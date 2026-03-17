@@ -1,0 +1,1136 @@
+<!DOCTYPE html>
+<html lang="de" data-theme="cyber-dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>BioEntdecker — Interaktive Biologie-Lernapp</title>
+<meta name="description" content="Interaktive Biologie-Lernapp für Klasse 7-10 mit Gamification, Quizzen und Boss-Challenges">
+<style>
+@font-face{font-family:'Sora';src:url('../../Informatik/fonts/sora-latin-400-normal.woff2') format('woff2');font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:'Sora';src:url('../../Informatik/fonts/sora-latin-600-normal.woff2') format('woff2');font-weight:600;font-style:normal;font-display:swap}
+@font-face{font-family:'Sora';src:url('../../Informatik/fonts/sora-latin-700-normal.woff2') format('woff2');font-weight:700;font-style:normal;font-display:swap}
+@font-face{font-family:'JetBrains Mono';src:url('../../Informatik/fonts/jetbrains-mono-latin-400-normal.woff2') format('woff2');font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:'Playfair Display';src:url('../../Informatik/fonts/playfair-display-latin-700-normal.woff2') format('woff2');font-weight:700;font-style:normal;font-display:swap}
+@font-face{font-family:'Inter';src:url('../../Informatik/fonts/inter-latin-400-normal.woff2') format('woff2');font-weight:400;font-style:normal;font-display:swap}
+
+:root{
+--neon:#3b82f6;--neon-dim:rgba(59,130,246,.15);--neon-glow:rgba(59,130,246,.3);
+--bg:#0a0e14;--bg2:#111827;--bg3:#1f2937;--card:#161e2e;--card-hover:#1e293b;
+--border:#2a3444;--border-light:#374151;
+--text:#d4dce8;--text-dim:#8899aa;--text-bright:#f1f5f9;
+--heading:#ffffff;--link:#60a5fa;
+--success:#22c55e;--warning:#f59e0b;--danger:#ef4444;
+--xp-purple:#a855f7;--badge-cyan:#06b6d4;--streak-red:#ef4444;
+--radius:12px;--radius-sm:8px;--radius-lg:16px;
+--shadow:0 4px 24px rgba(0,0,0,.4);--shadow-lg:0 8px 40px rgba(0,0,0,.5);
+--font:'Sora','Segoe UI',system-ui,sans-serif;
+--mono:'JetBrains Mono','Cascadia Code',monospace;
+--serif:'Playfair Display','Georgia',serif;
+--sidebar-w:280px;--header-h:60px;
+--card-border-w:1px;--card-border-style:solid;--glow:1
+}
+[data-theme="cyber-dark"]{--neon:#3b82f6;--neon-dim:rgba(59,130,246,.15);--neon-glow:rgba(59,130,246,.3);--bg:#0a0e14;--bg2:#111827;--bg3:#1f2937;--card:#161e2e;--card-hover:#1e293b;--border:#2a3444;--border-light:#374151;--text:#d4dce8;--text-dim:#8899aa;--text-bright:#f1f5f9;--heading:#ffffff;--link:#60a5fa;--success:#22c55e;--warning:#f59e0b;--danger:#ef4444;--xp-purple:#a855f7;--badge-cyan:#06b6d4;--streak-red:#ef4444;--radius:12px;--radius-sm:8px;--radius-lg:16px;--shadow:0 4px 24px rgba(0,0,0,.4);--shadow-lg:0 8px 40px rgba(0,0,0,.5);--font:'Sora','Segoe UI',system-ui,sans-serif;--card-border-w:1px;--card-border-style:solid;--glow:1}
+[data-theme="cyber-light"]{--neon:#1d4ed8;--neon-dim:rgba(29,78,216,.1);--neon-glow:rgba(29,78,216,.2);--bg:#f8f9fb;--bg2:#f0f2f5;--bg3:#e5e7eb;--card:#ffffff;--card-hover:#f5f7fa;--border:#d1d5db;--border-light:#e5e7eb;--text:#374151;--text-dim:#4b5563;--text-bright:#111827;--heading:#111827;--link:#2563eb;--success:#22c55e;--warning:#f59e0b;--danger:#ef4444;--xp-purple:#a855f7;--badge-cyan:#06b6d4;--streak-red:#ef4444;--radius:12px;--radius-sm:8px;--radius-lg:16px;--shadow:0 4px 24px rgba(0,0,0,.08);--shadow-lg:0 8px 40px rgba(0,0,0,.12);--font:'Sora','Segoe UI',system-ui,sans-serif;--card-border-w:1px;--card-border-style:solid;--glow:0}
+[data-theme="retro-dark"]{--neon:#ffd700;--neon-dim:rgba(255,215,0,.12);--neon-glow:rgba(255,215,0,.3);--bg:#0d0208;--bg2:#1a0a1e;--bg3:#2d1233;--card:#1a0a1e;--card-hover:#2d1233;--border:#4a1942;--border-light:#5c2d5c;--text:#e0d0f0;--text-dim:#9080a0;--text-bright:#fff;--heading:#ffd700;--link:#ff6b9d;--success:#00e676;--warning:#ffab00;--danger:#ff1744;--xp-purple:#e040fb;--badge-cyan:#00e5ff;--streak-red:#ff1744;--radius:0px;--radius-sm:0px;--radius-lg:0px;--shadow:4px 4px 0 rgba(0,0,0,.8);--shadow-lg:6px 6px 0 rgba(0,0,0,.9);--font:'Courier New','Consolas',monospace;--card-border-w:3px;--card-border-style:solid;--glow:0}
+[data-theme="retro-light"]{--neon:#b8860b;--neon-dim:rgba(184,134,11,.1);--neon-glow:rgba(184,134,11,.2);--bg:#fff8e1;--bg2:#fff3cd;--bg3:#ffe0b2;--card:#ffffff;--card-hover:#fff9f0;--border:#d4a017;--border-light:#e6c84d;--text:#3e2723;--text-dim:#6d4c41;--text-bright:#1b0000;--heading:#b8860b;--link:#c2185b;--success:#2e7d32;--warning:#ef6c00;--danger:#c62828;--xp-purple:#8e24aa;--badge-cyan:#00838f;--streak-red:#c62828;--radius:0px;--radius-sm:0px;--radius-lg:0px;--shadow:3px 3px 0 rgba(0,0,0,.15);--shadow-lg:5px 5px 0 rgba(0,0,0,.2);--font:'Courier New','Consolas',monospace;--card-border-w:3px;--card-border-style:solid;--glow:0}
+[data-theme="nature-dark"]{--neon:#4ade80;--neon-dim:rgba(74,222,128,.12);--neon-glow:rgba(74,222,128,.25);--bg:#0c1a0f;--bg2:#132617;--bg3:#1e3a24;--card:#15291a;--card-hover:#1e3a24;--border:#2d5a36;--border-light:#3a7044;--text:#c8e6c9;--text-dim:#81a784;--text-bright:#e8f5e9;--heading:#e8f5e9;--link:#81c784;--success:#66bb6a;--warning:#ffa726;--danger:#ef5350;--xp-purple:#ab47bc;--badge-cyan:#26a69a;--streak-red:#ef5350;--radius:20px;--radius-sm:14px;--radius-lg:28px;--shadow:0 4px 20px rgba(0,0,0,.3);--shadow-lg:0 8px 32px rgba(0,0,0,.4);--font:'Segoe UI','Helvetica Neue',system-ui,sans-serif;--card-border-w:1px;--card-border-style:solid;--glow:0}
+[data-theme="nature-light"]{--neon:#2e7d32;--neon-dim:rgba(46,125,50,.08);--neon-glow:rgba(46,125,50,.15);--bg:#f1f8e9;--bg2:#e8f5e9;--bg3:#c8e6c9;--card:#ffffff;--card-hover:#f1faf1;--border:#a5d6a7;--border-light:#c8e6c9;--text:#33691e;--text-dim:#3e6e1c;--text-bright:#1b5e20;--heading:#1b5e20;--link:#2e7d32;--success:#388e3c;--warning:#ef6c00;--danger:#c62828;--xp-purple:#7b1fa2;--badge-cyan:#00695c;--streak-red:#c62828;--radius:20px;--radius-sm:14px;--radius-lg:28px;--shadow:0 4px 16px rgba(0,0,0,.06);--shadow-lg:0 8px 28px rgba(0,0,0,.1);--font:'Segoe UI','Helvetica Neue',system-ui,sans-serif;--card-border-w:1px;--card-border-style:solid;--glow:0}
+[data-theme="space-dark"]{--neon:#c084fc;--neon-dim:rgba(192,132,252,.12);--neon-glow:rgba(192,132,252,.3);--bg:#07020e;--bg2:#0f0720;--bg3:#1a0e35;--card:#110a28;--card-hover:#1a0e35;--border:#2e1a5e;--border-light:#3d2478;--text:#d4c8f0;--text-dim:#9080b8;--text-bright:#f0e8ff;--heading:#f0e8ff;--link:#f0abfc;--success:#34d399;--warning:#fbbf24;--danger:#fb7185;--xp-purple:#f472b6;--badge-cyan:#67e8f9;--streak-red:#fb7185;--radius:4px;--radius-sm:2px;--radius-lg:6px;--shadow:0 4px 24px rgba(100,50,200,.2);--shadow-lg:0 8px 40px rgba(100,50,200,.3);--font:'Segoe UI',system-ui,sans-serif;--card-border-w:1px;--card-border-style:solid;--glow:1}
+[data-theme="space-light"]{--neon:#7c3aed;--neon-dim:rgba(124,58,237,.08);--neon-glow:rgba(124,58,237,.15);--bg:#faf5ff;--bg2:#f3e8ff;--bg3:#e9d5ff;--card:#ffffff;--card-hover:#faf5ff;--border:#c4b5fd;--border-light:#ddd6fe;--text:#4c1d95;--text-dim:#5b21b6;--text-bright:#2e1065;--heading:#2e1065;--link:#7c3aed;--success:#059669;--warning:#d97706;--danger:#dc2626;--xp-purple:#db2777;--badge-cyan:#0891b2;--streak-red:#dc2626;--radius:4px;--radius-sm:2px;--radius-lg:6px;--shadow:0 4px 16px rgba(100,50,200,.06);--shadow-lg:0 8px 28px rgba(100,50,200,.1);--font:'Segoe UI',system-ui,sans-serif;--card-border-w:1px;--card-border-style:solid;--glow:0}
+[data-theme="comic-dark"]{--neon:#ff6b6b;--neon-dim:rgba(255,107,107,.12);--neon-glow:rgba(255,107,107,.3);--bg:#1a1a2e;--bg2:#222244;--bg3:#2e2e55;--card:#262650;--card-hover:#2e2e55;--border:#4a4a7a;--border-light:#5a5a8a;--text:#e8e0ff;--text-dim:#a098c0;--text-bright:#fff;--heading:#fff;--link:#ffa94d;--success:#51cf66;--warning:#fcc419;--danger:#ff6b6b;--xp-purple:#cc5de8;--badge-cyan:#22b8cf;--streak-red:#ff6b6b;--radius:16px;--radius-sm:12px;--radius-lg:24px;--shadow:4px 4px 0 rgba(0,0,0,.5);--shadow-lg:6px 6px 0 rgba(0,0,0,.6);--font:'Comic Sans MS','Chalkboard SE',cursive,system-ui,sans-serif;--card-border-w:3px;--card-border-style:solid;--glow:0}
+[data-theme="comic-light"]{--neon:#e03131;--neon-dim:rgba(224,49,49,.08);--neon-glow:rgba(224,49,49,.15);--bg:#fff9db;--bg2:#fff3bf;--bg3:#ffe066;--card:#ffffff;--card-hover:#fffdf0;--border:#fab005;--border-light:#fcc419;--text:#2b2b2b;--text-dim:#555;--text-bright:#000;--heading:#000;--link:#e8590c;--success:#2f9e44;--warning:#e8590c;--danger:#c92a2a;--xp-purple:#9c36b5;--badge-cyan:#1098ad;--streak-red:#c92a2a;--radius:16px;--radius-sm:12px;--radius-lg:24px;--shadow:3px 3px 0 rgba(0,0,0,.2);--shadow-lg:5px 5px 0 rgba(0,0,0,.25);--font:'Comic Sans MS','Chalkboard SE',cursive,system-ui,sans-serif;--card-border-w:3px;--card-border-style:solid;--glow:0}
+[data-theme="sketchy-dark"]{--neon:#d97706;--neon-dim:rgba(217,119,6,.15);--neon-glow:rgba(217,119,6,.3);--bg:#2a1f0f;--bg2:#3a2a1a;--bg3:#4a3a2a;--card:#362414;--card-hover:#462a1a;--border:#5a4030;--border-light:#6a5040;--text:#d4c4b0;--text-dim:#a09080;--text-bright:#e8d8c8;--heading:#f5ead5;--link:#e8a550;--success:#84cc16;--warning:#d97706;--danger:#e74c3c;--xp-purple:#d946ef;--badge-cyan:#06b6d4;--streak-red:#e74c3c;--radius:24px;--radius-sm:16px;--radius-lg:32px;--shadow:0 6px 20px rgba(0,0,0,.3);--shadow-lg:0 10px 40px rgba(0,0,0,.4);--font:'Playfair Display','Georgia',serif;--card-border-w:2px;--card-border-style:dashed;--glow:0}
+[data-theme="sketchy-light"]{--neon:#b45309;--neon-dim:rgba(180,83,9,.1);--neon-glow:rgba(180,83,9,.2);--bg:#fef3e2;--bg2:#fde8cc;--bg3:#f9d5b8;--card:#ffffff;--card-hover:#fffaf5;--border:#d4a574;--border-light:#e8c4a0;--text:#5c4033;--text-dim:#8b6f47;--text-bright:#3e2723;--heading:#3e2723;--link:#c2600c;--success:#65a30d;--warning:#b45309;--danger:#d25c4d;--xp-purple:#c084fc;--badge-cyan:#0891b2;--streak-red:#d25c4d;--radius:24px;--radius-sm:16px;--radius-lg:32px;--shadow:0 4px 12px rgba(0,0,0,.08);--shadow-lg:0 8px 24px rgba(0,0,0,.12);--font:'Playfair Display','Georgia',serif;--card-border-w:2px;--card-border-style:dashed;--glow:0}
+[data-theme="nature-code-dark"]{--neon:#10b981;--neon-dim:rgba(16,185,129,.15);--neon-glow:rgba(16,185,129,.25);--bg:#0a1f12;--bg2:#0d2818;--bg3:#1a3a2a;--card:#0f281a;--card-hover:#1a3a2a;--border:#2d5a3d;--border-light:#3a7050;--text:#c8e6d0;--text-dim:#7ba890;--text-bright:#e8f5ed;--heading:#e8f5ed;--link:#34d399;--success:#10b981;--warning:#f59e0b;--danger:#f87171;--xp-purple:#a78bfa;--badge-cyan:#22d3ee;--streak-red:#f87171;--radius:20px;--radius-sm:14px;--radius-lg:28px;--shadow:0 4px 20px rgba(0,100,50,.2);--shadow-lg:0 8px 32px rgba(0,100,50,.3);--font:'Segoe UI','Helvetica Neue',system-ui,sans-serif;--card-border-w:1px;--card-border-style:solid;--glow:0}
+[data-theme="nature-code-light"]{--neon:#059669;--neon-dim:rgba(5,150,105,.1);--neon-glow:rgba(5,150,105,.15);--bg:#f0fdf8;--bg2:#e8faf2;--bg3:#d1f2e0;--card:#ffffff;--card-hover:#f5fbf7;--border:#86efac;--border-light:#bbf7d0;--text:#164e3f;--text-dim:#2d6e4f;--text-bright:#052e16;--heading:#052e16;--link:#059669;--success:#10b981;--warning:#d97706;--danger:#dc2626;--xp-purple:#8b5cf6;--badge-cyan:#06b6d4;--streak-red:#dc2626;--radius:20px;--radius-sm:14px;--radius-lg:28px;--shadow:0 4px 16px rgba(0,100,50,.06);--shadow-lg:0 8px 28px rgba(0,100,50,.1);--font:'Segoe UI','Helvetica Neue',system-ui,sans-serif;--card-border-w:1px;--card-border-style:solid;--glow:0}
+[data-theme="glass-dark"]{--neon:#00d9ff;--neon-dim:rgba(0,217,255,.12);--neon-glow:rgba(0,217,255,.25);--bg:#0f0f23;--bg2:#1a1a3e;--bg3:#25254a;--card:rgba(30,30,60,.4);--card-hover:rgba(40,40,80,.5);--border:rgba(100,150,255,.2);--border-light:rgba(100,150,255,.3);--text:#e4e8f0;--text-dim:#8899aa;--text-bright:#f5f7ff;--heading:#ffffff;--link:#00d9ff;--success:#34d399;--warning:#fbbf24;--danger:#ff6b9d;--xp-purple:#b991f7;--badge-cyan:#00d9ff;--streak-red:#ff6b9d;--radius:16px;--radius-sm:12px;--radius-lg:20px;--shadow:0 8px 32px rgba(0,200,255,.1);--shadow-lg:0 16px 64px rgba(0,200,255,.15);--font:'Segoe UI',system-ui,sans-serif;--card-border-w:1px;--card-border-style:solid;--glow:1}
+[data-theme="glass-light"]{--neon:#0891b2;--neon-dim:rgba(8,145,178,.08);--neon-glow:rgba(8,145,178,.15);--bg:#f8fafc;--bg2:#f1f5f9;--bg3:#e2e8f0;--card:rgba(255,255,255,.4);--card-hover:rgba(255,255,255,.6);--border:rgba(100,180,255,.2);--border-light:rgba(100,180,255,.3);--text:#1e293b;--text-dim:#475569;--text-bright:#0f172a;--heading:#0f172a;--link:#0891b2;--success:#059669;--warning:#d97706;--danger:#dc2626;--xp-purple:#7c3aed;--badge-cyan:#0891b2;--streak-red:#dc2626;--radius:16px;--radius-sm:12px;--radius-lg:20px;--shadow:0 8px 32px rgba(100,150,255,.08);--shadow-lg:0 16px 64px rgba(100,150,255,.12);--font:'Segoe UI',system-ui,sans-serif;--card-border-w:1px;--card-border-style:solid;--glow:0}
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{font-family:var(--font);background:var(--bg);color:var(--text);line-height:1.6;min-height:100vh;overflow-x:hidden;transition:background .3s,color .3s}
+h1,h2,h3,h4{color:var(--heading);line-height:1.3}
+a{color:var(--link);text-decoration:none}
+a:hover{text-decoration:underline}
+button{font-family:var(--font);cursor:pointer;border:none;background:none;color:inherit}
+code,pre{font-family:var(--mono)}
+:focus-visible{outline:2px solid var(--neon);outline-offset:2px;border-radius:4px}
+::selection{background:var(--neon);color:#fff}
+::-webkit-scrollbar{width:8px}
+::-webkit-scrollbar-track{background:var(--bg2)}
+::-webkit-scrollbar-thumb{background:var(--border);border-radius:4px}
+::-webkit-scrollbar-thumb:hover{background:var(--text-dim)}
+.site-header{position:fixed;top:0;left:0;right:0;height:var(--header-h);background:var(--bg2);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 20px;z-index:100;backdrop-filter:blur(12px)}
+.header-logo{display:flex;align-items:center;gap:12px;font-weight:700;font-size:18px;color:var(--heading)}
+.header-logo-text{display:flex;flex-direction:column;line-height:1.2}
+.header-logo-main{font-size:20px;font-weight:800}
+.header-logo-sub{font-size:11px;font-weight:600;color:var(--neon);letter-spacing:1px;text-transform:uppercase;margin-top:2px}
+.header-right{margin-left:auto;display:flex;align-items:center;gap:12px}
+.header-xp{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--xp-purple);font-weight:600}
+.header-xp-bar{width:80px;height:6px;background:var(--bg3);border-radius:3px;overflow:hidden}
+.header-xp-fill{height:100%;background:var(--xp-purple);border-radius:3px;transition:width .5s}
+.header-streak{display:flex;align-items:center;gap:4px;font-size:13px;color:var(--streak-red);font-weight:600}
+.theme-toggle{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:var(--bg3);transition:background .2s}
+.theme-toggle:hover{background:var(--border)}
+.theme-picker-wrap{position:relative}
+.theme-picker-btn{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:var(--bg3);transition:background .2s;font-size:16px}
+.theme-picker-btn:hover{background:var(--border)}
+.theme-picker-dd{position:absolute;top:calc(100% + 8px);right:0;background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:12px;box-shadow:var(--shadow-lg);z-index:200;display:none;min-width:240px}
+.theme-picker-dd.open{display:block}
+.theme-picker-dd .tp-label{font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--text-dim);margin-bottom:8px}
+.tp-world{display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:var(--radius-sm);cursor:pointer;transition:background .15s;margin-bottom:2px}
+.tp-world:hover{background:var(--bg3)}
+.tp-world.active{background:var(--neon-dim)}
+.tp-world-color{width:28px;height:28px;border-radius:6px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:14px}
+.tp-world-info{flex:1;min-width:0}
+.tp-world-name{font-size:13px;font-weight:600;color:var(--heading)}
+.tp-world-desc{font-size:10px;color:var(--text-dim)}
+.tp-divider{height:1px;background:var(--border);margin:8px 0}
+.tp-mode-row{display:flex;align-items:center;justify-content:space-between;padding:4px 10px}
+.tp-mode-label{font-size:12px;color:var(--text);font-weight:600}
+.tp-mode-switch{width:44px;height:24px;border-radius:12px;background:var(--bg3);position:relative;cursor:pointer;transition:background .2s}
+.tp-mode-switch.light{background:var(--neon)}
+.tp-mode-switch::after{content:'';position:absolute;top:3px;left:3px;width:18px;height:18px;border-radius:50%;background:#fff;transition:transform .2s;box-shadow:0 1px 3px rgba(0,0,0,.3)}
+.tp-mode-switch.light::after{transform:translateX(20px)}
+.menu-btn{display:none;width:36px;height:36px;border-radius:8px;align-items:center;justify-content:center;background:var(--bg3)}
+.sidebar{position:fixed;top:var(--header-h);left:0;width:var(--sidebar-w);height:calc(100vh - var(--header-h));background:var(--bg2);border-right:1px solid var(--border);overflow-y:auto;padding:16px 12px;z-index:90;transition:transform .3s}
+.sidebar-section{margin-bottom:20px}
+.sidebar-label{font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--text-dim);padding:0 8px;margin-bottom:8px}
+.sidebar-level{padding:8px 12px;background:var(--neon-dim);border-radius:var(--radius-sm);margin-bottom:12px;text-align:center}
+.sidebar-level-title{font-size:14px;font-weight:700;color:var(--neon)}
+.sidebar-level-sub{font-size:11px;color:var(--text-dim);margin-top:2px}
+.sidebar-xp-bar{width:100%;height:8px;background:var(--bg3);border-radius:4px;overflow:hidden;margin-top:6px}
+.sidebar-xp-fill{height:100%;background:linear-gradient(90deg,var(--xp-purple),var(--neon));border-radius:4px;transition:width .6s}
+.mod-link{display:flex;align-items:center;gap:10px;padding:8px 12px;border-radius:var(--radius-sm);transition:background .15s;color:var(--text);font-size:13px;text-decoration:none;position:relative;cursor:pointer}
+.mod-link:hover{background:var(--bg3);text-decoration:none}
+.mod-link.active{background:var(--neon-dim);color:var(--neon);font-weight:600}
+.mod-link.completed::after{content:'\2713';position:absolute;right:10px;color:var(--success);font-weight:700;font-size:12px}
+.mod-link .mod-icon{width:28px;height:28px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
+.main{margin-left:var(--sidebar-w);margin-top:var(--header-h);min-height:calc(100vh - var(--header-h));padding:32px;max-width:900px}
+.module-header{margin-bottom:32px}
+.module-header .mod-badge{display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--neon);margin-bottom:8px}
+.module-header h1{font-size:28px;margin-bottom:8px}
+.module-header .mod-desc{font-size:15px;color:var(--text-dim);max-width:600px}
+.lesson-card{background:var(--card);border:var(--card-border-w) var(--card-border-style) var(--border);border-radius:var(--radius);padding:24px;margin-bottom:20px;transition:border-color .2s}
+.lesson-card:hover{border-color:var(--neon)}
+.lesson-card h3{font-size:18px;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.lesson-card p,.lesson-card li{font-size:14px;line-height:1.7;color:var(--text)}
+.lesson-card ul,.lesson-card ol{margin:8px 0 8px 20px}
+.lesson-card code{background:var(--bg3);padding:2px 6px;border-radius:4px;font-size:13px;color:var(--neon)}
+.lesson-card pre{background:var(--bg);border:1px solid var(--border);border-radius:var(--radius-sm);padding:16px;overflow-x:auto;margin:12px 0;font-size:13px;line-height:1.5}
+.lesson-card .info-box{background:var(--neon-dim);border-left:3px solid var(--neon);padding:12px 16px;border-radius:0 var(--radius-sm) var(--radius-sm) 0;margin:12px 0;font-size:13px}
+.interactive-area{background:var(--card);border:calc(var(--card-border-w) + 1px) dashed var(--border);border-radius:var(--radius);padding:24px;margin:20px 0;min-height:200px}
+.interactive-area h4{font-size:15px;color:var(--neon);margin-bottom:12px}
+.ia-toolbar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+.ia-btn{padding:6px 14px;font-size:12px;font-weight:600;border-radius:var(--radius-sm);background:var(--neon-dim);color:var(--neon);border:1px solid transparent;transition:all .15s}
+.ia-btn:hover{background:var(--neon);color:#fff}
+.ia-btn.active{background:var(--neon);color:#fff}
+.ix-grid{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;margin:16px 0}
+.ix-item{background:var(--bg3);border:2px solid var(--border);border-radius:var(--radius-sm);padding:14px 20px;font-size:20px;cursor:pointer;transition:all .2s;user-select:none;text-align:center;min-width:60px}
+.ix-item:hover{border-color:var(--neon);background:var(--neon-dim)}
+.ix-item.selected{border-color:var(--neon);background:var(--neon-dim)}
+.ix-item.correct{border-color:var(--success);background:rgba(34,197,94,.1)}
+.ix-item.wrong{border-color:var(--danger);background:rgba(239,68,68,.1)}
+.ix-item.placed{opacity:.4;pointer-events:none}
+.ix-btn{background:var(--neon);color:#fff;border:none;padding:10px 24px;border-radius:var(--radius-sm);font-size:14px;font-weight:700;cursor:pointer;font-family:var(--font);margin-top:12px;transition:opacity .2s}
+.ix-btn:hover{opacity:.85}
+.ix-btn:disabled{opacity:.4;cursor:not-allowed}
+.ix-feedback{text-align:center;padding:14px;border-radius:var(--radius-sm);font-size:16px;font-weight:700;margin-top:12px;display:none}
+.ix-feedback.pass{display:block;background:rgba(34,197,94,.12);color:var(--success)}
+.ix-feedback.fail{display:block;background:rgba(239,68,68,.12);color:var(--danger)}
+.quiz-section{background:var(--card);border:var(--card-border-w) var(--card-border-style) var(--border);border-radius:var(--radius);padding:24px;margin-top:24px}
+.quiz-section h3{font-size:18px;margin-bottom:16px;color:var(--xp-purple)}
+.quiz-q{margin-bottom:20px}
+.quiz-q p{font-size:14px;font-weight:600;margin-bottom:10px}
+.quiz-q label{display:flex;align-items:flex-start;gap:10px;padding:10px 14px;border-radius:var(--radius-sm);border:1px solid var(--border);cursor:pointer;transition:all .15s;font-size:14px;margin-bottom:6px}
+.quiz-q label:hover{border-color:var(--neon);background:var(--neon-dim)}
+.quiz-q input[type="radio"]{margin-top:3px;accent-color:var(--neon)}
+.quiz-q label.correct{border-color:var(--success);background:rgba(34,197,94,.1)}
+.quiz-q label.wrong{border-color:var(--danger);background:rgba(239,68,68,.1)}
+.quiz-submit{padding:10px 24px;font-size:14px;font-weight:700;border-radius:var(--radius-sm);background:var(--xp-purple);color:#fff;transition:opacity .2s;margin-top:8px}
+.quiz-submit:hover{opacity:.85}
+.quiz-result{padding:16px;border-radius:var(--radius-sm);margin-top:16px;font-size:14px;font-weight:600;text-align:center}
+.quiz-result.pass{background:rgba(34,197,94,.12);color:var(--success);border:1px solid rgba(34,197,94,.3)}
+.quiz-result.fail{background:rgba(239,68,68,.12);color:var(--danger);border:1px solid rgba(239,68,68,.3)}
+.quiz-explanation{margin-top:6px;padding:8px 14px;border-radius:var(--radius-sm);background:rgba(34,197,94,.08);border-left:3px solid var(--success);font-size:13px;color:var(--success);font-weight:600}
+.boss-section{background:linear-gradient(135deg,rgba(168,85,247,.08),rgba(59,130,246,.08));border:2px solid var(--xp-purple);border-radius:var(--radius);padding:24px;margin-top:24px}
+.boss-section h3{color:var(--xp-purple);font-size:20px;margin-bottom:4px}
+.boss-section .boss-sub{font-size:13px;color:var(--text-dim);margin-bottom:16px}
+.badge-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(100px,1fr));gap:12px;margin-top:12px}
+.badge-item{text-align:center;padding:12px 8px;border-radius:var(--radius-sm);background:var(--bg3);opacity:.4;transition:all .3s}
+.badge-item.earned{opacity:1;background:var(--neon-dim);border:1px solid var(--neon)}
+.badge-item .badge-icon{font-size:28px;margin-bottom:4px}
+.badge-item .badge-name{font-size:10px;font-weight:600;color:var(--text-dim)}
+.badge-item.earned .badge-name{color:var(--neon)}
+.stats-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px;margin-top:12px}
+.stat-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius-sm);padding:16px;text-align:center}
+.stat-card .stat-val{font-size:28px;font-weight:700;color:var(--neon)}
+.stat-card .stat-label{font-size:12px;color:var(--text-dim);margin-top:4px}
+.notif{position:fixed;top:80px;right:20px;background:var(--card);border:1px solid var(--neon);border-radius:var(--radius);padding:16px 20px;box-shadow:var(--shadow-lg);z-index:200;transform:translateX(120%);transition:transform .4s cubic-bezier(.22,1,.36,1);max-width:320px}
+.notif.show{transform:translateX(0)}
+.notif-title{font-size:14px;font-weight:700;color:var(--heading);margin-bottom:2px}
+.notif-text{font-size:12px;color:var(--text-dim)}
+.notif.xp{border-color:var(--xp-purple)}
+.notif.badge{border-color:var(--badge-cyan)}
+.notif.level{border-color:var(--success)}
+.notif.streak{border-color:var(--streak-red)}
+.level-up-overlay{position:fixed;inset:0;background:rgba(0,0,0,.7);display:none;align-items:center;justify-content:center;z-index:300}
+.level-up-overlay.active{display:flex}
+.level-up-box{text-align:center;padding:40px;animation:lvlPop .5s ease-out}
+.level-up-box .lvl-icon{font-size:64px;margin-bottom:12px}
+.level-up-box .lvl-title{font-size:28px;font-weight:900;color:var(--heading)}
+.level-up-box .lvl-name{font-size:20px;color:var(--xp-purple);font-weight:700;margin-top:4px}
+@keyframes lvlPop{from{transform:scale(.5);opacity:0}to{transform:scale(1);opacity:1}}
+.welcome-screen{display:flex;align-items:center;justify-content:center;min-height:calc(100vh - var(--header-h));text-align:center;padding:40px 20px}
+.welcome-box{max-width:480px}
+.welcome-box h1{font-size:36px;margin-bottom:8px}
+.welcome-box .ws-sub{color:var(--text-dim);font-size:15px;margin-bottom:32px}
+.welcome-box input{width:100%;max-width:320px;padding:12px 16px;font-size:16px;border-radius:var(--radius-sm);border:1px solid var(--border);background:var(--bg3);color:var(--heading);font-family:var(--font);text-align:center;margin-bottom:16px}
+.welcome-box input:focus{border-color:var(--neon);outline:2px solid var(--neon);outline-offset:2px}
+.welcome-box .ws-start{padding:14px 40px;font-size:16px;font-weight:700;border-radius:var(--radius-sm);background:var(--neon);color:#fff;transition:opacity .2s}
+.welcome-box .ws-start:hover{opacity:.85}
+.welcome-box .ws-start:disabled{opacity:.4;cursor:not-allowed}
+.cert-overlay{position:fixed;inset:0;background:rgba(0,0,0,.88);display:none;align-items:center;justify-content:center;z-index:400;padding:20px;flex-direction:column;backdrop-filter:blur(8px)}
+.cert-overlay.active{display:flex}
+.cert-picker{display:flex;gap:12px;justify-content:center;margin-bottom:20px;flex-wrap:wrap}
+.cert-pick-btn{padding:10px 20px;font-size:13px;font-weight:700;border-radius:12px;border:2px solid rgba(255,255,255,.15);background:rgba(255,255,255,.06);color:rgba(255,255,255,.7);transition:all .3s;backdrop-filter:blur(4px)}
+.cert-pick-btn:hover{border-color:rgba(255,255,255,.3);color:#fff;transform:translateY(-2px)}
+.cert-pick-btn.active{border-color:#ffd700;color:#ffd700;background:rgba(255,215,0,.1);box-shadow:0 0 20px rgba(255,215,0,.15)}
+.cert-frame{width:720px;max-width:100%;aspect-ratio:1.414;position:relative;overflow:hidden;animation:certEntrance .6s cubic-bezier(.34,1.56,.64,1) both}
+.cert-actions{display:flex;gap:12px;justify-content:center;margin-top:16px}
+.cert-actions button{padding:12px 28px;font-size:13px;font-weight:700;border-radius:12px;background:linear-gradient(135deg,var(--neon),var(--link));color:#fff;transition:transform .2s,box-shadow .2s}
+.cert-actions button:hover{transform:translateY(-2px);box-shadow:0 4px 20px rgba(0,0,0,.3)}
+@keyframes certEntrance{0%{opacity:0;transform:scale(.8) translateY(30px)}100%{opacity:1;transform:scale(1) translateY(0)}}
+@keyframes shimmer{0%{background-position:-200% 0}100%{background-position:200% 0}}
+@keyframes blink{50%{opacity:0}}
+@keyframes glitch{0%,93%{text-shadow:0 0 20px rgba(0,212,255,.5)}94%{text-shadow:-3px 0 #ff0040,3px 0 #00d4ff;transform:skewX(-2deg)}95%{text-shadow:3px 0 #ff0040,-3px 0 #00d4ff;transform:skewX(2deg)}96%{text-shadow:-1px 2px #ff0040,1px -2px #00d4ff}97%,100%{text-shadow:0 0 20px rgba(0,212,255,.5);transform:skewX(0)}}
+@keyframes pixelBlink{50%{opacity:0}}
+@keyframes holoSpin{to{transform:rotate(360deg)}}
+@keyframes aurora{0%{background-position:0% 50%}25%{background-position:50% 100%}50%{background-position:100% 50%}75%{background-position:50% 0%}100%{background-position:0% 50%}}
+@keyframes goldShimmer{0%{background-position:-100% 0}100%{background-position:200% 0}}
+@keyframes neonPulse{0%,100%{box-shadow:0 0 5px #00ff41,0 0 10px #00ff41,0 0 20px rgba(0,255,65,.3)}50%{box-shadow:0 0 10px #00ff41,0 0 25px #00ff41,0 0 50px rgba(0,255,65,.4)}}
+@keyframes matrixFall{0%{transform:translateY(-100%);opacity:1}100%{transform:translateY(100vh);opacity:0}}
+.cert-common-stats{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin:10px 0}
+.cert-stat{padding:4px 10px;border-radius:20px;font-size:11px;font-weight:700;display:inline-flex;align-items:center;gap:4px}
+.cert-badge-row{display:flex;gap:6px;justify-content:center;flex-wrap:wrap;margin:8px 0}
+.cert-badge-item{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px}
+.cert-verification{font-size:10px;letter-spacing:2px;margin-top:8px;opacity:.5;font-family:var(--mono)}
+.cert-logo-footer{display:flex;align-items:center;justify-content:center;gap:6px;margin-top:10px;opacity:.4;font-size:10px}
+.cert-logo-footer svg{width:16px;height:16px}
+.cert-akademie{background:linear-gradient(145deg,#faf6e8,#f0e8d0,#e8dfc0);border:none;padding:0;text-align:center;font-family:var(--serif);color:#1a1a3e;position:relative;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;overflow:hidden}
+.cert-akademie::before{content:'';position:absolute;inset:0;background:url("data:image/svg+xml,%3Csvg width='60' height='60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 5 L35 20 L30 15 L25 20Z' fill='%23c5a54e' opacity='.04'/%3E%3C/svg%3E");pointer-events:none}
+.cert-akademie::after{content:'';position:absolute;inset:8px;border:2px solid rgba(197,165,78,.35);border-radius:2px;pointer-events:none}
+.cert-akademie .cert-inner{position:relative;z-index:1;padding:36px 32px;width:100%}
+.cert-akademie .cert-corner{position:absolute;width:60px;height:60px;z-index:2}
+.cert-akademie .cert-corner svg{width:100%;height:100%}
+.cert-akademie .cert-corner-tl{top:14px;left:14px}
+.cert-akademie .cert-corner-tr{top:14px;right:14px;transform:scaleX(-1)}
+.cert-akademie .cert-corner-bl{bottom:14px;left:14px;transform:scaleY(-1)}
+.cert-akademie .cert-corner-br{bottom:14px;right:14px;transform:scale(-1)}
+.cert-akademie .cert-title{font-size:36px;font-weight:700;color:#1a1a3e;margin-bottom:2px;letter-spacing:3px}
+.cert-akademie .cert-sub{font-size:11px;color:#8a7d5e;letter-spacing:5px;text-transform:uppercase;margin-bottom:16px}
+.cert-akademie .cert-hr{width:200px;height:2px;background:linear-gradient(90deg,transparent,#c5a54e,transparent);margin:10px auto}
+.cert-akademie .cert-body{font-size:14px;line-height:1.7;color:#3d3422;margin-bottom:8px}
+.cert-akademie .cert-name{font-size:32px;font-weight:700;background:linear-gradient(135deg,#c5a54e,#e8c84e,#c5a54e);background-size:200% auto;animation:goldShimmer 3s linear infinite;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin:12px 0;font-style:italic}
+.cert-akademie .cert-seal-wrap{margin:12px auto;position:relative;width:90px;height:90px}
+.cert-akademie .cert-seal-ring{position:absolute;inset:0;border:3px solid #c5a54e;border-radius:50%;opacity:.3}
+.cert-akademie .cert-seal{width:76px;height:76px;margin:7px;background:radial-gradient(circle at 35% 35%,#e8c84e,#c5a54e,#8a6914);border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 16px rgba(160,134,54,.5),inset 0 2px 4px rgba(255,255,255,.3)}
+.cert-akademie .cert-stat{background:rgba(197,165,78,.12);color:#8a6914;border:1px solid rgba(197,165,78,.25)}
+.cert-akademie .cert-badge-item{background:rgba(197,165,78,.15);border:1px solid rgba(197,165,78,.3)}
+.cert-akademie .cert-date{font-size:11px;color:#8a7d5e;margin-top:8px;font-style:italic}
+.cert-hacker{background:#050505;border:2px solid #00ff41;padding:0;font-family:var(--mono);color:#00ff41;position:relative;overflow:hidden;height:100%;display:flex;flex-direction:column;justify-content:center;box-shadow:0 0 30px rgba(0,255,65,.15),inset 0 0 60px rgba(0,255,65,.03);animation:neonPulse 4s ease-in-out infinite}
+.cert-hacker::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(transparent,transparent 2px,rgba(0,255,65,.025) 2px,rgba(0,255,65,.025) 4px);pointer-events:none;z-index:1}
+.cert-hacker::after{content:'> > > CERTIFIED > > > CERTIFIED > > > CERTIFIED > > >';position:absolute;bottom:0;left:0;right:0;font-size:9px;color:rgba(0,255,65,.08);letter-spacing:3px;padding:4px;white-space:nowrap;overflow:hidden;z-index:1}
+.cert-hacker .cert-inner{position:relative;z-index:2;padding:30px 32px}
+.cert-hacker .cert-matrix-col{position:absolute;top:-100%;font-size:11px;color:#00ff41;opacity:.08;z-index:0;font-family:var(--mono);line-height:1.1;animation:matrixFall linear infinite;white-space:pre}
+.cert-hacker .cert-title{font-size:22px;font-weight:700;text-shadow:0 0 15px rgba(0,255,65,.6);margin-bottom:4px}
+.cert-hacker .cert-access{font-size:32px;font-weight:700;color:#00d4ff;text-shadow:0 0 30px rgba(0,212,255,.6),0 0 60px rgba(0,212,255,.2);margin:14px 0;animation:glitch 4s infinite;letter-spacing:4px}
+.cert-hacker .cert-body{font-size:12px;line-height:2;color:#33cc55}
+.cert-hacker .cert-name{font-size:24px;color:#00d4ff;margin:12px 0;text-shadow:0 0 10px rgba(0,212,255,.4)}
+.cert-hacker .cert-prompt{color:#444;font-size:11px}
+.cert-hacker .cert-prompt span{color:#00ff41}
+.cert-hacker .cursor-blink{animation:blink 1s step-end infinite}
+.cert-hacker .cert-hex-seal{width:70px;height:70px;margin:12px auto;border:2px solid #00ff41;border-radius:50%;display:flex;align-items:center;justify-content:center;position:relative;box-shadow:0 0 15px rgba(0,255,65,.2)}
+.cert-hacker .cert-stat{background:rgba(0,255,65,.08);color:#00ff41;border:1px solid rgba(0,255,65,.2)}
+.cert-hacker .cert-badge-item{background:rgba(0,255,65,.08);border:1px solid rgba(0,255,65,.2)}
+.cert-pixel{background:linear-gradient(180deg,#0f0f2e,#1a1a3e,#0f0f2e);border:6px solid #ffd700;padding:0;text-align:center;color:#fff;font-family:var(--font);position:relative;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;overflow:hidden;box-shadow:inset 0 0 80px rgba(255,215,0,.05)}
+.cert-pixel .cert-inner{position:relative;z-index:1;padding:28px 24px;width:100%}
+.cert-pixel .cert-complete{font-size:20px;color:#00e676;margin:6px 0;animation:pixelBlink 1.2s step-end infinite;text-shadow:0 0 10px rgba(0,230,118,.4);letter-spacing:3px;font-weight:900}
+.cert-pixel .cert-title{font-size:32px;font-weight:900;color:#ffd700;text-transform:uppercase;letter-spacing:5px;text-shadow:4px 4px 0 #e4002b}
+.cert-pixel .cert-name{font-size:26px;font-weight:900;color:#fff;margin:14px 0;text-shadow:2px 2px 0 rgba(0,0,0,.5)}
+.cert-pixel .cert-stars{font-size:28px;margin:8px 0;letter-spacing:6px;color:#ffd700;text-shadow:0 0 10px rgba(255,215,0,.4)}
+.cert-pixel .cert-body{font-size:12px;color:#aaa;line-height:1.7}
+.cert-pixel .cert-score{font-size:18px;color:#ff4757;font-weight:900;margin-top:6px;text-shadow:2px 2px 0 rgba(0,0,0,.5);letter-spacing:2px}
+.cert-pixel .cert-xp-bar{width:200px;height:14px;background:#111;border:2px solid #ffd700;margin:8px auto;position:relative;overflow:hidden}
+.cert-pixel .cert-xp-fill{height:100%;background:repeating-linear-gradient(90deg,#ffd700 0px,#ffd700 8px,#ffaa00 8px,#ffaa00 16px);box-shadow:0 0 8px rgba(255,215,0,.4)}
+.cert-pixel .cert-xp-label{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:900;color:#fff;text-shadow:1px 1px 0 #000;z-index:1}
+.cert-pixel .cert-stat{background:rgba(255,215,0,.1);color:#ffd700;border:2px solid rgba(255,215,0,.3)}
+.cert-pixel .cert-badge-item{background:rgba(255,215,0,.1);border:2px solid rgba(255,215,0,.25)}
+.cert-zukunft{background:linear-gradient(135deg,#0a0a2e,#1a0a3e,#0a1a3e);border:1px solid rgba(255,255,255,.1);border-radius:20px;padding:0;text-align:center;color:#fff;font-family:var(--font);position:relative;overflow:hidden;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.cert-zukunft::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(99,102,241,.15),rgba(236,72,153,.15),rgba(245,158,11,.15),rgba(34,197,94,.15),rgba(99,102,241,.15));background-size:400% 400%;animation:aurora 8s ease infinite;pointer-events:none}
+.cert-zukunft .cert-inner{position:relative;z-index:1;padding:30px 28px;width:100%}
+.cert-zukunft .cert-particle{position:absolute;width:3px;height:3px;border-radius:50%;z-index:0}
+.cert-zukunft .cert-title{font-size:30px;font-weight:900;background:linear-gradient(135deg,#6366f1,#ec4899,#f59e0b,#22c55e);background-size:200% auto;animation:shimmer 4s linear infinite;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.cert-zukunft .cert-sub{font-size:11px;color:rgba(255,255,255,.5);letter-spacing:4px;text-transform:uppercase;margin-bottom:14px}
+.cert-zukunft .cert-name{font-size:28px;font-weight:700;margin:12px 0;background:linear-gradient(90deg,#a78bfa,#f472b6,#fbbf24);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.cert-zukunft .cert-body{font-size:13px;color:rgba(255,255,255,.65);line-height:1.7}
+.cert-zukunft .cert-seal-holo{width:80px;height:80px;margin:12px auto;border-radius:50%;background:conic-gradient(#6366f1,#ec4899,#f59e0b,#22c55e,#06b6d4,#6366f1);display:flex;align-items:center;justify-content:center;animation:holoSpin 6s linear infinite;box-shadow:0 0 30px rgba(99,102,241,.3)}
+.cert-zukunft .cert-seal-mid{width:68px;height:68px;border-radius:50%;border:2px solid rgba(255,255,255,.15);background:transparent;display:flex;align-items:center;justify-content:center;animation:holoSpin 10s linear infinite reverse}
+.cert-zukunft .cert-seal-inner{width:52px;height:52px;border-radius:50%;background:rgba(10,10,30,.9);display:flex;align-items:center;justify-content:center;backdrop-filter:blur(4px)}
+.cert-zukunft .cert-date{font-size:10px;color:rgba(255,255,255,.35);margin-top:10px;letter-spacing:2px}
+.cert-zukunft .cert-stat{background:rgba(99,102,241,.12);color:#a78bfa;border:1px solid rgba(99,102,241,.25)}
+.cert-zukunft .cert-badge-item{background:rgba(99,102,241,.1);border:1px solid rgba(99,102,241,.2)}
+.confetti-container{position:fixed;inset:0;pointer-events:none;z-index:600;overflow:hidden}
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.6);display:none;align-items:center;justify-content:center;z-index:500;padding:20px}
+.modal-overlay.active{display:flex}
+.modal{background:var(--card);border:1px solid var(--border);border-radius:var(--radius-lg);max-width:640px;width:100%;max-height:85vh;overflow-y:auto;padding:32px;position:relative}
+.modal-close{position:absolute;top:12px;right:12px;font-size:24px;color:var(--text-dim);background:none;border:none;cursor:pointer}
+@media(max-width:800px){
+.menu-btn{display:flex}
+.sidebar{transform:translateX(-100%)}
+.sidebar.open{transform:translateX(0)}
+.main{margin-left:0;padding:16px}
+}
+@media print{
+*{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}
+.site-header,.sidebar,.notif,.level-up-overlay,.confetti-container{display:none!important}
+.main{margin-left:0!important;padding:20px!important}
+.lesson-card{break-inside:avoid;page-break-inside:avoid}
+}
+
+.zoom-controls{position:fixed;bottom:16px;left:16px;display:flex;gap:4px;z-index:9999}
+.zoom-btn{width:32px;height:32px;border-radius:50%;border:1px solid var(--border,#2a3444);background:var(--bg2,#111827);color:var(--text,#d4dce8);cursor:pointer;font-size:15px;display:flex;align-items:center;justify-content:center;transition:all .2s;font-family:inherit;line-height:1}
+.zoom-btn:hover{border-color:var(--neon,#3b82f6);color:var(--neon,#3b82f6);transform:scale(1.1)}
+.zoom-btn:focus-visible{outline:2px solid var(--neon,#3b82f6);outline-offset:2px}
+.zoom-level{font-size:10px;position:absolute;top:-16px;left:50%;transform:translateX(-50%);color:var(--text-dim,#8899aa);white-space:nowrap;pointer-events:none}
+
+/* A11y: Print improvements */
+@media print{body{background:#fff!important;color:#000!important}.cert-overlay,.modal-overlay,.level-up-overlay,.theme-overlay,.zoom-controls{display:none!important}.lesson-card,.quiz-section,.boss-section,.interactive-area{break-inside:avoid;page-break-inside:avoid}}
+
+/* Audio/Speech */
+.tts-btn{background:none;border:none;cursor:pointer;font-size:.9em;opacity:.5;transition:all .2s;vertical-align:middle;margin-left:8px;padding:2px 6px;border-radius:4px}
+.tts-btn:hover{opacity:1;background:var(--bg2)}.tts-btn.speaking{opacity:1;color:var(--neon);animation:tts-pulse 1s infinite}
+@keyframes tts-pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.15)}}
+.tts-bar{display:flex;align-items:center;gap:8px;padding:6px 12px;background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);margin:8px 0;font-size:.8rem;flex-wrap:wrap}
+.tts-bar select{background:var(--bg);color:var(--text);border:1px solid var(--border);border-radius:4px;padding:2px 6px;font-size:.78rem}
+.tts-bar button{background:none;border:1px solid var(--border);border-radius:4px;padding:2px 8px;cursor:pointer;color:var(--text);font-size:.8rem}
+.tts-bar button:hover{background:var(--bg)}
+.speech-ex{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:16px;margin:12px 0;text-align:center}
+.speech-ex h4{margin:0 0 8px;font-size:1rem}
+.mic-btn{font-size:1.6em;background:none;border:2px solid var(--neon);border-radius:50%;width:52px;height:52px;cursor:pointer;transition:all .3s;color:var(--text);display:inline-flex;align-items:center;justify-content:center}
+.mic-btn:hover{background:var(--neon);color:var(--bg)}.mic-btn.rec{background:#ef4444;border-color:#ef4444;color:#fff;animation:tts-pulse 1s infinite}
+.sr-res{margin-top:8px;padding:6px 10px;border-radius:4px;font-weight:600;font-size:.85rem;display:inline-block}
+.sr-res.good{background:#22c55e22;color:#22c55e}.sr-res.retry{background:#f59e0b22;color:#f59e0b}
+.sr-na{font-size:.8rem;color:var(--text-dim);margin-top:8px}
+</style>
+</head>
+<body>
+<a href="#mainContent" class="skip-nav" style="position:absolute;top:-50px;left:8px;background:var(--neon);color:#fff;padding:8px 16px;z-index:9999;border-radius:0 0 8px 8px;font-weight:700;text-decoration:none">Zum Inhalt springen</a>
+<header class="site-header">
+<button class="menu-btn" onclick="toggleSidebar()" aria-label="Menu">&#9776;</button>
+<div class="header-logo">
+<svg viewBox="0 0 40 40" width="40" height="40" fill="none" aria-hidden="true">
+<rect x="4" y="4" width="32" height="32" rx="8" fill="var(--neon-dim)" stroke="var(--neon)" stroke-width="1.5"/>
+<text x="20" y="26" text-anchor="middle" font-size="18" font-weight="900" fill="var(--neon)">B</text>
+</svg>
+<div class="header-logo-text">
+<div class="header-logo-main">BioEntdecker</div>
+<div class="header-logo-sub">Biologie Klasse 7-10</div>
+</div>
+</div>
+<div class="header-right">
+<div class="header-xp"><span id="headerLevel">Level 1</span><div class="header-xp-bar"><div class="header-xp-fill" style="width:0%"></div></div><span id="headerXP">0 XP</span></div>
+<div class="header-streak" id="headerStreak">&#128293; 0</div>
+<div class="theme-picker-wrap">
+<button class="theme-picker-btn" onclick="toggleThemePicker()" aria-label="Theme wählen">&#127912;</button>
+<div class="theme-picker-dd" id="themePickerDD"></div>
+</div>
+<button class="theme-toggle" onclick="toggleMode()" aria-label="Dark/Light umschalten">&#127769;</button>
+</div>
+</header>
+<nav class="sidebar" id="sidebar" role="navigation" aria-label="Module">
+<div class="sidebar-section">
+<div class="sidebar-level">
+<div class="sidebar-level-title" id="sidebarLevel">Bio-Neuling</div>
+<div class="sidebar-level-sub" id="sidebarXP">0 XP</div>
+<div class="sidebar-xp-bar"><div class="sidebar-xp-fill" id="sidebarXPFill" style="width:0%"></div></div>
+</div>
+</div>
+<div class="sidebar-section">
+<div class="sidebar-label">Module</div>
+<div id="sidebarModules"></div>
+</div>
+<div class="sidebar-section" style="border-top:1px solid var(--border);padding-top:12px;margin-top:12px">
+<a class="mod-link" onclick="showBadges()"><span class="mod-icon">&#127941;</span>Abzeichen</a>
+<a class="mod-link" onclick="showStats()"><span class="mod-icon">&#128202;</span>Statistik</a>
+<a class="mod-link" onclick="showCert()"><span class="mod-icon">&#127891;</span>Urkunde</a>
+</div>
+<div class="sidebar-section" style="border-top:1px solid var(--border);padding-top:12px;margin-top:12px">
+<a class="mod-link" onclick="exportData()"><span class="mod-icon">&#128190;</span>Speichern</a>
+    <a class="mod-link" onclick="exportFortschritt()"><span class="mod-icon">📄</span>Fortschritt (TXT)</a>
+<label class="mod-link" style="cursor:pointer"><span class="mod-icon">&#128194;</span>Laden<input type="file" accept=".json" onchange="importData(event)" style="display:none"></label>
+<a class="mod-link" onclick="if(confirm('Wirklich alles zurücksetzen?')){localStorage.removeItem(STORAGE_KEY);location.reload()}" style="color:var(--danger)"><span class="mod-icon">&#128465;</span>Zurücksetzen</a>
+</div>
+<div style="padding:16px 8px 8px;border-top:1px solid var(--border);margin-top:12px;font-size:11px;color:var(--text-dim)">
+<a onclick="showImpressum()" style="cursor:pointer;color:var(--text-dim)">Impressum</a> &middot;
+<a onclick="showDatenschutz()" style="cursor:pointer;color:var(--text-dim)">Datenschutz</a>
+</div>
+</nav>
+<main class="main" id="mainContent">
+<div class="welcome-screen" id="welcomeScreen">
+<div class="welcome-box">
+<div style="font-size:64px;margin-bottom:16px">&#129516;</div>
+<h1>BioEntdecker</h1>
+<p class="ws-sub">Entdecke die faszinierende Welt der Biologie — von Zellen bis zu ganzen Ökosystemen!</p>
+<input type="text" id="nameInput" placeholder="Dein Name" maxlength="24" aria-label="Dein Name" oninput="document.getElementById('startBtn').disabled=!this.value.trim()">
+<br>
+<button class="ws-start" id="startBtn" disabled onclick="startApp()">Expedition starten &#129516;</button>
+</div>
+</div>
+<div id="moduleContent" style="display:none"></div>
+<div id="badgesView" style="display:none"></div>
+<div id="statsView" style="display:none"></div>
+</main>
+<div class="notif" id="notif" role="status" aria-live="polite" aria-atomic="true"><div class="notif-title" id="notifTitle"></div><div class="notif-text" id="notifText"></div></div>
+<div class="level-up-overlay" id="levelUpOverlay"><div class="level-up-box" id="levelUpBox"></div></div>
+<div class="confetti-container" id="confetti"></div>
+<div class="cert-overlay" id="certOverlay" role="dialog" aria-label="Urkunde" aria-modal="true">
+<div class="cert-picker" id="certPicker"></div>
+<div class="cert-frame" id="certFrame"></div>
+<div class="cert-actions">
+<button onclick="printCert()">&#128424; Drucken / PDF</button>
+<button onclick="closeCert()">Schließen</button>
+</div>
+</div>
+<div class="modal-overlay" id="impressumOverlay">
+<div class="modal">
+<button class="modal-close" onclick="document.getElementById('impressumOverlay').classList.remove('active')">&times;</button>
+<h2>Impressum</h2>
+<p><strong>&copy; 2026 GZ AI Stacks - Gerd Zimmermann</strong></p>
+<p>Diese Lern-App wurde mit Claude Code (Anthropic) entwickelt.</p>
+<p>Kontakt: gz-ai-stacks@example.com</p>
+</div>
+</div>
+<div class="modal-overlay" id="datenschutzOverlay">
+<div class="modal">
+<button class="modal-close" onclick="document.getElementById('datenschutzOverlay').classList.remove('active')">&times;</button>
+<h2>Datenschutzerklärung</h2>
+<p>Diese App speichert Daten <strong>ausschließlich lokal</strong> auf Ihrem Gerät.</p>
+<ul>
+<li>Keine Cookies</li>
+<li>Kein Tracking oder Analytics</li>
+<li>Keine externen Ressourcen</li>
+<li>Keine Registrierung</li>
+<li>Alle Daten verbleiben auf Ihrem Gerät</li>
+</ul>
+<p>Sie können Ihre gespeicherten Daten jederzeit über die "Zurücksetzen"-Funktion löschen.</p>
+</div>
+</div>
+<script>
+function showImpressum(){document.getElementById('impressumOverlay').classList.add('active')}
+function showDatenschutz(){document.getElementById('datenschutzOverlay').classList.add('active')}
+
+// === XOR Quiz Encryption ===
+
+// === Audio (TTS) ===
+const _synth=window.speechSynthesis,_LANG='de-DE';let _ttsOn=false,_ttsRate=1,_ttsTimer=null;
+function speakLesson(i){if(_ttsOn){stopTTS();return}const c=document.querySelectorAll('.lesson-card');if(!c[i]||!_synth)return;stopTTS();const u=new SpeechSynthesisUtterance(c[i].innerText);u.lang=_LANG;u.rate=_ttsRate;u.onstart=()=>{_ttsOn=true;updTTSUI();startTTSTimer()};u.onend=()=>{_ttsOn=false;updTTSUI();clearTTSTimer()};u.onerror=()=>{_ttsOn=false;updTTSUI();clearTTSTimer()};_synth.speak(u);showTTSBar()}
+function speakText(t,lang){if(!_synth)return;stopTTS();const u=new SpeechSynthesisUtterance(t);u.lang=lang||_LANG;u.rate=_ttsRate;u.onstart=()=>{_ttsOn=true;updTTSUI();startTTSTimer()};u.onend=()=>{_ttsOn=false;updTTSUI();clearTTSTimer()};u.onerror=()=>{_ttsOn=false;updTTSUI();clearTTSTimer()};_synth.speak(u)}
+function stopTTS(){if(_synth){_synth.cancel()}_ttsOn=false;updTTSUI();clearTTSTimer()}
+function updTTSUI(){document.querySelectorAll('.tts-btn').forEach(b=>b.classList.toggle('speaking',_ttsOn))}
+function setTTSRate(r){_ttsRate=parseFloat(r)}
+function startTTSTimer(){clearTTSTimer();_ttsTimer=setInterval(()=>{if(_synth&&_synth.speaking&&!_synth.paused){_synth.pause();_synth.resume()}},10000)}
+function clearTTSTimer(){if(_ttsTimer){clearInterval(_ttsTimer);_ttsTimer=null}}
+function showTTSBar(){if(document.getElementById('ttsBar'))return;const mc=document.getElementById('moduleContent');if(!mc)return;const b=document.createElement('div');b.className='tts-bar';b.id='ttsBar';b.innerHTML='\u{1F50A} <select onchange="setTTSRate(this.value)"><option value="0.7">Langsam</option><option value="1" selected>Normal</option><option value="1.3">Schnell</option></select> <button onclick="stopTTS()">\u25A0 Stopp</button>';mc.prepend(b)}
+
+
+/* === Fortschritt-Export (TXT) === */
+function exportFortschritt(){
+  var t=document.title.replace(/\s*[\u2014\u2013|].*/,'').trim();
+  var d=new Date();
+  var dd=String(d.getDate()).padStart(2,'0');
+  var mm=String(d.getMonth()+1).padStart(2,'0');
+  var yyyy=d.getFullYear();
+  var datum=dd+'.'+mm+'.'+yyyy;
+  var datumFile=yyyy+'-'+mm+'-'+dd;
+
+  var mc=state.modulesCompleted||[];
+  var total=modules.length;
+  var done=mc.length;
+
+  var lvl=0;
+  for(var i=LEVELS.length-1;i>=0;i--){if(state.xp>=LEVELS[i].xp){lvl=i;break;}}
+  var lvlName=LEVELS[lvl]?LEVELS[lvl].name:'';
+
+  var sep='\u2550'.repeat(42);
+  var sep2='\u2500'.repeat(42);
+  var lines=[];
+  lines.push(sep);
+  lines.push('  LERNFORTSCHRITT \u2014 '+t);
+  lines.push(sep);
+  lines.push('');
+  lines.push('  Sch\u00FCler:   '+(state.name||'(kein Name)'));
+  lines.push('  Datum:     '+datum);
+  lines.push('  Level:     '+(lvl+1)+' \u2014 '+lvlName+' ('+state.xp+' XP)');
+  lines.push('  Streak:    '+(state.streak||0)+' Tage in Folge');
+  lines.push('');
+  lines.push(sep2);
+  lines.push('  MODULE ('+done+'/'+total+' abgeschlossen)');
+  lines.push(sep2);
+  lines.push('');
+
+  for(var m=0;m<modules.length;m++){
+    var mod=modules[m];
+    var isDone=mc.indexOf(m)!==-1;
+    var icon=isDone?'\u2705':'\u2B1C';
+    var line='  '+icon+' Modul '+(m+1)+': '+mod.title;
+    if(isDone){
+      var qs=state.quizResults&&state.quizResults[m]!=null?state.quizResults[m]:'?';
+      var bs=state.bossResults&&state.bossResults[m]!=null?state.bossResults[m]:'?';
+      line+='\n        Quiz: '+qs+'/5 | Boss: '+bs+'/3';
+    }
+    lines.push(line);
+  }
+
+  var earnedBadges=(state.badges||[]);
+  lines.push('');
+  lines.push(sep2);
+  lines.push('  ABZEICHEN ('+earnedBadges.length+'/'+BADGES.length+')');
+  lines.push(sep2);
+  lines.push('');
+  if(earnedBadges.length===0){
+    lines.push('  (noch keine)');
+  }else{
+    for(var b=0;b<BADGES.length;b++){
+      if(earnedBadges.indexOf(BADGES[b].id)!==-1){
+        lines.push('  '+BADGES[b].icon+' '+BADGES[b].name);
+      }
+    }
+  }
+
+  lines.push('');
+  lines.push(sep);
+  lines.push('  (c) 2026 GZ AI Stacks \u2014 Gerd Zimmermann');
+  lines.push(sep);
+
+  var txt=lines.join('\n');
+  var safeName=(state.name||'Schueler').replace(/[^a-zA-Z0-9\u00C0-\u017F]/g,'_');
+  var fileName='Fortschritt_'+t.replace(/[^a-zA-Z0-9\u00C0-\u017F]/g,'_')+'_'+safeName+'_'+datumFile+'.txt';
+  var a=document.createElement('a');
+  a.download=fileName;
+  a.href=URL.createObjectURL(new Blob([txt],{type:'text/plain;charset=utf-8'}));
+  a.click();
+}
+
+const _qk=[0x4A,0x7F,0x2B,0x61,0x5C,0x3E,0x18,0x73];
+function _d(h,i){return h^_qk[i%_qk.length]}
+
+// === Levels ===
+const LEVELS=[
+{name:'Bio-Neuling',xp:0},{name:'Zellen-Entdecker',xp:40},{name:'Mikroskop-Anfänger',xp:100},
+{name:'Gen-Kenner',xp:180},{name:'DNA-Detektiv',xp:280},{name:'Evolutions-Forscher',xp:400},
+{name:'Öko-Kundiger',xp:540},{name:'Organ-Experte',xp:700},{name:'Nerven-Spezialist',xp:880},
+{name:'Immun-Krieger',xp:1080},{name:'Anatomie-Profi',xp:1300},{name:'Bio-Stratege',xp:1540},
+{name:'Genetik-Guru',xp:1800},{name:'Natur-Bewahrer',xp:2080},{name:'Zell-Virtuose',xp:2380},
+{name:'Bio-Champion',xp:2700},{name:'Wissenschafts-Held',xp:3040},{name:'Bio-Legende',xp:3400},
+{name:'Nobel-Kandidat',xp:3780},{name:'Bio-Genie',xp:4200}
+];
+
+// === Badges ===
+const BADGES=[
+{id:'m0',name:'Zell-Forscher',icon:'\uD83D\uDD2C',desc:'Modul 1 abgeschlossen'},
+{id:'m1',name:'Gen-Entdecker',icon:'\uD83E\uDDEC',desc:'Modul 2 abgeschlossen'},
+{id:'m2',name:'Evolutions-Kenner',icon:'\uD83E\uDD95',desc:'Modul 3 abgeschlossen'},
+{id:'m3',name:'Öko-Spezialist',icon:'\uD83C\uDF0D',desc:'Modul 4 abgeschlossen'},
+{id:'m4',name:'Fotosynthese-Profi',icon:'\uD83C\uDF31',desc:'Modul 5 abgeschlossen'},
+{id:'m5',name:'Anatomie-Meister',icon:'\uD83E\uDEC0',desc:'Modul 6 abgeschlossen'},
+{id:'m6',name:'Neuro-Experte',icon:'\uD83E\uDDE0',desc:'Modul 7 abgeschlossen'},
+{id:'m7',name:'Immun-Held',icon:'\uD83D\uDEE1\uFE0F',desc:'Modul 8 abgeschlossen'},
+{id:'m8',name:'Entwicklungs-Kenner',icon:'\uD83E\uDD5A',desc:'Modul 9 abgeschlossen'},
+{id:'m9',name:'Arten-Schützer',icon:'\uD83E\uDD8B',desc:'Modul 10 abgeschlossen'},
+{id:'first_quiz',name:'Quiz-Neuling',icon:'\u2753',desc:'Erstes Quiz bestanden'},
+{id:'perfect_quiz',name:'Perfektionist',icon:'\uD83D\uDC8E',desc:'Quiz mit 5/5 bestanden'},
+{id:'first_boss',name:'Boss-Bezwinger',icon:'\uD83D\uDC51',desc:'Erste Boss-Challenge bestanden'},
+{id:'all_bosses',name:'Endgegner',icon:'\uD83C\uDFC6',desc:'Alle Boss-Challenges bestanden'},
+{id:'streak3',name:'Durchstarter',icon:'\uD83D\uDD25',desc:'3 Tage in Folge gelernt'},
+{id:'streak7',name:'Wochenkrieger',icon:'\u2694\uFE0F',desc:'7 Tage in Folge gelernt'},
+{id:'half_done',name:'Halbzeit',icon:'\u23F3',desc:'5 Module abgeschlossen'},
+{id:'speed_quiz',name:'Blitz-Denker',icon:'\u26A1',desc:'Quiz in unter 60 Sekunden'},
+{id:'explorer',name:'Entdecker',icon:'\uD83D\uDDFA\uFE0F',desc:'Alle Module angesehen'},
+{id:'graduate',name:'Absolvent',icon:'\uD83C\uDF93',desc:'Alle 10 Module abgeschlossen'}
+];
+
+// === Theme Config ===
+const THEME_CONFIG={
+cyber:{name:'Cyber Neon',emoji:'\uD83D\uDDA5',color:'#3b82f6',desc:'Futuristisch & Digital'},
+retro:{name:'Retro Arcade',emoji:'\uD83D\uDD79',color:'#ffd700',desc:'80er Arcade-Feeling'},
+nature:{name:'Nature Forest',emoji:'\uD83C\uDF33',color:'#4ade80',desc:'Natürlich & Organisch'},
+space:{name:'Deep Space',emoji:'\uD83D\uDE80',color:'#c084fc',desc:'Kosmisch & Geheimnisvoll'},
+comic:{name:'Comic Pop',emoji:'\uD83D\uDCA5',color:'#ff6b6b',desc:'Bunt & Verspielt'},
+sketchy:{name:'Sketchy',emoji:'\u270D\uFE0F',color:'#d97706',desc:'Handgemacht & Warm'},
+'nature-code':{name:'Nature x Code',emoji:'\uD83C\uDF3F',color:'#10b981',desc:'Natur trifft Technik'},
+glass:{name:'Glasmorphism',emoji:'\uD83D\uDCA0',color:'#00d9ff',desc:'Modern & Transparent'}
+};
+
+// === Modules ===
+const modules=[
+{id:0,title:'Zellbiologie',icon:'\uD83D\uDD2C',duration:'25 Min.',description:'Lerne den Aufbau von Zellen, ihre Organellen und die Unterschiede zwischen Tier- und Pflanzenzellen kennen.',
+lessons:[
+{title:'Aufbau einer Zelle',content:'<p>Alle Lebewesen bestehen aus <strong>Zellen</strong> \u2014 den kleinsten Bausteinen des Lebens. Ob winziges Bakterium oder riesiger Blauwal: Ohne Zellen geht nichts! Jede Zelle besitzt grundlegende Bestandteile:</p><ul><li><strong>Zellmembran</strong>: Umgibt die Zelle und kontrolliert den Stoffaustausch \u2014 wie ein Türsteher, der entscheidet, was rein und raus darf</li><li><strong>Zellplasma (Cytoplasma)</strong>: Gelartige Masse, in der die Organellen eingebettet sind \u2014 vergleichbar mit dem Wasser in einem Aquarium</li><li><strong>Zellkern (Nucleus)</strong>: Enthält die DNA und steuert alle Zellfunktionen \u2014 das Kontrollzentrum der Zelle</li><li><strong>Mitochondrien</strong>: Die \u201EKraftwerke der Zelle\u201C \u2014 hier wird Energie durch Zellatmung gewonnen. Stell dir kleine Generatoren vor, die ständig Strom produzieren</li><li><strong>Ribosomen</strong>: Stellen Proteine her (Proteinbiosynthese) \u2014 sie sind die Fabriken der Zelle</li><li><strong>Endoplasmatisches Retikulum (ER)</strong>: Ein Kanalsystem für den Transport von Stoffen innerhalb der Zelle</li><li><strong>Golgi-Apparat</strong>: Verpackt und versendet Proteine \u2014 wie eine Poststelle</li></ul><div class="info-box">\uD83D\uDCA1 <strong>Merke:</strong> Die Zelle ist die kleinste lebensfähige Einheit. Alle Lebewesen bestehen aus mindestens einer Zelle.</div><p>Wusstest du, dass der menschliche Körper aus etwa <strong>37 Billionen Zellen</strong> besteht? Jede Sekunde werden Millionen neuer Zellen gebildet und alte ersetzt. Eine rote Blutzelle lebt nur etwa 120 Tage, während Nervenzellen ein ganzes Leben lang halten können.</p><div class="info-box">\uD83E\uDD14 <strong>Alltagsbeispiel:</strong> Wenn du dir in den Finger schneidest, beginnen sofort Zellen sich zu teilen, um die Wunde zu schließen. Hautzellen erneuern sich komplett alle 2\u20133 Wochen!</div>'},
+{title:'Tier- vs. Pflanzenzelle',content:'<p>Tier- und Pflanzenzellen haben viele Gemeinsamkeiten, aber auch wichtige Unterschiede. Beide besitzen Zellmembran, Zellkern, Mitochondrien und Ribosomen \u2014 doch darüber hinaus gibt es entscheidende Besonderheiten:</p><p><strong>Nur in Pflanzenzellen:</strong></p><ul><li><strong>Zellwand</strong>: Feste Hülle aus Cellulose, gibt der Zelle Stabilität \u2014 deshalb können Bäume so hoch wachsen!</li><li><strong>Chloroplasten</strong>: Enthalten Chlorophyll für die Fotosynthese \u2014 sie machen Blätter grün und verwandeln Sonnenlicht in Nahrung</li><li><strong>Vakuole</strong>: Großer, flüssigkeitsgefüllter Hohlraum für Speicherung und Zellinnendruck. Die Vakuole kann bis zu 90% des Zellvolumens ausmachen!</li></ul><p><strong>Nur in Tierzellen:</strong></p><ul><li><strong>Lysosomen</strong>: Bauen Abfallstoffe und beschädigte Organellen ab \u2014 die Müllabfuhr der Zelle</li><li><strong>Zentriolen</strong>: Wichtig für die Zellteilung, bilden den Spindelapparat</li></ul><div class="info-box">\uD83D\uDCA1 <strong>Merke:</strong> Pflanzenzellen haben Zellwand + Chloroplasten + große Vakuole. Tierzellen haben diese nicht.</div><p>Ein anschaulicher Vergleich: Stell dir eine Tierzelle wie ein Zelt vor \u2014 flexibel und beweglich. Eine Pflanzenzelle ist dagegen wie ein Haus mit festen Mauern (Zellwand). Deshalb können sich Tiere bewegen, während Pflanzen fest verwurzelt sind.</p><div class="info-box">\uD83C\uDF3F <strong>Spannend:</strong> Es gibt auch Zellen ohne Zellkern! Rote Blutkörperchen stoßen ihren Kern ab, um mehr Platz für Sauerstoff zu haben. Und Bakterien haben generell keinen Zellkern \u2014 sie gehören zu den Prokaryoten.</div>'},
+{title:'Zellteilung: Mitose',content:'<p>Die <strong>Mitose</strong> ist die Teilung einer Körperzelle in zwei genetisch identische Tochterzellen. Sie läuft in mehreren Phasen ab:</p><ul><li><strong>Prophase</strong>: Chromosomen werden sichtbar, die Kernhülle löst sich auf, der Spindelapparat bildet sich</li><li><strong>Metaphase</strong>: Chromosomen ordnen sich in der Zellmitte an (Äquatorialebene)</li><li><strong>Anaphase</strong>: Die Schwesterchromatiden werden zu den gegenüberliegenden Polen gezogen</li><li><strong>Telophase</strong>: Neue Kernhüllen bilden sich, die Zelle teilt sich (Zytokinese)</li></ul><p>Die Mitose dient dem <strong>Wachstum</strong> und der <strong>Reparatur</strong> von Gewebe. Vor der Mitose findet die <strong>Interphase</strong> statt, in der die DNA verdoppelt wird \u2014 so hat jede Tochterzelle eine vollständige Kopie des Erbguts.</p><div class="info-box">\uD83D\uDCA1 <strong>Alltagsbeispiel:</strong> Wenn ein Kind wächst, teilen sich Millionen von Zellen durch Mitose. Auch bei der Wundheilung wird Mitose benötigt. In deinem Knochenmark entstehen so jeden Tag Milliarden neuer Blutzellen!</div><p>Die Geschwindigkeit der Mitose variiert stark: Manche Zellen teilen sich alle 24 Stunden (z.B. Hautzellen), während sich Nervenzellen nach der Geburt kaum noch teilen. Krebszellen sind gefährlich, weil sie sich unkontrolliert und ohne Stopp-Signal teilen.</p>'}
+],
+quiz:[
+{q:'Welche Organelle wird als "Kraftwerk der Zelle" bezeichnet?',a:['Ribosom','Zellkern','Mitochondrium','Vakuole'],_h:0x48},
+{q:'Was ist nur in Pflanzenzellen vorhanden?',a:['Mitochondrien','Zellkern','Chloroplasten','Ribosomen'],_h:0x7D},
+{q:'Woraus besteht die Zellwand der Pflanzenzelle?',a:['Protein','Fett','Cellulose','Chitin'],_h:0x29},
+{q:'Was steuert alle Funktionen der Zelle?',a:['Die Zellmembran','Der Zellkern','Das Ribosom','Die Vakuole'],_h:0x60},
+{q:'In welcher Mitose-Phase ordnen sich die Chromosomen in der Zellmitte an?',a:['Prophase','Metaphase','Anaphase','Telophase'],_h:0x5D}
+],
+boss:[
+{q:'Warum können Pflanzenzellen Fotosynthese betreiben, Tierzellen aber nicht?',a:['Weil Tierzellen keinen Zellkern haben','Weil Tierzellen zu klein sind','Weil nur Pflanzenzellen Chloroplasten mit Chlorophyll besitzen','Weil Tierzellen keine Zellmembran haben'],_h:0x48},
+{q:'Was passiert, wenn man eine Tierzelle in reines Wasser legt?',a:['Sie platzt, weil Wasser durch Osmose eindringt und keine Zellwand Stabilität gibt','Nichts passiert','Sie schrumpft','Sie teilt sich'],_h:0x7F},
+{q:'Warum ist die Mitose wichtig für das Wachstum?',a:['Weil sie Zellen verkleinert','Weil sie genetisch identische Tochterzellen erzeugt und so Gewebe aufbaut','Weil sie Zellen abtötet','Weil sie DNA zerstört'],_h:0x2A}
+]},
+{id:1,title:'Genetik und Vererbung',icon:'\uD83E\uDDEC',duration:'30 Min.',description:'Verstehe DNA, Chromosomen und die Mendel\'schen Regeln der Vererbung.',
+lessons:[
+{title:'DNA und Chromosomen',content:'<p>Die <strong>DNA (Desoxyribonukleinsäure)</strong> ist der Träger der Erbinformation. Sie hat die Form einer <strong>Doppelhelix</strong> \u2014 einer verdrehten Strickleiter. Würde man die gesamte DNA eines einzigen Menschen aneinanderreihen, wäre sie etwa <strong>2 Meter lang</strong> \u2014 und doch passt sie zusammengefaltet in einen winzigen Zellkern!</p><ul><li><strong>Nukleotide</strong>: Die Bausteine der DNA bestehen aus Zucker (Desoxyribose), Phosphat und einer Base</li><li><strong>Basenpaare</strong>: Adenin (A) paart mit Thymin (T), Guanin (G) paart mit Cytosin (C) \u2014 wie Puzzleteile, die nur zueinander passen</li><li><strong>Gene</strong>: Abschnitte der DNA, die für bestimmte Merkmale codieren. Der Mensch hat etwa 20.000\u201325.000 Gene</li><li><strong>Chromosomen</strong>: Aufgewickelte DNA-Fäden; der Mensch hat 46 Chromosomen (23 Paare), davon 22 Autosomen-Paare und 1 Geschlechtschromosomen-Paar</li></ul><div class="info-box">\uD83D\uDCA1 <strong>Merke:</strong> Die Basenpaarung ist komplementär: A-T und G-C. Das ist die Grundlage der DNA-Verdopplung (Replikation).</div><p>Ein faszinierender Vergleich: Stell dir die DNA wie ein riesiges Kochbuch vor. Die einzelnen Gene sind die Rezepte, und die Chromosomen sind die Kapitel. Jede Zelle deines Körpers hat eine vollständige Kopie dieses Buches!</p><div class="info-box">\uD83E\uDDEC <strong>Spannend:</strong> Menschen teilen etwa 99,9% ihrer DNA miteinander. Die 0,1% Unterschied machen uns einzigartig! Und wir teilen sogar etwa 60% unserer Gene mit der Banane.</div>'},
+{title:'Mendel\'sche Regeln',content:'<p><strong>Gregor Mendel</strong> (1822\u20131884), ein Mönch aus Brünn, entdeckte die Grundregeln der Vererbung durch jahrelange Kreuzungsversuche mit Erbsen. Er wird heute als \u201EVater der Genetik\u201C bezeichnet.</p><ul><li><strong>1. Regel (Uniformitätsregel)</strong>: Kreuzt man zwei reinerbige Eltern, die sich in einem Merkmal unterscheiden, sind alle Nachkommen der F1-Generation gleich (uniform). Beispiel: Rote Blüte (RR) × weiße Blüte (rr) \u2192 alle F1 rot (Rr)</li><li><strong>2. Regel (Spaltungsregel)</strong>: Kreuzt man die F1-Generation untereinander, spalten sich die Merkmale in der F2-Generation im Verhältnis 3:1 auf. Beispiel: Rr × Rr \u2192 3 rot : 1 weiß</li><li><strong>3. Regel (Unabhängigkeitsregel)</strong>: Verschiedene Merkmale werden unabhängig voneinander vererbt (gilt nur für Gene auf verschiedenen Chromosomen)</li></ul><p><strong>Dominant</strong> bedeutet, dass ein Merkmal sich durchsetzt (Großbuchstabe, z.B. R). <strong>Rezessiv</strong> bedeutet, es wird nur sichtbar, wenn beide Allele rezessiv sind (Kleinbuchstabe, z.B. rr).</p><div class="info-box">\uD83C\uDF31 <strong>Alltagsbeispiel:</strong> Warum haben manche Menschen Grübchen und andere nicht? Grübchen sind ein dominantes Merkmal! Wenn ein Elternteil Grübchen hat (Gg) und der andere nicht (gg), haben 50% der Kinder eine Chance auf Grübchen.</div>'},
+{title:'Genotyp und Phänotyp',content:'<p>In der Genetik unterscheidet man zwei zentrale Begriffe:</p><ul><li><strong>Genotyp</strong>: Die genetische Ausstattung eines Organismus (z.B. Aa, AA, aa) \u2014 der \u201Einnere Bauplan\u201C</li><li><strong>Phänotyp</strong>: Das äußerlich sichtbare Merkmal (z.B. braune Augen) \u2014 das \u201Eäußere Erscheinungsbild\u201C</li><li><strong>Homozygot (reinerbig)</strong>: Beide Allele sind gleich (AA oder aa)</li><li><strong>Heterozygot (mischerbig)</strong>: Die Allele sind verschieden (Aa)</li></ul><div class="info-box">\uD83D\uDCA1 <strong>Merke:</strong> Der Phänotyp ist das, was man sieht. Der Genotyp ist das, was in den Genen steckt. Bei dominantem Erbgang sehen Aa und AA gleich aus \u2014 der Phänotyp ist identisch, aber der Genotyp unterscheidet sich!</div><p>Der Phänotyp wird nicht nur vom Genotyp bestimmt, sondern auch von <strong>Umwelteinflüssen</strong>. Beispiel: Eineiige Zwillinge haben den gleichen Genotyp, können sich aber durch unterschiedliche Ernährung, Sport oder Sonneneinstrahlung äußerlich unterscheiden. Das nennt man <strong>Modifikation</strong>.</p><div class="info-box">\uD83E\uDD14 <strong>Wusstest du?</strong> Bei manchen Merkmalen gibt es keine klare Dominanz. Bei der Wunderblume (Mirabilis jalapa) ergibt die Kreuzung von rot (RR) und weiß (rr) rosa Blüten (Rr) \u2014 das nennt man <strong>intermediäre Vererbung</strong>.</div>'}
+],
+quiz:[
+{q:'Welche Basen paaren sich in der DNA?',a:['A mit G und T mit C','A mit T und G mit C','A mit C und T mit G','Alle Basen paaren beliebig'],_h:0x4B},
+{q:'Wie viele Chromosomen hat der Mensch?',a:['23','48','46','44'],_h:0x7D},
+{q:'Was besagt die Uniformitätsregel?',a:['Alle Lebewesen sehen gleich aus','Kreuzt man zwei reinerbige Eltern, sind die F1-Nachkommen uniform','Alle Gene sind gleich','Mutation ist unmöglich'],_h:0x2A},
+{q:'Was bedeutet "rezessiv"?',a:['Das Merkmal setzt sich immer durch','Das Merkmal wird nur bei reinerbigem Vorliegen sichtbar','Das Merkmal ist stärker als dominant','Das Merkmal gibt es nicht'],_h:0x60},
+{q:'Was ist der Genotyp?',a:['Das sichtbare Merkmal','Die genetische Ausstattung eines Organismus','Die Blutgruppe','Die Körpergröße'],_h:0x5D}
+],
+boss:[
+{q:'Warum können zwei braunäugige Eltern ein blauäugiges Kind haben?',a:['Weil Blau dominant ist','Weil braune Augen immer rezessiv sind','Weil beide Eltern heterozygot (Aa) sein können und das Kind aa erbt','Weil Augenfarbe nicht vererbt wird'],_h:0x48},
+{q:'Was passiert bei der DNA-Replikation?',a:['Die DNA wird zerstört','Die DNA-Doppelhelix wird aufgetrennt und jeder Strang dient als Vorlage für einen neuen','Proteine werden hergestellt','Chromosomen werden halbiert'],_h:0x7E},
+{q:'In welchem Verhältnis spalten sich Merkmale in der F2-Generation bei monohybridem Erbgang?',a:['1:1','3:1','2:1','4:0'],_h:0x2A}
+]},
+{id:2,title:'Evolution',icon:'\uD83E\uDD95',duration:'30 Min.',description:'Erfahre wie natürliche Selektion, Anpassung und Stammesgeschichte die Artenvielfalt geformt haben.',
+lessons:[
+{title:'Darwins Evolutionstheorie',content:'<p><strong>Charles Darwin</strong> (1809\u20131882) formulierte die Theorie der <strong>natürlichen Selektion</strong> \u2014 die wichtigste Erklärung für die Entstehung und Veränderung von Arten. Auf seiner berühmten Reise mit der HMS Beagle zu den Galápagos-Inseln sammelte er die entscheidenden Beobachtungen.</p><ul><li><strong>Variation</strong>: Individuen einer Art unterscheiden sich in ihren Merkmalen \u2014 kein Lebewesen ist exakt wie ein anderes</li><li><strong>Überproduktion</strong>: Es werden mehr Nachkommen erzeugt, als überleben können. Ein Kabeljau legt z.B. Millionen Eier, aber nur wenige überleben</li><li><strong>Selektion</strong>: Individuen mit vorteilhaften Merkmalen überleben häufiger und pflanzen sich fort (\u201Enatürliche Auslese\u201C)</li><li><strong>Vererbung</strong>: Vorteilhafte Merkmale werden an die nächste Generation weitergegeben</li></ul><div class="info-box">\uD83D\uDCA1 <strong>Merke:</strong> Evolution bedeutet nicht \u201Eder Stärkste überlebt\u201C, sondern \u201Eder am besten Angepasste\u201C (Survival of the Fittest). Ein Eisbär ist nicht stärker als ein Löwe, aber besser an die Arktis angepasst.</div><p>Ein eindrucksvolles Beispiel ist der <strong>Birkenspanner</strong>: Vor der Industrialisierung waren helle Falter besser getarnt auf hellen Birkenrinden. Als die Bäume durch Ruß dunkel wurden, hatten plötzlich dunkle Falter einen Vorteil \u2014 ihr Anteil stieg rasant an.</p>'},
+{title:'Belege für die Evolution',content:'<p>Es gibt zahlreiche Belege, die die Evolution stützen. Zusammen bilden sie ein überwältigendes Beweispaket:</p><ul><li><strong>Fossilien</strong>: Versteinerte Überreste zeigen, wie sich Arten im Laufe der Zeit verändert haben. Der berühmte <em>Archaeopteryx</em> zeigt Merkmale von Reptilien und Vögeln \u2014 ein Bindeglied!</li><li><strong>Homologe Organe</strong>: Gleicher Grundbauplan bei verschiedenen Arten (z.B. Arm des Menschen, Flügel der Fledermaus, Flosse des Wals) \u2014 alle gehen auf einen gemeinsamen Vorfahren zurück</li><li><strong>Analoge Organe</strong>: Ähnliche Funktion, aber unterschiedlicher Bauplan (z.B. Flügel von Vogel und Insekt) \u2014 Ergebnis von Anpassung an ähnliche Umweltbedingungen</li><li><strong>Rudimentäre Organe</strong>: Funktionslos gewordene Organe (z.B. Blinddarm, Steißbein beim Menschen, Becken bei Walen)</li><li><strong>DNA-Vergleiche</strong>: Je ähnlicher die DNA zweier Arten, desto näher sind sie verwandt. Mensch und Schimpanse teilen ca. 98,7% ihrer DNA!</li></ul><div class="info-box">\uD83E\uDD95 <strong>Spannend:</strong> Der Quastenflosser galt als seit 65 Millionen Jahren ausgestorben \u2014 bis 1938 ein lebendes Exemplar vor Südafrika gefangen wurde! Er wird als \u201Elebendes Fossil\u201C bezeichnet.</div>'},
+{title:'Stammesgeschichte und Artbildung',content:'<p>Die <strong>Stammesgeschichte (Phylogenese)</strong> beschreibt die Entwicklung der Arten über Millionen von Jahren. Alles Leben auf der Erde geht auf einen gemeinsamen Vorfahren zurück, der vor etwa 3,5 Milliarden Jahren lebte.</p><ul><li><strong>Stammbäume</strong>: Zeigen die Verwandtschaftsbeziehungen zwischen Arten. Je näher zwei Äste beieinander liegen, desto enger verwandt sind die Arten</li><li><strong>Artbildung</strong>: Entsteht durch räumliche Trennung (allopatrisch, z.B. durch Gebirge oder Meere) oder ökologische Nischen (sympatrisch, z.B. durch unterschiedliche Nahrung)</li><li><strong>Adaptive Radiation</strong>: Eine Ursprungsart entwickelt sich in viele verschiedene Arten, die unterschiedliche Lebensräume besiedeln (z.B. Darwinfinken auf den Galápagos-Inseln)</li></ul><div class="info-box">\uD83D\uDCA1 <strong>Merke:</strong> Mutation und Rekombination erzeugen die Variation. Natürliche Selektion bestimmt, welche Varianten sich durchsetzen.</div><p>Ein berühmtes Beispiel für Artbildung ist die <strong>Entstehung der Darwinfinken</strong>: Eine einzige Finkenart gelangte auf die Galápagos-Inseln und entwickelte sich im Laufe der Zeit zu 13 verschiedenen Arten mit unterschiedlichen Schnabelformen \u2014 je nachdem, ob sie Samen knacken, Insekten fangen oder Kakteen fressen.</p><div class="info-box">\uD83C\uDF0D <strong>Zeitleiste:</strong> Das Leben auf der Erde existiert seit ca. 3,5 Milliarden Jahren. Dinosaurier herrschten 165 Millionen Jahre. Der moderne Mensch existiert erst seit etwa 300.000 Jahren \u2014 ein Wimpernschlag in der Erdgeschichte!</div>'}
+],
+quiz:[
+{q:'Was bedeutet "natürliche Selektion"?',a:['Tiere wählen ihre Nahrung','Besser angepasste Individuen überleben häufiger und pflanzen sich fort','Menschen züchten Tiere','Alle Tiere sind gleich stark'],_h:0x4B},
+{q:'Was sind homologe Organe?',a:['Organe ohne Funktion','Organe mit gleichem Grundbauplan aber unterschiedlicher Funktion','Organe die nur bei Pflanzen vorkommen','Künstliche Organe'],_h:0x7E},
+{q:'Was ist ein Fossil?',a:['Ein lebender Organismus','Ein künstlicher Stein','Ein versteinerter Überrest eines früheren Lebewesens','Ein Mineral'],_h:0x29},
+{q:'Was versteht man unter adaptiver Radiation?',a:['Radioaktive Strahlung','Anpassung an Dunkelheit','Auffächerung einer Art in viele Arten für verschiedene Lebensräume','Aussterben aller Arten'],_h:0x63},
+{q:'Welches Organ beim Menschen gilt als rudimentär?',a:['Das Herz','Der Blinddarm','Die Lunge','Das Gehirn'],_h:0x5D}
+],
+boss:[
+{q:'Warum haben Wale noch Beckenknochen, obwohl sie keine Beine haben?',a:['Weil sie früher an Land lebten und diese Knochen Überreste der Evolution sind','Weil sie damit schwimmen','Weil Beckenknochen für die Atmung wichtig sind','Weil alle Fische Beckenknochen haben'],_h:0x4A},
+{q:'Warum werden Bakterien resistent gegen Antibiotika?',a:['Weil Ärzte zu wenig Antibiotika verschreiben','Weil resistente Bakterien durch Selektion überleben und sich vermehren','Weil Antibiotika die Bakterien stärker machen','Weil Bakterien lernen können'],_h:0x7E},
+{q:'Warum sehen die Darwinfinken auf verschiedenen Inseln unterschiedlich aus?',a:['Weil sie verschiedene Arten sind, die unabhängig entstanden','Weil sie durch räumliche Trennung und unterschiedliche Nahrung verschiedene Schnabelformen entwickelten','Weil das Klima die Schnabelfarbe ändert','Weil größere Inseln größere Vögel haben'],_h:0x2A}
+]},
+{id:3,title:'Ökologie',icon:'\uD83C\uDF0D',duration:'30 Min.',description:'Verstehe Ökosysteme, Nahrungsketten und die wichtigsten Stoffkreisläufe der Natur.',
+lessons:[
+{title:'Ökosystem und Lebensgemeinschaft',content:'<p>Ein <strong>Ökosystem</strong> besteht aus dem <strong>Biotop</strong> (Lebensraum) und der <strong>Biozönose</strong> (Lebensgemeinschaft aller Organismen darin). Beispiele für Ökosysteme sind ein See, ein Wald, eine Wiese oder sogar ein Komposthaufen im Garten!</p><ul><li><strong>Biotische Faktoren</strong>: Lebewesen und ihre Wechselwirkungen (Konkurrenz, Räuber-Beute, Symbiose, Parasitismus)</li><li><strong>Abiotische Faktoren</strong>: Nicht-lebende Umweltbedingungen (Temperatur, Licht, Wasser, Boden, pH-Wert)</li><li><strong>Ökologische Nische</strong>: Die Gesamtheit aller Umweltansprüche einer Art \u2014 kein \u201EOrt\u201C, sondern ein \u201EBeruf\u201C in der Natur</li></ul><div class="info-box">\uD83D\uDCA1 <strong>Merke:</strong> Kein Lebewesen existiert isoliert \u2014 alle sind durch Nahrungsbeziehungen und Wechselwirkungen miteinander verbunden.</div><p>Ein wunderbares Beispiel für Symbiose ist die <strong>Clownfisch-Anemone-Beziehung</strong>: Die Anemone schützt den Fisch mit ihren giftigen Tentakeln, und der Clownfisch vertreibt Fressfeinde der Anemone. Beide profitieren!</p><div class="info-box">\uD83C\uDF0D <strong>Wusstest du?</strong> Der Regenwald beherbergt über 50% aller Tier- und Pflanzenarten weltweit, obwohl er nur etwa 6% der Erdoberfläche bedeckt. Er wird deshalb auch \u201Egrüne Lunge der Erde\u201C genannt.</div>'},
+{title:'Nahrungsketten und Nahrungsnetze',content:'<p>In jedem Ökosystem gibt es <strong>Nahrungsketten</strong>, die zeigen, wer wen frisst. Energie fließt dabei immer nur in eine Richtung \u2014 von den Produzenten zu den Konsumenten:</p><ul><li><strong>Produzenten</strong>: Pflanzen und Algen (erzeugen Biomasse durch Fotosynthese) \u2014 die Grundlage allen Lebens</li><li><strong>Konsumenten 1. Ordnung</strong>: Pflanzenfresser (Herbivore), z.B. Kaninchen, Raupen</li><li><strong>Konsumenten 2. Ordnung</strong>: Fleischfresser (Karnivore), die Herbivore fressen, z.B. Fuchs, Meise</li><li><strong>Konsumenten 3. Ordnung</strong>: Top-Räuber, z.B. Adler, Wolf</li><li><strong>Destruenten</strong>: Zersetzer (Bakterien, Pilze, Regenwürmer), die tote Organismen abbauen und Nährstoffe freisetzen</li></ul><p>Viele Nahrungsketten bilden zusammen ein <strong>Nahrungsnetz</strong>. Bei jedem Schritt geht etwa 90% der Energie als Wärme verloren \u2014 deshalb gibt es immer weniger Individuen auf höheren Stufen.</p><div class="info-box">\uD83D\uDCA1 <strong>Alltagsbeispiel:</strong> Deshalb braucht man für 1 kg Rindfleisch etwa 10 kg Getreide. Die Energiepyramide erklärt, warum vegetarische Ernährung ressourcenschonender ist.</div>'},
+{title:'Stoffkreisläufe',content:'<p>Stoffe werden in der Natur nicht verbraucht, sondern <strong>recycelt</strong> \u2014 die Natur kennt keinen Müll! Die Atome, aus denen du bestehst, waren vielleicht einmal Teil eines Dinosauriers.</p><p><strong>Kohlenstoffkreislauf:</strong></p><ul><li>Pflanzen nehmen CO\u2082 auf und bauen es in Biomasse ein (Fotosynthese)</li><li>Tiere und Pflanzen geben CO\u2082 durch Atmung ab</li><li>Destruenten setzen CO\u2082 bei der Zersetzung frei</li><li>Verbrennung fossiler Brennstoffe setzt zusätzliches CO\u2082 frei \u2014 das stört das Gleichgewicht!</li></ul><p><strong>Stickstoffkreislauf:</strong></p><ul><li>Bakterien wandeln Luftstickstoff (N\u2082) in Ammonium und Nitrat um (Stickstofffixierung)</li><li>Pflanzen nehmen Nitrat aus dem Boden auf und bauen daraus Proteine</li><li>Über Nahrungsketten gelangt Stickstoff in Tiere</li><li>Destruenten bauen tote Organismen ab und geben Stickstoff zurück in den Boden</li></ul><div class="info-box">\uD83C\uDF3F <strong>Spannend:</strong> Ohne Destruenten wie Pilze und Bakterien würden sich tote Blätter, Holz und Tierkadaver meterhoch stapeln! Sie sind die unsichtbaren Helden des Ökosystems.</div>'}
+],
+quiz:[
+{q:'Was ist ein Biotop?',a:['Eine Tierart','Der Lebensraum eines Ökosystems','Ein einzelnes Tier','Eine Pflanzenzelle'],_h:0x4B},
+{q:'Welche Organismen stehen am Anfang einer Nahrungskette?',a:['Fleischfresser','Destruenten','Produzenten (Pflanzen)','Top-Räuber'],_h:0x7D},
+{q:'Was sind Destruenten?',a:['Pflanzenfresser','Zersetzer wie Bakterien und Pilze','Räuber','Parasiten'],_h:0x2A},
+{q:'Wie viel Energie geht bei jedem Glied der Nahrungskette ungefähr verloren?',a:['10%','50%','90%','0%'],_h:0x63},
+{q:'Was sind abiotische Faktoren?',a:['Andere Lebewesen','Nicht-lebende Umweltbedingungen wie Temperatur und Licht','Bakterien','Parasiten'],_h:0x5D}
+],
+boss:[
+{q:'Warum bricht ein Ökosystem zusammen, wenn alle Produzenten verschwinden?',a:['Weil es dann zu viele Tiere gibt','Weil die gesamte Nahrungsgrundlage fehlt und keine Energie mehr in die Nahrungskette gelangt','Weil dann mehr Licht vorhanden ist','Weil Destruenten die Produzenten ersetzen können'],_h:0x4B},
+{q:'Warum führt zu viel CO\u2082 in der Atmosphäre zum Klimawandel?',a:['Weil CO\u2082 die Sonne blockiert','Weil CO\u2082 als Treibhausgas Wärmestrahlung in der Atmosphäre zurückhält','Weil CO\u2082 giftig für Pflanzen ist','Weil CO\u2082 den Sauerstoff verdrängt'],_h:0x7E},
+{q:'Warum kann eine übermäßige Düngung von Feldern Gewässer schädigen?',a:['Weil der Dünger die Fische vergiftet','Weil Nährstoffe in Gewässer gelangen, Algenwachstum fördern und Sauerstoffmangel verursachen','Weil die Felder dann leer sind','Weil Dünger das Wasser färbt'],_h:0x2A}
+]},
+{id:4,title:'Fotosynthese und Atmung',icon:'\uD83C\uDF31',duration:'25 Min.',description:'Verstehe die Energieumwandlung in Pflanzen durch Fotosynthese und die Zellatmung bei allen Lebewesen.',
+lessons:[
+{title:'Fotosynthese',content:'<p>Die <strong>Fotosynthese</strong> ist der wichtigste biologische Prozess auf der Erde. Pflanzen, Algen und manche Bakterien wandeln dabei Lichtenergie in chemische Energie um \u2014 sie sind die einzigen Organismen, die das können!</p><pre><code>6 CO\u2082 + 6 H\u2082O  \u2192  C\u2086H\u2081\u2082O\u2086 + 6 O\u2082\n(Kohlenstoffdioxid + Wasser \u2192 Glucose + Sauerstoff)</code></pre><ul><li><strong>Ort</strong>: Chloroplasten (in den Blättern). Das grüne Chlorophyll fängt das Licht ein</li><li><strong>Lichtreaktion</strong>: Lichtenergie wird eingefangen und in chemische Energie (ATP, NADPH) umgewandelt. Wasser wird dabei gespalten und Sauerstoff freigesetzt</li><li><strong>Dunkelreaktion (Calvin-Zyklus)</strong>: CO\u2082 wird mithilfe der Energie aus der Lichtreaktion in Glucose umgebaut. Dieser Schritt braucht kein Licht, findet aber trotzdem meist am Tag statt</li></ul><div class="info-box">\uD83D\uDCA1 <strong>Merke:</strong> Die Fotosynthese ist die Grundlage für fast alles Leben auf der Erde \u2014 sie liefert Sauerstoff und Nahrung.</div><p>Ohne die Fotosynthese gäbe es in unserer Atmosphäre keinen Sauerstoff. Vor etwa 2,5 Milliarden Jahren begannen Cyanobakterien mit der Fotosynthese und verwandelten die damalige sauerstofffreie Atmosphäre in die, die wir heute atmen.</p><div class="info-box">\uD83C\uDF3F <strong>Spannend:</strong> Ein ausgewachsener Baum produziert pro Jahr genug Sauerstoff für etwa 2\u20133 Menschen. Deshalb sind Wälder so wichtig für unser Klima!</div>'},
+{title:'Zellatmung',content:'<p>Die <strong>Zellatmung</strong> ist der umgekehrte Prozess der Fotosynthese. Alle Lebewesen (Tiere <em>und</em> Pflanzen!) nutzen sie, um Energie aus Glucose zu gewinnen. Ohne Zellatmung könntest du keinen Muskel bewegen und kein Gehirn betreiben!</p><pre><code>C\u2086H\u2081\u2082O\u2086 + 6 O\u2082  \u2192  6 CO\u2082 + 6 H\u2082O + Energie (ATP)\n(Glucose + Sauerstoff \u2192 Kohlenstoffdioxid + Wasser + Energie)</code></pre><ul><li><strong>Ort</strong>: Mitochondrien \u2014 die \u201EKraftwerke der Zelle\u201C</li><li><strong>Glykolyse</strong>: Glucose wird im Zellplasma in Pyruvat gespalten (liefert 2 ATP, braucht keinen Sauerstoff)</li><li><strong>Citratzyklus</strong>: Pyruvat wird in den Mitochondrien weiter abgebaut</li><li><strong>Atmungskette</strong>: Hier wird die meiste Energie (bis zu 34 ATP) gewonnen</li></ul><p><strong>ATP (Adenosintriphosphat)</strong> ist die universelle Energiewährung aller Zellen. Dein Körper produziert und verbraucht täglich etwa sein eigenes Körpergewicht an ATP!</p><div class="info-box">\uD83E\uDD14 <strong>Wusstest du?</strong> Wenn kein Sauerstoff vorhanden ist, können Zellen auch ohne ihn Energie gewinnen \u2014 das nennt man <strong>Gärung</strong>. Hefezellen machen das bei der Brotbacken und Bierbrauen (alkoholische Gärung), und deine Muskeln produzieren bei starker Anstrengung Milchsäure (Milchsäuregärung \u2192 Muskelkater!).</div>'},
+{title:'Zusammenspiel von Fotosynthese und Atmung',content:'<p>Fotosynthese und Zellatmung sind eng miteinander verknüpft \u2014 sie bilden einen eleganten Kreislauf der Natur:</p><ul><li>Pflanzen betreiben <strong>beides</strong>: Am Tag überwiegt die Fotosynthese, nachts nur Zellatmung</li><li>Die <strong>Produkte</strong> der Fotosynthese (Glucose + O\u2082) sind die <strong>Ausgangsstoffe</strong> der Zellatmung</li><li>Die <strong>Produkte</strong> der Zellatmung (CO\u2082 + H\u2082O) sind die <strong>Ausgangsstoffe</strong> der Fotosynthese</li></ul><div class="info-box">\uD83D\uDCA1 <strong>Merke:</strong> Fotosynthese und Zellatmung bilden einen Kreislauf. Ohne Fotosynthese gäbe es keinen Sauerstoff, ohne Zellatmung keine Energie für Lebewesen.</div><p>Am sogenannten <strong>Kompensationspunkt</strong> produziert eine Pflanze genauso viel CO\u2082 durch Atmung, wie sie durch Fotosynthese aufnimmt. Bei starkem Licht überwiegt die Fotosynthese, bei Dunkelheit nur die Atmung.</p><div class="info-box">\uD83C\uDF31 <strong>Experiment für zu Hause:</strong> Stelle eine Wasserpflanze (z.B. Elodea) in ein Glas Wasser und beleuchte sie. Du kannst kleine Sauerstoffblasen aufsteigen sehen \u2014 die Fotosynthese in Aktion! Je heller das Licht, desto mehr Blasen entstehen.</div>'}
+],
+quiz:[
+{q:'Wo findet die Fotosynthese statt?',a:['In den Mitochondrien','In den Chloroplasten','Im Zellkern','In den Ribosomen'],_h:0x4B},
+{q:'Welches Gas wird bei der Fotosynthese freigesetzt?',a:['Stickstoff','Kohlenstoffdioxid','Sauerstoff','Wasserstoff'],_h:0x7D},
+{q:'Was ist das Produkt der Zellatmung?',a:['Glucose und Sauerstoff','Sauerstoff und Wasser','CO\u2082, Wasser und Energie (ATP)','Nur Wärme'],_h:0x29},
+{q:'Was ist ATP?',a:['Ein Vitamin','Die Energiewährung der Zelle','Ein Hormon','Ein Enzym'],_h:0x60},
+{q:'Wann betreiben Pflanzen Zellatmung?',a:['Nur am Tag','Nur nachts','Immer, Tag und Nacht','Nie, nur Tiere atmen'],_h:0x5E}
+],
+boss:[
+{q:'Warum produzieren Pflanzen netto Sauerstoff, obwohl sie auch atmen?',a:['Weil sie nicht wirklich atmen','Weil die Fotosynthese am Tag mehr O\u2082 erzeugt als die Zellatmung verbraucht','Weil Sauerstoff ein Abfallprodukt ist','Weil nur alte Pflanzen atmen'],_h:0x4B},
+{q:'Was würde passieren, wenn es keine Fotosynthese mehr gäbe?',a:['Nichts Besonderes','Der Sauerstoff in der Atmosphäre würde langfristig abnehmen und die Nahrungsgrundlage für fast alles Leben fehlen','Weil CO\u2082 giftig ist','Tiere würden Fotosynthese übernehmen'],_h:0x7E},
+{q:'Warum brauchen Pflanzen Licht für die Fotosynthese?',a:['Weil Licht die Blätter wärmt','Weil Lichtenergie die chemische Reaktion antreibt, CO\u2082 und H\u2082O in Glucose umzuwandeln','Weil Pflanzen ohne Licht schlafen','Weil Licht die Farbe der Blätter bestimmt'],_h:0x2A}
+]},
+{id:5,title:'Menschlicher Körper',icon:'\uD83E\uDEC0',duration:'30 Min.',description:'Lerne die wichtigsten Organsysteme, das Skelett und die Muskulatur des Menschen kennen.',
+lessons:[
+{title:'Das Skelett und die Muskulatur',content:'<p>Das menschliche <strong>Skelett</strong> besteht aus etwa <strong>206 Knochen</strong> und hat drei Hauptfunktionen:</p><ul><li><strong>Stützfunktion</strong>: Gibt dem Körper Form und Halt</li><li><strong>Schutzfunktion</strong>: Schützt innere Organe (z.B. Schädel \u2192 Gehirn, Rippen \u2192 Lunge und Herz)</li><li><strong>Bewegungsfunktion</strong>: Zusammen mit Muskeln ermöglichen Knochen Bewegung durch das Gelenk-Hebel-Prinzip</li></ul><p>Die <strong>Muskulatur</strong> wird in drei Typen eingeteilt:</p><ul><li><strong>Skelettmuskulatur</strong>: Willkürlich steuerbar (z.B. Bizeps, Quadrizeps) \u2014 etwa 40% des Körpergewichts</li><li><strong>Glatte Muskulatur</strong>: Unwillkürlich, in inneren Organen (z.B. Darm, Blutgefäße)</li><li><strong>Herzmuskulatur</strong>: Unwillkürlich, nur im Herzen \u2014 ermüdet nie!</li></ul><div class="info-box">\uD83E\uDDB4 <strong>Spannend:</strong> Knochen sind nicht tot \u2014 sie sind lebendiges Gewebe! Sie werden ständig auf- und abgebaut. Babys haben sogar etwa 300 Knochen, die im Laufe des Wachstums teilweise zusammenwachsen.</div><p>Muskeln arbeiten immer nach dem <strong>Gegenspieler-Prinzip</strong> (Antagonismus): Wenn der Bizeps sich zusammenzieht und den Arm beugt, muss der Trizeps sich entspannen \u2014 und umgekehrt. Muskeln können sich nur zusammenziehen, niemals aktiv strecken!</p>'},
+{title:'Herz-Kreislauf-System',content:'<p>Das <strong>Herz</strong> ist ein faustgroßer Hohlmuskel, der Blut durch den Körper pumpt. Es hat <strong>vier Kammern</strong>: zwei Vorhöfe und zwei Hauptkammern.</p><ul><li><strong>Lungenkreislauf</strong> (kleiner Kreislauf): Rechte Herzkammer \u2192 Lunge (CO\u2082 abgeben, O\u2082 aufnehmen) \u2192 linker Vorhof</li><li><strong>Körperkreislauf</strong> (großer Kreislauf): Linke Herzkammer \u2192 Körper (O\u2082 abgeben, CO\u2082 aufnehmen) \u2192 rechter Vorhof</li></ul><p><strong>Blutgefäße:</strong></p><ul><li><strong>Arterien</strong>: Führen Blut vom Herzen weg (sauerstoffreich, außer Lungenarterie)</li><li><strong>Venen</strong>: Führen Blut zum Herzen hin (haben Klappen gegen Rückfluss)</li><li><strong>Kapillaren</strong>: Feinste Gefäße, wo der Stoffaustausch mit dem Gewebe stattfindet</li></ul><div class="info-box">\uD83D\uDCA1 <strong>Merke:</strong> Das Herz schlägt etwa 100.000 Mal pro Tag und pumpt dabei rund 7.000 Liter Blut. In einem ganzen Leben schlägt es etwa 3 Milliarden Mal!</div><p>Das Blut besteht aus <strong>Blutplasma</strong> (55%, flüssiger Anteil), <strong>roten Blutkörperchen</strong> (Sauerstofftransport), <strong>weißen Blutkörperchen</strong> (Immunabwehr) und <strong>Blutplättchen</strong> (Blutgerinnung). Würde man alle Blutgefäße eines Menschen aneinanderreihen, ergäbe das eine Strecke von etwa 100.000 km!</p>'},
+{title:'Verdauungssystem',content:'<p>Die <strong>Verdauung</strong> zerlegt Nahrung in kleinste Bestandteile, die vom Körper aufgenommen werden können. Die Reise der Nahrung dauert insgesamt 24\u201372 Stunden:</p><ul><li><strong>Mund</strong>: Mechanische Zerkleinerung durch Zähne + Speichelamylase spaltet Stärke in Zucker. Schon hier beginnt die chemische Verdauung!</li><li><strong>Speiseröhre</strong>: Transport durch wellenförmige Muskelbewegungen (Peristaltik) \u2014 funktioniert sogar im Handstand!</li><li><strong>Magen</strong>: Salzsäure tötet Bakterien, Pepsin spaltet Proteine (pH \u2248 2). Die Magenwand schützt sich selbst durch eine Schleimschicht</li><li><strong>Dünndarm</strong>: Mit 6\u20137 Metern der längste Abschnitt! Hauptort der Verdauung und Nährstoffaufnahme; Enzyme aus Bauchspeicheldrüse und Galle</li><li><strong>Dickdarm</strong>: Wasserrückgewinnung, Bakterien produzieren Vitamine (z.B. Vitamin K). Im Dickdarm leben Milliarden nützliche Bakterien!</li></ul><p>Die Nährstoffe gelangen über die <strong>Darmzotten</strong> ins Blut \u2014 sie vergrößern die Oberfläche des Dünndarms auf etwa 200 m\u00B2 \u2014 so groß wie ein Tennisplatz!</p><div class="info-box">\uD83E\uDD14 <strong>Wusstest du?</strong> Die Leber ist das größte innere Organ und ein wahres Multitalent: Sie entgiftet das Blut, produziert Galle, speichert Vitamine und reguliert den Blutzucker. Sie hat über 500 verschiedene Aufgaben!</div>'}
+],
+quiz:[
+{q:'Aus wie vielen Knochen besteht das menschliche Skelett ungefähr?',a:['206','106','306','50'],_h:0x4A},
+{q:'Welche Muskulatur ist willkürlich steuerbar?',a:['Glatte Muskulatur','Herzmuskulatur','Skelettmuskulatur','Alle drei Typen'],_h:0x7D},
+{q:'Was passiert im Dünndarm?',a:['Nur Wasserrückgewinnung','Nahrung wird gekaut','Die Hauptverdauung und Nährstoffaufnahme finden statt','Bakterien werden abgetötet'],_h:0x29},
+{q:'Welche Blutgefäße führen Blut vom Herzen weg?',a:['Venen','Kapillaren','Lymphgefäße','Arterien'],_h:0x62},
+{q:'Wie viele Kammern hat das menschliche Herz?',a:['Zwei','Drei','Vier','Fünf'],_h:0x5E}
+],
+boss:[
+{q:'Warum ist die linke Herzkammer muskulöser als die rechte?',a:['Weil sie größer ist','Weil sie das Blut in den gesamten Körperkreislauf pumpen muss, was mehr Kraft erfordert','Weil die rechte Kammer nicht arbeitet','Weil die linke Seite näher am Gehirn liegt'],_h:0x4B},
+{q:'Warum haben Darmzotten eine so große Oberfläche?',a:['Damit mehr Bakterien leben können','Um möglichst viele Nährstoffe in kurzer Zeit aufnehmen zu können','Weil der Darm zu klein ist','Weil die Nahrung langsamer werden soll'],_h:0x7E},
+{q:'Warum ist der pH-Wert im Magen so niedrig (sauer)?',a:['Weil der Magen krank ist','Um Krankheitserreger abzutöten und Proteine mit Pepsin zu spalten','Weil saures Essen dorthin gelangt','Weil der Körper Säure produziert zum Spass'],_h:0x2A}
+]},
+{id:6,title:'Nervensystem und Sinne',icon:'\uD83E\uDDE0',duration:'30 Min.',description:'Erfahre wie Gehirn, Nerven und Sinnesorgane zusammenarbeiten, um Reize zu verarbeiten.',
+lessons:[
+{title:'Aufbau des Nervensystems',content:'<p>Das <strong>Nervensystem</strong> steuert alle Körperfunktionen und besteht aus:</p><ul><li><strong>Zentrales Nervensystem (ZNS)</strong>: Gehirn und Rückenmark \u2014 die Schaltzentrale</li><li><strong>Peripheres Nervensystem (PNS)</strong>: Alle Nerven ausserhalb des ZNS</li></ul><p>Die Grundeinheit des Nervensystems ist die <strong>Nervenzelle (Neuron)</strong>:</p><ul><li><strong>Dendrit</strong>: Empfängt Signale von anderen Neuronen</li><li><strong>Zellk\u00F6rper</strong>: Verarbeitet die Information</li><li><strong>Axon</strong>: Leitet das Signal als elektrischen Impuls weiter</li><li><strong>Synapse</strong>: \u00DCberträgt das Signal chemisch (durch Neurotransmitter) an die n\u00E4chste Nervenzelle</li></ul><div class="info-box">\uD83D\uDCA1 <strong>Merke:</strong> Nervensignale können mit bis zu 120 m/s durch den Körper rasen!</div>'},
+{title:'Das Gehirn',content:'<p>Das <strong>Gehirn</strong> ist das komplexeste Organ des Menschen mit etwa 86 Milliarden Neuronen:</p><ul><li><strong>Großhirn</strong>: Denken, Sprache, Bewusstsein, willkürliche Bewegung (gr\u00F6\u00DFter Teil)</li><li><strong>Kleinhirn</strong>: Koordination, Gleichgewicht, feine Bewegungsabläufe</li><li><strong>Zwischenhirn</strong>: Hormonsteuerung, Schlaf-Wach-Rhythmus, Körpertemperatur</li><li><strong>Hirnstamm</strong>: Lebenswichtige Grundfunktionen wie Atmung, Herzschlag, Reflexe</li></ul><p>Das Großhirn ist in zwei <strong>Hemisphären</strong> (H\u00E4lften) geteilt, die durch den <strong>Balken</strong> verbunden sind.</p>'},
+{title:'Sinnesorgane und Reflexe',content:'<p><strong>Sinnesorgane</strong> nehmen Reize aus der Umwelt auf und wandeln sie in Nervensignale um:</p><ul><li><strong>Auge</strong>: Lichtreize \u2192 Sehen (Stäbchen für Hell-Dunkel, Zäpfchen für Farben)</li><li><strong>Ohr</strong>: Schallwellen \u2192 H\u00F6ren + Gleichgewichtssinn</li><li><strong>Nase</strong>: Chemische Stoffe \u2192 Riechen</li><li><strong>Zunge</strong>: Geschmacksreize (s\u00FC\u00DF, sauer, salzig, bitter, umami)</li><li><strong>Haut</strong>: Druck, Temperatur, Schmerz \u2192 Tasten</li></ul><p>Ein <strong>Reflex</strong> ist eine schnelle, unwillkürliche Reaktion. Der <strong>Reflexbogen</strong>: Reiz \u2192 Rezeptor \u2192 sensorisches Neuron \u2192 Rückenmark \u2192 motorisches Neuron \u2192 Muskel.</p>'}
+],
+quiz:[
+{q:'Woraus besteht das zentrale Nervensystem?',a:['Nur aus dem Gehirn','Aus Gehirn und Rückenmark','Aus allen Nerven des Körpers','Aus Muskeln und Nerven'],_h:0x4B},
+{q:'Was leitet Signale innerhalb eines Neurons weiter?',a:['Der Dendrit','Die Synapse','Das Axon','Der Zellkern'],_h:0x7D},
+{q:'Welcher Gehirnteil ist für Denken und Sprache zuständig?',a:['Kleinhirn','Hirnstamm','Zwischenhirn','Großhirn'],_h:0x28},
+{q:'Wie werden Signale an der Synapse \u00FCbertragen?',a:['Elektrisch \u00FCber Kabel','Durch Neurotransmitter (chemisch)','Durch Licht','Durch Schall'],_h:0x60},
+{q:'Was ist ein Reflex?',a:['Eine willkürliche Bewegung','Eine schnelle, unwillkürliche Reaktion auf einen Reiz','Ein bewusster Gedanke','Ein Muskelkrampf'],_h:0x5D}
+],
+boss:[
+{q:'Warum zieht man die Hand reflexartig von einer heißen Herdplatte zurück, bevor man den Schmerz bewusst wahrnimmt?',a:['Weil das Gehirn sehr schnell arbeitet','Weil der Reflexbogen \u00FCber das Rückenmark läuft und nicht erst das Gehirn einschalten muss','Weil die Hand ein eigenes Gehirn hat','Weil die Herdplatte die Hand wegstößt'],_h:0x4B},
+{q:'Warum kann ein Schlaganfall zu Lähmungen auf der gegenüberliegenden Körperseite führen?',a:['Weil die Nerven sich kreuzen und jede Gehirnhälfte die gegenüberliegende Körperseite steuert','Weil der ganze Körper gleichzeitig gelähmt wird','Weil die Muskeln direkt betroffen sind','Weil das Herz aufhört zu schlagen'],_h:0x7F},
+{q:'Warum können wir verschiedene Farben sehen?',a:['Weil das Gehirn Farben erfindet','Weil drei verschiedene Typen von Zäpfchen im Auge jeweils für Rot, Grün und Blau empfindlich sind','Weil die Linse Farben filtert','Weil das Licht immer farbig ist'],_h:0x2A}
+]},
+{id:7,title:'Immunsystem',icon:'\uD83D\uDEE1\uFE0F',duration:'25 Min.',description:'Erfahre wie der Körper sich gegen Krankheitserreger wehrt und wie Impfungen wirken.',
+lessons:[
+{title:'Krankheitserreger',content:'<p><strong>Krankheitserreger (Pathogene)</strong> sind Organismen, die Krankheiten verursachen können:</p><ul><li><strong>Bakterien</strong>: Einzellige Lebewesen ohne Zellkern (Prokaryoten). Manche sind n\u00FCtzlich (Darmbakterien), andere sch\u00E4dlich (z.B. Tuberkulose). K\u00F6nnen mit Antibiotika bek\u00E4mpft werden</li><li><strong>Viren</strong>: Keine Lebewesen im eigentlichen Sinne \u2014 brauchen Wirtszellen zur Vermehrung. Beispiele: Grippe, COVID-19. Antibiotika wirken NICHT gegen Viren</li><li><strong>Pilze</strong>: K\u00F6nnen Haut- und Schleimhautinfektionen verursachen (z.B. Fusspilz)</li><li><strong>Parasiten</strong>: Leben auf Kosten eines Wirts (z.B. Zecken, Bandwürmer)</li></ul><div class="info-box">\uD83D\uDCA1 <strong>Merke:</strong> Antibiotika wirken nur gegen Bakterien, nicht gegen Viren! Bei einer Grippe helfen Antibiotika daher nicht.</div>'},
+{title:'Immunabwehr',content:'<p>Das <strong>Immunsystem</strong> sch\u00FCtzt den Körper auf mehreren Ebenen:</p><p><strong>Unspezifische Abwehr (angeboren):</strong></p><ul><li><strong>Haut und Schleimhäute</strong>: Erste Barriere gegen Erreger</li><li><strong>Fresszellen (Makrophagen)</strong>: Verschlingen eingedrungene Erreger</li><li><strong>Entzündungsreaktion</strong>: Rötung, Schwellung, Wärme locken Immunzellen an</li></ul><p><strong>Spezifische Abwehr (erworben):</strong></p><ul><li><strong>B-Lymphozyten</strong>: Produzieren Antikörper, die genau zu einem bestimmten Erreger passen (Schlüssel-Schloss-Prinzip)</li><li><strong>T-Lymphozyten</strong>: Zerst\u00F6ren infizierte Zellen direkt</li><li><strong>Gedächtniszellen</strong>: Merken sich Erreger und erm\u00F6glichen bei erneutem Kontakt eine schnellere Abwehr</li></ul>'},
+{title:'Impfung und Immunisierung',content:'<p><strong>Impfungen</strong> trainieren das Immunsystem, ohne dass man krank wird:</p><ul><li><strong>Aktive Immunisierung</strong>: Man erh\u00E4lt abgeschwächte oder abgetoetete Erreger (oder Teile davon). Das Immunsystem bildet Antikörper und Gedächtniszellen \u2192 langfristiger Schutz</li><li><strong>Passive Immunisierung</strong>: Man erh\u00E4lt fertige Antikörper (z.B. nach einem Schlangenbiss). Wirkt sofort, h\u00E4lt aber nur kurz an</li></ul><p><strong>Herdenimmunität</strong>: Wenn genug Menschen geimpft sind, können sich Krankheiten nicht mehr ausbreiten \u2014 auch ungeimpfte Personen werden gesch\u00FCtzt.</p><div class="info-box">\uD83D\uDCA1 <strong>Merke:</strong> Impfungen geh\u00F6ren zu den wirksamsten Massnahmen der Medizingeschichte. Krankheiten wie Pocken konnten dadurch ausgerottet werden.</div>'}
+],
+quiz:[
+{q:'Gegen welche Erreger wirken Antibiotika?',a:['Gegen Viren','Nur gegen Bakterien','Gegen Pilze','Gegen alle Erreger'],_h:0x4B},
+{q:'Was sind Antikörper?',a:['Krankheitserreger','Proteine, die spezifisch an Erreger binden und sie unschädlich machen','Rote Blutk\u00F6rperchen','Vitamine'],_h:0x7E},
+{q:'Was passiert bei einer aktiven Immunisierung?',a:['Man bekommt fertige Antikörper','Das Immunsystem bildet selbst Antikörper nach Kontakt mit abgeschwächten Erregern','Man nimmt Antibiotika','Man wird künstlich krank'],_h:0x2A},
+{q:'Was ist die Aufgabe der Gedächtniszellen?',a:['Energie speichern','Bei erneutem Kontakt mit dem Erreger schneller Antikörper zu bilden','Nährstoffe transportieren','Knochen aufbauen'],_h:0x60},
+{q:'Was versteht man unter Herdenimmunität?',a:['Tiere schützen sich gegenseitig','Genug geimpfte Menschen schützen auch ungeimpfte, weil sich Krankheiten nicht ausbreiten können','Jeder muss einzeln geimpft werden','Immunität gegen Tiere'],_h:0x5D}
+],
+boss:[
+{q:'Warum wirken Antibiotika nicht gegen Viren?',a:['Weil Viren zu gross sind','Weil Viren keine eigene Zellstruktur haben, die Antibiotika angreifen k\u00F6nnten','Weil Viren Antibiotika fressen','Weil Antibiotika nur im Magen wirken'],_h:0x4B},
+{q:'Warum kann man an der gleichen Erkältung nicht zweimal erkranken?',a:['Weil Erkältungen nur einmal vorkommen','Weil Gedächtniszellen den Erreger wiedererkennen und das Immunsystem schneller reagiert','Weil der Körper immun gegen alle Krankheiten wird','Weil die Erkältung den Körper stärker macht'],_h:0x7E},
+{q:'Warum ist es gefährlich, wenn zu viele Menschen Antibiotika unnötig einnehmen?',a:['Weil Antibiotika teuer sind','Weil es zu Resistenzen kommt: Bakterien überleben durch Selektion und sind nicht mehr behandelbar','Weil Menschen süchtig werden','Weil Antibiotika das Herz schädigen'],_h:0x2A}
+]},
+{id:8,title:'Fortpflanzung und Entwicklung',icon:'\uD83E\uDD5A',duration:'25 Min.',description:'Verstehe Zellteilung, Fortpflanzung und die Grundlagen der Embryonalentwicklung.',
+lessons:[
+{title:'Mitose und Meiose',content:'<p>Es gibt zwei Arten der Zellteilung:</p><p><strong>Mitose (Körperzellteilung):</strong></p><ul><li>Erzeugt zwei <strong>genetisch identische</strong> Tochterzellen</li><li>Dient dem Wachstum und der Reparatur</li><li>Ergebnis: 2 Zellen mit <strong>diploidem</strong> Chromosomensatz (2n = 46 beim Menschen)</li></ul><p><strong>Meiose (Reifeteilung):</strong></p><ul><li>Erzeugt vier <strong>genetisch verschiedene</strong> Keimzellen (Ei- oder Samenzellen)</li><li>Der Chromosomensatz wird <strong>halbiert</strong>: von 2n auf n</li><li>Ergebnis: 4 Zellen mit <strong>haploidem</strong> Chromosomensatz (n = 23 beim Menschen)</li></ul><div class="info-box">\uD83D\uDCA1 <strong>Merke:</strong> Die Meiose ist entscheidend für die genetische Vielfalt, weil durch Crossing-over und zufällige Verteilung neue Genkombinationen entstehen.</div>'},
+{title:'Befruchtung und Embryonalentwicklung',content:'<p>Bei der <strong>Befruchtung</strong> verschmilzt eine Samenzelle (n=23) mit einer Eizelle (n=23) zur <strong>Zygote</strong> (2n=46).</p><p>Die <strong>Embryonalentwicklung</strong> verläuft in mehreren Phasen:</p><ul><li><strong>Furchungsteilungen</strong>: Die Zygote teilt sich vielfach durch Mitose</li><li><strong>Blastozyste</strong>: Ein Hohlkugel-Stadium, das sich in die Gebärmutterschleimhaut einnistet</li><li><strong>Gastrulation</strong>: Bildung der drei Keimbl\u00E4tter (Ektoderm, Mesoderm, Entoderm)</li><li><strong>Organbildung</strong>: Aus den Keimbl\u00E4ttern entwickeln sich alle Organe</li></ul><p>Nach ca. <strong>9 Monaten</strong> (40 Wochen) ist die Entwicklung abgeschlossen und das Kind wird geboren.</p>'},
+{title:'Geschlechtsbestimmung und Pubertät',content:'<p>Das <strong>Geschlecht</strong> wird durch die Geschlechtschromosomen bestimmt:</p><ul><li><strong>XX</strong>: Weiblich</li><li><strong>XY</strong>: Männlich</li><li>Die Eizelle trägt immer ein X-Chromosom, die Samenzelle entweder X oder Y</li></ul><p>In der <strong>Pubertät</strong> ver\u00E4ndern Hormone den Körper:</p><ul><li><strong>Oestrogen</strong> (weiblich): Brustwachstum, Menstruationszyklus, Hueftwachstum</li><li><strong>Testosteron</strong> (m\u00E4nnlich): Stimmbruch, Bartwachstum, Muskelaufbau</li></ul><p>Beide Geschlechter produzieren beide Hormone, aber in unterschiedlichen Mengen.</p>'}
+],
+quiz:[
+{q:'Was erzeugt die Meiose?',a:['Zwei identische Körperzellen','Vier genetisch verschiedene Keimzellen mit halbem Chromosomensatz','Eine große Zelle','Acht identische Zellen'],_h:0x4B},
+{q:'Wie viele Chromosomen hat eine menschliche Eizelle?',a:['46','12','23','92'],_h:0x7D},
+{q:'Was entsteht bei der Befruchtung?',a:['Eine Keimzelle','Ein Organ','Eine Zygote mit 46 Chromosomen','Ein Embryo mit 23 Chromosomen'],_h:0x29},
+{q:'Welches Chromosomenpaar bestimmt das m\u00E4nnliche Geschlecht?',a:['XX','XY','YY','XO'],_h:0x60},
+{q:'Welches Hormon l\u00F6st den Stimmbruch aus?',a:['Oestrogen','Insulin','Adrenalin','Testosteron'],_h:0x5F}
+],
+boss:[
+{q:'Warum ist die Meiose für die genetische Vielfalt wichtig?',a:['Weil sie identische Zellen erzeugt','Weil sie mehr Zellen produziert','Weil durch Crossing-over und zufällige Chromosomenverteilung immer neue Genkombinationen entstehen','Weil sie schneller ist als Mitose'],_h:0x48},
+{q:'Warum bestimmt biologisch gesehen der Vater das Geschlecht des Kindes?',a:['Weil Väter stärker sind','Weil die Samenzelle entweder ein X- oder ein Y-Chromosom trägt, während die Eizelle immer ein X hat','Weil die Mutter keinen Einfluss hat','Weil das Geschlecht zufällig ist'],_h:0x7E},
+{q:'Warum ist die Einnistung der Blastozyste in die Gebärmutterschleimhaut so wichtig?',a:['Weil die Blastozyste sonst verhungert','Weil dort die Nährstoff- und Sauerstoffversorgung durch die Mutter sichergestellt wird','Weil die Gebärmutter warm ist','Weil die Blastozyste sich dort verstecken muss'],_h:0x2A}
+]},
+{id:9,title:'Biodiversität',icon:'\uD83E\uDD8B',duration:'25 Min.',description:'Entdecke die Artenvielfalt, lerne biologische Klassifikation und verstehe, warum Naturschutz wichtig ist.',
+lessons:[
+{title:'Artenvielfalt und Biodiversität',content:'<p><strong>Biodiversität</strong> beschreibt die Vielfalt des Lebens auf drei Ebenen:</p><ul><li><strong>Genetische Vielfalt</strong>: Unterschiede innerhalb einer Art (z.B. verschiedene Fellfarben bei Füchsen)</li><li><strong>Artenvielfalt</strong>: Die Anzahl verschiedener Arten in einem Ökosystem</li><li><strong>Ökosystem-Vielfalt</strong>: Die Vielfalt an Lebensr\u00E4umen (Wald, Meer, W\u00FCste, S\u00FC\u00DFwasser)</li></ul><p>Auf der Erde gibt es schätzungsweise <strong>8 Millionen Arten</strong>, von denen erst etwa 1,5 Millionen wissenschaftlich beschrieben sind.</p><div class="info-box">\uD83D\uDCA1 <strong>Merke:</strong> Hohe Biodiversität macht Ökosysteme stabiler und widerstandsfähiger gegen\u00FCber Stoerungen.</div>'},
+{title:'Biologische Klassifikation',content:'<p>Die <strong>Systematik</strong> ordnet alle Lebewesen in ein hierarchisches System:</p><ul><li><strong>Reich</strong> (z.B. Tiere, Pflanzen, Pilze)</li><li><strong>Stamm</strong> (z.B. Chordatiere)</li><li><strong>Klasse</strong> (z.B. Säugetiere)</li><li><strong>Ordnung</strong> (z.B. Raubtiere)</li><li><strong>Familie</strong> (z.B. Katzen)</li><li><strong>Gattung</strong> (z.B. Panthera)</li><li><strong>Art</strong> (z.B. Panthera leo = L\u00F6we)</li></ul><p>Die wissenschaftliche Benennung erfolgt mit der <strong>binären Nomenklatur</strong> nach Linne: Gattungsname + Artname (z.B. <em>Homo sapiens</em>).</p><p>Die f\u00FCnf großen Reiche des Lebens sind: Tiere, Pflanzen, Pilze, Protisten und Bakterien.</p>'},
+{title:'Naturschutz und Artenschutz',content:'<p>Die <strong>Biodiversität</strong> ist weltweit bedroht. Die Hauptursachen sind:</p><ul><li><strong>Lebensraumzerstörung</strong>: Rodung von W\u00E4ldern, \u00DCberbauung, intensive Landwirtschaft</li><li><strong>Klimawandel</strong>: Ver\u00E4ndert Lebensr\u00E4ume schneller, als Arten sich anpassen können</li><li><strong>\u00DCbernutzung</strong>: \u00DCberfischung, Wilderei</li><li><strong>Invasive Arten</strong>: Eingeschleppte Arten verdrängen heimische Arten</li><li><strong>Umweltverschmutzung</strong>: Pestizide, Plastik, Chemikalien</li></ul><p><strong>Schutzmassnahmen:</strong></p><ul><li>Nationalparks und Naturschutzgebiete</li><li>Artenschutzabkommen (z.B. Washingtoner Artenschutz\u00FCbereinkommen)</li><li>Renaturierung zerst\u00F6rter Lebensr\u00E4ume</li><li>Nachhaltige Landwirtschaft und Fischerei</li></ul><div class="info-box">\uD83D\uDCA1 <strong>Merke:</strong> Jede Art spielt eine Rolle im Ökosystem. Das Aussterben einer Art kann eine Kettenreaktion auslösen.</div>'}
+],
+quiz:[
+{q:'Was bedeutet Biodiversität?',a:['Die Anzahl der Tiere in einem Zoo','Die Vielfalt des Lebens auf genetischer, Arten- und Ökosystemebene','Die Größe eines Waldes','Die Anzahl der Pflanzen in einem Garten'],_h:0x4B},
+{q:'Wie heißt das System zur wissenschaftlichen Benennung von Arten?',a:['Artenliste','Binäre Nomenklatur','Artenregister','Biologisches Wörterbuch'],_h:0x7E},
+{q:'Was ist die häufigste Ursache für das Artensterben?',a:['Natürliche Selektion','Klimawandel allein','Lebensraumzerstörung','Vulkanausbrüche'],_h:0x29},
+{q:'In welcher Reihenfolge wird klassifiziert (vom Größten zum Kleinsten)?',a:['Art, Gattung, Familie, Ordnung, Klasse, Stamm, Reich','Reich, Stamm, Klasse, Ordnung, Familie, Gattung, Art','Familie, Art, Gattung, Reich, Stamm, Klasse, Ordnung','Gattung, Art, Familie, Klasse, Stamm, Ordnung, Reich'],_h:0x60},
+{q:'Was sind invasive Arten?',a:['Besonders große Tiere','Eingeschleppte Arten, die heimische Arten verdrängen','Ausgestorbene Arten','Genetisch ver\u00E4nderte Arten'],_h:0x5D}
+],
+boss:[
+{q:'Warum macht hohe Biodiversität ein Ökosystem stabiler?',a:['Weil mehr Tiere schöner sind','Weil es mehr Nahrungsalternativen gibt und der Ausfall einer Art leichter kompensiert werden kann','Weil größere Ökosysteme immer besser sind','Weil Biodiversität die Temperatur reguliert'],_h:0x4B},
+{q:'Warum ist das Aussterben von Bestäubern wie Bienen besonders bedrohlich?',a:['Weil Honig teuer wird','Weil viele Nutzpflanzen auf Bestäubung angewiesen sind und ohne sie keine Früchte tragen','Weil Bienen hübsch sind','Weil Bienen den Wald schützen'],_h:0x7E},
+{q:'Warum reicht es nicht, bedrohte Arten nur in Zoos zu schützen?',a:['Weil Zoos zu teuer sind','Weil Arten ihren natürlichen Lebensraum brauchen und in Gefangenschaft genetische Vielfalt verlieren','Weil Zoos zu klein sind für alle Tiere','Weil Tiere in Zoos nicht fressen'],_h:0x2A}
+]}
+];
+
+// === State Management ===
+const STORAGE_KEY='bioentdecker_progress';
+let state={name:'',started:false,currentModule:0,xp:0,level:0,streak:0,lastVisit:null,modulesCompleted:[],quizResults:{},bossResults:{},badges:[],quizShuffleMap:{},modulesViewed:[],interactiveResults:{},designTheme:'cyber-dark'};
+function saveState(){try{localStorage.setItem(STORAGE_KEY,JSON.stringify(state))}catch(e){}}
+function loadState(){try{const s=localStorage.getItem(STORAGE_KEY);if(s){Object.assign(state,JSON.parse(s));return true}}catch(e){}return false}
+function exportData(){const a=document.createElement('a');a.download='bioentdecker-'+state.name+'.json';a.href=URL.createObjectURL(new Blob([JSON.stringify(state,null,2)],{type:'application/json'}));a.click()}
+function importData(e){const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=ev=>{try{const d=JSON.parse(ev.target.result);Object.assign(state,d);saveState();location.reload()}catch(err){alert('Datei konnte nicht gelesen werden.')}};r.readAsText(f)}
+
+// === XP & Level ===
+function getLevel(xp){let lv=0;for(let i=LEVELS.length-1;i>=0;i--){if(xp>=LEVELS[i].xp){lv=i;break}}return lv}
+function getLevelProgress(xp){const lv=getLevel(xp);const cur=LEVELS[lv].xp;const next=lv<LEVELS.length-1?LEVELS[lv+1].xp:cur;if(next===cur)return 100;return Math.min(100,Math.round((xp-cur)/(next-cur)*100))}
+function addXP(amount,reason){const old=getLevel(state.xp);state.xp+=amount;const nw=getLevel(state.xp);saveState();updateUI();showNotif('xp','+'+amount+' XP',reason);if(nw>old){state.level=nw;saveState();setTimeout(()=>showLevelUp(nw),800)}}
+
+// === Streak ===
+function updateStreak(){const today=new Date().toDateString();if(state.lastVisit===today)return;const yesterday=new Date(Date.now()-86400000).toDateString();if(state.lastVisit===yesterday){state.streak++;showNotif('streak','\uD83D\uDD25 '+state.streak+' Tage Streak!','Weiter so!');if(state.streak>=3)awardBadge('streak3');if(state.streak>=7)awardBadge('streak7')}else if(state.lastVisit!==today){state.streak=1}state.lastVisit=today;saveState()}
+
+// === Badges ===
+function awardBadge(id){if(state.badges.includes(id))return;state.badges.push(id);saveState();const b=BADGES.find(x=>x.id===id);if(b)showNotif('badge',b.icon+' Badge: '+b.name,b.desc)}
+
+// === Notifications ===
+let notifQueue=[],notifActive=false;
+function showNotif(type,title,text){notifQueue.push({type,title,text});if(!notifActive)processNotif()}
+function processNotif(){if(!notifQueue.length){notifActive=false;return}notifActive=true;const{type,title,text}=notifQueue.shift();const el=document.getElementById('notif');el.className='notif '+type;document.getElementById('notifTitle').textContent=title;document.getElementById('notifText').textContent=text;el.classList.add('show');setTimeout(()=>{el.classList.remove('show');setTimeout(processNotif,300)},2500)}
+
+// === Level Up + Confetti ===
+function showLevelUp(lv){const ov=document.getElementById('levelUpOverlay');const box=document.getElementById('levelUpBox');box.innerHTML='<div class="lvl-icon">\u2B06\uFE0F</div><div class="lvl-title">Level Up!</div><div class="lvl-name">Level '+(lv+1)+': '+LEVELS[lv].name+'</div>';ov.classList.add('active');spawnConfetti();setTimeout(()=>ov.classList.remove('active'),3000)}
+function spawnConfetti(){const c=document.getElementById('confetti');c.innerHTML='';const cols=['#3b82f6','#a855f7','#22c55e','#f59e0b','#ef4444','#06b6d4'];for(let i=0;i<60;i++){const p=document.createElement('div');p.style.cssText='position:absolute;left:'+Math.random()*100+'%;background:'+cols[i%cols.length]+';width:'+(6+Math.random()*8)+'px;height:'+(6+Math.random()*8)+'px;border-radius:'+(Math.random()>.5?'50%':'2px')+';animation:confettiFall '+(1.5+Math.random()*2)+'s ease-out '+Math.random()*.5+'s forwards';c.appendChild(p)}if(!document.getElementById('confettiStyle')){const s=document.createElement('style');s.id='confettiStyle';s.textContent='@keyframes confettiFall{0%{opacity:1;transform:translateY(0) rotate(0deg)}100%{opacity:0;transform:translateY(100vh) rotate(720deg)}}';document.head.appendChild(s)}setTimeout(()=>c.innerHTML='',4000)}
+
+// === Quiz Engine ===
+function shuffleQuiz(modId,quiz){const key='m'+modId;if(state.quizShuffleMap[key])return state.quizShuffleMap[key];const idx=[...Array(quiz.length).keys()];for(let i=idx.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[idx[i],idx[j]]=[idx[j],idx[i]]}state.quizShuffleMap[key]=idx;saveState();return idx}
+function renderQuiz(modId,quiz,isBoss){
+const pf=isBoss?'boss':'quiz';const idx=isBoss?[...Array(quiz.length).keys()]:shuffleQuiz(modId,quiz);
+let h='<div class="'+(isBoss?'boss-section':'quiz-section')+'">';
+h+=isBoss?'<h3>\uD83D\uDC51 Boss-Challenge</h3><p class="boss-sub">Alle '+quiz.length+' Fragen richtig beantworten!</p>':'<h3>\uD83D\uDCDD Quiz \u2014 Teste dein Wissen</h3>';
+idx.forEach((qi,di)=>{const q=quiz[qi];h+='<div class="quiz-q" data-qi="'+qi+'"><p>'+(di+1)+'. '+q.q+'</p>';q.a.forEach((a,ai)=>{h+='<label><input type="radio" name="'+pf+'_'+modId+'_'+qi+'" value="'+ai+'"> '+a+'<\/label>'});h+='<\/div>'});
+h+='<button class="quiz-submit" onclick="checkQuiz('+modId+','+isBoss+')">'+(isBoss?'Boss besiegen!':'Antworten pr\u00FCfen')+'<\/button>';
+h+='<div class="quiz-result" id="'+pf+'Result'+modId+'" style="display:none"><\/div><\/div>';return h;
+}
+function checkQuiz(modId,isBoss){
+const pf=isBoss?'boss':'quiz';const quiz=isBoss?modules[modId].boss:modules[modId].quiz;
+let correct=0;const total=quiz.length;const startTime=window._quizStart||Date.now();
+quiz.forEach((q,qi)=>{
+const sel=document.querySelector('input[name="'+pf+'_'+modId+'_'+qi+'"]:checked');
+const labels=document.querySelectorAll('[data-qi="'+qi+'"] label');
+const ci=_d(q._h,qi);
+labels.forEach((l,li)=>{l.classList.remove('correct','wrong');if(li===ci)l.classList.add('correct');else if(sel&&parseInt(sel.value)===li)l.classList.add('wrong')});
+const qDiv=labels[0]?.closest('.quiz-q');if(qDiv){const old=qDiv.querySelector('.quiz-explanation');if(old)old.remove()}
+if(!sel||parseInt(sel.value)!==ci){if(qDiv){const exp=document.createElement('div');exp.className='quiz-explanation';exp.textContent='\u2192 Richtige Antwort: '+q.a[ci];qDiv.appendChild(exp)}}
+if(sel&&parseInt(sel.value)===ci)correct++;
+});
+const rEl=document.getElementById(pf+'Result'+modId);rEl.style.display='block';
+if(isBoss){
+if(correct===total){
+rEl.className='quiz-result pass';rEl.textContent='\uD83D\uDC51 Boss besiegt! '+correct+'/'+total+' \u2014 Perfekt!';
+if(!state.bossResults[modId]){state.bossResults[modId]=true;addXP(100,'Boss-Challenge bestanden!');if(!state.badges.includes('first_boss'))awardBadge('first_boss');if(modules.every((_,i)=>state.bossResults[i]))awardBadge('all_bosses');checkModuleComplete(modId)}
+}else{rEl.className='quiz-result fail';rEl.textContent='\uD83D\uDC80 '+correct+'/'+total+' \u2014 Alle müssen richtig sein! Versuch es nochmal.';setTimeout(()=>{document.querySelectorAll('input[name^="'+pf+'_'+modId+'"]').forEach(r=>{r.disabled=false;r.checked=false});document.querySelectorAll('[data-qi] label').forEach(l=>l.classList.remove('correct','wrong'));document.querySelectorAll('.quiz-explanation').forEach(e=>e.remove());rEl.style.display='none'},2000);return}
+}else{
+const passed=correct>=Math.ceil(total*0.6);rEl.className='quiz-result '+(passed?'pass':'fail');
+rEl.textContent=passed?'\u2705 '+correct+'/'+total+' richtig \u2014 Bestanden!':'\u274C '+correct+'/'+total+' richtig \u2014 Mindestens '+Math.ceil(total*0.6)+' n\u00F6tig.';
+if(passed&&!state.quizResults[modId]){state.quizResults[modId]=correct;addXP(correct*15+50,'Quiz bestanden ('+correct+'/'+total+')');if(!state.badges.includes('first_quiz'))awardBadge('first_quiz');if(correct===total)awardBadge('perfect_quiz');if(Date.now()-startTime<60000)awardBadge('speed_quiz');checkModuleComplete(modId)}
+}
+saveState();document.querySelectorAll('input[name^="'+pf+'_'+modId+'"]').forEach(r=>r.disabled=true);
+window.scrollTo({top:0,behavior:'smooth'});
+}
+function checkModuleComplete(modId){
+if(state.quizResults[modId]!==undefined&&state.bossResults[modId]&&!state.modulesCompleted.includes(modId)){
+state.modulesCompleted.push(modId);awardBadge('m'+modId);
+if(state.modulesCompleted.length>=5)awardBadge('half_done');
+if(state.modulesCompleted.length>=10){awardBadge('graduate');setTimeout(()=>showCert(),1500)}
+saveState();renderSidebar();
+}
+}
+
+// === Render Module ===
+function renderModule(modId){
+state.currentModule=modId;
+if(!state.modulesViewed.includes(modId)){state.modulesViewed.push(modId);addXP(10,'Neues Modul geöffnet');if(state.modulesViewed.length>=10)awardBadge('explorer')}
+saveState();closeSidebar();
+const m=modules[modId];
+let h='<div class="module-header"><div class="mod-badge">'+m.icon+' Modul '+(modId+1)+'<\/div><h1>'+m.title+'<\/h1><p class="mod-desc">'+m.description+'<\/p><\/div>';
+m.lessons.forEach((l,i)=>{h+='<div class="lesson-card"><h3><span style="color:var(--neon)">'+String(i+1).padStart(2,'0')+'<\/span> '+l.title+' <button class="tts-btn" onclick="speakLesson('+i+')" title="Vorlesen">&#128266;<\/button><\/h3>'+l.content+'<\/div>'});
+h+='<div class="interactive-area"><h4>\uD83E\uDDEC Interaktive Übung<\/h4><div id="interactiveContent">Lädt...<\/div><\/div>';
+window._quizStart=Date.now();
+h+=renderQuiz(modId,m.quiz,false);
+h+=renderQuiz(modId,m.boss,true);
+document.getElementById('welcomeScreen').style.display='none';
+document.getElementById('badgesView').style.display='none';
+document.getElementById('statsView').style.display='none';
+const mc=document.getElementById('moduleContent');mc.style.display='block';mc.innerHTML=h;
+renderSidebar();setTimeout(()=>{initInteractive(modId);window.scrollTo(0,0)},100);
+}
+
+// === Sidebar ===
+function renderSidebar(){
+const el=document.getElementById('sidebarModules');
+el.innerHTML=modules.map((m,i)=>{
+const done=state.modulesCompleted.includes(i);
+const act=state.currentModule===i&&document.getElementById('moduleContent').style.display==='block';
+return '<a class="mod-link'+(act?' active':'')+(done?' completed':'')+'" onclick="renderModule('+i+')"><span class="mod-icon">'+m.icon+'<\/span>'+m.title+'<\/a>';
+}).join('');
+const lv=getLevel(state.xp);
+const lvEl=document.getElementById('sidebarLevel');if(lvEl)lvEl.textContent=LEVELS[lv].name;
+const xpEl=document.getElementById('sidebarXP');if(xpEl)xpEl.textContent=state.xp+' XP';
+const xpFill=document.getElementById('sidebarXPFill');if(xpFill)xpFill.style.width=getLevelProgress(state.xp)+'%';
+}
+function toggleSidebar(){document.getElementById('sidebar').classList.toggle('open')}
+function closeSidebar(){document.getElementById('sidebar').classList.remove('open')}
+
+// === Badges & Stats ===
+function showBadges(){
+document.getElementById('welcomeScreen').style.display='none';
+document.getElementById('moduleContent').style.display='none';
+document.getElementById('statsView').style.display='none';
+const v=document.getElementById('badgesView');v.style.display='block';closeSidebar();
+let h='<div class="module-header"><h1>\uD83C\uDFC5 Deine Abzeichen<\/h1><p class="mod-desc">'+state.badges.length+' von '+BADGES.length+' gesammelt<\/p><\/div><div class="badge-grid">';
+BADGES.forEach(b=>{const earned=state.badges.includes(b.id);h+='<div class="badge-item'+(earned?' earned':' locked')+'"><div class="badge-icon">'+(earned?b.icon:'\uD83D\uDD12')+'<\/div><div class="badge-name">'+b.name+'<\/div><\/div>'});
+h+='<\/div>';v.innerHTML=h;
+}
+function showStats(){
+document.getElementById('welcomeScreen').style.display='none';
+document.getElementById('moduleContent').style.display='none';
+document.getElementById('badgesView').style.display='none';
+const v=document.getElementById('statsView');v.style.display='block';closeSidebar();
+const lv=getLevel(state.xp);
+let h='<div class="module-header"><h1>\uD83D\uDCCA Statistik<\/h1><\/div><div class="stats-grid">';
+h+='<div class="stat-card"><div class="stat-val">'+state.xp+'<\/div><div class="stat-label">XP gesammelt<\/div><\/div>';
+h+='<div class="stat-card"><div class="stat-val">'+LEVELS[lv].name+'<\/div><div class="stat-label">Aktueller Rang<\/div><\/div>';
+h+='<div class="stat-card"><div class="stat-val">'+state.modulesCompleted.length+'/10<\/div><div class="stat-label">Module abgeschlossen<\/div><\/div>';
+h+='<div class="stat-card"><div class="stat-val">'+Object.keys(state.quizResults).length+'<\/div><div class="stat-label">Quizze bestanden<\/div><\/div>';
+h+='<div class="stat-card"><div class="stat-val">'+Object.keys(state.bossResults).length+'<\/div><div class="stat-label">Bosse besiegt<\/div><\/div>';
+h+='<div class="stat-card"><div class="stat-val">'+state.badges.length+'<\/div><div class="stat-label">Abzeichen<\/div><\/div>';
+h+='<div class="stat-card"><div class="stat-val">\uD83D\uDD25 '+state.streak+'<\/div><div class="stat-label">Tage-Streak<\/div><\/div>';
+h+='<\/div>';v.innerHTML=h;
+}
+
+// === Certificate ===
+let certStyle='akademie';
+function showCert(){window._lastFocus=document.activeElement;
+const ov=document.getElementById('certOverlay');
+const styles=['akademie','hacker','pixel','zukunft'];
+const labels=['\uD83C\uDFDB Akademie','\uD83D\uDCBB Terminal','\uD83D\uDD2C Mikroskop','\u2728 Zukunft'];
+document.getElementById('certPicker').innerHTML=styles.map((s,i)=>'<button class="cert-pick-btn '+(s===certStyle?'active':'')+'" onclick="certStyle=\''+s+'\';renderCert()">'+labels[i]+'<\/button>').join('');
+renderCert();ov.classList.add('active');
+}
+function closeCert(){document.getElementById('certOverlay').classList.remove('active');if(window._lastFocus){window._lastFocus.focus();window._lastFocus=null}}
+function generateCertCode(){const n=state.name||'X';const d=new Date();return 'BE-'+d.getFullYear()+'-'+((n.charCodeAt(0)*7+state.xp)%9999).toString(16).toUpperCase().padStart(4,'0')}
+function printCert(){window.print()}
+function certBadgeRow(){
+const earned=state.badges||[];if(earned.length===0)return'';
+return'<div class="cert-badge-row">'+earned.slice(0,8).map(bid=>{const b=BADGES.find(x=>x.id===bid);return b?'<div class="cert-badge-item" title="'+b.name+'">'+b.icon+'<\/div>':''}).join('')+(earned.length>8?'<div class="cert-badge-item" title="'+(earned.length-8)+' weitere">+'+(earned.length-8)+'<\/div>':'')+'<\/div>';
+}
+function certStatsRow(){
+const mods=state.modulesCompleted.length;const quizDone=Object.keys(state.quizResults).length;const bossDone=Object.keys(state.bossResults).length;
+return'<div class="cert-common-stats"><div class="cert-stat">\uD83D\uDCDA '+mods+'/10<\/div><div class="cert-stat">\uD83D\uDCDD '+quizDone+' Quizze<\/div><div class="cert-stat">\uD83D\uDC51 '+bossDone+' Bosse<\/div><div class="cert-stat">\uD83D\uDD25 '+state.streak+'d Streak<\/div><\/div>';
+}
+function certLogoFooter(dark){
+const fill=dark?'rgba(255,255,255,.4)':'rgba(0,0,0,.35)';
+return'<div class="cert-logo-footer"><svg viewBox="0 0 32 32" fill="none"><g transform="translate(16,16)"><circle cx="-10" cy="-9" r="1.2" fill="'+fill+'" opacity=".6"/><circle cx="10" cy="-9" r="1.2" fill="'+fill+'" opacity=".6"/><rect x="-7" y="-5.5" width="14" height="11" rx="3.5" fill="none" stroke="'+fill+'" stroke-width="1"/><text x="0" y="0" text-anchor="middle" dominant-baseline="central" font-family="system-ui" font-size="7.5" font-weight="900" fill="'+fill+'" letter-spacing="1">AI<\/text><\/g><\/svg><span style="color:'+fill+'">GZ AI Stacks<\/span><\/div>';
+}
+function svgCorner(){return'<svg viewBox="0 0 60 60" fill="none"><path d="M5 55 L5 15 Q5 5 15 5 L55 5" stroke="#c5a54e" stroke-width="1.5" fill="none" opacity=".4"/><circle cx="8" cy="8" r="3" fill="#c5a54e" opacity=".2"/><\/svg>';}
+function svgLaurelSeal(){return'<svg viewBox="0 0 90 90" fill="none"><circle cx="45" cy="45" r="32" fill="url(#cg)"/><defs><radialGradient id="cg"><stop offset="0%" stop-color="#e8c84e"/><stop offset="100%" stop-color="#8a6914"/><\/radialGradient><\/defs><text x="45" y="47" text-anchor="middle" dominant-baseline="central" font-family="serif" font-size="22" font-weight="900" fill="#fff">\u2605<\/text><\/svg>';}
+function svgHexSeal(){return'<svg viewBox="0 0 70 70" fill="none"><circle cx="35" cy="35" r="22" stroke="#00d4ff" stroke-width="1.5" opacity=".5"/><circle cx="35" cy="35" r="16" fill="rgba(0,255,65,.08)"/><text x="35" y="33" text-anchor="middle" dominant-baseline="central" font-family="monospace" font-size="8" font-weight="700" fill="#00ff41" opacity=".7">VERIFIED<\/text><text x="35" y="42" text-anchor="middle" font-family="monospace" font-size="7" fill="#00d4ff">\u2713<\/text><\/svg>';}
+function matrixCols(){const chars='01\u30A2\u30A4\u30A6\u30A8\u30AA{}[]<>';let h='';for(let i=0;i<10;i++){const x=5+i*9;const d=3+Math.random()*6;let col='';for(let j=0;j<25;j++)col+=chars[Math.floor(Math.random()*chars.length)]+'\n';h+='<div class="cert-matrix-col" style="left:'+x+'%;animation-duration:'+d+'s;animation-delay:'+Math.random()*4+'s">'+col+'<\/div>';}return h;}
+function renderCert(){
+const f=document.getElementById('certFrame');
+const name=state.name||'Unbekannt';const date=new Date().toLocaleDateString('de-DE',{day:'numeric',month:'long',year:'numeric'});
+const xp=state.xp;const mods=state.modulesCompleted.length;const rank=LEVELS[getLevel(xp)].name;const code=generateCertCode();const badges=certBadgeRow();
+document.querySelectorAll('.cert-pick-btn').forEach(b=>b.classList.toggle('active',b.textContent.toLowerCase().includes(certStyle)));
+if(certStyle==='akademie'){
+const corner=svgCorner();
+f.innerHTML='<div class="cert-akademie"><div class="cert-corner cert-corner-tl">'+corner+'<\/div><div class="cert-corner cert-corner-tr">'+corner+'<\/div><div class="cert-corner cert-corner-bl">'+corner+'<\/div><div class="cert-corner cert-corner-br">'+corner+'<\/div><div class="cert-inner"><div class="cert-sub">BioEntdecker \u00B7 Bio-Akademie<\/div><div class="cert-title">Diplom<\/div><div class="cert-hr"><\/div><div class="cert-body">Die Bio-Akademie verleiht hiermit<\/div><div class="cert-name">'+name+'<\/div><div class="cert-body">die Anerkennung als<br><strong style="font-size:18px;color:#1a1a3e">Bio-'+rank+'<\/strong><br>für die erfolgreiche Absolvierung von<br>\u201EBioEntdecker \u2014 Biologie Klasse 7-10\u201C<\/div>'+certStatsRow()+badges+'<div class="cert-seal-wrap"><div class="cert-seal-ring"><\/div><div class="cert-seal">'+svgLaurelSeal()+'<\/div><\/div><div class="cert-date">'+date+'<\/div><div class="cert-verification">'+code+'<\/div>'+certLogoFooter(false)+'<\/div><\/div>';
+}else if(certStyle==='hacker'){
+f.innerHTML='<div class="cert-hacker">'+matrixCols()+'<div class="cert-inner"><div class="cert-prompt">root@bioentdecker:~$ <span>verify --user "'+name+'" --deep-scan<\/span><\/div><div class="cert-title">&gt;&gt; SYSTEM CERTIFICATION &lt;&lt;<\/div><div class="cert-access">ACCESS GRANTED<span class="cursor-blink">_<\/span><\/div><div class="cert-body">&gt; User..........: <strong style="color:#00d4ff">'+name+'<\/strong><br>&gt; Rank..........: '+rank+'<br>&gt; Modules.......: [<span style="color:#00ff41">'+ '\u2588'.repeat(mods)+'\u2591'.repeat(10-mods)+'<\/span>] '+mods+'/10<br>&gt; XP............: '+xp+' pts<br>&gt; Status........: <span style="color:#00ff41">VERIFIED<\/span> \u2713<\/div>'+certStatsRow()+badges+'<div class="cert-hex-seal">'+svgHexSeal()+'<\/div><div class="cert-body" style="font-size:11px">&gt; Certificate ID: '+code+'<br>&gt; Issued: '+date+'<br>&gt; Authority: BioEntdecker Academy<\/div><div class="cert-prompt">root@bioentdecker:~$ <span class="cursor-blink">_<\/span><\/div>'+certLogoFooter(true)+'<\/div><\/div>';
+}else if(certStyle==='pixel'){
+const orgIcons=['\uD83E\uDDA0','\uD83E\uDDEC','\uD83C\uDF31','\uD83D\uDC1B','\uD83C\uDF3F','\uD83E\uDDAF','\uD83D\uDC20','\uD83E\uDD9C','\uD83C\uDF44','\uD83E\uDDB4'];
+const orgRow=orgIcons.slice(0,10).map((ico,i)=>'<div style="display:inline-block;width:40px;height:44px;border:2px solid '+(i<mods?'#22c55e':'#555')+';border-radius:50%;margin:2px;text-align:center;padding:4px 0;background:'+(i<mods?'rgba(34,197,94,.1)':'rgba(100,100,100,.05)')+'"><div style="font-size:18px">'+ico+'<\/div><div style="font-size:7px;color:'+(i<mods?'#22c55e':'#888')+'">M'+(i+1)+'<\/div><\/div>').join('');
+f.innerHTML='<div class="cert-pixel"><div class="cert-inner"><div style="text-align:center;margin-bottom:8px"><svg viewBox="0 0 60 80" width="60" fill="none"><rect x="22" y="5" width="16" height="30" rx="8" fill="none" stroke="#22c55e" stroke-width="1.5"/><line x1="30" y1="35" x2="30" y2="55" stroke="#22c55e" stroke-width="2"/><rect x="20" y="55" width="20" height="4" rx="2" fill="#22c55e" opacity=".3"/><rect x="15" y="59" width="30" height="4" rx="2" fill="#22c55e" opacity=".2"/><circle cx="30" cy="20" r="5" fill="rgba(34,197,94,.25)"/><circle cx="28" cy="18" r="1.5" fill="rgba(34,197,94,.4)"/><circle cx="33" cy="22" r="1" fill="rgba(34,197,94,.3)"/><\/svg><\/div><div class="cert-complete" style="color:#22c55e;letter-spacing:3px">\uD83D\uDD2C FORSCHUNGSBERICHT \uD83D\uDD2C<\/div><div class="cert-title" style="font-family:var(--mono);color:#22c55e">'+name+'<\/div><div style="margin:12px auto;max-width:460px">'+orgRow+'<\/div><div class="cert-body">Forschungsrang: <strong style="color:#22c55e">'+rank+'<\/strong><\/div><div class="cert-body">Entdeckungen: <strong style="color:#22c55e">'+mods+'/10 Gebiete</strong> \u00B7 '+xp+' XP<\/div>'+certStatsRow()+badges+'<div style="margin-top:12px;font-size:10px;color:#555">\uD83E\uDDEC '+date+' \u00B7 '+code+'<\/div>'+certLogoFooter(true)+'<\/div><\/div>';
+}else{
+const particles=Array.from({length:15},(_,i)=>{const colors=['#6366f1','#ec4899','#f59e0b','#22c55e','#06b6d4'];return'<div class="cert-particle" style="position:absolute;left:'+Math.random()*100+'%;top:'+Math.random()*100+'%;width:'+(2+Math.random()*3)+'px;height:'+(2+Math.random()*3)+'px;background:'+colors[i%5]+';opacity:'+(0.1+Math.random()*0.2)+';box-shadow:0 0 '+(6+Math.random()*9)+'px '+colors[i%5]+';border-radius:50%"><\/div>';}).join('');
+f.innerHTML='<div class="cert-zukunft">'+particles+'<div class="cert-inner"><div class="cert-sub">Zukunfts-Akademie \u00B7 '+new Date().getFullYear()+'<\/div><div class="cert-title">Zertifikat der Zukunft<\/div><div class="cert-body">Hiermit best\u00E4tigen wir, dass<\/div><div class="cert-name">'+name+'<\/div><div class="cert-body">den interaktiven Biologie-Kurs<br>\u201EBioEntdecker \u2014 Biologie Klasse 7-10\u201C<br>erfolgreich absolviert hat.<\/div><div class="cert-body" style="margin:6px 0"><strong style="color:#a78bfa;font-size:16px">'+rank+'<\/strong><\/div>'+certStatsRow()+badges+'<div class="cert-seal-holo"><div class="cert-seal-mid"><div class="cert-seal-inner"><svg viewBox="0 0 40 40" fill="none"><text x="20" y="18" text-anchor="middle" font-size="14" fill="#a78bfa">\u2726<\/text><text x="20" y="28" text-anchor="middle" font-size="6" font-weight="700" fill="rgba(255,255,255,.6)" font-family="system-ui">BIO<\/text><\/svg><\/div><\/div><\/div><div class="cert-date">'+date+' \u00B7 '+code+'<\/div>'+certLogoFooter(true)+'<\/div><\/div>';
+}
+f.style.animation='none';f.offsetHeight;f.style.animation='certEntrance .6s cubic-bezier(.34,1.56,.64,1) both';
+}
+
+// === UI Update ===
+function updateUI(){
+const lv=getLevel(state.xp);
+const hdr=document.getElementById('headerLevel');if(hdr)hdr.textContent=LEVELS[lv].name;
+const hxp=document.getElementById('headerXP');if(hxp)hxp.textContent=state.xp+' XP';
+const fill=document.querySelector('.header-xp-fill');if(fill)fill.style.width=getLevelProgress(state.xp)+'%';
+const streakEl=document.getElementById('headerStreak');if(streakEl)streakEl.textContent='\uD83D\uDD25 '+state.streak;
+renderSidebar();
+}
+
+// === Theme System ===
+function setDesignTheme(world,mode){state.designTheme=world+'-'+mode;document.documentElement.setAttribute('data-theme',state.designTheme);saveState();buildThemePicker()}
+function getCurrentThemeParts(){const p=state.designTheme.split('-');return{world:p.slice(0,-1).join('-'),mode:p[p.length-1]||'dark'}}
+function toggleMode(){const{world,mode}=getCurrentThemeParts();setDesignTheme(world,mode==='dark'?'light':'dark')}
+function buildThemePicker(){
+const dd=document.getElementById('themePickerDD');if(!dd)return;
+const{world,mode}=getCurrentThemeParts();
+let h='<div class="tp-label">Theme w\u00E4hlen<\/div>';
+Object.keys(THEME_CONFIG).forEach(w=>{const t=THEME_CONFIG[w];h+='<div class="tp-world'+(w===world?' active':'')+'" onclick="setDesignTheme(\''+w+'\',\''+mode+'\')\"><div class="tp-world-color" style="background:'+t.color+'">'+t.emoji+'<\/div><div class="tp-world-info"><div class="tp-world-name">'+t.name+'<\/div><div class="tp-world-desc">'+t.desc+'<\/div><\/div><\/div>';});
+h+='<div class="tp-divider"><\/div><div class="tp-mode-row"><span class="tp-mode-label">'+(mode==='dark'?'\uD83C\uDF19 Dark':'\u2600\uFE0F Light')+'<\/span><div class="tp-mode-switch'+(mode==='light'?' light':'')+'" onclick="toggleMode()"><\/div><\/div>';
+dd.innerHTML=h;
+}
+function toggleThemePicker(){document.getElementById('themePickerDD').classList.toggle('open')}
+
+// === Interactive Exercises ===
+function initInteractive(modId){
+const el=document.getElementById('interactiveContent');if(!el)return;
+const exercises=[
+// Mod 0: Zellbiologie — Organellen sortieren
+function(){el.innerHTML='<p>Ordne die Organellen: Klicke auf eine Organelle und dann auf die richtige Kategorie.<\/p><div class="ix-grid" id="ixItems"><\/div><div style="display:flex;gap:16px;justify-content:center;margin:16px 0"><button class="ix-btn" onclick="ixDrop(0,\'pflanze\')">Pflanzenzelle<\/button><button class="ix-btn" onclick="ixDrop(0,\'tier\')">Tierzelle<\/button><button class="ix-btn" onclick="ixDrop(0,\'beide\')">Beide<\/button><\/div><div id="ixScore"><\/div><div class="ix-feedback" id="ixFb"><\/div>';
+const items=[{n:'Zellwand',t:'pflanze'},{n:'Chloroplasten',t:'pflanze'},{n:'Zentriolen',t:'tier'},{n:'Vakuole (gross)',t:'pflanze'},{n:'Mitochondrien',t:'beide'},{n:'Zellmembran',t:'beide'}];
+window._ixData={items,sel:null,done:0,correct:0};
+const g=document.getElementById('ixItems');items.forEach((it,i)=>{const d=document.createElement('div');d.className='ix-item';d.textContent=it.n;d.onclick=()=>{document.querySelectorAll('.ix-item').forEach(x=>x.classList.remove('selected'));d.classList.add('selected');window._ixData.sel=i};g.appendChild(d)});},
+// Mod 1: Genetik — Mendel-Kreuzung
+function(){el.innerHTML='<p>Mendel-Kreuzung: <strong>Aa x Aa</strong><br>Wie viel Prozent der Nachkommen sind <em>homozygot rezessiv</em> (aa)?<\/p><div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin:16px 0"><button class="ix-btn" onclick="ixCheckMendel(\'25\')">25%<\/button><button class="ix-btn" onclick="ixCheckMendel(\'50\')">50%<\/button><button class="ix-btn" onclick="ixCheckMendel(\'75\')">75%<\/button><button class="ix-btn" onclick="ixCheckMendel(\'0\')">0%<\/button><\/div><div class="ix-feedback" id="ixFb"><\/div>';},
+// Mod 2: Evolution — Belege zuordnen
+function(){el.innerHTML='<p>Ordne die Evolutionsbelege: Klicke auf einen Beleg und dann auf die richtige Kategorie.<\/p><div class="ix-grid" id="ixItems"><\/div><div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin:16px 0"><button class="ix-btn" onclick="ixDrop(2,\'palaeo\')">Palaeontologie<\/button><button class="ix-btn" onclick="ixDrop(2,\'anatomie\')">Vergl. Anatomie<\/button><button class="ix-btn" onclick="ixDrop(2,\'molekular\')">Molekularbiologie<\/button><button class="ix-btn" onclick="ixDrop(2,\'embryo\')">Embryologie<\/button><\/div><div class="ix-feedback" id="ixFb"><\/div>';
+const items=[{n:'Fossilien',t:'palaeo'},{n:'Homologe Organe',t:'anatomie'},{n:'DNA-Sequenzvergleich',t:'molekular'},{n:'Embryonalentwicklung',t:'embryo'}];
+window._ixData={items,sel:null,done:0,correct:0};
+const g=document.getElementById('ixItems');items.forEach((it,i)=>{const d=document.createElement('div');d.className='ix-item';d.textContent=it.n;d.onclick=()=>{document.querySelectorAll('.ix-item').forEach(x=>x.classList.remove('selected'));d.classList.add('selected');window._ixData.sel=i};g.appendChild(d)});},
+// Mod 3: \u00D6kologie — Nahrungskette
+function(){el.innerHTML='<p>Baue die Nahrungskette auf! Klicke auf die Organismen in der richtigen Reihenfolge (von der Energiequelle zum Endkonsumenten).<\/p><div class="ix-grid" id="ixChain"><\/div><div id="ixChainResult" style="text-align:center;font-size:18px;margin:12px 0"><\/div><div class="ix-feedback" id="ixFb"><\/div>';
+const correct=['Sonne','Gras','Heuschrecke','Frosch','Storch'];
+const shuffled=[...correct].sort(()=>Math.random()-.5);
+window._ixChain={correct,order:[],total:correct.length};
+const g=document.getElementById('ixChain');shuffled.forEach(name=>{const d=document.createElement('div');d.className='ix-item';d.style.minWidth='100px';d.textContent=name;d.onclick=()=>{if(d.classList.contains('placed'))return;const ch=window._ixChain;const idx=ch.order.length;if(name===ch.correct[idx]){d.classList.add('correct');d.classList.add('placed');ch.order.push(name);const res=document.getElementById('ixChainResult');res.textContent=ch.order.join(' \u2192 ');if(ch.order.length===ch.total){const fb=document.getElementById('ixFb');fb.className='ix-feedback pass';fb.textContent='\u2705 Richtig! Die Nahrungskette ist komplett!';if(!state.interactiveResults[3]){state.interactiveResults[3]=true;addXP(20,'Interaktive Übung gelöst');saveState()}}}else{d.classList.add('wrong');setTimeout(()=>d.classList.remove('wrong'),800)}};g.appendChild(d)});},
+// Mod 4: Fotosynthese — Gleichung ergänzen
+function(){el.innerHTML='<p>Ergänze die Fotosynthesegleichung! Gib die Koeffizienten ein.<\/p><div style="text-align:center;margin:16px 0;font-size:18px"><input type="number" id="ixC1" min="1" max="9" style="width:40px;padding:4px;background:var(--bg3);color:var(--text);border:1px solid var(--border);border-radius:4px;text-align:center"> CO\u2082 + <input type="number" id="ixC2" min="1" max="9" style="width:40px;padding:4px;background:var(--bg3);color:var(--text);border:1px solid var(--border);border-radius:4px;text-align:center"> H\u2082O \u2192 <input type="number" id="ixC3" min="1" max="9" style="width:40px;padding:4px;background:var(--bg3);color:var(--text);border:1px solid var(--border);border-radius:4px;text-align:center"> C\u2086H\u2081\u2082O\u2086 + <input type="number" id="ixC4" min="1" max="9" style="width:40px;padding:4px;background:var(--bg3);color:var(--text);border:1px solid var(--border);border-radius:4px;text-align:center"> O\u2082<\/div><button class="ix-btn" onclick="ixCheckPhoto()" style="display:block;margin:12px auto">Pr\u00FCfen<\/button><div class="ix-feedback" id="ixFb"><\/div>';},
+// Mod 5: Körper — Organe zuordnen
+function(){el.innerHTML='<p>Ordne die Organe dem richtigen Körpersystem zu.<\/p><div class="ix-grid" id="ixOrgans"><\/div><div class="ix-feedback" id="ixFb"><\/div>';
+const items=[{n:'Herz',cat:'Kreislauf'},{n:'Lunge',cat:'Atmung'},{n:'Magen',cat:'Verdauung'},{n:'Niere',cat:'Harn'},{n:'Gehirn',cat:'Nerven'}];
+const g=document.getElementById('ixOrgans');
+items.forEach(it=>{const d=document.createElement('div');d.className='ix-item';d.style.minWidth='120px';d.innerHTML=it.n+'<br><small style="color:var(--text-dim)">System?<\/small>';d.onclick=()=>{const ans=prompt(it.n+' gehört zum ... system?\n(Kreislauf / Atmung / Verdauung / Harn / Nerven)');if(ans){const a=ans.trim();if(a.toLowerCase()===it.cat.toLowerCase()){d.classList.add('correct');d.innerHTML=it.n+'<br><small style="color:var(--success)">'+it.cat+'system<\/small>'}else{d.classList.add('wrong');setTimeout(()=>d.classList.remove('wrong'),1000)}}};g.appendChild(d)});
+let done=0;const obs=new MutationObserver(()=>{done=g.querySelectorAll('.correct').length;if(done>=items.length&&!state.interactiveResults[5]){state.interactiveResults[5]=true;addXP(20,'Interaktive Übung gelöst');saveState();const fb=document.getElementById('ixFb');fb.className='ix-feedback pass';fb.textContent='\u2705 Alle Organe richtig zugeordnet!'}});obs.observe(g,{subtree:true,attributes:true});},
+// Mod 6: Nervensystem — Reflexbogen
+function(){el.innerHTML='<p>Ordne die Schritte des Reflexbogens in die richtige Reihenfolge! Klicke der Reihe nach.<\/p><div class="ix-grid" id="ixReflex"><\/div><div id="ixReflexResult" style="text-align:center;font-size:18px;margin:12px 0"><\/div><div class="ix-feedback" id="ixFb"><\/div>';
+const correct=['Reiz','Rezeptor','Sensorischer Nerv','Rückenmark','Motorischer Nerv','Muskel'];
+const shuffled=[...correct].sort(()=>Math.random()-.5);
+window._ixReflex={correct,order:[],total:correct.length};
+const g=document.getElementById('ixReflex');shuffled.forEach(name=>{const d=document.createElement('div');d.className='ix-item';d.style.minWidth='130px';d.textContent=name;d.onclick=()=>{if(d.classList.contains('placed'))return;const r=window._ixReflex;const idx=r.order.length;if(name===r.correct[idx]){d.classList.add('correct');d.classList.add('placed');r.order.push(name);const res=document.getElementById('ixReflexResult');res.textContent=r.order.join(' \u2192 ');if(r.order.length===r.total){const fb=document.getElementById('ixFb');fb.className='ix-feedback pass';fb.textContent='\u2705 Richtig! Der Reflexbogen ist komplett!';if(!state.interactiveResults[6]){state.interactiveResults[6]=true;addXP(20,'Interaktive Übung gelöst');saveState()}}}else{d.classList.add('wrong');setTimeout(()=>d.classList.remove('wrong'),800)}};g.appendChild(d)});},
+// Mod 7: Immunsystem — Abwehr klassifizieren
+function(){el.innerHTML='<p>Ordne die Abwehrmechanismen: Klicke auf einen Mechanismus und dann auf die richtige Kategorie.<\/p><div class="ix-grid" id="ixItems"><\/div><div style="display:flex;gap:16px;justify-content:center;margin:16px 0"><button class="ix-btn" onclick="ixDrop(7,\'unspez\')">Unspezifisch<\/button><button class="ix-btn" onclick="ixDrop(7,\'spez\')">Spezifisch<\/button><\/div><div class="ix-feedback" id="ixFb"><\/div>';
+const items=[{n:'Haut',t:'unspez'},{n:'Antikörper',t:'spez'},{n:'Fresszellen',t:'unspez'},{n:'T-Zellen',t:'spez'},{n:'Schleimhäute',t:'unspez'}];
+window._ixData={items,sel:null,done:0,correct:0};
+const g=document.getElementById('ixItems');items.forEach((it,i)=>{const d=document.createElement('div');d.className='ix-item';d.textContent=it.n;d.onclick=()=>{document.querySelectorAll('.ix-item').forEach(x=>x.classList.remove('selected'));d.classList.add('selected');window._ixData.sel=i};g.appendChild(d)});},
+// Mod 8: Fortpflanzung — Mitose vs Meiose
+function(){el.innerHTML='<p>Mitose oder Meiose? Ordne die Aussage richtig zu.<\/p><div id="ixDivQ" style="text-align:center;font-size:18px;font-weight:700;margin:16px 0"><\/div><div style="display:flex;gap:16px;justify-content:center"><button class="ix-btn" onclick="ixCheckDiv(\'mitose\')">Mitose<\/button><button class="ix-btn" onclick="ixCheckDiv(\'meiose\')">Meiose<\/button><\/div><div class="ix-feedback" id="ixFb"><\/div>';
+const qs=[{q:'Ergebnis: 2 identische Tochterzellen',a:'mitose'},{q:'Ergebnis: 4 haploide Zellen',a:'meiose'},{q:'Dient dem Wachstum und der Reparatur',a:'mitose'},{q:'Crossing-over findet statt',a:'meiose'},{q:'Chromosomenzahl wird halbiert',a:'meiose'},{q:'Chromosomenzahl bleibt gleich',a:'mitose'}];
+const pick=qs[Math.floor(Math.random()*qs.length)];window._ixDiv=pick;
+document.getElementById('ixDivQ').textContent=pick.q;},
+// Mod 9: Biodiversität — Organismen klassifizieren
+function(){el.innerHTML='<p>Ordne die Organismen dem richtigen Reich zu.<\/p><div class="ix-grid" id="ixBio"><\/div><div class="ix-feedback" id="ixFb"><\/div>';
+const items=[{n:'Tier (z.B. Hund)',cat:'Animalia'},{n:'Pflanze (z.B. Eiche)',cat:'Plantae'},{n:'Pilz (z.B. Champignon)',cat:'Fungi'},{n:'Bakterie (z.B. E. coli)',cat:'Monera'}];
+const g=document.getElementById('ixBio');
+items.forEach(it=>{const d=document.createElement('div');d.className='ix-item';d.style.minWidth='140px';d.textContent=it.n;d.onclick=()=>{const ans=prompt(it.n+' gehört zum Reich...?\n(Animalia / Plantae / Fungi / Monera)');if(ans&&ans.trim().toLowerCase()===it.cat.toLowerCase()){d.classList.add('correct');d.innerHTML=it.n+'<br><small style="color:var(--success)">'+it.cat+'<\/small>'}else if(ans){d.classList.add('wrong');setTimeout(()=>d.classList.remove('wrong'),1000)}};g.appendChild(d)});
+let done=0;const obs=new MutationObserver(()=>{done=g.querySelectorAll('.correct').length;if(done>=items.length&&!state.interactiveResults[9]){state.interactiveResults[9]=true;addXP(20,'Interaktive Übung gelöst');saveState();const fb=document.getElementById('ixFb');fb.className='ix-feedback pass';fb.textContent='\u2705 Alle Organismen richtig klassifiziert!'}});obs.observe(g,{subtree:true,attributes:true})}
+];
+if(exercises[modId])exercises[modId]();
+}
+// Interactive helpers
+window.ixDrop=function(modId,cat){
+const d=window._ixData;if(d.sel===null)return;
+const item=d.items[d.sel];const els=document.querySelectorAll('.ix-item');
+if(item.t===cat){els[d.sel].classList.add('correct');els[d.sel].classList.add('placed');d.correct++}
+else{els[d.sel].classList.add('wrong');setTimeout(()=>els[d.sel].classList.remove('wrong'),800)}
+d.done++;d.sel=null;els.forEach(e=>e.classList.remove('selected'));
+const threshold=Math.ceil(d.items.length*0.7);
+if(d.done>=d.items.length){const fb=document.getElementById('ixFb');fb.className='ix-feedback '+(d.correct>=threshold?'pass':'fail');fb.textContent=d.correct>=threshold?'\u2705 '+d.correct+'/'+d.items.length+' richtig!':'\u274C '+d.correct+'/'+d.items.length+' — Versuch es nochmal!';
+if(d.correct>=threshold&&!state.interactiveResults[modId]){state.interactiveResults[modId]=true;addXP(20,'Interaktive Übung gelöst');saveState()}}
+};
+window.ixCheckMendel=function(ans){const fb=document.getElementById('ixFb');if(ans==='25'){fb.className='ix-feedback pass';fb.textContent='\u2705 Richtig! Bei Aa x Aa sind 25% der Nachkommen aa (homozygot rezessiv). Genotypen: 1 AA : 2 Aa : 1 aa.';if(!state.interactiveResults[1]){state.interactiveResults[1]=true;addXP(20,'Interaktive Übung gelöst');saveState()}}else{fb.className='ix-feedback fail';fb.textContent='\u274C Falsch! Tipp: Erstelle ein Punnett-Quadrat für Aa x Aa.'}};
+window.ixCheckPhoto=function(){const c1=parseInt(document.getElementById('ixC1').value);const c2=parseInt(document.getElementById('ixC2').value);const c3=parseInt(document.getElementById('ixC3').value);const c4=parseInt(document.getElementById('ixC4').value);const fb=document.getElementById('ixFb');
+if(c1===6&&c2===6&&c3===1&&c4===6){fb.className='ix-feedback pass';fb.textContent='\u2705 Richtig! 6 CO\u2082 + 6 H\u2082O \u2192 1 C\u2086H\u2081\u2082O\u2086 + 6 O\u2082';if(!state.interactiveResults[4]){state.interactiveResults[4]=true;addXP(20,'Interaktive Übung gelöst');saveState()}}else{fb.className='ix-feedback fail';fb.textContent='\u274C Nicht korrekt. Tipp: Zähle die C-, H- und O-Atome auf beiden Seiten!'}};
+window.ixCheckDiv=function(ans){const fb=document.getElementById('ixFb');if(ans===window._ixDiv.a){fb.className='ix-feedback pass';fb.textContent='\u2705 Richtig! Die Aussage gehört zur '+(ans==='mitose'?'Mitose':'Meiose')+'.';if(!state.interactiveResults[8]){state.interactiveResults[8]=true;addXP(20,'Interaktive Übung gelöst');saveState()}}else{fb.className='ix-feedback fail';fb.textContent='\u274C Falsch! Richtig wäre: '+(window._ixDiv.a==='mitose'?'Mitose':'Meiose')}};
+
+// === Start App ===
+function startApp(){
+const name=document.getElementById('nameInput').value.trim();if(!name)return;
+state.name=name;state.started=true;saveState();
+document.getElementById('welcomeScreen').style.display='none';
+renderModule(0);updateStreak();
+}
+
+// === Init ===
+(function init(){
+if(loadState()&&state.started){
+document.getElementById('welcomeScreen').style.display='none';
+document.documentElement.setAttribute('data-theme',state.designTheme);
+renderModule(state.currentModule);updateUI();updateStreak();
+}else{
+document.documentElement.setAttribute('data-theme',state.designTheme);
+buildThemePicker();
+}
+renderSidebar();
+document.addEventListener('click',e=>{if(!e.target.closest('.theme-picker-wrap'))document.getElementById('themePickerDD')?.classList.remove('open')});
+})();
+</script>
+
+<script>
+(function(){
+var KEY=null;
+var scripts=document.querySelectorAll('script');
+for(var i=0;i<scripts.length;i++){
+var km=scripts[i].textContent.match(/STORAGE_KEY\s*=\s*['"](\w+)['"]/);
+if(km){KEY=km[1];break;}
+}
+if(!location.hash.match(/modules=/)){try{Object.keys(localStorage).filter(function(k){return k.indexOf("_allowed_modules")!==-1}).forEach(function(k){localStorage.removeItem(k)})}catch(e){}}
+var LOCK_KEY=(KEY||'app')+'_allowed_modules';
+var h=location.hash.match(/modules=([0-9,]+)/);
+var allowed=null;
+if(h){
+allowed=h[1].split(",").map(Number);
+try{localStorage.setItem(LOCK_KEY,JSON.stringify(allowed));}catch(e){}
+}else{
+try{var stored=localStorage.getItem(LOCK_KEY);if(stored)allowed=JSON.parse(stored);}catch(e){}
+}
+if(!allowed||!allowed.length)return;
+function filterSidebar(){
+var items=document.querySelectorAll("#sidebarModules > *");
+for(var i=0;i<items.length;i++){
+items[i].style.display=(allowed.indexOf(i)===-1)?"none":"";
+}
+}
+var sb=document.getElementById("sidebarModules");
+if(sb){new MutationObserver(filterSidebar).observe(sb,{childList:true});filterSidebar();}
+document.addEventListener("click",function(e){
+var t=e.target.closest("[onclick]");
+if(!t)return;
+var oc=t.getAttribute("onclick")||"";
+var idx=oc.indexOf("renderModule(");
+if(idx===-1)return;
+var num=parseInt(oc.substring(idx+13));
+if(!isNaN(num)&&allowed.indexOf(num)===-1){e.preventDefault();e.stopImmediatePropagation();}
+},true);
+setTimeout(filterSidebar,500);
+window.addEventListener("hashchange",function(){
+var hh=location.hash.match(/modules=([0-9,]+)/);
+if(hh){
+allowed=hh[1].split(",").map(Number);
+try{localStorage.setItem(LOCK_KEY,JSON.stringify(allowed));}catch(e){}
+filterSidebar();
+}
+});
+})();
+</script>
+
+<div class="zoom-controls" role="toolbar" aria-label="Zoom-Steuerung">
+<button class="zoom-btn" onclick="zoomOut()" title="Verkleinern (Taste -)" aria-label="Verkleinern">&#8722;</button>
+<button class="zoom-btn" onclick="zoomReset()" title="Zoom zurücksetzen" aria-label="Zoom zurücksetzen" style="font-size:10px;position:relative"><span id="zoomLvl">100%</span></button>
+<button class="zoom-btn" onclick="zoomIn()" title="Vergrößern (Taste +)" aria-label="Vergrößern">+</button>
+</div>
+
+<script>
+(function(){
+var zl=100;
+function applyZoom(){document.body.style.zoom=zl/100;var e=document.getElementById('zoomLvl');if(e)e.textContent=zl+'%';}
+window.zoomIn=function(){if(zl<200){zl+=10;applyZoom();}};
+window.zoomOut=function(){if(zl>50){zl-=10;applyZoom();}};
+window.zoomReset=function(){zl=100;applyZoom();};
+document.addEventListener('keydown',function(e){
+if(e.target.tagName==='INPUT'||e.target.tagName==='TEXTAREA'||e.target.isContentEditable)return;
+if((e.key==='+'||e.key==='=')&&!e.ctrlKey&&!e.metaKey){e.preventDefault();zoomIn();}
+else if((e.key==='-'||e.key==='_')&&!e.ctrlKey&&!e.metaKey){e.preventDefault();zoomOut();}
+else if(e.key==='0'&&!e.ctrlKey&&!e.metaKey){e.preventDefault();zoomReset();}
+});
+})();
+</script>
+
+<script>
+/* A11y: Focus trap for modal overlays */
+document.addEventListener('keydown',function(e){if(e.key==='Tab'){var ov=document.querySelector('.cert-overlay.active,.modal-overlay.active,[role="dialog"].active');if(ov){var fc=ov.querySelectorAll('button,a,[tabindex="0"],input,select,textarea');if(fc.length){var f=fc[0],l=fc[fc.length-1];if(e.shiftKey&&document.activeElement===f){e.preventDefault();l.focus()}else if(!e.shiftKey&&document.activeElement===l){e.preventDefault();f.focus()}}}}});
+</script>
+</body>
+</html>

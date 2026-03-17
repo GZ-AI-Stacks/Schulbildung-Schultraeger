@@ -1,0 +1,1154 @@
+<!DOCTYPE html>
+<html lang="de" data-theme="cyber-dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>TextProfi — Interaktive Deutsch-Lernapp</title>
+<meta name="description" content="Interaktive Deutsch-Lernapp für Klasse 7-10 mit Gamification, Quizzen und Boss-Challenges">
+<style>
+@font-face{font-family:'Sora';src:url('../../Informatik/fonts/sora-latin-400-normal.woff2') format('woff2');font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:'Sora';src:url('../../Informatik/fonts/sora-latin-600-normal.woff2') format('woff2');font-weight:600;font-style:normal;font-display:swap}
+@font-face{font-family:'Sora';src:url('../../Informatik/fonts/sora-latin-700-normal.woff2') format('woff2');font-weight:700;font-style:normal;font-display:swap}
+@font-face{font-family:'JetBrains Mono';src:url('../../Informatik/fonts/jetbrains-mono-latin-400-normal.woff2') format('woff2');font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:'Playfair Display';src:url('../../Informatik/fonts/playfair-display-latin-700-normal.woff2') format('woff2');font-weight:700;font-style:normal;font-display:swap}
+@font-face{font-family:'Inter';src:url('../../Informatik/fonts/inter-latin-400-normal.woff2') format('woff2');font-weight:400;font-style:normal;font-display:swap}
+
+:root{
+--neon:#3b82f6;--neon-dim:rgba(59,130,246,.15);--neon-glow:rgba(59,130,246,.3);
+--bg:#0a0e14;--bg2:#111827;--bg3:#1f2937;--card:#161e2e;--card-hover:#1e293b;
+--border:#2a3444;--border-light:#374151;
+--text:#d4dce8;--text-dim:#8899aa;--text-bright:#f1f5f9;
+--heading:#ffffff;--link:#60a5fa;
+--success:#22c55e;--warning:#f59e0b;--danger:#ef4444;
+--xp-purple:#a855f7;--badge-cyan:#06b6d4;--streak-red:#ef4444;
+--radius:12px;--radius-sm:8px;--radius-lg:16px;
+--shadow:0 4px 24px rgba(0,0,0,.4);--shadow-lg:0 8px 40px rgba(0,0,0,.5);
+--font:'Sora','Segoe UI',system-ui,sans-serif;
+--mono:'JetBrains Mono','Cascadia Code',monospace;
+--serif:'Playfair Display','Georgia',serif;
+--sidebar-w:280px;--header-h:60px;
+--card-border-w:1px;--card-border-style:solid;--glow:1
+}
+[data-theme="cyber-dark"]{--neon:#3b82f6;--neon-dim:rgba(59,130,246,.15);--neon-glow:rgba(59,130,246,.3);--bg:#0a0e14;--bg2:#111827;--bg3:#1f2937;--card:#161e2e;--card-hover:#1e293b;--border:#2a3444;--border-light:#374151;--text:#d4dce8;--text-dim:#8899aa;--text-bright:#f1f5f9;--heading:#ffffff;--link:#60a5fa;--success:#22c55e;--warning:#f59e0b;--danger:#ef4444;--xp-purple:#a855f7;--badge-cyan:#06b6d4;--streak-red:#ef4444;--radius:12px;--radius-sm:8px;--radius-lg:16px;--shadow:0 4px 24px rgba(0,0,0,.4);--shadow-lg:0 8px 40px rgba(0,0,0,.5);--font:'Sora','Segoe UI',system-ui,sans-serif;--card-border-w:1px;--card-border-style:solid;--glow:1}
+[data-theme="cyber-light"]{--neon:#1d4ed8;--neon-dim:rgba(29,78,216,.1);--neon-glow:rgba(29,78,216,.2);--bg:#f8f9fb;--bg2:#f0f2f5;--bg3:#e5e7eb;--card:#ffffff;--card-hover:#f5f7fa;--border:#d1d5db;--border-light:#e5e7eb;--text:#374151;--text-dim:#4b5563;--text-bright:#111827;--heading:#111827;--link:#2563eb;--success:#22c55e;--warning:#f59e0b;--danger:#ef4444;--xp-purple:#a855f7;--badge-cyan:#06b6d4;--streak-red:#ef4444;--radius:12px;--radius-sm:8px;--radius-lg:16px;--shadow:0 4px 24px rgba(0,0,0,.08);--shadow-lg:0 8px 40px rgba(0,0,0,.12);--font:'Sora','Segoe UI',system-ui,sans-serif;--card-border-w:1px;--card-border-style:solid;--glow:0}
+[data-theme="retro-dark"]{--neon:#ffd700;--neon-dim:rgba(255,215,0,.12);--neon-glow:rgba(255,215,0,.3);--bg:#0d0208;--bg2:#1a0a1e;--bg3:#2d1233;--card:#1a0a1e;--card-hover:#2d1233;--border:#4a1942;--border-light:#5c2d5c;--text:#e0d0f0;--text-dim:#9080a0;--text-bright:#fff;--heading:#ffd700;--link:#ff6b9d;--success:#00e676;--warning:#ffab00;--danger:#ff1744;--xp-purple:#e040fb;--badge-cyan:#00e5ff;--streak-red:#ff1744;--radius:0px;--radius-sm:0px;--radius-lg:0px;--shadow:4px 4px 0 rgba(0,0,0,.8);--shadow-lg:6px 6px 0 rgba(0,0,0,.9);--font:'Courier New','Consolas',monospace;--card-border-w:3px;--card-border-style:solid;--glow:0}
+[data-theme="retro-light"]{--neon:#b8860b;--neon-dim:rgba(184,134,11,.1);--neon-glow:rgba(184,134,11,.2);--bg:#fff8e1;--bg2:#fff3cd;--bg3:#ffe0b2;--card:#ffffff;--card-hover:#fff9f0;--border:#d4a017;--border-light:#e6c84d;--text:#3e2723;--text-dim:#6d4c41;--text-bright:#1b0000;--heading:#b8860b;--link:#c2185b;--success:#2e7d32;--warning:#ef6c00;--danger:#c62828;--xp-purple:#8e24aa;--badge-cyan:#00838f;--streak-red:#c62828;--radius:0px;--radius-sm:0px;--radius-lg:0px;--shadow:3px 3px 0 rgba(0,0,0,.15);--shadow-lg:5px 5px 0 rgba(0,0,0,.2);--font:'Courier New','Consolas',monospace;--card-border-w:3px;--card-border-style:solid;--glow:0}
+[data-theme="nature-dark"]{--neon:#4ade80;--neon-dim:rgba(74,222,128,.12);--neon-glow:rgba(74,222,128,.25);--bg:#0c1a0f;--bg2:#132617;--bg3:#1e3a24;--card:#15291a;--card-hover:#1e3a24;--border:#2d5a36;--border-light:#3a7044;--text:#c8e6c9;--text-dim:#81a784;--text-bright:#e8f5e9;--heading:#e8f5e9;--link:#81c784;--success:#66bb6a;--warning:#ffa726;--danger:#ef5350;--xp-purple:#ab47bc;--badge-cyan:#26a69a;--streak-red:#ef5350;--radius:20px;--radius-sm:14px;--radius-lg:28px;--shadow:0 4px 20px rgba(0,0,0,.3);--shadow-lg:0 8px 32px rgba(0,0,0,.4);--font:'Segoe UI','Helvetica Neue',system-ui,sans-serif;--card-border-w:1px;--card-border-style:solid;--glow:0}
+[data-theme="nature-light"]{--neon:#2e7d32;--neon-dim:rgba(46,125,50,.08);--neon-glow:rgba(46,125,50,.15);--bg:#f1f8e9;--bg2:#e8f5e9;--bg3:#c8e6c9;--card:#ffffff;--card-hover:#f1faf1;--border:#a5d6a7;--border-light:#c8e6c9;--text:#33691e;--text-dim:#3e6e1c;--text-bright:#1b5e20;--heading:#1b5e20;--link:#2e7d32;--success:#388e3c;--warning:#ef6c00;--danger:#c62828;--xp-purple:#7b1fa2;--badge-cyan:#00695c;--streak-red:#c62828;--radius:20px;--radius-sm:14px;--radius-lg:28px;--shadow:0 4px 16px rgba(0,0,0,.06);--shadow-lg:0 8px 28px rgba(0,0,0,.1);--font:'Segoe UI','Helvetica Neue',system-ui,sans-serif;--card-border-w:1px;--card-border-style:solid;--glow:0}
+[data-theme="space-dark"]{--neon:#c084fc;--neon-dim:rgba(192,132,252,.12);--neon-glow:rgba(192,132,252,.3);--bg:#07020e;--bg2:#0f0720;--bg3:#1a0e35;--card:#110a28;--card-hover:#1a0e35;--border:#2e1a5e;--border-light:#3d2478;--text:#d4c8f0;--text-dim:#9080b8;--text-bright:#f0e8ff;--heading:#f0e8ff;--link:#f0abfc;--success:#34d399;--warning:#fbbf24;--danger:#fb7185;--xp-purple:#f472b6;--badge-cyan:#67e8f9;--streak-red:#fb7185;--radius:4px;--radius-sm:2px;--radius-lg:6px;--shadow:0 4px 24px rgba(100,50,200,.2);--shadow-lg:0 8px 40px rgba(100,50,200,.3);--font:'Segoe UI',system-ui,sans-serif;--card-border-w:1px;--card-border-style:solid;--glow:1}
+[data-theme="space-light"]{--neon:#7c3aed;--neon-dim:rgba(124,58,237,.08);--neon-glow:rgba(124,58,237,.15);--bg:#faf5ff;--bg2:#f3e8ff;--bg3:#e9d5ff;--card:#ffffff;--card-hover:#faf5ff;--border:#c4b5fd;--border-light:#ddd6fe;--text:#4c1d95;--text-dim:#5b21b6;--text-bright:#2e1065;--heading:#2e1065;--link:#7c3aed;--success:#059669;--warning:#d97706;--danger:#dc2626;--xp-purple:#db2777;--badge-cyan:#0891b2;--streak-red:#dc2626;--radius:4px;--radius-sm:2px;--radius-lg:6px;--shadow:0 4px 16px rgba(100,50,200,.06);--shadow-lg:0 8px 28px rgba(100,50,200,.1);--font:'Segoe UI',system-ui,sans-serif;--card-border-w:1px;--card-border-style:solid;--glow:0}
+[data-theme="comic-dark"]{--neon:#ff6b6b;--neon-dim:rgba(255,107,107,.12);--neon-glow:rgba(255,107,107,.3);--bg:#1a1a2e;--bg2:#222244;--bg3:#2e2e55;--card:#262650;--card-hover:#2e2e55;--border:#4a4a7a;--border-light:#5a5a8a;--text:#e8e0ff;--text-dim:#a098c0;--text-bright:#fff;--heading:#fff;--link:#ffa94d;--success:#51cf66;--warning:#fcc419;--danger:#ff6b6b;--xp-purple:#cc5de8;--badge-cyan:#22b8cf;--streak-red:#ff6b6b;--radius:16px;--radius-sm:12px;--radius-lg:24px;--shadow:4px 4px 0 rgba(0,0,0,.5);--shadow-lg:6px 6px 0 rgba(0,0,0,.6);--font:'Comic Sans MS','Chalkboard SE',cursive,system-ui,sans-serif;--card-border-w:3px;--card-border-style:solid;--glow:0}
+[data-theme="comic-light"]{--neon:#e03131;--neon-dim:rgba(224,49,49,.08);--neon-glow:rgba(224,49,49,.15);--bg:#fff9db;--bg2:#fff3bf;--bg3:#ffe066;--card:#ffffff;--card-hover:#fffdf0;--border:#fab005;--border-light:#fcc419;--text:#2b2b2b;--text-dim:#555;--text-bright:#000;--heading:#000;--link:#e8590c;--success:#2f9e44;--warning:#e8590c;--danger:#c92a2a;--xp-purple:#9c36b5;--badge-cyan:#1098ad;--streak-red:#c92a2a;--radius:16px;--radius-sm:12px;--radius-lg:24px;--shadow:3px 3px 0 rgba(0,0,0,.2);--shadow-lg:5px 5px 0 rgba(0,0,0,.25);--font:'Comic Sans MS','Chalkboard SE',cursive,system-ui,sans-serif;--card-border-w:3px;--card-border-style:solid;--glow:0}
+[data-theme="sketchy-dark"]{--neon:#d97706;--neon-dim:rgba(217,119,6,.15);--neon-glow:rgba(217,119,6,.3);--bg:#2a1f0f;--bg2:#3a2a1a;--bg3:#4a3a2a;--card:#362414;--card-hover:#462a1a;--border:#5a4030;--border-light:#6a5040;--text:#d4c4b0;--text-dim:#a09080;--text-bright:#e8d8c8;--heading:#f5ead5;--link:#e8a550;--success:#84cc16;--warning:#d97706;--danger:#e74c3c;--xp-purple:#d946ef;--badge-cyan:#06b6d4;--streak-red:#e74c3c;--radius:24px;--radius-sm:16px;--radius-lg:32px;--shadow:0 6px 20px rgba(0,0,0,.3);--shadow-lg:0 10px 40px rgba(0,0,0,.4);--font:'Playfair Display','Georgia',serif;--card-border-w:2px;--card-border-style:dashed;--glow:0}
+[data-theme="sketchy-light"]{--neon:#b45309;--neon-dim:rgba(180,83,9,.1);--neon-glow:rgba(180,83,9,.2);--bg:#fef3e2;--bg2:#fde8cc;--bg3:#f9d5b8;--card:#ffffff;--card-hover:#fffaf5;--border:#d4a574;--border-light:#e8c4a0;--text:#5c4033;--text-dim:#8b6f47;--text-bright:#3e2723;--heading:#3e2723;--link:#c2600c;--success:#65a30d;--warning:#b45309;--danger:#d25c4d;--xp-purple:#c084fc;--badge-cyan:#0891b2;--streak-red:#d25c4d;--radius:24px;--radius-sm:16px;--radius-lg:32px;--shadow:0 4px 12px rgba(0,0,0,.08);--shadow-lg:0 8px 24px rgba(0,0,0,.12);--font:'Playfair Display','Georgia',serif;--card-border-w:2px;--card-border-style:dashed;--glow:0}
+[data-theme="nature-code-dark"]{--neon:#10b981;--neon-dim:rgba(16,185,129,.15);--neon-glow:rgba(16,185,129,.25);--bg:#0a1f12;--bg2:#0d2818;--bg3:#1a3a2a;--card:#0f281a;--card-hover:#1a3a2a;--border:#2d5a3d;--border-light:#3a7050;--text:#c8e6d0;--text-dim:#7ba890;--text-bright:#e8f5ed;--heading:#e8f5ed;--link:#34d399;--success:#10b981;--warning:#f59e0b;--danger:#f87171;--xp-purple:#a78bfa;--badge-cyan:#22d3ee;--streak-red:#f87171;--radius:20px;--radius-sm:14px;--radius-lg:28px;--shadow:0 4px 20px rgba(0,100,50,.2);--shadow-lg:0 8px 32px rgba(0,100,50,.3);--font:'Segoe UI','Helvetica Neue',system-ui,sans-serif;--card-border-w:1px;--card-border-style:solid;--glow:0}
+[data-theme="nature-code-light"]{--neon:#059669;--neon-dim:rgba(5,150,105,.1);--neon-glow:rgba(5,150,105,.15);--bg:#f0fdf8;--bg2:#e8faf2;--bg3:#d1f2e0;--card:#ffffff;--card-hover:#f5fbf7;--border:#86efac;--border-light:#bbf7d0;--text:#164e3f;--text-dim:#2d6e4f;--text-bright:#052e16;--heading:#052e16;--link:#059669;--success:#10b981;--warning:#d97706;--danger:#dc2626;--xp-purple:#8b5cf6;--badge-cyan:#06b6d4;--streak-red:#dc2626;--radius:20px;--radius-sm:14px;--radius-lg:28px;--shadow:0 4px 16px rgba(0,100,50,.06);--shadow-lg:0 8px 28px rgba(0,100,50,.1);--font:'Segoe UI','Helvetica Neue',system-ui,sans-serif;--card-border-w:1px;--card-border-style:solid;--glow:0}
+[data-theme="glass-dark"]{--neon:#00d9ff;--neon-dim:rgba(0,217,255,.12);--neon-glow:rgba(0,217,255,.25);--bg:#0f0f23;--bg2:#1a1a3e;--bg3:#25254a;--card:rgba(30,30,60,.4);--card-hover:rgba(40,40,80,.5);--border:rgba(100,150,255,.2);--border-light:rgba(100,150,255,.3);--text:#e4e8f0;--text-dim:#8899aa;--text-bright:#f5f7ff;--heading:#ffffff;--link:#00d9ff;--success:#34d399;--warning:#fbbf24;--danger:#ff6b9d;--xp-purple:#b991f7;--badge-cyan:#00d9ff;--streak-red:#ff6b9d;--radius:16px;--radius-sm:12px;--radius-lg:20px;--shadow:0 8px 32px rgba(0,200,255,.1);--shadow-lg:0 16px 64px rgba(0,200,255,.15);--font:'Segoe UI',system-ui,sans-serif;--card-border-w:1px;--card-border-style:solid;--glow:1}
+[data-theme="glass-light"]{--neon:#0891b2;--neon-dim:rgba(8,145,178,.08);--neon-glow:rgba(8,145,178,.15);--bg:#f8fafc;--bg2:#f1f5f9;--bg3:#e2e8f0;--card:rgba(255,255,255,.4);--card-hover:rgba(255,255,255,.6);--border:rgba(100,180,255,.2);--border-light:rgba(100,180,255,.3);--text:#1e293b;--text-dim:#475569;--text-bright:#0f172a;--heading:#0f172a;--link:#0891b2;--success:#059669;--warning:#d97706;--danger:#dc2626;--xp-purple:#7c3aed;--badge-cyan:#0891b2;--streak-red:#dc2626;--radius:16px;--radius-sm:12px;--radius-lg:20px;--shadow:0 8px 32px rgba(100,150,255,.08);--shadow-lg:0 16px 64px rgba(100,150,255,.12);--font:'Segoe UI',system-ui,sans-serif;--card-border-w:1px;--card-border-style:solid;--glow:0}
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{font-family:var(--font);background:var(--bg);color:var(--text);line-height:1.6;min-height:100vh;overflow-x:hidden;transition:background .3s,color .3s}
+h1,h2,h3,h4{color:var(--heading);line-height:1.3}
+a{color:var(--link);text-decoration:none}
+a:hover{text-decoration:underline}
+button{font-family:var(--font);cursor:pointer;border:none;background:none;color:inherit}
+code,pre{font-family:var(--mono)}
+:focus-visible{outline:2px solid var(--neon);outline-offset:2px;border-radius:4px}
+::selection{background:var(--neon);color:#fff}
+::-webkit-scrollbar{width:8px}
+::-webkit-scrollbar-track{background:var(--bg2)}
+::-webkit-scrollbar-thumb{background:var(--border);border-radius:4px}
+::-webkit-scrollbar-thumb:hover{background:var(--text-dim)}
+.site-header{position:fixed;top:0;left:0;right:0;height:var(--header-h);background:var(--bg2);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 20px;z-index:100;backdrop-filter:blur(12px)}
+.header-logo{display:flex;align-items:center;gap:12px;font-weight:700;font-size:18px;color:var(--heading)}
+.header-logo-text{display:flex;flex-direction:column;line-height:1.2}
+.header-logo-main{font-size:20px;font-weight:800}
+.header-logo-sub{font-size:11px;font-weight:600;color:var(--neon);letter-spacing:1px;text-transform:uppercase;margin-top:2px}
+.header-right{margin-left:auto;display:flex;align-items:center;gap:12px}
+.header-xp{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--xp-purple);font-weight:600}
+.header-xp-bar{width:80px;height:6px;background:var(--bg3);border-radius:3px;overflow:hidden}
+.header-xp-fill{height:100%;background:var(--xp-purple);border-radius:3px;transition:width .5s}
+.header-streak{display:flex;align-items:center;gap:4px;font-size:13px;color:var(--streak-red);font-weight:600}
+.theme-toggle{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:var(--bg3);transition:background .2s}
+.theme-toggle:hover{background:var(--border)}
+.theme-picker-wrap{position:relative}
+.theme-picker-btn{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:var(--bg3);transition:background .2s;font-size:16px}
+.theme-picker-btn:hover{background:var(--border)}
+.theme-picker-dd{position:absolute;top:calc(100% + 8px);right:0;background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:12px;box-shadow:var(--shadow-lg);z-index:200;display:none;min-width:240px}
+.theme-picker-dd.open{display:block}
+.theme-picker-dd .tp-label{font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--text-dim);margin-bottom:8px}
+.tp-world{display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:var(--radius-sm);cursor:pointer;transition:background .15s;margin-bottom:2px}
+.tp-world:hover{background:var(--bg3)}
+.tp-world.active{background:var(--neon-dim)}
+.tp-world-color{width:28px;height:28px;border-radius:6px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:14px}
+.tp-world-info{flex:1;min-width:0}
+.tp-world-name{font-size:13px;font-weight:600;color:var(--heading)}
+.tp-world-desc{font-size:10px;color:var(--text-dim)}
+.tp-divider{height:1px;background:var(--border);margin:8px 0}
+.tp-mode-row{display:flex;align-items:center;justify-content:space-between;padding:4px 10px}
+.tp-mode-label{font-size:12px;color:var(--text);font-weight:600}
+.tp-mode-switch{width:44px;height:24px;border-radius:12px;background:var(--bg3);position:relative;cursor:pointer;transition:background .2s}
+.tp-mode-switch.light{background:var(--neon)}
+.tp-mode-switch::after{content:'';position:absolute;top:3px;left:3px;width:18px;height:18px;border-radius:50%;background:#fff;transition:transform .2s;box-shadow:0 1px 3px rgba(0,0,0,.3)}
+.tp-mode-switch.light::after{transform:translateX(20px)}
+.menu-btn{display:none;width:36px;height:36px;border-radius:8px;align-items:center;justify-content:center;background:var(--bg3)}
+.sidebar{position:fixed;top:var(--header-h);left:0;width:var(--sidebar-w);height:calc(100vh - var(--header-h));background:var(--bg2);border-right:1px solid var(--border);overflow-y:auto;padding:16px 12px;z-index:90;transition:transform .3s}
+.sidebar-section{margin-bottom:20px}
+.sidebar-label{font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--text-dim);padding:0 8px;margin-bottom:8px}
+.sidebar-level{padding:8px 12px;background:var(--neon-dim);border-radius:var(--radius-sm);margin-bottom:12px;text-align:center}
+.sidebar-level-title{font-size:14px;font-weight:700;color:var(--neon)}
+.sidebar-level-sub{font-size:11px;color:var(--text-dim);margin-top:2px}
+.sidebar-xp-bar{width:100%;height:8px;background:var(--bg3);border-radius:4px;overflow:hidden;margin-top:6px}
+.sidebar-xp-fill{height:100%;background:linear-gradient(90deg,var(--xp-purple),var(--neon));border-radius:4px;transition:width .6s}
+.mod-link{display:flex;align-items:center;gap:10px;padding:8px 12px;border-radius:var(--radius-sm);transition:background .15s;color:var(--text);font-size:13px;text-decoration:none;position:relative;cursor:pointer}
+.mod-link:hover{background:var(--bg3);text-decoration:none}
+.mod-link.active{background:var(--neon-dim);color:var(--neon);font-weight:600}
+.mod-link.completed::after{content:'\2713';position:absolute;right:10px;color:var(--success);font-weight:700;font-size:12px}
+.mod-link .mod-icon{width:28px;height:28px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
+.main{margin-left:var(--sidebar-w);margin-top:var(--header-h);min-height:calc(100vh - var(--header-h));padding:32px;max-width:900px}
+.module-header{margin-bottom:32px}
+.module-header .mod-badge{display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--neon);margin-bottom:8px}
+.module-header h1{font-size:28px;margin-bottom:8px}
+.module-header .mod-desc{font-size:15px;color:var(--text-dim);max-width:600px}
+.lesson-card{background:var(--card);border:var(--card-border-w) var(--card-border-style) var(--border);border-radius:var(--radius);padding:24px;margin-bottom:20px;transition:border-color .2s}
+.lesson-card:hover{border-color:var(--neon)}
+.lesson-card h3{font-size:18px;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.lesson-card p,.lesson-card li{font-size:14px;line-height:1.7;color:var(--text)}
+.lesson-card ul,.lesson-card ol{margin:8px 0 8px 20px}
+.lesson-card code{background:var(--bg3);padding:2px 6px;border-radius:4px;font-size:13px;color:var(--neon)}
+.lesson-card pre{background:var(--bg);border:1px solid var(--border);border-radius:var(--radius-sm);padding:16px;overflow-x:auto;margin:12px 0;font-size:13px;line-height:1.5}
+.lesson-card .info-box{background:var(--neon-dim);border-left:3px solid var(--neon);padding:12px 16px;border-radius:0 var(--radius-sm) var(--radius-sm) 0;margin:12px 0;font-size:13px}
+.interactive-area{background:var(--card);border:calc(var(--card-border-w) + 1px) dashed var(--border);border-radius:var(--radius);padding:24px;margin:20px 0;min-height:200px}
+.interactive-area h4{font-size:15px;color:var(--neon);margin-bottom:12px}
+.ia-toolbar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+.ia-btn{padding:6px 14px;font-size:12px;font-weight:600;border-radius:var(--radius-sm);background:var(--neon-dim);color:var(--neon);border:1px solid transparent;transition:all .15s}
+.ia-btn:hover{background:var(--neon);color:#fff}
+.ia-btn.active{background:var(--neon);color:#fff}
+.ix-grid{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;margin:16px 0}
+.ix-item{background:var(--bg3);border:2px solid var(--border);border-radius:var(--radius-sm);padding:14px 20px;font-size:20px;cursor:pointer;transition:all .2s;user-select:none;text-align:center;min-width:60px}
+.ix-item:hover{border-color:var(--neon);background:var(--neon-dim)}
+.ix-item.selected{border-color:var(--neon);background:var(--neon-dim)}
+.ix-item.correct{border-color:var(--success);background:rgba(34,197,94,.1)}
+.ix-item.wrong{border-color:var(--danger);background:rgba(239,68,68,.1)}
+.ix-item.placed{opacity:.4;pointer-events:none}
+.ix-btn{background:var(--neon);color:#fff;border:none;padding:10px 24px;border-radius:var(--radius-sm);font-size:14px;font-weight:700;cursor:pointer;font-family:var(--font);margin-top:12px;transition:opacity .2s}
+.ix-btn:hover{opacity:.85}
+.ix-btn:disabled{opacity:.4;cursor:not-allowed}
+.ix-feedback{text-align:center;padding:14px;border-radius:var(--radius-sm);font-size:16px;font-weight:700;margin-top:12px;display:none}
+.ix-feedback.pass{display:block;background:rgba(34,197,94,.12);color:var(--success)}
+.ix-feedback.fail{display:block;background:rgba(239,68,68,.12);color:var(--danger)}
+.quiz-section{background:var(--card);border:var(--card-border-w) var(--card-border-style) var(--border);border-radius:var(--radius);padding:24px;margin-top:24px}
+.quiz-section h3{font-size:18px;margin-bottom:16px;color:var(--xp-purple)}
+.quiz-q{margin-bottom:20px}
+.quiz-q p{font-size:14px;font-weight:600;margin-bottom:10px}
+.quiz-q label{display:flex;align-items:flex-start;gap:10px;padding:10px 14px;border-radius:var(--radius-sm);border:1px solid var(--border);cursor:pointer;transition:all .15s;font-size:14px;margin-bottom:6px}
+.quiz-q label:hover{border-color:var(--neon);background:var(--neon-dim)}
+.quiz-q input[type="radio"]{margin-top:3px;accent-color:var(--neon)}
+.quiz-q label.correct{border-color:var(--success);background:rgba(34,197,94,.1)}
+.quiz-q label.wrong{border-color:var(--danger);background:rgba(239,68,68,.1)}
+.quiz-submit{padding:10px 24px;font-size:14px;font-weight:700;border-radius:var(--radius-sm);background:var(--xp-purple);color:#fff;transition:opacity .2s;margin-top:8px}
+.quiz-submit:hover{opacity:.85}
+.quiz-result{padding:16px;border-radius:var(--radius-sm);margin-top:16px;font-size:14px;font-weight:600;text-align:center}
+.quiz-result.pass{background:rgba(34,197,94,.12);color:var(--success);border:1px solid rgba(34,197,94,.3)}
+.quiz-result.fail{background:rgba(239,68,68,.12);color:var(--danger);border:1px solid rgba(239,68,68,.3)}
+.quiz-explanation{margin-top:6px;padding:8px 14px;border-radius:var(--radius-sm);background:rgba(34,197,94,.08);border-left:3px solid var(--success);font-size:13px;color:var(--success);font-weight:600}
+.boss-section{background:linear-gradient(135deg,rgba(168,85,247,.08),rgba(59,130,246,.08));border:2px solid var(--xp-purple);border-radius:var(--radius);padding:24px;margin-top:24px}
+.boss-section h3{color:var(--xp-purple);font-size:20px;margin-bottom:4px}
+.boss-section .boss-sub{font-size:13px;color:var(--text-dim);margin-bottom:16px}
+.badge-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(100px,1fr));gap:12px;margin-top:12px}
+.badge-item{text-align:center;padding:12px 8px;border-radius:var(--radius-sm);background:var(--bg3);opacity:.4;transition:all .3s}
+.badge-item.earned{opacity:1;background:var(--neon-dim);border:1px solid var(--neon)}
+.badge-item .badge-icon{font-size:28px;margin-bottom:4px}
+.badge-item .badge-name{font-size:10px;font-weight:600;color:var(--text-dim)}
+.badge-item.earned .badge-name{color:var(--neon)}
+.stats-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px;margin-top:12px}
+.stat-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius-sm);padding:16px;text-align:center}
+.stat-card .stat-val{font-size:28px;font-weight:700;color:var(--neon)}
+.stat-card .stat-label{font-size:12px;color:var(--text-dim);margin-top:4px}
+.notif{position:fixed;top:80px;right:20px;background:var(--card);border:1px solid var(--neon);border-radius:var(--radius);padding:16px 20px;box-shadow:var(--shadow-lg);z-index:200;transform:translateX(120%);transition:transform .4s cubic-bezier(.22,1,.36,1);max-width:320px}
+.notif.show{transform:translateX(0)}
+.notif-title{font-size:14px;font-weight:700;color:var(--heading);margin-bottom:2px}
+.notif-text{font-size:12px;color:var(--text-dim)}
+.notif.xp{border-color:var(--xp-purple)}
+.notif.badge{border-color:var(--badge-cyan)}
+.notif.level{border-color:var(--success)}
+.notif.streak{border-color:var(--streak-red)}
+.level-up-overlay{position:fixed;inset:0;background:rgba(0,0,0,.7);display:none;align-items:center;justify-content:center;z-index:300}
+.level-up-overlay.active{display:flex}
+.level-up-box{text-align:center;padding:40px;animation:lvlPop .5s ease-out}
+.level-up-box .lvl-icon{font-size:64px;margin-bottom:12px}
+.level-up-box .lvl-title{font-size:28px;font-weight:900;color:var(--heading)}
+.level-up-box .lvl-name{font-size:20px;color:var(--xp-purple);font-weight:700;margin-top:4px}
+@keyframes lvlPop{from{transform:scale(.5);opacity:0}to{transform:scale(1);opacity:1}}
+.welcome-screen{display:flex;align-items:center;justify-content:center;min-height:calc(100vh - var(--header-h));text-align:center;padding:40px 20px}
+.welcome-box{max-width:480px}
+.welcome-box h1{font-size:36px;margin-bottom:8px}
+.welcome-box .ws-sub{color:var(--text-dim);font-size:15px;margin-bottom:32px}
+.welcome-box input{width:100%;max-width:320px;padding:12px 16px;font-size:16px;border-radius:var(--radius-sm);border:1px solid var(--border);background:var(--bg3);color:var(--heading);font-family:var(--font);text-align:center;margin-bottom:16px}
+.welcome-box input:focus{border-color:var(--neon);outline:2px solid var(--neon);outline-offset:2px}
+.welcome-box .ws-start{padding:14px 40px;font-size:16px;font-weight:700;border-radius:var(--radius-sm);background:var(--neon);color:#fff;transition:opacity .2s}
+.welcome-box .ws-start:hover{opacity:.85}
+.welcome-box .ws-start:disabled{opacity:.4;cursor:not-allowed}
+.cert-overlay{position:fixed;inset:0;background:rgba(0,0,0,.88);display:none;align-items:center;justify-content:center;z-index:400;padding:20px;flex-direction:column;backdrop-filter:blur(8px)}
+.cert-overlay.active{display:flex}
+.cert-picker{display:flex;gap:12px;justify-content:center;margin-bottom:20px;flex-wrap:wrap}
+.cert-pick-btn{padding:10px 20px;font-size:13px;font-weight:700;border-radius:12px;border:2px solid rgba(255,255,255,.15);background:rgba(255,255,255,.06);color:rgba(255,255,255,.7);transition:all .3s;backdrop-filter:blur(4px)}
+.cert-pick-btn:hover{border-color:rgba(255,255,255,.3);color:#fff;transform:translateY(-2px)}
+.cert-pick-btn.active{border-color:#ffd700;color:#ffd700;background:rgba(255,215,0,.1);box-shadow:0 0 20px rgba(255,215,0,.15)}
+.cert-frame{width:720px;max-width:100%;aspect-ratio:1.414;position:relative;overflow:hidden;animation:certEntrance .6s cubic-bezier(.34,1.56,.64,1) both}
+.cert-actions{display:flex;gap:12px;justify-content:center;margin-top:16px}
+.cert-actions button{padding:12px 28px;font-size:13px;font-weight:700;border-radius:12px;background:linear-gradient(135deg,var(--neon),var(--link));color:#fff;transition:transform .2s,box-shadow .2s}
+.cert-actions button:hover{transform:translateY(-2px);box-shadow:0 4px 20px rgba(0,0,0,.3)}
+@keyframes certEntrance{0%{opacity:0;transform:scale(.8) translateY(30px)}100%{opacity:1;transform:scale(1) translateY(0)}}
+@keyframes shimmer{0%{background-position:-200% 0}100%{background-position:200% 0}}
+@keyframes blink{50%{opacity:0}}
+@keyframes glitch{0%,93%{text-shadow:0 0 20px rgba(0,212,255,.5)}94%{text-shadow:-3px 0 #ff0040,3px 0 #00d4ff;transform:skewX(-2deg)}95%{text-shadow:3px 0 #ff0040,-3px 0 #00d4ff;transform:skewX(2deg)}96%{text-shadow:-1px 2px #ff0040,1px -2px #00d4ff}97%,100%{text-shadow:0 0 20px rgba(0,212,255,.5);transform:skewX(0)}}
+@keyframes pixelBlink{50%{opacity:0}}
+@keyframes holoSpin{to{transform:rotate(360deg)}}
+@keyframes aurora{0%{background-position:0% 50%}25%{background-position:50% 100%}50%{background-position:100% 50%}75%{background-position:50% 0%}100%{background-position:0% 50%}}
+@keyframes goldShimmer{0%{background-position:-100% 0}100%{background-position:200% 0}}
+@keyframes neonPulse{0%,100%{box-shadow:0 0 5px #00ff41,0 0 10px #00ff41,0 0 20px rgba(0,255,65,.3)}50%{box-shadow:0 0 10px #00ff41,0 0 25px #00ff41,0 0 50px rgba(0,255,65,.4)}}
+@keyframes matrixFall{0%{transform:translateY(-100%);opacity:1}100%{transform:translateY(100vh);opacity:0}}
+.cert-common-stats{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin:10px 0}
+.cert-stat{padding:4px 10px;border-radius:20px;font-size:11px;font-weight:700;display:inline-flex;align-items:center;gap:4px}
+.cert-badge-row{display:flex;gap:6px;justify-content:center;flex-wrap:wrap;margin:8px 0}
+.cert-badge-item{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px}
+.cert-verification{font-size:10px;letter-spacing:2px;margin-top:8px;opacity:.5;font-family:var(--mono)}
+.cert-logo-footer{display:flex;align-items:center;justify-content:center;gap:6px;margin-top:10px;opacity:.4;font-size:10px}
+.cert-logo-footer svg{width:16px;height:16px}
+.cert-akademie{background:linear-gradient(145deg,#faf6e8,#f0e8d0,#e8dfc0);border:none;padding:0;text-align:center;font-family:var(--serif);color:#1a1a3e;position:relative;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;overflow:hidden}
+.cert-akademie::before{content:'';position:absolute;inset:0;background:url("data:image/svg+xml,%3Csvg width='60' height='60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 5 L35 20 L30 15 L25 20Z' fill='%23c5a54e' opacity='.04'/%3E%3C/svg%3E");pointer-events:none}
+.cert-akademie::after{content:'';position:absolute;inset:8px;border:2px solid rgba(197,165,78,.35);border-radius:2px;pointer-events:none}
+.cert-akademie .cert-inner{position:relative;z-index:1;padding:36px 32px;width:100%}
+.cert-akademie .cert-corner{position:absolute;width:60px;height:60px;z-index:2}
+.cert-akademie .cert-corner svg{width:100%;height:100%}
+.cert-akademie .cert-corner-tl{top:14px;left:14px}
+.cert-akademie .cert-corner-tr{top:14px;right:14px;transform:scaleX(-1)}
+.cert-akademie .cert-corner-bl{bottom:14px;left:14px;transform:scaleY(-1)}
+.cert-akademie .cert-corner-br{bottom:14px;right:14px;transform:scale(-1)}
+.cert-akademie .cert-title{font-size:36px;font-weight:700;color:#1a1a3e;margin-bottom:2px;letter-spacing:3px}
+.cert-akademie .cert-sub{font-size:11px;color:#8a7d5e;letter-spacing:5px;text-transform:uppercase;margin-bottom:16px}
+.cert-akademie .cert-hr{width:200px;height:2px;background:linear-gradient(90deg,transparent,#c5a54e,transparent);margin:10px auto}
+.cert-akademie .cert-body{font-size:14px;line-height:1.7;color:#3d3422;margin-bottom:8px}
+.cert-akademie .cert-name{font-size:32px;font-weight:700;background:linear-gradient(135deg,#c5a54e,#e8c84e,#c5a54e);background-size:200% auto;animation:goldShimmer 3s linear infinite;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin:12px 0;font-style:italic}
+.cert-akademie .cert-seal-wrap{margin:12px auto;position:relative;width:90px;height:90px}
+.cert-akademie .cert-seal-ring{position:absolute;inset:0;border:3px solid #c5a54e;border-radius:50%;opacity:.3}
+.cert-akademie .cert-seal{width:76px;height:76px;margin:7px;background:radial-gradient(circle at 35% 35%,#e8c84e,#c5a54e,#8a6914);border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 16px rgba(160,134,54,.5),inset 0 2px 4px rgba(255,255,255,.3)}
+.cert-akademie .cert-stat{background:rgba(197,165,78,.12);color:#8a6914;border:1px solid rgba(197,165,78,.25)}
+.cert-akademie .cert-badge-item{background:rgba(197,165,78,.15);border:1px solid rgba(197,165,78,.3)}
+.cert-akademie .cert-date{font-size:11px;color:#8a7d5e;margin-top:8px;font-style:italic}
+.cert-hacker{background:#050505;border:2px solid #00ff41;padding:0;font-family:var(--mono);color:#00ff41;position:relative;overflow:hidden;height:100%;display:flex;flex-direction:column;justify-content:center;box-shadow:0 0 30px rgba(0,255,65,.15),inset 0 0 60px rgba(0,255,65,.03);animation:neonPulse 4s ease-in-out infinite}
+.cert-hacker::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(transparent,transparent 2px,rgba(0,255,65,.025) 2px,rgba(0,255,65,.025) 4px);pointer-events:none;z-index:1}
+.cert-hacker::after{content:'> > > CERTIFIED > > > CERTIFIED > > > CERTIFIED > > >';position:absolute;bottom:0;left:0;right:0;font-size:9px;color:rgba(0,255,65,.08);letter-spacing:3px;padding:4px;white-space:nowrap;overflow:hidden;z-index:1}
+.cert-hacker .cert-inner{position:relative;z-index:2;padding:30px 32px}
+.cert-hacker .cert-matrix-col{position:absolute;top:-100%;font-size:11px;color:#00ff41;opacity:.08;z-index:0;font-family:var(--mono);line-height:1.1;animation:matrixFall linear infinite;white-space:pre}
+.cert-hacker .cert-title{font-size:22px;font-weight:700;text-shadow:0 0 15px rgba(0,255,65,.6);margin-bottom:4px}
+.cert-hacker .cert-access{font-size:32px;font-weight:700;color:#00d4ff;text-shadow:0 0 30px rgba(0,212,255,.6),0 0 60px rgba(0,212,255,.2);margin:14px 0;animation:glitch 4s infinite;letter-spacing:4px}
+.cert-hacker .cert-body{font-size:12px;line-height:2;color:#33cc55}
+.cert-hacker .cert-name{font-size:24px;color:#00d4ff;margin:12px 0;text-shadow:0 0 10px rgba(0,212,255,.4)}
+.cert-hacker .cert-prompt{color:#444;font-size:11px}
+.cert-hacker .cert-prompt span{color:#00ff41}
+.cert-hacker .cursor-blink{animation:blink 1s step-end infinite}
+.cert-hacker .cert-hex-seal{width:70px;height:70px;margin:12px auto;border:2px solid #00ff41;border-radius:50%;display:flex;align-items:center;justify-content:center;position:relative;box-shadow:0 0 15px rgba(0,255,65,.2)}
+.cert-hacker .cert-stat{background:rgba(0,255,65,.08);color:#00ff41;border:1px solid rgba(0,255,65,.2)}
+.cert-hacker .cert-badge-item{background:rgba(0,255,65,.08);border:1px solid rgba(0,255,65,.2)}
+.cert-pixel{background:linear-gradient(180deg,#0f0f2e,#1a1a3e,#0f0f2e);border:6px solid #ffd700;padding:0;text-align:center;color:#fff;font-family:var(--font);position:relative;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;overflow:hidden;box-shadow:inset 0 0 80px rgba(255,215,0,.05)}
+.cert-pixel .cert-inner{position:relative;z-index:1;padding:28px 24px;width:100%}
+.cert-pixel .cert-complete{font-size:20px;color:#00e676;margin:6px 0;animation:pixelBlink 1.2s step-end infinite;text-shadow:0 0 10px rgba(0,230,118,.4);letter-spacing:3px;font-weight:900}
+.cert-pixel .cert-title{font-size:32px;font-weight:900;color:#ffd700;text-transform:uppercase;letter-spacing:5px;text-shadow:4px 4px 0 #e4002b}
+.cert-pixel .cert-name{font-size:26px;font-weight:900;color:#fff;margin:14px 0;text-shadow:2px 2px 0 rgba(0,0,0,.5)}
+.cert-pixel .cert-stars{font-size:28px;margin:8px 0;letter-spacing:6px;color:#ffd700;text-shadow:0 0 10px rgba(255,215,0,.4)}
+.cert-pixel .cert-body{font-size:12px;color:#aaa;line-height:1.7}
+.cert-pixel .cert-score{font-size:18px;color:#ff4757;font-weight:900;margin-top:6px;text-shadow:2px 2px 0 rgba(0,0,0,.5);letter-spacing:2px}
+.cert-pixel .cert-xp-bar{width:200px;height:14px;background:#111;border:2px solid #ffd700;margin:8px auto;position:relative;overflow:hidden}
+.cert-pixel .cert-xp-fill{height:100%;background:repeating-linear-gradient(90deg,#ffd700 0px,#ffd700 8px,#ffaa00 8px,#ffaa00 16px);box-shadow:0 0 8px rgba(255,215,0,.4)}
+.cert-pixel .cert-xp-label{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:900;color:#fff;text-shadow:1px 1px 0 #000;z-index:1}
+.cert-pixel .cert-stat{background:rgba(255,215,0,.1);color:#ffd700;border:2px solid rgba(255,215,0,.3)}
+.cert-pixel .cert-badge-item{background:rgba(255,215,0,.1);border:2px solid rgba(255,215,0,.25)}
+.cert-zukunft{background:linear-gradient(135deg,#0a0a2e,#1a0a3e,#0a1a3e);border:1px solid rgba(255,255,255,.1);border-radius:20px;padding:0;text-align:center;color:#fff;font-family:var(--font);position:relative;overflow:hidden;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.cert-zukunft::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(99,102,241,.15),rgba(236,72,153,.15),rgba(245,158,11,.15),rgba(34,197,94,.15),rgba(99,102,241,.15));background-size:400% 400%;animation:aurora 8s ease infinite;pointer-events:none}
+.cert-zukunft .cert-inner{position:relative;z-index:1;padding:30px 28px;width:100%}
+.cert-zukunft .cert-particle{position:absolute;width:3px;height:3px;border-radius:50%;z-index:0}
+.cert-zukunft .cert-title{font-size:30px;font-weight:900;background:linear-gradient(135deg,#6366f1,#ec4899,#f59e0b,#22c55e);background-size:200% auto;animation:shimmer 4s linear infinite;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.cert-zukunft .cert-sub{font-size:11px;color:rgba(255,255,255,.5);letter-spacing:4px;text-transform:uppercase;margin-bottom:14px}
+.cert-zukunft .cert-name{font-size:28px;font-weight:700;margin:12px 0;background:linear-gradient(90deg,#a78bfa,#f472b6,#fbbf24);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.cert-zukunft .cert-body{font-size:13px;color:rgba(255,255,255,.65);line-height:1.7}
+.cert-zukunft .cert-seal-holo{width:80px;height:80px;margin:12px auto;border-radius:50%;background:conic-gradient(#6366f1,#ec4899,#f59e0b,#22c55e,#06b6d4,#6366f1);display:flex;align-items:center;justify-content:center;animation:holoSpin 6s linear infinite;box-shadow:0 0 30px rgba(99,102,241,.3)}
+.cert-zukunft .cert-seal-mid{width:68px;height:68px;border-radius:50%;border:2px solid rgba(255,255,255,.15);background:transparent;display:flex;align-items:center;justify-content:center;animation:holoSpin 10s linear infinite reverse}
+.cert-zukunft .cert-seal-inner{width:52px;height:52px;border-radius:50%;background:rgba(10,10,30,.9);display:flex;align-items:center;justify-content:center;backdrop-filter:blur(4px)}
+.cert-zukunft .cert-date{font-size:10px;color:rgba(255,255,255,.35);margin-top:10px;letter-spacing:2px}
+.cert-zukunft .cert-stat{background:rgba(99,102,241,.12);color:#a78bfa;border:1px solid rgba(99,102,241,.25)}
+.cert-zukunft .cert-badge-item{background:rgba(99,102,241,.1);border:1px solid rgba(99,102,241,.2)}
+.confetti-container{position:fixed;inset:0;pointer-events:none;z-index:600;overflow:hidden}
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.6);display:none;align-items:center;justify-content:center;z-index:500;padding:20px}
+.modal-overlay.active{display:flex}
+.modal{background:var(--card);border:1px solid var(--border);border-radius:var(--radius-lg);max-width:640px;width:100%;max-height:85vh;overflow-y:auto;padding:32px;position:relative}
+.modal-close{position:absolute;top:12px;right:12px;font-size:24px;color:var(--text-dim);background:none;border:none;cursor:pointer}
+@media(max-width:800px){
+.menu-btn{display:flex}
+.sidebar{transform:translateX(-100%)}
+.sidebar.open{transform:translateX(0)}
+.main{margin-left:0;padding:16px}
+}
+@media print{
+*{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}
+.site-header,.sidebar,.notif,.level-up-overlay,.confetti-container{display:none!important}
+.main{margin-left:0!important;padding:20px!important}
+.lesson-card{break-inside:avoid;page-break-inside:avoid}
+}
+
+.zoom-controls{position:fixed;bottom:16px;left:16px;display:flex;gap:4px;z-index:9999}
+.zoom-btn{width:32px;height:32px;border-radius:50%;border:1px solid var(--border,#2a3444);background:var(--bg2,#111827);color:var(--text,#d4dce8);cursor:pointer;font-size:15px;display:flex;align-items:center;justify-content:center;transition:all .2s;font-family:inherit;line-height:1}
+.zoom-btn:hover{border-color:var(--neon,#3b82f6);color:var(--neon,#3b82f6);transform:scale(1.1)}
+.zoom-btn:focus-visible{outline:2px solid var(--neon,#3b82f6);outline-offset:2px}
+.zoom-level{font-size:10px;position:absolute;top:-16px;left:50%;transform:translateX(-50%);color:var(--text-dim,#8899aa);white-space:nowrap;pointer-events:none}
+
+/* A11y: Print improvements */
+@media print{body{background:#fff!important;color:#000!important}.cert-overlay,.modal-overlay,.level-up-overlay,.theme-overlay,.zoom-controls{display:none!important}.lesson-card,.quiz-section,.boss-section,.interactive-area{break-inside:avoid;page-break-inside:avoid}}
+
+/* Audio/Speech */
+.tts-btn{background:none;border:none;cursor:pointer;font-size:.9em;opacity:.5;transition:all .2s;vertical-align:middle;margin-left:8px;padding:2px 6px;border-radius:4px}
+.tts-btn:hover{opacity:1;background:var(--bg2)}.tts-btn.speaking{opacity:1;color:var(--neon);animation:tts-pulse 1s infinite}
+@keyframes tts-pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.15)}}
+.tts-bar{display:flex;align-items:center;gap:8px;padding:6px 12px;background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);margin:8px 0;font-size:.8rem;flex-wrap:wrap}
+.tts-bar select{background:var(--bg);color:var(--text);border:1px solid var(--border);border-radius:4px;padding:2px 6px;font-size:.78rem}
+.tts-bar button{background:none;border:1px solid var(--border);border-radius:4px;padding:2px 8px;cursor:pointer;color:var(--text);font-size:.8rem}
+.tts-bar button:hover{background:var(--bg)}
+.speech-ex{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:16px;margin:12px 0;text-align:center}
+.speech-ex h4{margin:0 0 8px;font-size:1rem}
+.mic-btn{font-size:1.6em;background:none;border:2px solid var(--neon);border-radius:50%;width:52px;height:52px;cursor:pointer;transition:all .3s;color:var(--text);display:inline-flex;align-items:center;justify-content:center}
+.mic-btn:hover{background:var(--neon);color:var(--bg)}.mic-btn.rec{background:#ef4444;border-color:#ef4444;color:#fff;animation:tts-pulse 1s infinite}
+.sr-res{margin-top:8px;padding:6px 10px;border-radius:4px;font-weight:600;font-size:.85rem;display:inline-block}
+.sr-res.good{background:#22c55e22;color:#22c55e}.sr-res.retry{background:#f59e0b22;color:#f59e0b}
+.sr-na{font-size:.8rem;color:var(--text-dim);margin-top:8px}
+</style>
+</head>
+<body>
+<a href="#mainContent" class="skip-nav" style="position:absolute;top:-50px;left:8px;background:var(--neon);color:#fff;padding:8px 16px;z-index:9999;border-radius:0 0 8px 8px;font-weight:700;text-decoration:none">Zum Inhalt springen</a>
+<header class="site-header">
+<button class="menu-btn" onclick="toggleSidebar()" aria-label="Menu">&#9776;</button>
+<div class="header-logo">
+<svg viewBox="0 0 40 40" width="40" height="40" fill="none" aria-hidden="true">
+<rect x="4" y="4" width="32" height="32" rx="8" fill="var(--neon-dim)" stroke="var(--neon)" stroke-width="1.5"/>
+<text x="20" y="26" text-anchor="middle" font-size="18" font-weight="900" fill="var(--neon)">T</text>
+</svg>
+<div class="header-logo-text">
+<div class="header-logo-main">TextProfi</div>
+<div class="header-logo-sub">Deutsch Klasse 7-10</div>
+</div>
+</div>
+<div class="header-right">
+<div class="header-xp"><span id="headerLevel">Level 1</span><div class="header-xp-bar"><div class="header-xp-fill" style="width:0%"></div></div><span id="headerXP">0 XP</span></div>
+<div class="header-streak" id="headerStreak">&#128293; 0</div>
+<div class="theme-picker-wrap">
+<button class="theme-picker-btn" onclick="toggleThemePicker()" aria-label="Theme wählen">&#127912;</button>
+<div class="theme-picker-dd" id="themePickerDD"></div>
+</div>
+<button class="theme-toggle" onclick="toggleMode()" aria-label="Dark/Light umschalten">&#127769;</button>
+</div>
+</header>
+<nav class="sidebar" id="sidebar" role="navigation" aria-label="Module">
+<div class="sidebar-section">
+<div class="sidebar-level">
+<div class="sidebar-level-title" id="sidebarLevel">Wort-Neuling</div>
+<div class="sidebar-level-sub" id="sidebarXP">0 XP</div>
+<div class="sidebar-xp-bar"><div class="sidebar-xp-fill" id="sidebarXPFill" style="width:0%"></div></div>
+</div>
+</div>
+<div class="sidebar-section">
+<div class="sidebar-label">Module</div>
+<div id="sidebarModules"></div>
+</div>
+<div class="sidebar-section" style="border-top:1px solid var(--border);padding-top:12px;margin-top:12px">
+<a class="mod-link" onclick="showBadges()"><span class="mod-icon">&#127941;</span>Abzeichen</a>
+<a class="mod-link" onclick="showStats()"><span class="mod-icon">&#128202;</span>Statistik</a>
+<a class="mod-link" onclick="showCert()"><span class="mod-icon">&#127891;</span>Urkunde</a>
+</div>
+<div class="sidebar-section" style="border-top:1px solid var(--border);padding-top:12px;margin-top:12px">
+<a class="mod-link" onclick="exportData()"><span class="mod-icon">&#128190;</span>Speichern</a>
+    <a class="mod-link" onclick="exportFortschritt()"><span class="mod-icon">📄</span>Fortschritt (TXT)</a>
+<label class="mod-link" style="cursor:pointer"><span class="mod-icon">&#128194;</span>Laden<input type="file" accept=".json" onchange="importData(event)" style="display:none"></label>
+<a class="mod-link" onclick="if(confirm('Wirklich alles zurücksetzen?')){localStorage.removeItem(STORAGE_KEY);location.reload()}" style="color:var(--danger)"><span class="mod-icon">&#128465;</span>Zurücksetzen</a>
+</div>
+<div style="padding:16px 8px 8px;border-top:1px solid var(--border);margin-top:12px;font-size:11px;color:var(--text-dim)">
+<a onclick="showImpressum()" style="cursor:pointer;color:var(--text-dim)">Impressum</a> &middot;
+<a onclick="showDatenschutz()" style="cursor:pointer;color:var(--text-dim)">Datenschutz</a>
+</div>
+</nav>
+<main class="main" id="mainContent">
+<div class="welcome-screen" id="welcomeScreen">
+<div class="welcome-box">
+<div style="font-size:64px;margin-bottom:16px">&#128214;</div>
+<h1>TextProfi</h1>
+<p class="ws-sub">Werde zum Textprofi — von Textanalyse und Erörterung bis Gedichtinterpretation und kreativem Schreiben!</p>
+<input type="text" id="nameInput" placeholder="Dein Name" maxlength="24" aria-label="Dein Name" oninput="document.getElementById('startBtn').disabled=!this.value.trim()">
+<br>
+<button class="ws-start" id="startBtn" disabled onclick="startApp()">Los geht's! &#128214;</button>
+</div>
+</div>
+<div id="moduleContent" style="display:none"></div>
+<div id="badgesView" style="display:none"></div>
+<div id="statsView" style="display:none"></div>
+</main>
+<div class="notif" id="notif" role="status" aria-live="polite" aria-atomic="true"><div class="notif-title" id="notifTitle"></div><div class="notif-text" id="notifText"></div></div>
+<div class="level-up-overlay" id="levelUpOverlay"><div class="level-up-box" id="levelUpBox"></div></div>
+<div class="confetti-container" id="confetti"></div>
+<div class="cert-overlay" id="certOverlay" role="dialog" aria-label="Urkunde" aria-modal="true">
+<div class="cert-picker" id="certPicker"></div>
+<div class="cert-frame" id="certFrame"></div>
+<div class="cert-actions">
+<button onclick="printCert()">&#128424; Drucken / PDF</button>
+<button onclick="closeCert()">Schließen</button>
+</div>
+</div>
+<div class="modal-overlay" id="impressumOverlay">
+<div class="modal">
+<button class="modal-close" onclick="document.getElementById('impressumOverlay').classList.remove('active')">&times;</button>
+<h2>Impressum</h2>
+<p><strong>&copy; 2026 GZ AI Stacks - Gerd Zimmermann</strong></p>
+<p>TextProfi — Interaktive Deutsch-Lernapp für Klasse 7-10.</p>
+<p>Entwickelt mit Claude Code (Anthropic).</p>
+<p>Kontakt: gz-ai-stacks@example.com</p>
+</div>
+</div>
+<div class="modal-overlay" id="datenschutzOverlay">
+<div class="modal">
+<button class="modal-close" onclick="document.getElementById('datenschutzOverlay').classList.remove('active')">&times;</button>
+<h2>Datenschutzerklärung</h2>
+<p>Diese App speichert Daten <strong>ausschließlich lokal</strong> auf Ihrem Gerät.</p>
+<ul>
+<li>Keine Cookies</li>
+<li>Kein Tracking oder Analytics</li>
+<li>Keine externen Ressourcen</li>
+<li>Keine Registrierung</li>
+<li>Alle Daten verbleiben auf Ihrem Gerät</li>
+</ul>
+<p>Sie können Ihre gespeicherten Daten jederzeit über die "Zurücksetzen"-Funktion löschen.</p>
+</div>
+</div>
+<script>
+function showImpressum(){document.getElementById('impressumOverlay').classList.add('active')}
+function showDatenschutz(){document.getElementById('datenschutzOverlay').classList.add('active')}
+
+// === XOR Quiz Encryption ===
+
+// === Audio (TTS) ===
+const _synth=window.speechSynthesis,_LANG='de-DE';let _ttsOn=false,_ttsRate=1,_ttsTimer=null;
+function speakLesson(i){if(_ttsOn){stopTTS();return}const c=document.querySelectorAll('.lesson-card');if(!c[i]||!_synth)return;stopTTS();const u=new SpeechSynthesisUtterance(c[i].innerText);u.lang=_LANG;u.rate=_ttsRate;u.onstart=()=>{_ttsOn=true;updTTSUI();startTTSTimer()};u.onend=()=>{_ttsOn=false;updTTSUI();clearTTSTimer()};u.onerror=()=>{_ttsOn=false;updTTSUI();clearTTSTimer()};_synth.speak(u);showTTSBar()}
+function speakText(t,lang){if(!_synth)return;stopTTS();const u=new SpeechSynthesisUtterance(t);u.lang=lang||_LANG;u.rate=_ttsRate;u.onstart=()=>{_ttsOn=true;updTTSUI();startTTSTimer()};u.onend=()=>{_ttsOn=false;updTTSUI();clearTTSTimer()};u.onerror=()=>{_ttsOn=false;updTTSUI();clearTTSTimer()};_synth.speak(u)}
+function stopTTS(){if(_synth){_synth.cancel()}_ttsOn=false;updTTSUI();clearTTSTimer()}
+function updTTSUI(){document.querySelectorAll('.tts-btn').forEach(b=>b.classList.toggle('speaking',_ttsOn))}
+function setTTSRate(r){_ttsRate=parseFloat(r)}
+function startTTSTimer(){clearTTSTimer();_ttsTimer=setInterval(()=>{if(_synth&&_synth.speaking&&!_synth.paused){_synth.pause();_synth.resume()}},10000)}
+function clearTTSTimer(){if(_ttsTimer){clearInterval(_ttsTimer);_ttsTimer=null}}
+function showTTSBar(){if(document.getElementById('ttsBar'))return;const mc=document.getElementById('moduleContent');if(!mc)return;const b=document.createElement('div');b.className='tts-bar';b.id='ttsBar';b.innerHTML='\u{1F50A} <select onchange="setTTSRate(this.value)"><option value="0.7">Langsam</option><option value="1" selected>Normal</option><option value="1.3">Schnell</option></select> <button onclick="stopTTS()">\u25A0 Stopp</button>';mc.prepend(b)}
+
+// === Audio (STT) ===
+const _SR=window.SpeechRecognition||window.webkitSpeechRecognition;let _rec=null,_recCB=null;
+function initSR(){if(!_SR)return false;_rec=new _SR();_rec.lang=_LANG;_rec.continuous=false;_rec.interimResults=false;_rec.onresult=e=>{const t=e.results[0][0].transcript.toLowerCase().trim();if(_recCB)_recCB(t,e.results[0][0].confidence)};_rec.onerror=()=>{document.querySelectorAll('.mic-btn').forEach(b=>b.classList.remove('rec'))};_rec.onend=()=>{document.querySelectorAll('.mic-btn').forEach(b=>b.classList.remove('rec'))};return true}
+function startSR(cb){if(!_rec&&!initSR()){cb(null,0);return}_recCB=cb;document.querySelectorAll('.mic-btn').forEach(b=>b.classList.add('rec'));try{_rec.start()}catch(e){cb(null,0)}}
+let _spIdx=0,_spSen=[];
+function initSpEx(m){const mod=modules[m];const d=document.createElement('div');d.innerHTML=mod.lessons.map(l=>l.content).join(' ');_spSen=d.textContent.split(/[.!?]+/).map(s=>s.trim()).filter(s=>s.length>15&&s.length<100).slice(0,5);_spIdx=0;renderSpEx()}
+function renderSpEx(){const el=document.getElementById('speechExArea');if(!el)return;if(!_spSen.length){el.innerHTML='<p class="sr-na">Keine S\u00E4tze f\u00FCr Sprach\u00FCbung verf\u00FCgbar.</p>';return}const s=_spSen[_spIdx].replace(/"/g,'&quot;').replace(/'/g,'&#39;');el.innerHTML='<p style="font-size:1.05em;color:var(--neon);margin:10px 0;font-style:italic">&bdquo;'+_spSen[_spIdx]+'&ldquo;</p><div style="display:flex;justify-content:center;gap:16px;margin:12px 0"><button class="tts-btn" onclick="speakText(this.closest(\'.speech-ex\').querySelector(\'p\').textContent)" style="font-size:1.5em;opacity:1" title="Vorlesen">&#128266;</button>'+(_SR?'<button class="mic-btn" onclick="doSpCheck()" title="Nachsprechen">&#127908;</button>':'<p class="sr-na">Spracherkennung nicht verf\u00FCgbar.</p>')+'</div><div id="srRes"></div><div style="font-size:.78rem;color:var(--text-dim);margin-top:8px">Satz '+(_spIdx+1)+' von '+_spSen.length+'</div>'}
+function doSpCheck(){const expected=_spSen[_spIdx].toLowerCase().replace(/[^a-z\u00e4\u00f6\u00fc\u00df\u00e9\u00e8\u00ea\u00e0 0-9]/g,'');startSR((spoken,conf)=>{const el=document.getElementById('srRes');if(!el)return;if(!spoken){el.innerHTML='<span class="sr-res retry">Nicht erkannt \u2014 nochmal versuchen</span>';return}const sim=calcSim(spoken.replace(/[^a-z\u00e4\u00f6\u00fc\u00df\u00e9\u00e8\u00ea\u00e0 0-9]/g,''),expected);if(sim>.45){el.innerHTML='<span class="sr-res good">\u2714 Gut! ('+Math.round(sim*100)+'%)</span>';_spIdx++;setTimeout(()=>{if(_spIdx<_spSen.length)renderSpEx();else{el.innerHTML='<span class="sr-res good">\u2714 Alle S\u00E4tze geschafft!</span>';if(typeof addXP==='function'&&typeof state!=='undefined'&&!state.interactiveResults['sp_'+state.currentModule]){state.interactiveResults['sp_'+state.currentModule]=true;addXP(30,'Sprach\u00FCbung');saveState()}}},1200)}else{el.innerHTML='<span class="sr-res retry">\u21BB Nochmal: &quot;'+spoken+'&quot;</span>'}})}
+function calcSim(a,b){const wa=a.split(/\s+/).filter(Boolean),wb=b.split(/\s+/).filter(Boolean);if(!wa.length||!wb.length)return 0;let c=0;wa.forEach(w=>{if(wb.some(x=>x.includes(w)||w.includes(x)))c++});return c/Math.max(wa.length,wb.length)}
+
+
+/* === Fortschritt-Export (TXT) === */
+function exportFortschritt(){
+  var t=document.title.replace(/\s*[\u2014\u2013|].*/,'').trim();
+  var d=new Date();
+  var dd=String(d.getDate()).padStart(2,'0');
+  var mm=String(d.getMonth()+1).padStart(2,'0');
+  var yyyy=d.getFullYear();
+  var datum=dd+'.'+mm+'.'+yyyy;
+  var datumFile=yyyy+'-'+mm+'-'+dd;
+
+  var mc=state.modulesCompleted||[];
+  var total=modules.length;
+  var done=mc.length;
+
+  var lvl=0;
+  for(var i=LEVELS.length-1;i>=0;i--){if(state.xp>=LEVELS[i].xp){lvl=i;break;}}
+  var lvlName=LEVELS[lvl]?LEVELS[lvl].name:'';
+
+  var sep='\u2550'.repeat(42);
+  var sep2='\u2500'.repeat(42);
+  var lines=[];
+  lines.push(sep);
+  lines.push('  LERNFORTSCHRITT \u2014 '+t);
+  lines.push(sep);
+  lines.push('');
+  lines.push('  Sch\u00FCler:   '+(state.name||'(kein Name)'));
+  lines.push('  Datum:     '+datum);
+  lines.push('  Level:     '+(lvl+1)+' \u2014 '+lvlName+' ('+state.xp+' XP)');
+  lines.push('  Streak:    '+(state.streak||0)+' Tage in Folge');
+  lines.push('');
+  lines.push(sep2);
+  lines.push('  MODULE ('+done+'/'+total+' abgeschlossen)');
+  lines.push(sep2);
+  lines.push('');
+
+  for(var m=0;m<modules.length;m++){
+    var mod=modules[m];
+    var isDone=mc.indexOf(m)!==-1;
+    var icon=isDone?'\u2705':'\u2B1C';
+    var line='  '+icon+' Modul '+(m+1)+': '+mod.title;
+    if(isDone){
+      var qs=state.quizResults&&state.quizResults[m]!=null?state.quizResults[m]:'?';
+      var bs=state.bossResults&&state.bossResults[m]!=null?state.bossResults[m]:'?';
+      line+='\n        Quiz: '+qs+'/5 | Boss: '+bs+'/3';
+    }
+    lines.push(line);
+  }
+
+  var earnedBadges=(state.badges||[]);
+  lines.push('');
+  lines.push(sep2);
+  lines.push('  ABZEICHEN ('+earnedBadges.length+'/'+BADGES.length+')');
+  lines.push(sep2);
+  lines.push('');
+  if(earnedBadges.length===0){
+    lines.push('  (noch keine)');
+  }else{
+    for(var b=0;b<BADGES.length;b++){
+      if(earnedBadges.indexOf(BADGES[b].id)!==-1){
+        lines.push('  '+BADGES[b].icon+' '+BADGES[b].name);
+      }
+    }
+  }
+
+  lines.push('');
+  lines.push(sep);
+  lines.push('  (c) 2026 GZ AI Stacks \u2014 Gerd Zimmermann');
+  lines.push(sep);
+
+  var txt=lines.join('\n');
+  var safeName=(state.name||'Schueler').replace(/[^a-zA-Z0-9\u00C0-\u017F]/g,'_');
+  var fileName='Fortschritt_'+t.replace(/[^a-zA-Z0-9\u00C0-\u017F]/g,'_')+'_'+safeName+'_'+datumFile+'.txt';
+  var a=document.createElement('a');
+  a.download=fileName;
+  a.href=URL.createObjectURL(new Blob([txt],{type:'text/plain;charset=utf-8'}));
+  a.click();
+}
+
+const _qk=[0x4A,0x7F,0x2B,0x61,0x5C,0x3E,0x18,0x73];
+function _d(h,i){return h^_qk[i%_qk.length]}
+
+// === Levels ===
+const LEVELS=[
+{name:'Wort-Neuling',xp:0},{name:'Satz-Starter',xp:40},{name:'Grammatik-Anf\u00E4nger',xp:100},
+{name:'Text-Entdecker',xp:180},{name:'Aufsatz-Schreiber',xp:280},{name:'Stil-Lehrling',xp:400},
+{name:'Analyse-Novize',xp:540},{name:'Er\u00F6rterungs-Kenner',xp:700},{name:'Lyrik-Forscher',xp:880},
+{name:'Rhetorik-Talent',xp:1080},{name:'Literatur-Kenner',xp:1300},{name:'Debattier-Profi',xp:1540},
+{name:'Sachtext-Experte',xp:1800},{name:'Interpretations-Ass',xp:2080},{name:'Sprachk\u00FCnstler',xp:2380},
+{name:'Text-Architekt',xp:2700},{name:'Germanist',xp:3040},{name:'Schiller-Scholar',xp:3400},
+{name:'Goethe-Kenner',xp:3780},{name:'Deutsch-Genie',xp:4200}
+];
+
+// === Badges ===
+const BADGES=[
+{id:'m0',name:'Analyse-Starter',icon:'\uD83D\uDD0D',desc:'Modul 1 abgeschlossen'},
+{id:'m1',name:'Argumentations-Held',icon:'\u2696\uFE0F',desc:'Modul 2 abgeschlossen'},
+{id:'m2',name:'Grammatik-Guru',icon:'\uD83D\uDCD0',desc:'Modul 3 abgeschlossen'},
+{id:'m3',name:'Stilmittel-Kenner',icon:'\uD83C\uDFAD',desc:'Modul 4 abgeschlossen'},
+{id:'m4',name:'Rechtschreib-Profi',icon:'\u2705',desc:'Modul 5 abgeschlossen'},
+{id:'m5',name:'Interpunktions-Meister',icon:'\u2757',desc:'Modul 6 abgeschlossen'},
+{id:'m6',name:'Lyrik-Experte',icon:'\uD83C\uDFB5',desc:'Modul 7 abgeschlossen'},
+{id:'m7',name:'Sachtext-Analytiker',icon:'\uD83D\uDCCA',desc:'Modul 8 abgeschlossen'},
+{id:'m8',name:'Kreativ-Autor',icon:'\u270D\uFE0F',desc:'Modul 9 abgeschlossen'},
+{id:'m9',name:'Kommunikations-K\u00F6nig',icon:'\uD83D\uDDE3\uFE0F',desc:'Modul 10 abgeschlossen'},
+{id:'first_quiz',name:'Quiz-Neuling',icon:'\u2753',desc:'Erstes Quiz bestanden'},
+{id:'perfect_quiz',name:'Perfektionist',icon:'\uD83D\uDC8E',desc:'Quiz mit 5/5 bestanden'},
+{id:'first_boss',name:'Boss-Bezwinger',icon:'\uD83D\uDC51',desc:'Erste Boss-Challenge bestanden'},
+{id:'all_bosses',name:'Endgegner',icon:'\uD83C\uDFC6',desc:'Alle Boss-Challenges bestanden'},
+{id:'streak3',name:'Durchstarter',icon:'\uD83D\uDD25',desc:'3 Tage in Folge gelernt'},
+{id:'streak7',name:'Wochenkrieger',icon:'\u2694\uFE0F',desc:'7 Tage in Folge gelernt'},
+{id:'half_done',name:'Halbzeit',icon:'\u23F3',desc:'5 Module abgeschlossen'},
+{id:'speed_quiz',name:'Blitz-Denker',icon:'\u26A1',desc:'Quiz in unter 60 Sekunden'},
+{id:'explorer',name:'Entdecker',icon:'\uD83D\uDDFA\uFE0F',desc:'Alle Module angesehen'},
+{id:'graduate',name:'Absolvent',icon:'\uD83C\uDF93',desc:'Alle 10 Module abgeschlossen'}
+];
+
+// === Theme Config ===
+const THEME_CONFIG={
+cyber:{name:'Cyber Neon',emoji:'\uD83D\uDDA5',color:'#3b82f6',desc:'Futuristisch & Digital'},
+retro:{name:'Retro Arcade',emoji:'\uD83D\uDD79',color:'#ffd700',desc:'80er Arcade-Feeling'},
+nature:{name:'Nature Forest',emoji:'\uD83C\uDF33',color:'#4ade80',desc:'Natürlich & Organisch'},
+space:{name:'Deep Space',emoji:'\uD83D\uDE80',color:'#c084fc',desc:'Kosmisch & Geheimnisvoll'},
+comic:{name:'Comic Pop',emoji:'\uD83D\uDCA5',color:'#ff6b6b',desc:'Bunt & Verspielt'},
+sketchy:{name:'Sketchy',emoji:'\u270D\uFE0F',color:'#d97706',desc:'Handgemacht & Warm'},
+'nature-code':{name:'Nature x Code',emoji:'\uD83C\uDF3F',color:'#10b981',desc:'Natur trifft Technik'},
+glass:{name:'Glasmorphism',emoji:'\uD83D\uDCA0',color:'#00d9ff',desc:'Modern & Transparent'}
+};
+
+// === Modules ===
+const modules=[
+{id:0,title:'Textanalyse Grundlagen',icon:'\uD83D\uDD0D',duration:'30 Min.',description:'Lerne die Grundlagen der Textanalyse: Aufbau, Methoden und Werkzeuge.',
+lessons:[
+{title:'Was ist eine Textanalyse?',content:'<p>Eine <strong>Textanalyse</strong> untersucht einen Text systematisch nach Inhalt, Sprache, Aufbau und Wirkung.</p><p><strong>Grundlegende Schritte:</strong></p><ul><li><strong>1. Lesen:</strong> Den Text mindestens zweimal gr\u00FCndlich lesen</li><li><strong>2. Markieren:</strong> Schlüsselw\u00F6rter, Stilmittel und Auffälligkeiten hervorheben</li><li><strong>3. Gliedern:</strong> Sinnabschnitte erkennen und zusammenfassen</li><li><strong>4. Analysieren:</strong> Sprache, Struktur und Wirkung untersuchen</li><li><strong>5. Schreiben:</strong> Die Analyse in einem strukturierten Text verfassen</li></ul><div class="info-box">\uD83D\uDCA1 <strong>Merke:</strong> Eine Textanalyse ist <strong>keine</strong> reine Zusammenfassung! Sie untersucht, <em>wie</em> und <em>warum</em> der Autor schreibt, nicht nur <em>was</em> er schreibt.</div>'},
+{title:'Aufbau einer Textanalyse',content:'<p>Jede Textanalyse folgt einem klaren <strong>Dreischritt</strong>:</p><p><strong>Einleitung:</strong></p><ul><li>Textart (z.B. Kurzgeschichte, Kommentar, Rede)</li><li>Titel und Autor</li><li>Erscheinungsjahr und -ort (wenn bekannt)</li><li>Thema in einem Satz</li></ul><p><strong>Hauptteil:</strong></p><ul><li>Inhaltliche Zusammenfassung (kurz!)</li><li>Analyse der Sprache (Wortwahl, Satzbau, Stilmittel)</li><li>Analyse der Struktur (Aufbau, Spannungsbogen)</li><li>Analyse der Wirkung auf den Leser</li></ul><p><strong>Schluss:</strong></p><ul><li>Zusammenfassung der wichtigsten Ergebnisse</li><li>Bewertung / persönliche Stellungnahme (wenn gefordert)</li></ul><div class="info-box">\uD83D\uDCA1 <strong>Tipp:</strong> Beginne die Einleitung mit einem <strong>Basissatz</strong>: \"In dem/der [Textart] \\\"[Titel]\\\" von [Autor] aus dem Jahr [Jahr] geht es um [Thema].\"</div>'},
+{title:'Textarten unterscheiden',content:'<p>Im Deutschunterricht begegnen dir verschiedene <strong>Textarten</strong>:</p><p><strong>Literarische Texte (fiktional):</strong></p><ul><li><strong>Kurzgeschichte:</strong> Kurze Erz\u00E4hlung, offener Anfang/Ende, Wendepunkt</li><li><strong>Novelle:</strong> Mittellange Erz\u00E4hlung mit \"unerh\u00F6rter Begebenheit\"</li><li><strong>Roman:</strong> Lange Erz\u00E4hlung mit komplexer Handlung</li><li><strong>Gedicht:</strong> Lyrischer Text mit Versen, Reimen, Metrum</li><li><strong>Drama:</strong> Text f\u00FCr die Bühne mit Dialogen und Regieanweisungen</li></ul><p><strong>Sachtexte (nicht-fiktional):</strong></p><ul><li><strong>Bericht:</strong> Sachlich, informierend, W-Fragen</li><li><strong>Kommentar:</strong> Meinungsbetont, argumentativ</li><li><strong>Reportage:</strong> Lebendig, anschaulich, mit persönlichen Einruecken</li><li><strong>Rede:</strong> An ein Publikum gerichtet, \u00FCberzeugend</li></ul><div class="info-box">\uD83D\uDCA1 <strong>Merke:</strong> Die Textart bestimmt, <em>welche</em> Analysewerkzeuge du brauchst. Ein Gedicht analysiert man anders als einen Zeitungskommentar!</div>'}
+],
+quiz:[
+{q:'Was ist der erste Schritt bei einer Textanalyse?',a:['Sofort den Hauptteil schreiben','Den Text gr\u00FCndlich lesen und markieren','Die eigene Meinung aufschreiben','Den Autor recherchieren'],_h:0x4B},
+{q:'Was geh\u00F6rt in die Einleitung einer Textanalyse?',a:['Titel, Autor, Textart und Thema','Nur die eigene Meinung','Eine ausführliche Nacherz\u00E4hlung','Stilmittel-Analyse'],_h:0x7F},
+{q:'Was ist eine Kurzgeschichte?',a:['Ein langer Roman','Ein Sachtext','Eine kurze Erz\u00E4hlung mit offenem Anfang und Ende','Ein Gedicht ohne Reime'],_h:0x29},
+{q:'Was untersucht man im Hauptteil?',a:['Nur den Inhalt','Nur die Rechtschreibung','Sprache, Struktur und Wirkung','Das Erscheinungsjahr'],_h:0x63},
+{q:'Was unterscheidet Analyse von Zusammenfassung?',a:['Nichts, beides ist dasselbe','Die Analyse ist k\u00FCrzer','Die Analyse untersucht das Wie und Warum','Die Zusammenfassung ist detaillierter'],_h:0x5E}
+],
+boss:[
+{q:'Warum beginnt eine Textanalyse mit einem Basissatz?',a:['Weil es Pflicht ist','Weil er dem Leser Orientierung \u00FCber Text, Autor und Thema gibt','Weil er den Text zusammenfasst','Weil der Lehrer es verlangt'],_h:0x4B},
+{q:'Wie erkennt man einen Kommentar?',a:['Er ist meinungsbetont und argumentativ','Er reimt sich','Er hat einen offenen Schluss','Er beantwortet W-Fragen sachlich'],_h:0x7F},
+{q:'Was bedeutet es, die Wirkung eines Textes zu analysieren?',a:['Den Text zu bewerten','Zu untersuchen, welche Reaktion der Text beim Leser ausl\u00F6st','Die Rechtschreibfehler zu z\u00E4hlen','Den Text nachzuerz\u00E4hlen'],_h:0x2A}
+]},
+{id:1,title:'Er\u00F6rterung schreiben',icon:'\u2696\uFE0F',duration:'30 Min.',description:'Lerne, wie du eine \u00FCberzeugende Er\u00F6rterung aufbaust und argumentierst.',
+lessons:[
+{title:'Lineare und dialektische Er\u00F6rterung',content:'<p>Die <strong>Er\u00F6rterung</strong> ist eine der wichtigsten Aufsatzformen. Man unterscheidet zwei Typen:</p><p><strong>Lineare Er\u00F6rterung (steigernde):</strong></p><ul><li>Nur <strong>eine Seite</strong> wird beleuchtet (Pro ODER Contra)</li><li>Argumente werden <strong>vom schw\u00E4chsten zum st\u00E4rksten</strong> geordnet</li><li>Typische Aufgabe: \"Erkl\u00E4re, warum Lesen wichtig ist.\"</li></ul><p><strong>Dialektische Er\u00F6rterung (Pro-Contra):</strong></p><ul><li><strong>Beide Seiten</strong> werden beleuchtet (Pro UND Contra)</li><li>Aufbau: These - Antithese - Synthese</li><li>Typische Aufgabe: \"Sollen Handys in der Schule erlaubt sein?\"</li></ul><div class="info-box">\uD83D\uDCA1 <strong>Merke:</strong> Bei der dialektischen Er\u00F6rterung beginne mit der Seite, die du <strong>nicht</strong> vertrittst, und ende mit deiner eigenen Position!</div>'},
+{title:'Argumente aufbauen',content:'<p>Ein gutes <strong>Argument</strong> besteht aus drei Teilen — der <strong>Dreischritt</strong>:</p><ul><li><strong>1. Behauptung (These):</strong> Was willst du sagen?</li><li><strong>2. Begr\u00FCndung:</strong> Warum ist das so?</li><li><strong>3. Beispiel / Beleg:</strong> Ein konkretes Beispiel, das deine These stützt</li></ul><p><strong>Beispiel:</strong></p><p><em>These:</em> Lesen foerdert die Sprachkompetenz.<br><em>Begr\u00FCndung:</em> Wer viel liest, erweitert seinen Wortschatz und lernt komplexe Satzstrukturen kennen.<br><em>Beispiel:</em> Studien zeigen, dass Vielleser im Durchschnitt 50% mehr W\u00F6rter aktiv verwenden als Wenigleser.</p><p><strong>Nützliche Formulierungen:</strong></p><ul><li>Erstens... Zweitens... Drittens...</li><li>Ein weiteres Argument ist...</li><li>Hinzu kommt, dass...</li><li>Dies zeigt sich beispielsweise daran, dass...</li><li>Abschliessend l\u00E4sst sich sagen...</li></ul><div class="info-box">\uD83D\uDCA1 <strong>Tipp:</strong> Ein Argument ohne Beispiel wirkt <strong>schwach</strong>. Ein Beispiel ohne Begr\u00FCndung wirkt <strong>beliebig</strong>. Nur der Dreischritt \u00FCberzeugt!</div>'},
+{title:'Einleitung und Schluss der Er\u00F6rterung',content:'<p>Die <strong>Einleitung</strong> soll das Thema vorstellen und Interesse wecken:</p><ul><li>Aktuellen Bezug herstellen (z.B. eine aktuelle Nachricht)</li><li>Eine provokante Frage stellen</li><li>Ein Zitat oder eine Statistik anführen</li><li>Ein persönliches Erlebnis schildern</li></ul><p><strong>Beispiel einer guten Einleitung:</strong></p><p><em>\"Laut einer aktuellen Studie verbringen Jugendliche t\u00E4glich mehr als drei Stunden am Smartphone. Dies wirft die Frage auf, ob eine st\u00E4rkere Regulierung der Bildschirmzeit sinnvoll w\u00E4re.\"</em></p><p>Der <strong>Schluss</strong> fasst zusammen und gibt eine eigene Stellungnahme:</p><ul><li>Die wichtigsten Argumente kurz zusammenfassen</li><li>Die eigene Position klar formulieren</li><li>Einen Ausblick geben oder zum Nachdenken anregen</li></ul><div class="info-box">\uD83D\uDCA1 <strong>Merke:</strong> Im Schluss duerfen <strong>keine neuen Argumente</strong> mehr kommen! Er rundet die Er\u00F6rterung ab.</div>'}
+],
+quiz:[
+{q:'Was ist eine dialektische Er\u00F6rterung?',a:['Eine Er\u00F6rterung mit nur einer Seite','Eine Er\u00F6rterung die Pro und Contra beleuchtet','Ein Bericht','Eine Gedichtanalyse'],_h:0x4B},
+{q:'Woraus besteht der Dreischritt eines Arguments?',a:['Behauptung, Begr\u00FCndung, Beispiel','Einleitung, Hauptteil, Schluss','These, Antithese, Synthese','Frage, Antwort, Bewertung'],_h:0x7F},
+{q:'Womit beginnt man bei einer dialektischen Er\u00F6rterung?',a:['Mit der eigenen Meinung','Mit dem st\u00E4rksten Argument','Mit der Seite die man NICHT vertritt','Mit dem Schluss'],_h:0x29},
+{q:'Was geh\u00F6rt NICHT in den Schluss?',a:['Eine Zusammenfassung','Die eigene Position','Ein Ausblick','Neue Argumente'],_h:0x62},
+{q:'Wie kann man eine Einleitung interessant gestalten?',a:['Mit einem langen Satz','Mit einem aktuellen Bezug oder einer Frage','Mit der Zusammenfassung des Textes','Mit dem st\u00E4rksten Argument'],_h:0x5D}
+],
+boss:[
+{q:'Warum ordnet man Argumente vom schw\u00E4chsten zum st\u00E4rksten?',a:['Weil die schw\u00E4chsten wichtiger sind','Damit das stärkste Argument am Ende am meisten Wirkung entfaltet','Weil es alphabetisch ist','Weil der Lehrer es verlangt'],_h:0x4B},
+{q:'Was unterscheidet These von Behauptung?',a:['Nichts, beides meint eine zu begr\u00FCndende Aussage','These ist l\u00E4nger','Behauptung braucht kein Beispiel','These ist nur mündlich'],_h:0x7F},
+{q:'Warum soll man mit der Gegenseite beginnen?',a:['Weil man sie zuerst widerlegen muss','Damit die eigene Position als letztes st\u00E4rker wirkt','Weil die Gegenseite wichtiger ist','Das ist eine Regel ohne Grund'],_h:0x2A}
+]},
+{id:2,title:'Grammatik Oberstufe',icon:'\uD83D\uDCD0',duration:'30 Min.',description:'Vertiefe dein Wissen \u00FCber Satzglieder, Nebens\u00E4tze und Konjunktiv.',
+lessons:[
+{title:'Satzglieder erkennen und bestimmen',content:'<p>Die wichtigsten <strong>Satzglieder</strong> im Deutschen:</p><table style="width:100%;border-collapse:collapse;margin:12px 0;font-size:13px"><tr style="background:var(--neon-dim)"><th style="padding:8px;border:1px solid var(--border)">Satzglied</th><th style="padding:8px;border:1px solid var(--border)">Frage</th><th style="padding:8px;border:1px solid var(--border)">Beispiel</th></tr><tr><td style="padding:6px;border:1px solid var(--border)"><strong>Subjekt</strong></td><td style="padding:6px;border:1px solid var(--border)">Wer oder was?</td><td style="padding:6px;border:1px solid var(--border)"><u>Der Hund</u> bellt laut.</td></tr><tr><td style="padding:6px;border:1px solid var(--border)"><strong>Pr\u00E4dikat</strong></td><td style="padding:6px;border:1px solid var(--border)">Was tut/geschieht?</td><td style="padding:6px;border:1px solid var(--border)">Der Hund <u>bellt</u> laut.</td></tr><tr><td style="padding:6px;border:1px solid var(--border)"><strong>Akkusativobjekt</strong></td><td style="padding:6px;border:1px solid var(--border)">Wen oder was?</td><td style="padding:6px;border:1px solid var(--border)">Er liest <u>ein Buch</u>.</td></tr><tr><td style="padding:6px;border:1px solid var(--border)"><strong>Dativobjekt</strong></td><td style="padding:6px;border:1px solid var(--border)">Wem?</td><td style="padding:6px;border:1px solid var(--border)">Er gibt <u>dem Kind</u> den Ball.</td></tr><tr><td style="padding:6px;border:1px solid var(--border)"><strong>Genitivobjekt</strong></td><td style="padding:6px;border:1px solid var(--border)">Wessen?</td><td style="padding:6px;border:1px solid var(--border)">Er bedarf <u>der Hilfe</u>.</td></tr><tr><td style="padding:6px;border:1px solid var(--border)"><strong>Adverbiale Bestimmung</strong></td><td style="padding:6px;border:1px solid var(--border)">Wo? Wann? Wie? Warum?</td><td style="padding:6px;border:1px solid var(--border)">Er liest <u>im Garten</u>.</td></tr></table><div class="info-box">\uD83D\uDCA1 <strong>Umstellprobe:</strong> Was sich <strong>gemeinsam verschieben</strong> l\u00E4sst, ist ein Satzglied: <em>Im Garten liest er ein Buch.</em> \u2192 \"Im Garten\" ist ein Satzglied.</div>'},
+{title:'Nebensatzarten',content:'<p>Im Deutschen gibt es verschiedene Arten von <strong>Nebens\u00E4tzen</strong>:</p><ul><li><strong>Kausalsatz</strong> (Grund): Er bleibt zu Hause, <em>weil</em> er krank ist.</li><li><strong>Konditionalsatz</strong> (Bedingung): <em>Wenn</em> es regnet, nehme ich den Schirm.</li><li><strong>Konzessivsatz</strong> (Einräumung): <em>Obwohl</em> er m\u00FCde war, lernte er weiter.</li><li><strong>Temporalsatz</strong> (Zeit): <em>Nachdem</em> er gegessen hatte, ging er spazieren.</li><li><strong>Finalsatz</strong> (Zweck): Er lernt fleissig, <em>damit</em> er die Pr\u00FCfung besteht.</li><li><strong>Relativsatz</strong>: Das Buch, <em>das</em> ich gelesen habe, war spannend.</li><li><strong>Konsekutivsatz</strong> (Folge): Er war so m\u00FCde, <em>dass</em> er einschlief.</li></ul><div class="info-box">\uD83D\uDCA1 <strong>Merke:</strong> Im Nebensatz steht das konjugierte Verb <strong>am Ende</strong>! Das ist das wichtigste Erkennungsmerkmal.</div>'},
+{title:'Der Konjunktiv I und II',content:'<p>Der <strong>Konjunktiv</strong> dr\u00FCckt Nicht-Wirkliches aus:</p><p><strong>Konjunktiv I</strong> (indirekte Rede):</p><ul><li>Er sagt, er <strong>sei</strong> krank. (statt: er ist krank)</li><li>Sie meint, sie <strong>habe</strong> keine Zeit.</li><li>Bildung: Infinitivstamm + Konjunktiv-Endung (-e, -est, -e, -en, -et, -en)</li></ul><p><strong>Konjunktiv II</strong> (W\u00FCnsche, irreale Bedingungen):</p><ul><li>Ich <strong>w\u00E4re</strong> gern reich. (Wunsch)</li><li><strong>H\u00E4tte</strong> ich Zeit, <strong>w\u00FCrde</strong> ich kommen. (irreale Bedingung)</li><li>Bildung: Präteritumstamm + Umlaut + Endung, oder <strong>w\u00FCrde + Infinitiv</strong></li></ul><p><strong>W\u00FCrde-Ersatzform:</strong> Statt \"ich huebe\" sagt man \"ich <strong>w\u00FCrde heben</strong>\" — die w\u00FCrde-Form ist im Alltag üblicher.</p><div class="info-box">\uD83D\uDCA1 <strong>Merke:</strong> Konjunktiv I = <strong>indirekte Rede</strong> (was jemand sagt). Konjunktiv II = <strong>Irreales</strong> (was nicht so ist, aber sein k\u00F6nnte).</div>'}
+],
+quiz:[
+{q:'Mit welcher Frage erkennt man das Akkusativobjekt?',a:['Wer oder was?','Wen oder was?','Wem?','Wo?'],_h:0x4B},
+{q:'Wo steht das Verb im Nebensatz?',a:['Am Anfang','An zweiter Stelle','Am Ende','In der Mitte'],_h:0x7D},
+{q:'Welche Konjunktion leitet einen Kausalsatz ein?',a:['obwohl','damit','weil','nachdem'],_h:0x29},
+{q:'Wof\u00FCr verwendet man den Konjunktiv I?',a:['F\u00FCr W\u00FCnsche','F\u00FCr die indirekte Rede','F\u00FCr Befehle','F\u00FCr Fragen'],_h:0x60},
+{q:'Was ist die Umstellprobe?',a:['Man streicht W\u00F6rter','Man verschiebt Satzglieder um sie zu erkennen','Man ersetzt W\u00F6rter','Man z\u00E4hlt die Silben'],_h:0x5D}
+],
+boss:[
+{q:'Warum sagt man im Alltag oft die w\u00FCrde-Form statt des Konjunktivs II?',a:['Weil der Konjunktiv II falsch ist','Weil viele Konjunktiv-II-Formen veraltet oder ungebreauchlich klingen','Weil die w\u00FCrde-Form grammatisch korrekt ist und der Konj. II nicht','Weil es keine Regel gibt'],_h:0x4B},
+{q:'Was unterscheidet einen Konzessivsatz von einem Kausalsatz?',a:['Der Konzessivsatz räumt einen Gegengrund ein, der Kausalsatz nennt den Grund','Nichts, beides ist dasselbe','Der Kausalsatz steht am Ende','Der Konzessivsatz hat kein Verb'],_h:0x7F},
+{q:'Wie erkennt man ein Genitivobjekt?',a:['Mit der Frage Wen?','Mit der Frage Wem?','Mit der Frage Wessen?','Mit der Frage Wo?'],_h:0x29}
+]},
+{id:3,title:'Stilmittel erkennen',icon:'\uD83C\uDFAD',duration:'25 Min.',description:'Lerne die wichtigsten rhetorischen Stilmittel und ihre Wirkung.',
+lessons:[
+{title:'Bildliche Stilmittel',content:'<p>Bildliche Stilmittel erzeugen <strong>Anschaulichkeit</strong> und <strong>Emotionen</strong>:</p><table style="width:100%;border-collapse:collapse;margin:12px 0;font-size:13px"><tr style="background:var(--neon-dim)"><th style="padding:8px;border:1px solid var(--border)">Stilmittel</th><th style="padding:8px;border:1px solid var(--border)">Erkl\u00E4rung</th><th style="padding:8px;border:1px solid var(--border)">Beispiel</th></tr><tr><td style="padding:6px;border:1px solid var(--border)"><strong>Metapher</strong></td><td style="padding:6px;border:1px solid var(--border)">Bildlicher Vergleich ohne \"wie\"</td><td style="padding:6px;border:1px solid var(--border)">Das <strong>Meer der Träume</strong></td></tr><tr><td style="padding:6px;border:1px solid var(--border)"><strong>Vergleich</strong></td><td style="padding:6px;border:1px solid var(--border)">Vergleich mit \"wie\"</td><td style="padding:6px;border:1px solid var(--border)">Schnell <strong>wie der Wind</strong></td></tr><tr><td style="padding:6px;border:1px solid var(--border)"><strong>Personifikation</strong></td><td style="padding:6px;border:1px solid var(--border)">Vermenschlichung</td><td style="padding:6px;border:1px solid var(--border)">Die Sonne <strong>lacht</strong></td></tr><tr><td style="padding:6px;border:1px solid var(--border)"><strong>Symbol</strong></td><td style="padding:6px;border:1px solid var(--border)">Sinnbild f\u00FCr etwas anderes</td><td style="padding:6px;border:1px solid var(--border)">Die <strong>Taube</strong> (= Frieden)</td></tr><tr><td style="padding:6px;border:1px solid var(--border)"><strong>Allegorie</strong></td><td style="padding:6px;border:1px solid var(--border)">Ausführliches Sinnbild</td><td style="padding:6px;border:1px solid var(--border)"><strong>Justitia</strong> (= Gerechtigkeit)</td></tr></table><div class="info-box">\uD83D\uDCA1 <strong>Merke:</strong> Metapher = Vergleich <strong>ohne</strong> \"wie\". Vergleich = mit \"wie\". Das ist die häufigste Verwechslung in Klausuren!</div>'},
+{title:'Klangliche und syntaktische Stilmittel',content:'<p><strong>Klangliche Stilmittel:</strong></p><ul><li><strong>Alliteration:</strong> Gleicher Anlaut: <em><strong>M</strong>ilch <strong>m</strong>acht <strong>m</strong>üde <strong>M</strong>änner <strong>m</strong>unter</em></li><li><strong>Anapher:</strong> Wiederholung am Satzanfang: <em><strong>Ich</strong> kam. <strong>Ich</strong> sah. <strong>Ich</strong> siegte.</em></li><li><strong>Onomatopösie:</strong> Lautmalerei: <em>Es <strong>knistert</strong> und <strong>knackt</strong></em></li></ul><p><strong>Syntaktische Stilmittel:</strong></p><ul><li><strong>Parallelismus:</strong> Gleicher Satzbau: <em>Heiß ist die Liebe, kalt ist der Tod.</em></li><li><strong>Chiasmus:</strong> Kreuzstellung: <em>Die Kunst ist lang, und kurz ist unser Leben.</em></li><li><strong>Ellipse:</strong> Auslassung: <em>Je fr\u00FCher, desto besser.</em></li><li><strong>Antithese:</strong> Gegen\u00FCberstellung: <em>Krieg und Frieden</em></li><li><strong>Klimax:</strong> Steigerung: <em>Er kam, sah und <strong>siegte</strong>.</em></li><li><strong>Rhetorische Frage:</strong> Frage ohne erwartete Antwort: <em>Sind wir nicht alle S\u00FCnder?</em></li></ul><div class="info-box">\uD83D\uDCA1 <strong>Tipp:</strong> In Klausuren nicht nur das Stilmittel <strong>benennen</strong>, sondern immer auch die <strong>Wirkung</strong> erkl\u00E4ren!</div>'},
+{title:'Stilmittel in der Analyse verwenden',content:'<p>Wenn du Stilmittel in einer Analyse besprichst, nutze den <strong>Dreischritt</strong>:</p><ul><li><strong>1. Benennen:</strong> Um welches Stilmittel handelt es sich?</li><li><strong>2. Belegen:</strong> Wo genau steht es im Text? (Zitat mit Zeilenangabe)</li><li><strong>3. Wirkung erkl\u00E4ren:</strong> Welchen Effekt hat es?</li></ul><p><strong>Beispielformulierung:</strong></p><p><em>\"Der Autor verwendet in Zeile 5 die Metapher \\\"Meer der Träume\\\", die die Unendlichkeit und Tiefe der menschlichen Sehnsucht verdeutlicht.\"</em></p><p><strong>Typische Wirkungen:</strong></p><ul><li>Metapher: veranschaulicht, erzeugt Bilder</li><li>Anapher: betont, verst\u00E4rkt, erzeugt Rhythmus</li><li>Antithese: kontrastiert, zeigt Gegens\u00E4tze</li><li>Rhetorische Frage: regt zum Nachdenken an, bezieht den Leser ein</li><li>Klimax: steigert Spannung, verst\u00E4rkt die Aussage</li></ul><div class="info-box">\uD83D\uDCA1 <strong>Merke:</strong> Stilmittel nur aufz\u00E4hlen gibt <strong>keine Punkte</strong>! Erst die Wirkungsanalyse zeigt, dass du das Stilmittel verstanden hast.</div>'}
+],
+quiz:[
+{q:'Was ist eine Metapher?',a:['Ein Vergleich mit wie','Ein bildlicher Ausdruck ohne wie','Eine Wiederholung','Eine Frage ohne Antwort'],_h:0x4B},
+{q:'Was ist eine Anapher?',a:['Eine Steigerung','Eine Wiederholung am Satzanfang','Ein Gegensatz','Eine Lautmalerei'],_h:0x7E},
+{q:'Was ist ein Parallelismus?',a:['Gleicher Satzbau in aufeinanderfolgenden S\u00E4tzen','Eine Kreuzstellung','Ein Vergleich','Eine Auslassung'],_h:0x2B},
+{q:'Was ist eine Klimax?',a:['Ein Gegensatz','Eine Verkleinerung','Eine Steigerung','Eine Auslassung'],_h:0x63},
+{q:'Wie analysiert man Stilmittel richtig?',a:['Nur benennen','Benennen und Beispiel geben','Benennen, belegen und Wirkung erkl\u00E4ren','Nur die Wirkung beschreiben'],_h:0x5E}
+],
+boss:[
+{q:'Was unterscheidet eine Metapher von einem Symbol?',a:['Nichts','Die Metapher ist ein einzelner bildlicher Ausdruck, das Symbol steht dauerhaft f\u00FCr etwas','Die Metapher ist l\u00E4nger','Das Symbol verwendet wie'],_h:0x4B},
+{q:'Warum ist es falsch, Stilmittel nur aufzuz\u00E4hlen?',a:['Weil es zu schnell geht','Weil ohne Wirkungsanalyse keine Analyseleistung erkennbar ist','Weil es zu viele Stilmittel gibt','Weil der Lehrer es nicht mag'],_h:0x7F},
+{q:'Was ist der Unterschied zwischen Parallelismus und Chiasmus?',a:['Parallelismus = gleicher Satzbau, Chiasmus = Kreuzstellung (umgekehrter Satzbau)','Kein Unterschied','Chiasmus ist l\u00E4nger','Parallelismus hat immer drei Teile'],_h:0x2B}
+]},
+{id:4,title:'Rechtschreibung Fortgeschritten',icon:'\u2705',duration:'25 Min.',description:'Meistere schwierige Rechtschreibregeln: das/dass, Fremdw\u00F6rter und Getrenntschreibung.',
+lessons:[
+{title:'das oder dass?',content:'<p>Die Unterscheidung von <strong>das</strong> und <strong>dass</strong> ist eine der häufigsten Fehlerquellen:</p><p><strong>das</strong> (Artikel, Demonstrativpronomen, Relativpronomen):</p><ul><li>Kann durch <strong>\"dieses\", \"jenes\"</strong> oder <strong>\"welches\"</strong> ersetzt werden</li><li><em><strong>Das</strong> Buch, <strong>das</strong> ich lese, ist spannend.</em> (= welches ich lese)</li><li><em>Ich mag <strong>das</strong>.</em> (= dieses/jenes)</li></ul><p><strong>dass</strong> (Konjunktion):</p><ul><li>Leitet einen <strong>Nebensatz</strong> ein, kann <strong>nicht</strong> durch \"welches\" ersetzt werden</li><li><em>Ich hoffe, <strong>dass</strong> du kommst.</em></li><li><em>Er sagt, <strong>dass</strong> er m\u00FCde ist.</em></li></ul><div class="info-box">\uD83D\uDCA1 <strong>Eselsbruecke:</strong> Kannst du \"das\" durch <strong>\"welches\"</strong> ersetzen? \u2192 <strong>das</strong>. Geht das nicht? \u2192 <strong>dass</strong>.</div>'},
+{title:'Getrennt- und Zusammenschreibung',content:'<p>Einige wichtige Regeln:</p><ul><li><strong>Verb + Verb:</strong> Getrennt: <em>spazieren gehen, lesen lernen</em></li><li><strong>Adjektiv + Verb:</strong> Zusammen bei neuer Bedeutung: <em>freisprechen</em> (vor Gericht), aber getrennt: <em>frei sprechen</em> (ohne Notizen)</li><li><strong>Nomen + Verb:</strong> Meist zusammen: <em>Rad fahren, teilnehmen, stattfinden</em></li><li><strong>Zusammensetzungen mit \"so\", \"wie\", \"zu\":</strong></li><li><em>so dass / sodass</em> (beides m\u00F6glich)</li><li><em>wie viel</em> (immer getrennt!)</li><li><em>zu Hause / zuhause</em> (beides m\u00F6glich)</li></ul><div class="info-box">\uD83D\uDCA1 <strong>Tipp:</strong> Im Zweifelsfall hilft der Duden! Manche Schreibweisen wurden durch die Rechtschreibreform ge\u00E4ndert.</div>'},
+{title:'Fremdw\u00F6rter richtig schreiben',content:'<p>Häufig falsch geschriebene <strong>Fremdw\u00F6rter</strong>:</p><table style="width:100%;border-collapse:collapse;margin:12px 0;font-size:13px"><tr style="background:var(--neon-dim)"><th style="padding:8px;border:1px solid var(--border)">Falsch</th><th style="padding:8px;border:1px solid var(--border)">Richtig</th><th style="padding:8px;border:1px solid var(--border)">Herkunft</th></tr><tr><td style="padding:6px;border:1px solid var(--border)">Agression</td><td style="padding:6px;border:1px solid var(--border)"><strong>Aggression</strong></td><td style="padding:6px;border:1px solid var(--border)">lat. aggressio</td></tr><tr><td style="padding:6px;border:1px solid var(--border)">Rhytmus</td><td style="padding:6px;border:1px solid var(--border)"><strong>Rhythmus</strong></td><td style="padding:6px;border:1px solid var(--border)">griech. rhythmos</td></tr><tr><td style="padding:6px;border:1px solid var(--border)">Symetrie</td><td style="padding:6px;border:1px solid var(--border)"><strong>Symmetrie</strong></td><td style="padding:6px;border:1px solid var(--border)">griech. symmetria</td></tr><tr><td style="padding:6px;border:1px solid var(--border)">Terasse</td><td style="padding:6px;border:1px solid var(--border)"><strong>Terrasse</strong></td><td style="padding:6px;border:1px solid var(--border)">franz. terrasse</td></tr><tr><td style="padding:6px;border:1px solid var(--border)">Reperatur</td><td style="padding:6px;border:1px solid var(--border)"><strong>Reparatur</strong></td><td style="padding:6px;border:1px solid var(--border)">lat. reparare</td></tr><tr><td style="padding:6px;border:1px solid var(--border)">Akusativ</td><td style="padding:6px;border:1px solid var(--border)"><strong>Akkusativ</strong></td><td style="padding:6px;border:1px solid var(--border)">lat. accusativus</td></tr></table><div class="info-box">\uD83D\uDCA1 <strong>Tipp:</strong> Wenn du die <strong>Herkunftssprache</strong> kennst, f\u00E4llt die Schreibung oft leichter!</div>'}
+],
+quiz:[
+{q:'Wann schreibt man \"dass\" mit Doppel-s?',a:['Immer','Wenn es durch welches ersetzt werden kann','Wenn es eine Konjunktion ist und einen Nebensatz einleitet','Nur am Satzanfang'],_h:0x48},
+{q:'Wie schreibt man \"wie viel\"?',a:['wieviel','wie viel','wieviele','wie-viel'],_h:0x7E},
+{q:'Was ist die richtige Schreibung?',a:['Agression','Aggresion','Aggression','Agresion'],_h:0x29},
+{q:'Wann schreibt man Adjektiv + Verb zusammen?',a:['Immer','Nie','Wenn eine neue Bedeutung entsteht','Nur bei kurzen W\u00F6rtern'],_h:0x63},
+{q:'Wie pr\u00FCft man ob \"das\" oder \"dass\"?',a:['Durch Nachschlagen im W\u00F6rterbuch','Durch Ersetzen mit welches','Durch lautes Vorlesen','Durch Silbenzählung'],_h:0x5D}
+],
+boss:[
+{q:'Warum ist \"das Buch, dass ich lese\" falsch?',a:['Weil man welches einsetzen kann und es daher das heißen muss','Weil dass nie nach Komma steht','Weil es ein Artikel ist','Weil Buch grossgeschrieben wird'],_h:0x4A},
+{q:'Warum ist Rhythmus schwer zu schreiben?',a:['Weil das Wort zu lang ist','Weil die griechische Herkunft die ungewoehnliche Buchstabenfolge rh-y-th erkl\u00E4rt','Weil es ein Verb ist','Weil es keine Regeln gibt'],_h:0x7E},
+{q:'Erkl\u00E4re den Unterschied: freisprechen vs. frei sprechen',a:['Kein Unterschied','Freisprechen = vor Gericht entlasten, frei sprechen = ohne Notizen reden','Frei sprechen ist immer falsch','Freisprechen ist veraltet'],_h:0x2B}
+]},
+{id:5,title:'Zeichensetzung Meistern',icon:'\u2757',duration:'25 Min.',description:'Lerne die wichtigsten Komma-, Semikolon- und Zeichensetzungsregeln.',
+lessons:[
+{title:'Kommaregeln: Die wichtigsten Fälle',content:'<p>Die <strong>Kommasetzung</strong> ist einer der häufigsten Fehlerbereiche. Hier die wichtigsten Regeln:</p><p><strong>1. Komma zwischen Haupt- und Nebensatz:</strong></p><ul><li>Ich bleibe zu Hause<strong>,</strong> weil es regnet.</li><li>Weil es regnet<strong>,</strong> bleibe ich zu Hause.</li></ul><p><strong>2. Komma bei Aufz\u00E4hlungen:</strong></p><ul><li>Er kaufte Aepfel<strong>,</strong> Birnen<strong>,</strong> Bananen und Orangen.</li><li>Kein Komma vor \"und\" / \"oder\" (bei einfachen Aufz\u00E4hlungen)</li></ul><p><strong>3. Komma bei Infinitivgruppen mit \"um\", \"ohne\", \"statt\", \"anstatt\", \"ausser\":</strong></p><ul><li>Er lernt<strong>,</strong> um die Pr\u00FCfung zu bestehen.</li><li>Sie ging<strong>,</strong> ohne sich zu verabschieden.</li></ul><p><strong>4. Komma bei Appositionen (Einschueben):</strong></p><ul><li>Berlin<strong>,</strong> die Hauptstadt Deutschlands<strong>,</strong> ist eine Metropole.</li></ul><div class="info-box">\uD83D\uDCA1 <strong>Merke:</strong> Nebens\u00E4tze erkennt man an der Konjunktion (weil, obwohl, dass, wenn...) und am Verb am Ende!</div>'},
+{title:'Semikolon, Doppelpunkt und Gedankenstrich',content:'<p><strong>Semikolon (;):</strong></p><ul><li>Trennt eng zusammengeh\u00F6rende S\u00E4tze: <em>Er war m\u00FCde; trotzdem arbeitete er weiter.</em></li><li>St\u00E4rker als ein Komma, schwächer als ein Punkt</li></ul><p><strong>Doppelpunkt (:):</strong></p><ul><li>Vor Aufz\u00E4hlungen: <em>Er braucht: Stift, Papier, Lineal.</em></li><li>Vor w\u00F6rtlicher Rede: <em>Er sagte: \"Ich komme morgen.\"</em></li><li>Vor Erkl\u00E4rungen: <em>Das Ergebnis war eindeutig: Alle bestanden.</em></li></ul><p><strong>Gedankenstrich (\u2013):</strong></p><ul><li>F\u00FCr Einschuebe: <em>Berlin \u2013 die Hauptstadt \u2013 hat viel zu bieten.</em></li><li>F\u00FCr \u00FCberraschende Wendungen: <em>Er öffnete die Tür und sah \u2013 nichts.</em></li></ul><div class="info-box">\uD83D\uDCA1 <strong>Tipp:</strong> Nach dem Doppelpunkt schreibt man <strong>gross</strong>, wenn ein vollständiger Satz folgt!</div>'},
+{title:'Anführungszeichen und Zitate',content:'<p><strong>Anführungszeichen</strong> im Deutschen:</p><ul><li>Wörtliche Rede: <em>Er sagte: \u201EIch bin da.\u201C</em></li><li>Zitate: <em>Goethe schrieb: \u201EZwei Seelen wohnen, ach! in meiner Brust.\u201C</em></li><li>Ironische Distanz: <em>Das war ja \"toll\".</em></li></ul><p><strong>Regeln f\u00FCr Zitate in Aufs\u00E4tzen:</strong></p><ul><li>Zitate <strong>wörtlich</strong> und <strong>mit Quellenangabe</strong> (z.B. Z. 5)</li><li>Kürzungen mit [...] kennzeichnen</li><li>Zitate in den eigenen Satz einbauen</li></ul><p><strong>Beispiel einer guten Einbindung:</strong></p><p><em>Der Autor betont durch die Metapher \"Meer der Träume\" (Z. 12) die Sehnsucht des Protagonisten.</em></p><div class="info-box">\uD83D\uDCA1 <strong>Merke:</strong> Im Deutschen sind die Anführungszeichen \u201Eunten und oben\u201C, im Englischen \u201Coben und oben\u201D!</div>'}
+],
+quiz:[
+{q:'Wann steht ein Komma zwischen Haupt- und Nebensatz?',a:['Nur bei langen S\u00E4tzen','Immer wenn ein Nebensatz beginnt','Nur vor und','Nie'],_h:0x4B},
+{q:'Was steht nach einem Doppelpunkt?',a:['Immer ein Kleinbuchstabe','Grossschreibung wenn ein vollständiger Satz folgt','Immer ein Grossbuchstabe','Ein Semikolon'],_h:0x7E},
+{q:'Wie sehen deutsche Anführungszeichen aus?',a:['Oben und oben','Unten und oben','Zwei Punkte','Klammern'],_h:0x2A},
+{q:'Wann steht ein Komma vor und?',a:['Immer','Nie bei einfachen Aufz\u00E4hlungen','Nur bei langen S\u00E4tzen','Vor jedem Wort'],_h:0x60},
+{q:'Was kennzeichnet [...] in einem Zitat?',a:['Einen Fehler','Eine Kürzung/Auslassung','Das Ende des Zitats','Einen Kommentar'],_h:0x5D}
+],
+boss:[
+{q:'Warum steht nach um, ohne, statt immer ein Komma?',a:['Weil es h\u00F6flich ist','Weil diese W\u00F6rter Infinitivgruppen einleiten die abgetrennt werden','Weil es kurze W\u00F6rter sind','Es steht nicht immer ein Komma'],_h:0x4B},
+{q:'Wann verwendet man ein Semikolon statt eines Punktes?',a:['Immer','Wenn zwei S\u00E4tze inhaltlich eng zusammengeh\u00F6ren','Nur in Listen','Nur in Briefen'],_h:0x7F},
+{q:'Warum muss man Zitate in den eigenen Satz einbauen?',a:['Weil es sch\u00F6ner aussieht','Damit die Analyse zeigt dass man den Text verstanden hat und ihn deuten kann','Weil der Lehrer es verlangt','Weil Zitate allein zu kurz sind'],_h:0x2A}
+]},
+{id:6,title:'Gedichtanalyse',icon:'\uD83C\uDFB5',duration:'30 Min.',description:'Lerne Gedichte zu analysieren: Reimschema, Metrum, Stilmittel und Interpretation.',
+lessons:[
+{title:'Reimschema und Strophenform',content:'<p>Das <strong>Reimschema</strong> beschreibt die Anordnung der Reime:</p><ul><li><strong>Paarreim (aabb):</strong> Aufeinander folgende Verse reimen sich</li><li><strong>Kreuzreim (abab):</strong> Verse reimen sich \u00FCber Kreuz</li><li><strong>Umarmender Reim (abba):</strong> Aeussere und innere Verse reimen sich</li><li><strong>Schweifreim (aabccb):</strong> Kombination aus Paarreim und Kreuzreim</li></ul><p><strong>Wichtige Strophenformen:</strong></p><ul><li><strong>Sonett:</strong> 14 Verse (4+4+3+3), oft Kreuzreim</li><li><strong>Volkslied:</strong> 4-zeilige Strophen, Kreuzreim</li><li><strong>Ode:</strong> Feierlich, oft ohne festes Reimschema</li><li><strong>Ballade:</strong> Erz\u00E4hlendes Gedicht, oft mit Dialog</li></ul><div class="info-box">\uD83D\uDCA1 <strong>Tipp:</strong> Notiere die Reimw\u00F6rter am Rand und vergib Buchstaben (a, b, c...) f\u00FCr gleiche Endungen!</div>'},
+{title:'Metrum und Versmaass',content:'<p>Das <strong>Metrum</strong> (Versmaass) beschreibt den Rhythmus eines Gedichts:</p><table style="width:100%;border-collapse:collapse;margin:12px 0;font-size:13px"><tr style="background:var(--neon-dim)"><th style="padding:8px;border:1px solid var(--border)">Metrum</th><th style="padding:8px;border:1px solid var(--border)">Schema</th><th style="padding:8px;border:1px solid var(--border)">Beispiel</th></tr><tr><td style="padding:6px;border:1px solid var(--border)"><strong>Jambus</strong></td><td style="padding:6px;border:1px solid var(--border)">unbetont-betont (x X)</td><td style="padding:6px;border:1px solid var(--border)">Ge-<strong>DICHT</strong> / ver-<strong>STEHN</strong></td></tr><tr><td style="padding:6px;border:1px solid var(--border)"><strong>Trochaeus</strong></td><td style="padding:6px;border:1px solid var(--border)">betont-unbetont (X x)</td><td style="padding:6px;border:1px solid var(--border)"><strong>LE</strong>-ben / <strong>FREU</strong>-de</td></tr><tr><td style="padding:6px;border:1px solid var(--border)"><strong>Daktylus</strong></td><td style="padding:6px;border:1px solid var(--border)">betont-unbetont-unbetont (X x x)</td><td style="padding:6px;border:1px solid var(--border)"><strong>WUN</strong>-der-bar</td></tr><tr><td style="padding:6px;border:1px solid var(--border)"><strong>Anapeast</strong></td><td style="padding:6px;border:1px solid var(--border)">unbetont-unbetont-betont (x x X)</td><td style="padding:6px;border:1px solid var(--border)">U-ber-<strong>ALL</strong></td></tr></table><p><strong>Enjambement:</strong> Ein Satz geht \u00FCber das Versende hinaus in den n\u00E4chsten Vers \u2014 erzeugt Spannung und Dynamik.</p><p><strong>Kadenzen:</strong></p><ul><li><strong>Männlich:</strong> Vers endet auf betonter Silbe (klingt abgeschlossen)</li><li><strong>Weiblich:</strong> Vers endet auf unbetonter Silbe (klingt offen)</li></ul><div class="info-box">\uD83D\uDCA1 <strong>Tipp:</strong> Klopfe den Rhythmus auf den Tisch \u2014 so h\u00F6rst du das Metrum!</div>'},
+{title:'Gedichtinterpretation schreiben',content:'<p>Der Aufbau einer <strong>Gedichtinterpretation</strong>:</p><p><strong>Einleitung:</strong></p><ul><li>Titel, Autor, Entstehungsjahr, Epoche</li><li>Thema/Motiv in einem Satz</li><li>Deutungshypothese: Was k\u00F6nnte die zentrale Aussage sein?</li></ul><p><strong>Hauptteil:</strong></p><ul><li>Form: Strophen, Verse, Reimschema, Metrum</li><li>Inhalt: Strophe f\u00FCr Strophe analysieren</li><li>Sprache: Stilmittel, Wortwahl, Bildsprache</li><li>Wirkung: Stimmung, Emotionen, Botschaft</li></ul><p><strong>Schluss:</strong></p><ul><li>Zusammenfassung der Analyseergebnisse</li><li>Bestätigung oder Korrektur der Deutungshypothese</li><li>Einordnung in die Epoche</li></ul><div class="info-box">\uD83D\uDCA1 <strong>Merke:</strong> Die <strong>Deutungshypothese</strong> in der Einleitung ist wie ein roter Faden \u2014 alle Analyseergebnisse im Hauptteil sollten darauf bezogen werden!</div>'}
+],
+quiz:[
+{q:'Was ist ein Kreuzreim?',a:['aabb','abab','abba','abcabc'],_h:0x4B},
+{q:'Was ist ein Jambus?',a:['betont-unbetont','unbetont-betont','betont-betont','unbetont-unbetont'],_h:0x7E},
+{q:'Was ist ein Enjambement?',a:['Ein Reim','Ein Satz der \u00FCber das Versende hinausgeht','Ein Stilmittel','Ein Reimschema'],_h:0x2A},
+{q:'Was geh\u00F6rt in die Einleitung einer Gedichtinterpretation?',a:['Die Analyse der Stilmittel','Titel, Autor, Thema und Deutungshypothese','Nur der Titel','Die eigene Meinung'],_h:0x60},
+{q:'Was ist ein Sonett?',a:['Ein kurzes Gedicht','Ein Gedicht mit 14 Versen (4+4+3+3)','Ein Lied','Ein Drama'],_h:0x5D}
+],
+boss:[
+{q:'Warum ist die Deutungshypothese wichtig?',a:['Weil sie Punkte gibt','Weil sie als roter Faden die gesamte Analyse strukturiert','Weil man sie abschreiben kann','Weil sie am Ende steht'],_h:0x4B},
+{q:'Was sagt das Metrum \u00FCber ein Gedicht aus?',a:['Nur die L\u00E4nge','Es erzeugt den Rhythmus und beeinflusst die Stimmung und Wirkung','Es zeigt die Reimw\u00F6rter','Es bestimmt die Strophenanzahl'],_h:0x7F},
+{q:'Warum analysiert man Strophe f\u00FCr Strophe?',a:['Weil es schneller geht','Damit man die inhaltliche Entwicklung und den Aufbau des Gedichts nachvollziehen kann','Weil man sonst nichts findet','Weil jede Strophe gleich ist'],_h:0x2A}
+]},
+{id:7,title:'Sachtextanalyse',icon:'\uD83D\uDCCA',duration:'30 Min.',description:'Lerne Sachtexte zu analysieren: Argumentationsstruktur, Intention und Sprache.',
+lessons:[
+{title:'Sachtexte erkennen und einordnen',content:'<p><strong>Sachtexte</strong> informieren, argumentieren oder appellieren. Wichtige Arten:</p><table style="width:100%;border-collapse:collapse;margin:12px 0;font-size:13px"><tr style="background:var(--neon-dim)"><th style="padding:8px;border:1px solid var(--border)">Textart</th><th style="padding:8px;border:1px solid var(--border)">Merkmal</th><th style="padding:8px;border:1px solid var(--border)">Intention</th></tr><tr><td style="padding:6px;border:1px solid var(--border)"><strong>Bericht / Nachricht</strong></td><td style="padding:6px;border:1px solid var(--border)">Sachlich, neutral, W-Fragen</td><td style="padding:6px;border:1px solid var(--border)">Informieren</td></tr><tr><td style="padding:6px;border:1px solid var(--border)"><strong>Kommentar</strong></td><td style="padding:6px;border:1px solid var(--border)">Meinungsbetont, wertend</td><td style="padding:6px;border:1px solid var(--border)">Stellung nehmen</td></tr><tr><td style="padding:6px;border:1px solid var(--border)"><strong>Glosse</strong></td><td style="padding:6px;border:1px solid var(--border)">Ironisch, \u00FCberspitzt</td><td style="padding:6px;border:1px solid var(--border)">Kritisieren / unterhalten</td></tr><tr><td style="padding:6px;border:1px solid var(--border)"><strong>Reportage</strong></td><td style="padding:6px;border:1px solid var(--border)">Lebendig, anschaulich</td><td style="padding:6px;border:1px solid var(--border)">Informieren + unterhalten</td></tr><tr><td style="padding:6px;border:1px solid var(--border)"><strong>Rede</strong></td><td style="padding:6px;border:1px solid var(--border)">An Publikum gerichtet</td><td style="padding:6px;border:1px solid var(--border)">\u00DCberzeugen / appellieren</td></tr></table><div class="info-box">\uD83D\uDCA1 <strong>Merke:</strong> Die Textart bestimmt die <strong>Intention</strong> (Absicht) des Autors \u2014 informieren, \u00FCberzeugen oder unterhalten?</div>'},
+{title:'Argumentationsstruktur analysieren',content:'<p>Bei der Analyse von Sachtexten ist die <strong>Argumentationsstruktur</strong> zentral:</p><p><strong>Argumenttypen:</strong></p><ul><li><strong>Faktenargument:</strong> Stützt sich auf Tatsachen und Daten</li><li><strong>Autoritätsargument:</strong> Beruft sich auf Experten</li><li><strong>Normatives Argument:</strong> Beruft sich auf Werte und Normen</li><li><strong>Beispielargument:</strong> Belegt durch ein konkretes Beispiel</li><li><strong>Analogieargument:</strong> Vergleicht mit einem ähnlichen Fall</li></ul><p><strong>Analysefragen:</strong></p><ul><li>Was ist die <strong>These</strong> des Autors?</li><li>Welche <strong>Argumente</strong> nennt er?</li><li>Welche <strong>Argumenttypen</strong> verwendet er?</li><li>Wie <strong>\u00FCberzeugend</strong> sind die Argumente?</li><li>Gibt es <strong>L\u00FCcken</strong> in der Argumentation?</li></ul><div class="info-box">\uD83D\uDCA1 <strong>Tipp:</strong> Markiere beim Lesen: These = rot, Argumente = blau, Beispiele = gr\u00FCn</div>'},
+{title:'Sprache in Sachtexten',content:'<p>Auch in Sachtexten ist die <strong>Sprachanalyse</strong> wichtig:</p><ul><li><strong>Wortwahl:</strong> Fachsprache, Umgangssprache, wertende Adjektive</li><li><strong>Satzbau:</strong> Kurze oder lange S\u00E4tze, Hypotaxe oder Parataxe</li><li><strong>Rhetorische Mittel:</strong> Rhetorische Fragen, Wiederholungen, \u00DCbertreibungen</li><li><strong>Adressatenbezug:</strong> Wen spricht der Autor an? Wie? (du/Sie, wir)</li></ul><p><strong>Sprachliche Strategien der \u00DCberzeugung:</strong></p><ul><li>Emotionalisierung durch bildhafte Sprache</li><li>Vereinfachung durch pauschale Aussagen</li><li>Autoritätsbezug durch Expertenzitate</li><li>Wir-Gef\u00FChl durch inklusive Sprache (\"wir alle\")</li></ul><div class="info-box">\uD83D\uDCA1 <strong>Merke:</strong> In einem Kommentar ist die Sprache <strong>subjektiv</strong> und wertend. In einem Bericht ist sie <strong>objektiv</strong> und sachlich. Diesen Unterschied musst du erkennen!</div>'}
+],
+quiz:[
+{q:'Was ist die Intention eines Kommentars?',a:['Informieren','Stellung nehmen und \u00FCberzeugen','Unterhalten','Beschreiben'],_h:0x4B},
+{q:'Was ist ein Faktenargument?',a:['Ein Argument das sich auf Experten beruft','Ein Argument das sich auf Tatsachen und Daten stützt','Ein persönliches Argument','Ein Vergleich'],_h:0x7E},
+{q:'Was unterscheidet eine Reportage von einem Bericht?',a:['Nichts','Die Reportage ist lebendiger und anschaulicher','Der Bericht ist l\u00E4nger','Die Reportage ist neutral'],_h:0x2A},
+{q:'Was ist Parataxe?',a:['Verschachtelter Satzbau','Aneinanderreihung kurzer Haupts\u00E4tze','Lange Nebens\u00E4tze','Ein Stilmittel'],_h:0x60},
+{q:'Welche sprachliche Strategie erzeugt ein Wir-Gef\u00FChl?',a:['Fachsprache','Inklusive Sprache wie wir alle','Kurze S\u00E4tze','Fremdw\u00F6rter'],_h:0x5D}
+],
+boss:[
+{q:'Warum ist es wichtig, die Argumenttypen zu erkennen?',a:['F\u00FCr die Note','Weil man so die \u00DCberzeugungskraft und Strategie des Autors bewerten kann','Weil es Pflicht ist','Weil es den Text k\u00FCrzer macht'],_h:0x4B},
+{q:'Wie erkennt man eine Glosse?',a:['Am sachlichen Ton','Am ironischen, \u00FCberspitzten Ton und der kritischen Absicht','An der L\u00E4nge','Am fehlenden Autor'],_h:0x7F},
+{q:'Was zeigt eine Analyse der Adressatenbezüge?',a:['Die L\u00E4nge des Textes','Wen der Autor ansprechen will und wie er sein Publikum beeinflusst','Die Textart','Die Rechtschreibung'],_h:0x2A}
+]},
+{id:8,title:'Kreatives Schreiben',icon:'\u270D\uFE0F',duration:'25 Min.',description:'Lerne kreative Texte zu schreiben: Kurzgeschichten, innere Monologe und mehr.',
+lessons:[
+{title:'Kurzgeschichte schreiben',content:'<p>Eine <strong>Kurzgeschichte</strong> hat besondere Merkmale:</p><ul><li><strong>Unvermittelter Anfang:</strong> Die Handlung beginnt ohne lange Einleitung</li><li><strong>Wenige Figuren:</strong> Meist nur 1-3 Personen</li><li><strong>Alltagssituation:</strong> Eine gewoehnliche Situation mit besonderer Bedeutung</li><li><strong>Wendepunkt:</strong> Ein \u00FCberraschendes Ereignis ver\u00E4ndert alles</li><li><strong>Offener Schluss:</strong> Das Ende l\u00E4sst Raum f\u00FCr Interpretation</li></ul><p><strong>Erz\u00E4hltechniken:</strong></p><ul><li><strong>Show, don\u2019t tell:</strong> Zeige Gef\u00FChle durch Handlungen statt sie zu benennen</li><li>Statt: \"Er war wütend.\" \u2192 \"Er ballte die Fäuste und presste die Lippen zusammen.\"</li><li><strong>Dialog:</strong> Macht die Geschichte lebendig</li><li><strong>Innerer Monolog:</strong> Zeigt Gedanken direkt</li></ul><div class="info-box">\uD83D\uDCA1 <strong>Tipp:</strong> Plane deine Geschichte mit einer <strong>Spannungskurve</strong>: Einleitung \u2192 steigende Handlung \u2192 Höhepunkt \u2192 Wendepunkt \u2192 offener Schluss.</div>'},
+{title:'Innerer Monolog und Tagebucheintrag',content:'<p>Der <strong>innere Monolog</strong> gibt die Gedanken einer Figur direkt wieder:</p><ul><li>Geschrieben in der <strong>Ich-Form</strong></li><li>Im <strong>Präsens</strong> (Gegenwartsform)</li><li>Gedankenströme, Fragen, Ausrufe</li><li>Keine Anführungszeichen</li></ul><p><strong>Beispiel:</strong></p><p><em>Was soll ich nur tun? Wenn ich jetzt gehe, ist alles vorbei. Aber wenn ich bleibe... Nein. Ich kann nicht einfach so weitermachen. Nicht nach allem, was passiert ist.</em></p><p>Der <strong>Tagebucheintrag</strong>:</p><ul><li>Datum oben</li><li>Persönlich, emotional, Ich-Form</li><li>Schilderung von Erlebnissen und Gef\u00FChlen</li><li>Umgangssprache erlaubt</li></ul><div class="info-box">\uD83D\uDCA1 <strong>Merke:</strong> Beim inneren Monolog: <strong>keine</strong> Anführungszeichen, denn der Leser \"h\u00F6rt\" die Gedanken direkt!</div>'},
+{title:'Beschreibung und Schilderung',content:'<p>Die <strong>Beschreibung</strong> ist sachlich und geordnet:</p><ul><li>Systematischer Aufbau (z.B. von oben nach unten)</li><li>Präsens</li><li>Genaue, treffende Adjektive</li><li>Beispiel: Personenbeschreibung, Gegenstandsbeschreibung</li></ul><p>Die <strong>Schilderung</strong> ist subjektiv und stimmungsvoll:</p><ul><li>Persönliche Wahrnehmung und Einruecke</li><li>Sinneseinruecke: Was siehst, h\u00F6rst, riechst, fühlst du?</li><li>Stilmittel wie Vergleiche und Metaphern erlaubt</li><li>Beispiel: Schilderung eines Sonnenuntergangs</li></ul><p><strong>Nützliche Adjektive und Adverbien:</strong></p><ul><li>Licht: funkelnd, schimmernd, glitzernd, strahlend</li><li>Geräusche: leise, donnernd, sanft, durchdringend</li><li>Gef\u00FChle: behaglich, beklemmend, friedlich, aufregend</li></ul><div class="info-box">\uD83D\uDCA1 <strong>Tipp:</strong> In einer Schilderung solltest du alle <strong>f\u00FCnf Sinne</strong> ansprechen: Sehen, H\u00F6ren, Riechen, Schmecken, Tasten.</div>'}
+],
+quiz:[
+{q:'Was ist ein Merkmal einer Kurzgeschichte?',a:['Langer ausführlicher Anfang','Unvermittelter Anfang und offener Schluss','Viele Figuren','Immer ein Happy End'],_h:0x4B},
+{q:'In welcher Zeitform wird ein innerer Monolog geschrieben?',a:['Präteritum','Perfekt','Präsens','Futur'],_h:0x7D},
+{q:'Was bedeutet Show dont tell?',a:['Bilder zeigen','Gef\u00FChle durch Handlungen zeigen statt sie zu benennen','Laut vorlesen','Den Text k\u00FCrzer machen'],_h:0x2B},
+{q:'Was unterscheidet Beschreibung von Schilderung?',a:['Nichts','Die Beschreibung ist sachlich, die Schilderung subjektiv und stimmungsvoll','Die Schilderung ist k\u00FCrzer','Die Beschreibung ist persönlicher'],_h:0x60},
+{q:'Was geh\u00F6rt in einen Tagebucheintrag?',a:['Sachliche Fakten','Datum, persönliche Erlebnisse und Gef\u00FChle','Nur Aufz\u00E4hlungen','Nur Fragen'],_h:0x5D}
+],
+boss:[
+{q:'Warum hat eine Kurzgeschichte einen offenen Schluss?',a:['Weil dem Autor nichts einfiel','Damit der Leser selbst nachdenken und interpretieren muss','Weil es zu kurz ist','Weil es ein Fehler ist'],_h:0x4A},
+{q:'Warum ist Show dont tell wirkungsvoller?',a:['Weil es k\u00FCrzer ist','Weil der Leser die Gef\u00FChle selbst erkennen und mitfühlen kann','Weil es einfacher ist','Weil der Lehrer es verlangt'],_h:0x7F},
+{q:'Welche Sinne sollte eine gute Schilderung ansprechen?',a:['Nur Sehen','Sehen und H\u00F6ren','Alle f\u00FCnf Sinne: Sehen, H\u00F6ren, Riechen, Schmecken, Tasten','Nur Fühlen'],_h:0x29}
+]},
+{id:9,title:'Kommunikationsmodelle',icon:'\uD83D\uDDE3\uFE0F',duration:'30 Min.',description:'Verstehe Kommunikationsmodelle: Schulz von Thun, Watzlawick und mehr.',
+lessons:[
+{title:'Das Vier-Ohren-Modell (Schulz von Thun)',content:'<p>Nach <strong>Friedemann Schulz von Thun</strong> hat jede Nachricht <strong>vier Seiten</strong>:</p><table style="width:100%;border-collapse:collapse;margin:12px 0;font-size:13px"><tr style="background:var(--neon-dim)"><th style="padding:8px;border:1px solid var(--border)">Ebene</th><th style="padding:8px;border:1px solid var(--border)">Frage</th><th style="padding:8px;border:1px solid var(--border)">Beispiel (Die Ampel ist gr\u00FCn)</th></tr><tr><td style="padding:6px;border:1px solid var(--border)"><strong>Sachinhalt</strong></td><td style="padding:6px;border:1px solid var(--border)">Was wird mitgeteilt?</td><td style="padding:6px;border:1px solid var(--border)">Die Ampel zeigt gr\u00FCn.</td></tr><tr><td style="padding:6px;border:1px solid var(--border)"><strong>Selbstoffenbarung</strong></td><td style="padding:6px;border:1px solid var(--border)">Was sagt es \u00FCber den Sender?</td><td style="padding:6px;border:1px solid var(--border)">Ich habe es eilig.</td></tr><tr><td style="padding:6px;border:1px solid var(--border)"><strong>Beziehung</strong></td><td style="padding:6px;border:1px solid var(--border)">Wie steht der Sender zum Empf\u00E4nger?</td><td style="padding:6px;border:1px solid var(--border)">Du brauchst meine Hilfe beim Fahren.</td></tr><tr><td style="padding:6px;border:1px solid var(--border)"><strong>Appell</strong></td><td style="padding:6px;border:1px solid var(--border)">Was soll der Empf\u00E4nger tun?</td><td style="padding:6px;border:1px solid var(--border)">Fahr los!</td></tr></table><div class="info-box">\uD83D\uDCA1 <strong>Merke:</strong> Missverst\u00E4ndnisse entstehen, wenn Sender und Empf\u00E4nger auf <strong>verschiedenen Ebenen</strong> kommunizieren!</div>'},
+{title:'Watzlawicks Axiome',content:'<p><strong>Paul Watzlawick</strong> formulierte f\u00FCnf <strong>Axiome der Kommunikation</strong>:</p><ul><li><strong>1. Man kann nicht nicht kommunizieren.</strong><br>Auch Schweigen ist eine Botschaft!</li><li><strong>2. Jede Kommunikation hat einen Inhalts- und einen Beziehungsaspekt.</strong><br>Der Beziehungsaspekt bestimmt, wie der Inhalt verstanden wird.</li><li><strong>3. Kommunikation ist immer Ursache und Wirkung.</strong><br>Jeder reagiert auf den anderen (Teufelskreis m\u00F6glich).</li><li><strong>4. Menschliche Kommunikation bedient sich digitaler und analoger Modalitäten.</strong><br>Digital = W\u00F6rter, Analog = K\u00F6rpersprache, Tonfall.</li><li><strong>5. Kommunikation ist symmetrisch oder komplementär.</strong><br>Symmetrisch = gleichrangig, Komplementär = \u00FCber-/untergeordnet.</li></ul><div class="info-box">\uD83D\uDCA1 <strong>Anwendung:</strong> Watzlawicks Axiome helfen, <strong>Konflikte in Texten</strong> zu analysieren. Warum reden die Figuren aneinander vorbei?</div>'},
+{title:'Kommunikationsanalyse in Texten',content:'<p>So wendest du Kommunikationsmodelle in der <strong>Textanalyse</strong> an:</p><p><strong>Schritte der Kommunikationsanalyse:</strong></p><ul><li><strong>1. Situation:</strong> Wer kommuniziert mit wem? In welchem Kontext?</li><li><strong>2. Verbale Kommunikation:</strong> Was wird gesagt? Wie wird es formuliert?</li><li><strong>3. Nonverbale Kommunikation:</strong> K\u00F6rpersprache, Gestik, Mimik (aus dem Text erschliessen)</li><li><strong>4. Modell anwenden:</strong> Welche Ebenen/Axiome erkl\u00E4ren die Kommunikation?</li><li><strong>5. Stoerungen:</strong> Wo kommt es zu Missverst\u00E4ndnissen und warum?</li></ul><p><strong>Beispielformulierung:</strong></p><p><em>\"Der Dialog zwischen Anna und ihrem Vater l\u00E4sst sich mit dem Vier-Ohren-Modell analysieren: W\u00E4hrend Anna die Aussage auf der Beziehungsebene als Kritik versteht, meint der Vater sie auf der Sachebene.\"</em></p><div class="info-box">\uD83D\uDCA1 <strong>Tipp:</strong> In Klausuren wird oft verlangt, einen Dialog mit <strong>einem bestimmten Modell</strong> zu analysieren. Uebe das systematisch!</div>'}
+],
+quiz:[
+{q:'Wie viele Seiten hat eine Nachricht nach Schulz von Thun?',a:['Zwei','Drei','Vier','F\u00FCnf'],_h:0x49},
+{q:'Was bedeutet Man kann nicht nicht kommunizieren?',a:['Man muss immer reden','Auch Schweigen und K\u00F6rpersprache sind Kommunikation','Kommunikation ist unm\u00F6glich','Man soll weniger reden'],_h:0x7E},
+{q:'Was ist der Beziehungsaspekt einer Nachricht?',a:['Der Inhalt','Wie der Sender zum Empf\u00E4nger steht','Die Lautstärke','Das Thema'],_h:0x29},
+{q:'Was ist digitale Kommunikation nach Watzlawick?',a:['Kommunikation per Computer','Kommunikation durch W\u00F6rter und Sprache','K\u00F6rpersprache','Schweigen'],_h:0x60},
+{q:'Wann entstehen laut dem Vier-Ohren-Modell Missverst\u00E4ndnisse?',a:['Wenn man zu leise spricht','Wenn Sender und Empf\u00E4nger auf verschiedenen Ebenen kommunizieren','Wenn man zu schnell spricht','Wenn man Fremdw\u00F6rter benutzt'],_h:0x5D}
+],
+boss:[
+{q:'Warum ist das Vier-Ohren-Modell f\u00FCr die Textanalyse n\u00FCtzlich?',a:['Weil es einfach ist','Weil es hilft, Missverst\u00E4ndnisse und Konflikte zwischen Figuren zu erkl\u00E4ren','Weil es in jedem Text vorkommt','Weil es Pflicht ist'],_h:0x4B},
+{q:'Was bedeutet komplementäre Kommunikation?',a:['Gleichrangige Kommunikation','Kommunikation zwischen \u00FCber- und untergeordneten Partnern','Kommunikation ohne W\u00F6rter','Schriftliche Kommunikation'],_h:0x7E},
+{q:'Wie erkl\u00E4rt Watzlawicks 3. Axiom einen Teufelskreis?',a:['Es erkl\u00E4rt gar nichts','Jeder sieht sein Verhalten als Reaktion auf den anderen, wodurch Konflikte eskalieren','Es beschreibt digitale Kommunikation','Es bezieht sich auf K\u00F6rpersprache'],_h:0x2B}
+]}
+];
+
+// === State Management ===
+const STORAGE_KEY='textprofi_progress';
+let state={name:'',started:false,currentModule:0,xp:0,level:0,streak:0,lastVisit:null,modulesCompleted:[],quizResults:{},bossResults:{},badges:[],quizShuffleMap:{},modulesViewed:[],interactiveResults:{},designTheme:'cyber-dark'};
+function saveState(){try{localStorage.setItem(STORAGE_KEY,JSON.stringify(state))}catch(e){}}
+function loadState(){try{const s=localStorage.getItem(STORAGE_KEY);if(s){Object.assign(state,JSON.parse(s));return true}}catch(e){}return false}
+function exportData(){const a=document.createElement('a');a.download='textprofi-'+state.name+'.json';a.href=URL.createObjectURL(new Blob([JSON.stringify(state,null,2)],{type:'application/json'}));a.click()}
+function importData(e){const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=ev=>{try{const d=JSON.parse(ev.target.result);Object.assign(state,d);saveState();location.reload()}catch(err){alert('Datei konnte nicht gelesen werden.')}};r.readAsText(f)}
+
+// === XP & Level ===
+function getLevel(xp){let lv=0;for(let i=LEVELS.length-1;i>=0;i--){if(xp>=LEVELS[i].xp){lv=i;break}}return lv}
+function getLevelProgress(xp){const lv=getLevel(xp);const cur=LEVELS[lv].xp;const next=lv<LEVELS.length-1?LEVELS[lv+1].xp:cur;if(next===cur)return 100;return Math.min(100,Math.round((xp-cur)/(next-cur)*100))}
+function addXP(amount,reason){const old=getLevel(state.xp);state.xp+=amount;const nw=getLevel(state.xp);saveState();updateUI();showNotif('xp','+'+amount+' XP',reason);if(nw>old){state.level=nw;saveState();setTimeout(()=>showLevelUp(nw),800)}}
+
+// === Streak ===
+function updateStreak(){const today=new Date().toDateString();if(state.lastVisit===today)return;const yesterday=new Date(Date.now()-86400000).toDateString();if(state.lastVisit===yesterday){state.streak++;showNotif('streak','\uD83D\uDD25 '+state.streak+' Tage Streak!','Weiter so!');if(state.streak>=3)awardBadge('streak3');if(state.streak>=7)awardBadge('streak7')}else if(state.lastVisit!==today){state.streak=1}state.lastVisit=today;saveState()}
+
+// === Badges ===
+function awardBadge(id){if(state.badges.includes(id))return;state.badges.push(id);saveState();const b=BADGES.find(x=>x.id===id);if(b)showNotif('badge',b.icon+' Badge: '+b.name,b.desc)}
+
+// === Notifications ===
+let notifQueue=[],notifActive=false;
+function showNotif(type,title,text){notifQueue.push({type,title,text});if(!notifActive)processNotif()}
+function processNotif(){if(!notifQueue.length){notifActive=false;return}notifActive=true;const{type,title,text}=notifQueue.shift();const el=document.getElementById('notif');el.className='notif '+type;document.getElementById('notifTitle').textContent=title;document.getElementById('notifText').textContent=text;el.classList.add('show');setTimeout(()=>{el.classList.remove('show');setTimeout(processNotif,300)},2500)}
+
+// === Level Up + Confetti ===
+function showLevelUp(lv){const ov=document.getElementById('levelUpOverlay');const box=document.getElementById('levelUpBox');box.innerHTML='<div class="lvl-icon">\u2B06\uFE0F</div><div class="lvl-title">Level Up!</div><div class="lvl-name">Level '+(lv+1)+': '+LEVELS[lv].name+'</div>';ov.classList.add('active');spawnConfetti();setTimeout(()=>ov.classList.remove('active'),3000)}
+function spawnConfetti(){const c=document.getElementById('confetti');c.innerHTML='';const cols=['#3b82f6','#a855f7','#22c55e','#f59e0b','#ef4444','#06b6d4'];for(let i=0;i<60;i++){const p=document.createElement('div');p.style.cssText='position:absolute;left:'+Math.random()*100+'%;background:'+cols[i%cols.length]+';width:'+(6+Math.random()*8)+'px;height:'+(6+Math.random()*8)+'px;border-radius:'+(Math.random()>.5?'50%':'2px')+';animation:confettiFall '+(1.5+Math.random()*2)+'s ease-out '+Math.random()*.5+'s forwards';c.appendChild(p)}if(!document.getElementById('confettiStyle')){const s=document.createElement('style');s.id='confettiStyle';s.textContent='@keyframes confettiFall{0%{opacity:1;transform:translateY(0) rotate(0deg)}100%{opacity:0;transform:translateY(100vh) rotate(720deg)}}';document.head.appendChild(s)}setTimeout(()=>c.innerHTML='',4000)}
+
+// === Quiz Engine ===
+function shuffleQuiz(modId,quiz){const key='m'+modId;if(state.quizShuffleMap[key])return state.quizShuffleMap[key];const idx=[...Array(quiz.length).keys()];for(let i=idx.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[idx[i],idx[j]]=[idx[j],idx[i]]}state.quizShuffleMap[key]=idx;saveState();return idx}
+function renderQuiz(modId,quiz,isBoss){
+const pf=isBoss?'boss':'quiz';const idx=isBoss?[...Array(quiz.length).keys()]:shuffleQuiz(modId,quiz);
+let h='<div class="'+(isBoss?'boss-section':'quiz-section')+'">';
+h+=isBoss?'<h3>\uD83D\uDC51 Boss-Challenge</h3><p class="boss-sub">Alle '+quiz.length+' Fragen richtig beantworten!</p>':'<h3>\uD83D\uDCDD Quiz \u2014 Teste dein Wissen</h3>';
+idx.forEach((qi,di)=>{const q=quiz[qi];h+='<div class="quiz-q" data-qi="'+qi+'"><p>'+(di+1)+'. '+q.q+'</p>';q.a.forEach((a,ai)=>{h+='<label><input type="radio" name="'+pf+'_'+modId+'_'+qi+'" value="'+ai+'"> '+a+'<\/label>'});h+='<\/div>'});
+h+='<button class="quiz-submit" onclick="checkQuiz('+modId+','+isBoss+')">'+(isBoss?'Boss besiegen!':'Antworten prüfen')+'<\/button>';
+h+='<div class="quiz-result" id="'+pf+'Result'+modId+'" style="display:none"><\/div><\/div>';return h;
+}
+function checkQuiz(modId,isBoss){
+const pf=isBoss?'boss':'quiz';const quiz=isBoss?modules[modId].boss:modules[modId].quiz;
+let correct=0;const total=quiz.length;const startTime=window._quizStart||Date.now();
+quiz.forEach((q,qi)=>{
+const sel=document.querySelector('input[name="'+pf+'_'+modId+'_'+qi+'"]:checked');
+const labels=document.querySelectorAll('[data-qi="'+qi+'"] label');
+const ci=_d(q._h,qi);
+labels.forEach((l,li)=>{l.classList.remove('correct','wrong');if(li===ci)l.classList.add('correct');else if(sel&&parseInt(sel.value)===li)l.classList.add('wrong')});
+const qDiv=labels[0]?.closest('.quiz-q');if(qDiv){const old=qDiv.querySelector('.quiz-explanation');if(old)old.remove()}
+if(!sel||parseInt(sel.value)!==ci){if(qDiv){const exp=document.createElement('div');exp.className='quiz-explanation';exp.textContent='\u2192 Richtige Antwort: '+q.a[ci];qDiv.appendChild(exp)}}
+if(sel&&parseInt(sel.value)===ci)correct++;
+});
+const rEl=document.getElementById(pf+'Result'+modId);rEl.style.display='block';
+if(isBoss){
+if(correct===total){
+rEl.className='quiz-result pass';rEl.textContent='\uD83D\uDC51 Boss besiegt! '+correct+'/'+total+' \u2014 Perfekt!';
+if(!state.bossResults[modId]){state.bossResults[modId]=true;addXP(100,'Boss-Challenge bestanden!');if(!state.badges.includes('first_boss'))awardBadge('first_boss');if(modules.every((_,i)=>state.bossResults[i]))awardBadge('all_bosses');checkModuleComplete(modId)}
+}else{rEl.className='quiz-result fail';rEl.textContent='\uD83D\uDC80 '+correct+'/'+total+' \u2014 Alle müssen richtig sein! Versuch es nochmal.';setTimeout(()=>{document.querySelectorAll('input[name^="'+pf+'_'+modId+'"]').forEach(r=>{r.disabled=false;r.checked=false});document.querySelectorAll('[data-qi] label').forEach(l=>l.classList.remove('correct','wrong'));document.querySelectorAll('.quiz-explanation').forEach(e=>e.remove());rEl.style.display='none'},2000);return}
+}else{
+const passed=correct>=Math.ceil(total*0.6);rEl.className='quiz-result '+(passed?'pass':'fail');
+rEl.textContent=passed?'\u2705 '+correct+'/'+total+' richtig \u2014 Bestanden!':'\u274C '+correct+'/'+total+' richtig \u2014 Mindestens '+Math.ceil(total*0.6)+' nötig.';
+if(passed&&!state.quizResults[modId]){state.quizResults[modId]=correct;addXP(correct*15+50,'Quiz bestanden ('+correct+'/'+total+')');if(!state.badges.includes('first_quiz'))awardBadge('first_quiz');if(correct===total)awardBadge('perfect_quiz');if(Date.now()-startTime<60000)awardBadge('speed_quiz');checkModuleComplete(modId)}
+}
+saveState();document.querySelectorAll('input[name^="'+pf+'_'+modId+'"]').forEach(r=>r.disabled=true);
+window.scrollTo({top:0,behavior:'smooth'});
+}
+function checkModuleComplete(modId){
+if(state.quizResults[modId]!==undefined&&state.bossResults[modId]&&!state.modulesCompleted.includes(modId)){
+state.modulesCompleted.push(modId);awardBadge('m'+modId);
+if(state.modulesCompleted.length>=5)awardBadge('half_done');
+if(state.modulesCompleted.length>=10){awardBadge('graduate');setTimeout(()=>showCert(),1500)}
+saveState();renderSidebar();
+}
+}
+
+// === Render Module ===
+function renderModule(modId){
+state.currentModule=modId;
+if(!state.modulesViewed.includes(modId)){state.modulesViewed.push(modId);addXP(10,'Neues Modul geöffnet');if(state.modulesViewed.length>=10)awardBadge('explorer')}
+saveState();closeSidebar();
+const m=modules[modId];
+let h='<div class="module-header"><div class="mod-badge">'+m.icon+' Modul '+(modId+1)+'<\/div><h1>'+m.title+'<\/h1><p class="mod-desc">'+m.description+'<\/p><\/div>';
+m.lessons.forEach((l,i)=>{h+='<div class="lesson-card"><h3><span style="color:var(--neon)">'+String(i+1).padStart(2,'0')+'<\/span> '+l.title+' <button class="tts-btn" onclick="speakLesson('+i+')" title="Vorlesen">&#128266;<\/button><\/h3>'+l.content+'<\/div>'});
+h+='<div class="interactive-area"><h4>\uD83D\uDCDD Interaktive Übung<\/h4><div id="interactiveContent">Lädt...<\/div><\/div>';
+window._quizStart=Date.now();
+h+='<div class="speech-ex"><h4>Sprach\u00FCbung \u{1F3A4}<\/h4><div id="speechExArea"><\/div><\/div>';
+h+=renderQuiz(modId,m.quiz,false);
+h+=renderQuiz(modId,m.boss,true);
+document.getElementById('welcomeScreen').style.display='none';
+document.getElementById('badgesView').style.display='none';
+document.getElementById('statsView').style.display='none';
+const mc=document.getElementById('moduleContent');mc.style.display='block';mc.innerHTML=h;
+renderSidebar();setTimeout(()=>{initInteractive(modId);window.scrollTo(0,0)},100);
+}
+
+// === Sidebar ===
+function renderSidebar(){
+const el=document.getElementById('sidebarModules');
+el.innerHTML=modules.map((m,i)=>{
+const done=state.modulesCompleted.includes(i);
+const act=state.currentModule===i&&document.getElementById('moduleContent').style.display==='block';
+return '<a class="mod-link'+(act?' active':'')+(done?' completed':'')+'" onclick="renderModule('+i+')"><span class="mod-icon">'+m.icon+'<\/span>'+m.title+'<\/a>';
+}).join('');
+const lv=getLevel(state.xp);
+const lvEl=document.getElementById('sidebarLevel');if(lvEl)lvEl.textContent=LEVELS[lv].name;
+const xpEl=document.getElementById('sidebarXP');if(xpEl)xpEl.textContent=state.xp+' XP';
+const xpFill=document.getElementById('sidebarXPFill');if(xpFill)xpFill.style.width=getLevelProgress(state.xp)+'%';
+}
+function toggleSidebar(){document.getElementById('sidebar').classList.toggle('open')}
+function closeSidebar(){document.getElementById('sidebar').classList.remove('open')}
+
+// === Badges & Stats ===
+function showBadges(){
+document.getElementById('welcomeScreen').style.display='none';
+document.getElementById('moduleContent').style.display='none';
+document.getElementById('statsView').style.display='none';
+const v=document.getElementById('badgesView');v.style.display='block';closeSidebar();
+let h='<div class="module-header"><h1>\uD83C\uDFC5 Deine Abzeichen<\/h1><p class="mod-desc">'+state.badges.length+' von '+BADGES.length+' gesammelt<\/p><\/div><div class="badge-grid">';
+BADGES.forEach(b=>{const earned=state.badges.includes(b.id);h+='<div class="badge-item'+(earned?' earned':' locked')+'"><div class="badge-icon">'+(earned?b.icon:'\uD83D\uDD12')+'<\/div><div class="badge-name">'+b.name+'<\/div><\/div>'});
+h+='<\/div>';v.innerHTML=h;
+}
+function showStats(){
+document.getElementById('welcomeScreen').style.display='none';
+document.getElementById('moduleContent').style.display='none';
+document.getElementById('badgesView').style.display='none';
+const v=document.getElementById('statsView');v.style.display='block';closeSidebar();
+const lv=getLevel(state.xp);
+let h='<div class="module-header"><h1>\uD83D\uDCCA Statistik<\/h1><\/div><div class="stats-grid">';
+h+='<div class="stat-card"><div class="stat-val">'+state.xp+'<\/div><div class="stat-label">XP gesammelt<\/div><\/div>';
+h+='<div class="stat-card"><div class="stat-val">'+LEVELS[lv].name+'<\/div><div class="stat-label">Aktueller Rang<\/div><\/div>';
+h+='<div class="stat-card"><div class="stat-val">'+state.modulesCompleted.length+'/10<\/div><div class="stat-label">Module abgeschlossen<\/div><\/div>';
+h+='<div class="stat-card"><div class="stat-val">'+Object.keys(state.quizResults).length+'<\/div><div class="stat-label">Quizze bestanden<\/div><\/div>';
+h+='<div class="stat-card"><div class="stat-val">'+Object.keys(state.bossResults).length+'<\/div><div class="stat-label">Bosse besiegt<\/div><\/div>';
+h+='<div class="stat-card"><div class="stat-val">'+state.badges.length+'<\/div><div class="stat-label">Abzeichen<\/div><\/div>';
+h+='<div class="stat-card"><div class="stat-val">\uD83D\uDD25 '+state.streak+'<\/div><div class="stat-label">Tage-Streak<\/div><\/div>';
+h+='<\/div>';v.innerHTML=h;
+}
+
+// === Certificate ===
+let certStyle='akademie';
+function showCert(){window._lastFocus=document.activeElement;
+const ov=document.getElementById('certOverlay');
+const styles=['akademie','hacker','pixel','zukunft'];
+const labels=['\uD83C\uDFDB Akademie','\uD83D\uDCBB Hacker','\uD83D\uDD79 Pixel','\u2728 Zukunft'];
+document.getElementById('certPicker').innerHTML=styles.map((s,i)=>'<button class="cert-pick-btn '+(s===certStyle?'active':'')+'" onclick="certStyle=\''+s+'\';renderCert()">'+labels[i]+'<\/button>').join('');
+renderCert();ov.classList.add('active');
+}
+function closeCert(){document.getElementById('certOverlay').classList.remove('active');if(window._lastFocus){window._lastFocus.focus();window._lastFocus=null}}
+function generateCertCode(){const n=state.name||'X';const d=new Date();return 'TP-'+d.getFullYear()+'-'+((n.charCodeAt(0)*7+state.xp)%9999).toString(16).toUpperCase().padStart(4,'0')}
+function printCert(){window.print()}
+function certBadgeRow(){
+const earned=state.badges||[];if(earned.length===0)return'';
+return'<div class="cert-badge-row">'+earned.slice(0,8).map(bid=>{const b=BADGES.find(x=>x.id===bid);return b?'<div class="cert-badge-item" title="'+b.name+'">'+b.icon+'<\/div>':''}).join('')+(earned.length>8?'<div class="cert-badge-item" title="'+(earned.length-8)+' weitere">+'+(earned.length-8)+'<\/div>':'')+'<\/div>';
+}
+function certStatsRow(){
+const mods=state.modulesCompleted.length;const quizDone=Object.keys(state.quizResults).length;const bossDone=Object.keys(state.bossResults).length;
+return'<div class="cert-common-stats"><div class="cert-stat">\uD83D\uDCDA '+mods+'/10<\/div><div class="cert-stat">\uD83D\uDCDD '+quizDone+' Quizze<\/div><div class="cert-stat">\uD83D\uDC51 '+bossDone+' Bosse<\/div><div class="cert-stat">\uD83D\uDD25 '+state.streak+'d Streak<\/div><\/div>';
+}
+function certLogoFooter(dark){
+const fill=dark?'rgba(255,255,255,.4)':'rgba(0,0,0,.35)';
+return'<div class="cert-logo-footer"><svg viewBox="0 0 32 32" fill="none"><g transform="translate(16,16)"><circle cx="-10" cy="-9" r="1.2" fill="'+fill+'" opacity=".6"/><circle cx="10" cy="-9" r="1.2" fill="'+fill+'" opacity=".6"/><rect x="-7" y="-5.5" width="14" height="11" rx="3.5" fill="none" stroke="'+fill+'" stroke-width="1"/><text x="0" y="0" text-anchor="middle" dominant-baseline="central" font-family="system-ui" font-size="7.5" font-weight="900" fill="'+fill+'" letter-spacing="1">AI<\/text><\/g><\/svg><span style="color:'+fill+'">GZ AI Stacks<\/span><\/div>';
+}
+function svgCorner(){return'<svg viewBox="0 0 60 60" fill="none"><path d="M5 55 L5 15 Q5 5 15 5 L55 5" stroke="#c5a54e" stroke-width="1.5" fill="none" opacity=".4"/><circle cx="8" cy="8" r="3" fill="#c5a54e" opacity=".2"/><\/svg>';}
+function svgLaurelSeal(){return'<svg viewBox="0 0 90 90" fill="none"><circle cx="45" cy="45" r="32" fill="url(#cg)"/><defs><radialGradient id="cg"><stop offset="0%" stop-color="#e8c84e"/><stop offset="100%" stop-color="#8a6914"/><\/radialGradient><\/defs><text x="45" y="47" text-anchor="middle" dominant-baseline="central" font-family="serif" font-size="22" font-weight="900" fill="#fff">\u2605<\/text><\/svg>';}
+function svgHexSeal(){return'<svg viewBox="0 0 70 70" fill="none"><circle cx="35" cy="35" r="22" stroke="#00d4ff" stroke-width="1.5" opacity=".5"/><circle cx="35" cy="35" r="16" fill="rgba(0,255,65,.08)"/><text x="35" y="33" text-anchor="middle" dominant-baseline="central" font-family="monospace" font-size="8" font-weight="700" fill="#00ff41" opacity=".7">VERIFIED<\/text><text x="35" y="42" text-anchor="middle" font-family="monospace" font-size="7" fill="#00d4ff">\u2713<\/text><\/svg>';}
+function matrixCols(){const chars='01\u30A2\u30A4\u30A6\u30A8\u30AA{}[]<>';let h='';for(let i=0;i<10;i++){const x=5+i*9;const d=3+Math.random()*6;let col='';for(let j=0;j<25;j++)col+=chars[Math.floor(Math.random()*chars.length)]+'\n';h+='<div class="cert-matrix-col" style="left:'+x+'%;animation-duration:'+d+'s;animation-delay:'+Math.random()*4+'s">'+col+'<\/div>';}return h;}
+function renderCert(){
+const f=document.getElementById('certFrame');
+const name=state.name||'Unbekannt';const date=new Date().toLocaleDateString('de-DE',{day:'numeric',month:'long',year:'numeric'});
+const xp=state.xp;const mods=state.modulesCompleted.length;const rank=LEVELS[getLevel(xp)].name;const code=generateCertCode();const badges=certBadgeRow();
+document.querySelectorAll('.cert-pick-btn').forEach(b=>b.classList.toggle('active',b.textContent.toLowerCase().includes(certStyle)));
+if(certStyle==='akademie'){
+const corner=svgCorner();
+f.innerHTML='<div class="cert-akademie"><div class="cert-corner cert-corner-tl">'+corner+'<\/div><div class="cert-corner cert-corner-tr">'+corner+'<\/div><div class="cert-corner cert-corner-bl">'+corner+'<\/div><div class="cert-corner cert-corner-br">'+corner+'<\/div><div class="cert-inner"><div class="cert-sub">TextProfi \u00B7 Deutsche Textakademie<\/div><div class="cert-title">Diplom<\/div><div class="cert-hr"><\/div><div class="cert-body">Die Deutsche Textakademie verleiht hiermit<\/div><div class="cert-name">'+name+'<\/div><div class="cert-body">die Anerkennung als<br><strong style="font-size:18px;color:#1a1a3e">Deutsch-'+rank+'<\/strong><br>für die erfolgreiche Absolvierung von<br>\u201ETextProfi \u2014 Deutsch Klasse 7-10\u201C<\/div>'+certStatsRow()+badges+'<div class="cert-seal-wrap"><div class="cert-seal-ring"><\/div><div class="cert-seal">'+svgLaurelSeal()+'<\/div><\/div><div class="cert-date">'+date+'<\/div><div class="cert-verification">'+code+'<\/div>'+certLogoFooter(false)+'<\/div><\/div>';
+}else if(certStyle==='hacker'){
+f.innerHTML='<div class="cert-hacker">'+matrixCols()+'<div class="cert-inner"><div class="cert-prompt">root@textprofi:~$ <span>verify --user "'+name+'" --deep-scan<\/span><\/div><div class="cert-title">&gt;&gt; SYSTEM CERTIFICATION &lt;&lt;<\/div><div class="cert-access">ACCESS GRANTED<span class="cursor-blink">_<\/span><\/div><div class="cert-body">&gt; User..........: <strong style="color:#00d4ff">'+name+'<\/strong><br>&gt; Rank..........: '+rank+'<br>&gt; Modules.......: [<span style="color:#00ff41">'+ '\u2588'.repeat(mods)+'\u2591'.repeat(10-mods)+'<\/span>] '+mods+'/10<br>&gt; XP............: '+xp+' pts<br>&gt; Status........: <span style="color:#00ff41">VERIFIED<\/span> \u2713<\/div>'+certStatsRow()+badges+'<div class="cert-hex-seal">'+svgHexSeal()+'<\/div><div class="cert-body" style="font-size:11px">&gt; Certificate ID: '+code+'<br>&gt; Issued: '+date+'<br>&gt; Authority: TextProfi Akademie<\/div><div class="cert-prompt">root@textprofi:~$ <span class="cursor-blink">_<\/span><\/div>'+certLogoFooter(true)+'<\/div><\/div>';
+}else if(certStyle==='pixel'){
+const stars='\u2605'.repeat(Math.min(5,Math.ceil(mods/2)))+'\u2606'.repeat(Math.max(0,5-Math.ceil(mods/2)));
+const pct=Math.min(100,Math.round(xp/42));
+f.innerHTML='<div class="cert-pixel"><div class="cert-inner"><div class="cert-complete">\u25C6 LEVEL COMPLETE! \u25C6<\/div><div class="cert-title">CHAMPION<\/div><div class="cert-name">'+name+'<\/div><div class="cert-stars">'+stars+'<\/div><div class="cert-xp-bar"><div class="cert-xp-fill" style="width:'+pct+'%"><\/div><div class="cert-xp-label">'+xp+' XP<\/div><\/div><div class="cert-body">RANK: <strong style="color:#ffd700">'+rank.toUpperCase()+'<\/strong><\/div>'+certStatsRow()+badges+'<div class="cert-score">HIGH SCORE: '+xp+' PTS<\/div><div style="margin-top:8px;font-size:10px;color:#555">'+date+' \u00B7 '+code+'<\/div>'+certLogoFooter(true)+'<\/div><\/div>';
+}else{
+const particles=Array.from({length:15},(_,i)=>{const colors=['#6366f1','#ec4899','#f59e0b','#22c55e','#06b6d4'];return'<div class="cert-particle" style="position:absolute;left:'+Math.random()*100+'%;top:'+Math.random()*100+'%;width:'+(2+Math.random()*3)+'px;height:'+(2+Math.random()*3)+'px;background:'+colors[i%5]+';opacity:'+(0.1+Math.random()*0.2)+';box-shadow:0 0 '+(6+Math.random()*9)+'px '+colors[i%5]+';border-radius:50%"><\/div>';}).join('');
+f.innerHTML='<div class="cert-zukunft">'+particles+'<div class="cert-inner"><div class="cert-sub">Zukunfts-Akademie \u00B7 '+new Date().getFullYear()+'<\/div><div class="cert-title">Zertifikat der Zukunft<\/div><div class="cert-body">Hiermit bestätigen wir, dass<\/div><div class="cert-name">'+name+'<\/div><div class="cert-body">den interaktiven Deutsch-Kurs<br>\u201ETextProfi \u2014 Deutsch Klasse 7-10\u201C<br>erfolgreich absolviert hat.<\/div><div class="cert-body" style="margin:6px 0"><strong style="color:#a78bfa;font-size:16px">'+rank+'<\/strong><\/div>'+certStatsRow()+badges+'<div class="cert-seal-holo"><div class="cert-seal-mid"><div class="cert-seal-inner"><svg viewBox="0 0 40 40" fill="none"><text x="20" y="18" text-anchor="middle" font-size="14" fill="#a78bfa">\u2726<\/text><text x="20" y="28" text-anchor="middle" font-size="6" font-weight="700" fill="rgba(255,255,255,.6)" font-family="system-ui">DEU<\/text><\/svg><\/div><\/div><\/div><div class="cert-date">'+date+' \u00B7 '+code+'<\/div>'+certLogoFooter(true)+'<\/div><\/div>';
+}
+f.style.animation='none';f.offsetHeight;f.style.animation='certEntrance .6s cubic-bezier(.34,1.56,.64,1) both';
+}
+
+// === UI Update ===
+function updateUI(){
+const lv=getLevel(state.xp);
+const hdr=document.getElementById('headerLevel');if(hdr)hdr.textContent=LEVELS[lv].name;
+const hxp=document.getElementById('headerXP');if(hxp)hxp.textContent=state.xp+' XP';
+const fill=document.querySelector('.header-xp-fill');if(fill)fill.style.width=getLevelProgress(state.xp)+'%';
+const streakEl=document.getElementById('headerStreak');if(streakEl)streakEl.textContent='\uD83D\uDD25 '+state.streak;
+renderSidebar();
+}
+
+// === Theme System ===
+function setDesignTheme(world,mode){state.designTheme=world+'-'+mode;document.documentElement.setAttribute('data-theme',state.designTheme);saveState();buildThemePicker()}
+function getCurrentThemeParts(){const p=state.designTheme.split('-');return{world:p.slice(0,-1).join('-'),mode:p[p.length-1]||'dark'}}
+function toggleMode(){const{world,mode}=getCurrentThemeParts();setDesignTheme(world,mode==='dark'?'light':'dark')}
+function buildThemePicker(){
+const dd=document.getElementById('themePickerDD');if(!dd)return;
+const{world,mode}=getCurrentThemeParts();
+let h='<div class="tp-label">Theme wählen<\/div>';
+Object.keys(THEME_CONFIG).forEach(w=>{const t=THEME_CONFIG[w];h+='<div class="tp-world'+(w===world?' active':'')+'" onclick="setDesignTheme(\''+w+'\',\''+mode+'\')\"><div class="tp-world-color" style="background:'+t.color+'">'+t.emoji+'<\/div><div class="tp-world-info"><div class="tp-world-name">'+t.name+'<\/div><div class="tp-world-desc">'+t.desc+'<\/div><\/div><\/div>';});
+h+='<div class="tp-divider"><\/div><div class="tp-mode-row"><span class="tp-mode-label">'+(mode==='dark'?'\uD83C\uDF19 Dark':'\u2600\uFE0F Light')+'<\/span><div class="tp-mode-switch'+(mode==='light'?' light':'')+'" onclick="toggleMode()"><\/div><\/div>';
+dd.innerHTML=h;
+}
+function toggleThemePicker(){document.getElementById('themePickerDD').classList.toggle('open')}
+
+// === Interactive Exercises ===
+function initInteractive(modId){
+const el=document.getElementById('interactiveContent');if(!el)return;
+const exercises=[
+// Mod 0: Textanalyse — Textarten zuordnen
+function(){el.innerHTML='<p>Ordne die Texte der richtigen Textart zu. Klicke auf einen Text und dann auf die passende Kategorie.</p><div class="ix-grid" id="ixItems"><\/div><div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin:16px 0"><button class="ix-btn" onclick="ixDrop(0,\'fiktional\')">Fiktionaler Text</button><button class="ix-btn" onclick="ixDrop(0,\'sachtext\')">Sachtext</button></div><div class="ix-feedback" id="ixFb"><\/div>';
+const items=[{n:'Es war einmal ein kleines Mädchen...',t:'fiktional'},{n:'Laut einer Studie der Uni München...',t:'sachtext'},{n:'Er öffnete die Tür und sah — nichts.',t:'fiktional'},{n:'Der Bundestag beschloss gestern...',t:'sachtext'},{n:'Die Sonne lachte auf das Meer hinab.',t:'fiktional'},{n:'Im Jahr 2025 betrug das BIP...',t:'sachtext'}];
+window._ixData={items,sel:null,done:0,correct:0};
+const g=document.getElementById('ixItems');items.forEach((it,i)=>{const d=document.createElement('div');d.className='ix-item';d.textContent=it.n;d.onclick=()=>{document.querySelectorAll('.ix-item').forEach(x=>x.classList.remove('selected'));d.classList.add('selected');window._ixData.sel=i};g.appendChild(d)});},
+// Mod 1: Er\u00F6rterung — Argumente dem Dreischritt zuordnen
+function(){el.innerHTML='<p>Ordne die S\u00E4tze dem richtigen Teil des Dreischritts zu.</p><div class="ix-grid" id="ixItems"><\/div><div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin:16px 0"><button class="ix-btn" onclick="ixDrop(1,\'these\')">These</button><button class="ix-btn" onclick="ixDrop(1,\'begr\u00FCndung\')">Begr\u00FCndung</button><button class="ix-btn" onclick="ixDrop(1,\'beispiel\')">Beispiel</button></div><div class="ix-feedback" id="ixFb"><\/div>';
+const items=[{n:'Lesen foerdert die Sprachkompetenz.',t:'these'},{n:'Wer viel liest, erweitert seinen Wortschatz.',t:'begr\u00FCndung'},{n:'Studien zeigen, dass Vielleser 50% mehr W\u00F6rter verwenden.',t:'beispiel'},{n:'Handys sollten im Unterricht verboten sein.',t:'these'},{n:'Sie lenken die Sch\u00FCler vom Lernen ab.',t:'begr\u00FCndung'},{n:'In einer Klasse in Bayern stiegen die Noten nach dem Handyverbot.',t:'beispiel'}];
+window._ixData={items,sel:null,done:0,correct:0};
+const g=document.getElementById('ixItems');items.forEach((it,i)=>{const d=document.createElement('div');d.className='ix-item';d.textContent=it.n;d.onclick=()=>{document.querySelectorAll('.ix-item').forEach(x=>x.classList.remove('selected'));d.classList.add('selected');window._ixData.sel=i};g.appendChild(d)});},
+// Mod 2: Grammatik — Satzglieder bestimmen
+function(){el.innerHTML='<p>Welches Satzglied ist unterstrichen? Wähle die richtige Antwort.</p><div id="ixGramQ" style="text-align:center;font-size:20px;margin:16px 0"><\/div><div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap" id="ixGramBtns"><\/div><div class="ix-feedback" id="ixFb"><\/div>';
+const qs=[{q:'<u>Der Hund</u> bellt laut.',a:'Subjekt',opts:['Subjekt','Pr\u00E4dikat','Objekt','Adverbiale']},{q:'Er liest <u>ein Buch</u>.',a:'Akkusativobjekt',opts:['Subjekt','Dativobjekt','Akkusativobjekt','Pr\u00E4dikat']},{q:'Er gibt <u>dem Kind</u> den Ball.',a:'Dativobjekt',opts:['Akkusativobjekt','Dativobjekt','Subjekt','Adverbiale']},{q:'Er liest <u>im Garten</u>.',a:'Adverbiale Bestimmung',opts:['Subjekt','Objekt','Pr\u00E4dikat','Adverbiale Bestimmung']}];
+const pick=qs[Math.floor(Math.random()*qs.length)];window._ixGram=pick;
+document.getElementById('ixGramQ').innerHTML=pick.q;
+const btns=document.getElementById('ixGramBtns');pick.opts.forEach(o=>{const b=document.createElement('button');b.className='ix-btn';b.textContent=o;b.onclick=()=>{const fb=document.getElementById('ixFb');if(o===pick.a){fb.className='ix-feedback pass';fb.textContent='\u2705 Richtig! '+pick.a;if(!state.interactiveResults[2]){state.interactiveResults[2]=true;addXP(20,'Interaktive Übung gelöst');saveState()}}else{fb.className='ix-feedback fail';fb.textContent='\u274C Falsch! Richtig w\u00E4re: '+pick.a}};btns.appendChild(b)});},
+// Mod 3: Stilmittel — Stilmittel erkennen
+function(){el.innerHTML='<p>Welches Stilmittel wird hier verwendet?</p><div id="ixStilQ" style="text-align:center;font-size:18px;font-style:italic;margin:16px 0;padding:16px;background:var(--bg3);border-radius:8px"><\/div><div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap" id="ixStilBtns"><\/div><div class="ix-feedback" id="ixFb"><\/div>';
+const qs=[{q:'Die Sonne lacht.',a:'Personifikation',opts:['Metapher','Personifikation','Vergleich','Alliteration']},{q:'Milch macht m\u00FCde Männer munter.',a:'Alliteration',opts:['Anapher','Klimax','Alliteration','Metapher']},{q:'Schnell wie der Wind.',a:'Vergleich',opts:['Metapher','Vergleich','Personifikation','Hyperbel']},{q:'Das Meer der Träume.',a:'Metapher',opts:['Vergleich','Personifikation','Metapher','Symbol']},{q:'Er kam, sah und siegte.',a:'Klimax',opts:['Anapher','Parallelismus','Antithese','Klimax']}];
+const pick=qs[Math.floor(Math.random()*qs.length)];window._ixStil=pick;
+document.getElementById('ixStilQ').textContent=pick.q;
+const btns=document.getElementById('ixStilBtns');pick.opts.sort(()=>Math.random()-.5).forEach(o=>{const b=document.createElement('button');b.className='ix-btn';b.textContent=o;b.onclick=()=>{const fb=document.getElementById('ixFb');if(o===pick.a){fb.className='ix-feedback pass';fb.textContent='\u2705 Richtig! '+pick.a;if(!state.interactiveResults[3]){state.interactiveResults[3]=true;addXP(20,'Interaktive Übung gelöst');saveState()}}else{fb.className='ix-feedback fail';fb.textContent='\u274C Falsch! Richtig w\u00E4re: '+pick.a}};btns.appendChild(b)});},
+// Mod 4: Rechtschreibung — das/dass Quiz
+function(){el.innerHTML='<p>Setze \"das\" oder \"dass\" ein!</p><div id="ixRsQ" style="text-align:center;font-size:18px;margin:16px 0"><\/div><div style="display:flex;gap:16px;justify-content:center"><button class="ix-btn" onclick="ixCheckRS(\'das\')">das</button><button class="ix-btn" onclick="ixCheckRS(\'dass\')">dass</button></div><div class="ix-feedback" id="ixFb"><\/div>';
+const qs=[{q:'Ich hoffe, ___ du kommst.',a:'dass'},{q:'___ Buch, ___ ich lese, ist gut.',a:'das'},{q:'Er sagt, ___ er m\u00FCde ist.',a:'dass'},{q:'___ Auto, ___ dort steht, ist rot.',a:'das'},{q:'Ich weiss, ___ du recht hast.',a:'dass'}];
+const pick=qs[Math.floor(Math.random()*qs.length)];window._ixRS=pick;
+document.getElementById('ixRsQ').textContent=pick.q;},
+// Mod 5: Zeichensetzung — Komma setzen
+function(){el.innerHTML='<p>Wo muss ein Komma stehen? Klicke auf die richtige Stelle.</p><div id="ixKommaQ" style="text-align:center;font-size:18px;margin:16px 0"><\/div><div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap" id="ixKommaBtns"><\/div><div class="ix-feedback" id="ixFb"><\/div>';
+const qs=[{parts:['Er bleibt zu Hause','weil es regnet.'],komma:0},{parts:['Wenn es regnet','nehme ich den Schirm.'],komma:0},{parts:['Berlin','die Hauptstadt','ist gross.'],komma:1},{parts:['Er lernt','um die Pr\u00FCfung zu bestehen.'],komma:0}];
+const pick=qs[Math.floor(Math.random()*qs.length)];window._ixKomma=pick;
+const q=document.getElementById('ixKommaQ');q.textContent=pick.parts.join(' | ');
+const btns=document.getElementById('ixKommaBtns');
+pick.parts.forEach((p,i)=>{if(i<pick.parts.length-1){const b=document.createElement('button');b.className='ix-btn';b.textContent='Komma nach: '+p;b.onclick=()=>{const fb=document.getElementById('ixFb');if(i===pick.komma){fb.className='ix-feedback pass';fb.textContent='\u2705 Richtig! '+pick.parts.slice(0,i+1).join(', ')+', '+pick.parts.slice(i+1).join(', ');if(!state.interactiveResults[5]){state.interactiveResults[5]=true;addXP(20,'Interaktive Übung gelöst');saveState()}}else{fb.className='ix-feedback fail';fb.textContent='\u274C Falsch! Das Komma steht nach: '+pick.parts[pick.komma]}};btns.appendChild(b)}});},
+// Mod 6: Gedichtanalyse — Reimschema bestimmen
+function(){el.innerHTML='<p>Bestimme das Reimschema! Klicke auf die richtige Antwort.</p><div style="background:var(--bg3);padding:16px;border-radius:8px;margin:12px 0;font-style:italic;line-height:2"id="ixReimQ"><\/div><div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap" id="ixReimBtns"><\/div><div class="ix-feedback" id="ixFb"><\/div>';
+const qs=[{q:'Ich ging im Walde (a)<br>So f\u00FCr mich hin (b)<br>Und nichts zu suchen (a)<br>Das war mein Sinn (b)',a:'Kreuzreim (abab)',opts:['Paarreim (aabb)','Kreuzreim (abab)','Umarmender Reim (abba)','Schweifreim']},{q:'Die Nacht ist still (a)<br>Der Wind weht kalt (a)<br>Kein Licht erhellt (b)<br>Den dunklen Wald (b)',a:'Paarreim (aabb)',opts:['Paarreim (aabb)','Kreuzreim (abab)','Umarmender Reim (abba)','Kein Reimschema']}];
+const pick=qs[Math.floor(Math.random()*qs.length)];
+document.getElementById('ixReimQ').innerHTML=pick.q;
+const btns=document.getElementById('ixReimBtns');pick.opts.forEach(o=>{const b=document.createElement('button');b.className='ix-btn';b.textContent=o;b.onclick=()=>{const fb=document.getElementById('ixFb');if(o===pick.a){fb.className='ix-feedback pass';fb.textContent='\u2705 Richtig! '+pick.a;if(!state.interactiveResults[6]){state.interactiveResults[6]=true;addXP(20,'Interaktive Übung gelöst');saveState()}}else{fb.className='ix-feedback fail';fb.textContent='\u274C Falsch! Richtig w\u00E4re: '+pick.a}};btns.appendChild(b)});},
+// Mod 7: Sachtextanalyse — Argumenttypen zuordnen
+function(){el.innerHTML='<p>Ordne die Argumente dem richtigen Argumenttyp zu.</p><div class="ix-grid" id="ixItems"><\/div><div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin:16px 0"><button class="ix-btn" onclick="ixDrop(7,\'fakt\')">Faktenargument</button><button class="ix-btn" onclick="ixDrop(7,\'autorit\')">Autoritätsargument</button><button class="ix-btn" onclick="ixDrop(7,\'beispiel\')">Beispielargument</button></div><div class="ix-feedback" id="ixFb"><\/div>';
+const items=[{n:'Laut einer Studie lesen 40% der Jugendlichen t\u00E4glich.',t:'fakt'},{n:'Professor M\u00FCller betont die Wichtigkeit des Lesens.',t:'autorit'},{n:'Mein Nachbar hat durch Lesen bessere Noten bekommen.',t:'beispiel'},{n:'Die Arbeitslosenquote lag 2024 bei 5,2%.',t:'fakt'},{n:'Wie der Bildungsexperte Dr. Schmidt erkl\u00E4rt...',t:'autorit'},{n:'In unserer Schule f\u00FChrte ein Leseprojekt zu besseren Ergebnissen.',t:'beispiel'}];
+window._ixData={items,sel:null,done:0,correct:0};
+const g=document.getElementById('ixItems');items.forEach((it,i)=>{const d=document.createElement('div');d.className='ix-item';d.style.fontSize='13px';d.textContent=it.n;d.onclick=()=>{document.querySelectorAll('.ix-item').forEach(x=>x.classList.remove('selected'));d.classList.add('selected');window._ixData.sel=i};g.appendChild(d)});},
+// Mod 8: Kreatives Schreiben — Erz\u00E4hltechnik erkennen
+function(){el.innerHTML='<p>Welche Erz\u00E4hltechnik wird hier verwendet?</p><div id="ixErzQ" style="text-align:center;font-size:16px;font-style:italic;margin:16px 0;padding:16px;background:var(--bg3);border-radius:8px"><\/div><div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap" id="ixErzBtns"><\/div><div class="ix-feedback" id="ixFb"><\/div>';
+const qs=[{q:'Er ballte die Fäuste und presste die Lippen zusammen.',a:'Show dont tell',opts:['Innerer Monolog','Show dont tell','Dialog','Beschreibung']},{q:'Was soll ich nur tun? Wenn ich jetzt gehe, ist alles vorbei.',a:'Innerer Monolog',opts:['Dialog','Innerer Monolog','Erzählerbericht','Show dont tell']},{q:'"Komm sofort hierher!", rief sie.',a:'Dialog',opts:['Innerer Monolog','Show dont tell','Dialog','Schilderung']}];
+const pick=qs[Math.floor(Math.random()*qs.length)];
+document.getElementById('ixErzQ').textContent=pick.q;
+const btns=document.getElementById('ixErzBtns');pick.opts.forEach(o=>{const b=document.createElement('button');b.className='ix-btn';b.textContent=o;b.onclick=()=>{const fb=document.getElementById('ixFb');if(o===pick.a){fb.className='ix-feedback pass';fb.textContent='\u2705 Richtig! '+pick.a;if(!state.interactiveResults[8]){state.interactiveResults[8]=true;addXP(20,'Interaktive Übung gelöst');saveState()}}else{fb.className='ix-feedback fail';fb.textContent='\u274C Falsch! Richtig w\u00E4re: '+pick.a}};btns.appendChild(b)});},
+// Mod 9: Kommunikation — Vier-Ohren-Modell anwenden
+function(){el.innerHTML='<p>Analysiere die Aussage \"Die Ampel ist gr\u00FCn.\" auf den vier Ebenen. Ordne die Interpretationen zu.</p><div class="ix-grid" id="ixItems"><\/div><div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin:16px 0"><button class="ix-btn" onclick="ixDrop(9,\'sach\')">Sachinhalt</button><button class="ix-btn" onclick="ixDrop(9,\'selbst\')">Selbstoffenbarung</button><button class="ix-btn" onclick="ixDrop(9,\'bez\')">Beziehung</button><button class="ix-btn" onclick="ixDrop(9,\'appell\')">Appell</button></div><div class="ix-feedback" id="ixFb"><\/div>';
+const items=[{n:'Die Ampel zeigt gr\u00FCn.',t:'sach'},{n:'Ich habe es eilig.',t:'selbst'},{n:'Du brauchst meine Hilfe beim Fahren.',t:'bez'},{n:'Fahr endlich los!',t:'appell'}];
+window._ixData={items,sel:null,done:0,correct:0};
+const g=document.getElementById('ixItems');items.forEach((it,i)=>{const d=document.createElement('div');d.className='ix-item';d.textContent=it.n;d.onclick=()=>{document.querySelectorAll('.ix-item').forEach(x=>x.classList.remove('selected'));d.classList.add('selected');window._ixData.sel=i};g.appendChild(d)})}
+];
+if(exercises[modId])exercises[modId]();
+}
+// Interactive helpers
+window.ixDrop=function(modId,cat){
+const d=window._ixData;if(d.sel===null)return;
+const item=d.items[d.sel];const els=document.querySelectorAll('.ix-item');
+if(item.t===cat){els[d.sel].classList.add('correct');els[d.sel].classList.add('placed');d.correct++}
+else{els[d.sel].classList.add('wrong');setTimeout(()=>els[d.sel].classList.remove('wrong'),800)}
+d.done++;d.sel=null;els.forEach(e=>e.classList.remove('selected'));
+if(d.done>=d.items.length){const fb=document.getElementById('ixFb');fb.className='ix-feedback '+(d.correct>=4?'pass':'fail');fb.textContent=d.correct>=4?'\u2705 '+d.correct+'/'+d.items.length+' richtig!':'\u274C '+d.correct+'/'+d.items.length+' \u2014 Versuch es nochmal!';
+if(d.correct>=4&&!state.interactiveResults[modId]){state.interactiveResults[modId]=true;addXP(20,'Interaktive Übung gelöst');saveState()}}
+};
+window.ixCheckRS=function(ans){const fb=document.getElementById('ixFb');const pick=window._ixRS;
+if(ans===pick.a){fb.className='ix-feedback pass';fb.textContent='\u2705 Richtig! '+pick.q.replace('___',pick.a);if(!state.interactiveResults[4]){state.interactiveResults[4]=true;addXP(20,'Interaktive Übung gelöst');saveState()}}
+else{fb.className='ix-feedback fail';fb.textContent='\u274C Falsch! Richtig w\u00E4re: '+pick.a}};
+
+// === Start App ===
+function startApp(){
+const name=document.getElementById('nameInput').value.trim();if(!name)return;
+state.name=name;state.started=true;saveState();
+document.getElementById('welcomeScreen').style.display='none';
+renderModule(0);updateStreak();
+}
+
+// === Init ===
+(function init(){
+if(loadState()&&state.started){
+document.getElementById('welcomeScreen').style.display='none';
+document.documentElement.setAttribute('data-theme',state.designTheme);
+renderModule(state.currentModule);updateUI();updateStreak();
+}else{
+document.documentElement.setAttribute('data-theme',state.designTheme);
+buildThemePicker();
+}
+renderSidebar();
+document.addEventListener('click',e=>{if(!e.target.closest('.theme-picker-wrap'))document.getElementById('themePickerDD')?.classList.remove('open')});
+})();
+</script>
+
+<script>
+(function(){
+var KEY=null;
+var scripts=document.querySelectorAll('script');
+for(var i=0;i<scripts.length;i++){
+var km=scripts[i].textContent.match(/STORAGE_KEY\s*=\s*['"](\w+)['"]/);
+if(km){KEY=km[1];break;}
+}
+if(!location.hash.match(/modules=/)){try{Object.keys(localStorage).filter(function(k){return k.indexOf("_allowed_modules")!==-1}).forEach(function(k){localStorage.removeItem(k)})}catch(e){}}
+var LOCK_KEY=(KEY||'app')+'_allowed_modules';
+var h=location.hash.match(/modules=([0-9,]+)/);
+var allowed=null;
+if(h){
+allowed=h[1].split(",").map(Number);
+try{localStorage.setItem(LOCK_KEY,JSON.stringify(allowed));}catch(e){}
+}else{
+try{var stored=localStorage.getItem(LOCK_KEY);if(stored)allowed=JSON.parse(stored);}catch(e){}
+}
+if(!allowed||!allowed.length)return;
+function filterSidebar(){
+var items=document.querySelectorAll("#sidebarModules > *");
+for(var i=0;i<items.length;i++){
+items[i].style.display=(allowed.indexOf(i)===-1)?"none":"";
+}
+}
+var sb=document.getElementById("sidebarModules");
+if(sb){new MutationObserver(filterSidebar).observe(sb,{childList:true});filterSidebar();}
+document.addEventListener("click",function(e){
+var t=e.target.closest("[onclick]");
+if(!t)return;
+var oc=t.getAttribute("onclick")||"";
+var idx=oc.indexOf("renderModule(");
+if(idx===-1)return;
+var num=parseInt(oc.substring(idx+13));
+if(!isNaN(num)&&allowed.indexOf(num)===-1){e.preventDefault();e.stopImmediatePropagation();}
+},true);
+setTimeout(filterSidebar,500);
+window.addEventListener("hashchange",function(){
+var hh=location.hash.match(/modules=([0-9,]+)/);
+if(hh){
+allowed=hh[1].split(",").map(Number);
+try{localStorage.setItem(LOCK_KEY,JSON.stringify(allowed));}catch(e){}
+filterSidebar();
+}
+});
+})();
+</script>
+
+<div class="zoom-controls" role="toolbar" aria-label="Zoom-Steuerung">
+<button class="zoom-btn" onclick="zoomOut()" title="Verkleinern (Taste -)" aria-label="Verkleinern">&#8722;</button>
+<button class="zoom-btn" onclick="zoomReset()" title="Zoom zurücksetzen" aria-label="Zoom zurücksetzen" style="font-size:10px;position:relative"><span id="zoomLvl">100%</span></button>
+<button class="zoom-btn" onclick="zoomIn()" title="Vergrößern (Taste +)" aria-label="Vergrößern">+</button>
+</div>
+
+<script>
+(function(){
+var zl=100;
+function applyZoom(){document.body.style.zoom=zl/100;var e=document.getElementById('zoomLvl');if(e)e.textContent=zl+'%';}
+window.zoomIn=function(){if(zl<200){zl+=10;applyZoom();}};
+window.zoomOut=function(){if(zl>50){zl-=10;applyZoom();}};
+window.zoomReset=function(){zl=100;applyZoom();};
+document.addEventListener('keydown',function(e){
+if(e.target.tagName==='INPUT'||e.target.tagName==='TEXTAREA'||e.target.isContentEditable)return;
+if((e.key==='+'||e.key==='=')&&!e.ctrlKey&&!e.metaKey){e.preventDefault();zoomIn();}
+else if((e.key==='-'||e.key==='_')&&!e.ctrlKey&&!e.metaKey){e.preventDefault();zoomOut();}
+else if(e.key==='0'&&!e.ctrlKey&&!e.metaKey){e.preventDefault();zoomReset();}
+});
+})();
+</script>
+
+<script>
+/* A11y: Focus trap for modal overlays */
+document.addEventListener('keydown',function(e){if(e.key==='Tab'){var ov=document.querySelector('.cert-overlay.active,.modal-overlay.active,[role="dialog"].active');if(ov){var fc=ov.querySelectorAll('button,a,[tabindex="0"],input,select,textarea');if(fc.length){var f=fc[0],l=fc[fc.length-1];if(e.shiftKey&&document.activeElement===f){e.preventDefault();l.focus()}else if(!e.shiftKey&&document.activeElement===l){e.preventDefault();f.focus()}}}}});
+</script>
+</body>
+</html>

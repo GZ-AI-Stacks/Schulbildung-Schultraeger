@@ -1,0 +1,918 @@
+<!DOCTYPE html>
+<html lang="de" data-theme="cyber-dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>KunstForscher - Kunst Klasse 3-6</title>
+<meta name="description" content="Interaktive Lern-App für Kunst, Klasse 3-6. 10 Module zu Farbenlehre, Perspektive, Kunstepochen und mehr mit Quiz, Boss-Challenges und Gamification.">
+<style>
+@font-face{font-family:'Sora';src:url('../../../Klasse_7-10/Informatik/fonts/sora-latin-400-normal.woff2') format('woff2');font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:'Sora';src:url('../../../Klasse_7-10/Informatik/fonts/sora-latin-600-normal.woff2') format('woff2');font-weight:600;font-style:normal;font-display:swap}
+@font-face{font-family:'Sora';src:url('../../../Klasse_7-10/Informatik/fonts/sora-latin-700-normal.woff2') format('woff2');font-weight:700;font-style:normal;font-display:swap}
+@font-face{font-family:'JetBrains Mono';src:url('../../../Klasse_7-10/Informatik/fonts/jetbrains-mono-latin-400-normal.woff2') format('woff2');font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:'Playfair Display';src:url('../../../Klasse_7-10/Informatik/fonts/playfair-display-latin-700-normal.woff2') format('woff2');font-weight:700;font-style:normal;font-display:swap}
+@font-face{font-family:'Inter';src:url('../../../Klasse_7-10/Informatik/fonts/inter-latin-400-normal.woff2') format('woff2');font-weight:400;font-style:normal;font-display:swap}
+
+:root{--neon:#3b82f6;--neon-dim:rgba(59,130,246,.15);--neon-glow:rgba(59,130,246,.3);--bg:#0a0e14;--bg2:#111827;--bg3:#1f2937;--card:#161e2e;--card-hover:#1e293b;--border:#2a3444;--border-light:#374151;--text:#d4dce8;--text-dim:#8899aa;--text-bright:#f1f5f9;--heading:#ffffff;--link:#60a5fa;--success:#22c55e;--warning:#f59e0b;--danger:#ef4444;--xp-purple:#a855f7;--badge-cyan:#06b6d4;--streak-red:#ef4444;--radius:12px;--radius-sm:8px;--radius-lg:16px;--shadow:0 4px 24px rgba(0,0,0,.4);--shadow-lg:0 8px 40px rgba(0,0,0,.5);--font:'Sora','Segoe UI',system-ui,sans-serif;--mono:'JetBrains Mono','Cascadia Code',monospace;--serif:'Playfair Display','Georgia',serif;--sidebar-w:280px;--header-h:60px;--card-border-w:1px;--card-border-style:solid;--glow:1}
+[data-theme="cyber-dark"]{--neon:#3b82f6;--neon-dim:rgba(59,130,246,.15);--neon-glow:rgba(59,130,246,.3);--bg:#0a0e14;--bg2:#111827;--bg3:#1f2937;--card:#161e2e;--card-hover:#1e293b;--border:#2a3444;--border-light:#374151;--text:#d4dce8;--text-dim:#8899aa;--text-bright:#f1f5f9;--heading:#ffffff;--link:#60a5fa;--success:#22c55e;--warning:#f59e0b;--danger:#ef4444;--xp-purple:#a855f7;--badge-cyan:#06b6d4;--streak-red:#ef4444;--radius:12px;--radius-sm:8px;--radius-lg:16px;--shadow:0 4px 24px rgba(0,0,0,.4);--shadow-lg:0 8px 40px rgba(0,0,0,.5);--font:'Sora','Segoe UI',system-ui,sans-serif;--card-border-w:1px;--card-border-style:solid;--glow:1}
+[data-theme="cyber-light"]{--neon:#1d4ed8;--neon-dim:rgba(29,78,216,.1);--neon-glow:rgba(29,78,216,.2);--bg:#f8f9fb;--bg2:#f0f2f5;--bg3:#e5e7eb;--card:#ffffff;--card-hover:#f5f7fa;--border:#d1d5db;--border-light:#e5e7eb;--text:#374151;--text-dim:#4b5563;--text-bright:#111827;--heading:#111827;--link:#2563eb;--success:#22c55e;--warning:#f59e0b;--danger:#ef4444;--xp-purple:#a855f7;--badge-cyan:#06b6d4;--streak-red:#ef4444;--radius:12px;--radius-sm:8px;--radius-lg:16px;--shadow:0 4px 24px rgba(0,0,0,.08);--shadow-lg:0 8px 40px rgba(0,0,0,.12);--font:'Sora','Segoe UI',system-ui,sans-serif;--card-border-w:1px;--card-border-style:solid;--glow:0}
+[data-theme="retro-dark"]{--neon:#ffd700;--neon-dim:rgba(255,215,0,.12);--neon-glow:rgba(255,215,0,.3);--bg:#0d0208;--bg2:#1a0a1e;--bg3:#2d1233;--card:#1a0a1e;--card-hover:#2d1233;--border:#4a1942;--border-light:#5c2d5c;--text:#e0d0f0;--text-dim:#9080a0;--text-bright:#fff;--heading:#ffd700;--link:#ff6b9d;--success:#00e676;--warning:#ffab00;--danger:#ff1744;--xp-purple:#e040fb;--badge-cyan:#00e5ff;--streak-red:#ff1744;--radius:0px;--radius-sm:0px;--radius-lg:0px;--shadow:4px 4px 0 rgba(0,0,0,.8);--shadow-lg:6px 6px 0 rgba(0,0,0,.9);--font:'Courier New','Consolas',monospace;--card-border-w:3px;--card-border-style:solid;--glow:0}
+[data-theme="retro-light"]{--neon:#b8860b;--neon-dim:rgba(184,134,11,.1);--neon-glow:rgba(184,134,11,.2);--bg:#fff8e1;--bg2:#fff3cd;--bg3:#ffe0b2;--card:#ffffff;--card-hover:#fff9f0;--border:#d4a017;--border-light:#e6c84d;--text:#3e2723;--text-dim:#6d4c41;--text-bright:#1b0000;--heading:#b8860b;--link:#c2185b;--success:#2e7d32;--warning:#ef6c00;--danger:#c62828;--xp-purple:#8e24aa;--badge-cyan:#00838f;--streak-red:#c62828;--radius:0px;--radius-sm:0px;--radius-lg:0px;--shadow:3px 3px 0 rgba(0,0,0,.15);--shadow-lg:5px 5px 0 rgba(0,0,0,.2);--font:'Courier New','Consolas',monospace;--card-border-w:3px;--card-border-style:solid;--glow:0}
+[data-theme="nature-dark"]{--neon:#4ade80;--neon-dim:rgba(74,222,128,.12);--neon-glow:rgba(74,222,128,.25);--bg:#0c1a0f;--bg2:#132617;--bg3:#1e3a24;--card:#15291a;--card-hover:#1e3a24;--border:#2d5a36;--border-light:#3a7044;--text:#c8e6c9;--text-dim:#81a784;--text-bright:#e8f5e9;--heading:#e8f5e9;--link:#81c784;--success:#66bb6a;--warning:#ffa726;--danger:#ef5350;--xp-purple:#ab47bc;--badge-cyan:#26a69a;--streak-red:#ef5350;--radius:20px;--radius-sm:14px;--radius-lg:28px;--shadow:0 4px 20px rgba(0,0,0,.3);--shadow-lg:0 8px 32px rgba(0,0,0,.4);--font:'Segoe UI','Helvetica Neue',system-ui,sans-serif;--card-border-w:1px;--card-border-style:solid;--glow:0}
+[data-theme="nature-light"]{--neon:#2e7d32;--neon-dim:rgba(46,125,50,.08);--neon-glow:rgba(46,125,50,.15);--bg:#f1f8e9;--bg2:#e8f5e9;--bg3:#c8e6c9;--card:#ffffff;--card-hover:#f1faf1;--border:#a5d6a7;--border-light:#c8e6c9;--text:#33691e;--text-dim:#3e6e1c;--text-bright:#1b5e20;--heading:#1b5e20;--link:#2e7d32;--success:#388e3c;--warning:#ef6c00;--danger:#c62828;--xp-purple:#7b1fa2;--badge-cyan:#00695c;--streak-red:#c62828;--radius:20px;--radius-sm:14px;--radius-lg:28px;--shadow:0 4px 16px rgba(0,0,0,.06);--shadow-lg:0 8px 28px rgba(0,0,0,.1);--font:'Segoe UI','Helvetica Neue',system-ui,sans-serif;--card-border-w:1px;--card-border-style:solid;--glow:0}
+[data-theme="space-dark"]{--neon:#c084fc;--neon-dim:rgba(192,132,252,.12);--neon-glow:rgba(192,132,252,.3);--bg:#07020e;--bg2:#0f0720;--bg3:#1a0e35;--card:#110a28;--card-hover:#1a0e35;--border:#2e1a5e;--border-light:#3d2478;--text:#d4c8f0;--text-dim:#9080b8;--text-bright:#f0e8ff;--heading:#f0e8ff;--link:#f0abfc;--success:#34d399;--warning:#fbbf24;--danger:#fb7185;--xp-purple:#f472b6;--badge-cyan:#67e8f9;--streak-red:#fb7185;--radius:4px;--radius-sm:2px;--radius-lg:6px;--shadow:0 4px 24px rgba(100,50,200,.2);--shadow-lg:0 8px 40px rgba(100,50,200,.3);--font:'Segoe UI',system-ui,sans-serif;--card-border-w:1px;--card-border-style:solid;--glow:1}
+[data-theme="space-light"]{--neon:#7c3aed;--neon-dim:rgba(124,58,237,.08);--neon-glow:rgba(124,58,237,.15);--bg:#faf5ff;--bg2:#f3e8ff;--bg3:#e9d5ff;--card:#ffffff;--card-hover:#faf5ff;--border:#c4b5fd;--border-light:#ddd6fe;--text:#4c1d95;--text-dim:#5b21b6;--text-bright:#2e1065;--heading:#2e1065;--link:#7c3aed;--success:#059669;--warning:#d97706;--danger:#dc2626;--xp-purple:#db2777;--badge-cyan:#0891b2;--streak-red:#dc2626;--radius:4px;--radius-sm:2px;--radius-lg:6px;--shadow:0 4px 16px rgba(100,50,200,.06);--shadow-lg:0 8px 28px rgba(100,50,200,.1);--font:'Segoe UI',system-ui,sans-serif;--card-border-w:1px;--card-border-style:solid;--glow:0}
+[data-theme="comic-dark"]{--neon:#ff6b6b;--neon-dim:rgba(255,107,107,.12);--neon-glow:rgba(255,107,107,.3);--bg:#1a1a2e;--bg2:#222244;--bg3:#2e2e55;--card:#262650;--card-hover:#2e2e55;--border:#4a4a7a;--border-light:#5a5a8a;--text:#e8e0ff;--text-dim:#a098c0;--text-bright:#fff;--heading:#fff;--link:#ffa94d;--success:#51cf66;--warning:#fcc419;--danger:#ff6b6b;--xp-purple:#cc5de8;--badge-cyan:#22b8cf;--streak-red:#ff6b6b;--radius:16px;--radius-sm:12px;--radius-lg:24px;--shadow:4px 4px 0 rgba(0,0,0,.5);--shadow-lg:6px 6px 0 rgba(0,0,0,.6);--font:'Comic Sans MS','Chalkboard SE',cursive,system-ui,sans-serif;--card-border-w:3px;--card-border-style:solid;--glow:0}
+[data-theme="comic-light"]{--neon:#e03131;--neon-dim:rgba(224,49,49,.08);--neon-glow:rgba(224,49,49,.15);--bg:#fff9db;--bg2:#fff3bf;--bg3:#ffe066;--card:#ffffff;--card-hover:#fffdf0;--border:#fab005;--border-light:#fcc419;--text:#2b2b2b;--text-dim:#555;--text-bright:#000;--heading:#000;--link:#e8590c;--success:#2f9e44;--warning:#e8590c;--danger:#c92a2a;--xp-purple:#9c36b5;--badge-cyan:#1098ad;--streak-red:#c92a2a;--radius:16px;--radius-sm:12px;--radius-lg:24px;--shadow:3px 3px 0 rgba(0,0,0,.2);--shadow-lg:5px 5px 0 rgba(0,0,0,.25);--font:'Comic Sans MS','Chalkboard SE',cursive,system-ui,sans-serif;--card-border-w:3px;--card-border-style:solid;--glow:0}
+[data-theme="sketchy-dark"]{--neon:#d97706;--neon-dim:rgba(217,119,6,.15);--neon-glow:rgba(217,119,6,.3);--bg:#2a1f0f;--bg2:#3a2a1a;--bg3:#4a3a2a;--card:#362414;--card-hover:#462a1a;--border:#5a4030;--border-light:#6a5040;--text:#d4c4b0;--text-dim:#a09080;--text-bright:#e8d8c8;--heading:#f5ead5;--link:#e8a550;--success:#84cc16;--warning:#d97706;--danger:#e74c3c;--xp-purple:#d946ef;--badge-cyan:#06b6d4;--streak-red:#e74c3c;--radius:24px;--radius-sm:16px;--radius-lg:32px;--shadow:0 6px 20px rgba(0,0,0,.3);--shadow-lg:0 10px 40px rgba(0,0,0,.4);--font:'Playfair Display','Georgia',serif;--card-border-w:2px;--card-border-style:dashed;--glow:0}
+[data-theme="sketchy-light"]{--neon:#b45309;--neon-dim:rgba(180,83,9,.1);--neon-glow:rgba(180,83,9,.2);--bg:#fef3e2;--bg2:#fde8cc;--bg3:#f9d5b8;--card:#ffffff;--card-hover:#fffaf5;--border:#d4a574;--border-light:#e8c4a0;--text:#5c4033;--text-dim:#8b6f47;--text-bright:#3e2723;--heading:#3e2723;--link:#c2600c;--success:#65a30d;--warning:#b45309;--danger:#d25c4d;--xp-purple:#c084fc;--badge-cyan:#0891b2;--streak-red:#d25c4d;--radius:24px;--radius-sm:16px;--radius-lg:32px;--shadow:0 4px 12px rgba(0,0,0,.08);--shadow-lg:0 8px 24px rgba(0,0,0,.12);--font:'Playfair Display','Georgia',serif;--card-border-w:2px;--card-border-style:dashed;--glow:0}
+[data-theme="nature-code-dark"]{--neon:#10b981;--neon-dim:rgba(16,185,129,.15);--neon-glow:rgba(16,185,129,.25);--bg:#0a1f12;--bg2:#0d2818;--bg3:#1a3a2a;--card:#0f281a;--card-hover:#1a3a2a;--border:#2d5a3d;--border-light:#3a7050;--text:#c8e6d0;--text-dim:#7ba890;--text-bright:#e8f5ed;--heading:#e8f5ed;--link:#34d399;--success:#10b981;--warning:#f59e0b;--danger:#f87171;--xp-purple:#a78bfa;--badge-cyan:#22d3ee;--streak-red:#f87171;--radius:20px;--radius-sm:14px;--radius-lg:28px;--shadow:0 4px 20px rgba(0,100,50,.2);--shadow-lg:0 8px 32px rgba(0,100,50,.3);--font:'Segoe UI','Helvetica Neue',system-ui,sans-serif;--card-border-w:1px;--card-border-style:solid;--glow:0}
+[data-theme="nature-code-light"]{--neon:#059669;--neon-dim:rgba(5,150,105,.1);--neon-glow:rgba(5,150,105,.15);--bg:#f0fdf8;--bg2:#e8faf2;--bg3:#d1f2e0;--card:#ffffff;--card-hover:#f5fbf7;--border:#86efac;--border-light:#bbf7d0;--text:#164e3f;--text-dim:#2d6e4f;--text-bright:#052e16;--heading:#052e16;--link:#059669;--success:#10b981;--warning:#d97706;--danger:#dc2626;--xp-purple:#8b5cf6;--badge-cyan:#06b6d4;--streak-red:#dc2626;--radius:20px;--radius-sm:14px;--radius-lg:28px;--shadow:0 4px 16px rgba(0,100,50,.06);--shadow-lg:0 8px 28px rgba(0,100,50,.1);--font:'Segoe UI','Helvetica Neue',system-ui,sans-serif;--card-border-w:1px;--card-border-style:solid;--glow:0}
+[data-theme="glass-dark"]{--neon:#00d9ff;--neon-dim:rgba(0,217,255,.12);--neon-glow:rgba(0,217,255,.25);--bg:#0f0f23;--bg2:#1a1a3e;--bg3:#25254a;--card:rgba(30,30,60,.4);--card-hover:rgba(40,40,80,.5);--border:rgba(100,150,255,.2);--border-light:rgba(100,150,255,.3);--text:#e4e8f0;--text-dim:#8899aa;--text-bright:#f5f7ff;--heading:#ffffff;--link:#00d9ff;--success:#34d399;--warning:#fbbf24;--danger:#ff6b9d;--xp-purple:#b991f7;--badge-cyan:#00d9ff;--streak-red:#ff6b9d;--radius:16px;--radius-sm:12px;--radius-lg:20px;--shadow:0 8px 32px rgba(0,200,255,.1);--shadow-lg:0 16px 64px rgba(0,200,255,.15);--font:'Segoe UI',system-ui,sans-serif;--card-border-w:1px;--card-border-style:solid;--glow:1}
+[data-theme="glass-light"]{--neon:#0891b2;--neon-dim:rgba(8,145,178,.08);--neon-glow:rgba(8,145,178,.15);--bg:#f8fafc;--bg2:#f1f5f9;--bg3:#e2e8f0;--card:rgba(255,255,255,.4);--card-hover:rgba(255,255,255,.6);--border:rgba(100,180,255,.2);--border-light:rgba(100,180,255,.3);--text:#1e293b;--text-dim:#475569;--text-bright:#0f172a;--heading:#0f172a;--link:#0891b2;--success:#059669;--warning:#d97706;--danger:#dc2626;--xp-purple:#7c3aed;--badge-cyan:#0891b2;--streak-red:#dc2626;--radius:16px;--radius-sm:12px;--radius-lg:20px;--shadow:0 8px 32px rgba(100,150,255,.08);--shadow-lg:0 16px 64px rgba(100,150,255,.12);--font:'Segoe UI',system-ui,sans-serif;--card-border-w:1px;--card-border-style:solid;--glow:0}
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}body{font-family:var(--font);background:var(--bg);color:var(--text);line-height:1.6;min-height:100vh;overflow-x:hidden;transition:background .3s,color .3s}h1,h2,h3,h4{color:var(--heading);line-height:1.3}a{color:var(--link);text-decoration:none}a:hover{text-decoration:underline}button{font-family:var(--font);cursor:pointer;border:none;background:none;color:inherit}code,pre{font-family:var(--mono)}:focus-visible{outline:2px solid var(--neon);outline-offset:2px;border-radius:4px}::selection{background:var(--neon);color:#fff}::-webkit-scrollbar{width:8px}::-webkit-scrollbar-track{background:var(--bg2)}::-webkit-scrollbar-thumb{background:var(--border);border-radius:4px}::-webkit-scrollbar-thumb:hover{background:var(--text-dim)}
+.site-header{position:fixed;top:0;left:0;right:0;height:var(--header-h);background:var(--bg2);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 20px;z-index:100;backdrop-filter:blur(12px)}.header-logo{display:flex;align-items:center;gap:12px;font-weight:700;font-size:18px;color:var(--heading)}.header-logo-text{display:flex;flex-direction:column;line-height:1.2}.header-logo-main{font-size:20px;font-weight:800}.header-logo-sub{font-size:11px;font-weight:600;color:var(--neon);letter-spacing:1px;text-transform:uppercase;margin-top:2px}.header-right{margin-left:auto;display:flex;align-items:center;gap:12px}.header-xp{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--xp-purple);font-weight:600}.header-xp-bar{width:80px;height:6px;background:var(--bg3);border-radius:3px;overflow:hidden}.header-xp-fill{height:100%;background:var(--xp-purple);border-radius:3px;transition:width .5s}.header-streak{display:flex;align-items:center;gap:4px;font-size:13px;color:var(--streak-red);font-weight:600}
+.theme-toggle{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:var(--bg3);transition:background .2s}.theme-toggle:hover{background:var(--border)}.theme-picker-wrap{position:relative}.theme-picker-btn{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:var(--bg3);transition:background .2s;font-size:16px}.theme-picker-btn:hover{background:var(--border)}.theme-picker-dd{position:absolute;top:calc(100% + 8px);right:0;background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:12px;box-shadow:var(--shadow-lg);z-index:200;display:none;min-width:240px}.theme-picker-dd.open{display:block}.theme-picker-dd .tp-label{font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--text-dim);margin-bottom:8px}.tp-world{display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:var(--radius-sm);cursor:pointer;transition:background .15s;margin-bottom:2px}.tp-world:hover{background:var(--bg3)}.tp-world.active{background:var(--neon-dim)}.tp-world-color{width:28px;height:28px;border-radius:6px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:14px}.tp-world-info{flex:1;min-width:0}.tp-world-name{font-size:13px;font-weight:600;color:var(--heading)}.tp-world-desc{font-size:10px;color:var(--text-dim)}.tp-divider{height:1px;background:var(--border);margin:8px 0}.tp-mode-row{display:flex;align-items:center;justify-content:space-between;padding:4px 10px}.tp-mode-label{font-size:12px;color:var(--text);font-weight:600}.tp-mode-switch{width:44px;height:24px;border-radius:12px;background:var(--bg3);position:relative;cursor:pointer;transition:background .2s}.tp-mode-switch.light{background:var(--neon)}.tp-mode-switch::after{content:'';position:absolute;top:3px;left:3px;width:18px;height:18px;border-radius:50%;background:#fff;transition:transform .2s;box-shadow:0 1px 3px rgba(0,0,0,.3)}.tp-mode-switch.light::after{transform:translateX(20px)}.menu-btn{display:none;width:36px;height:36px;border-radius:8px;align-items:center;justify-content:center;background:var(--bg3)}
+.sidebar{position:fixed;top:var(--header-h);left:0;width:var(--sidebar-w);height:calc(100vh - var(--header-h));background:var(--bg2);border-right:1px solid var(--border);overflow-y:auto;padding:16px 12px;z-index:90;transition:transform .3s}.sidebar-section{margin-bottom:20px}.sidebar-label{font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--text-dim);padding:0 8px;margin-bottom:8px}.sidebar-level{padding:8px 12px;background:var(--neon-dim);border-radius:var(--radius-sm);margin-bottom:12px;text-align:center}.sidebar-level-title{font-size:14px;font-weight:700;color:var(--neon)}.sidebar-level-sub{font-size:11px;color:var(--text-dim);margin-top:2px}.sidebar-xp-bar{width:100%;height:8px;background:var(--bg3);border-radius:4px;overflow:hidden;margin-top:6px}.sidebar-xp-fill{height:100%;background:linear-gradient(90deg,var(--xp-purple),var(--neon));border-radius:4px;transition:width .6s}.mod-link{display:flex;align-items:center;gap:10px;padding:8px 12px;border-radius:var(--radius-sm);transition:background .15s;color:var(--text);font-size:13px;text-decoration:none;position:relative;cursor:pointer}.mod-link:hover{background:var(--bg3);text-decoration:none}.mod-link.active{background:var(--neon-dim);color:var(--neon);font-weight:600}.mod-link.completed::after{content:'\2713';position:absolute;right:10px;color:var(--success);font-weight:700;font-size:12px}.mod-link .mod-icon{width:28px;height:28px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
+.main{margin-left:var(--sidebar-w);margin-top:var(--header-h);min-height:calc(100vh - var(--header-h));padding:32px;max-width:900px}.module-header{margin-bottom:32px}.module-header .mod-badge{display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--neon);margin-bottom:8px}.module-header h1{font-size:28px;margin-bottom:8px}.module-header .mod-desc{font-size:15px;color:var(--text-dim);max-width:600px}
+.lesson-card{background:var(--card);border:var(--card-border-w) var(--card-border-style) var(--border);border-radius:var(--radius);padding:24px;margin-bottom:20px;transition:border-color .2s}.lesson-card:hover{border-color:var(--neon)}.lesson-card h3{font-size:18px;margin-bottom:12px;display:flex;align-items:center;gap:8px}.lesson-card p,.lesson-card li{font-size:14px;line-height:1.7;color:var(--text)}.lesson-card ul,.lesson-card ol{margin:8px 0 8px 20px}.lesson-card code{background:var(--bg3);padding:2px 6px;border-radius:4px;font-size:13px;color:var(--neon)}.lesson-card .info-box{background:var(--neon-dim);border-left:3px solid var(--neon);padding:12px 16px;border-radius:0 var(--radius-sm) var(--radius-sm) 0;margin:12px 0;font-size:13px}
+.interactive-area{background:var(--card);border:calc(var(--card-border-w) + 1px) dashed var(--border);border-radius:var(--radius);padding:24px;margin:20px 0;min-height:200px}.interactive-area h4{font-size:15px;color:var(--neon);margin-bottom:12px}.ix-grid{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;margin:16px 0}.ix-item{background:var(--bg3);border:2px solid var(--border);border-radius:var(--radius-sm);padding:14px 20px;font-size:16px;cursor:pointer;transition:all .2s;user-select:none;text-align:center;min-width:60px}.ix-item:hover{border-color:var(--neon);background:var(--neon-dim)}.ix-item.selected{border-color:var(--neon);background:var(--neon-dim)}.ix-item.correct{border-color:var(--success);background:rgba(34,197,94,.1)}.ix-item.wrong{border-color:var(--danger);background:rgba(239,68,68,.1)}.ix-item.placed{opacity:.4;pointer-events:none}.ix-btn{background:var(--neon);color:#fff;border:none;padding:10px 24px;border-radius:var(--radius-sm);font-size:14px;font-weight:700;cursor:pointer;font-family:var(--font);margin-top:12px;transition:opacity .2s}.ix-btn:hover{opacity:.85}.ix-feedback{text-align:center;padding:14px;border-radius:var(--radius-sm);font-size:16px;font-weight:700;margin-top:12px;display:none}.ix-feedback.pass{display:block;background:rgba(34,197,94,.12);color:var(--success)}.ix-feedback.fail{display:block;background:rgba(239,68,68,.12);color:var(--danger)}
+.quiz-section{background:var(--card);border:var(--card-border-w) var(--card-border-style) var(--border);border-radius:var(--radius);padding:24px;margin-top:24px}.quiz-section h3{font-size:18px;margin-bottom:16px;color:var(--xp-purple)}.quiz-q{margin-bottom:20px}.quiz-q p{font-size:14px;font-weight:600;margin-bottom:10px}.quiz-q label{display:flex;align-items:flex-start;gap:10px;padding:10px 14px;border-radius:var(--radius-sm);border:1px solid var(--border);cursor:pointer;transition:all .15s;font-size:14px;margin-bottom:6px}.quiz-q label:hover{border-color:var(--neon);background:var(--neon-dim)}.quiz-q input[type="radio"]{margin-top:3px;accent-color:var(--neon)}.quiz-q label.correct{border-color:var(--success);background:rgba(34,197,94,.1)}.quiz-q label.wrong{border-color:var(--danger);background:rgba(239,68,68,.1)}.quiz-submit{padding:10px 24px;font-size:14px;font-weight:700;border-radius:var(--radius-sm);background:var(--xp-purple);color:#fff;transition:opacity .2s;margin-top:8px}.quiz-submit:hover{opacity:.85}.quiz-result{padding:16px;border-radius:var(--radius-sm);margin-top:16px;font-size:14px;font-weight:600;text-align:center}.quiz-result.pass{background:rgba(34,197,94,.12);color:var(--success);border:1px solid rgba(34,197,94,.3)}.quiz-result.fail{background:rgba(239,68,68,.12);color:var(--danger);border:1px solid rgba(239,68,68,.3)}.quiz-explanation{margin-top:6px;padding:8px 14px;border-radius:var(--radius-sm);background:rgba(34,197,94,.08);border-left:3px solid var(--success);font-size:13px;color:var(--success);font-weight:600}
+.boss-section{background:linear-gradient(135deg,rgba(168,85,247,.08),rgba(59,130,246,.08));border:2px solid var(--xp-purple);border-radius:var(--radius);padding:24px;margin-top:24px}.boss-section h3{color:var(--xp-purple);font-size:20px;margin-bottom:4px}.boss-section .boss-sub{font-size:13px;color:var(--text-dim);margin-bottom:16px}
+.badge-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(100px,1fr));gap:12px;margin-top:12px}.badge-item{text-align:center;padding:12px 8px;border-radius:var(--radius-sm);background:var(--bg3);opacity:.4;transition:all .3s}.badge-item.earned{opacity:1;background:var(--neon-dim);border:1px solid var(--neon)}.badge-item .badge-icon{font-size:28px;margin-bottom:4px}.badge-item .badge-name{font-size:10px;font-weight:600;color:var(--text-dim)}.badge-item.earned .badge-name{color:var(--neon)}
+.stats-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px;margin-top:12px}.stat-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius-sm);padding:16px;text-align:center}.stat-card .stat-val{font-size:28px;font-weight:700;color:var(--neon)}.stat-card .stat-label{font-size:12px;color:var(--text-dim);margin-top:4px}
+.notif{position:fixed;top:80px;right:20px;background:var(--card);border:1px solid var(--neon);border-radius:var(--radius);padding:16px 20px;box-shadow:var(--shadow-lg);z-index:200;transform:translateX(120%);transition:transform .4s cubic-bezier(.22,1,.36,1);max-width:320px}.notif.show{transform:translateX(0)}.notif-title{font-size:14px;font-weight:700;color:var(--heading);margin-bottom:2px}.notif-text{font-size:12px;color:var(--text-dim)}.notif.xp{border-color:var(--xp-purple)}.notif.badge{border-color:var(--badge-cyan)}.notif.level{border-color:var(--success)}.notif.streak{border-color:var(--streak-red)}
+.level-up-overlay{position:fixed;inset:0;background:rgba(0,0,0,.7);display:none;align-items:center;justify-content:center;z-index:300}.level-up-overlay.active{display:flex}.level-up-box{text-align:center;padding:40px;animation:lvlPop .5s ease-out}.level-up-box .lvl-icon{font-size:64px;margin-bottom:12px}.level-up-box .lvl-title{font-size:28px;font-weight:900;color:var(--heading)}.level-up-box .lvl-name{font-size:20px;color:var(--xp-purple);font-weight:700;margin-top:4px}@keyframes lvlPop{from{transform:scale(.5);opacity:0}to{transform:scale(1);opacity:1}}
+.welcome-screen{display:flex;align-items:center;justify-content:center;min-height:calc(100vh - var(--header-h));text-align:center;padding:40px 20px}.welcome-box{max-width:480px}.welcome-box h1{font-size:36px;margin-bottom:8px}.welcome-box .ws-sub{color:var(--text-dim);font-size:15px;margin-bottom:32px}.welcome-box input{width:100%;max-width:320px;padding:12px 16px;font-size:16px;border-radius:var(--radius-sm);border:1px solid var(--border);background:var(--bg3);color:var(--heading);font-family:var(--font);text-align:center;margin-bottom:16px}.welcome-box input:focus{border-color:var(--neon);outline:none}.welcome-box .ws-start{padding:14px 40px;font-size:16px;font-weight:700;border-radius:var(--radius-sm);background:var(--neon);color:#fff;transition:opacity .2s}.welcome-box .ws-start:hover{opacity:.85}.welcome-box .ws-start:disabled{opacity:.4;cursor:not-allowed}
+.cert-overlay{position:fixed;inset:0;background:rgba(0,0,0,.88);display:none;align-items:center;justify-content:center;z-index:400;padding:20px;flex-direction:column;backdrop-filter:blur(8px)}.cert-overlay.active{display:flex}.cert-picker{display:flex;gap:12px;justify-content:center;margin-bottom:20px;flex-wrap:wrap}.cert-pick-btn{padding:10px 20px;font-size:13px;font-weight:700;border-radius:12px;border:2px solid rgba(255,255,255,.15);background:rgba(255,255,255,.06);color:rgba(255,255,255,.7);transition:all .3s;backdrop-filter:blur(4px)}.cert-pick-btn:hover{border-color:rgba(255,255,255,.3);color:#fff;transform:translateY(-2px)}.cert-pick-btn.active{border-color:#ffd700;color:#ffd700;background:rgba(255,215,0,.1);box-shadow:0 0 20px rgba(255,215,0,.15)}.cert-frame{width:720px;max-width:100%;aspect-ratio:1.414;position:relative;overflow:hidden}.cert-actions{display:flex;gap:12px;justify-content:center;margin-top:16px}.cert-actions button{padding:12px 28px;font-size:13px;font-weight:700;border-radius:12px;background:linear-gradient(135deg,var(--neon),var(--link));color:#fff;transition:transform .2s,box-shadow .2s}.cert-actions button:hover{transform:translateY(-2px);box-shadow:0 4px 20px rgba(0,0,0,.3)}
+.confetti-container{position:fixed;inset:0;pointer-events:none;z-index:600;overflow:hidden}
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.6);display:none;align-items:center;justify-content:center;z-index:500;padding:20px}.modal-overlay.active{display:flex}.modal{background:var(--card);border:1px solid var(--border);border-radius:var(--radius-lg);max-width:640px;width:100%;max-height:85vh;overflow-y:auto;padding:32px;position:relative}.modal-close{position:absolute;top:12px;right:16px;font-size:24px;color:var(--text-dim);background:none;border:none;cursor:pointer}
+@media(max-width:800px){.menu-btn{display:flex}.sidebar{transform:translateX(-100%)}.sidebar.open{transform:translateX(0)}.main{margin-left:0;padding:16px}}
+@media print{*{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}.site-header,.sidebar,.notif,.level-up-overlay,.confetti-container{display:none!important}.main{margin-left:0!important;padding:20px!important}.lesson-card{break-inside:avoid;page-break-inside:avoid}}
+
+/* Audio/Speech */
+.tts-btn{background:none;border:none;cursor:pointer;font-size:.9em;opacity:.5;transition:all .2s;vertical-align:middle;margin-left:8px;padding:2px 6px;border-radius:4px}
+.tts-btn:hover{opacity:1;background:var(--bg2)}.tts-btn.speaking{opacity:1;color:var(--neon);animation:tts-pulse 1s infinite}
+@keyframes tts-pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.15)}}
+.tts-bar{display:flex;align-items:center;gap:8px;padding:6px 12px;background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);margin:8px 0;font-size:.8rem;flex-wrap:wrap}
+.tts-bar select{background:var(--bg);color:var(--text);border:1px solid var(--border);border-radius:4px;padding:2px 6px;font-size:.78rem}
+.tts-bar button{background:none;border:1px solid var(--border);border-radius:4px;padding:2px 8px;cursor:pointer;color:var(--text);font-size:.8rem}
+.tts-bar button:hover{background:var(--bg)}
+.speech-ex{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:16px;margin:12px 0;text-align:center}
+.speech-ex h4{margin:0 0 8px;font-size:1rem}
+.mic-btn{font-size:1.6em;background:none;border:2px solid var(--neon);border-radius:50%;width:52px;height:52px;cursor:pointer;transition:all .3s;color:var(--text);display:inline-flex;align-items:center;justify-content:center}
+.mic-btn:hover{background:var(--neon);color:var(--bg)}.mic-btn.rec{background:#ef4444;border-color:#ef4444;color:#fff;animation:tts-pulse 1s infinite}
+.sr-res{margin-top:8px;padding:6px 10px;border-radius:4px;font-weight:600;font-size:.85rem;display:inline-block}
+.sr-res.good{background:#22c55e22;color:#22c55e}.sr-res.retry{background:#f59e0b22;color:#f59e0b}
+.sr-na{font-size:.8rem;color:var(--text-dim);margin-top:8px}
+</style>
+</head>
+<body>
+<a href="#mainContent" class="skip-nav" style="position:absolute;top:-50px;left:8px;background:var(--neon);color:#fff;padding:8px 16px;z-index:9999;border-radius:0 0 8px 8px;font-weight:700;text-decoration:none">Zum Inhalt springen</a>
+<header class="site-header">
+  <button class="menu-btn" onclick="toggleSidebar()" aria-label="Menu">&#9776;</button>
+  <div class="header-logo">
+    <svg viewBox="0 0 40 40" width="40" height="40" fill="none" aria-hidden="true"><rect x="4" y="4" width="32" height="32" rx="8" fill="var(--neon-dim)" stroke="var(--neon)" stroke-width="1.5"/><text x="20" y="26" text-anchor="middle" font-size="18" font-weight="900" fill="var(--neon)">K</text></svg>
+    <div class="header-logo-text"><div class="header-logo-main">KunstForscher</div><div class="header-logo-sub">Kunst Klasse 3-6</div></div>
+  </div>
+  <div class="header-right">
+    <div class="header-xp"><span id="headerLevel">Level 1</span><div class="header-xp-bar"><div class="header-xp-fill" style="width:0%"></div></div><span id="headerXP">0 XP</span></div>
+    <div class="header-streak" id="headerStreak">&#128293; 0</div>
+    <div class="theme-picker-wrap"><button class="theme-picker-btn" onclick="toggleThemePicker()" aria-label="Theme wählen">&#127912;</button><div class="theme-picker-dd" id="themePickerDD"></div></div>
+    <button class="theme-toggle" onclick="toggleMode()" aria-label="Dark/Light umschalten">&#127769;</button>
+  </div>
+</header>
+<nav class="sidebar" id="sidebar" role="navigation" aria-label="Module">
+  <div class="sidebar-section"><div class="sidebar-level"><div class="sidebar-level-title" id="sidebarLevel">Anfänger</div><div class="sidebar-level-sub" id="sidebarXP">0 XP</div><div class="sidebar-xp-bar"><div class="sidebar-xp-fill" id="sidebarXPFill" style="width:0%"></div></div></div></div>
+  <div class="sidebar-section"><div class="sidebar-label">Module</div><div id="sidebarModules"></div></div>
+  <div class="sidebar-section" style="border-top:1px solid var(--border);padding-top:12px;margin-top:12px">
+    <a class="mod-link" onclick="showBadges()"><span class="mod-icon">&#127941;</span>Abzeichen</a>
+    <a class="mod-link" onclick="showStats()"><span class="mod-icon">&#128202;</span>Statistik</a>
+    <a class="mod-link" onclick="showCert()"><span class="mod-icon">&#127891;</span>Urkunde</a>
+  </div>
+  <div class="sidebar-section" style="border-top:1px solid var(--border);padding-top:12px;margin-top:12px">
+    <a class="mod-link" onclick="exportData()"><span class="mod-icon">&#128190;</span>Speichern</a>
+    <a class="mod-link" onclick="exportFortschritt()"><span class="mod-icon">📄</span>Fortschritt (TXT)</a>
+    <label class="mod-link" style="cursor:pointer"><span class="mod-icon">&#128194;</span>Laden<input type="file" accept=".json" onchange="importData(event)" style="display:none"></label>
+    <a class="mod-link" onclick="if(confirm('Wirklich alles zurücksetzen?')){localStorage.removeItem(STORAGE_KEY);location.reload()}" style="color:var(--danger)"><span class="mod-icon">&#128465;</span>Zurücksetzen</a>
+  </div>
+  <div style="padding:16px 8px 8px;border-top:1px solid var(--border);margin-top:12px;font-size:11px;color:var(--text-dim)">
+    <a onclick="showImpressum()" style="cursor:pointer;color:var(--text-dim)">Impressum</a> &middot;
+    <a onclick="showDatenschutz()" style="cursor:pointer;color:var(--text-dim)">Datenschutz</a>
+  </div>
+</nav>
+<main class="main" id="mainContent">
+  <div class="welcome-screen" id="welcomeScreen"><div class="welcome-box"><div style="font-size:64px;margin-bottom:16px">🎨</div><h1>KunstForscher</h1><p class="ws-sub">Entdecke die Welt der Kunst! 10 Module mit Quiz, Boss-Challenges und kreativen Übungen.</p><input type="text" id="nameInput" placeholder="Dein Name" maxlength="24" aria-label="Dein Name" oninput="document.getElementById('startBtn').disabled=!this.value.trim()"><br><button class="ws-start" id="startBtn" disabled onclick="startApp()">🎨 Kunst entdecken!</button></div></div>
+  <div id="moduleContent" style="display:none"></div>
+  <div id="badgesView" style="display:none"></div>
+  <div id="statsView" style="display:none"></div>
+</main>
+<div class="notif" id="notif"><div class="notif-title" id="notifTitle"></div><div class="notif-text" id="notifText"></div></div>
+<div class="level-up-overlay" id="levelUpOverlay"><div class="level-up-box" id="levelUpBox"></div></div>
+<div class="confetti-container" id="confetti"></div>
+<div class="cert-overlay" id="certOverlay" role="dialog" aria-label="Urkunde" aria-modal="true"><div class="cert-picker" id="certPicker"></div><div class="cert-frame" id="certFrame"></div><div class="cert-actions"><button onclick="printCert()">&#128424; Drucken / PDF</button><button onclick="closeCert()">Schließen</button></div></div>
+<div class="modal-overlay" id="impressumOverlay"><div class="modal"><button class="modal-close" onclick="document.getElementById('impressumOverlay').classList.remove('active')">&times;</button><h2>Impressum</h2><p><strong>© 2026 GZ AI Stacks - Gerd Zimmermann</strong></p><p>Diese Lern-App wurde mit Claude Code (Anthropic) entwickelt.</p></div></div>
+<div class="modal-overlay" id="datenschutzOverlay"><div class="modal"><button class="modal-close" onclick="document.getElementById('datenschutzOverlay').classList.remove('active')">&times;</button><h2>Datenschutzerklärung</h2><p>Diese App speichert Daten <strong>ausschließlich lokal</strong> in Ihrem Browser (LocalStorage). Es werden keine Daten an Server übertragen.</p><ul><li>Keine Cookies</li><li>Kein Tracking oder Analytics</li><li>Keine externen Ressourcen</li><li>Keine Registrierung</li><li>Alle Daten verbleiben auf Ihrem Gerät</li></ul><p>Sie können Ihre gespeicherten Daten jederzeit über die "Zurücksetzen"-Funktion löschen.</p></div></div>
+<script>
+function showImpressum(){document.getElementById('impressumOverlay').classList.add('active')}
+function showDatenschutz(){document.getElementById('datenschutzOverlay').classList.add('active')}
+
+
+// === Audio (TTS) ===
+const _synth=window.speechSynthesis,_LANG='de-DE';let _ttsOn=false,_ttsRate=1,_ttsTimer=null;
+function speakLesson(i){if(_ttsOn){stopTTS();return}const c=document.querySelectorAll('.lesson-card');if(!c[i]||!_synth)return;stopTTS();const u=new SpeechSynthesisUtterance(c[i].innerText);u.lang=_LANG;u.rate=_ttsRate;u.onstart=()=>{_ttsOn=true;updTTSUI();startTTSTimer()};u.onend=()=>{_ttsOn=false;updTTSUI();clearTTSTimer()};u.onerror=()=>{_ttsOn=false;updTTSUI();clearTTSTimer()};_synth.speak(u);showTTSBar()}
+function speakText(t,lang){if(!_synth)return;stopTTS();const u=new SpeechSynthesisUtterance(t);u.lang=lang||_LANG;u.rate=_ttsRate;u.onstart=()=>{_ttsOn=true;updTTSUI();startTTSTimer()};u.onend=()=>{_ttsOn=false;updTTSUI();clearTTSTimer()};u.onerror=()=>{_ttsOn=false;updTTSUI();clearTTSTimer()};_synth.speak(u)}
+function stopTTS(){if(_synth){_synth.cancel()}_ttsOn=false;updTTSUI();clearTTSTimer()}
+function updTTSUI(){document.querySelectorAll('.tts-btn').forEach(b=>b.classList.toggle('speaking',_ttsOn))}
+function setTTSRate(r){_ttsRate=parseFloat(r)}
+function startTTSTimer(){clearTTSTimer();_ttsTimer=setInterval(()=>{if(_synth&&_synth.speaking&&!_synth.paused){_synth.pause();_synth.resume()}},10000)}
+function clearTTSTimer(){if(_ttsTimer){clearInterval(_ttsTimer);_ttsTimer=null}}
+function showTTSBar(){if(document.getElementById('ttsBar'))return;const mc=document.getElementById('moduleContent');if(!mc)return;const b=document.createElement('div');b.className='tts-bar';b.id='ttsBar';b.innerHTML='\u{1F50A} <select onchange="setTTSRate(this.value)"><option value="0.7">Langsam</option><option value="1" selected>Normal</option><option value="1.3">Schnell</option></select> <button onclick="stopTTS()">\u25A0 Stopp</button>';mc.prepend(b)}
+
+
+/* === Fortschritt-Export (TXT) === */
+function exportFortschritt(){
+  var t=document.title.replace(/\s*[\u2014\u2013|].*/,'').trim();
+  var d=new Date();
+  var dd=String(d.getDate()).padStart(2,'0');
+  var mm=String(d.getMonth()+1).padStart(2,'0');
+  var yyyy=d.getFullYear();
+  var datum=dd+'.'+mm+'.'+yyyy;
+  var datumFile=yyyy+'-'+mm+'-'+dd;
+
+  var mc=state.modulesCompleted||[];
+  var total=modules.length;
+  var done=mc.length;
+
+  var lvl=0;
+  for(var i=LEVELS.length-1;i>=0;i--){if(state.xp>=LEVELS[i].xp){lvl=i;break;}}
+  var lvlName=LEVELS[lvl]?LEVELS[lvl].name:'';
+
+  var sep='\u2550'.repeat(42);
+  var sep2='\u2500'.repeat(42);
+  var lines=[];
+  lines.push(sep);
+  lines.push('  LERNFORTSCHRITT \u2014 '+t);
+  lines.push(sep);
+  lines.push('');
+  lines.push('  Sch\u00FCler:   '+(state.name||'(kein Name)'));
+  lines.push('  Datum:     '+datum);
+  lines.push('  Level:     '+(lvl+1)+' \u2014 '+lvlName+' ('+state.xp+' XP)');
+  lines.push('  Streak:    '+(state.streak||0)+' Tage in Folge');
+  lines.push('');
+  lines.push(sep2);
+  lines.push('  MODULE ('+done+'/'+total+' abgeschlossen)');
+  lines.push(sep2);
+  lines.push('');
+
+  for(var m=0;m<modules.length;m++){
+    var mod=modules[m];
+    var isDone=mc.indexOf(m)!==-1;
+    var icon=isDone?'\u2705':'\u2B1C';
+    var line='  '+icon+' Modul '+(m+1)+': '+mod.title;
+    if(isDone){
+      var qs=state.quizResults&&state.quizResults[m]!=null?state.quizResults[m]:'?';
+      var bs=state.bossResults&&state.bossResults[m]!=null?state.bossResults[m]:'?';
+      line+='\n        Quiz: '+qs+'/5 | Boss: '+bs+'/3';
+    }
+    lines.push(line);
+  }
+
+  var earnedBadges=(state.badges||[]);
+  lines.push('');
+  lines.push(sep2);
+  lines.push('  ABZEICHEN ('+earnedBadges.length+'/'+BADGES.length+')');
+  lines.push(sep2);
+  lines.push('');
+  if(earnedBadges.length===0){
+    lines.push('  (noch keine)');
+  }else{
+    for(var b=0;b<BADGES.length;b++){
+      if(earnedBadges.indexOf(BADGES[b].id)!==-1){
+        lines.push('  '+BADGES[b].icon+' '+BADGES[b].name);
+      }
+    }
+  }
+
+  lines.push('');
+  lines.push(sep);
+  lines.push('  (c) 2026 GZ AI Stacks \u2014 Gerd Zimmermann');
+  lines.push(sep);
+
+  var txt=lines.join('\n');
+  var safeName=(state.name||'Schueler').replace(/[^a-zA-Z0-9\u00C0-\u017F]/g,'_');
+  var fileName='Fortschritt_'+t.replace(/[^a-zA-Z0-9\u00C0-\u017F]/g,'_')+'_'+safeName+'_'+datumFile+'.txt';
+  var a=document.createElement('a');
+  a.download=fileName;
+  a.href=URL.createObjectURL(new Blob([txt],{type:'text/plain;charset=utf-8'}));
+  a.click();
+}
+
+const _qk=[0x4A,0x7F,0x2B,0x61,0x5C,0x3E,0x18,0x73];
+function _d(h,i){return h^_qk[i%_qk.length]}
+
+const LEVELS=[
+{name:'Farbenmischer',xp:0},{name:'Skizzierer',xp:50},{name:'Formgestalter',xp:120},
+{name:'Perspektivler',xp:200},{name:'Stilkenner',xp:300},{name:'Kunsthistoriker',xp:420},
+{name:'Druckgrafiker',xp:560},{name:'Bildhauer',xp:720},{name:'Fotograf',xp:900},
+{name:'Designer',xp:1100},{name:'Architekturfan',xp:1320},{name:'Galerist',xp:1560},
+{name:'Kunstkritiker',xp:1820},{name:'Kurator',xp:2100},{name:'Atelierkünstler',xp:2400},
+{name:'Kunstprofessor',xp:2720},{name:'Meisterkünstler',xp:3060},{name:'Kunstpionier',xp:3420},
+{name:'Kunstgenie',xp:3800},{name:'KunstForscher-Legende',xp:4200}
+];
+const BADGES=[
+{id:'mod1',name:'Farbenlehre-Profi',icon:'🎨',desc:'Modul 1 abgeschlossen'},
+{id:'mod2',name:'Perspektiv-Meister',icon:'📐',desc:'Modul 2 abgeschlossen'},
+{id:'mod3',name:'Künstler-Kenner',icon:'🖼️',desc:'Modul 3 abgeschlossen'},
+{id:'mod4',name:'Epochen-Experte',icon:'🏛️',desc:'Modul 4 abgeschlossen'},
+{id:'mod5',name:'Druck-Spezialist',icon:'🖨️',desc:'Modul 5 abgeschlossen'},
+{id:'mod6',name:'Bildhauer-Profi',icon:'🗿',desc:'Modul 6 abgeschlossen'},
+{id:'mod7',name:'Foto-Experte',icon:'📷',desc:'Modul 7 abgeschlossen'},
+{id:'mod8',name:'Design-Kenner',icon:'✏️',desc:'Modul 8 abgeschlossen'},
+{id:'mod9',name:'Architektur-Fan',icon:'🏗️',desc:'Modul 9 abgeschlossen'},
+{id:'mod10',name:'Moderne-Kunst-Kenner',icon:'🎭',desc:'Modul 10 abgeschlossen'},
+{id:'first_quiz',name:'Erster Entwurf',icon:'✍️',desc:'Erstes Quiz bestanden'},
+{id:'streak_3',name:'Kreativ-Serie',icon:'🔥',desc:'3 Tage Streak'},
+{id:'streak_7',name:'Kunst-Woche',icon:'📅',desc:'7 Tage Streak'},
+{id:'all_quiz',name:'Kunst-Meister',icon:'🏆',desc:'Alle Quizze bestanden'},
+{id:'all_boss',name:'Kunst-Legende',icon:'👑',desc:'Alle Bosse besiegt'},
+{id:'speed_demon',name:'Schnellskizzierer',icon:'⚡',desc:'Quiz unter 30 Sekunden'},
+{id:'perfect',name:'Meisterwerk',icon:'💯',desc:'Quiz ohne Fehler'},
+{id:'night_owl',name:'Nachtkünstler',icon:'🦉',desc:'Nach 22 Uhr gelernt'},
+{id:'early_bird',name:'Morgeninspiration',icon:'🌅',desc:'Vor 7 Uhr gelernt'},
+{id:'xp_master',name:'XP-Künstler',icon:'⭐',desc:'1000 XP erreicht'}
+];
+const THEME_CONFIG={
+  cyber:{name:'Cyber Neon',emoji:'🖥',color:'#3b82f6',desc:'Futuristisch & Digital'},
+  retro:{name:'Retro Arcade',emoji:'🕹',color:'#ffd700',desc:'80er Arcade-Feeling'},
+  nature:{name:'Nature Forest',emoji:'🌳',color:'#4ade80',desc:'Natürlich & Organisch'},
+  space:{name:'Deep Space',emoji:'🚀',color:'#c084fc',desc:'Kosmisch & Geheimnisvoll'},
+  comic:{name:'Comic Pop',emoji:'💥',color:'#ff6b6b',desc:'Bunt & Verspielt'},
+  sketchy:{name:'Sketchy',emoji:'✍️',color:'#d97706',desc:'Handgemacht & Warm'},
+  'nature-code':{name:'Nature x Code',emoji:'🌿',color:'#10b981',desc:'Natur trifft Technik'},
+  glass:{name:'Glasmorphism',emoji:'💠',color:'#00d9ff',desc:'Modern & Transparent'}
+};
+const modules=[
+// Modul 0: Farbenlehre
+{id:0,title:'Farbenlehre',icon:'🎨',duration:'25 Min.',description:'Lerne Primärfarben, Sekundärfarben, den Farbkreis und Komplementärfarben kennen.',lessons:[
+{title:'Primär- und Sekundärfarben',content:`<p>In der Kunst gibt es drei <strong>Primärfarben</strong> (Grundfarben), die man nicht mischen kann:</p>
+<ul><li>🔴 <strong>Rot</strong></li><li>🔵 <strong>Blau</strong></li><li>🟡 <strong>Gelb</strong></li></ul>
+<p>Mischt man zwei Primärfarben, entstehen die <strong>Sekundärfarben</strong>:</p>
+<ul><li>Rot + Gelb = <strong>Orange</strong> 🟠</li><li>Blau + Gelb = <strong>Grün</strong> 🟢</li><li>Rot + Blau = <strong>Violett</strong> 🟣</li></ul>
+<div class="info-box">💡 <strong>Merke:</strong> Aus nur drei Grundfarben kannst du fast alle Farben der Welt mischen!</div>`},
+{title:'Der Farbkreis',content:`<p>Der <strong>Farbkreis</strong> ordnet alle Farben in einem Kreis an. Er wurde vom Künstler <strong>Johannes Itten</strong> entwickelt.</p>
+<ul><li>Die drei Primärfarben bilden ein <strong>Dreieck</strong> in der Mitte</li><li>Dazwischen liegen die <strong>Sekundärfarben</strong></li><li>Weitere Mischungen ergeben <strong>Tertiärfarben</strong> (z.B. Rotviolett, Blaugrün)</li></ul>
+<div class="info-box">🔍 <strong>Tipp:</strong> Farben, die sich im Farbkreis gegenüberliegen, heißen <em>Komplementärfarben</em>.</div>`},
+{title:'Komplementärfarben und Farbwirkung',content:`<p><strong>Komplementärfarben</strong> liegen im Farbkreis gegenüber und verstärken sich gegenseitig:</p>
+<ul><li>Rot ↔ Grün</li><li>Blau ↔ Orange</li><li>Gelb ↔ Violett</li></ul>
+<p><strong>Warme Farben</strong> (Rot, Orange, Gelb) wirken lebendig und einladend.</p>
+<p><strong>Kalte Farben</strong> (Blau, Grün, Violett) wirken beruhigend und kühl.</p>
+<div class="info-box">🎨 <strong>Künstler-Tipp:</strong> Verwende Komplementärfarben nebeneinander, um spannende Kontraste zu erzeugen!</div>`}
+],quiz:[
+{q:'Welche drei Farben sind die Primärfarben?',a:['Rot, Grün, Blau','Rot, Gelb, Blau','Orange, Grün, Violett','Schwarz, Weiß, Grau'],_h:75},
+{q:'Was entsteht, wenn man Rot und Gelb mischt?',a:['Grün','Violett','Orange','Braun'],_h:125},
+{q:'Wer hat den bekannten Farbkreis entwickelt?',a:['Pablo Picasso','Claude Monet','Johannes Itten','Leonardo da Vinci'],_h:41},
+{q:'Welche Farbe ist die Komplementärfarbe von Rot?',a:['Blau','Gelb','Grün','Orange'],_h:99},
+{q:'Welche Farben werden als warme Farben bezeichnet?',a:['Rot, Orange, Gelb','Blau, Grün, Violett','Schwarz, Weiß, Grau','Braun, Beige, Creme'],_h:92}
+],boss:[
+{q:'Warum wirken Komplementärfarben nebeneinander besonders intensiv?',a:['Weil sie sich gegenseitig verstärken und einen starken Kontrast bilden','Weil sie sich vermischen','Weil sie gleich aussehen','Weil sie dunkel werden'],_h:74},
+{q:'Ein Maler möchte ein Bild besonders ruhig und friedlich wirken lassen. Welche Farben sollte er bevorzugt verwenden?',a:['Rot und Orange','Kalte Farben wie Blau und Grün','Nur Schwarz und Weiß','Nur Komplementärfarben'],_h:126},
+{q:'Warum kann man Primärfarben nicht durch Mischen anderer Farben herstellen?',a:['Weil sie zu hell sind','Weil sie die Grundbausteine sind, aus denen alle anderen Farben gemischt werden','Weil sie zu teuer sind','Weil sie nur in der Natur vorkommen'],_h:42}
+]},
+// Modul 1: Perspektive
+{id:1,title:'Perspektive',icon:'📐',duration:'25 Min.',description:'Verstehe Fluchtpunkt, Horizontlinie und Zentralperspektive für räumliche Tiefe.',lessons:[
+{title:'Fluchtpunkt und Horizontlinie',content:`<p>Um auf einem flachen Blatt Papier <strong>Tiefe</strong> darzustellen, nutzen Künstler die <strong>Perspektive</strong>.</p>
+<ul><li>Die <strong>Horizontlinie</strong> ist die gedachte Linie auf Augenhöhe — dort, wo Himmel und Erde sich scheinbar treffen</li><li>Der <strong>Fluchtpunkt</strong> liegt auf der Horizontlinie — alle Linien laufen auf diesen Punkt zu</li></ul>
+<div class="info-box">💡 <strong>Merke:</strong> Gegenstände werden kleiner, je weiter sie vom Betrachter entfernt sind!</div>`},
+{title:'Zentralperspektive',content:`<p>Die <strong>Zentralperspektive</strong> (Ein-Punkt-Perspektive) hat genau einen Fluchtpunkt in der Bildmitte:</p>
+<ul><li>Alle Tiefenlinien laufen auf <strong>einen Punkt</strong> zu</li><li>Besonders gut geeignet für Straßen, Flure, Schienen</li><li>Die Renaissance-Künstler entdeckten diese Technik im 15. Jahrhundert</li></ul>
+<div class="info-box">🔍 <strong>Beispiel:</strong> Stell dir eine gerade Straße vor, die in der Ferne zu einem Punkt zusammenläuft — das ist Zentralperspektive!</div>`},
+{title:'Raumtiefe erzeugen',content:`<p>Es gibt verschiedene Tricks, um <strong>Raumtiefe</strong> in einem Bild zu erzeugen:</p>
+<ul><li>📏 <strong>Größenunterschied</strong> — nahe Objekte sind größer, ferne kleiner</li><li>🎨 <strong>Farbperspektive</strong> — ferne Objekte erscheinen blasser und bläulicher</li><li>↕️ <strong>Höhenunterschied</strong> — ferne Objekte stehen höher im Bild</li><li>🔲 <strong>Überschneidung</strong> — vordere Objekte verdecken hintere teilweise</li></ul>
+<div class="info-box">🎨 <strong>Künstler-Tipp:</strong> Kombiniere mehrere Techniken für eine überzeugende Raumwirkung!</div>`}
+],quiz:[
+{q:'Was ist die Horizontlinie?',a:['Die untere Bildkante','Die gedachte Linie auf Augenhöhe','Eine diagonale Linie','Der Bildrahmen'],_h:75},
+{q:'Wohin laufen die Tiefenlinien in der Zentralperspektive?',a:['Zum Bildrand','Nach oben','Auf einen Fluchtpunkt zu','In alle Richtungen'],_h:125},
+{q:'In welcher Epoche wurde die Zentralperspektive entdeckt?',a:['Im Mittelalter','Im Barock','In der Renaissance','In der Moderne'],_h:41},
+{q:'Wie erscheinen weit entfernte Gegenstände im Bild?',a:['Größer und bunter','Kleiner und blasser','Dunkler und schärfer','Genauso wie nahe Gegenstände'],_h:97},
+{q:'Was bedeutet Überschneidung in der Perspektive?',a:['Farben mischen sich','Vordere Objekte verdecken hintere teilweise','Linien kreuzen sich','Das Bild wird gedreht'],_h:92}
+],boss:[
+{q:'Warum wirken Berge in der Ferne oft bläulich?',a:['Weil die Luftschichten das Licht streuen und ferne Objekte blasser erscheinen lassen (Farbperspektive)','Weil Berge aus blauem Gestein bestehen','Weil der Himmel sich spiegelt','Weil es dort kälter ist'],_h:74},
+{q:'Ein Schüler zeichnet eine Straße, aber sie wirkt flach und ohne Tiefe. Was fehlt vermutlich?',a:['Mehr Farbe','Ein Fluchtpunkt, auf den die Straßenlinien zulaufen','Ein Rahmen','Mehr Wolken'],_h:126},
+{q:'Leonardo da Vinci nutzte in seinen Gemälden die sogenannte Sfumato-Technik. Was könnte das mit Perspektive zu tun haben?',a:['Sfumato macht Bilder bunt','Weiche Übergänge und Unschärfe erzeugen Tiefenwirkung, ähnlich wie ferne Objekte in der Natur verschwommen erscheinen','Es hat nichts mit Perspektive zu tun','Sfumato bedeutet schnelles Malen'],_h:42}
+]},
+// Modul 2: Berühmte Künstler
+{id:2,title:'Berühmte Künstler',icon:'🖼️',duration:'25 Min.',description:'Entdecke Leonardo da Vinci, Claude Monet, Pablo Picasso und Vincent van Gogh.',lessons:[
+{title:'Leonardo da Vinci und Vincent van Gogh',content:`<p><strong>Leonardo da Vinci</strong> (1452–1519) war ein italienisches Universalgenie:</p>
+<ul><li>Malte die berühmte <strong>Mona Lisa</strong> und das <strong>Abendmahl</strong></li><li>War auch Erfinder, Wissenschaftler und Architekt</li><li>Gilt als Meister der <strong>Renaissance</strong></li></ul>
+<p><strong>Vincent van Gogh</strong> (1853–1890) war ein niederländischer Maler:</p>
+<ul><li>Berühmt für seinen ausdrucksstarken Pinselstrich</li><li>Bekanntestes Werk: <strong>Sternennacht</strong></li><li>Malte über 800 Gemälde, wurde aber erst nach seinem Tod berühmt</li></ul>
+<div class="info-box">🖼️ <strong>Wusstest du?</strong> Van Gogh verkaufte zu Lebzeiten nur ein einziges Gemälde!</div>`},
+{title:'Claude Monet und Pablo Picasso',content:`<p><strong>Claude Monet</strong> (1840–1926) war ein französischer Maler und Begründer des Impressionismus:</p>
+<ul><li>Malte gerne <strong>Seerosen</strong>, Landschaften und Lichtspiele</li><li>Sein Bild „Impression, Sonnenaufgang" gab dem <strong>Impressionismus</strong> seinen Namen</li><li>Malte oft dasselbe Motiv bei verschiedenem Licht</li></ul>
+<p><strong>Pablo Picasso</strong> (1881–1973) war ein spanischer Künstler:</p>
+<ul><li>Erfand zusammen mit Georges Braque den <strong>Kubismus</strong></li><li>Zerlegte Motive in geometrische Formen</li><li>Berühmtes Werk: <strong>Guernica</strong> (Antikriegsbild)</li></ul>
+<div class="info-box">🎨 <strong>Spannend:</strong> Picasso schuf über 50.000 Kunstwerke in seinem Leben!</div>`},
+{title:'Kunstwerke verstehen',content:`<p>Jeder Künstler hatte einen eigenen <strong>Stil</strong>:</p>
+<ul><li>🖌️ Da Vinci: <strong>Realismus</strong> — sehr naturgetreue, detaillierte Darstellung</li><li>🌅 Monet: <strong>Impressionismus</strong> — flüchtige Lichtmomente einfangen</li><li>🔷 Picasso: <strong>Kubismus</strong> — Formen zerlegen und neu zusammensetzen</li><li>🌀 Van Gogh: <strong>Post-Impressionismus</strong> — intensive Farben und ausdrucksstarke Pinselstriche</li></ul>
+<div class="info-box">💡 <strong>Tipp:</strong> Schau dir Bilder dieser Künstler an und vergleiche ihre Stile — jeder erzählt Geschichten auf seine eigene Art!</div>`}
+],quiz:[
+{q:'Welches berühmte Gemälde malte Leonardo da Vinci?',a:['Sternennacht','Seerosen','Mona Lisa','Guernica'],_h:72},
+{q:'Welcher Künstler begründete den Impressionismus?',a:['Pablo Picasso','Claude Monet','Vincent van Gogh','Leonardo da Vinci'],_h:126},
+{q:'Was ist typisch für den Kubismus von Picasso?',a:['Naturgetreue Darstellung','Zerlegung in geometrische Formen','Lichtspiele','Dicke Pinselstriche'],_h:42},
+{q:'Welcher Maler wurde erst nach seinem Tod berühmt?',a:['Picasso','Monet','Da Vinci','Vincent van Gogh'],_h:98},
+{q:'Welches Werk von Picasso ist ein berühmtes Antikriegsbild?',a:['Mona Lisa','Sternennacht','Guernica','Seerosen'],_h:94}
+],boss:[
+{q:'Warum malte Monet dasselbe Motiv (z.B. die Kathedrale von Rouen) immer wieder?',a:['Weil er vergesslich war','Um zu zeigen, wie sich Licht und Farben je nach Tageszeit und Wetter verändern','Weil er kein anderes Motiv fand','Weil es sein Lieblingsgebäude war'],_h:75},
+{q:'Picasso sagte: „Ich male die Dinge nicht, wie ich sie sehe, sondern wie ich sie denke." Was meinte er damit?',a:['Er malte mit geschlossenen Augen','Er stellte Objekte aus mehreren Blickwinkeln gleichzeitig dar, nicht nur wie sie aussehen','Er kopierte andere Künstler','Er malte nur Fantasiebilder'],_h:126},
+{q:'Leonardo da Vinci war nicht nur Maler, sondern auch Erfinder. Wie beeinflusste sein wissenschaftliches Denken seine Kunst?',a:['Es beeinflusste ihn gar nicht','Er studierte Anatomie, Licht und Perspektive genau und brachte dieses Wissen in seine realistischen Gemälde ein','Er malte nur Maschinen','Er benutzte nur eine Farbe'],_h:42}
+]},
+// Modul 3: Kunstepochen
+{id:3,title:'Kunstepochen',icon:'🏛️',duration:'25 Min.',description:'Reise durch Renaissance, Barock, Impressionismus und Expressionismus.',lessons:[
+{title:'Renaissance und Barock',content:`<p>Die <strong>Renaissance</strong> (ca. 1400–1600) bedeutet „Wiedergeburt" der antiken Kunst:</p>
+<ul><li>Realistische Darstellung des Menschen</li><li>Entdeckung der <strong>Perspektive</strong></li><li>Wichtige Künstler: Leonardo da Vinci, Michelangelo, Raffael</li></ul>
+<p>Der <strong>Barock</strong> (ca. 1600–1750) war prunkvoller und dramatischer:</p>
+<ul><li>Starke <strong>Hell-Dunkel-Kontraste</strong></li><li>Bewegte, dramatische Szenen</li><li>Wichtige Künstler: Rembrandt, Caravaggio, Peter Paul Rubens</li></ul>
+<div class="info-box">🏛️ <strong>Merke:</strong> Renaissance = klare Ordnung und Harmonie. Barock = Drama und Bewegung!</div>`},
+{title:'Impressionismus und Expressionismus',content:`<p>Der <strong>Impressionismus</strong> (ca. 1860–1900) revolutionierte die Malerei:</p>
+<ul><li>Maler gingen nach <strong>draußen</strong> (Freilichtmalerei)</li><li>Schnelle Pinselstriche fingen flüchtige <strong>Lichtmomente</strong> ein</li><li>Wichtige Künstler: Claude Monet, Pierre-Auguste Renoir, Edgar Degas</li></ul>
+<p>Der <strong>Expressionismus</strong> (ca. 1905–1925) drückte starke Gefühle aus:</p>
+<ul><li>Leuchtende, oft unrealistische <strong>Farben</strong></li><li>Verzerrte Formen für emotionalen <strong>Ausdruck</strong></li><li>Wichtige Künstler: Ernst Ludwig Kirchner, Franz Marc, Edvard Munch</li></ul>
+<div class="info-box">🎨 <strong>Unterschied:</strong> Impressionismus zeigt, wie die Welt <em>aussieht</em>. Expressionismus zeigt, wie die Welt sich <em>anfühlt</em>!</div>`},
+{title:'Kunstepochen im Überblick',content:`<p>Die wichtigsten Epochen in zeitlicher Reihenfolge:</p>
+<ol><li>🏛️ <strong>Renaissance</strong> (1400–1600) — Realismus, Perspektive</li><li>👑 <strong>Barock</strong> (1600–1750) — Drama, Prunk</li><li>🌅 <strong>Impressionismus</strong> (1860–1900) — Licht, Freiluft</li><li>🎭 <strong>Expressionismus</strong> (1905–1925) — Gefühle, Farben</li></ol>
+<p>Jede Epoche reagierte auf die vorherige und brachte neue Ideen in die Kunst.</p>
+<div class="info-box">💡 <strong>Tipp:</strong> Versuche beim Betrachten eines Bildes herauszufinden, zu welcher Epoche es gehört!</div>`}
+],quiz:[
+{q:'Was bedeutet das Wort „Renaissance"?',a:['Wiedergeburt','Revolution','Romantik','Rebellion'],_h:74},
+{q:'Was ist typisch für den Barock?',a:['Schlichte, einfache Darstellung','Starke Hell-Dunkel-Kontraste und Drama','Abstrakte Formen','Schnelle Pinselstriche'],_h:126},
+{q:'Was taten die Impressionisten anders als frühere Maler?',a:['Sie malten nur in Schwarz-Weiß','Sie malten draußen und fingen Lichtmomente ein','Sie malten nur Porträts','Sie benutzten keine Pinsel'],_h:42},
+{q:'Welcher Künstler gehört zum Expressionismus?',a:['Leonardo da Vinci','Claude Monet','Franz Marc','Rembrandt'],_h:99},
+{q:'In welcher Reihenfolge kamen die Epochen?',a:['Barock, Renaissance, Impressionismus','Expressionismus, Impressionismus, Barock','Renaissance, Barock, Impressionismus, Expressionismus','Impressionismus, Renaissance, Expressionismus'],_h:94}
+],boss:[
+{q:'Warum malten die Impressionisten oft draußen statt im Atelier?',a:['Weil ihre Ateliers zu klein waren','Weil sie das natürliche, sich ständig verändernde Licht direkt einfangen wollten','Weil es billiger war','Weil es vorgeschrieben war'],_h:75},
+{q:'Der Expressionist Franz Marc malte Pferde oft in Blau. Warum benutzte er keine realistischen Farben?',a:['Weil er farbenblind war','Weil er die Gefühle und die innere Wahrheit der Tiere ausdrücken wollte, nicht ihr Aussehen','Weil er keine andere Farbe hatte','Weil blaue Pferde existieren'],_h:126},
+{q:'Warum war die Entdeckung der Perspektive in der Renaissance so revolutionär?',a:['Weil Bilder dadurch billiger wurden','Weil man erstmals Raumtiefe realistisch auf einer flachen Fläche darstellen konnte','Weil es nur ein Trend war','Weil Farben dadurch heller wirkten'],_h:42}
+]},
+// Modul 4: Drucktechniken
+{id:4,title:'Drucktechniken',icon:'🖨️',duration:'25 Min.',description:'Entdecke Stempeldruck, Linolschnitt und Monotypie als kreative Techniken.',lessons:[
+{title:'Stempeldruck',content:`<p>Der <strong>Stempeldruck</strong> ist eine der ältesten und einfachsten Drucktechniken:</p>
+<ul><li>Ein Relief (erhabene Fläche) wird mit <strong>Farbe</strong> bestrichen</li><li>Dann wird es auf Papier <strong>gedrückt</strong> — das Motiv überträgt sich</li><li>Man kann Stempel aus Kartoffeln, Moosgummi oder Korken herstellen</li></ul>
+<p>Bekannte Anwendungen: Buchstabenstempel, Motivstempel, historische Siegelringe</p>
+<div class="info-box">💡 <strong>Tipp:</strong> Beim Stempeldruck ist das Motiv spiegelverkehrt! Denke daran bei Buchstaben und Zahlen.</div>`},
+{title:'Linolschnitt',content:`<p>Der <strong>Linolschnitt</strong> ist eine beliebte Hochdrucktechnik:</p>
+<ul><li>In eine Linoleumplatte werden Teile <strong>herausgeschnitten</strong></li><li>Die stehen gebliebenen Teile werden <strong>eingefärbt</strong></li><li>Das Papier wird aufgelegt und mit einer Walze oder Löffel <strong>abgerieben</strong></li></ul>
+<p>Beim Linolschnitt gilt: Was weggeschnitten wird, bleibt weiß (druckt nicht). Was stehen bleibt, wird farbig.</p>
+<div class="info-box">⚠️ <strong>Sicherheit:</strong> Beim Linolschnitt immer vom Körper weg schnitzen! Die Werkzeuge sind sehr scharf.</div>`},
+{title:'Monotypie',content:`<p>Die <strong>Monotypie</strong> ist eine besondere Drucktechnik — jeder Druck ist ein Unikat:</p>
+<ul><li>Farbe wird auf eine glatte Platte (Glas, Plastik) aufgetragen</li><li>Man zeichnet mit einem Stift in die Farbe oder legt Papier auf und drückt</li><li>Jeder Abzug sieht <strong>anders</strong> aus — deshalb „Mono" (einmalig)</li></ul>
+<p>Unterschied zu anderen Drucktechniken: Bei der Monotypie kann man die Druckplatte nicht wiederverwenden.</p>
+<div class="info-box">🎨 <strong>Kreativ-Tipp:</strong> Experimentiere mit verschiedenen Werkzeugen — Finger, Pinsel, Schwamm — für spannende Effekte!</div>`}
+],quiz:[
+{q:'Warum erscheint ein Stempeldruck spiegelverkehrt?',a:['Weil das Papier falsch liegt','Weil das Motiv beim Drücken umgekehrt übertragen wird','Weil die Farbe falsch ist','Weil man falsch drückt'],_h:75},
+{q:'Was bleibt beim Linolschnitt weiß?',a:['Die stehen gebliebenen Teile','Die herausgeschnittenen Teile','Alles','Nichts'],_h:126},
+{q:'Was ist das Besondere an der Monotypie?',a:['Man kann 100 gleiche Drucke machen','Jeder Druck ist ein Unikat','Man braucht keine Farbe','Sie ist die älteste Technik'],_h:42},
+{q:'Welches Material eignet sich NICHT für einen Stempel?',a:['Kartoffel','Moosgummi','Wasser','Korken'],_h:99},
+{q:'Was muss man beim Linolschnitt besonders beachten?',a:['Immer vom Körper weg schnitzen','Immer zum Körper hin schnitzen','Nur runde Formen schnitzen','Nur mit Bleistift arbeiten'],_h:92}
+],boss:[
+{q:'Ein Schüler schnitzt den Buchstaben „R" in eine Linolplatte. Wie muss er den Buchstaben schnitzen, damit er richtig herum gedruckt wird?',a:['Spiegelverkehrt, weil der Druck das Motiv umdreht','Genauso wie normal','Auf dem Kopf stehend','Doppelt so groß'],_h:74},
+{q:'Warum ist die Monotypie bei Künstlern beliebt, obwohl man nur einen Druck machen kann?',a:['Weil sie billig ist','Weil sie einzigartige, nicht wiederholbare Ergebnisse erzeugt, die besonders lebendig wirken','Weil sie schnell geht','Weil sie einfach ist'],_h:126},
+{q:'Was ist der Hauptunterschied zwischen Hochdruck (wie Linolschnitt) und Tiefdruck?',a:['Beim Hochdruck drucken die erhabenen Teile, beim Tiefdruck die vertieften Stellen','Es gibt keinen Unterschied','Tiefdruck ist älter','Hochdruck braucht mehr Farbe'],_h:43}
+]},
+// Modul 5: Plastisches Gestalten
+{id:5,title:'Plastisches Gestalten',icon:'🗿',duration:'25 Min.',description:'Arbeite mit Ton, Pappmaché und Draht, um dreidimensionale Kunstwerke zu schaffen.',lessons:[
+{title:'Ton und Keramik',content:`<p><strong>Ton</strong> ist eines der ältesten Materialien der Kunst. Seit Jahrtausenden formen Menschen daraus Gefäße, Figuren und Skulpturen.</p>
+<ul><li>Ton lässt sich leicht <strong>formen</strong>, solange er feucht ist</li><li>Durch <strong>Brennen</strong> im Ofen (über 900°C) wird er hart und haltbar → <strong>Keramik</strong></li><li>Man kann Ton <strong>glasieren</strong> (mit einer glänzenden Schicht überziehen)</li></ul>
+<p>Wichtige Techniken: Daumenschale, Wulsttechnik, Plattentechnik</p>
+<div class="info-box">💡 <strong>Merke:</strong> Luftblasen im Ton können beim Brennen zum Platzen führen! Deshalb Ton gut durchkneten.</div>`},
+{title:'Pappmaché',content:`<p><strong>Pappmaché</strong> (französisch für „gekautes Papier") ist günstig und vielseitig:</p>
+<ul><li>Zeitungspapier wird in kleine Stücke gerissen</li><li>Die Stücke werden in <strong>Kleister</strong> (Tapetenkleister oder Mehlkleister) getaucht</li><li>Schicht für Schicht wird das Papier auf eine Form aufgebracht</li><li>Nach dem <strong>Trocknen</strong> wird die Form stabil und kann bemalt werden</li></ul>
+<div class="info-box">🎨 <strong>Idee:</strong> Bau eine Maske, ein Tier oder eine Schale aus Pappmaché — deiner Fantasie sind keine Grenzen gesetzt!</div>`},
+{title:'Drahtplastik',content:`<p>Mit <strong>Draht</strong> lassen sich filigrane, dreidimensionale Skulpturen bauen:</p>
+<ul><li>Draht kann gebogen, verdreht und geformt werden</li><li>Man kann <strong>Figuren</strong>, Tiere oder abstrakte Formen gestalten</li><li>Der Künstler <strong>Alexander Calder</strong> wurde berühmt für seine Draht-Skulpturen und Mobiles</li></ul>
+<p>Wichtig bei Drahtplastik: Stabilität durch <strong>Verdrillen</strong> und <strong>Verankern</strong> an einem festen Fuß.</p>
+<div class="info-box">🔍 <strong>Tipp:</strong> Beginne mit einem „Skelett" aus dickerem Draht und füge Details mit dünnerem Draht hinzu.</div>`}
+],quiz:[
+{q:'Was passiert mit Ton beim Brennen?',a:['Er wird weich','Er wird zu hartem Keramik','Er schmilzt','Er wird durchsichtig'],_h:75},
+{q:'Woraus besteht Pappmaché?',a:['Aus Plastik','Aus Holz','Aus Papier und Kleister','Aus Ton und Wasser'],_h:125},
+{q:'Welcher Künstler ist bekannt für seine Draht-Skulpturen?',a:['Pablo Picasso','Alexander Calder','Claude Monet','Leonardo da Vinci'],_h:42},
+{q:'Warum muss man Luftblasen aus dem Ton entfernen?',a:['Weil sie hässlich aussehen','Weil der Ton dadurch leichter wird','Weil sie beim Brennen platzen können','Weil die Farbe nicht hält'],_h:99},
+{q:'Was versteht man unter „Glasieren" bei Keramik?',a:['Das Zerbrechen','Das Überziehen mit einer glänzenden Schutzschicht','Das Trocknen an der Luft','Das Bemalen mit Wasserfarben'],_h:92}
+],boss:[
+{q:'Warum eignet sich die Wulsttechnik besonders gut, um große Tongefäße zu bauen?',a:['Weil sie schneller ist als andere Techniken','Weil man Schicht für Schicht aufbaut und so die Wand gleichmäßig stabil hochziehen kann','Weil man weniger Ton braucht','Weil die Gefäße dadurch leichter werden'],_h:75},
+{q:'Ein Pappmaché-Objekt ist nach dem Trocknen nicht stabil genug. Was könnte man verbessern?',a:['Weniger Schichten verwenden','Mehr Schichten auftragen und zwischen den Schichten gut trocknen lassen','Dickeres Papier nehmen','Weniger Kleister verwenden'],_h:126},
+{q:'Warum sind Alexander Calders Mobiles so besonders in der Kunstgeschichte?',a:['Weil sie teuer sind','Weil sie die erste Kunst waren, die sich bewegt — Skulptur wurde lebendig und reagierte auf Luft und Wind','Weil sie sehr schwer sind','Weil sie aus Gold bestehen'],_h:42}
+]},
+// Modul 6: Fotografie
+{id:6,title:'Fotografie',icon:'📷',duration:'25 Min.',description:'Lerne Bildaufbau, Drittel-Regel und den Umgang mit Licht und Schatten.',lessons:[
+{title:'Bildaufbau und Komposition',content:`<p>Ein gutes Foto braucht einen durchdachten <strong>Bildaufbau</strong> (Komposition):</p>
+<ul><li>🎯 <strong>Hauptmotiv</strong> — Was soll im Mittelpunkt stehen?</li><li>📐 <strong>Bildformat</strong> — Hochformat für Porträts, Querformat für Landschaften</li><li>🔲 <strong>Vordergrund, Mittelgrund, Hintergrund</strong> — erzeugen Tiefe</li></ul>
+<p>Typische Fehler: Motiv genau in der Mitte, schiefer Horizont, zu viel leerer Raum.</p>
+<div class="info-box">💡 <strong>Merke:</strong> Überlege VOR dem Fotografieren, was du zeigen möchtest — das macht den Unterschied!</div>`},
+{title:'Die Drittel-Regel',content:`<p>Die <strong>Drittel-Regel</strong> ist die wichtigste Kompositionsregel in der Fotografie:</p>
+<ul><li>Teile das Bild gedanklich in <strong>9 gleiche Felder</strong> (3 × 3)</li><li>Platziere das Hauptmotiv auf einem der vier <strong>Schnittpunkte</strong></li><li>Der Horizont liegt am besten auf einer der <strong>horizontalen Linien</strong></li></ul>
+<p>Die Drittel-Regel sorgt dafür, dass Bilder spannender und dynamischer wirken als bei einer reinen Mittelplatzierung.</p>
+<div class="info-box">📷 <strong>Tipp:</strong> Die meisten Smartphones können ein Raster einblenden — aktiviere es in den Kamera-Einstellungen!</div>`},
+{title:'Licht und Schatten',content:`<p><strong>Licht</strong> ist das wichtigste Gestaltungsmittel in der Fotografie:</p>
+<ul><li>☀️ <strong>Natürliches Licht</strong> — Tageslicht, Sonnenlicht (am schönsten morgens und abends)</li><li>💡 <strong>Künstliches Licht</strong> — Lampen, Blitz (kann Schatten erzeugen)</li><li>🌅 <strong>Goldene Stunde</strong> — kurz nach Sonnenaufgang oder vor Sonnenuntergang, warmes, weiches Licht</li></ul>
+<p>Schatten geben dem Bild <strong>Tiefe</strong> und <strong>Dramatik</strong>. Seitenlicht erzeugt lange, spannende Schatten.</p>
+<div class="info-box">🔍 <strong>Experiment:</strong> Fotografiere denselben Gegenstand bei verschiedenem Licht — du wirst staunen, wie unterschiedlich er wirkt!</div>`}
+],quiz:[
+{q:'In wie viele Felder teilt die Drittel-Regel das Bild?',a:['4','6','9','12'],_h:72},
+{q:'Wann ist die „Goldene Stunde" in der Fotografie?',a:['Mittags bei strahlendem Sonnenschein','Kurz nach Sonnenaufgang oder vor Sonnenuntergang','Nachts bei Vollmond','Bei Regen'],_h:126},
+{q:'Welches Bildformat eignet sich besonders für Porträts?',a:['Querformat','Quadratisch','Hochformat','Panorama'],_h:41},
+{q:'Was bewirken Schatten in einem Foto?',a:['Sie stören das Bild','Sie geben Tiefe und Dramatik','Sie machen das Bild heller','Sie löschen Farben'],_h:97},
+{q:'Wo sollte das Hauptmotiv laut Drittel-Regel idealerweise stehen?',a:['Genau in der Mitte','Am Bildrand','Auf einem der vier Schnittpunkte','Im Hintergrund'],_h:94}
+],boss:[
+{q:'Warum wirkt ein Porträt mit Seitenlicht oft interessanter als mit Frontallicht?',a:['Weil Seitenlicht billiger ist','Weil Seitenlicht Schatten erzeugt, die dem Gesicht Tiefe und Plastizität verleihen','Weil Frontallicht die Kamera beschädigt','Weil Seitenlicht heller ist'],_h:75},
+{q:'Ein Schüler fotografiert eine Landschaft. Der Horizont liegt genau in der Bildmitte. Was könnte er verbessern?',a:['Den Horizont auf das obere oder untere Drittel legen, um das Bild dynamischer zu gestalten','Das Bild drehen','Mehr Zoom verwenden','Den Horizont entfernen'],_h:74},
+{q:'Warum fotografieren professionelle Fotografen besonders gerne während der Goldenen Stunde?',a:['Weil die Kamera dann besser funktioniert','Weil das tiefstehende Sonnenlicht warme Farben und weiche Schatten erzeugt, die Bilder besonders schön machen','Weil es dann weniger Menschen gibt','Weil es dann windstill ist'],_h:42}
+]},
+// Modul 7: Design
+{id:7,title:'Design',icon:'✏️',duration:'25 Min.',description:'Entdecke die Grundlagen von Logo-Design, Typografie und Layout.',lessons:[
+{title:'Logo-Design',content:`<p>Ein <strong>Logo</strong> ist ein Erkennungszeichen für eine Marke oder Organisation:</p>
+<ul><li>Es muss <strong>einfach</strong> und <strong>einprägsam</strong> sein</li><li>Es muss in verschiedenen <strong>Größen</strong> funktionieren (vom Briefkopf bis zur Plakatwand)</li><li>Es sollte auch in <strong>Schwarz-Weiß</strong> erkennbar sein</li></ul>
+<p>Arten von Logos:</p>
+<ul><li>📝 <strong>Wortmarke</strong> — nur Text (z.B. Google)</li><li>🎯 <strong>Bildmarke</strong> — nur Symbol (z.B. Apple-Apfel)</li><li>📎 <strong>Kombinationsmarke</strong> — Text und Symbol zusammen</li></ul>
+<div class="info-box">💡 <strong>Merke:</strong> Die besten Logos sind so einfach, dass du sie aus dem Gedächtnis zeichnen kannst!</div>`},
+{title:'Typografie',content:`<p><strong>Typografie</strong> ist die Kunst der Schriftgestaltung:</p>
+<ul><li>📰 <strong>Serifen-Schriften</strong> (z.B. Times New Roman) — haben kleine Füßchen an den Buchstaben, wirken klassisch</li><li>🖥️ <strong>Serifenlose Schriften</strong> (z.B. Arial, Helvetica) — klar und modern</li><li>✍️ <strong>Handschriften</strong> — persönlich, aber schwerer lesbar</li></ul>
+<p>Wichtig bei der Schriftwahl: <strong>Lesbarkeit</strong> geht immer vor Dekoration!</p>
+<div class="info-box">🔍 <strong>Wusstest du?</strong> Die Schrift „Helvetica" aus der Schweiz (1957) ist eine der meistverwendeten Schriften der Welt!</div>`},
+{title:'Layout-Grundlagen',content:`<p>Das <strong>Layout</strong> bestimmt, wie Texte, Bilder und Grafiken auf einer Seite angeordnet werden:</p>
+<ul><li>📏 <strong>Raster</strong> — unsichtbare Hilfslinien für eine ordentliche Aufteilung</li><li>↔️ <strong>Weißraum</strong> — freie Flächen lassen das Design „atmen"</li><li>🔤 <strong>Hierarchie</strong> — Überschriften groß, Fließtext kleiner, damit man weiß, was wichtig ist</li><li>📊 <strong>Ausrichtung</strong> — Elemente an gemeinsamen Kanten ausrichten</li></ul>
+<div class="info-box">🎨 <strong>Regel:</strong> Weniger ist mehr! Ein aufgeräumtes Layout wirkt professioneller als eines mit zu vielen Elementen.</div>`}
+],quiz:[
+{q:'Was muss ein gutes Logo sein?',a:['Möglichst bunt und kompliziert','Einfach und einprägsam','Immer rund','Immer mit Text'],_h:75},
+{q:'Was ist eine Wortmarke?',a:['Ein Logo nur aus Text','Ein Logo nur aus einem Bild','Ein Logo mit Foto','Ein Logo mit Rahmen'],_h:126},
+{q:'Was sind Serifen bei einer Schrift?',a:['Große Buchstaben','Kleine Füßchen an den Buchstaben','Unterstreichungen','Schatten'],_h:41},
+{q:'Was bedeutet Weißraum im Layout?',a:['Fehler im Design','Freie Flächen, die das Design atmen lassen','Weiße Schrift','Leere Seiten'],_h:97},
+{q:'Warum ist Lesbarkeit bei der Schriftwahl wichtig?',a:['Weil Schriften teuer sind','Weil der Text verstanden werden muss','Weil der Computer es verlangt','Weil es ein Gesetz gibt'],_h:93}
+],boss:[
+{q:'Das Apple-Logo wurde über die Jahre immer einfacher gestaltet (von einem detaillierten Bild zu einem schlichten Apfel). Warum ist einfacheres Design oft besser?',a:['Weil es billiger ist','Weil einfache Logos schneller erkannt und besser erinnert werden und in jeder Größe funktionieren','Weil Farben teuer sind','Weil Computer einfache Formen besser darstellen'],_h:75},
+{q:'Warum verwendet man in Büchern oft Serifen-Schriften, auf Websites aber serifenlose Schriften?',a:['Aus Tradition','Weil Serifen im Druck das Auge an der Zeile entlangführen, während auf Bildschirmen serifenlose Schriften klarer dargestellt werden','Weil es keine anderen Schriften gibt','Weil Bücher älter sind als Websites'],_h:126},
+{q:'Warum ist Weißraum kein „verschwendeter Platz" in einem guten Design?',a:['Weil Papier billig ist','Weil Weißraum die Aufmerksamkeit auf die wichtigen Elemente lenkt und das Design übersichtlicher und ruhiger macht','Weil Weißraum immer weiß sein muss','Weil es Mode ist'],_h:42}
+]},
+// Modul 8: Architektur
+{id:8,title:'Architektur',icon:'🏗️',duration:'25 Min.',description:'Entdecke Gotik, Bauhaus und moderne Architektur als Baukunst.',lessons:[
+{title:'Gotik',content:`<p>Die <strong>Gotik</strong> (ca. 1140–1500) brachte beeindruckende Kathedralen hervor:</p>
+<ul><li>⬆️ <strong>Spitzbögen</strong> — statt der runden Bögen der Romanik</li><li>🪟 <strong>Große Fenster</strong> mit buntem Glas (Rosetten, Kirchenfenster)</li><li>🏰 <strong>Strebepfeiler</strong> — äußere Stützen, die hohe Wände ermöglichten</li><li>📏 Alles strebt nach <strong>oben</strong> — zum Himmel</li></ul>
+<p>Berühmte Beispiele: Kölner Dom, Notre-Dame de Paris, Kathedrale von Chartres</p>
+<div class="info-box">🏛️ <strong>Wusstest du?</strong> Am Kölner Dom wurde über 600 Jahre gebaut (1248–1880)!</div>`},
+{title:'Bauhaus',content:`<p>Das <strong>Bauhaus</strong> (1919–1933) war eine deutsche Kunstschule, die Architektur, Design und Kunst verband:</p>
+<ul><li>Gegründet von <strong>Walter Gropius</strong> in Weimar</li><li>Motto: <strong>„Form folgt Funktion"</strong> — kein unnötiger Schmuck</li><li>Klare Linien, <strong>geometrische Formen</strong>, schlichte Materialien</li><li>Einfluss auf modernes Design weltweit</li></ul>
+<div class="info-box">💡 <strong>Merke:</strong> Das Bauhaus veränderte unser Verständnis von Design grundlegend — auch heute noch sehen wir seinen Einfluss überall!</div>`},
+{title:'Moderne Architektur',content:`<p>Die <strong>moderne Architektur</strong> (ab ca. 1920) experimentiert mit neuen Formen und Materialien:</p>
+<ul><li>🔲 <strong>Stahl und Glas</strong> — ermöglichen Wolkenkratzer und transparente Fassaden</li><li>🔵 <strong>Beton</strong> — erlaubt fließende, organische Formen</li><li>🌿 <strong>Nachhaltiges Bauen</strong> — Dachbegrünung, Solarenergie, recycelte Materialien</li></ul>
+<p>Berühmte Architekten: Frank Lloyd Wright (Fallingwater), Zaha Hadid, Frank Gehry (Guggenheim Bilbao)</p>
+<div class="info-box">🔍 <strong>Trend:</strong> Grüne Architektur integriert die Natur ins Gebäude — mit Fassadenbegrünung, Dachgärten und natürlicher Belüftung.</div>`}
+],quiz:[
+{q:'Was ist typisch für die Gotik?',a:['Flache Dächer','Spitzbögen und hohe Fenster','Betonwände','Runde Kuppeln'],_h:75},
+{q:'Wer gründete das Bauhaus?',a:['Ludwig Mies van der Rohe','Frank Lloyd Wright','Walter Gropius','Le Corbusier'],_h:125},
+{q:'Was bedeutet „Form folgt Funktion"?',a:['Die Form ist wichtiger als die Funktion','Das Aussehen soll sich aus dem Zweck ergeben, kein unnötiger Schmuck','Funktion ist unwichtig','Alles muss rund sein'],_h:42},
+{q:'Welches Material ermöglichte den Bau von Wolkenkratzern?',a:['Holz','Ziegel','Stahl','Stein'],_h:99},
+{q:'Wie lange wurde am Kölner Dom gebaut?',a:['50 Jahre','200 Jahre','Über 600 Jahre','1000 Jahre'],_h:94}
+],boss:[
+{q:'Warum brauchten gotische Kathedralen Strebepfeiler (äußere Stützen)?',a:['Zur Dekoration','Weil die hohen, dünnen Wände mit den riesigen Fenstern ohne äußere Stützen eingestürzt wären','Weil sie Treppen enthielten','Weil es ein Gesetz war'],_h:75},
+{q:'Warum war das Bauhaus-Prinzip „Form folgt Funktion" damals so revolutionär?',a:['Weil es billig war','Weil zuvor Gebäude und Objekte oft mit unnötigem Schmuck überladen waren und das Bauhaus klare, zweckmäßige Gestaltung forderte','Weil es verboten wurde','Weil es hässlich war'],_h:126},
+{q:'Warum wird nachhaltiges Bauen in der modernen Architektur immer wichtiger?',a:['Weil es Mode ist','Weil Gebäude viel Energie verbrauchen und wir den Klimawandel bekämpfen müssen, indem wir ressourcenschonend bauen','Weil nachhaltige Gebäude teurer sind','Weil Architekten es lustig finden'],_h:42}
+]},
+// Modul 9: Moderne Kunst
+{id:9,title:'Moderne Kunst',icon:'🎭',duration:'25 Min.',description:'Erforsche Abstrakte Kunst, Pop Art und Installationskunst.',lessons:[
+{title:'Abstrakte Kunst',content:`<p><strong>Abstrakte Kunst</strong> verzichtet auf die Darstellung erkennbarer Gegenstände:</p>
+<ul><li>Statt Dinge abzubilden, arbeiten Künstler mit <strong>Farben, Formen und Linien</strong></li><li>Der russische Maler <strong>Wassily Kandinsky</strong> gilt als Pionier der abstrakten Malerei</li><li>Auch <strong>Piet Mondrian</strong> wurde berühmt für seine geometrischen Bilder mit Primärfarben und schwarzen Linien</li></ul>
+<p>Abstrakte Kunst regt die Fantasie an — jeder Betrachter kann etwas anderes darin entdecken!</p>
+<div class="info-box">💡 <strong>Merke:</strong> Bei abstrakter Kunst geht es nicht darum, was man sieht, sondern was man <em>fühlt</em>!</div>`},
+{title:'Pop Art',content:`<p><strong>Pop Art</strong> (ab ca. 1955) machte Alltagsgegenstände zur Kunst:</p>
+<ul><li>Bekanntester Vertreter: <strong>Andy Warhol</strong> (Suppendosen, Marilyn Monroe)</li><li>Weitere wichtige Künstler: <strong>Roy Lichtenstein</strong> (Comic-Stil), Jasper Johns</li><li>Pop Art nutzt <strong>grelle Farben</strong>, Wiederholung und Motive aus Werbung und Medien</li></ul>
+<p>Pop Art stellte die Frage: Was ist Kunst? Kann eine Suppendose Kunst sein?</p>
+<div class="info-box">🎨 <strong>Spannend:</strong> Andy Warhol nannte sein Atelier „The Factory" (Die Fabrik) — er wollte Kunst wie ein Produkt herstellen!</div>`},
+{title:'Installation und Konzeptkunst',content:`<p><strong>Installationskunst</strong> nutzt einen ganzen Raum als Kunstwerk:</p>
+<ul><li>Der Betrachter kann das Werk <strong>betreten</strong> und <strong>erleben</strong></li><li>Es werden verschiedene Materialien kombiniert: Licht, Ton, Objekte, Video</li><li>Berühmtes Beispiel: <strong>Olafur Eliasson</strong> — „The Weather Project" (künstliche Sonne in der Tate Modern)</li></ul>
+<p>Bei der <strong>Konzeptkunst</strong> ist die <strong>Idee</strong> wichtiger als das fertige Objekt.</p>
+<div class="info-box">🔍 <strong>Nachdenk-Frage:</strong> Wenn die Idee das Kunstwerk ist — braucht man dann überhaupt noch ein Objekt?</div>`}
+],quiz:[
+{q:'Wer gilt als Pionier der abstrakten Malerei?',a:['Andy Warhol','Wassily Kandinsky','Pablo Picasso','Claude Monet'],_h:75},
+{q:'Welcher Künstler ist der bekannteste Vertreter der Pop Art?',a:['Piet Mondrian','Wassily Kandinsky','Andy Warhol','Olafur Eliasson'],_h:125},
+{q:'Was ist typisch für Pop Art?',a:['Naturgetreue Landschaften','Grelle Farben und Alltagsmotive','Abstrakte Formen','Religiöse Themen'],_h:42},
+{q:'Was ist eine Installation in der Kunst?',a:['Ein technisches Gerät','Ein Kunstwerk, das einen ganzen Raum nutzt und erlebbar ist','Ein kleines Gemälde','Eine Skulptur aus Marmor'],_h:97},
+{q:'Was ist bei der Konzeptkunst am wichtigsten?',a:['Das Material','Die Größe','Die Idee hinter dem Werk','Die Farbe'],_h:94}
+],boss:[
+{q:'Warum löste die abstrakte Kunst Anfang des 20. Jahrhunderts große Diskussionen aus?',a:['Weil sie zu bunt war','Weil viele Menschen Kunst nur als Abbildung der Realität kannten und nicht verstanden, warum Formen und Farben allein Kunst sein können','Weil sie verboten wurde','Weil sie zu teuer war'],_h:75},
+{q:'Andy Warhol druckte Suppendosen als Kunstwerk. Was wollte er damit aussagen?',a:['Dass er Suppe mochte','Er hinterfragte die Grenze zwischen Konsum, Massenproduktion und Kunst — alltägliche Dinge können Kunst sein','Dass Kunst billig sein soll','Dass Supermärkte Museen ersetzen sollen'],_h:126},
+{q:'Warum ist Installationskunst anders als ein traditionelles Gemälde?',a:['Weil sie teurer ist','Weil der Betrachter das Kunstwerk betreten und mit allen Sinnen erleben kann, statt es nur von außen zu betrachten','Weil sie schneller gemacht wird','Weil sie immer draußen steht'],_h:42}
+]}
+];
+
+const STORAGE_KEY='kunstforscher_progress';
+let state={name:'',started:false,currentModule:0,xp:0,level:0,streak:0,lastVisit:null,modulesCompleted:[],quizResults:{},bossResults:{},badges:[],quizShuffleMap:{},modulesViewed:[],interactiveResults:{},designTheme:'cyber-dark'};
+
+function saveState(){try{localStorage.setItem(STORAGE_KEY,JSON.stringify(state))}catch(e){}}
+function loadState(){try{const s=localStorage.getItem(STORAGE_KEY);if(s){Object.assign(state,JSON.parse(s));return true}}catch(e){}return false}
+function exportData(){const a=document.createElement('a');a.download='kunstforscher_backup-'+state.name+'.json';a.href=URL.createObjectURL(new Blob([JSON.stringify(state,null,2)],{type:'application/json'}));a.click()}
+function importData(e){const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=ev=>{try{const d=JSON.parse(ev.target.result);Object.assign(state,d);saveState();location.reload()}catch(err){alert('Datei konnte nicht gelesen werden.')}};r.readAsText(f)}
+
+function getLevel(xp){let lv=0;for(let i=LEVELS.length-1;i>=0;i--){if(xp>=LEVELS[i].xp){lv=i;break}}return lv}
+function getLevelProgress(xp){const lv=getLevel(xp);const cur=LEVELS[lv].xp;const next=lv<LEVELS.length-1?LEVELS[lv+1].xp:cur;if(next===cur)return 100;return Math.min(100,Math.round((xp-cur)/(next-cur)*100))}
+function addXP(amount,reason){const old=getLevel(state.xp);state.xp+=amount;const nw=getLevel(state.xp);saveState();updateUI();showNotif('xp','+'+amount+' XP',reason);if(nw>old){state.level=nw;saveState();setTimeout(()=>showLevelUp(nw),800)}if(state.xp>=1000)awardBadge('xp_master')}
+
+function updateStreak(){const today=new Date().toDateString();if(state.lastVisit===today)return;const yesterday=new Date(Date.now()-86400000).toDateString();if(state.lastVisit===yesterday){state.streak++;showNotif('streak','\uD83D\uDD25 '+state.streak+' Tage Streak!','Weiter so!');if(state.streak>=3)awardBadge('streak_3');if(state.streak>=7)awardBadge('streak_7')}else if(state.lastVisit!==today){state.streak=1}state.lastVisit=today;saveState();const h=new Date().getHours();if(h>=22)awardBadge('night_owl');if(h<7)awardBadge('early_bird')}
+
+function awardBadge(id){if(state.badges.includes(id))return;state.badges.push(id);saveState();const b=BADGES.find(x=>x.id===id);if(b)showNotif('badge',b.icon+' Badge: '+b.name,b.desc)}
+
+let notifQueue=[],notifActive=false;
+function showNotif(type,title,text){notifQueue.push({type,title,text});if(!notifActive)processNotif()}
+function processNotif(){if(!notifQueue.length){notifActive=false;return}notifActive=true;const{type,title,text}=notifQueue.shift();const el=document.getElementById('notif');el.className='notif '+type;document.getElementById('notifTitle').textContent=title;document.getElementById('notifText').textContent=text;el.classList.add('show');setTimeout(()=>{el.classList.remove('show');setTimeout(processNotif,300)},2500)}
+
+function showLevelUp(lv){const ov=document.getElementById('levelUpOverlay');const box=document.getElementById('levelUpBox');box.innerHTML='<div class="lvl-icon">⬆️</div><div class="lvl-title">Level Up!</div><div class="lvl-name">Level '+(lv+1)+': '+LEVELS[lv].name+'<\/div>';ov.classList.add('active');spawnConfetti();setTimeout(()=>ov.classList.remove('active'),3000)}
+function spawnConfetti(){const c=document.getElementById('confetti');c.innerHTML='';const cols=['#3b82f6','#a855f7','#22c55e','#f59e0b','#ef4444','#06b6d4'];for(let i=0;i<60;i++){const p=document.createElement('div');p.style.cssText='position:absolute;left:'+Math.random()*100+'%;background:'+cols[i%cols.length]+';width:'+(6+Math.random()*8)+'px;height:'+(6+Math.random()*8)+'px;border-radius:'+(Math.random()>.5?'50%':'2px')+';animation:confettiFall '+(1.5+Math.random()*2)+'s ease-out '+Math.random()*.5+'s forwards';c.appendChild(p)}if(!document.getElementById('confettiStyle')){const s=document.createElement('style');s.id='confettiStyle';s.textContent='@keyframes confettiFall{0%{opacity:1;transform:translateY(0) rotate(0deg)}100%{opacity:0;transform:translateY(100vh) rotate(720deg)}}';document.head.appendChild(s)}setTimeout(()=>c.innerHTML='',4000)}
+
+function shuffleQuiz(modId,quiz){const key='m'+modId;if(state.quizShuffleMap[key])return state.quizShuffleMap[key];const idx=[...Array(quiz.length).keys()];for(let i=idx.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[idx[i],idx[j]]=[idx[j],idx[i]]}state.quizShuffleMap[key]=idx;saveState();return idx}
+
+function renderQuiz(modId,quiz,isBoss){
+  const pf=isBoss?'boss':'quiz';const idx=isBoss?[...Array(quiz.length).keys()]:shuffleQuiz(modId,quiz);
+  let h='<div class="'+(isBoss?'boss-section':'quiz-section')+'">';
+  h+=isBoss?'<h3>👑 Boss-Challenge<\/h3><p class="boss-sub">Alle '+quiz.length+' Fragen richtig beantworten!<\/p>':'<h3>📝 Quiz — Teste dein Wissen<\/h3>';
+  idx.forEach((qi,di)=>{const q=quiz[qi];h+='<div class="quiz-q" data-qi="'+qi+'"><p>'+(di+1)+'. '+q.q+'<\/p>';q.a.forEach((a,ai)=>{h+='<label><input type="radio" name="'+pf+'_'+modId+'_'+qi+'" value="'+ai+'"> '+a+'<\/label>'});h+='<\/div>'});
+  h+='<button class="quiz-submit" onclick="checkQuiz('+modId+','+isBoss+')">'+(isBoss?'Boss besiegen!':'Antworten prüfen')+'<\/button>';
+  h+='<div class="quiz-result" id="'+pf+'Result'+modId+'" style="display:none"><\/div><\/div>';return h;
+}
+
+function checkQuiz(modId,isBoss){
+  const pf=isBoss?'boss':'quiz';const quiz=isBoss?modules[modId].boss:modules[modId].quiz;
+  let correct=0;const total=quiz.length;const startTime=window._quizStart||Date.now();
+  quiz.forEach((q,qi)=>{
+    const sel=document.querySelector('input[name="'+pf+'_'+modId+'_'+qi+'"]:checked');
+    const labels=document.querySelectorAll('[data-qi="'+qi+'"] label');
+    const ci=_d(q._h,qi);
+    labels.forEach((l,li)=>{l.classList.remove('correct','wrong');if(li===ci)l.classList.add('correct');else if(sel&&parseInt(sel.value)===li)l.classList.add('wrong')});
+    const qDiv=labels[0]?.closest('.quiz-q');if(qDiv){const old=qDiv.querySelector('.quiz-explanation');if(old)old.remove()}
+    if(!sel||parseInt(sel.value)!==ci){if(qDiv){const exp=document.createElement('div');exp.className='quiz-explanation';exp.textContent='→ Richtige Antwort: '+q.a[ci];qDiv.appendChild(exp)}}
+    if(sel&&parseInt(sel.value)===ci)correct++;
+  });
+  const rEl=document.getElementById(pf+'Result'+modId);rEl.style.display='block';
+  if(isBoss){
+    if(correct===total){rEl.className='quiz-result pass';rEl.textContent='👑 Boss besiegt! '+correct+'/'+total+' — Perfekt!';if(!state.bossResults[modId]){state.bossResults[modId]=true;addXP(100,'Boss-Challenge bestanden!');if(!state.badges.includes('first_boss'))awardBadge('first_boss');if(modules.every((_,i)=>state.bossResults[i]))awardBadge('all_boss');checkModuleComplete(modId)}}
+    else{rEl.className='quiz-result fail';rEl.textContent='💀 '+correct+'/'+total+' — Alle müssen richtig sein! Versuch es nochmal.';setTimeout(()=>{document.querySelectorAll('input[name^="'+pf+'_'+modId+'"]').forEach(r=>{r.disabled=false;r.checked=false});document.querySelectorAll('[data-qi] label').forEach(l=>l.classList.remove('correct','wrong'));document.querySelectorAll('.quiz-explanation').forEach(e=>e.remove());rEl.style.display='none'},2000);return}
+  }else{
+    const passed=correct>=Math.ceil(total*0.6);rEl.className='quiz-result '+(passed?'pass':'fail');
+    rEl.textContent=passed?'✅ '+correct+'/'+total+' richtig — Bestanden!':'❌ '+correct+'/'+total+' richtig — Mindestens '+Math.ceil(total*0.6)+' nötig.';
+    if(passed&&!state.quizResults[modId]){state.quizResults[modId]=correct;addXP(correct*15+50,'Quiz bestanden ('+correct+'/'+total+')');if(!state.badges.includes('first_quiz'))awardBadge('first_quiz');if(correct===total)awardBadge('perfect');if(Date.now()-startTime<30000)awardBadge('speed_demon');checkModuleComplete(modId)}
+  }
+  saveState();document.querySelectorAll('input[name^="'+pf+'_'+modId+'"]').forEach(r=>r.disabled=true);window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function checkModuleComplete(modId){
+  if(state.quizResults[modId]!==undefined&&state.bossResults[modId]&&!state.modulesCompleted.includes(modId)){
+    state.modulesCompleted.push(modId);awardBadge('mod'+(modId+1));
+    if(state.modulesCompleted.length>=10){awardBadge('all_quiz');setTimeout(()=>showCert(),1500)}
+    saveState();renderSidebar();
+  }
+}
+
+function renderModule(modId){
+  state.currentModule=modId;
+  if(!state.modulesViewed.includes(modId)){state.modulesViewed.push(modId);addXP(10,'Neues Modul geöffnet')}
+  saveState();closeSidebar();
+  const m=modules[modId];
+  let h='<div class="module-header"><div class="mod-badge">'+m.icon+' Modul '+(modId+1)+'<\/div><h1>'+m.title+'<\/h1><p class="mod-desc">'+m.description+'<\/p><\/div>';
+  m.lessons.forEach((l,i)=>{h+='<div class="lesson-card"><h3><span style="color:var(--neon)">'+String(i+1).padStart(2,'0')+'<\/span> '+l.title+' <button class="tts-btn" onclick="speakLesson('+i+')" title="Vorlesen">&#128266;<\/button><\/h3>'+l.content+'<\/div>'});
+  h+='<div class="interactive-area"><h4>🧪 Interaktive Übung<\/h4><div id="interactiveArea">Lädt...<\/div><\/div>';
+  window._quizStart=Date.now();
+  h+=renderQuiz(modId,m.quiz,false);
+  h+=renderQuiz(modId,m.boss,true);
+  document.getElementById('welcomeScreen').style.display='none';
+  document.getElementById('badgesView').style.display='none';
+  document.getElementById('statsView').style.display='none';
+  const mc=document.getElementById('moduleContent');mc.style.display='block';mc.innerHTML=h;
+  renderSidebar();window.scrollTo({top:0,behavior:'smooth'});
+  setTimeout(()=>initInteractive(modId),100);
+}
+
+function renderSidebar(){
+  const el=document.getElementById('sidebarModules');
+  el.innerHTML=modules.map((m,i)=>{
+    const done=state.modulesCompleted.includes(i);
+    const act=state.currentModule===i&&document.getElementById('moduleContent').style.display==='block';
+    return '<a class="mod-link'+(act?' active':'')+(done?' completed':'')+'" onclick="renderModule('+i+')"><span class="mod-icon">'+m.icon+'<\/span>'+m.title+'<\/a>';
+  }).join('');
+  const lv=getLevel(state.xp);
+  const lvEl=document.querySelector('.sidebar-level-title');
+  if(lvEl)lvEl.textContent=LEVELS[lv].name;
+  const xpFill=document.querySelector('.sidebar-xp-fill');
+  if(xpFill)xpFill.style.width=getLevelProgress(state.xp)+'%';
+}
+function toggleSidebar(){document.getElementById('sidebar').classList.toggle('open')}
+function closeSidebar(){document.getElementById('sidebar').classList.remove('open')}
+
+function showBadges(){
+  document.getElementById('welcomeScreen').style.display='none';document.getElementById('moduleContent').style.display='none';document.getElementById('statsView').style.display='none';
+  const v=document.getElementById('badgesView');v.style.display='block';closeSidebar();
+  let h='<div class="module-header"><h1>🏅 Deine Abzeichen<\/h1><p class="mod-desc">'+state.badges.length+' von '+BADGES.length+' gesammelt<\/p><\/div><div class="badge-grid">';
+  BADGES.forEach(b=>{const earned=state.badges.includes(b.id);h+='<div class="badge-item'+(earned?' earned':' locked')+'"><div class="badge-icon">'+(earned?b.icon:'🔒')+'<\/div><div class="badge-name">'+b.name+'<\/div><\/div>'});
+  h+='<\/div>';v.innerHTML=h;
+}
+
+function showStats(){
+  document.getElementById('welcomeScreen').style.display='none';document.getElementById('moduleContent').style.display='none';document.getElementById('badgesView').style.display='none';
+  const v=document.getElementById('statsView');v.style.display='block';closeSidebar();
+  const lv=getLevel(state.xp);
+  let h='<div class="module-header"><h1>📊 Statistik<\/h1><\/div><div class="stats-grid">';
+  h+='<div class="stat-card"><div class="stat-val">'+state.xp+'<\/div><div class="stat-label">XP gesammelt<\/div><\/div>';
+  h+='<div class="stat-card"><div class="stat-val">'+LEVELS[lv].name+'<\/div><div class="stat-label">Aktueller Rang<\/div><\/div>';
+  h+='<div class="stat-card"><div class="stat-val">'+state.modulesCompleted.length+'/10<\/div><div class="stat-label">Module abgeschlossen<\/div><\/div>';
+  h+='<div class="stat-card"><div class="stat-val">'+Object.keys(state.quizResults).length+'<\/div><div class="stat-label">Quizze bestanden<\/div><\/div>';
+  h+='<div class="stat-card"><div class="stat-val">'+Object.keys(state.bossResults).length+'<\/div><div class="stat-label">Bosse besiegt<\/div><\/div>';
+  h+='<div class="stat-card"><div class="stat-val">'+state.badges.length+'<\/div><div class="stat-label">Abzeichen<\/div><\/div>';
+  h+='<div class="stat-card"><div class="stat-val">🔥 '+state.streak+'<\/div><div class="stat-label">Tage-Streak<\/div><\/div>';
+  h+='<\/div>';v.innerHTML=h;
+}
+
+let certStyle='akademie';
+function showCert(){
+  const ov=document.getElementById('certOverlay');ov.classList.add('active');
+  document.getElementById('certPicker').innerHTML=
+    ['🏛 Akademie','💻 Hacker','🕹 Pixel','🚀 Zukunft'].map((l,i)=>{
+      const s=['akademie','hacker','pixel','zukunft'][i];
+      return '<button class="cert-pick-btn'+(certStyle===s?' active':'')+'" onclick="certStyle=\''+s+'\';showCert()">'+l+'<\/button>';
+    }).join('');
+  renderCert();
+}
+function closeCert(){document.getElementById('certOverlay').classList.remove('active')}
+function generateCertCode(){const n=state.name||'X';const d=new Date();return 'KF-'+d.getFullYear()+'-'+((n.charCodeAt(0)*7+state.xp)%9999).toString(16).toUpperCase().padStart(4,'0')}
+
+function renderCert(){
+  const f=document.getElementById('certFrame');if(!f)return;
+  const n=state.name||'Schüler';const d=new Date().toLocaleDateString('de-DE',{day:'2-digit',month:'long',year:'numeric'});
+  const code=generateCertCode();const pct=Math.round(state.modulesCompleted.length/10*100);
+  const styles={
+    akademie:{bg:'linear-gradient(135deg,#1a1a4e,#2d2d7a)',border:'#c9a84c',title:'#c9a84c',text:'#d4d0ff',accent:'#c9a84c',font:"'Playfair Display',serif"},
+    hacker:{bg:'linear-gradient(135deg,#0a0e14,#1a2332)',border:'#00ff88',title:'#00ff88',text:'#b0f0d0',accent:'#00ff88',font:"'JetBrains Mono',monospace"},
+    pixel:{bg:'linear-gradient(135deg,#1a0a2e,#2d1055)',border:'#ffd700',title:'#ffd700',text:'#e0d0f0',accent:'#ff6b9d',font:"'Courier New',monospace"},
+    zukunft:{bg:'linear-gradient(135deg,#0f0f23,#1a1a3e)',border:'#00d9ff',title:'#00d9ff',text:'#d0e8ff',accent:'#00d9ff',font:"'Sora',sans-serif"}
+  };
+  const s=styles[certStyle]||styles.akademie;
+  f.innerHTML='<div style="width:100%;height:100%;background:'+s.bg+';border:3px solid '+s.border+';border-radius:12px;padding:40px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;font-family:'+s.font+';position:relative;overflow:hidden">'
+    +'<div style="font-size:14px;letter-spacing:4px;text-transform:uppercase;color:'+s.accent+';margin-bottom:8px">Zertifikat</div>'
+    +'<div style="font-size:28px;font-weight:700;color:'+s.title+';margin-bottom:4px">KunstForscher</div>'
+    +'<div style="font-size:13px;color:'+s.text+';margin-bottom:20px">Kunst Klasse 3-6</div>'
+    +'<div style="font-size:14px;color:'+s.text+'">Hiermit wird bestätigt, dass</div>'
+    +'<div style="font-size:24px;font-weight:700;color:'+s.title+';margin:8px 0;border-bottom:2px solid '+s.accent+';padding-bottom:4px">'+n+'</div>'
+    +'<div style="font-size:14px;color:'+s.text+';max-width:400px;line-height:1.6">den Kurs <strong>KunstForscher</strong> mit <strong>'+pct+'%</strong> Abschluss und <strong>'+state.xp+' XP</strong> erfolgreich absolviert hat.</div>'
+    +'<div style="font-size:12px;color:'+s.accent+';margin-top:16px">'+d+'</div>'
+    +'<div style="font-size:10px;color:'+s.text+';opacity:0.6;margin-top:8px">Code: '+code+' | © 2026 GZ AI Stacks</div>'
+    +'</div>';
+}
+function printCert(){window.print()}
+
+function updateUI(){
+  const lv=getLevel(state.xp);
+  const xpEl=document.querySelector('.header-xp');
+  if(xpEl)xpEl.innerHTML=LEVELS[lv].name+' <span style="margin-left:8px">'+state.xp+' XP<\/span>';
+  const fill=document.querySelector('.header-xp-fill');
+  if(fill)fill.style.width=getLevelProgress(state.xp)+'%';
+  const streakEl=document.querySelector('.header-streak');
+  if(streakEl)streakEl.textContent='🔥 '+state.streak;
+  renderSidebar();
+}
+
+function setDesignTheme(world,mode){
+  state.designTheme=world+'-'+mode;document.documentElement.setAttribute('data-theme',state.designTheme);saveState();buildThemePicker();
+}
+function getCurrentThemeParts(){const p=state.designTheme.split('-');return{world:p.slice(0,-1).join('-'),mode:p[p.length-1]||'dark'}}
+function toggleMode(){const{world,mode}=getCurrentThemeParts();setDesignTheme(world,mode==='dark'?'light':'dark')}
+function buildThemePicker(){
+  const dd=document.getElementById('themePickerDD');if(!dd)return;
+  const{world,mode}=getCurrentThemeParts();
+  let h='<div class="tp-label">Theme wählen<\/div>';
+  Object.keys(THEME_CONFIG).forEach(w=>{
+    const t=THEME_CONFIG[w];
+    h+='<div class="tp-world'+(w===world?' active':'')+'" onclick="setDesignTheme(\''+w+'\',\''+mode+'\')">';
+    h+='<div class="tp-world-color" style="background:'+t.color+'">'+t.emoji+'<\/div>';
+    h+='<div class="tp-world-info"><div class="tp-world-name">'+t.name+'<\/div><div class="tp-world-desc">'+t.desc+'<\/div><\/div><\/div>';
+  });
+  h+='<div class="tp-divider"><\/div>';
+  h+='<div class="tp-mode-row"><span class="tp-mode-label">'+(mode==='dark'?'🌙 Dark':'☀️ Light')+'<\/span>';
+  h+='<div class="tp-mode-switch'+(mode==='light'?' light':'')+'" onclick="toggleMode()"><\/div><\/div>';
+  dd.innerHTML=h;
+}
+function toggleThemePicker(){document.getElementById('themePickerDD').classList.toggle('open')}
+
+
+function initInteractive(modId) {
+const area = document.getElementById('interactiveArea');
+if(!area) return;
+const exercises = {
+0: function() {
+// Farbenlehre: Farben mischen
+const pairs = [
+{c1:'Rot',c2:'Gelb',result:'Orange',e1:'🔴',e2:'🟡',er:'🟠'},
+{c1:'Blau',c2:'Gelb',result:'Grün',e1:'🔵',e2:'🟡',er:'🟢'},
+{c1:'Rot',c2:'Blau',result:'Violett',e1:'🔴',e2:'🔵',er:'🟣'}
+];
+let idx=0; let score=0;
+function showMix(){
+if(idx>=pairs.length){area.innerHTML='<div class="ix-feedback pass">✅ Ergebnis: '+score+'/'+pairs.length+' richtig! Du kennst die Farbmischungen.</div>';return;}
+const p=pairs[idx];
+area.innerHTML='<h4>'+p.e1+' '+p.c1+' + '+p.e2+' '+p.c2+' = ?</h4><p>Welche Sekundärfarbe entsteht?</p><div class="ix-grid"><button class="ix-item" onclick="window._mixCheck(this,\'Orange\')">🟠 Orange</button><button class="ix-item" onclick="window._mixCheck(this,\'Grün\')">🟢 Grün</button><button class="ix-item" onclick="window._mixCheck(this,\'Violett\')">🟣 Violett</button></div><div id="mixFb"></div>';
+}
+window._mixCheck=function(btn,ans){
+const correct=ans===pairs[idx].result;
+if(correct){score++;btn.classList.add('correct')}else{btn.classList.add('wrong')}
+document.getElementById('mixFb').innerHTML=correct?'<span style="color:var(--success)">✅ Richtig!</span>':'<span style="color:var(--danger)">❌ Richtig wäre: '+pairs[idx].er+' '+pairs[idx].result+'</span>';
+idx++;setTimeout(showMix,1200);
+};showMix();
+},
+1: function() {
+// Perspektive: Begriffe zuordnen
+const items=[
+{term:'Fluchtpunkt',def:'Punkt, auf den alle Tiefenlinien zulaufen'},
+{term:'Horizontlinie',def:'Gedachte Linie auf Augenhöhe'},
+{term:'Zentralperspektive',def:'Perspektive mit genau einem Fluchtpunkt'},
+{term:'Farbperspektive',def:'Ferne Objekte erscheinen blasser und bläulicher'}
+];
+let ci=0;let score=0;
+const defs=items.map(function(i){return i.def;}).sort(function(){return Math.random()-0.5;});
+function showTerm(){
+if(ci>=items.length){area.innerHTML='<div class="ix-feedback pass">✅ '+score+'/'+items.length+' richtig!</div>';return;}
+area.innerHTML='<h4>Ordne den Begriff zu ('+(ci+1)+'/'+items.length+')</h4><p style="font-size:1.2em;margin:12px 0">📐 <strong>'+items[ci].term+'</strong></p>'+defs.map(function(d){return '<button class="ix-item" style="text-align:left;display:block;width:100%;margin:4px 0" onclick="window._perspCheck(this,\''+d.replace(/'/g,"\\'")+'\')">'+d+'</button>';}).join('')+'<div id="perspFb"></div>';
+}
+window._perspCheck=function(btn,ans){
+const correct=ans===items[ci].def;
+if(correct){score++;btn.classList.add('correct')}else{btn.classList.add('wrong')}
+document.getElementById('perspFb').innerHTML=correct?'<span style="color:var(--success)">✅ Richtig!</span>':'<span style="color:var(--danger)">❌ Richtig: '+items[ci].def+'</span>';
+ci++;setTimeout(showTerm,1200);
+};showTerm();
+},
+2: function() {
+// Berühmte Künstler: Künstler-Werk zuordnen
+const pairs=[
+{artist:'Leonardo da Vinci',work:'Mona Lisa'},
+{artist:'Claude Monet',work:'Seerosen'},
+{artist:'Pablo Picasso',work:'Guernica'},
+{artist:'Vincent van Gogh',work:'Sternennacht'}
+];
+let pi=0;let score=0;
+const works=pairs.map(function(p){return p.work;}).sort(function(){return Math.random()-0.5;});
+function showPair(){
+if(pi>=pairs.length){area.innerHTML='<div class="ix-feedback pass">✅ '+score+'/'+pairs.length+' richtig! Du kennst die Künstler und ihre Werke.</div>';return;}
+area.innerHTML='<h4>Welches Werk gehört zu diesem Künstler? ('+(pi+1)+'/'+pairs.length+')</h4><p style="font-size:1.2em;margin:12px 0">🖼️ <strong>'+pairs[pi].artist+'</strong></p>'+works.map(function(w){return '<button class="ix-item" onclick="window._artMatch(this,\''+w+'\')">'+w+'</button>';}).join('')+'<div id="artFb"></div>';
+}
+window._artMatch=function(btn,ans){
+const correct=ans===pairs[pi].work;
+if(correct){score++;btn.classList.add('correct')}else{btn.classList.add('wrong')}
+document.getElementById('artFb').innerHTML=correct?'<span style="color:var(--success)">✅ Richtig!</span>':'<span style="color:var(--danger)">❌ Richtig: '+pairs[pi].work+'</span>';
+pi++;setTimeout(showPair,1200);
+};showPair();
+},
+3: function() {
+// Kunstepochen: Chronologisch sortieren
+const epochs=['Renaissance','Barock','Impressionismus','Expressionismus'];
+const shuffled=epochs.slice().sort(function(){return Math.random()-0.5;});
+let selected=[];
+area.innerHTML='<h4>Sortiere die Kunstepochen chronologisch! (älteste zuerst)</h4><p>Klicke die Epochen in der richtigen Reihenfolge an:</p><div class="ix-grid" id="epochBtns">'+shuffled.map(function(e){return '<button class="ix-item" onclick="window._epochPick(this,\''+e+'\')">'+e+'</button>';}).join('')+'</div><p id="epochOrder" style="margin-top:12px;font-weight:600"></p><div id="epochFb"></div>';
+window._epochPick=function(btn,name){
+selected.push(name);btn.classList.add('placed');
+document.getElementById('epochOrder').textContent='Reihenfolge: '+selected.join(' → ');
+if(selected.length===epochs.length){
+var correct=true;
+for(var i=0;i<epochs.length;i++){if(selected[i]!==epochs[i])correct=false;}
+document.getElementById('epochFb').innerHTML=correct?'<div class="ix-feedback pass">✅ Perfekt! Die richtige Reihenfolge!</div>':'<div class="ix-feedback fail">❌ Richtige Reihenfolge: '+epochs.join(' → ')+'</div>';
+}
+};
+},
+4: function() {
+// Drucktechniken: Quiz über Techniken
+const qs=[
+{q:'Welche Technik erzeugt jedes Mal ein Unikat?',correct:'Monotypie',opts:['Linolschnitt','Stempeldruck','Monotypie']},
+{q:'Bei welcher Technik wird Material weggeschnitten?',correct:'Linolschnitt',opts:['Monotypie','Linolschnitt','Stempeldruck']},
+{q:'Welche Technik eignet sich für Anfänger am besten?',correct:'Stempeldruck',opts:['Linolschnitt','Stempeldruck','Monotypie']}
+];
+let qi=0;let score=0;
+function showQ(){
+if(qi>=qs.length){area.innerHTML='<div class="ix-feedback pass">✅ '+score+'/'+qs.length+' richtig!</div>';return;}
+area.innerHTML='<h4>🖨️ Drucktechniken-Quiz ('+(qi+1)+'/'+qs.length+')</h4><p>'+qs[qi].q+'</p><div class="ix-grid">'+qs[qi].opts.map(function(o){return '<button class="ix-item" onclick="window._druckCheck(this,\''+o+'\')">'+o+'</button>';}).join('')+'</div><div id="druckFb"></div>';
+}
+window._druckCheck=function(btn,ans){
+const correct=ans===qs[qi].correct;
+if(correct){score++;btn.classList.add('correct')}else{btn.classList.add('wrong')}
+document.getElementById('druckFb').innerHTML=correct?'<span style="color:var(--success)">✅ Richtig!</span>':'<span style="color:var(--danger)">❌ Richtig: '+qs[qi].correct+'</span>';
+qi++;setTimeout(showQ,1200);
+};showQ();
+},
+5: function() {
+// Plastisches Gestalten: Material-Eigenschaften zuordnen
+const items=[
+{mat:'Ton',eigenschaft:'Wird durch Brennen zu Keramik'},
+{mat:'Pappmaché',eigenschaft:'Besteht aus Papier und Kleister'},
+{mat:'Draht',eigenschaft:'Kann gebogen und verdrillt werden'}
+];
+let mi=0;let score=0;
+const props=items.map(function(i){return i.eigenschaft;}).sort(function(){return Math.random()-0.5;});
+function showMat(){
+if(mi>=items.length){area.innerHTML='<div class="ix-feedback pass">✅ '+score+'/'+items.length+' richtig!</div>';return;}
+area.innerHTML='<h4>Welche Eigenschaft gehört zu diesem Material? ('+(mi+1)+'/'+items.length+')</h4><p style="font-size:1.2em;margin:12px 0">🗿 <strong>'+items[mi].mat+'</strong></p>'+props.map(function(p){return '<button class="ix-item" style="text-align:left;display:block;width:100%;margin:4px 0" onclick="window._matCheck(this,\''+p.replace(/'/g,"\\'")+'\')">'+p+'</button>';}).join('')+'<div id="matFb"></div>';
+}
+window._matCheck=function(btn,ans){
+const correct=ans===items[mi].eigenschaft;
+if(correct){score++;btn.classList.add('correct')}else{btn.classList.add('wrong')}
+document.getElementById('matFb').innerHTML=correct?'<span style="color:var(--success)">✅ Richtig!</span>':'<span style="color:var(--danger)">❌ Richtig: '+items[mi].eigenschaft+'</span>';
+mi++;setTimeout(showMat,1200);
+};showMat();
+},
+6: function() {
+// Fotografie: Drittel-Regel
+area.innerHTML='<h4>📷 Die Drittel-Regel anwenden</h4><p>Wo sollte das Hauptmotiv idealerweise platziert werden? Klicke auf den richtigen Bereich!</p><div style="display:grid;grid-template-columns:1fr 1fr 1fr;grid-template-rows:1fr 1fr 1fr;width:300px;height:200px;border:2px solid var(--border);margin:16px auto;background:var(--bg3)"><div class="ix-item" style="min-width:auto;border-radius:0" onclick="window._fotoCheck(this,false)">1</div><div class="ix-item" style="min-width:auto;border-radius:0" onclick="window._fotoCheck(this,false)">2</div><div class="ix-item" style="min-width:auto;border-radius:0" onclick="window._fotoCheck(this,false)">3</div><div class="ix-item" style="min-width:auto;border-radius:0" onclick="window._fotoCheck(this,true)">4 ✦</div><div class="ix-item" style="min-width:auto;border-radius:0" onclick="window._fotoCheck(this,false)">5</div><div class="ix-item" style="min-width:auto;border-radius:0" onclick="window._fotoCheck(this,true)">6 ✦</div><div class="ix-item" style="min-width:auto;border-radius:0" onclick="window._fotoCheck(this,false)">7</div><div class="ix-item" style="min-width:auto;border-radius:0" onclick="window._fotoCheck(this,true)">8 ✦</div><div class="ix-item" style="min-width:auto;border-radius:0" onclick="window._fotoCheck(this,true)">9 ✦</div></div><p style="font-size:12px;color:var(--text-dim)">Die Schnittpunkte der Drittel-Linien (Felder 4, 6, 8, 9) sind ideal!</p><div id="fotoFb"></div>';
+window._fotoCheck=function(btn,correct){
+if(correct){btn.classList.add('correct');document.getElementById('fotoFb').innerHTML='<div class="ix-feedback pass">✅ Richtig! Auf den Schnittpunkten der Drittel-Linien wirkt das Motiv am besten.</div>';}
+else{btn.classList.add('wrong');document.getElementById('fotoFb').innerHTML='<div class="ix-feedback fail">❌ Nicht ideal. Die Schnittpunkte der Drittel-Linien (an den Ecken des mittleren Feldes) sind besser!</div>';}
+};
+},
+7: function() {
+// Design: Logo-Typen erkennen
+const logos=[
+{name:'Nur Text, kein Symbol',type:'Wortmarke'},
+{name:'Nur ein Symbol, kein Text',type:'Bildmarke'},
+{name:'Text und Symbol zusammen',type:'Kombinationsmarke'}
+];
+let li=0;let score=0;
+const types=['Wortmarke','Bildmarke','Kombinationsmarke'];
+function showLogo(){
+if(li>=logos.length){area.innerHTML='<div class="ix-feedback pass">✅ '+score+'/'+logos.length+' richtig!</div>';return;}
+area.innerHTML='<h4>Welcher Logo-Typ ist das? ('+(li+1)+'/'+logos.length+')</h4><p style="font-size:1.1em;margin:12px 0">Beschreibung: <strong>„'+logos[li].name+'"</strong></p><div class="ix-grid">'+types.map(function(t){return '<button class="ix-item" onclick="window._logoCheck(this,\''+t+'\')">'+t+'</button>';}).join('')+'</div><div id="logoFb"></div>';
+}
+window._logoCheck=function(btn,ans){
+const correct=ans===logos[li].type;
+if(correct){score++;btn.classList.add('correct')}else{btn.classList.add('wrong')}
+document.getElementById('logoFb').innerHTML=correct?'<span style="color:var(--success)">✅ Richtig!</span>':'<span style="color:var(--danger)">❌ Richtig: '+logos[li].type+'</span>';
+li++;setTimeout(showLogo,1200);
+};showLogo();
+},
+8: function() {
+// Architektur: Epochen-Merkmale zuordnen
+const items=[
+{stil:'Gotik',merkmal:'Spitzbögen und riesige bunte Fenster'},
+{stil:'Bauhaus',merkmal:'Form folgt Funktion, klare geometrische Linien'},
+{stil:'Moderne',merkmal:'Stahl, Glas und nachhaltige Materialien'}
+];
+let ai=0;let score=0;
+const merkmale=items.map(function(i){return i.merkmal;}).sort(function(){return Math.random()-0.5;});
+function showStil(){
+if(ai>=items.length){area.innerHTML='<div class="ix-feedback pass">✅ '+score+'/'+items.length+' richtig!</div>';return;}
+area.innerHTML='<h4>Welches Merkmal gehört zu diesem Architekturstil? ('+(ai+1)+'/'+items.length+')</h4><p style="font-size:1.2em;margin:12px 0">🏗️ <strong>'+items[ai].stil+'</strong></p>'+merkmale.map(function(m){return '<button class="ix-item" style="text-align:left;display:block;width:100%;margin:4px 0" onclick="window._archCheck(this,\''+m.replace(/'/g,"\\'")+'\')">'+m+'</button>';}).join('')+'<div id="archFb"></div>';
+}
+window._archCheck=function(btn,ans){
+const correct=ans===items[ai].merkmal;
+if(correct){score++;btn.classList.add('correct')}else{btn.classList.add('wrong')}
+document.getElementById('archFb').innerHTML=correct?'<span style="color:var(--success)">✅ Richtig!</span>':'<span style="color:var(--danger)">❌ Richtig: '+items[ai].merkmal+'</span>';
+ai++;setTimeout(showStil,1200);
+};showStil();
+},
+9: function() {
+// Moderne Kunst: Kunstrichtung erkennen
+const items=[
+{richtung:'Abstrakte Kunst',beschreibung:'Keine erkennbaren Gegenstände, nur Farben und Formen'},
+{richtung:'Pop Art',beschreibung:'Alltagsgegenstände wie Suppendosen werden zur Kunst'},
+{richtung:'Installationskunst',beschreibung:'Ein ganzer Raum wird zum begehbaren Kunstwerk'}
+];
+let ki=0;let score=0;
+const richtungen=items.map(function(i){return i.richtung;}).sort(function(){return Math.random()-0.5;});
+function showRichtung(){
+if(ki>=items.length){area.innerHTML='<div class="ix-feedback pass">✅ '+score+'/'+items.length+' richtig!</div>';return;}
+area.innerHTML='<h4>Welche Kunstrichtung passt zu dieser Beschreibung? ('+(ki+1)+'/'+items.length+')</h4><p style="font-size:1.1em;margin:12px 0">🎭 <em>„'+items[ki].beschreibung+'"</em></p><div class="ix-grid">'+richtungen.map(function(r){return '<button class="ix-item" onclick="window._modKunstCheck(this,\''+r+'\')">'+r+'</button>';}).join('')+'</div><div id="modKunstFb"></div>';
+}
+window._modKunstCheck=function(btn,ans){
+const correct=ans===items[ki].richtung;
+if(correct){score++;btn.classList.add('correct')}else{btn.classList.add('wrong')}
+document.getElementById('modKunstFb').innerHTML=correct?'<span style="color:var(--success)">✅ Richtig!</span>':'<span style="color:var(--danger)">❌ Richtig: '+items[ki].richtung+'</span>';
+ki++;setTimeout(showRichtung,1200);
+};showRichtung();
+}
+};
+if(exercises[modId]) exercises[modId]();
+else area.innerHTML='<p>Übung wird geladen...</p>';
+}
+
+function startApp(){
+  const name=document.getElementById('nameInput').value.trim();if(!name)return;
+  state.name=name;state.started=true;saveState();
+  document.getElementById('welcomeScreen').style.display='none';
+  renderModule(0);updateStreak();
+}
+
+(function init(){
+  if(loadState()&&state.started){
+    document.getElementById('welcomeScreen').style.display='none';
+    document.documentElement.setAttribute('data-theme',state.designTheme);
+    renderModule(state.currentModule);updateUI();updateStreak();
+  }else{
+    document.documentElement.setAttribute('data-theme',state.designTheme);
+    buildThemePicker();
+  }
+  renderSidebar();
+  document.addEventListener('click',e=>{if(!e.target.closest('.theme-picker-wrap'))document.getElementById('themePickerDD')?.classList.remove('open')});
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,894 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Anleitung — LehrplanManager</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:#0a0e14;color:#d4dce8;line-height:1.7;min-height:100vh}
+a{color:#60a5fa;text-decoration:none}
+a:hover{text-decoration:underline}
+
+/* Header */
+.hero{background:linear-gradient(135deg,#0a0e14 0%,#111827 50%,#1e3a5f 100%);border-bottom:3px solid #3b82f6;padding:3rem 2rem;text-align:center;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:radial-gradient(circle at 30% 50%,rgba(59,130,246,.08) 0%,transparent 50%);pointer-events:none}
+.hero h1{font-size:2.2rem;font-weight:800;color:#fff;margin-bottom:.3rem;position:relative}
+.hero .brand{font-size:.95rem;color:#3b82f6;font-weight:600;margin-bottom:.5rem}
+.hero .subtitle{font-size:1rem;color:#8899aa;max-width:600px;margin:0 auto}
+
+/* Container */
+.container{max-width:860px;margin:0 auto;padding:2rem 1.5rem 4rem}
+
+/* Navigation */
+.toc{background:#161e2e;border:1px solid #2a3444;border-radius:12px;padding:1.5rem 2rem;margin-bottom:2.5rem}
+.toc h2{font-size:1rem;color:#3b82f6;font-weight:700;margin-bottom:.8rem;text-transform:uppercase;letter-spacing:.05em}
+.toc ol{padding-left:1.2rem}
+.toc li{margin-bottom:.4rem;font-size:.9rem}
+.toc a{color:#60a5fa}
+
+/* Sections */
+.section{margin-bottom:3rem;scroll-margin-top:2rem}
+.section h2{font-size:1.4rem;font-weight:700;color:#fff;margin-bottom:1rem;padding-bottom:.5rem;border-bottom:2px solid #3b82f6;display:flex;align-items:center;gap:.6rem}
+.section h2 .num{background:#3b82f6;color:#fff;width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.85rem;font-weight:800;flex-shrink:0}
+.section h3{font-size:1.05rem;font-weight:700;color:#e2e8f0;margin:1.5rem 0 .6rem}
+
+/* Steps */
+.steps{counter-reset:step}
+.step{position:relative;padding-left:3rem;margin-bottom:1.5rem;counter-increment:step}
+.step::before{content:counter(step);position:absolute;left:0;top:0;width:2rem;height:2rem;background:linear-gradient(135deg,#3b82f6,#2563eb);color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.82rem;font-weight:700}
+.step p{margin-bottom:.4rem}
+.step-title{font-weight:700;color:#fff;font-size:.95rem}
+
+/* Info Boxes */
+.info-box{border-radius:10px;padding:1rem 1.2rem;margin:1rem 0;font-size:.88rem;line-height:1.6}
+.info-box.blue{background:rgba(59,130,246,.1);border-left:4px solid #3b82f6}
+.info-box.green{background:rgba(34,197,94,.1);border-left:4px solid #22c55e}
+.info-box.yellow{background:rgba(245,158,11,.1);border-left:4px solid #f59e0b}
+.info-box.red{background:rgba(239,68,68,.1);border-left:4px solid #ef4444}
+.info-box strong{color:#fff}
+
+/* Screenshots / Mockups */
+.mockup{background:#111827;border:1px solid #2a3444;border-radius:10px;padding:1.2rem;margin:1rem 0;font-family:'Cascadia Code','Consolas',monospace;font-size:.82rem;line-height:1.5;color:#8899aa;overflow-x:auto;white-space:pre}
+.mockup .highlight{color:#3b82f6;font-weight:700}
+.mockup .action{color:#22c55e}
+.mockup .label{color:#f59e0b}
+.mockup.wire{white-space:normal;font-family:'Cascadia Code','Consolas',monospace}
+.wire-header{border:1px solid #3b82f6;border-radius:6px 6px 0 0;padding:.5rem .8rem;color:#3b82f6;font-weight:700;font-size:.78rem}
+.wire-body{display:flex;border:1px solid #2a3444;border-top:0;border-radius:0 0 6px 6px;min-height:180px}
+.wire-sidebar{width:120px;flex-shrink:0;border-right:1px solid #2a3444;padding:.6rem;font-size:.72rem;line-height:1.8;color:#f59e0b}
+.wire-main{flex:1;padding:.8rem;font-size:.75rem;line-height:1.6;color:#8899aa}
+.wire-card{border:1px solid #2a3444;border-radius:6px;padding:.5rem .7rem;font-size:.72rem;line-height:1.7;flex:1}
+.wire-cards{display:flex;gap:.8rem;margin-top:.5rem}
+.wire-app{border:1px solid #2a3444;border-radius:8px;padding:1rem 1.2rem;font-size:.78rem;line-height:1.7;max-width:400px;margin:0 auto}
+.wire-progress{color:#3b82f6;letter-spacing:-1px;margin:.3rem 0}
+
+/* Key Visual */
+.key{display:inline-block;background:#1f2937;border:1px solid #374151;border-radius:5px;padding:.15rem .5rem;font-size:.78rem;font-family:'Cascadia Code','Consolas',monospace;color:#d4dce8;margin:0 .1rem;vertical-align:middle}
+
+/* Feature Grid */
+.feature-grid{display:grid;grid-template-columns:1fr 1fr;gap:.8rem;margin:1rem 0}
+.feature-card{background:#161e2e;border:1px solid #2a3444;border-radius:10px;padding:1rem;transition:border-color .2s}
+.feature-card:hover{border-color:#3b82f6}
+.feature-card .fc-icon{font-size:1.4rem;margin-bottom:.4rem}
+.feature-card .fc-title{font-size:.88rem;font-weight:700;color:#fff;margin-bottom:.2rem}
+.feature-card .fc-desc{font-size:.78rem;color:#8899aa;line-height:1.4}
+
+/* Table */
+table{width:100%;border-collapse:collapse;margin:1rem 0;font-size:.85rem}
+th{background:#1f2937;color:#fff;text-align:left;padding:.6rem .8rem;border:1px solid #2a3444;font-weight:600}
+td{padding:.5rem .8rem;border:1px solid #2a3444;vertical-align:top}
+tr:nth-child(even) td{background:#111827}
+
+/* Keyboard Shortcuts */
+.shortcut-table td:first-child{white-space:nowrap;font-weight:600;color:#3b82f6}
+
+/* FAQ */
+.faq-item{margin-bottom:1.2rem}
+.faq-q{font-weight:700;color:#fff;font-size:.95rem;margin-bottom:.3rem;cursor:pointer;display:flex;align-items:center;gap:.5rem}
+.faq-q::before{content:'?';background:#3b82f6;color:#fff;width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.75rem;font-weight:800;flex-shrink:0}
+.faq-a{padding-left:2rem;font-size:.88rem;color:#8899aa}
+
+/* Footer */
+.footer{text-align:center;padding:2rem 1rem;font-size:.75rem;color:#4b5563;border-top:1px solid #1f2937;margin-top:2rem}
+
+/* Print */
+@media print{
+  body{background:#fff;color:#222}
+  .hero{background:#f0f4ff;border-bottom:2px solid #3b82f6}
+  .hero h1,.section h2,.step-title,.feature-card .fc-title,.faq-q{color:#111}
+  .hero .subtitle,.info-box,.faq-a,td{color:#444}
+  .toc,.mockup,.feature-card{background:#f8fafc;border:1px solid #ddd}
+  .step::before{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .section h2 .num{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+}
+
+/* Responsive */
+@media(max-width:700px){
+  .hero{padding:2rem 1rem}
+  .hero h1{font-size:1.6rem}
+  .container{padding:1.2rem 1rem 3rem}
+  .feature-grid{grid-template-columns:1fr}
+  .step{padding-left:2.5rem}
+}
+</style>
+</head>
+<body>
+
+<!-- ===== HERO ===== -->
+<div class="hero">
+  <div class="brand">GZ-AI.-Stacks &mdash; Zimmermann AI Systems</div>
+  <h1>LehrplanManager</h1>
+  <div class="subtitle">Vollst&auml;ndige Anleitung f&uuml;r Lehrkr&auml;fte &mdash; Von der ersten Anmeldung bis zur fertigen Sch&uuml;ler-App</div>
+</div>
+
+<div class="container">
+
+<!-- ===== INHALTSVERZEICHNIS ===== -->
+<nav class="toc" aria-label="Inhaltsverzeichnis">
+  <h2>Inhaltsverzeichnis</h2>
+  <ol>
+    <li><a href="#s1">&Uuml;berblick &mdash; Was ist der LehrplanManager?</a></li>
+    <li><a href="#s2">Schnellstart &mdash; In 5 Minuten loslegen</a></li>
+    <li><a href="#s3">Das Dashboard im Detail</a></li>
+    <li><a href="#s4">Module ausw&auml;hlen &amp; Lehrplan zusammenstellen</a></li>
+    <li><a href="#s5">Der Wochenplaner</a></li>
+    <li><a href="#s6">Sch&uuml;ler-App generieren &mdash; Das Herzst&uuml;ck</a></li>
+    <li><a href="#s7">Sch&uuml;ler-Verwaltung &mdash; Presets, Sch&uuml;ler &amp; Batch-Export</a></li>
+    <li><a href="#s8">Fortschritt der Sch&uuml;ler verfolgen</a></li>
+    <li><a href="#s9">Themes &mdash; Designs anpassen</a></li>
+    <li><a href="#s10">Export, Import &amp; Drucken</a></li>
+    <li><a href="#s11">Alle verf&uuml;gbaren Apps &amp; Module</a></li>
+    <li><a href="#s12">Tastaturk&uuml;rzel &amp; Barrierefreiheit</a></li>
+    <li><a href="#s13">H&auml;ufige Fragen (FAQ)</a></li>
+    <li><a href="#s14">Technische Hinweise &amp; Datenschutz</a></li>
+  </ol>
+</nav>
+
+<!-- ===== 1. ÜBERBLICK ===== -->
+<div class="section" id="s1">
+  <h2><span class="num">1</span> &Uuml;berblick &mdash; Was ist der LehrplanManager?</h2>
+
+  <p>Der <strong>LehrplanManager</strong> ist Ihr pers&ouml;nliches Lehrer-Dashboard, mit dem Sie aus <strong>110 Lernmodulen</strong> in <strong>11 Fach-Apps</strong> einen individuellen Lehrplan zusammenstellen k&ouml;nnen &mdash; und diesen als fertige, eigenst&auml;ndige <strong>Sch&uuml;ler-App</strong> exportieren.</p>
+
+  <div class="feature-grid">
+    <div class="feature-card">
+      <div class="fc-icon">&#128218;</div>
+      <div class="fc-title">110 Module in 11 Apps</div>
+      <div class="fc-desc">Deutsch, Mathematik, Informatik, Physik, Chemie, Biologie und Englisch &mdash; f&uuml;r Klasse 1 bis 10.</div>
+    </div>
+    <div class="feature-card">
+      <div class="fc-icon">&#128197;</div>
+      <div class="fc-title">Wochenplaner</div>
+      <div class="fc-desc">Module per Drag &amp; Drop auf Wochentage verteilen. Mehrere Pl&auml;ne f&uuml;r verschiedene Klassen.</div>
+    </div>
+    <div class="feature-card">
+      <div class="fc-icon">&#127891;</div>
+      <div class="fc-title">Sch&uuml;ler-App Generator</div>
+      <div class="fc-desc">Eine HTML-Datei zum Download &mdash; mit genau den Modulen, die Sie ausgew&auml;hlt haben. Inkl. Deadline-Countdown.</div>
+    </div>
+    <div class="feature-card">
+      <div class="fc-icon">&#128274;</div>
+      <div class="fc-title">100% Offline &amp; DSGVO</div>
+      <div class="fc-desc">Kein Server, keine Registrierung, kein Tracking. Alles l&auml;uft lokal in Ihrem Browser.</div>
+    </div>
+  </div>
+
+  <div class="info-box blue">
+    <strong>Wichtig:</strong> Der LehrplanManager ist eine einzelne HTML-Datei. Sie brauchen nur einen Browser (Chrome, Firefox, Edge, Safari) &mdash; keine Installation, keinen Account, kein Internet.
+  </div>
+</div>
+
+<!-- ===== 2. SCHNELLSTART ===== -->
+<div class="section" id="s2">
+  <h2><span class="num">2</span> Schnellstart &mdash; In 5 Minuten loslegen</h2>
+
+  <div class="steps">
+    <div class="step">
+      <div class="step-title">Dashboard &ouml;ffnen</div>
+      <p>&Ouml;ffnen Sie die Datei <code>Dashboard/index.html</code> in Ihrem Browser. Doppelklick auf die Datei gen&uuml;gt.</p>
+    </div>
+
+    <div class="step">
+      <div class="step-title">Module ausw&auml;hlen</div>
+      <p>Klicken Sie auf die Module, die Ihre Sch&uuml;ler bearbeiten sollen. Ein Haken erscheint bei jedem ausgew&auml;hlten Modul. Die Statistik oben z&auml;hlt automatisch mit.</p>
+    </div>
+
+    <div class="step">
+      <div class="step-title">Optional: Wochenplan erstellen</div>
+      <p>Wechseln Sie zum <strong>Wochenplaner</strong> (linke Seitenleiste) und ziehen Sie die Module per Drag &amp; Drop auf die gew&uuml;nschten Wochentage.</p>
+    </div>
+
+    <div class="step">
+      <div class="step-title">Sch&uuml;ler-App generieren</div>
+      <p>Klicken Sie auf den gr&uuml;nen Button <strong>&laquo;Sch&uuml;ler-App&raquo;</strong> in der Kopfzeile. Geben Sie Klassenname, Begr&uuml;&szlig;ungstext und ein Abgabedatum ein. Klicken Sie auf <strong>&laquo;App herunterladen&raquo;</strong>.</p>
+    </div>
+
+    <div class="step">
+      <div class="step-title">An Sch&uuml;ler verteilen</div>
+      <p>Geben Sie die heruntergeladene HTML-Datei zusammen mit dem <code>Schulbildung</code>-Ordner an Ihre Sch&uuml;ler weiter (USB-Stick, Schulcloud, E-Mail). Die Sch&uuml;ler &ouml;ffnen die Datei im Browser und arbeiten ihre Module ab.</p>
+    </div>
+  </div>
+
+  <div class="info-box green">
+    <strong>Fertig!</strong> In diesen 5 Schritten haben Sie einen kompletten, personalisierten Lernplan erstellt und als App an Ihre Klasse verteilt. Alles Weitere auf dieser Seite erkl&auml;rt die Feinheiten.
+  </div>
+</div>
+
+<!-- ===== 3. DASHBOARD IM DETAIL ===== -->
+<div class="section" id="s3">
+  <h2><span class="num">3</span> Das Dashboard im Detail</h2>
+
+  <h3>Aufbau der Oberfl&auml;che</h3>
+  <div class="mockup wire">
+    <div class="wire-header"><span class="highlight">KOPFZEILE</span>: LehrplanManager &nbsp;&nbsp; Theme | Export | Import | Drucken | <span class="action">Sch&uuml;ler-App</span></div>
+    <div class="wire-body">
+      <div class="wire-sidebar">
+        <span class="label">SIDEBAR</span><br>
+        Dashboard<br>
+        Wochenplan<br>
+        <span class="action">Sch&uuml;ler</span><br><br>
+        Kl. 1-3<br>
+        Kl. 3-6<br>
+        Kl. 7-10<br><br>
+        Alle ausw.<br>
+        Auswahl X
+      </div>
+      <div class="wire-main">
+        <span class="highlight">HAUPTBEREICH</span><br><br>
+        [25 Apps] [250 Module] [<span class="action">0 Ausgew.</span>] [0h Zeit]<br><br>
+        <span class="label">Filter:</span> [Alle] [Deutsch] [Mathe] [Info] ...<br><br>
+        <div class="wire-cards">
+          <div class="wire-card"><strong>BuchstabenReise</strong><br>&#9744; Die Vokale<br>&#9744; Konsonanten<br>&#9744; Silben</div>
+          <div class="wire-card"><strong>LeseHeld</strong><br>&#9745; W&ouml;rter verst.<br>&#9745; S&auml;tze lesen<br>&#9744; Geschichte</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <h3>Die vier Bereiche</h3>
+  <table>
+    <tr><th style="width:25%">Bereich</th><th>Funktion</th></tr>
+    <tr><td><strong>Kopfzeile</strong></td><td>Alle Hauptaktionen: Theme wechseln, Lehrplan exportieren/importieren, drucken, Sch&uuml;ler-App generieren, Impressum.</td></tr>
+    <tr><td><strong>Seitenleiste</strong></td><td>Navigation zwischen Dashboard, Wochenplaner und Sch&uuml;ler-Verwaltung. Filter nach Klassenstufe. Schnellzugriff zum Ausw&auml;hlen/Leeren aller Module.</td></tr>
+    <tr><td><strong>Statistik-Karten</strong></td><td>Vier Karten zeigen: Anzahl Apps, Anzahl Module, davon ausgew&auml;hlt, und die gesch&auml;tzte Gesamtzeit (25 Min. pro Modul).</td></tr>
+    <tr><td><strong>App-Karten</strong></td><td>Jede Karte zeigt eine Lern-App mit all ihren Modulen. Klicken Sie auf ein Modul, um es auszuw&auml;hlen. &laquo;&Ouml;ffnen&raquo; startet die App direkt.</td></tr>
+  </table>
+</div>
+
+<!-- ===== 4. MODULE AUSWÄHLEN ===== -->
+<div class="section" id="s4">
+  <h2><span class="num">4</span> Module ausw&auml;hlen &amp; Lehrplan zusammenstellen</h2>
+
+  <h3>Einzelne Module ausw&auml;hlen</h3>
+  <div class="steps">
+    <div class="step">
+      <div class="step-title">Klicken Sie auf ein Modul</div>
+      <p>Jedes Modul zeigt einen Titel, ein Symbol und die gesch&auml;tzte Zeit (25 Min.). Beim Klicken erscheint ein gr&uuml;ner Haken &#10003; &mdash; das Modul ist jetzt in Ihrem Lehrplan.</p>
+    </div>
+    <div class="step">
+      <div class="step-title">Erneut klicken zum Abw&auml;hlen</div>
+      <p>Ein zweiter Klick entfernt das Modul wieder aus der Auswahl. Der Haken verschwindet.</p>
+    </div>
+  </div>
+
+  <h3>Ganze Apps auf einmal ausw&auml;hlen</h3>
+  <p>Am unteren Rand jeder App-Karte finden Sie den Link <strong>&laquo;Alle ausw&auml;hlen&raquo;</strong>. Damit werden alle 10 Module dieser App auf einmal ausgew&auml;hlt. Bei erneutem Klick werden alle wieder abgew&auml;hlt.</p>
+
+  <h3>Schnellzugriff (Seitenleiste)</h3>
+  <table>
+    <tr><th>Aktion</th><th>Beschreibung</th></tr>
+    <tr><td><strong>Alle ausw&auml;hlen</strong></td><td>W&auml;hlt alle 110 Module in allen 11 Apps auf einmal aus.</td></tr>
+    <tr><td><strong>Auswahl leeren</strong></td><td>Entfernt alle Auswahlen und leert auch den Wochenplan.</td></tr>
+  </table>
+
+  <h3>Nach F&auml;chern oder Klassenstufen filtern</h3>
+  <p>Nutzen Sie die <strong>Filter-Chips</strong> oberhalb der App-Karten:</p>
+  <ul style="margin:.5rem 0 .5rem 1.5rem">
+    <li><strong>Fach-Filter:</strong> Deutsch, Mathematik, Informatik, Physik, Chemie, Biologie, Englisch</li>
+    <li><strong>Klassen-Filter:</strong> Kl. 1-3, Kl. 3-6, Kl. 7-10</li>
+  </ul>
+  <p>Es wird immer nur ein Filter gleichzeitig aktiv. Klicken Sie auf &laquo;Alle F&auml;cher&raquo;, um den Filter zur&uuml;ckzusetzen.</p>
+
+  <div class="info-box blue">
+    <strong>Tipp:</strong> Ihre Auswahl bleibt erhalten, auch wenn Sie filtern. Sie k&ouml;nnen z.B. zuerst Mathe-Module ausw&auml;hlen, dann auf Deutsch wechseln und weitere Module hinzuf&uuml;gen.
+  </div>
+</div>
+
+<!-- ===== 5. WOCHENPLANER ===== -->
+<div class="section" id="s5">
+  <h2><span class="num">5</span> Der Wochenplaner</h2>
+
+  <p>Im Wochenplaner verteilen Sie Ihre ausgew&auml;hlten Module auf die f&uuml;nf Schultage <strong>Montag bis Freitag</strong>.</p>
+
+  <h3>Module zuweisen</h3>
+  <div class="steps">
+    <div class="step">
+      <div class="step-title">Wechseln Sie zum Wochenplaner</div>
+      <p>Klicken Sie in der Seitenleiste auf <strong>&laquo;Wochenplaner&raquo;</strong>.</p>
+    </div>
+    <div class="step">
+      <div class="step-title">Module per Drag &amp; Drop zuweisen</div>
+      <p>Unter dem Wochenplan sehen Sie alle ausgew&auml;hlten Module. <strong>Ziehen</strong> Sie ein Modul mit der Maus auf den gew&uuml;nschten Wochentag und <strong>lassen Sie los</strong>.</p>
+    </div>
+    <div class="step">
+      <div class="step-title">Module zwischen Tagen verschieben</div>
+      <p>Bereits zugewiesene Module k&ouml;nnen Sie von einem Tag auf einen anderen ziehen. So passen Sie Ihren Plan flexibel an.</p>
+    </div>
+    <div class="step">
+      <div class="step-title">Module aus einem Tag entfernen</div>
+      <p>Klicken Sie auf das <strong>&times;</strong> rechts neben dem Modul im Wochenplan.</p>
+    </div>
+  </div>
+
+  <div class="info-box yellow">
+    <strong>Hinweis:</strong> Der Wochenplan zeigt unten bei jedem Tag die Gesamtzeit an (z.B. &laquo;75 Min.&raquo; bei 3 Modulen). So sehen Sie sofort, ob ein Tag zu voll wird.
+  </div>
+
+  <h3>Mehrere Lehrpl&auml;ne verwalten</h3>
+  <p>Sie k&ouml;nnen beliebig viele Lehrpl&auml;ne anlegen &mdash; z.B. einen pro Klasse oder pro Woche:</p>
+  <table>
+    <tr><th>Aktion</th><th>Wie?</th></tr>
+    <tr><td>Neuen Plan anlegen</td><td>Klicken Sie auf <strong>&laquo;+ Neuer Plan&raquo;</strong> und geben Sie einen Namen ein (z.B. &laquo;7a MINT-Woche&raquo;).</td></tr>
+    <tr><td>Zwischen Pl&auml;nen wechseln</td><td>Klicken Sie auf den jeweiligen Plan-Tab.</td></tr>
+    <tr><td>Plan umbenennen</td><td>Klicken Sie auf das Stift-Symbol &#9999; neben dem Plannamen.</td></tr>
+    <tr><td>Plan l&ouml;schen</td><td>Klicken Sie auf das &times; neben dem aktiven Plan. Best&auml;tigen Sie die Sicherheitsabfrage.</td></tr>
+  </table>
+</div>
+
+<!-- ===== 6. SCHÜLER-APP ===== -->
+<div class="section" id="s6">
+  <h2><span class="num">6</span> Sch&uuml;ler-App generieren &mdash; Das Herzst&uuml;ck</h2>
+
+  <div class="info-box green">
+    <strong>Das Besondere:</strong> Mit einem Klick erstellen Sie eine <strong>fertige, eigenst&auml;ndige HTML-Datei</strong>, die Ihre Sch&uuml;ler einfach im Browser &ouml;ffnen. Sie enth&auml;lt genau die Module, die Sie ausgew&auml;hlt haben &mdash; mit Fortschrittsverfolgung, Deadline-Countdown und pers&ouml;nlicher Begr&uuml;&szlig;ung.
+  </div>
+
+  <h3>Schritt f&uuml;r Schritt</h3>
+  <div class="steps">
+    <div class="step">
+      <div class="step-title">Module ausw&auml;hlen</div>
+      <p>W&auml;hlen Sie im Dashboard die gew&uuml;nschten Module aus (siehe Kapitel 4).</p>
+    </div>
+    <div class="step">
+      <div class="step-title">Klicken Sie auf &laquo;Sch&uuml;ler-App&raquo;</div>
+      <p>Der gr&uuml;ne Button in der Kopfzeile. Es &ouml;ffnet sich ein Konfigurationsdialog.</p>
+    </div>
+    <div class="step">
+      <div class="step-title">Klassenname eingeben</div>
+      <p>Z.B. &laquo;Klasse 7a&raquo;, &laquo;MINT-AG&raquo; oder &laquo;Nachhilfe Max&raquo;. Dieser Name erscheint als &Uuml;berschrift in der Sch&uuml;ler-App.</p>
+    </div>
+    <div class="step">
+      <div class="step-title">Begr&uuml;&szlig;ungstext schreiben</div>
+      <p>Eine pers&ouml;nliche Nachricht an Ihre Sch&uuml;ler. Z.B.:</p>
+      <div class="mockup">
+        <span class="action">Hallo liebe 7a!</span><br><br>
+        Hier findet ihr eure Lernmodule f&uuml;r diese Woche.<br>
+        Arbeitet die Module der Reihe nach durch und versucht<br>
+        m&ouml;glichst alle Quizze zu bestehen.<br><br>
+        <span class="highlight">Viel Erfolg! Euer Herr M&uuml;ller</span>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-title">Abgabedatum setzen (optional)</div>
+      <p>W&auml;hlen Sie ein Datum. In der Sch&uuml;ler-App erscheint dann ein <strong>Countdown</strong>: &laquo;Abgabe in 5 Tagen&raquo;. Bei weniger als 3 Tagen wird die Anzeige rot.</p>
+    </div>
+    <div class="step">
+      <div class="step-title">Theme w&auml;hlen</div>
+      <p>W&auml;hlen Sie ein Design f&uuml;r die Sch&uuml;ler-App (z.B. Comic f&uuml;r j&uuml;ngere, Cyber f&uuml;r &auml;ltere Sch&uuml;ler). Die Sch&uuml;ler k&ouml;nnen sp&auml;ter selbst zwischen Dark und Light umschalten.</p>
+    </div>
+    <div class="step">
+      <div class="step-title">App herunterladen</div>
+      <p>Klicken Sie auf <strong>&laquo;App herunterladen&raquo;</strong>. Eine HTML-Datei wird automatisch heruntergeladen, z.B. <code>Lernplan_Klasse_7a.html</code>.</p>
+    </div>
+  </div>
+
+  <h3>Was die Sch&uuml;ler sehen</h3>
+  <div class="mockup wire">
+    <div class="wire-app">
+      <div style="text-align:center">&#127891; <span class="highlight">Mein Lernplan</span><br><span class="action">Klasse 7a</span></div>
+      <br>
+      Hallo liebe 7a! ...
+      <div style="text-align:center">&#9203; <span class="label">Abgabe in 5 Tagen</span></div>
+      <br>
+      [<span class="action">3</span> Erledigt] [8 Module] [<span class="action">38%</span>] [3.3h]
+      <div class="wire-progress">&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9617;&#9617;&#9617;&#9617;&#9617;&#9617;&#9617;&#9617;&#9617;&#9617;&#9617;&#9617;&#9617;&#9617;&#9617;&#9617;&#9617;&#9617;&#9617;&#9617;&#9617;</div>
+      <br>
+      <span class="highlight">BruchProfi</span> &middot; Mathematik<br>
+      &#9745; Was sind Br&uuml;che?<br>
+      &#9745; Br&uuml;che vergleichen<br>
+      &#9744; Erweitern &amp; K&uuml;rzen<br>
+      &#9744; Addition von Br&uuml;chen
+    </div>
+  </div>
+
+  <h3>Funktionen der Sch&uuml;ler-App</h3>
+  <table>
+    <tr><th>Funktion</th><th>Beschreibung</th></tr>
+    <tr><td><strong>Automatischer Fortschritt</strong></td><td>Der Fortschritt wird <strong>automatisch</strong> aus den Lern-Apps erkannt (via LocalStorage). Wenn ein Sch&uuml;ler ein Modul in der Lern-App abschlie&szlig;t, erscheint automatisch ein gr&uuml;ner Haken. Kein manuelles Abhaken n&ouml;tig.</td></tr>
+    <tr><td><strong>Fortschrittsbalken</strong></td><td>Zeigt visuell, wie viel Prozent bereits geschafft sind.</td></tr>
+    <tr><td><strong>Statistik</strong></td><td>Erledigt / Gesamt / Prozent / Gesamtzeit werden live aktualisiert.</td></tr>
+    <tr><td><strong>Countdown</strong></td><td>Zeigt Tage bis zum Abgabedatum. Wird rot bei &le; 3 Tagen.</td></tr>
+    <tr><td><strong>Direktlinks</strong></td><td>Jedes Modul hat einen &laquo;&#9654; Starten&raquo; Button, der direkt zur Lern-App springt &mdash; mit Modul-Filter, sodass nur die zugewiesenen Module sichtbar sind.</td></tr>
+    <tr><td><strong>Dark/Light</strong></td><td>Sch&uuml;ler k&ouml;nnen unten rechts zwischen Dark und Light Mode wechseln.</td></tr>
+    <tr><td><strong>Konfetti</strong></td><td>Wenn alle Module abgehakt sind, regnet es Konfetti. &#127881;</td></tr>
+    <tr><td><strong>Speicherung</strong></td><td>Der Fortschritt wird automatisch im Browser gespeichert. Beim n&auml;chsten &Ouml;ffnen ist alles noch da.</td></tr>
+  </table>
+
+  <h3>Sch&uuml;ler-App verteilen</h3>
+  <div class="info-box blue">
+    <strong>Wichtig:</strong> Die Sch&uuml;ler-App enth&auml;lt Links zu den Lern-Apps (z.B. &laquo;BruchProfi &ouml;ffnen&raquo;). Damit diese Links funktionieren, m&uuml;ssen Sie den <strong>gesamten Schulbildung-Ordner</strong> zusammen mit der Sch&uuml;ler-App verteilen. Am besten als ZIP-Datei.
+  </div>
+
+  <p><strong>Verteilungswege:</strong></p>
+  <ul style="margin:.5rem 0 .5rem 1.5rem">
+    <li><strong>USB-Stick:</strong> Gesamten Ordner auf USB-Stick kopieren und weitergeben.</li>
+    <li><strong>Schulcloud / Moodle:</strong> Als ZIP-Datei hochladen. Sch&uuml;ler laden es herunter und entpacken es.</li>
+    <li><strong>E-Mail:</strong> ZIP-Datei als Anhang senden.</li>
+    <li><strong>Schul-Netzwerk:</strong> Auf ein gemeinsames Netzlaufwerk kopieren.</li>
+  </ul>
+</div>
+
+<!-- ===== 7. SCHÜLER-VERWALTUNG ===== -->
+<div class="section" id="s7">
+  <h2><span class="num">7</span> Sch&uuml;ler-Verwaltung &mdash; Presets, Sch&uuml;ler &amp; Batch-Export</h2>
+
+  <div class="info-box green">
+    <strong>NEU:</strong> Die Sch&uuml;ler-Verwaltung erm&ouml;glicht es Ihnen, f&uuml;r jeden Sch&uuml;ler einen <strong>individuellen, personalisierten Lernplan</strong> zu erstellen &mdash; mit eigener Modul-Auswahl, pers&ouml;nlicher Nachricht und Deadline. Alle Lernpl&auml;ne k&ouml;nnen auf einmal als <strong>ZIP-Datei</strong> heruntergeladen werden.
+  </div>
+
+  <h3>Schritt 1: Modul-Presets erstellen</h3>
+  <p>Ein <strong>Preset</strong> ist eine gespeicherte Modul-Zusammenstellung, die Sie mehreren Sch&uuml;lern zuweisen k&ouml;nnen.</p>
+  <div class="steps">
+    <div class="step">
+      <div class="step-title">Module im Dashboard ausw&auml;hlen</div>
+      <p>W&auml;hlen Sie im Dashboard die gew&uuml;nschten Module aus (z.B. alle Mathe-Module f&uuml;r Nachhilfe).</p>
+    </div>
+    <div class="step">
+      <div class="step-title">Zur Sch&uuml;ler-Ansicht wechseln</div>
+      <p>Klicken Sie in der Seitenleiste auf <strong>&laquo;Sch&uuml;ler&raquo;</strong>.</p>
+    </div>
+    <div class="step">
+      <div class="step-title">Preset speichern</div>
+      <p>Klicken Sie auf <strong>&laquo;+ Aktuelle Auswahl als Preset speichern&raquo;</strong> und geben Sie einen Namen ein, z.B. &laquo;Mathe-Nachhilfe&raquo; oder &laquo;MINT-Basics&raquo;.</p>
+    </div>
+  </div>
+
+  <div class="info-box blue">
+    <strong>Tipp:</strong> Erstellen Sie verschiedene Presets f&uuml;r verschiedene F&ouml;rder-Szenarien: &laquo;Deutsch-F&ouml;rderung&raquo;, &laquo;Mathe-Vertiefung&raquo;, &laquo;Komplettpaket Kl. 7&raquo;. Jedes Preset kann beliebig vielen Sch&uuml;lern zugewiesen werden.
+  </div>
+
+  <table>
+    <tr><th>Preset-Aktion</th><th>Beschreibung</th></tr>
+    <tr><td><strong>&#11015; Laden</strong></td><td>L&auml;dt die Module des Presets zur&uuml;ck ins Dashboard (z.B. zum Bearbeiten).</td></tr>
+    <tr><td><strong>&#9999;&#65039; Umbenennen</strong></td><td>&Auml;ndert den Namen des Presets.</td></tr>
+    <tr><td><strong>&#10006; L&ouml;schen</strong></td><td>Entfernt das Preset. Sch&uuml;ler, die dieses Preset hatten, zeigen &laquo;(gel&ouml;scht)&raquo;.</td></tr>
+  </table>
+
+  <h3>Schritt 2: Sch&uuml;ler anlegen</h3>
+  <div class="steps">
+    <div class="step">
+      <div class="step-title">Sch&uuml;ler hinzuf&uuml;gen</div>
+      <p>Klicken Sie auf <strong>&laquo;+ Sch&uuml;ler hinzuf&uuml;gen&raquo;</strong>. Es &ouml;ffnet sich ein Formular.</p>
+    </div>
+    <div class="step">
+      <div class="step-title">Daten ausf&uuml;llen</div>
+      <p>Geben Sie den <strong>Namen</strong> ein, w&auml;hlen Sie ein <strong>Preset</strong> aus, setzen Sie optional ein <strong>Abgabedatum</strong> und schreiben Sie eine <strong>pers&ouml;nliche Nachricht</strong>.</p>
+    </div>
+    <div class="step">
+      <div class="step-title">Speichern</div>
+      <p>Klicken Sie auf <strong>&laquo;Speichern&raquo;</strong>. Der Sch&uuml;ler erscheint in der Liste mit Avatar-Initialen, Preset-Name und Details.</p>
+    </div>
+  </div>
+
+  <div class="mockup">
+    <span class="highlight">Sch&uuml;lerliste</span><br>
+    &#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;<br>
+    [<span class="action">DM</span>] Dieter M&uuml;ller &nbsp;&middot; &#128230; Mathe-Nachhilfe &middot; 5 Module &middot; &#128197; 2026-03-15 &nbsp;[&#9999;&#65039;] [&#10006;]<br>
+    [<span class="action">HS</span>] Hans Schmidt &nbsp;&nbsp;&middot; &#128230; Deutsch-Basics &middot; 8 Module &middot; &#128172; Nachricht &nbsp;&nbsp;[&#9999;&#65039;] [&#10006;]<br>
+    [<span class="action">WB</span>] Wilfried Braun &middot; &#128230; MINT-Komplett &nbsp;&middot; 12 Module &middot; &#128197; 2026-03-20 [&#9999;&#65039;] [&#10006;]
+  </div>
+
+  <h3>Schritt 3: Batch-Export</h3>
+  <p>Sobald mindestens ein Sch&uuml;ler vorhanden ist, erscheint der <strong>Batch-Export</strong>-Bereich:</p>
+
+  <div class="steps">
+    <div class="step">
+      <div class="step-title">Basis-URL angeben (optional)</div>
+      <p>Wenn die Sch&uuml;ler die Lern-Apps per &laquo;Starten&raquo;-Button &ouml;ffnen sollen, geben Sie hier den Pfad zum Schulbildung-Ordner an. Wird automatisch erkannt, wenn Sie das Dashboard aus dem Ordner &ouml;ffnen.</p>
+    </div>
+    <div class="step">
+      <div class="step-title">Theme w&auml;hlen</div>
+      <p>W&auml;hlen Sie ein Design f&uuml;r alle generierten Sch&uuml;ler-Apps.</p>
+    </div>
+    <div class="step">
+      <div class="step-title">ZIP herunterladen</div>
+      <p>Klicken Sie auf <strong>&laquo;Alle generieren &amp; ZIP herunterladen&raquo;</strong>. Alle Sch&uuml;ler-Apps werden in eine ZIP-Datei gepackt und heruntergeladen. Jede Datei hei&szlig;t z.B. <code>Lernplan_Dieter_Mueller.html</code>.</p>
+    </div>
+  </div>
+
+  <div class="info-box yellow">
+    <strong>Alternativ:</strong> Mit &laquo;Einzeln herunterladen&raquo; wird jede Sch&uuml;ler-App einzeln als HTML-Datei heruntergeladen (mit kurzer Verz&ouml;gerung zwischen den Downloads).
+  </div>
+
+  <h3>Beispiel-Workflow</h3>
+  <div class="info-box blue">
+    <strong>Szenario:</strong> Sie haben 3 Sch&uuml;ler mit unterschiedlichen Bed&uuml;rfnissen:<br><br>
+    1. <strong>Dieter</strong> &mdash; Probleme in Mathe &rarr; Preset &laquo;Mathe-Nachhilfe&raquo; (BruchProfi + AlgebraMeister)<br>
+    2. <strong>Hans</strong> &mdash; Schwach in Deutsch &rarr; Preset &laquo;Deutsch-F&ouml;rderung&raquo; (SchreibProfi + LeseHeld)<br>
+    3. <strong>Wilfried</strong> &mdash; Will alles lernen &rarr; Preset &laquo;MINT-Komplett&raquo; (Mathe + Physik + Chemie + Bio)<br><br>
+    &#10132; Ein Klick auf &laquo;Alle als ZIP generieren&raquo; &rarr; 3 personalisierte HTML-Dateien in einer ZIP-Datei. Jeder Sch&uuml;ler &ouml;ffnet seine eigene Datei und sieht nur seine Module.
+  </div>
+</div>
+
+<!-- ===== 8. FORTSCHRITT VERFOLGEN ===== -->
+<div class="section" id="s8">
+  <h2><span class="num">8</span> Fortschritt der Sch&uuml;ler verfolgen</h2>
+
+  <div class="info-box green">
+    <strong>NEU:</strong> Sie k&ouml;nnen jetzt den <strong>Lernfortschritt Ihrer Sch&uuml;ler</strong> direkt im Dashboard sehen &mdash; ohne Internet, ohne Anmeldung, ohne Server. Die Sch&uuml;ler speichern ihren Fortschritt als kleine Textdatei und geben sie Ihnen weiter.
+  </div>
+
+  <h3>So funktioniert es</h3>
+  <p>Das Fortschritts-Tracking arbeitet in <strong>3 einfachen Schritten</strong>:</p>
+
+  <div class="feature-grid">
+    <div class="feature-card">
+      <div class="fc-icon">&#128218;</div>
+      <div class="fc-title">1. Sch&uuml;ler lernt</div>
+      <div class="fc-desc">Der Sch&uuml;ler &ouml;ffnet seine Lernplan-App und arbeitet Module ab. Der Fortschritt wird automatisch gespeichert.</div>
+    </div>
+    <div class="feature-card">
+      <div class="fc-icon">&#128190;</div>
+      <div class="fc-title">2. Sch&uuml;ler speichert</div>
+      <div class="fc-desc">Ein Klick auf &laquo;Fortschritt speichern&raquo; erzeugt eine kleine Textdatei, die der Sch&uuml;ler an den Lehrer weitergibt.</div>
+    </div>
+    <div class="feature-card">
+      <div class="fc-icon">&#128194;</div>
+      <div class="fc-title">3. Lehrer l&auml;dt Datei</div>
+      <div class="fc-desc">Im Dashboard klicken Sie auf &laquo;Datei laden&raquo;, w&auml;hlen die Datei aus &mdash; und sehen sofort den Fortschritt.</div>
+    </div>
+    <div class="feature-card">
+      <div class="fc-icon">&#128202;</div>
+      <div class="fc-title">4. &Uuml;bersicht</div>
+      <div class="fc-desc">Eine Karte zeigt: Name, erledigte Module, Quiz-Ergebnisse und Gesamt-Fortschritt in Prozent.</div>
+    </div>
+  </div>
+
+  <h3>Anleitung f&uuml;r den Sch&uuml;ler</h3>
+  <p>Geben Sie Ihren Sch&uuml;lern diese einfache Anleitung:</p>
+
+  <div class="steps">
+    <div class="step">
+      <div class="step-title">&Ouml;ffne deine Lernplan-App</div>
+      <p>Das ist die HTML-Datei, die du von deinem Lehrer bekommen hast (z.B. <code>Lernplan_Max.html</code>).</p>
+    </div>
+    <div class="step">
+      <div class="step-title">Arbeite deine Module ab</div>
+      <p>Klicke auf <strong>&laquo;&#9654; Starten&raquo;</strong> bei einem Modul. Bearbeite das Quiz (mindestens 3 von 5 richtig) und die Boss-Aufgabe (alle 3 richtig). Erledigte Module bekommen ein <strong style="color:#22c55e">&#10003;</strong> H&auml;kchen.</p>
+    </div>
+    <div class="step">
+      <div class="step-title">Klicke auf &laquo;&#128190; Fortschritt speichern&raquo;</div>
+      <p>Am Ende der Modulliste findest du diesen Button. Es wird eine kleine Textdatei heruntergeladen, z.B. <code>Fortschritt_Max_Mueller_2026-03-09.txt</code>.</p>
+    </div>
+    <div class="step">
+      <div class="step-title">Gib die Datei deinem Lehrer</div>
+      <p>Per <strong>USB-Stick</strong>, <strong>E-Mail</strong>, <strong>Schulcloud</strong> oder einfach ausdrucken &mdash; der Lehrer braucht nur diese eine kleine Datei.</p>
+    </div>
+  </div>
+
+  <div class="mockup">
+    <span class="highlight">Sch&uuml;ler-App &mdash; unterer Bereich</span><br>
+    &#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;<br>
+    <span class="action">&#10003;</span> &#128264; Die Vokale: A, E, I, O, U &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Quiz: 5/5 &nbsp;Boss: &#10003;<br>
+    <span class="action">&#10003;</span> &#128018; Konsonanten-Safari &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Quiz: 4/5 &nbsp;Boss: &#10003;<br>
+    &#9744; &#128289; Mehr Buchstaben entdecken &nbsp;&nbsp;&nbsp;&nbsp;Quiz: --&nbsp;&nbsp;&nbsp; Boss: --<br>
+    &#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[<span class="action">&#128190; Fortschritt speichern</span>] &nbsp;[<span class="label">&#128203; Kopieren</span>]<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#10003; Datei gespeichert! Gib sie deinem Lehrer.
+  </div>
+
+  <h3>Anleitung f&uuml;r die Lehrkraft</h3>
+
+  <div class="steps">
+    <div class="step">
+      <div class="step-title">Sch&uuml;ler-Tab &ouml;ffnen</div>
+      <p>Klicken Sie in der Seitenleiste auf <strong>&laquo;Sch&uuml;ler&raquo;</strong>. Scrollen Sie nach unten zum Bereich <strong>&laquo;&#128202; Fortschritt importieren&raquo;</strong>.</p>
+    </div>
+    <div class="step">
+      <div class="step-title">Datei laden</div>
+      <p>Klicken Sie auf den <strong>&laquo;&#128194; Datei laden&raquo;</strong>-Button. W&auml;hlen Sie die <code>.txt</code>-Datei aus, die Ihr Sch&uuml;ler Ihnen gegeben hat.</p>
+    </div>
+    <div class="step">
+      <div class="step-title">Fortschritt ansehen</div>
+      <p>Es erscheint sofort eine <strong>Fortschrittskarte</strong> mit dem Namen des Sch&uuml;lers, Datum, Anzahl erledigter Module und Durchschnitt der Quiz-Ergebnisse.</p>
+    </div>
+    <div class="step">
+      <div class="step-title">Details aufklappen</div>
+      <p>Klicken Sie auf die Karte, um die <strong>Modul-Details</strong> zu sehen: Welche Module erledigt sind, Quiz-Ergebnisse (z.B. 4/5) und ob die Boss-Aufgabe bestanden wurde.</p>
+    </div>
+  </div>
+
+  <div class="mockup">
+    <span class="highlight">Dashboard &mdash; Importierte Fortschritte</span><br>
+    &#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;<br>
+    [<span class="action">MM</span>] <span class="highlight">Max Mustermann</span> &nbsp;&#128197; 2026-03-09 14:30 &nbsp;&#128218; 3/5 Module &nbsp;&nbsp;<span class="action">60%</span> &nbsp;&Oslash; Quiz: <span class="label">4.3</span><br>
+    &#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;<br>
+    &nbsp;&nbsp;<span class="action">&#10003;</span> Die Vokale: A, E, I, O, U &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Quiz: 5/5 &nbsp;Boss: &#10003;<br>
+    &nbsp;&nbsp;<span class="action">&#10003;</span> Konsonanten-Safari &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Quiz: 4/5 &nbsp;Boss: &#10003;<br>
+    &nbsp;&nbsp;&#10060; Mehr Buchstaben entdecken &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Quiz: 3/5 &nbsp;Boss: &#10060;<br>
+    &nbsp;&nbsp;<span class="action">&#10003;</span> W&ouml;rter verstehen &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Quiz: 5/5 &nbsp;Boss: &#10003;<br>
+    &nbsp;&nbsp;&#9744; S&auml;tze richtig lesen &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Quiz: -- &nbsp;&nbsp;Boss: --<br>
+    &#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;<br>
+    [<span class="action">LS</span>] <span class="highlight">Lisa Schmidt</span> &nbsp;&nbsp;&nbsp;&#128197; 2026-03-09 15:00 &nbsp;&#128218; 5/5 Module &nbsp;&nbsp;<span class="action">100%</span> &Oslash; Quiz: <span class="label">4.4</span>
+  </div>
+
+  <h3>&Uuml;bertragungswege</h3>
+  <p>Die Fortschrittsdatei ist winzig (unter 1 KB). Sie kann auf vielen Wegen &uuml;bertragen werden:</p>
+
+  <table>
+    <tr><th>Methode</th><th>Beschreibung</th></tr>
+    <tr><td><strong>&#128190; USB-Stick</strong></td><td>Sch&uuml;ler speichert die Datei auf einem USB-Stick, den die Lehrkraft einsammelt.</td></tr>
+    <tr><td><strong>&#128231; E-Mail</strong></td><td>Sch&uuml;ler schickt die Datei als Anhang an die Lehrkraft.</td></tr>
+    <tr><td><strong>&#9729;&#65039; Schulcloud</strong></td><td>Sch&uuml;ler l&auml;dt die Datei in einen gemeinsamen Ordner hoch (z.B. Nextcloud, IServ).</td></tr>
+    <tr><td><strong>&#128203; Kopieren</strong></td><td>Alternativ: &laquo;Kopieren&raquo;-Button &rarr; Code per Chat-Nachricht senden &rarr; Lehrer f&uuml;gt manuell ein (unter &laquo;Oder Code manuell einf&uuml;gen&raquo;).</td></tr>
+  </table>
+
+  <div class="info-box yellow">
+    <strong>Hinweis:</strong> Der Fortschritt wird in der Lernplan-App <strong>automatisch gespeichert</strong>, solange der Sch&uuml;ler denselben Browser verwendet. Der Sch&uuml;ler kann die Datei jederzeit erneut speichern, um aktuellen Fortschritt zu &uuml;bermitteln. Doppelte Eintr&auml;ge werden beim Import erkannt.
+  </div>
+
+  <h3>Verwaltung der importierten Fortschritte</h3>
+  <table>
+    <tr><th>Aktion</th><th>Beschreibung</th></tr>
+    <tr><td><strong>Karte anklicken</strong></td><td>Klappt die Modul-Details auf/zu (Quiz-Ergebnisse, Boss-Status pro Modul).</td></tr>
+    <tr><td><strong>&#10006; pro Karte</strong></td><td>Entfernt einen einzelnen Fortschrittseintrag (nach Best&auml;tigung).</td></tr>
+    <tr><td><strong>&laquo;Alle l&ouml;schen&raquo;</strong></td><td>Entfernt alle importierten Fortschritte auf einmal (nach Best&auml;tigung).</td></tr>
+  </table>
+
+  <div class="info-box blue">
+    <strong>Tipp:</strong> Importierte Fortschritte bleiben im Dashboard gespeichert (im Browser). Sie k&ouml;nnen jederzeit die Sch&uuml;ler-Ansicht &ouml;ffnen und die Karten erneut einsehen &mdash; auch nach einem Neustart des Browsers.
+  </div>
+</div>
+
+<!-- ===== 9. THEMES ===== -->
+<div class="section" id="s9">
+  <h2><span class="num">9</span> Themes &mdash; Designs anpassen</h2>
+
+
+  <p>Klicken Sie auf <strong>&laquo;Theme&raquo;</strong> in der Kopfzeile, um das Design zu &auml;ndern. Es stehen <strong>8 Themes</strong> zur Verf&uuml;gung, jeweils in einer <strong>Dark</strong>- und <strong>Light</strong>-Variante (= 16 Designs).</p>
+
+  <table>
+    <tr><th>Theme</th><th>Stil</th><th>Empfohlen f&uuml;r</th></tr>
+    <tr><td><strong>Cyber Neon</strong></td><td>Futuristisch, blau leuchtend</td><td>Standard, IT-affine Klassen</td></tr>
+    <tr><td><strong>Retro Arcade</strong></td><td>80er-Pixel-Look, gold</td><td>Spielerische Atmosph&auml;re</td></tr>
+    <tr><td><strong>Nature Forest</strong></td><td>Gr&uuml;n, organisch, runde Ecken</td><td>Biologie, j&uuml;ngere Sch&uuml;ler</td></tr>
+    <tr><td><strong>Deep Space</strong></td><td>Kosmisch, lila</td><td>Physik, Astronomie</td></tr>
+    <tr><td><strong>Comic Pop</strong></td><td>Bunt, verspielt, Comic-Font</td><td>Grundschule, kreative F&auml;cher</td></tr>
+    <tr><td><strong>Sketchy</strong></td><td>Handgezeichnet, warm</td><td>Deutsch, Kunst</td></tr>
+    <tr><td><strong>Nature x Code</strong></td><td>Gr&uuml;n trifft Technik</td><td>MINT-Kombination</td></tr>
+    <tr><td><strong>Glasmorphism</strong></td><td>Modern, transparent</td><td>Oberstufe, Pr&auml;sentationen</td></tr>
+  </table>
+
+  <div class="info-box blue">
+    <strong>Tipp:</strong> Das Theme wird automatisch gespeichert. Beim n&auml;chsten &Ouml;ffnen des Dashboards ist Ihr bevorzugtes Design wieder aktiv. F&uuml;r die Sch&uuml;ler-App k&ouml;nnen Sie ein separates Theme w&auml;hlen.
+  </div>
+</div>
+
+<!-- ===== 10. EXPORT / IMPORT ===== -->
+<div class="section" id="s10">
+  <h2><span class="num">10</span> Export, Import &amp; Drucken</h2>
+
+  <h3>Lehrplan exportieren (JSON)</h3>
+  <p>Klicken Sie auf <strong>&laquo;Export&raquo;</strong> in der Kopfzeile. Eine JSON-Datei wird heruntergeladen (z.B. <code>lehrplan-2026-03-07.json</code>). Diese Datei enth&auml;lt:</p>
+  <ul style="margin:.5rem 0 .5rem 1.5rem">
+    <li>Alle ausgew&auml;hlten Module</li>
+    <li>Alle Wochenpl&auml;ne</li>
+    <li>Ihr Theme und Ihre Einstellungen</li>
+  </ul>
+
+  <h3>Lehrplan importieren</h3>
+  <p>Klicken Sie auf <strong>&laquo;Import&raquo;</strong> und w&auml;hlen Sie eine zuvor exportierte JSON-Datei. Alle Einstellungen werden wiederhergestellt.</p>
+
+  <div class="info-box green">
+    <strong>Anwendungsfall:</strong> Exportieren Sie Ihren Lehrplan am Schul-PC und importieren Sie ihn zu Hause auf Ihrem Laptop. Oder teilen Sie die JSON-Datei mit Kolleg:innen, damit diese denselben Plan verwenden k&ouml;nnen.
+  </div>
+
+  <h3>Wochenplan drucken</h3>
+  <p>Klicken Sie auf <strong>&laquo;Drucken&raquo;</strong>. Der Wochenplaner wird druckoptimiert dargestellt. Ideal als Aushang im Klassenzimmer oder als Handout f&uuml;r Eltern.</p>
+</div>
+
+<!-- ===== 11. ALLE APPS ===== -->
+<div class="section" id="s11">
+  <h2><span class="num">11</span> Alle verf&uuml;gbaren Apps &amp; Module</h2>
+
+  <h3>Klasse 1&ndash;3 (Grundschule)</h3>
+  <table>
+    <tr><th>App</th><th>Fach</th><th>Module (Beispiele)</th></tr>
+    <tr><td><strong>BuchstabenReise</strong></td><td>Deutsch</td><td>Vokale, Konsonanten, Silben klatschen, Erste W&ouml;rter, Reime, Lese-Abenteuer</td></tr>
+    <tr><td><strong>LeseHeld</strong></td><td>Deutsch</td><td>W&ouml;rter verstehen, S&auml;tze lesen, Geschichten, L&uuml;ckentexte, Sachtexte</td></tr>
+    <tr><td><strong>RechenHeld</strong></td><td>Mathematik</td><td>Zahlen bis 20/100/1000, Addition, Subtraktion, Einmaleins, Division</td></tr>
+  </table>
+
+  <h3>Klasse 3&ndash;6 (Mittelstufe)</h3>
+  <table>
+    <tr><th>App</th><th>Fach</th><th>Module (Beispiele)</th></tr>
+    <tr><td><strong>SchreibProfi</strong></td><td>Deutsch</td><td>Gro&szlig;/Klein, Doppelte Buchstaben, Wortarten, Satzglieder, Texte schreiben</td></tr>
+    <tr><td><strong>BruchProfi</strong></td><td>Mathematik</td><td>Br&uuml;che, Vergleichen, K&uuml;rzen, Addition, Multiplikation, Dezimalzahlen</td></tr>
+    <tr><td><strong>PhysikLab</strong></td><td>Physik</td><td>Kr&auml;fte, Energie, Strom, Magnete, Licht, Schall, W&auml;rme, Maschinen</td></tr>
+  </table>
+
+  <h3>Klasse 7&ndash;10 (Oberstufe)</h3>
+  <table>
+    <tr><th>App</th><th>Fach</th><th>Module (Beispiele)</th></tr>
+    <tr><td><strong>AlgebraMeister</strong></td><td>Mathematik</td><td>Negative Zahlen, Terme, Gleichungen, Prozent, Funktionen, Wahrscheinlichkeit</td></tr>
+    <tr><td><strong>Code Quest</strong></td><td>Informatik</td><td>Digitale Welt, Bin&auml;r, Algorithmen, Webseiten, Programmieren, KI</td></tr>
+    <tr><td><strong>EnglishPro</strong></td><td>Englisch</td><td>Tenses, Vocabulary, Grammar, Reading, Writing, Idioms, Mediation</td></tr>
+    <tr><td><strong>BioEntdecker</strong></td><td>Biologie</td><td>Zellbiologie, Genetik, Evolution, &Ouml;kologie, K&ouml;rper, Immunsystem</td></tr>
+    <tr><td><strong>ChemieLabor</strong></td><td>Chemie</td><td>Stoffe, Atombau, Bindungen, Reaktionen, S&auml;uren/Basen, Elektrochemie</td></tr>
+  </table>
+
+  <div class="info-box blue">
+    <strong>Pro App:</strong> 10 Module mit je 5 Quiz-Fragen + 3 Boss-Fragen. 20 Levels, 20 Badges, Streak-System, 8 Themes. Jede App ist eine einzelne HTML-Datei, die offline funktioniert.
+  </div>
+</div>
+
+<!-- ===== 12. TASTATUR & BARRIEREFREIHEIT ===== -->
+<div class="section" id="s12">
+  <h2><span class="num">12</span> Tastaturk&uuml;rzel &amp; Barrierefreiheit</h2>
+
+  <h3>Tastaturk&uuml;rzel</h3>
+  <table class="shortcut-table">
+    <tr><th>Taste</th><th>Aktion</th></tr>
+    <tr><td><span class="key">Esc</span></td><td>Schlie&szlig;t alle ge&ouml;ffneten Dialoge (Theme, Impressum, Sch&uuml;ler-App)</td></tr>
+    <tr><td><span class="key">Tab</span></td><td>Springt zum n&auml;chsten interaktiven Element</td></tr>
+    <tr><td><span class="key">Shift</span> + <span class="key">Tab</span></td><td>Springt zum vorherigen Element</td></tr>
+    <tr><td><span class="key">Enter</span> / <span class="key">Leertaste</span></td><td>Aktiviert Buttons, w&auml;hlt Module aus/ab</td></tr>
+  </table>
+
+  <h3>Barrierefreiheit</h3>
+  <p>Der LehrplanManager erf&uuml;llt die g&auml;ngigen Barrierefreiheits-Standards:</p>
+  <ul style="margin:.5rem 0 .5rem 1.5rem">
+    <li><strong>Zoom:</strong> Die Seite kann beliebig vergr&ouml;&szlig;ert werden (kein Zoom-Lock)</li>
+    <li><strong>Tastatur-Navigation:</strong> Alle Funktionen sind per Tastatur erreichbar</li>
+    <li><strong>Screen Reader:</strong> ARIA-Rollen und Labels f&uuml;r alle interaktiven Elemente</li>
+    <li><strong>Focus-Trap:</strong> In Dialogen bleibt der Fokus innerhalb des Dialogs</li>
+    <li><strong>Skip-Link:</strong> Beim Tabben erscheint ein &laquo;Zum Inhalt springen&raquo; Link</li>
+    <li><strong>Kontrast:</strong> Alle Themes bieten ausreichenden Kontrast</li>
+  </ul>
+</div>
+
+<!-- ===== 13. FAQ ===== -->
+<div class="section" id="s13">
+  <h2><span class="num">13</span> H&auml;ufige Fragen (FAQ)</h2>
+
+  <div class="faq-item">
+    <div class="faq-q">Brauche ich Internet, um den LehrplanManager zu nutzen?</div>
+    <div class="faq-a">Nein. Der LehrplanManager und alle Lern-Apps funktionieren vollst&auml;ndig offline. Sie brauchen nur einen Browser.</div>
+  </div>
+
+  <div class="faq-item">
+    <div class="faq-q">Wo werden meine Daten gespeichert?</div>
+    <div class="faq-a">Ausschlie&szlig;lich lokal in Ihrem Browser (LocalStorage). Keine Daten verlassen Ihren Computer. Es gibt keinen Server, kein Tracking, keine Cookies.</div>
+  </div>
+
+  <div class="faq-item">
+    <div class="faq-q">Kann ich den LehrplanManager auf mehreren Ger&auml;ten nutzen?</div>
+    <div class="faq-a">Ja, nutzen Sie daf&uuml;r die Export/Import-Funktion. Exportieren Sie Ihren Plan als JSON-Datei und importieren Sie sie auf dem anderen Ger&auml;t.</div>
+  </div>
+
+  <div class="faq-item">
+    <div class="faq-q">Muss ich etwas installieren?</div>
+    <div class="faq-a">Nein. Doppelklicken Sie einfach auf <code>Dashboard/index.html</code> &mdash; die Datei &ouml;ffnet sich in Ihrem Standard-Browser.</div>
+  </div>
+
+  <div class="faq-item">
+    <div class="faq-q">Funktioniert die Sch&uuml;ler-App auf dem Handy?</div>
+    <div class="faq-a">Ja. Sowohl der LehrplanManager als auch die Sch&uuml;ler-App und alle Lern-Apps sind vollst&auml;ndig responsive und funktionieren auf PC, Tablet und Smartphone.</div>
+  </div>
+
+  <div class="faq-item">
+    <div class="faq-q">Warum funktionieren die Links in der Sch&uuml;ler-App nicht?</div>
+    <div class="faq-a">Die Sch&uuml;ler-App enth&auml;lt relative Links zu den Lern-Apps. Damit diese funktionieren, muss die HTML-Datei <strong>im Dashboard-Ordner</strong> liegen &mdash; oder der gesamte Schulbildung-Ordner muss mitgegeben werden. Verteilen Sie am besten alles zusammen als ZIP.</div>
+  </div>
+
+  <div class="faq-item">
+    <div class="faq-q">K&ouml;nnen die Sch&uuml;ler die Antworten sehen?</div>
+    <div class="faq-a">Nein. Alle Quiz-Antworten in den Lern-Apps sind XOR-verschl&uuml;sselt. Die korrekten Antworten stehen nicht im Klartext im Quellcode.</div>
+  </div>
+
+  <div class="faq-item">
+    <div class="faq-q">Kann ich die Auswahl sp&auml;ter &auml;ndern?</div>
+    <div class="faq-a">Ja. Ihre Auswahl wird automatisch im Browser gespeichert. Sie k&ouml;nnen jederzeit Module hinzuf&uuml;gen oder entfernen und eine neue Sch&uuml;ler-App generieren.</div>
+  </div>
+
+  <div class="faq-item">
+    <div class="faq-q">Wie viele Module sollte ich pro Woche zuweisen?</div>
+    <div class="faq-a">Als Richtwert: <strong>2&ndash;3 Module pro Tag</strong> (50&ndash;75 Min.). Das h&auml;ngt nat&uuml;rlich vom Fach, der Klassenstufe und der verf&uuml;gbaren Zeit ab. Der Wochenplaner zeigt Ihnen die Gesamtzeit pro Tag an.</div>
+  </div>
+
+  <div class="faq-item">
+    <div class="faq-q">Kann ich mehreren Sch&uuml;lern unterschiedliche Module zuweisen?</div>
+    <div class="faq-a">Ja! Erstellen Sie verschiedene <strong>Presets</strong> (z.B. &laquo;Mathe-Nachhilfe&raquo;, &laquo;Deutsch-F&ouml;rderung&raquo;) und weisen Sie jedem Sch&uuml;ler das passende Preset zu. Mit dem Batch-Export generieren Sie alle personalisierten Lernpl&auml;ne auf einmal als ZIP.</div>
+  </div>
+
+  <div class="faq-item">
+    <div class="faq-q">Wie funktioniert die automatische Fortschrittserkennung?</div>
+    <div class="faq-a">Die Sch&uuml;ler-App liest alle 3 Sekunden den Lernfortschritt aus dem LocalStorage des Browsers. Wenn der Sch&uuml;ler ein Modul in einer Lern-App abschlie&szlig;t (Quiz bestanden), wird dies automatisch in der Sch&uuml;ler-App als &laquo;erledigt&raquo; markiert. Voraussetzung: Sch&uuml;ler-App und Lern-Apps laufen im selben Browser.</div>
+  </div>
+
+  <div class="faq-item">
+    <div class="faq-q">Was sind Presets und warum brauche ich sie?</div>
+    <div class="faq-a">Ein Preset ist eine gespeicherte Modul-Zusammenstellung. Anstatt f&uuml;r jeden Sch&uuml;ler einzeln Module auszuw&auml;hlen, erstellen Sie einmal ein Preset und weisen es beliebig vielen Sch&uuml;lern zu. Das spart bei gro&szlig;en Klassen enorm viel Zeit.</div>
+  </div>
+
+  <div class="faq-item">
+    <div class="faq-q">Ist das DSGVO-konform?</div>
+    <div class="faq-a">Ja, vollst&auml;ndig. Keine personenbezogenen Daten werden erhoben, verarbeitet oder &uuml;bertragen. Keine Cookies, keine Analyse-Tools, keine externen Verbindungen. Jede App enth&auml;lt ein Impressum und eine Datenschutzerkl&auml;rung.</div>
+  </div>
+</div>
+
+<!-- ===== 14. TECHNISCHE HINWEISE ===== -->
+<div class="section" id="s14">
+  <h2><span class="num">14</span> Technische Hinweise &amp; Datenschutz</h2>
+
+  <h3>Systemanforderungen</h3>
+  <table>
+    <tr><th>Anforderung</th><th>Details</th></tr>
+    <tr><td>Browser</td><td>Chrome 90+, Firefox 90+, Edge 90+, Safari 15+</td></tr>
+    <tr><td>Betriebssystem</td><td>Windows, macOS, Linux, ChromeOS, Android, iOS</td></tr>
+    <tr><td>Internet</td><td>Nicht erforderlich (offline-f&auml;hig)</td></tr>
+    <tr><td>Installation</td><td>Nicht erforderlich</td></tr>
+    <tr><td>Speicher</td><td>Ca. 2 MB f&uuml;r alle Dateien inkl. Fonts</td></tr>
+  </table>
+
+  <h3>Datenschutz auf einen Blick</h3>
+  <div class="info-box green">
+    <ul style="margin:0;padding-left:1.2rem;list-style:none">
+      <li>&#10003; Keine Cookies</li>
+      <li>&#10003; Kein Tracking oder Analytics</li>
+      <li>&#10003; Keine externen Ressourcen oder CDN</li>
+      <li>&#10003; Keine Registrierung oder Kontoerstellung</li>
+      <li>&#10003; Daten bleiben auf dem Ger&auml;t (LocalStorage)</li>
+      <li>&#10003; Keine Server-Kommunikation</li>
+      <li>&#10003; Vollst&auml;ndig DSGVO-konform</li>
+      <li>&#10003; Impressum nach &sect; 5 TMG / &sect; 18 Abs. 2 MStV vorhanden</li>
+    </ul>
+  </div>
+
+  <h3>Ordnerstruktur</h3>
+  <div class="mockup">
+Schulbildung/ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(Hauptordner)<br>
+&#9500;&#9472;&#9472; <span class="highlight">Dashboard/</span><br>
+&#9474; &nbsp;&nbsp;&#9500;&#9472;&#9472; <span class="action">index.html</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(LehrplanManager)<br>
+&#9474; &nbsp;&nbsp;&#9492;&#9472;&#9472; <span class="action">anleitung.html</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(Diese Anleitung)<br>
+&#9500;&#9472;&#9472; Klasse_1-3/<br>
+&#9474; &nbsp;&nbsp;&#9500;&#9472;&#9472; Deutsch/BuchstabenReise/ &nbsp;&nbsp;&nbsp;&nbsp;(Lern-App)<br>
+&#9474; &nbsp;&nbsp;&#9500;&#9472;&#9472; Deutsch/LeseHeld/ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(Lern-App)<br>
+&#9474; &nbsp;&nbsp;&#9492;&#9472;&#9472; Mathematik/RechenHeld/ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(Lern-App)<br>
+&#9500;&#9472;&#9472; Klasse_3-6/<br>
+&#9474; &nbsp;&nbsp;&#9500;&#9472;&#9472; Deutsch/SchreibProfi/ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(Lern-App)<br>
+&#9474; &nbsp;&nbsp;&#9500;&#9472;&#9472; Mathematik/BruchProfi/ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(Lern-App)<br>
+&#9474; &nbsp;&nbsp;&#9492;&#9472;&#9472; Physik/PhysikLab/ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(Lern-App)<br>
+&#9500;&#9472;&#9472; Klasse_7-10/<br>
+&#9474; &nbsp;&nbsp;&#9500;&#9472;&#9472; Mathematik/AlgebraMeister/ &nbsp;(Lern-App)<br>
+&#9474; &nbsp;&nbsp;&#9500;&#9472;&#9472; Informatik/ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(Code Quest)<br>
+&#9474; &nbsp;&nbsp;&#9500;&#9472;&#9472; Englisch/EnglishPro/ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(Lern-App)<br>
+&#9474; &nbsp;&nbsp;&#9500;&#9472;&#9472; Biologie/BioEntdecker/ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(Lern-App)<br>
+&#9474; &nbsp;&nbsp;&#9500;&#9472;&#9472; Chemie/ChemieLabor/ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(Lern-App)<br>
+&#9474; &nbsp;&nbsp;&#9492;&#9472;&#9472; Informatik/fonts/ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(Gemeinsame Schriftarten)<br>
+&#9492;&#9472;&#9472; <span class="label">Lernplan_Klasse_7a.html</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(Generierte Sch&uuml;ler-App)
+  </div>
+
+  <p style="margin-top:1rem;font-size:.85rem;color:#8899aa">Bei Fragen oder Problemen wenden Sie sich an: <strong style="color:#fff">gz.ai.stacks@gmail.com</strong></p>
+</div>
+
+<!-- ===== FOOTER ===== -->
+<div class="footer">
+  &copy; 2026 GZ-AI.-Stacks &mdash; Zimmermann AI Systems &middot; Gerd Zimmermann<br>
+  G&ouml;rlitzer Str. 10 &middot; 91315 H&ouml;chstadt an der Aisch &middot; gz.ai.stacks@gmail.com
+</div>
+
+</div><!-- .container -->
+</body>
+</html>

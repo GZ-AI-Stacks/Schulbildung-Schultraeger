@@ -1,0 +1,1066 @@
+<!DOCTYPE html>
+<html lang="de" data-theme="cyber-dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ChemieLabor — Interaktive Chemie-Lernapp</title>
+<meta name="description" content="Interaktive Chemie-Lernapp für Klasse 7-10 mit Gamification, Quizzen und Boss-Challenges">
+<style>
+@font-face{font-family:'Sora';src:url('../../Informatik/fonts/sora-latin-400-normal.woff2') format('woff2');font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:'Sora';src:url('../../Informatik/fonts/sora-latin-600-normal.woff2') format('woff2');font-weight:600;font-style:normal;font-display:swap}
+@font-face{font-family:'Sora';src:url('../../Informatik/fonts/sora-latin-700-normal.woff2') format('woff2');font-weight:700;font-style:normal;font-display:swap}
+@font-face{font-family:'JetBrains Mono';src:url('../../Informatik/fonts/jetbrains-mono-latin-400-normal.woff2') format('woff2');font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:'Playfair Display';src:url('../../Informatik/fonts/playfair-display-latin-700-normal.woff2') format('woff2');font-weight:700;font-style:normal;font-display:swap}
+@font-face{font-family:'Inter';src:url('../../Informatik/fonts/inter-latin-400-normal.woff2') format('woff2');font-weight:400;font-style:normal;font-display:swap}
+
+:root{
+--neon:#3b82f6;--neon-dim:rgba(59,130,246,.15);--neon-glow:rgba(59,130,246,.3);
+--bg:#0a0e14;--bg2:#111827;--bg3:#1f2937;--card:#161e2e;--card-hover:#1e293b;
+--border:#2a3444;--border-light:#374151;
+--text:#d4dce8;--text-dim:#8899aa;--text-bright:#f1f5f9;
+--heading:#ffffff;--link:#60a5fa;
+--success:#22c55e;--warning:#f59e0b;--danger:#ef4444;
+--xp-purple:#a855f7;--badge-cyan:#06b6d4;--streak-red:#ef4444;
+--radius:12px;--radius-sm:8px;--radius-lg:16px;
+--shadow:0 4px 24px rgba(0,0,0,.4);--shadow-lg:0 8px 40px rgba(0,0,0,.5);
+--font:'Sora','Segoe UI',system-ui,sans-serif;
+--mono:'JetBrains Mono','Cascadia Code',monospace;
+--serif:'Playfair Display','Georgia',serif;
+--sidebar-w:280px;--header-h:60px;
+--card-border-w:1px;--card-border-style:solid;--glow:1
+}
+[data-theme="cyber-dark"]{--neon:#3b82f6;--neon-dim:rgba(59,130,246,.15);--neon-glow:rgba(59,130,246,.3);--bg:#0a0e14;--bg2:#111827;--bg3:#1f2937;--card:#161e2e;--card-hover:#1e293b;--border:#2a3444;--border-light:#374151;--text:#d4dce8;--text-dim:#8899aa;--text-bright:#f1f5f9;--heading:#ffffff;--link:#60a5fa;--success:#22c55e;--warning:#f59e0b;--danger:#ef4444;--xp-purple:#a855f7;--badge-cyan:#06b6d4;--streak-red:#ef4444;--radius:12px;--radius-sm:8px;--radius-lg:16px;--shadow:0 4px 24px rgba(0,0,0,.4);--shadow-lg:0 8px 40px rgba(0,0,0,.5);--font:'Sora','Segoe UI',system-ui,sans-serif;--card-border-w:1px;--card-border-style:solid;--glow:1}
+[data-theme="cyber-light"]{--neon:#1d4ed8;--neon-dim:rgba(29,78,216,.1);--neon-glow:rgba(29,78,216,.2);--bg:#f8f9fb;--bg2:#f0f2f5;--bg3:#e5e7eb;--card:#ffffff;--card-hover:#f5f7fa;--border:#d1d5db;--border-light:#e5e7eb;--text:#374151;--text-dim:#4b5563;--text-bright:#111827;--heading:#111827;--link:#2563eb;--success:#22c55e;--warning:#f59e0b;--danger:#ef4444;--xp-purple:#a855f7;--badge-cyan:#06b6d4;--streak-red:#ef4444;--radius:12px;--radius-sm:8px;--radius-lg:16px;--shadow:0 4px 24px rgba(0,0,0,.08);--shadow-lg:0 8px 40px rgba(0,0,0,.12);--font:'Sora','Segoe UI',system-ui,sans-serif;--card-border-w:1px;--card-border-style:solid;--glow:0}
+[data-theme="retro-dark"]{--neon:#ffd700;--neon-dim:rgba(255,215,0,.12);--neon-glow:rgba(255,215,0,.3);--bg:#0d0208;--bg2:#1a0a1e;--bg3:#2d1233;--card:#1a0a1e;--card-hover:#2d1233;--border:#4a1942;--border-light:#5c2d5c;--text:#e0d0f0;--text-dim:#9080a0;--text-bright:#fff;--heading:#ffd700;--link:#ff6b9d;--success:#00e676;--warning:#ffab00;--danger:#ff1744;--xp-purple:#e040fb;--badge-cyan:#00e5ff;--streak-red:#ff1744;--radius:0px;--radius-sm:0px;--radius-lg:0px;--shadow:4px 4px 0 rgba(0,0,0,.8);--shadow-lg:6px 6px 0 rgba(0,0,0,.9);--font:'Courier New','Consolas',monospace;--card-border-w:3px;--card-border-style:solid;--glow:0}
+[data-theme="retro-light"]{--neon:#b8860b;--neon-dim:rgba(184,134,11,.1);--neon-glow:rgba(184,134,11,.2);--bg:#fff8e1;--bg2:#fff3cd;--bg3:#ffe0b2;--card:#ffffff;--card-hover:#fff9f0;--border:#d4a017;--border-light:#e6c84d;--text:#3e2723;--text-dim:#6d4c41;--text-bright:#1b0000;--heading:#b8860b;--link:#c2185b;--success:#2e7d32;--warning:#ef6c00;--danger:#c62828;--xp-purple:#8e24aa;--badge-cyan:#00838f;--streak-red:#c62828;--radius:0px;--radius-sm:0px;--radius-lg:0px;--shadow:3px 3px 0 rgba(0,0,0,.15);--shadow-lg:5px 5px 0 rgba(0,0,0,.2);--font:'Courier New','Consolas',monospace;--card-border-w:3px;--card-border-style:solid;--glow:0}
+[data-theme="nature-dark"]{--neon:#4ade80;--neon-dim:rgba(74,222,128,.12);--neon-glow:rgba(74,222,128,.25);--bg:#0c1a0f;--bg2:#132617;--bg3:#1e3a24;--card:#15291a;--card-hover:#1e3a24;--border:#2d5a36;--border-light:#3a7044;--text:#c8e6c9;--text-dim:#81a784;--text-bright:#e8f5e9;--heading:#e8f5e9;--link:#81c784;--success:#66bb6a;--warning:#ffa726;--danger:#ef5350;--xp-purple:#ab47bc;--badge-cyan:#26a69a;--streak-red:#ef5350;--radius:20px;--radius-sm:14px;--radius-lg:28px;--shadow:0 4px 20px rgba(0,0,0,.3);--shadow-lg:0 8px 32px rgba(0,0,0,.4);--font:'Segoe UI','Helvetica Neue',system-ui,sans-serif;--card-border-w:1px;--card-border-style:solid;--glow:0}
+[data-theme="nature-light"]{--neon:#2e7d32;--neon-dim:rgba(46,125,50,.08);--neon-glow:rgba(46,125,50,.15);--bg:#f1f8e9;--bg2:#e8f5e9;--bg3:#c8e6c9;--card:#ffffff;--card-hover:#f1faf1;--border:#a5d6a7;--border-light:#c8e6c9;--text:#33691e;--text-dim:#3e6e1c;--text-bright:#1b5e20;--heading:#1b5e20;--link:#2e7d32;--success:#388e3c;--warning:#ef6c00;--danger:#c62828;--xp-purple:#7b1fa2;--badge-cyan:#00695c;--streak-red:#c62828;--radius:20px;--radius-sm:14px;--radius-lg:28px;--shadow:0 4px 16px rgba(0,0,0,.06);--shadow-lg:0 8px 28px rgba(0,0,0,.1);--font:'Segoe UI','Helvetica Neue',system-ui,sans-serif;--card-border-w:1px;--card-border-style:solid;--glow:0}
+[data-theme="space-dark"]{--neon:#c084fc;--neon-dim:rgba(192,132,252,.12);--neon-glow:rgba(192,132,252,.3);--bg:#07020e;--bg2:#0f0720;--bg3:#1a0e35;--card:#110a28;--card-hover:#1a0e35;--border:#2e1a5e;--border-light:#3d2478;--text:#d4c8f0;--text-dim:#9080b8;--text-bright:#f0e8ff;--heading:#f0e8ff;--link:#f0abfc;--success:#34d399;--warning:#fbbf24;--danger:#fb7185;--xp-purple:#f472b6;--badge-cyan:#67e8f9;--streak-red:#fb7185;--radius:4px;--radius-sm:2px;--radius-lg:6px;--shadow:0 4px 24px rgba(100,50,200,.2);--shadow-lg:0 8px 40px rgba(100,50,200,.3);--font:'Segoe UI',system-ui,sans-serif;--card-border-w:1px;--card-border-style:solid;--glow:1}
+[data-theme="space-light"]{--neon:#7c3aed;--neon-dim:rgba(124,58,237,.08);--neon-glow:rgba(124,58,237,.15);--bg:#faf5ff;--bg2:#f3e8ff;--bg3:#e9d5ff;--card:#ffffff;--card-hover:#faf5ff;--border:#c4b5fd;--border-light:#ddd6fe;--text:#4c1d95;--text-dim:#5b21b6;--text-bright:#2e1065;--heading:#2e1065;--link:#7c3aed;--success:#059669;--warning:#d97706;--danger:#dc2626;--xp-purple:#db2777;--badge-cyan:#0891b2;--streak-red:#dc2626;--radius:4px;--radius-sm:2px;--radius-lg:6px;--shadow:0 4px 16px rgba(100,50,200,.06);--shadow-lg:0 8px 28px rgba(100,50,200,.1);--font:'Segoe UI',system-ui,sans-serif;--card-border-w:1px;--card-border-style:solid;--glow:0}
+[data-theme="comic-dark"]{--neon:#ff6b6b;--neon-dim:rgba(255,107,107,.12);--neon-glow:rgba(255,107,107,.3);--bg:#1a1a2e;--bg2:#222244;--bg3:#2e2e55;--card:#262650;--card-hover:#2e2e55;--border:#4a4a7a;--border-light:#5a5a8a;--text:#e8e0ff;--text-dim:#a098c0;--text-bright:#fff;--heading:#fff;--link:#ffa94d;--success:#51cf66;--warning:#fcc419;--danger:#ff6b6b;--xp-purple:#cc5de8;--badge-cyan:#22b8cf;--streak-red:#ff6b6b;--radius:16px;--radius-sm:12px;--radius-lg:24px;--shadow:4px 4px 0 rgba(0,0,0,.5);--shadow-lg:6px 6px 0 rgba(0,0,0,.6);--font:'Comic Sans MS','Chalkboard SE',cursive,system-ui,sans-serif;--card-border-w:3px;--card-border-style:solid;--glow:0}
+[data-theme="comic-light"]{--neon:#e03131;--neon-dim:rgba(224,49,49,.08);--neon-glow:rgba(224,49,49,.15);--bg:#fff9db;--bg2:#fff3bf;--bg3:#ffe066;--card:#ffffff;--card-hover:#fffdf0;--border:#fab005;--border-light:#fcc419;--text:#2b2b2b;--text-dim:#555;--text-bright:#000;--heading:#000;--link:#e8590c;--success:#2f9e44;--warning:#e8590c;--danger:#c92a2a;--xp-purple:#9c36b5;--badge-cyan:#1098ad;--streak-red:#c92a2a;--radius:16px;--radius-sm:12px;--radius-lg:24px;--shadow:3px 3px 0 rgba(0,0,0,.2);--shadow-lg:5px 5px 0 rgba(0,0,0,.25);--font:'Comic Sans MS','Chalkboard SE',cursive,system-ui,sans-serif;--card-border-w:3px;--card-border-style:solid;--glow:0}
+[data-theme="sketchy-dark"]{--neon:#d97706;--neon-dim:rgba(217,119,6,.15);--neon-glow:rgba(217,119,6,.3);--bg:#2a1f0f;--bg2:#3a2a1a;--bg3:#4a3a2a;--card:#362414;--card-hover:#462a1a;--border:#5a4030;--border-light:#6a5040;--text:#d4c4b0;--text-dim:#a09080;--text-bright:#e8d8c8;--heading:#f5ead5;--link:#e8a550;--success:#84cc16;--warning:#d97706;--danger:#e74c3c;--xp-purple:#d946ef;--badge-cyan:#06b6d4;--streak-red:#e74c3c;--radius:24px;--radius-sm:16px;--radius-lg:32px;--shadow:0 6px 20px rgba(0,0,0,.3);--shadow-lg:0 10px 40px rgba(0,0,0,.4);--font:'Playfair Display','Georgia',serif;--card-border-w:2px;--card-border-style:dashed;--glow:0}
+[data-theme="sketchy-light"]{--neon:#b45309;--neon-dim:rgba(180,83,9,.1);--neon-glow:rgba(180,83,9,.2);--bg:#fef3e2;--bg2:#fde8cc;--bg3:#f9d5b8;--card:#ffffff;--card-hover:#fffaf5;--border:#d4a574;--border-light:#e8c4a0;--text:#5c4033;--text-dim:#8b6f47;--text-bright:#3e2723;--heading:#3e2723;--link:#c2600c;--success:#65a30d;--warning:#b45309;--danger:#d25c4d;--xp-purple:#c084fc;--badge-cyan:#0891b2;--streak-red:#d25c4d;--radius:24px;--radius-sm:16px;--radius-lg:32px;--shadow:0 4px 12px rgba(0,0,0,.08);--shadow-lg:0 8px 24px rgba(0,0,0,.12);--font:'Playfair Display','Georgia',serif;--card-border-w:2px;--card-border-style:dashed;--glow:0}
+[data-theme="nature-code-dark"]{--neon:#10b981;--neon-dim:rgba(16,185,129,.15);--neon-glow:rgba(16,185,129,.25);--bg:#0a1f12;--bg2:#0d2818;--bg3:#1a3a2a;--card:#0f281a;--card-hover:#1a3a2a;--border:#2d5a3d;--border-light:#3a7050;--text:#c8e6d0;--text-dim:#7ba890;--text-bright:#e8f5ed;--heading:#e8f5ed;--link:#34d399;--success:#10b981;--warning:#f59e0b;--danger:#f87171;--xp-purple:#a78bfa;--badge-cyan:#22d3ee;--streak-red:#f87171;--radius:20px;--radius-sm:14px;--radius-lg:28px;--shadow:0 4px 20px rgba(0,100,50,.2);--shadow-lg:0 8px 32px rgba(0,100,50,.3);--font:'Segoe UI','Helvetica Neue',system-ui,sans-serif;--card-border-w:1px;--card-border-style:solid;--glow:0}
+[data-theme="nature-code-light"]{--neon:#059669;--neon-dim:rgba(5,150,105,.1);--neon-glow:rgba(5,150,105,.15);--bg:#f0fdf8;--bg2:#e8faf2;--bg3:#d1f2e0;--card:#ffffff;--card-hover:#f5fbf7;--border:#86efac;--border-light:#bbf7d0;--text:#164e3f;--text-dim:#2d6e4f;--text-bright:#052e16;--heading:#052e16;--link:#059669;--success:#10b981;--warning:#d97706;--danger:#dc2626;--xp-purple:#8b5cf6;--badge-cyan:#06b6d4;--streak-red:#dc2626;--radius:20px;--radius-sm:14px;--radius-lg:28px;--shadow:0 4px 16px rgba(0,100,50,.06);--shadow-lg:0 8px 28px rgba(0,100,50,.1);--font:'Segoe UI','Helvetica Neue',system-ui,sans-serif;--card-border-w:1px;--card-border-style:solid;--glow:0}
+[data-theme="glass-dark"]{--neon:#00d9ff;--neon-dim:rgba(0,217,255,.12);--neon-glow:rgba(0,217,255,.25);--bg:#0f0f23;--bg2:#1a1a3e;--bg3:#25254a;--card:rgba(30,30,60,.4);--card-hover:rgba(40,40,80,.5);--border:rgba(100,150,255,.2);--border-light:rgba(100,150,255,.3);--text:#e4e8f0;--text-dim:#8899aa;--text-bright:#f5f7ff;--heading:#ffffff;--link:#00d9ff;--success:#34d399;--warning:#fbbf24;--danger:#ff6b9d;--xp-purple:#b991f7;--badge-cyan:#00d9ff;--streak-red:#ff6b9d;--radius:16px;--radius-sm:12px;--radius-lg:20px;--shadow:0 8px 32px rgba(0,200,255,.1);--shadow-lg:0 16px 64px rgba(0,200,255,.15);--font:'Segoe UI',system-ui,sans-serif;--card-border-w:1px;--card-border-style:solid;--glow:1}
+[data-theme="glass-light"]{--neon:#0891b2;--neon-dim:rgba(8,145,178,.08);--neon-glow:rgba(8,145,178,.15);--bg:#f8fafc;--bg2:#f1f5f9;--bg3:#e2e8f0;--card:rgba(255,255,255,.4);--card-hover:rgba(255,255,255,.6);--border:rgba(100,180,255,.2);--border-light:rgba(100,180,255,.3);--text:#1e293b;--text-dim:#475569;--text-bright:#0f172a;--heading:#0f172a;--link:#0891b2;--success:#059669;--warning:#d97706;--danger:#dc2626;--xp-purple:#7c3aed;--badge-cyan:#0891b2;--streak-red:#dc2626;--radius:16px;--radius-sm:12px;--radius-lg:20px;--shadow:0 8px 32px rgba(100,150,255,.08);--shadow-lg:0 16px 64px rgba(100,150,255,.12);--font:'Segoe UI',system-ui,sans-serif;--card-border-w:1px;--card-border-style:solid;--glow:0}
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{font-family:var(--font);background:var(--bg);color:var(--text);line-height:1.6;min-height:100vh;overflow-x:hidden;transition:background .3s,color .3s}
+h1,h2,h3,h4{color:var(--heading);line-height:1.3}
+a{color:var(--link);text-decoration:none}
+a:hover{text-decoration:underline}
+button{font-family:var(--font);cursor:pointer;border:none;background:none;color:inherit}
+code,pre{font-family:var(--mono)}
+:focus-visible{outline:2px solid var(--neon);outline-offset:2px;border-radius:4px}
+::selection{background:var(--neon);color:#fff}
+::-webkit-scrollbar{width:8px}
+::-webkit-scrollbar-track{background:var(--bg2)}
+::-webkit-scrollbar-thumb{background:var(--border);border-radius:4px}
+::-webkit-scrollbar-thumb:hover{background:var(--text-dim)}
+.site-header{position:fixed;top:0;left:0;right:0;height:var(--header-h);background:var(--bg2);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 20px;z-index:100;backdrop-filter:blur(12px)}
+.header-logo{display:flex;align-items:center;gap:12px;font-weight:700;font-size:18px;color:var(--heading)}
+.header-logo-text{display:flex;flex-direction:column;line-height:1.2}
+.header-logo-main{font-size:20px;font-weight:800}
+.header-logo-sub{font-size:11px;font-weight:600;color:var(--neon);letter-spacing:1px;text-transform:uppercase;margin-top:2px}
+.header-right{margin-left:auto;display:flex;align-items:center;gap:12px}
+.header-xp{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--xp-purple);font-weight:600}
+.header-xp-bar{width:80px;height:6px;background:var(--bg3);border-radius:3px;overflow:hidden}
+.header-xp-fill{height:100%;background:var(--xp-purple);border-radius:3px;transition:width .5s}
+.header-streak{display:flex;align-items:center;gap:4px;font-size:13px;color:var(--streak-red);font-weight:600}
+.theme-toggle{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:var(--bg3);transition:background .2s}
+.theme-toggle:hover{background:var(--border)}
+.theme-picker-wrap{position:relative}
+.theme-picker-btn{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:var(--bg3);transition:background .2s;font-size:16px}
+.theme-picker-btn:hover{background:var(--border)}
+.theme-picker-dd{position:absolute;top:calc(100% + 8px);right:0;background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:12px;box-shadow:var(--shadow-lg);z-index:200;display:none;min-width:240px}
+.theme-picker-dd.open{display:block}
+.theme-picker-dd .tp-label{font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--text-dim);margin-bottom:8px}
+.tp-world{display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:var(--radius-sm);cursor:pointer;transition:background .15s;margin-bottom:2px}
+.tp-world:hover{background:var(--bg3)}
+.tp-world.active{background:var(--neon-dim)}
+.tp-world-color{width:28px;height:28px;border-radius:6px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:14px}
+.tp-world-info{flex:1;min-width:0}
+.tp-world-name{font-size:13px;font-weight:600;color:var(--heading)}
+.tp-world-desc{font-size:10px;color:var(--text-dim)}
+.tp-divider{height:1px;background:var(--border);margin:8px 0}
+.tp-mode-row{display:flex;align-items:center;justify-content:space-between;padding:4px 10px}
+.tp-mode-label{font-size:12px;color:var(--text);font-weight:600}
+.tp-mode-switch{width:44px;height:24px;border-radius:12px;background:var(--bg3);position:relative;cursor:pointer;transition:background .2s}
+.tp-mode-switch.light{background:var(--neon)}
+.tp-mode-switch::after{content:'';position:absolute;top:3px;left:3px;width:18px;height:18px;border-radius:50%;background:#fff;transition:transform .2s;box-shadow:0 1px 3px rgba(0,0,0,.3)}
+.tp-mode-switch.light::after{transform:translateX(20px)}
+.menu-btn{display:none;width:36px;height:36px;border-radius:8px;align-items:center;justify-content:center;background:var(--bg3)}
+.sidebar{position:fixed;top:var(--header-h);left:0;width:var(--sidebar-w);height:calc(100vh - var(--header-h));background:var(--bg2);border-right:1px solid var(--border);overflow-y:auto;padding:16px 12px;z-index:90;transition:transform .3s}
+.sidebar-section{margin-bottom:20px}
+.sidebar-label{font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--text-dim);padding:0 8px;margin-bottom:8px}
+.sidebar-level{padding:8px 12px;background:var(--neon-dim);border-radius:var(--radius-sm);margin-bottom:12px;text-align:center}
+.sidebar-level-title{font-size:14px;font-weight:700;color:var(--neon)}
+.sidebar-level-sub{font-size:11px;color:var(--text-dim);margin-top:2px}
+.sidebar-xp-bar{width:100%;height:8px;background:var(--bg3);border-radius:4px;overflow:hidden;margin-top:6px}
+.sidebar-xp-fill{height:100%;background:linear-gradient(90deg,var(--xp-purple),var(--neon));border-radius:4px;transition:width .6s}
+.mod-link{display:flex;align-items:center;gap:10px;padding:8px 12px;border-radius:var(--radius-sm);transition:background .15s;color:var(--text);font-size:13px;text-decoration:none;position:relative;cursor:pointer}
+.mod-link:hover{background:var(--bg3);text-decoration:none}
+.mod-link.active{background:var(--neon-dim);color:var(--neon);font-weight:600}
+.mod-link.completed::after{content:'\2713';position:absolute;right:10px;color:var(--success);font-weight:700;font-size:12px}
+.mod-link .mod-icon{width:28px;height:28px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
+.main{margin-left:var(--sidebar-w);margin-top:var(--header-h);min-height:calc(100vh - var(--header-h));padding:32px;max-width:900px}
+.module-header{margin-bottom:32px}
+.module-header .mod-badge{display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--neon);margin-bottom:8px}
+.module-header h1{font-size:28px;margin-bottom:8px}
+.module-header .mod-desc{font-size:15px;color:var(--text-dim);max-width:600px}
+.lesson-card{background:var(--card);border:var(--card-border-w) var(--card-border-style) var(--border);border-radius:var(--radius);padding:24px;margin-bottom:20px;transition:border-color .2s}
+.lesson-card:hover{border-color:var(--neon)}
+.lesson-card h3{font-size:18px;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.lesson-card p,.lesson-card li{font-size:14px;line-height:1.7;color:var(--text)}
+.lesson-card ul,.lesson-card ol{margin:8px 0 8px 20px}
+.lesson-card code{background:var(--bg3);padding:2px 6px;border-radius:4px;font-size:13px;color:var(--neon)}
+.lesson-card pre{background:var(--bg);border:1px solid var(--border);border-radius:var(--radius-sm);padding:16px;overflow-x:auto;margin:12px 0;font-size:13px;line-height:1.5}
+.lesson-card .info-box{background:var(--neon-dim);border-left:3px solid var(--neon);padding:12px 16px;border-radius:0 var(--radius-sm) var(--radius-sm) 0;margin:12px 0;font-size:13px}
+.interactive-area{background:var(--card);border:calc(var(--card-border-w) + 1px) dashed var(--border);border-radius:var(--radius);padding:24px;margin:20px 0;min-height:200px}
+.interactive-area h4{font-size:15px;color:var(--neon);margin-bottom:12px}
+.ia-toolbar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+.ia-btn{padding:6px 14px;font-size:12px;font-weight:600;border-radius:var(--radius-sm);background:var(--neon-dim);color:var(--neon);border:1px solid transparent;transition:all .15s}
+.ia-btn:hover{background:var(--neon);color:#fff}
+.ia-btn.active{background:var(--neon);color:#fff}
+.ix-grid{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;margin:16px 0}
+.ix-item{background:var(--bg3);border:2px solid var(--border);border-radius:var(--radius-sm);padding:14px 20px;font-size:20px;cursor:pointer;transition:all .2s;user-select:none;text-align:center;min-width:60px}
+.ix-item:hover{border-color:var(--neon);background:var(--neon-dim)}
+.ix-item.selected{border-color:var(--neon);background:var(--neon-dim)}
+.ix-item.correct{border-color:var(--success);background:rgba(34,197,94,.1)}
+.ix-item.wrong{border-color:var(--danger);background:rgba(239,68,68,.1)}
+.ix-item.placed{opacity:.4;pointer-events:none}
+.ix-btn{background:var(--neon);color:#fff;border:none;padding:10px 24px;border-radius:var(--radius-sm);font-size:14px;font-weight:700;cursor:pointer;font-family:var(--font);margin-top:12px;transition:opacity .2s}
+.ix-btn:hover{opacity:.85}
+.ix-btn:disabled{opacity:.4;cursor:not-allowed}
+.ix-feedback{text-align:center;padding:14px;border-radius:var(--radius-sm);font-size:16px;font-weight:700;margin-top:12px;display:none}
+.ix-feedback.pass{display:block;background:rgba(34,197,94,.12);color:var(--success)}
+.ix-feedback.fail{display:block;background:rgba(239,68,68,.12);color:var(--danger)}
+.quiz-section{background:var(--card);border:var(--card-border-w) var(--card-border-style) var(--border);border-radius:var(--radius);padding:24px;margin-top:24px}
+.quiz-section h3{font-size:18px;margin-bottom:16px;color:var(--xp-purple)}
+.quiz-q{margin-bottom:20px}
+.quiz-q p{font-size:14px;font-weight:600;margin-bottom:10px}
+.quiz-q label{display:flex;align-items:flex-start;gap:10px;padding:10px 14px;border-radius:var(--radius-sm);border:1px solid var(--border);cursor:pointer;transition:all .15s;font-size:14px;margin-bottom:6px}
+.quiz-q label:hover{border-color:var(--neon);background:var(--neon-dim)}
+.quiz-q input[type="radio"]{margin-top:3px;accent-color:var(--neon)}
+.quiz-q label.correct{border-color:var(--success);background:rgba(34,197,94,.1)}
+.quiz-q label.wrong{border-color:var(--danger);background:rgba(239,68,68,.1)}
+.quiz-submit{padding:10px 24px;font-size:14px;font-weight:700;border-radius:var(--radius-sm);background:var(--xp-purple);color:#fff;transition:opacity .2s;margin-top:8px}
+.quiz-submit:hover{opacity:.85}
+.quiz-result{padding:16px;border-radius:var(--radius-sm);margin-top:16px;font-size:14px;font-weight:600;text-align:center}
+.quiz-result.pass{background:rgba(34,197,94,.12);color:var(--success);border:1px solid rgba(34,197,94,.3)}
+.quiz-result.fail{background:rgba(239,68,68,.12);color:var(--danger);border:1px solid rgba(239,68,68,.3)}
+.quiz-explanation{margin-top:6px;padding:8px 14px;border-radius:var(--radius-sm);background:rgba(34,197,94,.08);border-left:3px solid var(--success);font-size:13px;color:var(--success);font-weight:600}
+.boss-section{background:linear-gradient(135deg,rgba(168,85,247,.08),rgba(59,130,246,.08));border:2px solid var(--xp-purple);border-radius:var(--radius);padding:24px;margin-top:24px}
+.boss-section h3{color:var(--xp-purple);font-size:20px;margin-bottom:4px}
+.boss-section .boss-sub{font-size:13px;color:var(--text-dim);margin-bottom:16px}
+.badge-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(100px,1fr));gap:12px;margin-top:12px}
+.badge-item{text-align:center;padding:12px 8px;border-radius:var(--radius-sm);background:var(--bg3);opacity:.4;transition:all .3s}
+.badge-item.earned{opacity:1;background:var(--neon-dim);border:1px solid var(--neon)}
+.badge-item .badge-icon{font-size:28px;margin-bottom:4px}
+.badge-item .badge-name{font-size:10px;font-weight:600;color:var(--text-dim)}
+.badge-item.earned .badge-name{color:var(--neon)}
+.stats-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px;margin-top:12px}
+.stat-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius-sm);padding:16px;text-align:center}
+.stat-card .stat-val{font-size:28px;font-weight:700;color:var(--neon)}
+.stat-card .stat-label{font-size:12px;color:var(--text-dim);margin-top:4px}
+.notif{position:fixed;top:80px;right:20px;background:var(--card);border:1px solid var(--neon);border-radius:var(--radius);padding:16px 20px;box-shadow:var(--shadow-lg);z-index:200;transform:translateX(120%);transition:transform .4s cubic-bezier(.22,1,.36,1);max-width:320px}
+.notif.show{transform:translateX(0)}
+.notif-title{font-size:14px;font-weight:700;color:var(--heading);margin-bottom:2px}
+.notif-text{font-size:12px;color:var(--text-dim)}
+.notif.xp{border-color:var(--xp-purple)}
+.notif.badge{border-color:var(--badge-cyan)}
+.notif.level{border-color:var(--success)}
+.notif.streak{border-color:var(--streak-red)}
+.level-up-overlay{position:fixed;inset:0;background:rgba(0,0,0,.7);display:none;align-items:center;justify-content:center;z-index:300}
+.level-up-overlay.active{display:flex}
+.level-up-box{text-align:center;padding:40px;animation:lvlPop .5s ease-out}
+.level-up-box .lvl-icon{font-size:64px;margin-bottom:12px}
+.level-up-box .lvl-title{font-size:28px;font-weight:900;color:var(--heading)}
+.level-up-box .lvl-name{font-size:20px;color:var(--xp-purple);font-weight:700;margin-top:4px}
+@keyframes lvlPop{from{transform:scale(.5);opacity:0}to{transform:scale(1);opacity:1}}
+.welcome-screen{display:flex;align-items:center;justify-content:center;min-height:calc(100vh - var(--header-h));text-align:center;padding:40px 20px}
+.welcome-box{max-width:480px}
+.welcome-box h1{font-size:36px;margin-bottom:8px}
+.welcome-box .ws-sub{color:var(--text-dim);font-size:15px;margin-bottom:32px}
+.welcome-box input{width:100%;max-width:320px;padding:12px 16px;font-size:16px;border-radius:var(--radius-sm);border:1px solid var(--border);background:var(--bg3);color:var(--heading);font-family:var(--font);text-align:center;margin-bottom:16px}
+.welcome-box input:focus{border-color:var(--neon);outline:2px solid var(--neon);outline-offset:2px}
+.welcome-box .ws-start{padding:14px 40px;font-size:16px;font-weight:700;border-radius:var(--radius-sm);background:var(--neon);color:#fff;transition:opacity .2s}
+.welcome-box .ws-start:hover{opacity:.85}
+.welcome-box .ws-start:disabled{opacity:.4;cursor:not-allowed}
+.cert-overlay{position:fixed;inset:0;background:rgba(0,0,0,.88);display:none;align-items:center;justify-content:center;z-index:400;padding:20px;flex-direction:column;backdrop-filter:blur(8px)}
+.cert-overlay.active{display:flex}
+.cert-picker{display:flex;gap:12px;justify-content:center;margin-bottom:20px;flex-wrap:wrap}
+.cert-pick-btn{padding:10px 20px;font-size:13px;font-weight:700;border-radius:12px;border:2px solid rgba(255,255,255,.15);background:rgba(255,255,255,.06);color:rgba(255,255,255,.7);transition:all .3s;backdrop-filter:blur(4px)}
+.cert-pick-btn:hover{border-color:rgba(255,255,255,.3);color:#fff;transform:translateY(-2px)}
+.cert-pick-btn.active{border-color:#ffd700;color:#ffd700;background:rgba(255,215,0,.1);box-shadow:0 0 20px rgba(255,215,0,.15)}
+.cert-frame{width:720px;max-width:100%;aspect-ratio:1.414;position:relative;overflow:hidden;animation:certEntrance .6s cubic-bezier(.34,1.56,.64,1) both}
+.cert-actions{display:flex;gap:12px;justify-content:center;margin-top:16px}
+.cert-actions button{padding:12px 28px;font-size:13px;font-weight:700;border-radius:12px;background:linear-gradient(135deg,var(--neon),var(--link));color:#fff;transition:transform .2s,box-shadow .2s}
+.cert-actions button:hover{transform:translateY(-2px);box-shadow:0 4px 20px rgba(0,0,0,.3)}
+@keyframes certEntrance{0%{opacity:0;transform:scale(.8) translateY(30px)}100%{opacity:1;transform:scale(1) translateY(0)}}
+@keyframes shimmer{0%{background-position:-200% 0}100%{background-position:200% 0}}
+@keyframes blink{50%{opacity:0}}
+@keyframes glitch{0%,93%{text-shadow:0 0 20px rgba(0,212,255,.5)}94%{text-shadow:-3px 0 #ff0040,3px 0 #00d4ff;transform:skewX(-2deg)}95%{text-shadow:3px 0 #ff0040,-3px 0 #00d4ff;transform:skewX(2deg)}96%{text-shadow:-1px 2px #ff0040,1px -2px #00d4ff}97%,100%{text-shadow:0 0 20px rgba(0,212,255,.5);transform:skewX(0)}}
+@keyframes pixelBlink{50%{opacity:0}}
+@keyframes holoSpin{to{transform:rotate(360deg)}}
+@keyframes aurora{0%{background-position:0% 50%}25%{background-position:50% 100%}50%{background-position:100% 50%}75%{background-position:50% 0%}100%{background-position:0% 50%}}
+@keyframes goldShimmer{0%{background-position:-100% 0}100%{background-position:200% 0}}
+@keyframes neonPulse{0%,100%{box-shadow:0 0 5px #00ff41,0 0 10px #00ff41,0 0 20px rgba(0,255,65,.3)}50%{box-shadow:0 0 10px #00ff41,0 0 25px #00ff41,0 0 50px rgba(0,255,65,.4)}}
+@keyframes matrixFall{0%{transform:translateY(-100%);opacity:1}100%{transform:translateY(100vh);opacity:0}}
+.cert-common-stats{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin:10px 0}
+.cert-stat{padding:4px 10px;border-radius:20px;font-size:11px;font-weight:700;display:inline-flex;align-items:center;gap:4px}
+.cert-badge-row{display:flex;gap:6px;justify-content:center;flex-wrap:wrap;margin:8px 0}
+.cert-badge-item{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px}
+.cert-verification{font-size:10px;letter-spacing:2px;margin-top:8px;opacity:.5;font-family:var(--mono)}
+.cert-logo-footer{display:flex;align-items:center;justify-content:center;gap:6px;margin-top:10px;opacity:.4;font-size:10px}
+.cert-logo-footer svg{width:16px;height:16px}
+.cert-akademie{background:linear-gradient(145deg,#faf6e8,#f0e8d0,#e8dfc0);border:none;padding:0;text-align:center;font-family:var(--serif);color:#1a1a3e;position:relative;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;overflow:hidden}
+.cert-akademie::before{content:'';position:absolute;inset:0;background:url("data:image/svg+xml,%3Csvg width='60' height='60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 5 L35 20 L30 15 L25 20Z' fill='%23c5a54e' opacity='.04'/%3E%3C/svg%3E");pointer-events:none}
+.cert-akademie::after{content:'';position:absolute;inset:8px;border:2px solid rgba(197,165,78,.35);border-radius:2px;pointer-events:none}
+.cert-akademie .cert-inner{position:relative;z-index:1;padding:36px 32px;width:100%}
+.cert-akademie .cert-corner{position:absolute;width:60px;height:60px;z-index:2}
+.cert-akademie .cert-corner svg{width:100%;height:100%}
+.cert-akademie .cert-corner-tl{top:14px;left:14px}
+.cert-akademie .cert-corner-tr{top:14px;right:14px;transform:scaleX(-1)}
+.cert-akademie .cert-corner-bl{bottom:14px;left:14px;transform:scaleY(-1)}
+.cert-akademie .cert-corner-br{bottom:14px;right:14px;transform:scale(-1)}
+.cert-akademie .cert-title{font-size:36px;font-weight:700;color:#1a1a3e;margin-bottom:2px;letter-spacing:3px}
+.cert-akademie .cert-sub{font-size:11px;color:#8a7d5e;letter-spacing:5px;text-transform:uppercase;margin-bottom:16px}
+.cert-akademie .cert-hr{width:200px;height:2px;background:linear-gradient(90deg,transparent,#c5a54e,transparent);margin:10px auto}
+.cert-akademie .cert-body{font-size:14px;line-height:1.7;color:#3d3422;margin-bottom:8px}
+.cert-akademie .cert-name{font-size:32px;font-weight:700;background:linear-gradient(135deg,#c5a54e,#e8c84e,#c5a54e);background-size:200% auto;animation:goldShimmer 3s linear infinite;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin:12px 0;font-style:italic}
+.cert-akademie .cert-seal-wrap{margin:12px auto;position:relative;width:90px;height:90px}
+.cert-akademie .cert-seal-ring{position:absolute;inset:0;border:3px solid #c5a54e;border-radius:50%;opacity:.3}
+.cert-akademie .cert-seal{width:76px;height:76px;margin:7px;background:radial-gradient(circle at 35% 35%,#e8c84e,#c5a54e,#8a6914);border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 16px rgba(160,134,54,.5),inset 0 2px 4px rgba(255,255,255,.3)}
+.cert-akademie .cert-stat{background:rgba(197,165,78,.12);color:#8a6914;border:1px solid rgba(197,165,78,.25)}
+.cert-akademie .cert-badge-item{background:rgba(197,165,78,.15);border:1px solid rgba(197,165,78,.3)}
+.cert-akademie .cert-date{font-size:11px;color:#8a7d5e;margin-top:8px;font-style:italic}
+.cert-hacker{background:#050505;border:2px solid #00ff41;padding:0;font-family:var(--mono);color:#00ff41;position:relative;overflow:hidden;height:100%;display:flex;flex-direction:column;justify-content:center;box-shadow:0 0 30px rgba(0,255,65,.15),inset 0 0 60px rgba(0,255,65,.03);animation:neonPulse 4s ease-in-out infinite}
+.cert-hacker::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(transparent,transparent 2px,rgba(0,255,65,.025) 2px,rgba(0,255,65,.025) 4px);pointer-events:none;z-index:1}
+.cert-hacker::after{content:'> > > CERTIFIED > > > CERTIFIED > > > CERTIFIED > > >';position:absolute;bottom:0;left:0;right:0;font-size:9px;color:rgba(0,255,65,.08);letter-spacing:3px;padding:4px;white-space:nowrap;overflow:hidden;z-index:1}
+.cert-hacker .cert-inner{position:relative;z-index:2;padding:30px 32px}
+.cert-hacker .cert-matrix-col{position:absolute;top:-100%;font-size:11px;color:#00ff41;opacity:.08;z-index:0;font-family:var(--mono);line-height:1.1;animation:matrixFall linear infinite;white-space:pre}
+.cert-hacker .cert-title{font-size:22px;font-weight:700;text-shadow:0 0 15px rgba(0,255,65,.6);margin-bottom:4px}
+.cert-hacker .cert-access{font-size:32px;font-weight:700;color:#00d4ff;text-shadow:0 0 30px rgba(0,212,255,.6),0 0 60px rgba(0,212,255,.2);margin:14px 0;animation:glitch 4s infinite;letter-spacing:4px}
+.cert-hacker .cert-body{font-size:12px;line-height:2;color:#33cc55}
+.cert-hacker .cert-name{font-size:24px;color:#00d4ff;margin:12px 0;text-shadow:0 0 10px rgba(0,212,255,.4)}
+.cert-hacker .cert-prompt{color:#444;font-size:11px}
+.cert-hacker .cert-prompt span{color:#00ff41}
+.cert-hacker .cursor-blink{animation:blink 1s step-end infinite}
+.cert-hacker .cert-hex-seal{width:70px;height:70px;margin:12px auto;border:2px solid #00ff41;border-radius:50%;display:flex;align-items:center;justify-content:center;position:relative;box-shadow:0 0 15px rgba(0,255,65,.2)}
+.cert-hacker .cert-stat{background:rgba(0,255,65,.08);color:#00ff41;border:1px solid rgba(0,255,65,.2)}
+.cert-hacker .cert-badge-item{background:rgba(0,255,65,.08);border:1px solid rgba(0,255,65,.2)}
+.cert-pixel{background:linear-gradient(180deg,#0f0f2e,#1a1a3e,#0f0f2e);border:6px solid #ffd700;padding:0;text-align:center;color:#fff;font-family:var(--font);position:relative;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;overflow:hidden;box-shadow:inset 0 0 80px rgba(255,215,0,.05)}
+.cert-pixel .cert-inner{position:relative;z-index:1;padding:28px 24px;width:100%}
+.cert-pixel .cert-complete{font-size:20px;color:#00e676;margin:6px 0;animation:pixelBlink 1.2s step-end infinite;text-shadow:0 0 10px rgba(0,230,118,.4);letter-spacing:3px;font-weight:900}
+.cert-pixel .cert-title{font-size:32px;font-weight:900;color:#ffd700;text-transform:uppercase;letter-spacing:5px;text-shadow:4px 4px 0 #e4002b}
+.cert-pixel .cert-name{font-size:26px;font-weight:900;color:#fff;margin:14px 0;text-shadow:2px 2px 0 rgba(0,0,0,.5)}
+.cert-pixel .cert-stars{font-size:28px;margin:8px 0;letter-spacing:6px;color:#ffd700;text-shadow:0 0 10px rgba(255,215,0,.4)}
+.cert-pixel .cert-body{font-size:12px;color:#aaa;line-height:1.7}
+.cert-pixel .cert-score{font-size:18px;color:#ff4757;font-weight:900;margin-top:6px;text-shadow:2px 2px 0 rgba(0,0,0,.5);letter-spacing:2px}
+.cert-pixel .cert-xp-bar{width:200px;height:14px;background:#111;border:2px solid #ffd700;margin:8px auto;position:relative;overflow:hidden}
+.cert-pixel .cert-xp-fill{height:100%;background:repeating-linear-gradient(90deg,#ffd700 0px,#ffd700 8px,#ffaa00 8px,#ffaa00 16px);box-shadow:0 0 8px rgba(255,215,0,.4)}
+.cert-pixel .cert-xp-label{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:900;color:#fff;text-shadow:1px 1px 0 #000;z-index:1}
+.cert-pixel .cert-stat{background:rgba(255,215,0,.1);color:#ffd700;border:2px solid rgba(255,215,0,.3)}
+.cert-pixel .cert-badge-item{background:rgba(255,215,0,.1);border:2px solid rgba(255,215,0,.25)}
+.cert-zukunft{background:linear-gradient(135deg,#0a0a2e,#1a0a3e,#0a1a3e);border:1px solid rgba(255,255,255,.1);border-radius:20px;padding:0;text-align:center;color:#fff;font-family:var(--font);position:relative;overflow:hidden;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.cert-zukunft::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(99,102,241,.15),rgba(236,72,153,.15),rgba(245,158,11,.15),rgba(34,197,94,.15),rgba(99,102,241,.15));background-size:400% 400%;animation:aurora 8s ease infinite;pointer-events:none}
+.cert-zukunft .cert-inner{position:relative;z-index:1;padding:30px 28px;width:100%}
+.cert-zukunft .cert-particle{position:absolute;width:3px;height:3px;border-radius:50%;z-index:0}
+.cert-zukunft .cert-title{font-size:30px;font-weight:900;background:linear-gradient(135deg,#6366f1,#ec4899,#f59e0b,#22c55e);background-size:200% auto;animation:shimmer 4s linear infinite;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.cert-zukunft .cert-sub{font-size:11px;color:rgba(255,255,255,.5);letter-spacing:4px;text-transform:uppercase;margin-bottom:14px}
+.cert-zukunft .cert-name{font-size:28px;font-weight:700;margin:12px 0;background:linear-gradient(90deg,#a78bfa,#f472b6,#fbbf24);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.cert-zukunft .cert-body{font-size:13px;color:rgba(255,255,255,.65);line-height:1.7}
+.cert-zukunft .cert-seal-holo{width:80px;height:80px;margin:12px auto;border-radius:50%;background:conic-gradient(#6366f1,#ec4899,#f59e0b,#22c55e,#06b6d4,#6366f1);display:flex;align-items:center;justify-content:center;animation:holoSpin 6s linear infinite;box-shadow:0 0 30px rgba(99,102,241,.3)}
+.cert-zukunft .cert-seal-mid{width:68px;height:68px;border-radius:50%;border:2px solid rgba(255,255,255,.15);background:transparent;display:flex;align-items:center;justify-content:center;animation:holoSpin 10s linear infinite reverse}
+.cert-zukunft .cert-seal-inner{width:52px;height:52px;border-radius:50%;background:rgba(10,10,30,.9);display:flex;align-items:center;justify-content:center;backdrop-filter:blur(4px)}
+.cert-zukunft .cert-date{font-size:10px;color:rgba(255,255,255,.35);margin-top:10px;letter-spacing:2px}
+.cert-zukunft .cert-stat{background:rgba(99,102,241,.12);color:#a78bfa;border:1px solid rgba(99,102,241,.25)}
+.cert-zukunft .cert-badge-item{background:rgba(99,102,241,.1);border:1px solid rgba(99,102,241,.2)}
+.confetti-container{position:fixed;inset:0;pointer-events:none;z-index:600;overflow:hidden}
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.6);display:none;align-items:center;justify-content:center;z-index:500;padding:20px}
+.modal-overlay.active{display:flex}
+.modal{background:var(--card);border:1px solid var(--border);border-radius:var(--radius-lg);max-width:640px;width:100%;max-height:85vh;overflow-y:auto;padding:32px;position:relative}
+.modal-close{position:absolute;top:12px;right:12px;font-size:24px;color:var(--text-dim);background:none;border:none;cursor:pointer}
+@media(max-width:800px){
+.menu-btn{display:flex}
+.sidebar{transform:translateX(-100%)}
+.sidebar.open{transform:translateX(0)}
+.main{margin-left:0;padding:16px}
+}
+@media print{
+*{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}
+.site-header,.sidebar,.notif,.level-up-overlay,.confetti-container{display:none!important}
+.main{margin-left:0!important;padding:20px!important}
+.lesson-card{break-inside:avoid;page-break-inside:avoid}
+}
+
+.zoom-controls{position:fixed;bottom:16px;left:16px;display:flex;gap:4px;z-index:9999}
+.zoom-btn{width:32px;height:32px;border-radius:50%;border:1px solid var(--border,#2a3444);background:var(--bg2,#111827);color:var(--text,#d4dce8);cursor:pointer;font-size:15px;display:flex;align-items:center;justify-content:center;transition:all .2s;font-family:inherit;line-height:1}
+.zoom-btn:hover{border-color:var(--neon,#3b82f6);color:var(--neon,#3b82f6);transform:scale(1.1)}
+.zoom-btn:focus-visible{outline:2px solid var(--neon,#3b82f6);outline-offset:2px}
+.zoom-level{font-size:10px;position:absolute;top:-16px;left:50%;transform:translateX(-50%);color:var(--text-dim,#8899aa);white-space:nowrap;pointer-events:none}
+
+/* A11y: Print improvements */
+@media print{body{background:#fff!important;color:#000!important}.cert-overlay,.modal-overlay,.level-up-overlay,.theme-overlay,.zoom-controls{display:none!important}.lesson-card,.quiz-section,.boss-section,.interactive-area{break-inside:avoid;page-break-inside:avoid}}
+
+/* Audio/Speech */
+.tts-btn{background:none;border:none;cursor:pointer;font-size:.9em;opacity:.5;transition:all .2s;vertical-align:middle;margin-left:8px;padding:2px 6px;border-radius:4px}
+.tts-btn:hover{opacity:1;background:var(--bg2)}.tts-btn.speaking{opacity:1;color:var(--neon);animation:tts-pulse 1s infinite}
+@keyframes tts-pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.15)}}
+.tts-bar{display:flex;align-items:center;gap:8px;padding:6px 12px;background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);margin:8px 0;font-size:.8rem;flex-wrap:wrap}
+.tts-bar select{background:var(--bg);color:var(--text);border:1px solid var(--border);border-radius:4px;padding:2px 6px;font-size:.78rem}
+.tts-bar button{background:none;border:1px solid var(--border);border-radius:4px;padding:2px 8px;cursor:pointer;color:var(--text);font-size:.8rem}
+.tts-bar button:hover{background:var(--bg)}
+.speech-ex{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:16px;margin:12px 0;text-align:center}
+.speech-ex h4{margin:0 0 8px;font-size:1rem}
+.mic-btn{font-size:1.6em;background:none;border:2px solid var(--neon);border-radius:50%;width:52px;height:52px;cursor:pointer;transition:all .3s;color:var(--text);display:inline-flex;align-items:center;justify-content:center}
+.mic-btn:hover{background:var(--neon);color:var(--bg)}.mic-btn.rec{background:#ef4444;border-color:#ef4444;color:#fff;animation:tts-pulse 1s infinite}
+.sr-res{margin-top:8px;padding:6px 10px;border-radius:4px;font-weight:600;font-size:.85rem;display:inline-block}
+.sr-res.good{background:#22c55e22;color:#22c55e}.sr-res.retry{background:#f59e0b22;color:#f59e0b}
+.sr-na{font-size:.8rem;color:var(--text-dim);margin-top:8px}
+</style>
+</head>
+<body>
+<a href="#mainContent" class="skip-nav" style="position:absolute;top:-50px;left:8px;background:var(--neon);color:#fff;padding:8px 16px;z-index:9999;border-radius:0 0 8px 8px;font-weight:700;text-decoration:none">Zum Inhalt springen</a>
+<header class="site-header">
+<button class="menu-btn" onclick="toggleSidebar()" aria-label="Menu">&#9776;</button>
+<div class="header-logo">
+<svg viewBox="0 0 40 40" width="40" height="40" fill="none" aria-hidden="true">
+<rect x="4" y="4" width="32" height="32" rx="8" fill="var(--neon-dim)" stroke="var(--neon)" stroke-width="1.5"/>
+<text x="20" y="26" text-anchor="middle" font-size="18" font-weight="900" fill="var(--neon)">C</text>
+</svg>
+<div class="header-logo-text">
+<div class="header-logo-main">ChemieLabor</div>
+<div class="header-logo-sub">Chemie Klasse 7-10</div>
+</div>
+</div>
+<div class="header-right">
+<div class="header-xp"><span id="headerLevel">Level 1</span><div class="header-xp-bar"><div class="header-xp-fill" style="width:0%"></div></div><span id="headerXP">0 XP</span></div>
+<div class="header-streak" id="headerStreak">&#128293; 0</div>
+<div class="theme-picker-wrap">
+<button class="theme-picker-btn" onclick="toggleThemePicker()" aria-label="Theme w\u00E4hlen">&#127912;</button>
+<div class="theme-picker-dd" id="themePickerDD"></div>
+</div>
+<button class="theme-toggle" onclick="toggleMode()" aria-label="Dark/Light umschalten">&#127769;</button>
+</div>
+</header>
+<nav class="sidebar" id="sidebar" role="navigation" aria-label="Module">
+<div class="sidebar-section">
+<div class="sidebar-level">
+<div class="sidebar-level-title" id="sidebarLevel">Labor-Neuling</div>
+<div class="sidebar-level-sub" id="sidebarXP">0 XP</div>
+<div class="sidebar-xp-bar"><div class="sidebar-xp-fill" id="sidebarXPFill" style="width:0%"></div></div>
+</div>
+</div>
+<div class="sidebar-section">
+<div class="sidebar-label">Module</div>
+<div id="sidebarModules"></div>
+</div>
+<div class="sidebar-section" style="border-top:1px solid var(--border);padding-top:12px;margin-top:12px">
+<a class="mod-link" onclick="showBadges()"><span class="mod-icon">&#127941;</span>Abzeichen</a>
+<a class="mod-link" onclick="showStats()"><span class="mod-icon">&#128202;</span>Statistik</a>
+<a class="mod-link" onclick="showCert()"><span class="mod-icon">&#127891;</span>Urkunde</a>
+</div>
+<div class="sidebar-section" style="border-top:1px solid var(--border);padding-top:12px;margin-top:12px">
+<a class="mod-link" onclick="exportData()"><span class="mod-icon">&#128190;</span>Speichern</a>
+<label class="mod-link" style="cursor:pointer"><span class="mod-icon">&#128194;</span>Laden<input type="file" accept=".json" onchange="importData(event)" style="display:none"></label>
+<a class="mod-link" onclick="if(confirm('Wirklich alles zurücksetzen?')){localStorage.removeItem(STORAGE_KEY);location.reload()}" style="color:var(--danger)"><span class="mod-icon">&#128465;</span>Zurücksetzen</a>
+</div>
+<div style="padding:16px 8px 8px;border-top:1px solid var(--border);margin-top:12px;font-size:11px;color:var(--text-dim)">
+<a onclick="showImpressum()" style="cursor:pointer;color:var(--text-dim)">Impressum</a> &middot;
+<a onclick="showDatenschutz()" style="cursor:pointer;color:var(--text-dim)">Datenschutz</a>
+</div>
+</nav>
+<main class="main" id="mainContent">
+<div class="welcome-screen" id="welcomeScreen">
+<div class="welcome-box">
+<div style="font-size:64px;margin-bottom:16px">&#129514;</div>
+<h1>ChemieLabor</h1>
+<p class="ws-sub">Entdecke die faszinierende Welt der Chemie — von Atomen bis zu Alltagsreaktionen!</p>
+<input type="text" id="nameInput" placeholder="Dein Name" maxlength="24" aria-label="Dein Name" oninput="document.getElementById('startBtn').disabled=!this.value.trim()">
+<br>
+<button class="ws-start" id="startBtn" disabled onclick="startApp()">Experiment starten &#129514;</button>
+</div>
+</div>
+<div id="moduleContent" style="display:none"></div>
+<div id="badgesView" style="display:none"></div>
+<div id="statsView" style="display:none"></div>
+</main>
+<div class="notif" id="notif" role="status" aria-live="polite" aria-atomic="true"><div class="notif-title" id="notifTitle"></div><div class="notif-text" id="notifText"></div></div>
+<div class="level-up-overlay" id="levelUpOverlay"><div class="level-up-box" id="levelUpBox"></div></div>
+<div class="confetti-container" id="confetti"></div>
+<div class="cert-overlay" id="certOverlay" role="dialog" aria-label="Urkunde" aria-modal="true">
+<div class="cert-picker" id="certPicker"></div>
+<div class="cert-frame" id="certFrame"></div>
+<div class="cert-actions">
+<button onclick="printCert()">&#128424; Drucken / PDF</button>
+<button onclick="closeCert()">Schließen</button>
+</div>
+</div>
+<div class="modal-overlay" id="impressumOverlay">
+<div class="modal">
+<button class="modal-close" onclick="document.getElementById('impressumOverlay').classList.remove('active')">&times;</button>
+<h2>Impressum</h2>
+<p><strong>&copy; 2026 GZ AI Stacks - Gerd Zimmermann</strong></p>
+<p>Diese Lern-App wurde mit Claude Code (Anthropic) entwickelt.</p>
+<p>Kontakt: gz-ai-stacks@example.com</p>
+</div>
+</div>
+<div class="modal-overlay" id="datenschutzOverlay">
+<div class="modal">
+<button class="modal-close" onclick="document.getElementById('datenschutzOverlay').classList.remove('active')">&times;</button>
+<h2>Datenschutzerklärung</h2>
+<p>Diese App speichert Daten <strong>ausschließlich lokal</strong> auf Ihrem Gerät.</p>
+<ul>
+<li>Keine Cookies</li>
+<li>Kein Tracking oder Analytics</li>
+<li>Keine externen Ressourcen</li>
+<li>Keine Registrierung</li>
+<li>Alle Daten verbleiben auf Ihrem Gerät</li>
+</ul>
+<p>Sie können Ihre gespeicherten Daten jederzeit über die "Zurücksetzen"-Funktion löschen.</p>
+</div>
+</div>
+<script>
+function showImpressum(){document.getElementById('impressumOverlay').classList.add('active')}
+function showDatenschutz(){document.getElementById('datenschutzOverlay').classList.add('active')}
+
+// === XOR Quiz Encryption ===
+
+// === Audio (TTS) ===
+const _synth=window.speechSynthesis,_LANG='de-DE';let _ttsOn=false,_ttsRate=1,_ttsTimer=null;
+function speakLesson(i){if(_ttsOn){stopTTS();return}const c=document.querySelectorAll('.lesson-card');if(!c[i]||!_synth)return;stopTTS();const u=new SpeechSynthesisUtterance(c[i].innerText);u.lang=_LANG;u.rate=_ttsRate;u.onstart=()=>{_ttsOn=true;updTTSUI();startTTSTimer()};u.onend=()=>{_ttsOn=false;updTTSUI();clearTTSTimer()};u.onerror=()=>{_ttsOn=false;updTTSUI();clearTTSTimer()};_synth.speak(u);showTTSBar()}
+function speakText(t,lang){if(!_synth)return;stopTTS();const u=new SpeechSynthesisUtterance(t);u.lang=lang||_LANG;u.rate=_ttsRate;u.onstart=()=>{_ttsOn=true;updTTSUI();startTTSTimer()};u.onend=()=>{_ttsOn=false;updTTSUI();clearTTSTimer()};u.onerror=()=>{_ttsOn=false;updTTSUI();clearTTSTimer()};_synth.speak(u)}
+function stopTTS(){if(_synth){_synth.cancel()}_ttsOn=false;updTTSUI();clearTTSTimer()}
+function updTTSUI(){document.querySelectorAll('.tts-btn').forEach(b=>b.classList.toggle('speaking',_ttsOn))}
+function setTTSRate(r){_ttsRate=parseFloat(r)}
+function startTTSTimer(){clearTTSTimer();_ttsTimer=setInterval(()=>{if(_synth&&_synth.speaking&&!_synth.paused){_synth.pause();_synth.resume()}},10000)}
+function clearTTSTimer(){if(_ttsTimer){clearInterval(_ttsTimer);_ttsTimer=null}}
+function showTTSBar(){if(document.getElementById('ttsBar'))return;const mc=document.getElementById('moduleContent');if(!mc)return;const b=document.createElement('div');b.className='tts-bar';b.id='ttsBar';b.innerHTML='\u{1F50A} <select onchange="setTTSRate(this.value)"><option value="0.7">Langsam</option><option value="1" selected>Normal</option><option value="1.3">Schnell</option></select> <button onclick="stopTTS()">\u25A0 Stopp</button>';mc.prepend(b)}
+
+const _qk=[0x4A,0x7F,0x2B,0x61,0x5C,0x3E,0x18,0x73];
+function _d(h,i){return h^_qk[i%_qk.length]}
+
+// === Levels ===
+const LEVELS=[
+{name:'Labor-Neuling',xp:0},{name:'Reagenzglas-Rookie',xp:40},{name:'Bunsenbrenner-Beginner',xp:100},
+{name:'Stoff-Kenner',xp:180},{name:'Atom-Entdecker',xp:280},{name:'Molekül-Forscher',xp:400},
+{name:'Formel-Fuchs',xp:540},{name:'Reaktions-Kenner',xp:700},{name:'Säure-Base-Profi',xp:880},
+{name:'Element-Experte',xp:1080},{name:'Periodensystem-Profi',xp:1300},{name:'Bindungs-Spezialist',xp:1540},
+{name:'Redox-Meister',xp:1800},{name:'Orbital-Virtuose',xp:2080},{name:'Katalysator-König',xp:2380},
+{name:'Synthese-Stratege',xp:2700},{name:'Chemie-Champion',xp:3040},{name:'Labor-Legende',xp:3400},
+{name:'Nobelpreis-Kandidat',xp:3780},{name:'Chemie-Genie',xp:4200}
+];
+
+// === Badges ===
+const BADGES=[
+{id:'m0',name:'Stoff-Entdecker',icon:'\uD83E\uDDEA',desc:'Modul 1 abgeschlossen'},
+{id:'m1',name:'Atom-Kenner',icon:'\u269B\uFE0F',desc:'Modul 2 abgeschlossen'},
+{id:'m2',name:'Bindungs-Profi',icon:'\uD83D\uDD17',desc:'Modul 3 abgeschlossen'},
+{id:'m3',name:'Reaktions-Meister',icon:'\uD83D\uDCA5',desc:'Modul 4 abgeschlossen'},
+{id:'m4',name:'pH-Experte',icon:'\uD83E\uDDEB',desc:'Modul 5 abgeschlossen'},
+{id:'m5',name:'Redox-Held',icon:'\u26A1',desc:'Modul 6 abgeschlossen'},
+{id:'m6',name:'Kohlenstoff-König',icon:'\uD83D\uDEE2\uFE0F',desc:'Modul 7 abgeschlossen'},
+{id:'m7',name:'Energie-Forscher',icon:'\uD83D\uDD25',desc:'Modul 8 abgeschlossen'},
+{id:'m8',name:'Elektro-Chemiker',icon:'\uD83D\uDD0B',desc:'Modul 9 abgeschlossen'},
+{id:'m9',name:'Alltags-Chemiker',icon:'\uD83C\uDFE0',desc:'Modul 10 abgeschlossen'},
+{id:'first_quiz',name:'Quiz-Neuling',icon:'\u2753',desc:'Erstes Quiz bestanden'},
+{id:'perfect_quiz',name:'Perfektionist',icon:'\uD83D\uDC8E',desc:'Quiz mit 5/5 bestanden'},
+{id:'first_boss',name:'Boss-Bezwinger',icon:'\uD83D\uDC51',desc:'Erste Boss-Challenge bestanden'},
+{id:'all_bosses',name:'Endgegner',icon:'\uD83C\uDFC6',desc:'Alle Boss-Challenges bestanden'},
+{id:'streak3',name:'Durchstarter',icon:'\uD83D\uDD25',desc:'3 Tage in Folge gelernt'},
+{id:'streak7',name:'Wochenkrieger',icon:'\u2694\uFE0F',desc:'7 Tage in Folge gelernt'},
+{id:'half_done',name:'Halbzeit',icon:'\u23F3',desc:'5 Module abgeschlossen'},
+{id:'speed_quiz',name:'Blitz-Denker',icon:'\u26A1',desc:'Quiz in unter 60 Sekunden'},
+{id:'explorer',name:'Entdecker',icon:'\uD83D\uDDFA\uFE0F',desc:'Alle Module angesehen'},
+{id:'graduate',name:'Absolvent',icon:'\uD83C\uDF93',desc:'Alle 10 Module abgeschlossen'}
+];
+
+// === Theme Config ===
+const THEME_CONFIG={
+cyber:{name:'Cyber Neon',emoji:'\uD83D\uDDA5',color:'#3b82f6',desc:'Futuristisch & Digital'},
+retro:{name:'Retro Arcade',emoji:'\uD83D\uDD79',color:'#ffd700',desc:'80er Arcade-Feeling'},
+nature:{name:'Nature Forest',emoji:'\uD83C\uDF33',color:'#4ade80',desc:'Natürlich & Organisch'},
+space:{name:'Deep Space',emoji:'\uD83D\uDE80',color:'#c084fc',desc:'Kosmisch & Geheimnisvoll'},
+comic:{name:'Comic Pop',emoji:'\uD83D\uDCA5',color:'#ff6b6b',desc:'Bunt & Verspielt'},
+sketchy:{name:'Sketchy',emoji:'\u270D\uFE0F',color:'#d97706',desc:'Handgemacht & Warm'},
+'nature-code':{name:'Nature x Code',emoji:'\uD83C\uDF3F',color:'#10b981',desc:'Natur trifft Technik'},
+glass:{name:'Glasmorphism',emoji:'\uD83D\uDCA0',color:'#00d9ff',desc:'Modern & Transparent'}
+};
+
+// === Modules ===
+const modules=[
+{id:0,title:'Stoffe und Eigenschaften',icon:'\uD83E\uDDEA',duration:'25 Min.',description:'Lerne Reinstoffe, Gemische und Trennverfahren kennen.',
+lessons:[
+{title:'Was sind Stoffe?',content:'<p>In der Chemie nennen wir alles, was uns umgibt, <strong>Stoffe</strong>. Wasser, Eisen, Luft — das sind alles Stoffe. Jeder Gegenstand, den du anfassen, riechen oder sehen kannst, besteht aus einem oder mehreren Stoffen.</p><p>Man unterscheidet zwischen <strong>Reinstoffen</strong> (bestehen aus nur einer Substanz, z.B. destilliertes Wasser, reines Gold) und <strong>Gemischen</strong> (bestehen aus mehreren Stoffen, z.B. Luft, Meerwasser, Granit).</p><div class="info-box">\uD83D\uDCA1 <strong>Merke:</strong> Reinstoffe haben immer die gleichen Eigenschaften (Schmelzpunkt, Siedepunkt). Gemische können in ihren Eigenschaften variieren, je nach Zusammensetzung.</div><p>Gemische werden weiter unterteilt: <strong>Homogene Gemische</strong> (einheitlich, z.B. Salzwasser, Legierungen wie Bronze) und <strong>heterogene Gemische</strong> (uneinheitlich, z.B. Granit, Müsli, Nebel).</p><div class="info-box">\uD83D\uDCA1 <strong>Alltagsbeispiel:</strong> Die Luft, die wir atmen, ist ein homogenes Gemisch aus ca. 78% Stickstoff, 21% Sauerstoff und 1% weiteren Gasen (Argon, CO\u2082 u.a.).</div><p>Reinstoffe lassen sich nochmals in <strong>Elemente</strong> (z.B. Eisen, Sauerstoff — bestehen aus nur einer Atomsorte) und <strong>Verbindungen</strong> (z.B. Wasser H\u2082O, Kochsalz NaCl — bestehen aus mehreren Atomsorten in festem Verhältnis) unterteilen.</p>'},
+{title:'Stoffeigenschaften',content:'<p>Jeder Stoff hat charakteristische Eigenschaften, an denen man ihn erkennen und von anderen Stoffen unterscheiden kann:</p><ul><li><strong>Aggregatzustand</strong>: fest, flüssig oder gasförmig</li><li><strong>Schmelzpunkt</strong>: Temperatur, bei der ein Stoff schmilzt (z.B. Eis → Wasser bei 0\u00B0C)</li><li><strong>Siedepunkt</strong>: Temperatur, bei der ein Stoff siedet (z.B. Wasser → Dampf bei 100\u00B0C)</li><li><strong>Dichte</strong>: Masse pro Volumen (g/cm\u00B3) — Eisen hat z.B. 7,87 g/cm\u00B3</li><li><strong>Löslichkeit</strong>: Wie gut löst sich ein Stoff in einem Lösungsmittel?</li><li><strong>Farbe, Geruch, Geschmack</strong>: Sinnlich wahrnehmbare Eigenschaften</li><li><strong>Elektrische Leitfähigkeit</strong>: Leitet der Stoff Strom?</li></ul><div class="info-box">\uD83D\uDCA1 <strong>Merke:</strong> Wasser siedet bei 100\u00B0C und schmilzt bei 0\u00B0C (bei Normaldruck) — das sind stoffspezifische Konstanten, die zur Identifikation dienen.</div><p>Im Alltag nutzen wir Stoffeigenschaften ständig: Wir wählen Kupfer für Kabel (gute Leitfähigkeit), Glas für Fenster (durchsichtig, hart) und Wolle für Pullover (wärmeisolierend). Die Kenntnis der Stoffeigenschaften ist die Grundlage jeder chemischen Arbeit.</p>'},
+{title:'Trennverfahren',content:'<p>Gemische kann man mit verschiedenen Verfahren trennen. Welches Verfahren man wählt, hängt von den Eigenschaften der Stoffe im Gemisch ab:</p><ul><li><strong>Filtration</strong>: Trennt feste Stoffe von Flüssigkeiten (z.B. Sand aus Wasser filtrieren, Kaffee filtern)</li><li><strong>Destillation</strong>: Trennt Flüssigkeiten mit unterschiedlichen Siedepunkten (z.B. Alkohol aus Wein, Erdölraffinerie)</li><li><strong>Chromatographie</strong>: Trennt Stoffe nach Wanderungsgeschwindigkeit (z.B. Farbstoffe in Filzstiften trennen)</li><li><strong>Eindampfen</strong>: Gelöste Stoffe werden durch Verdampfen des Lösungsmittels gewonnen (z.B. Salzgewinnung aus Meerwasser)</li><li><strong>Sieben</strong>: Trennt nach Korngröße (z.B. Kies von Sand trennen)</li><li><strong>Magnetscheidung</strong>: Trennt magnetische von nicht-magnetischen Stoffen (z.B. Eisenspäne aus Sand)</li><li><strong>Dekantieren</strong>: Vorsichtiges Abgießen einer Flüssigkeit von einem Bodensatz</li></ul><div class="info-box">\uD83D\uDCA1 <strong>Alltagsbeispiel:</strong> In einer Kläranlage werden nacheinander mehrere Trennverfahren eingesetzt: Rechen (Sieben), Absetzbecken (Sedimentieren), Filtration und biologische Reinigung, um Abwasser zu säubern.</div><p>Die Wahl des richtigen Trennverfahrens ist eine wichtige Aufgabe in der Chemie und Industrie. Oft werden mehrere Verfahren hintereinander eingesetzt, um ein möglichst reines Produkt zu erhalten.</p>'}
+],
+quiz:[
+{q:'Was ist ein Reinstoff?',a:['Ein Gemisch aus zwei Stoffen','Ein Stoff aus nur einer Substanz','Ein heterogenes Gemisch','Ein Stoff ohne Eigenschaften'],_h:0x4B},
+{q:'Welches Trennverfahren nutzt unterschiedliche Siedepunkte?',a:['Filtration','Sieben','Destillation','Magnetscheidung'],_h:0x7D},
+{q:'Was ist ein homogenes Gemisch?',a:['Ein Gemisch mit einheitlichem Erscheinungsbild','Ein Gemisch aus nur zwei Stoffen','Ein Gemisch das man sehen kann','Ein festes Gemisch'],_h:0x2B},
+{q:'Welchen Aggregatzustand hat Eis?',a:['Flüssig','Fest','Gasförmig','Plasma'],_h:0x60},
+{q:'Welche Eigenschaft ist stoffspezifisch?',a:['Schmelzpunkt','Gewicht','Volumen','Form'],_h:0x5C}
+],
+boss:[
+{q:'Warum hat jeder Reinstoff einen eigenen Siedepunkt?',a:['Weil alle Stoffe gleich sind','Weil die Teilchen verschiedene Farben haben','Weil die Anziehungskräfte zwischen den Teilchen unterschiedlich stark sind','Weil die Temperatur variiert'],_h:0x48},
+{q:'Welches Trennverfahren nutzt unterschiedliche Korngrößen?',a:['Sieben','Destillation','Chromatographie','Eindampfen'],_h:0x7F},
+{q:'Was passiert bei der Chromatographie?',a:['Stoffe werden erhitzt','Stoffe werden durch unterschiedliche Wanderungsgeschwindigkeiten getrennt','Stoffe werden magnetisch getrennt','Stoffe werden eingefroren'],_h:0x2A}
+]},
+{id:1,title:'Atombau und Periodensystem',icon:'\u269B\uFE0F',duration:'30 Min.',description:'Verstehe den Aufbau von Atomen und das Periodensystem.',
+lessons:[
+{title:'Aufbau eines Atoms',content:'<p>Atome sind die kleinsten Bausteine der Materie, die noch die chemischen Eigenschaften eines Elements besitzen. Jedes Atom besteht aus:</p><ul><li><strong>Atomkern</strong>: Enthält <strong>Protonen</strong> (positiv geladen, Symbol p\u207A) und <strong>Neutronen</strong> (neutral, Symbol n) — der Kern macht fast die gesamte Masse des Atoms aus</li><li><strong>Elektronenhülle</strong>: Enthält <strong>Elektronen</strong> (negativ geladen, Symbol e\u207B), die den Kern in verschiedenen Schalen umgeben</li></ul><div class="info-box">\uD83D\uDCA1 <strong>Merke:</strong> Die Anzahl der Protonen bestimmt, welches Element es ist. Diese Zahl heißt <strong>Ordnungszahl</strong> (Z). Wasserstoff hat Z=1, Helium Z=2, Kohlenstoff Z=6.</div><p>Ein neutrales Atom hat gleich viele Protonen wie Elektronen, sodass die Ladungen sich ausgleichen. Die <strong>Massenzahl</strong> (A) ergibt sich aus: A = Protonen + Neutronen.</p><div class="info-box">\uD83D\uDCA1 <strong>Größenvorstellung:</strong> Ein Atom hat einen Durchmesser von etwa 0,1 Nanometer (0,0000000001 m). Würde man einen Apfel auf die Größe der Erde vergrößern, hätten die Atome darin etwa die Größe eines Apfels!</div>'},
+{title:'Elektronenschalen',content:'<p>Die Elektronen sind auf <strong>Schalen</strong> (Energieniveaus) verteilt, die den Kern wie Zwiebelschichten umgeben:</p><ul><li><strong>1. Schale (K)</strong>: Maximal 2 Elektronen</li><li><strong>2. Schale (L)</strong>: Maximal 8 Elektronen</li><li><strong>3. Schale (M)</strong>: Maximal 18 Elektronen</li><li><strong>4. Schale (N)</strong>: Maximal 32 Elektronen</li></ul><p>Die allgemeine Formel für die maximale Elektronenzahl pro Schale lautet: <strong>2n\u00B2</strong> (n = Schalennummer).</p><p><strong>Isotope</strong> sind Atome desselben Elements mit unterschiedlicher Neutronenzahl. Z.B. hat Kohlenstoff-12 sechs Neutronen, Kohlenstoff-14 hat acht. Isotope haben die gleichen chemischen Eigenschaften, aber unterschiedliche Massen.</p><div class="info-box">\uD83D\uDCA1 <strong>Merke:</strong> Die äußeren Elektronen (<strong>Valenzelektronen</strong>) bestimmen die chemischen Eigenschaften eines Elements. Elemente in der gleichen Gruppe des Periodensystems haben die gleiche Anzahl an Valenzelektronen.</div><div class="info-box">\uD83D\uDCA1 <strong>Alltagsbeispiel:</strong> Kohlenstoff-14 (ein Isotop) ist radioaktiv und zerfällt langsam. Wissenschaftler nutzen dies bei der <strong>C-14-Methode</strong>, um das Alter archäologischer Funde zu bestimmen.</div>'},
+{title:'Das Periodensystem',content:'<p>Im <strong>Periodensystem der Elemente (PSE)</strong> sind alle bekannten Elemente systematisch angeordnet:</p><ul><li><strong>Perioden</strong> (Zeilen): Geben die Anzahl der Elektronenschalen an</li><li><strong>Gruppen</strong> (Spalten): Elemente mit gleicher Valenzelektronenzahl stehen untereinander</li></ul><p>Wichtige Gruppen:</p><ul><li><strong>I. Hauptgruppe</strong>: Alkalimetalle (Lithium, Natrium, Kalium)</li><li><strong>VII. Hauptgruppe</strong>: Halogene (Fluor, Chlor, Brom)</li><li><strong>VIII. Hauptgruppe</strong>: Edelgase (Helium, Neon, Argon)</li></ul>'}
+],
+quiz:[
+{q:'Woraus besteht ein Atomkern?',a:['Nur aus Protonen','Nur aus Elektronen','Aus Protonen und Neutronen','Aus Neutronen und Elektronen'],_h:0x48},
+{q:'Was bestimmt die Ordnungszahl eines Elements?',a:['Die Anzahl der Protonen','Die Anzahl der Neutronen','Die Masse des Atoms','Die Anzahl der Schalen'],_h:0x7F},
+{q:'Wie viele Elektronen passen maximal auf die erste Schale?',a:['8','2','6','18'],_h:0x2A},
+{q:'Was sind Isotope?',a:['Atome verschiedener Elemente','Atome ohne Neutronen','Atome gleichen Elements mit unterschiedlicher Neutronenzahl','Negativ geladene Atome'],_h:0x63},
+{q:'In welcher Hauptgruppe stehen die Edelgase?',a:['I','III','VII','VIII'],_h:0x5F}
+],
+boss:[
+{q:'Warum sind Edelgase besonders stabil?',a:['Weil sie sehr schwer sind','Weil ihre äußere Schale voll besetzt ist','Weil sie keine Protonen haben','Weil sie radioaktiv sind'],_h:0x4B},
+{q:'Was besagt die Oktettregel?',a:['Atome haben immer 8 Protonen','Jede Schale fasst genau 8 Elektronen','Atome streben 8 Elektronen auf der äußeren Schale an','Es gibt nur 8 Elemente'],_h:0x7D},
+{q:'Wie verändert sich die Elektronegativität im PSE?',a:['Sie nimmt nach rechts oben zu','Sie nimmt nach links unten zu','Sie bleibt überall gleich','Sie nimmt nach unten zu'],_h:0x2B}
+]},
+{id:2,title:'Chemische Bindungen',icon:'\uD83D\uDD17',duration:'25 Min.',description:'Erfahre wie Atome sich zu Molekülen und Verbindungen zusammenschließen.',
+lessons:[
+{title:'Ionenbindung',content:'<p>Bei der <strong>Ionenbindung</strong> überträgt ein Atom Elektronen auf ein anderes. Diese Bindung entsteht typischerweise zwischen Metallen und Nichtmetallen:</p><ul><li>Ein <strong>Metallatom</strong> gibt Elektronen ab → wird zum <strong>Kation</strong> (positiv geladen, z.B. Na\u207A)</li><li>Ein <strong>Nichtmetall</strong> nimmt Elektronen auf → wird zum <strong>Anion</strong> (negativ geladen, z.B. Cl\u207B)</li></ul><p>Beispiel: Natrium (Na) gibt ein Elektron an Chlor (Cl) ab → <strong>NaCl</strong> (Kochsalz). Die entgegengesetzt geladenen Ionen ziehen sich elektrostatisch an.</p><div class="info-box">\uD83D\uDCA1 <strong>Merke:</strong> Ionenverbindungen bilden regelmäßige <strong>Kristallgitter</strong> und haben hohe Schmelzpunkte. NaCl schmilzt erst bei 801\u00B0C!</div><p>Typische Eigenschaften von Ionenverbindungen: Sie sind spröde, leiten in gelöstem oder geschmolzenem Zustand elektrischen Strom und sind oft gut wasserlöslich.</p><div class="info-box">\uD83D\uDCA1 <strong>Alltagsbeispiel:</strong> Kochsalz (NaCl) ist die bekannteste Ionenverbindung. In der Küche löst es sich leicht in Wasser — dabei zerfällt das Kristallgitter in einzelne Na\u207A- und Cl\u207B-Ionen.</div>'},
+{title:'Kovalente Bindung',content:'<p>Bei der <strong>kovalenten Bindung</strong> (Atombindung) teilen sich Atome Elektronenpaare, um die Edelgaskonfiguration zu erreichen:</p><ul><li>Entsteht zwischen <strong>Nichtmetallen</strong></li><li>Beide Atome erreichen eine volle äußere Schale</li><li>Es entstehen <strong>Moleküle</strong></li></ul><p>Beispiel: Zwei Wasserstoffatome teilen sich je ein Elektron → H\u2082 (Einfachbindung)</p><p>Wasser (H\u2082O): Sauerstoff teilt sich je ein Elektronenpaar mit zwei Wasserstoffatomen. Es gibt auch <strong>Doppelbindungen</strong> (z.B. O=O in O\u2082) und <strong>Dreifachbindungen</strong> (z.B. N\u2261N in N\u2082).</p><div class="info-box">\uD83D\uDCA1 <strong>Merke:</strong> Die <strong>Elektronegativität</strong> beschreibt, wie stark ein Atom gemeinsame Elektronen anzieht. Ist der Unterschied groß, entsteht ein <strong>polares Molekül</strong> (z.B. Wasser). Ist er gering, ist das Molekül <strong>unpolar</strong> (z.B. Methan CH\u2084).</div><p>Die Polarität von Wasser erklärt viele seiner besonderen Eigenschaften: Es löst Salze gut auf, hat einen hohen Siedepunkt und zeigt die Oberflächenspannung (Wasserläufer können darauf laufen!).</p>'},
+{title:'Metallbindung',content:'<p>In <strong>Metallen</strong> geben alle Atome ihre Valenzelektronen ab. Diese bilden ein <strong>Elektronengas</strong>, das sich frei im Metallgitter bewegt. Die positiven Atomrümpfe werden durch die delokalisierten Elektronen zusammengehalten.</p><p>Das erklärt die typischen Metalleigenschaften:</p><ul><li><strong>Elektrische Leitfähigkeit</strong>: Freie Elektronen transportieren Strom (z.B. Kupferkabel)</li><li><strong>Wärmeleitfähigkeit</strong>: Elektronen übertragen Wärme (z.B. Kochtöpfe aus Metall)</li><li><strong>Verformbarkeit</strong>: Metallschichten gleiten übereinander, ohne dass die Bindung bricht (z.B. Goldschmied hämmert Gold)</li><li><strong>Metallischer Glanz</strong>: Freie Elektronen reflektieren Licht</li></ul><div class="info-box">\uD83D\uDCA1 <strong>Alltagsbeispiel:</strong> Legierungen sind Gemische aus Metallen. <strong>Bronze</strong> (Kupfer + Zinn) und <strong>Stahl</strong> (Eisen + Kohlenstoff) sind bekannte Beispiele, die bessere Eigenschaften als die reinen Metalle haben.</div>'}
+],
+quiz:[
+{q:'Was passiert bei einer Ionenbindung?',a:['Elektronen werden übertragen','Elektronen werden geteilt','Atome verschmelzen','Nichts passiert'],_h:0x4A},
+{q:'Welche Bindung entsteht typisch zwischen Nichtmetallen?',a:['Ionenbindung','Kovalente Bindung','Metallbindung','Kernbindung'],_h:0x7E},
+{q:'Was ist ein Molekül?',a:['Ein einzelnes Atom','Ein geladenes Teilchen','Teilchen aus kovalent gebundenen Atomen','Ein Atomkern'],_h:0x29},
+{q:'Was kennzeichnet die Metallbindung?',a:['Frei bewegliche Elektronen im Metallgitter','Starre Elektronenpaare','Keine Elektronen','Nur Protonen'],_h:0x61},
+{q:'Welche Verbindung ist ionisch?',a:['H\u2082O','NaCl','O\u2082','CH\u2084'],_h:0x5D}
+],
+boss:[
+{q:'Warum leiten Metalle elektrischen Strom?',a:['Wegen der Protonen im Kern','Wegen der Neutronen','Wegen der frei beweglichen Elektronen','Wegen der Ionen'],_h:0x48},
+{q:'Was sind Dipol-Moleküle?',a:['Moleküle mit ungleicher Ladungsverteilung','Moleküle mit zwei Atomen','Moleküle ohne Elektronen','Ionenverbindungen'],_h:0x7F},
+{q:'Warum hat Diamant einen extrem hohen Schmelzpunkt?',a:['Weil er aus Gold besteht','Weil jedes C-Atom mit 4 anderen kovalent verbunden ist','Weil er ionisch gebunden ist','Weil er sehr schwer ist'],_h:0x2A}
+]},
+{id:3,title:'Chemische Reaktionen',icon:'\uD83D\uDCA5',duration:'30 Min.',description:'Verstehe Reaktionsgleichungen und das Gesetz der Massenerhaltung.',
+lessons:[
+{title:'Was ist eine chemische Reaktion?',content:'<p>Bei einer <strong>chemischen Reaktion</strong> werden Stoffe umgewandelt: Aus <strong>Edukten</strong> (Ausgangsstoffe) entstehen <strong>Produkte</strong> (neue Stoffe) mit völlig neuen Eigenschaften.</p><p>Kennzeichen einer chemischen Reaktion:</p><ul><li><strong>Farbveränderung</strong> (z.B. Eisen wird beim Rosten braun)</li><li><strong>Gasbildung</strong> (z.B. Brausetablette in Wasser)</li><li><strong>Temperaturveränderung</strong> (z.B. Wärme beim Verbrennen von Holz)</li><li><strong>Bildung eines Niederschlags</strong> (z.B. Kalkstein fällt aus)</li><li><strong>Geruchsveränderung</strong> (z.B. faule Eier durch Schwefelwasserstoff)</li></ul><div class="info-box">\uD83D\uDCA1 <strong>Merke:</strong> Das <strong>Gesetz der Massenerhaltung</strong> (Antoine Lavoisier, 1789) besagt: Die Gesamtmasse der Edukte ist gleich der Gesamtmasse der Produkte. Atome werden bei chemischen Reaktionen weder erzeugt noch zerstört — sie werden nur umgruppiert!</div><p>Wichtig: Eine chemische Reaktion ist etwas anderes als eine physikalische Zustandsänderung. Wenn Eis schmilzt (H\u2082O bleibt H\u2082O), ist das keine chemische Reaktion. Wenn Eisen rostet (Fe wird zu Fe\u2082O\u2083), schon!</p>'},
+{title:'Reaktionsgleichungen',content:'<p>Eine <strong>Reaktionsgleichung</strong> beschreibt eine chemische Reaktion mit chemischen Formeln:</p><pre><code>2 H\u2082 + O\u2082 \u2192 2 H\u2082O</code></pre><p>Der Pfeil (\u2192) bedeutet „reagiert zu". Die Zahlen vor den Formeln heißen <strong>Koeffizienten</strong> — sie gleichen die Gleichung aus, damit auf beiden Seiten gleich viele Atome stehen.</p><p><strong>So gleicht man eine Gleichung aus:</strong></p><ol><li>Schreibe die Formeln der Edukte und Produkte auf</li><li>Zähle die Atome jedes Elements auf beiden Seiten</li><li>Setze Koeffizienten vor die Formeln, bis alle Atome ausgeglichen sind</li><li>Überprüfe das Ergebnis</li></ol><div class="info-box">\uD83D\uDCA1 <strong>Beispiel Schritt für Schritt:</strong> H\u2082 + O\u2082 → H\u2082O — Links: 2 H, 2 O. Rechts: 2 H, 1 O. Sauerstoff ungleich! → 2 H\u2082 + O\u2082 → 2 H\u2082O — Links: 4 H, 2 O. Rechts: 4 H, 2 O. Stimmt!</div>'},
+{title:'Reaktionstypen',content:'<p>Wichtige Reaktionstypen in der Chemie:</p><ul><li><strong>Synthese</strong> (Vereinigung): Zwei oder mehr Stoffe verbinden sich zu einem neuen Stoff. A + B \u2192 AB<br>Beispiel: 2 Na + Cl\u2082 \u2192 2 NaCl (Natrium und Chlor reagieren zu Kochsalz)</li><li><strong>Analyse</strong> (Zersetzung): Ein Stoff wird in seine Bestandteile zerlegt. AB \u2192 A + B<br>Beispiel: 2 H\u2082O \u2192 2 H\u2082 + O\u2082 (Elektrolyse von Wasser)</li><li><strong>Umsetzung</strong> (Austauschreaktion): Stoffe tauschen Bestandteile aus. AB + CD \u2192 AD + CB<br>Beispiel: NaCl + AgNO\u2083 \u2192 NaNO\u2083 + AgCl</li></ul><div class="info-box">\uD83D\uDCA1 <strong>Alltagsbeispiel:</strong> Wenn du ein Streichholz anzündest, findet eine Synthese statt: Die Chemikalien am Streichholzkopf verbinden sich mit Sauerstoff. Beim Kuchenbacken hingegen zersetzen sich manche Stoffe (Analyse), während sich andere verbinden (Synthese) — Chemie in Aktion!</div><p>Zusätzlich gibt es <strong>katalytische Reaktionen</strong>, bei denen ein Katalysator die Reaktion beschleunigt, ohne selbst verbraucht zu werden (mehr dazu im Modul Energie).</p>'}
+],
+quiz:[
+{q:'Was gilt für jede chemische Reaktion?',a:['Es entstehen immer Gase','Die Masse bleibt erhalten','Die Temperatur steigt immer','Alle Produkte sind flüssig'],_h:0x4B},
+{q:'Was bedeutet der Pfeil in einer Reaktionsgleichung?',a:['"reagiert zu"','"ist gleich"','"wird erhitzt"','"ist größer als"'],_h:0x7F},
+{q:'Was ist ein Edukt?',a:['Ein Produkt','Ein Katalysator','Ein Ausgangsstoff','Ein Enzym'],_h:0x29},
+{q:'Wie heißt die Verbindung H\u2082O?',a:['Wasserstoffperoxid','Wasser','Salzsäure','Schwefelsäure'],_h:0x60},
+{q:'Was muss in einer Reaktionsgleichung ausgeglichen sein?',a:['Die Anzahl der Atome auf beiden Seiten','Die Temperatur','Die Farbe','Das Volumen'],_h:0x5C}
+],
+boss:[
+{q:'Was besagt das Gesetz der Massenerhaltung?',a:['In einer Reaktion geht keine Masse verloren oder entsteht','Masse kann erzeugt werden','Produkte sind immer schwerer','Edukte sind immer leichter'],_h:0x4A},
+{q:'Was ist der Unterschied zwischen Synthese und Analyse?',a:['Synthese ist schneller','Analyse braucht Wärme','Synthese verbindet Stoffe, Analyse trennt sie','Es gibt keinen Unterschied'],_h:0x7D},
+{q:'Warum muss man Reaktionsgleichungen ausgleichen?',a:['Damit sie schöner aussehen','Weil Atome weder entstehen noch verschwinden','Weil es Vorschrift ist','Damit die Temperatur stimmt'],_h:0x2A}
+]},
+{id:4,title:'Säuren, Basen und Salze',icon:'\uD83E\uDDEB',duration:'30 Min.',description:'Lerne pH-Wert, Indikatoren und Neutralisation kennen.',
+lessons:[
+{title:'pH-Wert und Indikatoren',content:'<p>Der <strong>pH-Wert</strong> gibt an, ob eine Lösung sauer, neutral oder basisch ist. Die Skala reicht von 0 bis 14:</p><ul><li><strong>pH 0-6</strong>: Sauer (z.B. Magensäure pH 1, Zitronensaft pH 2, Essig pH 3, Kaffee pH 5)</li><li><strong>pH 7</strong>: Neutral (reines Wasser, Blut hat pH 7,4)</li><li><strong>pH 8-14</strong>: Basisch/alkalisch (z.B. Seife pH 9, Bleiche pH 12, Natronlauge pH 14)</li></ul><div class="info-box">\uD83D\uDCA1 <strong>Wichtig:</strong> Die pH-Skala ist <strong>logarithmisch</strong>: Ein pH-Unterschied von 1 bedeutet eine 10-fache Änderung der Säurestärke! pH 3 ist also 10-mal saurer als pH 4 und 100-mal saurer als pH 5.</div><p><strong>Indikatoren</strong> sind Stoffe, die ihre Farbe je nach pH-Wert ändern:</p><ul><li><strong>Lackmus</strong>: rot in Säure, blau in Base</li><li><strong>Phenolphthalein</strong>: farblos in Säure, pink in Base</li><li><strong>Universalindikator</strong>: zeigt die gesamte pH-Skala in verschiedenen Farben an</li><li><strong>Rotkohlsaft</strong>: ein natürlicher Indikator — rot in Säure, grün/gelb in Base</li></ul>'},
+{title:'Säuren und Basen',content:'<p>Nach der <strong>Br\u00f8nsted-Definition</strong> (1923):</p><ul><li><strong>Säuren</strong> = Protonendonatoren (geben H\u207A-Ionen ab)</li><li><strong>Basen</strong> = Protonenakzeptoren (nehmen H\u207A-Ionen auf)</li></ul><p>Wichtige Säuren im Überblick:</p><ul><li><strong>Salzsäure</strong> (HCl) — im Magen, in der Industrie</li><li><strong>Schwefelsäure</strong> (H\u2082SO\u2084) — in Autobatterien, meistproduzierte Chemikalie der Welt</li><li><strong>Kohlensäure</strong> (H\u2082CO\u2083) — in Sprudelwasser</li><li><strong>Essigsäure</strong> (CH\u2083COOH) — in Essig zum Kochen</li></ul><p>Wichtige Basen: Natronlauge (NaOH), Kalkwasser (Ca(OH)\u2082), Ammoniak (NH\u2083)</p><div class="info-box">\uD83D\uDCA1 <strong>Alltagsbeispiel:</strong> Im Magen befindet sich Salzsäure (HCl) mit pH 1-2, die bei der Verdauung hilft und Bakterien abtötet. Bei Sodbrennen steigt diese Säure in die Speiseröhre auf — Antazida (basische Medikamente) neutralisieren sie.</div>'},
+{title:'Neutralisation',content:'<p>Wenn eine <strong>Säure</strong> und eine <strong>Base</strong> reagieren, entstehen <strong>Salz und Wasser</strong>:</p><pre><code>HCl + NaOH \u2192 NaCl + H\u2082O\nSäure + Base \u2192 Salz + Wasser</code></pre><p>Diese Reaktion heißt <strong>Neutralisation</strong>. Das entstehende Salz bestimmt sich aus dem Säure-Anion und dem Base-Kation.</p><div class="info-box">\uD83D\uDCA1 <strong>Weitere Beispiele:</strong><br>H\u2082SO\u2084 + 2 NaOH \u2192 Na\u2082SO\u2084 + 2 H\u2082O (Schwefelsäure + Natronlauge → Natriumsulfat + Wasser)<br>HNO\u2083 + KOH \u2192 KNO\u2083 + H\u2082O (Salpetersäure + Kalilauge → Kaliumnitrat + Wasser)</div><p>Die Neutralisation ist eine <strong>exotherme Reaktion</strong> — es wird Wärme frei. Im Alltag nutzt man dieses Prinzip z.B. bei <strong>Sodbrennen-Medikamenten</strong> (Base neutralisiert Magensäure) oder bei der <strong>Kalkung saurer Böden</strong> in der Landwirtschaft.</p>'}
+],
+quiz:[
+{q:'Was zeigt der pH-Wert an?',a:['Die Temperatur','Die Dichte','Ob eine Lösung sauer, neutral oder basisch ist','Die Farbe'],_h:0x48},
+{q:'Welchen pH-Wert hat eine neutrale Lösung?',a:['0','7','14','1'],_h:0x7E},
+{q:'Was entsteht bei einer Neutralisation?',a:['Salz und Wasser','Nur Wasser','Nur Salz','S\u00E4ure und Base'],_h:0x2B},
+{q:'Welche Säure ist im Magen?',a:['Schwefelsäure','Essigsäure','Salzsäure','Kohlensäure'],_h:0x63},
+{q:'Was ist eine Base nach Br\u00f8nsted?',a:['Ein Protonendonator','Ein Protonenakzeptor','Ein Neutralisator','Ein Katalysator'],_h:0x5D}
+],
+boss:[
+{q:'Warum färbt sich Lackmus in saurer Lösung rot?',a:['Weil die Lösung heiß ist','Weil der Indikator auf H\u207A-Ionen reagiert','Weil Lackmus immer rot ist','Weil Säuren rot sind'],_h:0x4B},
+{q:'Was passiert bei HCl + NaOH?',a:['Es entsteht NaCl + H\u2082O','Es passiert nichts','Es entsteht nur Gas','Es entsteht nur Salz'],_h:0x7F},
+{q:'Was unterscheidet starke von schwachen Säuren?',a:['Die Farbe','Die Temperatur','Starke dissoziieren vollständig, schwache nur teilweise','Das Volumen'],_h:0x29}
+]},
+{id:5,title:'Oxidation und Reduktion',icon:'\u26A1',duration:'30 Min.',description:'Verstehe Redoxreaktionen und Oxidationszahlen.',
+lessons:[
+{title:'Oxidation und Reduktion',content:'<p>Ursprünglich bezeichnete <strong>Oxidation</strong> nur die Verbindung mit Sauerstoff (z.B. Rosten). Heute definieren wir im <strong>erweiterten Sinne</strong>:</p><ul><li><strong>Oxidation</strong> = Elektronenabgabe (ein Teilchen verliert Elektronen)</li><li><strong>Reduktion</strong> = Elektronenaufnahme (ein Teilchen gewinnt Elektronen)</li></ul><p>Beide Prozesse laufen <strong>immer gleichzeitig</strong> ab — wenn ein Teilchen Elektronen abgibt, muss ein anderes sie aufnehmen. Deshalb spricht man von <strong>Redoxreaktionen</strong>.</p><div class="info-box">\uD83D\uDCA1 <strong>Eselsbrücke:</strong> <strong>OIL RIG</strong> — Oxidation Is Loss, Reduction Is Gain (von Elektronen). Oder auf Deutsch: <strong>Oxidation = Abgabe, Reduktion = Aufnahme</strong>.</div><p>Redoxreaktionen sind allgegenwärtig: Verbrennung, Atmung, Rosten, Fotosynthese, Batteriebetrieb — all diese Prozesse beruhen auf dem Austausch von Elektronen.</p><div class="info-box">\uD83D\uDCA1 <strong>Alltagsbeispiel:</strong> Wenn du atmest, wird Glucose in deinem Körper oxidiert: C\u2086H\u2081\u2082O\u2086 + 6 O\u2082 → 6 CO\u2082 + 6 H\u2082O + Energie. Das ist im Prinzip eine langsame Verbrennung!</div>'},
+{title:'Oxidationsmittel und Reduktionsmittel',content:'<p>In jeder Redoxreaktion gibt es zwei Partner:</p><ul><li><strong>Oxidationsmittel</strong>: Nimmt Elektronen auf und wird selbst reduziert (z.B. Sauerstoff, Chlor, Kaliumpermanganat)</li><li><strong>Reduktionsmittel</strong>: Gibt Elektronen ab und wird selbst oxidiert (z.B. Wasserstoff, unedle Metalle wie Eisen und Zink)</li></ul><p>Beispiel <strong>Rosten</strong>: Eisen gibt Elektronen an Sauerstoff ab:</p><pre><code>4 Fe + 3 O\u2082 \u2192 2 Fe\u2082O\u2083</code></pre><p>Hier ist Eisen das <strong>Reduktionsmittel</strong> (es wird oxidiert) und Sauerstoff das <strong>Oxidationsmittel</strong> (es wird reduziert).</p><div class="info-box">\uD83D\uDCA1 <strong>Alltagsbeispiel:</strong> <strong>Korrosionsschutz</strong>: Um Rosten zu verhindern, überzieht man Eisen mit Zink (<strong>Verzinken</strong>). Zink ist unedler als Eisen und wird bevorzugt oxidiert — es „opfert" sich für das Eisen (Opferanode). So bleiben z.B. Autokarosserien länger rostfrei.</div>'},
+{title:'Oxidationszahlen',content:'<p><strong>Oxidationszahlen</strong> (OZ) zeigen die formale Ladung eines Atoms in einer Verbindung. Sie helfen, Redoxreaktionen zu erkennen:</p><p><strong>Regeln zur Bestimmung:</strong></p><ul><li>Elemente in reiner Form: OZ = 0 (z.B. Fe, O\u2082, H\u2082)</li><li>Einatomige Ionen: OZ = Ionenladung (z.B. Na\u207A → OZ = +1)</li><li>Sauerstoff: meistens OZ = -2 (Ausnahme: Peroxide OZ = -1)</li><li>Wasserstoff: meistens OZ = +1 (Ausnahme: Metallhydride OZ = -1)</li><li>Die Summe aller Oxidationszahlen = Gesamtladung des Teilchens</li></ul><div class="info-box">\uD83D\uDCA1 <strong>Merke:</strong> Steigt die Oxidationszahl → <strong>Oxidation</strong> (Elektronenabgabe). Sinkt die Oxidationszahl → <strong>Reduktion</strong> (Elektronenaufnahme).</div><p><strong>Beispiel:</strong> Bei der Reaktion 2 Mg + O\u2082 → 2 MgO ändert sich die OZ von Mg von 0 auf +2 (Oxidation) und die OZ von O von 0 auf -2 (Reduktion).</p>'}
+],
+quiz:[
+{q:'Was ist Oxidation im erweiterten Sinne?',a:['Elektronenaufnahme','Elektronenabgabe','Protonenabgabe','Neutronenabgabe'],_h:0x4B},
+{q:'Was ist das Gegenteil von Oxidation?',a:['Synthese','Analyse','Reduktion','Neutralisation'],_h:0x7D},
+{q:'Was passiert bei der Rostbildung?',a:['Eisen wird oxidiert','Eisen wird reduziert','Eisen schmilzt','Eisen verdampft'],_h:0x2B},
+{q:'Was ist ein Oxidationsmittel?',a:['Ein Stoff der Elektronen abgibt','Ein Stoff der andere oxidiert und selbst reduziert wird','Ein Katalysator','Ein Lösungsmittel'],_h:0x60},
+{q:'Welche Oxidationszahl hat Sauerstoff meistens?',a:['0','+1','-2','+2'],_h:0x5E}
+],
+boss:[
+{q:'Warum ist Verbrennung eine Redoxreaktion?',a:['Weil gleichzeitig Oxidation und Reduktion stattfinden','Weil es heiß wird','Weil Licht entsteht','Weil Gas entsteht'],_h:0x4A},
+{q:'Was passiert bei der Thermitreaktion?',a:['Wasser wird gespalten','Aluminium reduziert Eisenoxid zu Eisen','Eisen wird gasförmig','Sauerstoff wird fest'],_h:0x7E},
+{q:'Wie bestimmt man Oxidationszahlen?',a:['Durch Wiegen','Man rät','Nach festen Regeln für Elemente und Verbindungen','Durch Erhitzen'],_h:0x29}
+]},
+{id:6,title:'Organische Chemie',icon:'\uD83D\uDEE2\uFE0F',duration:'30 Min.',description:'Entdecke die Chemie der Kohlenstoffverbindungen.',
+lessons:[
+{title:'Kohlenstoff — das besondere Element',content:'<p><strong>Kohlenstoff (C)</strong> ist die Basis der organischen Chemie und das vielseitigste Element überhaupt. Besonderheiten:</p><ul><li>Kann <strong>4 Bindungen</strong> eingehen (Vierbindigkeit)</li><li>Bildet lange <strong>Ketten</strong>, <strong>Ringe</strong> und <strong>Verzweigungen</strong></li><li>Kann Einfach-, Doppel- und Dreifachbindungen bilden</li><li>Über <strong>10 Millionen</strong> verschiedene Verbindungen sind bekannt</li></ul><div class="info-box">\uD83D\uDCA1 <strong>Merke:</strong> Organische Chemie = Chemie der Kohlenstoffverbindungen (außer CO\u2082, Carbonate und einige wenige andere anorganische C-Verbindungen).</div><p>Kohlenstoff kommt in verschiedenen <strong>Modifikationen</strong> vor: <strong>Diamant</strong> (jedes C-Atom ist mit 4 anderen verbunden — extrem hart), <strong>Graphit</strong> (Schichtstruktur — weich, leitet Strom, z.B. in Bleistiften) und <strong>Fullerene</strong> (kugelförmige Moleküle, z.B. C\u2086\u2080).</p><div class="info-box">\uD83D\uDCA1 <strong>Alltagsbeispiel:</strong> Alle Lebewesen basieren auf Kohlenstoffverbindungen: DNA, Proteine, Fette und Kohlenhydrate — die gesamte Biochemie ist organische Chemie!</div>'},
+{title:'Alkane, Alkene, Alkine',content:'<p><strong>Kohlenwasserstoffe</strong> bestehen nur aus Kohlenstoff (C) und Wasserstoff (H). Sie werden nach der Art ihrer Bindungen eingeteilt:</p><ul><li><strong>Alkane</strong> (nur Einfachbindungen, „gesättigt"): Methan CH\u2084, Ethan C\u2082H\u2086, Propan C\u2083H\u2088, Butan C\u2084H\u2081\u2080</li><li><strong>Alkene</strong> (mind. eine Doppelbindung, „ungesättigt"): Ethen C\u2082H\u2084 — wichtig für die Kunststoffherstellung (Polyethylen)</li><li><strong>Alkine</strong> (mind. eine Dreifachbindung): Ethin C\u2082H\u2082 (Acetylen) — wird beim Schweißen verwendet</li></ul><p>Die allgemeine Formel der Alkane ist: <strong>C\u2099H\u2082\u2099\u208A\u2082</strong></p><div class="info-box">\uD83D\uDCA1 <strong>Alltagsbeispiel:</strong> Erdgas besteht hauptsächlich aus Methan (CH\u2084). Propan und Butan finden sich in Campinggaskartuschen. Benzin ist ein Gemisch aus Alkanen mit 5-12 C-Atomen. Je länger die Kette, desto höher der Siedepunkt!</div><p>Mit steigender Kettenlänge ändern sich die physikalischen Eigenschaften: Methan (1 C) ist ein Gas, Oktan (8 C) ist flüssig (Benzin), und Paraffin (20+ C) ist ein Feststoff (Kerzen).</p>'},
+{title:'Funktionelle Gruppen',content:'<p><strong>Funktionelle Gruppen</strong> sind bestimmte Atomgruppen in organischen Molekülen, die deren chemische Eigenschaften maßgeblich bestimmen:</p><ul><li><strong>-OH</strong> (Hydroxylgruppe): <strong>Alkohole</strong> — z.B. Ethanol C\u2082H\u2085OH (in Getränken), Methanol CH\u2083OH (giftig!)</li><li><strong>-COOH</strong> (Carboxylgruppe): <strong>Carbonsäuren</strong> — z.B. Essigsäure CH\u2083COOH, Zitronensäure</li><li><strong>-NH\u2082</strong> (Aminogruppe): <strong>Amine</strong> — Bausteine der Aminosäuren und Proteine</li><li><strong>-CHO</strong> (Aldehydgruppe): <strong>Aldehyde</strong> — z.B. Formaldehyd (Konservierung)</li><li><strong>-CO-</strong> (Ketogruppe): <strong>Ketone</strong> — z.B. Aceton (Nagellackentferner)</li><li><strong>-COO-</strong> (Estergruppe): <strong>Ester</strong> — viele Aromastoffe in Früchten sind Ester</li></ul><div class="info-box">\uD83D\uDCA1 <strong>Alltagsbeispiel:</strong> Der Geruch von reifen Bananen kommt vom Ester Isoamylacetat. Erdbeeraroma, Apfelaroma — viele Fruchtaromen sind ebenfalls Ester. Die Parfümindustrie nutzt gezielt funktionelle Gruppen, um Düfte zu kreieren.</div>'}
+],
+quiz:[
+{q:'Welches Element ist Grundlage der organischen Chemie?',a:['Kohlenstoff','Sauerstoff','Stickstoff','Wasserstoff'],_h:0x4A},
+{q:'Was sind Alkane?',a:['Ungesättigte Kohlenwasserstoffe','Gesättigte Kohlenwasserstoffe mit Einfachbindungen','Salze','Säuren'],_h:0x7E},
+{q:'Wie heißt das einfachste Alkan?',a:['Ethan','Propan','Methan','Butan'],_h:0x29},
+{q:'Was unterscheidet Alkene von Alkanen?',a:['Alkene haben mindestens eine Doppelbindung','Alkene sind fest','Alkane haben Doppelbindungen','Es gibt keinen Unterschied'],_h:0x61},
+{q:'Was ist eine funktionelle Gruppe?',a:['Ein einzelnes Atom','Eine Atomgruppe die die Eigenschaften bestimmt','Der Atomkern','Die Elektronenschale'],_h:0x5D}
+],
+boss:[
+{q:'Warum kann Kohlenstoff so viele Verbindungen bilden?',a:['Weil er sehr schwer ist','Weil er radioaktiv ist','Weil er 4 Bindungen eingehen und Ketten bilden kann','Weil er ein Edelgas ist'],_h:0x48},
+{q:'Was sind Isomere?',a:['Identische Moleküle','Stoffe mit gleicher Summenformel aber unterschiedlicher Struktur','Isotope von Kohlenstoff','Verschiedene Elemente'],_h:0x7E},
+{q:'Welche funktionelle Gruppe haben Alkohole?',a:['Hydroxylgruppe -OH','Carboxylgruppe -COOH','Aminogruppe -NH\u2082','Aldehydgruppe -CHO'],_h:0x2B}
+]},
+{id:7,title:'Energie bei Reaktionen',icon:'\uD83D\uDD25',duration:'25 Min.',description:'Verstehe exotherme und endotherme Reaktionen.',
+lessons:[
+{title:'Exotherm und Endotherm',content:'<p>Chemische Reaktionen sind immer mit <strong>Energieänderungen</strong> verbunden:</p><ul><li><strong>Exotherm</strong>: Energie wird <strong>freigesetzt</strong> (Umgebung erw\u00E4rmt sich). Beispiel: Verbrennung</li><li><strong>Endotherm</strong>: Energie wird <strong>aufgenommen</strong> (Umgebung k\u00FChlt ab). Beispiel: Fotosynthese</li></ul><div class="info-box">\uD83D\uDCA1 <strong>Merke:</strong> Bei exothermen Reaktionen ist die Energie der Produkte <strong>niedriger</strong> als die der Edukte — die Differenz wird als W\u00E4rme abgegeben.</div>'},
+{title:'Aktivierungsenergie',content:'<p>Die <strong>Aktivierungsenergie</strong> ist die Energie, die n\u00F6tig ist, um eine Reaktion zu starten — wie ein Funke, der Holz entzündet.</p><p>Auch exotherme Reaktionen brauchen oft eine Anfangsenergie (z.B. ein Streichholz zum Anzünden).</p>'},
+{title:'Katalysatoren',content:'<p>Ein <strong>Katalysator</strong> senkt die Aktivierungsenergie, ohne selbst verbraucht zu werden:</p><ul><li>Reaktion läuft <strong>schneller</strong> ab</li><li>Katalysator liegt nach der Reaktion <strong>unver\u00E4ndert</strong> vor</li><li>Beispiel: Enzyme in unserem K\u00F6rper sind biologische Katalysatoren</li></ul>'}
+],
+quiz:[
+{q:'Was bedeutet exotherm?',a:['Energie wird aufgenommen','Energie wird freigesetzt','Keine Energieänderung','Temperatur sinkt'],_h:0x4B},
+{q:'Was ist Aktivierungsenergie?',a:['Die Energie die zum Starten einer Reaktion n\u00F6tig ist','Die Gesamtenergie','Die W\u00E4rme des Produkts','Die kinetische Energie'],_h:0x7F},
+{q:'Was macht ein Katalysator?',a:['Er liefert Energie','Er senkt die Aktivierungsenergie','Er erhoet die Masse','Er \u00E4ndert die Produkte'],_h:0x2A},
+{q:'Welche Reaktion ist endotherm?',a:['Verbrennung','Rosten','Fotosynthese','Explosion'],_h:0x63},
+{q:'Was ist der Satz von Hess?',a:['Die Reaktionsenthalpie ist wegunabhängig','Masse geht verloren','Energie entsteht aus Nichts','Katalysatoren werden verbraucht'],_h:0x5C}
+],
+boss:[
+{q:'Warum wird ein Katalysator nicht verbraucht?',a:['Weil er aus Diamant besteht','Weil er nach der Reaktion unver\u00E4ndert vorliegt','Weil er nicht reagiert','Weil er unsichtbar ist'],_h:0x4B},
+{q:'Was passiert energetisch bei der Verbrennung von Holz?',a:['Chemische Energie wird in W\u00E4rme und Licht umgewandelt','W\u00E4rme wird in chemische Energie umgewandelt','Keine Energieänderung','Masse wird in Energie umgewandelt'],_h:0x7F},
+{q:'Warum m\u00FCssen manche Reaktionen erhitzt werden?',a:['Weil sie endotherm sind','Weil sie keinen Katalysator haben','Weil die Aktivierungsenergie \u00FCberwunden werden muss','Weil W\u00E4rme die Masse erh\u00F6ht'],_h:0x29}
+]},
+{id:8,title:'Elektrochemie',icon:'\uD83D\uDD0B',duration:'30 Min.',description:'Lerne \u00FCber galvanische Zellen, Elektrolyse und Batterien.',
+lessons:[
+{title:'Galvanische Zellen',content:'<p>Eine <strong>galvanische Zelle</strong> wandelt chemische Energie in elektrische Energie um.</p><p>Aufbau: Zwei verschiedene Metalle in Elektrolytl\u00F6sungen, verbunden durch eine Salzbruecke.</p><ul><li><strong>Anode</strong> (-): Hier findet <strong>Oxidation</strong> statt (Metall l\u00F6st sich auf)</li><li><strong>Kathode</strong> (+): Hier findet <strong>Reduktion</strong> statt (Metall wird abgeschieden)</li></ul><div class="info-box">\uD83D\uDCA1 <strong>Merke:</strong> Die bekannteste galvanische Zelle ist die <strong>Daniell-Zelle</strong> mit Zink und Kupfer.</div>'},
+{title:'Elektrolyse',content:'<p>Die <strong>Elektrolyse</strong> ist das Gegenteil: Elektrische Energie erzwingt eine chemische Reaktion.</p><p>Anwendungen:</p><ul><li><strong>Aluminiumgewinnung</strong>: Aluminiumoxid wird mit Strom in Aluminium und Sauerstoff zerlegt</li><li><strong>Galvanisieren</strong>: Metallschicht wird auf ein anderes Metall aufgetragen</li><li><strong>Wasserelektrolyse</strong>: Wasser wird in H\u2082 und O\u2082 zerlegt</li></ul>'},
+{title:'Batterien und Akkus',content:'<p><strong>Batterie</strong>: Nicht wiederaufladbare galvanische Zelle (z.B. Alkali-Mangan)</p><p><strong>Akkumulator</strong>: Wiederaufladbar — die Reaktion ist umkehrbar (z.B. Lithium-Ionen-Akku)</p><p>Die <strong>elektrochemische Spannungsreihe</strong> ordnet Metalle nach ihrer Bereitschaft, Elektronen abzugeben. Unedle Metalle (z.B. Lithium, Zink) stehen oben.</p>'}
+],
+quiz:[
+{q:'Was ist eine galvanische Zelle?',a:['Ein Beh\u00E4lter f\u00FCr Chemikalien','Ein Messgerät','Eine Anordnung die chemische in elektrische Energie umwandelt','Ein Heizelement'],_h:0x48},
+{q:'Was passiert bei der Elektrolyse?',a:['Chemische Energie wird frei','Elektrische Energie erzwingt eine chemische Reaktion','W\u00E4rme wird erzeugt','Licht wird erzeugt'],_h:0x7E},
+{q:'An welcher Elektrode findet Oxidation statt?',a:['An der Anode','An der Kathode','An beiden','An keiner'],_h:0x2B},
+{q:'Was ist ein Akkumulator?',a:['Eine Einwegbatterie','Eine wiederaufladbare Batterie','Ein Generator','Ein Motor'],_h:0x60},
+{q:'Welches Metall ist besonders unedel?',a:['Gold','Kupfer','Lithium','Silber'],_h:0x5E}
+],
+boss:[
+{q:'Warum kann man mit Elektrolyse Aluminium gewinnen?',a:['Weil Strom Aluminiumoxid in Al und O\u2082 zerlegt','Weil Aluminium schmilzt','Weil Aluminium magnetisch ist','Weil Aluminium ein Edelmetall ist'],_h:0x4A},
+{q:'Was ist der Unterschied zwischen Anode und Kathode?',a:['Anode ist gr\u00F6\u00DFer','Kathode hat mehr Masse','Anode = Oxidation, Kathode = Reduktion','Es gibt keinen Unterschied'],_h:0x7D},
+{q:'Warum rosten verzinkte Autos weniger?',a:['Weil Zink sch\u00F6ner ist','Weil Zink als Opferanode wirkt und sich statt Eisen aufl\u00F6st','Weil Zink Wasser abstosst','Weil Zink magnetisch ist'],_h:0x2A}
+]},
+{id:9,title:'Chemie im Alltag',icon:'\uD83C\uDFE0',duration:'25 Min.',description:'Entdecke Chemie in Kunststoffen, Waschmitteln und Lebensmitteln.',
+lessons:[
+{title:'Kunststoffe',content:'<p><strong>Kunststoffe (Polymere)</strong> sind lange Kettenmoleküle aus vielen gleichen Bausteinen (Monomere).</p><p>Drei Haupttypen:</p><ul><li><strong>Thermoplaste</strong>: Werden beim Erw\u00E4rmen weich (z.B. PET-Flaschen) — recycelbar!</li><li><strong>Duroplaste</strong>: Werden beim Erw\u00E4rmen nicht weich (z.B. Steckdosen) — nicht schmelzbar</li><li><strong>Elastomere</strong>: Elastisch verformbar (z.B. Gummi)</li></ul>'},
+{title:'Waschmittel und Tenside',content:'<p><strong>Tenside</strong> sind der Hauptbestandteil von Waschmitteln. Sie haben:</p><ul><li>Einen <strong>hydrophilen</strong> (wasserliebenden) Teil</li><li>Einen <strong>hydrophoben</strong> (fettliebenden) Teil</li></ul><p>So k\u00F6nnen sie Fett und Wasser verbinden — der Schmutz wird von der Kleidung gel\u00F6st und weggespült.</p><div class="info-box">\uD83D\uDCA1 <strong>Merke:</strong> Seife ist ein nat\u00FCrliches Tensid, hergestellt aus Fetten und Lauge.</div>'},
+{title:'Lebensmittelchemie',content:'<p>Chemie steckt in jedem Lebensmittel:</p><ul><li><strong>Kohlenhydrate</strong>: Zucker und St\u00E4rke — liefern Energie</li><li><strong>Fette</strong>: Energiespeicher und Zellbaustein</li><li><strong>Proteine</strong>: Aus Aminos\u00E4uren aufgebaut — Baustoff des K\u00F6rpers</li></ul><p><strong>Gärung</strong>: Hefe baut Zucker zu Alkohol und CO\u2082 ab — so entsteht Brot (CO\u2082 macht Blasen) und Wein (Alkohol).</p>'}
+],
+quiz:[
+{q:'Was sind Kunststoffe chemisch?',a:['Salze','Lange Kettenmoleküle (Polymere)','Metalle','Gase'],_h:0x4B},
+{q:'Wie wirken Tenside in Waschmitteln?',a:['Sie haben einen wasserliebenden und einen fettliebenden Teil','Sie lösen Metalle','Sie erh\u00F6hen die Temperatur','Sie färben die Kleidung'],_h:0x7F},
+{q:'Was ist Gärung?',a:['Erhitzen von Metall','Schmelzen von Eis','Biologischer Abbau von Zucker zu Alkohol und CO\u2082','Verdampfen von Wasser'],_h:0x29},
+{q:'Warum schäumt Seife?',a:['Weil Tenside die Oberfl\u00E4chenspannung des Wassers senken','Weil Seife heiß ist','Weil Seife gasfoermig wird','Weil Wasser Blasen mag'],_h:0x61},
+{q:'Was bedeutet "biologisch abbaubar"?',a:['Der Stoff ist essbar','Mikroorganismen k\u00F6nnen den Stoff zersetzen','Der Stoff ist unsichtbar','Der Stoff l\u00F6st sich in Wasser'],_h:0x5D}
+],
+boss:[
+{q:'Warum sind manche Kunststoffe schwer recycelbar?',a:['Weil sie bunt sind','Weil sie zu leicht sind','Weil Duroplaste nach dem Aushärten nicht mehr schmelzbar sind','Weil sie zu teuer sind'],_h:0x48},
+{q:'Was ist der Treibhauseffekt chemisch betrachtet?',a:['Pflanzen wachsen schneller','CO\u2082 und andere Gase absorbieren W\u00E4rmestrahlung der Erde','Wasser wird w\u00E4rmer','Metalle rosten schneller'],_h:0x7E},
+{q:'Warum funktioniert Seife nicht gut in hartem Wasser?',a:['Weil Calcium-Ionen mit Seife unlösliche Kalkseife bilden','Weil das Wasser zu kalt ist','Weil hartes Wasser keinen Sauerstoff hat','Weil Seife nur in weichem Wasser existiert'],_h:0x2B}
+]}
+];
+
+// === State Management ===
+const STORAGE_KEY='chemielabor_progress';
+let state={name:'',started:false,currentModule:0,xp:0,level:0,streak:0,lastVisit:null,modulesCompleted:[],quizResults:{},bossResults:{},badges:[],quizShuffleMap:{},modulesViewed:[],interactiveResults:{},designTheme:'cyber-dark'};
+function saveState(){try{localStorage.setItem(STORAGE_KEY,JSON.stringify(state))}catch(e){}}
+function loadState(){try{const s=localStorage.getItem(STORAGE_KEY);if(s){Object.assign(state,JSON.parse(s));return true}}catch(e){}return false}
+function exportData(){const a=document.createElement('a');a.download='chemielabor-'+state.name+'.json';a.href=URL.createObjectURL(new Blob([JSON.stringify(state,null,2)],{type:'application/json'}));a.click()}
+function importData(e){const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=ev=>{try{const d=JSON.parse(ev.target.result);Object.assign(state,d);saveState();location.reload()}catch(err){alert('Datei konnte nicht gelesen werden.')}};r.readAsText(f)}
+
+// === XP & Level ===
+function getLevel(xp){let lv=0;for(let i=LEVELS.length-1;i>=0;i--){if(xp>=LEVELS[i].xp){lv=i;break}}return lv}
+function getLevelProgress(xp){const lv=getLevel(xp);const cur=LEVELS[lv].xp;const next=lv<LEVELS.length-1?LEVELS[lv+1].xp:cur;if(next===cur)return 100;return Math.min(100,Math.round((xp-cur)/(next-cur)*100))}
+function addXP(amount,reason){const old=getLevel(state.xp);state.xp+=amount;const nw=getLevel(state.xp);saveState();updateUI();showNotif('xp','+'+amount+' XP',reason);if(nw>old){state.level=nw;saveState();setTimeout(()=>showLevelUp(nw),800)}}
+
+// === Streak ===
+function updateStreak(){const today=new Date().toDateString();if(state.lastVisit===today)return;const yesterday=new Date(Date.now()-86400000).toDateString();if(state.lastVisit===yesterday){state.streak++;showNotif('streak','\uD83D\uDD25 '+state.streak+' Tage Streak!','Weiter so!');if(state.streak>=3)awardBadge('streak3');if(state.streak>=7)awardBadge('streak7')}else if(state.lastVisit!==today){state.streak=1}state.lastVisit=today;saveState()}
+
+// === Badges ===
+function awardBadge(id){if(state.badges.includes(id))return;state.badges.push(id);saveState();const b=BADGES.find(x=>x.id===id);if(b)showNotif('badge',b.icon+' Badge: '+b.name,b.desc)}
+
+// === Notifications ===
+let notifQueue=[],notifActive=false;
+function showNotif(type,title,text){notifQueue.push({type,title,text});if(!notifActive)processNotif()}
+function processNotif(){if(!notifQueue.length){notifActive=false;return}notifActive=true;const{type,title,text}=notifQueue.shift();const el=document.getElementById('notif');el.className='notif '+type;document.getElementById('notifTitle').textContent=title;document.getElementById('notifText').textContent=text;el.classList.add('show');setTimeout(()=>{el.classList.remove('show');setTimeout(processNotif,300)},2500)}
+
+// === Level Up + Confetti ===
+function showLevelUp(lv){const ov=document.getElementById('levelUpOverlay');const box=document.getElementById('levelUpBox');box.innerHTML='<div class="lvl-icon">\u2B06\uFE0F</div><div class="lvl-title">Level Up!</div><div class="lvl-name">Level '+(lv+1)+': '+LEVELS[lv].name+'</div>';ov.classList.add('active');spawnConfetti();setTimeout(()=>ov.classList.remove('active'),3000)}
+function spawnConfetti(){const c=document.getElementById('confetti');c.innerHTML='';const cols=['#3b82f6','#a855f7','#22c55e','#f59e0b','#ef4444','#06b6d4'];for(let i=0;i<60;i++){const p=document.createElement('div');p.style.cssText='position:absolute;left:'+Math.random()*100+'%;background:'+cols[i%cols.length]+';width:'+(6+Math.random()*8)+'px;height:'+(6+Math.random()*8)+'px;border-radius:'+(Math.random()>.5?'50%':'2px')+';animation:confettiFall '+(1.5+Math.random()*2)+'s ease-out '+Math.random()*.5+'s forwards';c.appendChild(p)}if(!document.getElementById('confettiStyle')){const s=document.createElement('style');s.id='confettiStyle';s.textContent='@keyframes confettiFall{0%{opacity:1;transform:translateY(0) rotate(0deg)}100%{opacity:0;transform:translateY(100vh) rotate(720deg)}}';document.head.appendChild(s)}setTimeout(()=>c.innerHTML='',4000)}
+
+// === Quiz Engine ===
+function shuffleQuiz(modId,quiz){const key='m'+modId;if(state.quizShuffleMap[key])return state.quizShuffleMap[key];const idx=[...Array(quiz.length).keys()];for(let i=idx.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[idx[i],idx[j]]=[idx[j],idx[i]]}state.quizShuffleMap[key]=idx;saveState();return idx}
+function renderQuiz(modId,quiz,isBoss){
+const pf=isBoss?'boss':'quiz';const idx=isBoss?[...Array(quiz.length).keys()]:shuffleQuiz(modId,quiz);
+let h='<div class="'+(isBoss?'boss-section':'quiz-section')+'">';
+h+=isBoss?'<h3>\uD83D\uDC51 Boss-Challenge</h3><p class="boss-sub">Alle '+quiz.length+' Fragen richtig beantworten!</p>':'<h3>\uD83D\uDCDD Quiz \u2014 Teste dein Wissen</h3>';
+idx.forEach((qi,di)=>{const q=quiz[qi];h+='<div class="quiz-q" data-qi="'+qi+'"><p>'+(di+1)+'. '+q.q+'</p>';q.a.forEach((a,ai)=>{h+='<label><input type="radio" name="'+pf+'_'+modId+'_'+qi+'" value="'+ai+'"> '+a+'<\/label>'});h+='<\/div>'});
+h+='<button class="quiz-submit" onclick="checkQuiz('+modId+','+isBoss+')">'+(isBoss?'Boss besiegen!':'Antworten pr\u00FCfen')+'<\/button>';
+h+='<div class="quiz-result" id="'+pf+'Result'+modId+'" style="display:none"><\/div><\/div>';return h;
+}
+function checkQuiz(modId,isBoss){
+const pf=isBoss?'boss':'quiz';const quiz=isBoss?modules[modId].boss:modules[modId].quiz;
+let correct=0;const total=quiz.length;const startTime=window._quizStart||Date.now();
+quiz.forEach((q,qi)=>{
+const sel=document.querySelector('input[name="'+pf+'_'+modId+'_'+qi+'"]:checked');
+const labels=document.querySelectorAll('[data-qi="'+qi+'"] label');
+const ci=_d(q._h,qi);
+labels.forEach((l,li)=>{l.classList.remove('correct','wrong');if(li===ci)l.classList.add('correct');else if(sel&&parseInt(sel.value)===li)l.classList.add('wrong')});
+const qDiv=labels[0]?.closest('.quiz-q');if(qDiv){const old=qDiv.querySelector('.quiz-explanation');if(old)old.remove()}
+if(!sel||parseInt(sel.value)!==ci){if(qDiv){const exp=document.createElement('div');exp.className='quiz-explanation';exp.textContent='\u2192 Richtige Antwort: '+q.a[ci];qDiv.appendChild(exp)}}
+if(sel&&parseInt(sel.value)===ci)correct++;
+});
+const rEl=document.getElementById(pf+'Result'+modId);rEl.style.display='block';
+if(isBoss){
+if(correct===total){
+rEl.className='quiz-result pass';rEl.textContent='\uD83D\uDC51 Boss besiegt! '+correct+'/'+total+' \u2014 Perfekt!';
+if(!state.bossResults[modId]){state.bossResults[modId]=true;addXP(100,'Boss-Challenge bestanden!');if(!state.badges.includes('first_boss'))awardBadge('first_boss');if(modules.every((_,i)=>state.bossResults[i]))awardBadge('all_bosses');checkModuleComplete(modId)}
+}else{rEl.className='quiz-result fail';rEl.textContent='\uD83D\uDC80 '+correct+'/'+total+' \u2014 Alle m\u00FCssen richtig sein! Versuch es nochmal.';setTimeout(()=>{document.querySelectorAll('input[name^="'+pf+'_'+modId+'"]').forEach(r=>{r.disabled=false;r.checked=false});document.querySelectorAll('[data-qi] label').forEach(l=>l.classList.remove('correct','wrong'));document.querySelectorAll('.quiz-explanation').forEach(e=>e.remove());rEl.style.display='none'},2000);return}
+}else{
+const passed=correct>=Math.ceil(total*0.6);rEl.className='quiz-result '+(passed?'pass':'fail');
+rEl.textContent=passed?'\u2705 '+correct+'/'+total+' richtig \u2014 Bestanden!':'\u274C '+correct+'/'+total+' richtig \u2014 Mindestens '+Math.ceil(total*0.6)+' n\u00F6tig.';
+if(passed&&!state.quizResults[modId]){state.quizResults[modId]=correct;addXP(correct*15+50,'Quiz bestanden ('+correct+'/'+total+')');if(!state.badges.includes('first_quiz'))awardBadge('first_quiz');if(correct===total)awardBadge('perfect_quiz');if(Date.now()-startTime<60000)awardBadge('speed_quiz');checkModuleComplete(modId)}
+}
+saveState();document.querySelectorAll('input[name^="'+pf+'_'+modId+'"]').forEach(r=>r.disabled=true);
+window.scrollTo({top:0,behavior:'smooth'});
+}
+function checkModuleComplete(modId){
+if(state.quizResults[modId]!==undefined&&state.bossResults[modId]&&!state.modulesCompleted.includes(modId)){
+state.modulesCompleted.push(modId);awardBadge('m'+modId);
+if(state.modulesCompleted.length>=5)awardBadge('half_done');
+if(state.modulesCompleted.length>=10){awardBadge('graduate');setTimeout(()=>showCert(),1500)}
+saveState();renderSidebar();
+}
+}
+
+// === Render Module ===
+function renderModule(modId){
+state.currentModule=modId;
+if(!state.modulesViewed.includes(modId)){state.modulesViewed.push(modId);addXP(10,'Neues Modul geöffnet');if(state.modulesViewed.length>=10)awardBadge('explorer')}
+saveState();closeSidebar();
+const m=modules[modId];
+let h='<div class="module-header"><div class="mod-badge">'+m.icon+' Modul '+(modId+1)+'<\/div><h1>'+m.title+'<\/h1><p class="mod-desc">'+m.description+'<\/p><\/div>';
+m.lessons.forEach((l,i)=>{h+='<div class="lesson-card"><h3><span style="color:var(--neon)">'+String(i+1).padStart(2,'0')+'<\/span> '+l.title+' <button class="tts-btn" onclick="speakLesson('+i+')" title="Vorlesen">&#128266;<\/button><\/h3>'+l.content+'<\/div>'});
+h+='<div class="interactive-area"><h4>\uD83E\uDDEA Interaktive \u00DCbung<\/h4><div id="interactiveContent">Lädt...<\/div><\/div>';
+window._quizStart=Date.now();
+h+=renderQuiz(modId,m.quiz,false);
+h+=renderQuiz(modId,m.boss,true);
+document.getElementById('welcomeScreen').style.display='none';
+document.getElementById('badgesView').style.display='none';
+document.getElementById('statsView').style.display='none';
+const mc=document.getElementById('moduleContent');mc.style.display='block';mc.innerHTML=h;
+renderSidebar();setTimeout(()=>{initInteractive(modId);window.scrollTo(0,0)},100);
+}
+
+// === Sidebar ===
+function renderSidebar(){
+const el=document.getElementById('sidebarModules');
+el.innerHTML=modules.map((m,i)=>{
+const done=state.modulesCompleted.includes(i);
+const act=state.currentModule===i&&document.getElementById('moduleContent').style.display==='block';
+return '<a class="mod-link'+(act?' active':'')+(done?' completed':'')+'" onclick="renderModule('+i+')"><span class="mod-icon">'+m.icon+'<\/span>'+m.title+'<\/a>';
+}).join('');
+const lv=getLevel(state.xp);
+const lvEl=document.getElementById('sidebarLevel');if(lvEl)lvEl.textContent=LEVELS[lv].name;
+const xpEl=document.getElementById('sidebarXP');if(xpEl)xpEl.textContent=state.xp+' XP';
+const xpFill=document.getElementById('sidebarXPFill');if(xpFill)xpFill.style.width=getLevelProgress(state.xp)+'%';
+}
+function toggleSidebar(){document.getElementById('sidebar').classList.toggle('open')}
+function closeSidebar(){document.getElementById('sidebar').classList.remove('open')}
+
+// === Badges & Stats ===
+function showBadges(){
+document.getElementById('welcomeScreen').style.display='none';
+document.getElementById('moduleContent').style.display='none';
+document.getElementById('statsView').style.display='none';
+const v=document.getElementById('badgesView');v.style.display='block';closeSidebar();
+let h='<div class="module-header"><h1>\uD83C\uDFC5 Deine Abzeichen<\/h1><p class="mod-desc">'+state.badges.length+' von '+BADGES.length+' gesammelt<\/p><\/div><div class="badge-grid">';
+BADGES.forEach(b=>{const earned=state.badges.includes(b.id);h+='<div class="badge-item'+(earned?' earned':' locked')+'"><div class="badge-icon">'+(earned?b.icon:'\uD83D\uDD12')+'<\/div><div class="badge-name">'+b.name+'<\/div><\/div>'});
+h+='<\/div>';v.innerHTML=h;
+}
+function showStats(){
+document.getElementById('welcomeScreen').style.display='none';
+document.getElementById('moduleContent').style.display='none';
+document.getElementById('badgesView').style.display='none';
+const v=document.getElementById('statsView');v.style.display='block';closeSidebar();
+const lv=getLevel(state.xp);
+let h='<div class="module-header"><h1>\uD83D\uDCCA Statistik<\/h1><\/div><div class="stats-grid">';
+h+='<div class="stat-card"><div class="stat-val">'+state.xp+'<\/div><div class="stat-label">XP gesammelt<\/div><\/div>';
+h+='<div class="stat-card"><div class="stat-val">'+LEVELS[lv].name+'<\/div><div class="stat-label">Aktueller Rang<\/div><\/div>';
+h+='<div class="stat-card"><div class="stat-val">'+state.modulesCompleted.length+'/10<\/div><div class="stat-label">Module abgeschlossen<\/div><\/div>';
+h+='<div class="stat-card"><div class="stat-val">'+Object.keys(state.quizResults).length+'<\/div><div class="stat-label">Quizze bestanden<\/div><\/div>';
+h+='<div class="stat-card"><div class="stat-val">'+Object.keys(state.bossResults).length+'<\/div><div class="stat-label">Bosse besiegt<\/div><\/div>';
+h+='<div class="stat-card"><div class="stat-val">'+state.badges.length+'<\/div><div class="stat-label">Abzeichen<\/div><\/div>';
+h+='<div class="stat-card"><div class="stat-val">\uD83D\uDD25 '+state.streak+'<\/div><div class="stat-label">Tage-Streak<\/div><\/div>';
+h+='<\/div>';v.innerHTML=h;
+}
+
+// === Certificate ===
+let certStyle='akademie';
+function showCert(){window._lastFocus=document.activeElement;
+const ov=document.getElementById('certOverlay');
+const styles=['akademie','hacker','pixel','zukunft'];
+const labels=['\uD83C\uDFDB Akademie','\uD83D\uDCBB Terminal','\uD83E\uDDEA Labor','\u2728 Zukunft'];
+document.getElementById('certPicker').innerHTML=styles.map((s,i)=>'<button class="cert-pick-btn '+(s===certStyle?'active':'')+'" onclick="certStyle=\''+s+'\';renderCert()">'+labels[i]+'<\/button>').join('');
+renderCert();ov.classList.add('active');
+}
+function closeCert(){document.getElementById('certOverlay').classList.remove('active');if(window._lastFocus){window._lastFocus.focus();window._lastFocus=null}}
+function generateCertCode(){const n=state.name||'X';const d=new Date();return 'CL-'+d.getFullYear()+'-'+((n.charCodeAt(0)*7+state.xp)%9999).toString(16).toUpperCase().padStart(4,'0')}
+function printCert(){window.print()}
+function certBadgeRow(){
+const earned=state.badges||[];if(earned.length===0)return'';
+return'<div class="cert-badge-row">'+earned.slice(0,8).map(bid=>{const b=BADGES.find(x=>x.id===bid);return b?'<div class="cert-badge-item" title="'+b.name+'">'+b.icon+'<\/div>':''}).join('')+(earned.length>8?'<div class="cert-badge-item" title="'+(earned.length-8)+' weitere">+'+(earned.length-8)+'<\/div>':'')+'<\/div>';
+}
+function certStatsRow(){
+const mods=state.modulesCompleted.length;const quizDone=Object.keys(state.quizResults).length;const bossDone=Object.keys(state.bossResults).length;
+return'<div class="cert-common-stats"><div class="cert-stat">\uD83D\uDCDA '+mods+'/10<\/div><div class="cert-stat">\uD83D\uDCDD '+quizDone+' Quizze<\/div><div class="cert-stat">\uD83D\uDC51 '+bossDone+' Bosse<\/div><div class="cert-stat">\uD83D\uDD25 '+state.streak+'d Streak<\/div><\/div>';
+}
+function certLogoFooter(dark){
+const fill=dark?'rgba(255,255,255,.4)':'rgba(0,0,0,.35)';
+return'<div class="cert-logo-footer"><svg viewBox="0 0 32 32" fill="none"><g transform="translate(16,16)"><circle cx="-10" cy="-9" r="1.2" fill="'+fill+'" opacity=".6"/><circle cx="10" cy="-9" r="1.2" fill="'+fill+'" opacity=".6"/><rect x="-7" y="-5.5" width="14" height="11" rx="3.5" fill="none" stroke="'+fill+'" stroke-width="1"/><text x="0" y="0" text-anchor="middle" dominant-baseline="central" font-family="system-ui" font-size="7.5" font-weight="900" fill="'+fill+'" letter-spacing="1">AI<\/text><\/g><\/svg><span style="color:'+fill+'">GZ AI Stacks<\/span><\/div>';
+}
+function svgCorner(){return'<svg viewBox="0 0 60 60" fill="none"><path d="M5 55 L5 15 Q5 5 15 5 L55 5" stroke="#c5a54e" stroke-width="1.5" fill="none" opacity=".4"/><circle cx="8" cy="8" r="3" fill="#c5a54e" opacity=".2"/><\/svg>';}
+function svgLaurelSeal(){return'<svg viewBox="0 0 90 90" fill="none"><circle cx="45" cy="45" r="32" fill="url(#cg)"/><defs><radialGradient id="cg"><stop offset="0%" stop-color="#e8c84e"/><stop offset="100%" stop-color="#8a6914"/><\/radialGradient><\/defs><text x="45" y="47" text-anchor="middle" dominant-baseline="central" font-family="serif" font-size="22" font-weight="900" fill="#fff">\u2605<\/text><\/svg>';}
+function svgHexSeal(){return'<svg viewBox="0 0 70 70" fill="none"><circle cx="35" cy="35" r="22" stroke="#00d4ff" stroke-width="1.5" opacity=".5"/><circle cx="35" cy="35" r="16" fill="rgba(0,255,65,.08)"/><text x="35" y="33" text-anchor="middle" dominant-baseline="central" font-family="monospace" font-size="8" font-weight="700" fill="#00ff41" opacity=".7">VERIFIED<\/text><text x="35" y="42" text-anchor="middle" font-family="monospace" font-size="7" fill="#00d4ff">\u2713<\/text><\/svg>';}
+function matrixCols(){const chars='01\u30A2\u30A4\u30A6\u30A8\u30AA{}[]<>';let h='';for(let i=0;i<10;i++){const x=5+i*9;const d=3+Math.random()*6;let col='';for(let j=0;j<25;j++)col+=chars[Math.floor(Math.random()*chars.length)]+'\n';h+='<div class="cert-matrix-col" style="left:'+x+'%;animation-duration:'+d+'s;animation-delay:'+Math.random()*4+'s">'+col+'<\/div>';}return h;}
+function renderCert(){
+const f=document.getElementById('certFrame');
+const name=state.name||'Unbekannt';const date=new Date().toLocaleDateString('de-DE',{day:'numeric',month:'long',year:'numeric'});
+const xp=state.xp;const mods=state.modulesCompleted.length;const rank=LEVELS[getLevel(xp)].name;const code=generateCertCode();const badges=certBadgeRow();
+document.querySelectorAll('.cert-pick-btn').forEach(b=>b.classList.toggle('active',b.textContent.toLowerCase().includes(certStyle)));
+if(certStyle==='akademie'){
+const corner=svgCorner();
+f.innerHTML='<div class="cert-akademie"><div class="cert-corner cert-corner-tl">'+corner+'<\/div><div class="cert-corner cert-corner-tr">'+corner+'<\/div><div class="cert-corner cert-corner-bl">'+corner+'<\/div><div class="cert-corner cert-corner-br">'+corner+'<\/div><div class="cert-inner"><div class="cert-sub">ChemieLabor \u00B7 Chemie-Akademie<\/div><div class="cert-title">Diplom<\/div><div class="cert-hr"><\/div><div class="cert-body">Die Chemie-Akademie verleiht hiermit<\/div><div class="cert-name">'+name+'<\/div><div class="cert-body">die Anerkennung als<br><strong style="font-size:18px;color:#1a1a3e">Chemie-'+rank+'<\/strong><br>für die erfolgreiche Absolvierung von<br>\u201EChemieLabor \u2014 Chemie Klasse 7-10\u201C<\/div>'+certStatsRow()+badges+'<div class="cert-seal-wrap"><div class="cert-seal-ring"><\/div><div class="cert-seal">'+svgLaurelSeal()+'<\/div><\/div><div class="cert-date">'+date+'<\/div><div class="cert-verification">'+code+'<\/div>'+certLogoFooter(false)+'<\/div><\/div>';
+}else if(certStyle==='hacker'){
+f.innerHTML='<div class="cert-hacker">'+matrixCols()+'<div class="cert-inner"><div class="cert-prompt">root@chemielabor:~$ <span>verify --user "'+name+'" --deep-scan<\/span><\/div><div class="cert-title">&gt;&gt; SYSTEM CERTIFICATION &lt;&lt;<\/div><div class="cert-access">ACCESS GRANTED<span class="cursor-blink">_<\/span><\/div><div class="cert-body">&gt; User..........: <strong style="color:#00d4ff">'+name+'<\/strong><br>&gt; Rank..........: '+rank+'<br>&gt; Modules.......: [<span style="color:#00ff41">'+ '\u2588'.repeat(mods)+'\u2591'.repeat(10-mods)+'<\/span>] '+mods+'/10<br>&gt; XP............: '+xp+' pts<br>&gt; Status........: <span style="color:#00ff41">VERIFIED<\/span> \u2713<\/div>'+certStatsRow()+badges+'<div class="cert-hex-seal">'+svgHexSeal()+'<\/div><div class="cert-body" style="font-size:11px">&gt; Certificate ID: '+code+'<br>&gt; Issued: '+date+'<br>&gt; Authority: ChemieLabor Academy<\/div><div class="cert-prompt">root@chemielabor:~$ <span class="cursor-blink">_<\/span><\/div>'+certLogoFooter(true)+'<\/div><\/div>';
+}else if(certStyle==='pixel'){
+const elCount=Math.min(10,mods+1);
+const elements=['H','He','Li','Be','B','C','N','O','F','Ne'];
+const elRow=elements.slice(0,elCount).map((e,i)=>'<div style="display:inline-block;width:42px;height:48px;border:2px solid '+(i<mods?'#22c55e':'#555')+';border-radius:4px;margin:3px;text-align:center;padding:2px;background:'+(i<mods?'rgba(34,197,94,.1)':'rgba(100,100,100,.05)')+'"><div style="font-size:8px;color:#888">'+(i+1)+'<\/div><div style="font-size:16px;font-weight:900;color:'+(i<mods?'#22c55e':'#888')+'">'+e+'<\/div><div style="font-size:7px;color:#666">Modul<\/div><\/div>').join('');
+f.innerHTML='<div class="cert-pixel"><div class="cert-inner"><div style="text-align:center;margin-bottom:8px"><svg viewBox="0 0 80 60" width="80" fill="none"><rect x="25" y="5" width="30" height="40" rx="2" fill="none" stroke="#22c55e" stroke-width="1.5"/><rect x="30" y="0" width="20" height="8" rx="4" fill="none" stroke="#22c55e" stroke-width="1.5"/><ellipse cx="40" cy="50" rx="15" ry="6" fill="rgba(34,197,94,.15)" stroke="#22c55e" stroke-width="1"/><circle cx="40" cy="25" r="8" fill="rgba(34,197,94,.2)"/><circle cx="37" cy="22" r="2" fill="rgba(255,255,255,.3)"/><\/svg><\/div><div class="cert-complete" style="color:#22c55e;letter-spacing:3px">\u2697\uFE0F LABOR-ZERTIFIKAT \u2697\uFE0F<\/div><div class="cert-title" style="font-family:var(--mono);color:#22c55e">'+name+'<\/div><div style="margin:12px auto;max-width:500px">'+elRow+'<\/div><div class="cert-body">Forschungsrang: <strong style="color:#22c55e">'+rank+'<\/strong><\/div><div class="cert-body">Experimente abgeschlossen: <strong style="color:#22c55e">'+mods+'/10<\/strong> \u00B7 '+xp+' XP<\/div>'+certStatsRow()+badges+'<div style="margin-top:12px;font-size:10px;color:#555">\u2697\uFE0F '+date+' \u00B7 '+code+'<\/div>'+certLogoFooter(true)+'<\/div><\/div>';
+}else{
+const particles=Array.from({length:15},(_,i)=>{const colors=['#6366f1','#ec4899','#f59e0b','#22c55e','#06b6d4'];return'<div class="cert-particle" style="position:absolute;left:'+Math.random()*100+'%;top:'+Math.random()*100+'%;width:'+(2+Math.random()*3)+'px;height:'+(2+Math.random()*3)+'px;background:'+colors[i%5]+';opacity:'+(0.1+Math.random()*0.2)+';box-shadow:0 0 '+(6+Math.random()*9)+'px '+colors[i%5]+';border-radius:50%"><\/div>';}).join('');
+f.innerHTML='<div class="cert-zukunft">'+particles+'<div class="cert-inner"><div class="cert-sub">Zukunfts-Akademie \u00B7 '+new Date().getFullYear()+'<\/div><div class="cert-title">Zertifikat der Zukunft<\/div><div class="cert-body">Hiermit best\u00E4tigen wir, dass<\/div><div class="cert-name">'+name+'<\/div><div class="cert-body">den interaktiven Chemie-Kurs<br>\u201EChemieLabor \u2014 Chemie Klasse 7-10\u201C<br>erfolgreich absolviert hat.<\/div><div class="cert-body" style="margin:6px 0"><strong style="color:#a78bfa;font-size:16px">'+rank+'<\/strong><\/div>'+certStatsRow()+badges+'<div class="cert-seal-holo"><div class="cert-seal-mid"><div class="cert-seal-inner"><svg viewBox="0 0 40 40" fill="none"><text x="20" y="18" text-anchor="middle" font-size="14" fill="#a78bfa">\u2726<\/text><text x="20" y="28" text-anchor="middle" font-size="6" font-weight="700" fill="rgba(255,255,255,.6)" font-family="system-ui">CHEMIE<\/text><\/svg><\/div><\/div><\/div><div class="cert-date">'+date+' \u00B7 '+code+'<\/div>'+certLogoFooter(true)+'<\/div><\/div>';
+}
+f.style.animation='none';f.offsetHeight;f.style.animation='certEntrance .6s cubic-bezier(.34,1.56,.64,1) both';
+}
+
+// === UI Update ===
+function updateUI(){
+const lv=getLevel(state.xp);
+const hdr=document.getElementById('headerLevel');if(hdr)hdr.textContent=LEVELS[lv].name;
+const hxp=document.getElementById('headerXP');if(hxp)hxp.textContent=state.xp+' XP';
+const fill=document.querySelector('.header-xp-fill');if(fill)fill.style.width=getLevelProgress(state.xp)+'%';
+const streakEl=document.getElementById('headerStreak');if(streakEl)streakEl.textContent='\uD83D\uDD25 '+state.streak;
+renderSidebar();
+}
+
+// === Theme System ===
+function setDesignTheme(world,mode){state.designTheme=world+'-'+mode;document.documentElement.setAttribute('data-theme',state.designTheme);saveState();buildThemePicker()}
+function getCurrentThemeParts(){const p=state.designTheme.split('-');return{world:p.slice(0,-1).join('-'),mode:p[p.length-1]||'dark'}}
+function toggleMode(){const{world,mode}=getCurrentThemeParts();setDesignTheme(world,mode==='dark'?'light':'dark')}
+function buildThemePicker(){
+const dd=document.getElementById('themePickerDD');if(!dd)return;
+const{world,mode}=getCurrentThemeParts();
+let h='<div class="tp-label">Theme w\u00E4hlen<\/div>';
+Object.keys(THEME_CONFIG).forEach(w=>{const t=THEME_CONFIG[w];h+='<div class="tp-world'+(w===world?' active':'')+'" onclick="setDesignTheme(\''+w+'\',\''+mode+'\')\"><div class="tp-world-color" style="background:'+t.color+'">'+t.emoji+'<\/div><div class="tp-world-info"><div class="tp-world-name">'+t.name+'<\/div><div class="tp-world-desc">'+t.desc+'<\/div><\/div><\/div>';});
+h+='<div class="tp-divider"><\/div><div class="tp-mode-row"><span class="tp-mode-label">'+(mode==='dark'?'\uD83C\uDF19 Dark':'\u2600\uFE0F Light')+'<\/span><div class="tp-mode-switch'+(mode==='light'?' light':'')+'" onclick="toggleMode()"><\/div><\/div>';
+dd.innerHTML=h;
+}
+function toggleThemePicker(){document.getElementById('themePickerDD').classList.toggle('open')}
+
+// === Interactive Exercises ===
+function initInteractive(modId){
+const el=document.getElementById('interactiveContent');if(!el)return;
+const exercises=[
+// Mod 0: Sortiere Stoffe
+function(){el.innerHTML='<p>Ordne die Stoffe: Klicke auf einen Stoff und dann auf die richtige Kategorie.<\/p><div class="ix-grid" id="ixItems"><\/div><div style="display:flex;gap:16px;justify-content:center;margin:16px 0"><button class="ix-btn" onclick="ixDrop(0,\'rein\')">Reinstoff<\/button><button class="ix-btn" onclick="ixDrop(0,\'gem\')">Gemisch<\/button><\/div><div id="ixScore"><\/div><div class="ix-feedback" id="ixFb"><\/div>';
+const items=[{n:'Destilliertes Wasser',t:'rein'},{n:'Luft',t:'gem'},{n:'Goldbarren',t:'rein'},{n:'Meerwasser',t:'gem'},{n:'Eisen',t:'rein'},{n:'Granit',t:'gem'}];
+window._ixData={items,sel:null,done:0,correct:0};
+const g=document.getElementById('ixItems');items.forEach((it,i)=>{const d=document.createElement('div');d.className='ix-item';d.textContent=it.n;d.onclick=()=>{document.querySelectorAll('.ix-item').forEach(x=>x.classList.remove('selected'));d.classList.add('selected');window._ixData.sel=i};g.appendChild(d)});},
+// Mod 1: Atombau
+function(){el.innerHTML='<p>Wie viele Protonen, Neutronen und Elektronen hat das Element?<\/p><div id="ixAtom" style="text-align:center;font-size:24px;margin:16px 0"><\/div><div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap"><label>Protonen: <input type="number" id="ixP" min="0" max="120" style="width:60px;padding:4px;background:var(--bg3);color:var(--text);border:1px solid var(--border);border-radius:4px"><\/label><label>Neutronen: <input type="number" id="ixN" min="0" max="120" style="width:60px;padding:4px;background:var(--bg3);color:var(--text);border:1px solid var(--border);border-radius:4px"><\/label><label>Elektronen: <input type="number" id="ixE" min="0" max="120" style="width:60px;padding:4px;background:var(--bg3);color:var(--text);border:1px solid var(--border);border-radius:4px"><\/label><\/div><button class="ix-btn" onclick="ixCheckAtom()" style="display:block;margin:12px auto">Pr\u00FCfen<\/button><div class="ix-feedback" id="ixFb"><\/div>';
+const elems=[{sym:'C',name:'Kohlenstoff',z:6,m:12},{sym:'O',name:'Sauerstoff',z:8,m:16},{sym:'Na',name:'Natrium',z:11,m:23},{sym:'Fe',name:'Eisen',z:26,m:56}];
+const pick=elems[Math.floor(Math.random()*elems.length)];window._ixAtom=pick;
+document.getElementById('ixAtom').innerHTML='<strong>'+pick.sym+'<\/strong> ('+pick.name+', Massenzahl: '+pick.m+')';},
+// Mod 2: Bindungstyp
+function(){el.innerHTML='<p>Welcher Bindungstyp liegt vor? Klicke die richtige Antwort.<\/p><div id="ixBondQ" style="text-align:center;font-size:20px;font-weight:700;margin:16px 0"><\/div><div style="display:flex;gap:12px;justify-content:center"><button class="ix-btn" onclick="ixCheckBond(\'ion\')">Ionenbindung<\/button><button class="ix-btn" onclick="ixCheckBond(\'kov\')">Kovalent<\/button><button class="ix-btn" onclick="ixCheckBond(\'met\')">Metallbindung<\/button><\/div><div class="ix-feedback" id="ixFb"><\/div>';
+const qs=[{q:'Na + Cl',a:'ion'},{q:'H + H',a:'kov'},{q:'Fe + Fe',a:'met'},{q:'C + O',a:'kov'},{q:'K + Br',a:'ion'}];
+const pick=qs[Math.floor(Math.random()*qs.length)];window._ixBond=pick;
+document.getElementById('ixBondQ').textContent=pick.q+' = ?';},
+// Mod 3: Gleichung ausgleichen
+function(){el.innerHTML='<p>Gleiche die Reaktionsgleichung aus! Gib die Koeffizienten ein.<\/p><div style="text-align:center;margin:16px 0;font-size:18px"><input type="number" id="ixC1" min="1" max="9" style="width:40px;padding:4px;background:var(--bg3);color:var(--text);border:1px solid var(--border);border-radius:4px;text-align:center"> H\u2082 + <input type="number" id="ixC2" min="1" max="9" style="width:40px;padding:4px;background:var(--bg3);color:var(--text);border:1px solid var(--border);border-radius:4px;text-align:center"> O\u2082 \u2192 <input type="number" id="ixC3" min="1" max="9" style="width:40px;padding:4px;background:var(--bg3);color:var(--text);border:1px solid var(--border);border-radius:4px;text-align:center"> H\u2082O<\/div><button class="ix-btn" onclick="ixCheckEq()" style="display:block;margin:12px auto">Pr\u00FCfen<\/button><div class="ix-feedback" id="ixFb"><\/div>';},
+// Mod 4: pH-Skala
+function(){el.innerHTML='<p>Ordne die Stoffe dem richtigen pH-Bereich zu.<\/p><div class="ix-grid" id="ixPH"><\/div><div class="ix-feedback" id="ixFb"><\/div>';
+const items=[{n:'Zitronensaft',ph:2,cat:'sauer'},{n:'Wasser',ph:7,cat:'neutral'},{n:'Seife',ph:9,cat:'basisch'},{n:'Magens\u00E4ure',ph:1,cat:'sauer'},{n:'Natronlauge',ph:14,cat:'basisch'}];
+const g=document.getElementById('ixPH');
+items.forEach(it=>{const d=document.createElement('div');d.className='ix-item';d.style.minWidth='120px';d.innerHTML=it.n+'<br><small style="color:var(--text-dim)">pH ?<\/small>';d.onclick=()=>{const ans=prompt(it.n+' — Ist es sauer, neutral oder basisch?');if(ans){const a=ans.toLowerCase().trim();if(a===it.cat){d.classList.add('correct');d.innerHTML=it.n+'<br><small style="color:var(--success)">pH \u2248'+it.ph+' ('+it.cat+')<\/small>'}else{d.classList.add('wrong');setTimeout(()=>d.classList.remove('wrong'),1000)}}};g.appendChild(d)});},
+// Mod 5: Oxidationszahlen
+function(){el.innerHTML='<p>Bestimme die Oxidationszahl des markierten Elements.<\/p><div id="ixOxQ" style="text-align:center;font-size:22px;font-weight:700;margin:16px 0"><\/div><div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap"><button class="ix-btn" onclick="ixCheckOx(-2)">-2<\/button><button class="ix-btn" onclick="ixCheckOx(-1)">-1<\/button><button class="ix-btn" onclick="ixCheckOx(0)">0<\/button><button class="ix-btn" onclick="ixCheckOx(1)">+1<\/button><button class="ix-btn" onclick="ixCheckOx(2)">+2<\/button><button class="ix-btn" onclick="ixCheckOx(3)">+3<\/button><\/div><div class="ix-feedback" id="ixFb"><\/div>';
+const qs=[{q:'<u>Fe</u>\u2082O\u2083',a:3},{q:'<u>H</u>\u2082O',a:1},{q:'<u>O</u> in H\u2082O',a:-2},{q:'<u>Na</u>Cl',a:1},{q:'<u>Fe</u> (elementar)',a:0}];
+const pick=qs[Math.floor(Math.random()*qs.length)];window._ixOx=pick;
+document.getElementById('ixOxQ').innerHTML=pick.q;},
+// Mod 6: Alkane benennen
+function(){el.innerHTML='<p>Wie hei\u00DFt das Alkan mit der angegebenen Anzahl an C-Atomen?<\/p><div id="ixAlkQ" style="text-align:center;font-size:22px;font-weight:700;margin:16px 0"><\/div><div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap" id="ixAlkBtns"><\/div><div class="ix-feedback" id="ixFb"><\/div>';
+const alks=[{c:1,n:'Methan'},{c:2,n:'Ethan'},{c:3,n:'Propan'},{c:4,n:'Butan'},{c:5,n:'Pentan'},{c:6,n:'Hexan'}];
+const pick=alks[Math.floor(Math.random()*alks.length)];window._ixAlk=pick;
+document.getElementById('ixAlkQ').textContent='C'+pick.c+'H'+(2*pick.c+2)+' = ?';
+const btns=document.getElementById('ixAlkBtns');const shuffled=[...alks].sort(()=>Math.random()-.5).slice(0,4);if(!shuffled.find(x=>x.n===pick.n))shuffled[0]=pick;
+shuffled.sort(()=>Math.random()-.5).forEach(a=>{const b=document.createElement('button');b.className='ix-btn';b.textContent=a.n;b.onclick=()=>{const fb=document.getElementById('ixFb');if(a.n===pick.n){fb.className='ix-feedback pass';fb.textContent='\u2705 Richtig! '+pick.n;if(!state.interactiveResults[modId]){state.interactiveResults[modId]=true;addXP(20,'Interaktive Übung gelöst');saveState()}}else{fb.className='ix-feedback fail';fb.textContent='\u274C Falsch! Richtig w\u00E4re: '+pick.n}};btns.appendChild(b)});},
+// Mod 7: Energiediagramm
+function(){el.innerHTML='<p>Ist die beschriebene Reaktion exotherm oder endotherm?<\/p><div id="ixEnQ" style="text-align:center;font-size:18px;margin:16px 0"><\/div><div style="display:flex;gap:16px;justify-content:center"><button class="ix-btn" onclick="ixCheckEn(\'exo\')">Exotherm<\/button><button class="ix-btn" onclick="ixCheckEn(\'endo\')">Endotherm<\/button><\/div><div class="ix-feedback" id="ixFb"><\/div>';
+const qs=[{q:'Verbrennung von Holz',a:'exo'},{q:'Fotosynthese',a:'endo'},{q:'Rosten von Eisen',a:'exo'},{q:'Schmelzen von Eis',a:'endo'},{q:'Neutralisation',a:'exo'}];
+const pick=qs[Math.floor(Math.random()*qs.length)];window._ixEn=pick;
+document.getElementById('ixEnQ').textContent=pick.q;},
+// Mod 8: Anode/Kathode
+function(){el.innerHTML='<p>Ordne den Prozess der richtigen Elektrode zu.<\/p><div id="ixElQ" style="text-align:center;font-size:18px;margin:16px 0"><\/div><div style="display:flex;gap:16px;justify-content:center"><button class="ix-btn" onclick="ixCheckEl(\'anode\')">Anode<\/button><button class="ix-btn" onclick="ixCheckEl(\'kathode\')">Kathode<\/button><\/div><div class="ix-feedback" id="ixFb"><\/div>';
+const qs=[{q:'Oxidation findet statt an der...',a:'anode'},{q:'Reduktion findet statt an der...',a:'kathode'},{q:'Metall wird abgeschieden an der...',a:'kathode'},{q:'Metall l\u00F6st sich auf an der...',a:'anode'}];
+const pick=qs[Math.floor(Math.random()*qs.length)];window._ixEl=pick;
+document.getElementById('ixElQ').textContent=pick.q;},
+// Mod 9: Chemie-Quiz
+function(){el.innerHTML='<p>Ordne den Alltagsstoff der richtigen chemischen Kategorie zu.<\/p><div class="ix-grid" id="ixAll"><\/div><div class="ix-feedback" id="ixFb"><\/div>';
+const items=[{n:'PET-Flasche',cat:'Thermoplast'},{n:'Autoreifen',cat:'Elastomer'},{n:'Steckdose',cat:'Duroplast'},{n:'Plastiktüte',cat:'Thermoplast'}];
+const g=document.getElementById('ixAll');
+items.forEach(it=>{const d=document.createElement('div');d.className='ix-item';d.style.minWidth='120px';d.textContent=it.n;d.onclick=()=>{const ans=prompt(it.n+' ist ein...?\n(Thermoplast / Duroplast / Elastomer)');if(ans&&ans.toLowerCase().trim()===it.cat.toLowerCase()){d.classList.add('correct');d.innerHTML=it.n+'<br><small style="color:var(--success)">'+it.cat+'<\/small>'}else if(ans){d.classList.add('wrong');setTimeout(()=>d.classList.remove('wrong'),1000)}};g.appendChild(d)})}
+];
+if(exercises[modId])exercises[modId]();
+}
+// Interactive helpers
+window.ixDrop=function(modId,cat){
+const d=window._ixData;if(d.sel===null)return;
+const item=d.items[d.sel];const els=document.querySelectorAll('.ix-item');
+if(item.t===cat){els[d.sel].classList.add('correct');els[d.sel].classList.add('placed');d.correct++}
+else{els[d.sel].classList.add('wrong');setTimeout(()=>els[d.sel].classList.remove('wrong'),800)}
+d.done++;d.sel=null;els.forEach(e=>e.classList.remove('selected'));
+if(d.done>=d.items.length){const fb=document.getElementById('ixFb');fb.className='ix-feedback '+(d.correct>=4?'pass':'fail');fb.textContent=d.correct>=4?'\u2705 '+d.correct+'/'+d.items.length+' richtig!':'\u274C '+d.correct+'/'+d.items.length+' — Versuch es nochmal!';
+if(d.correct>=4&&!state.interactiveResults[0]){state.interactiveResults[0]=true;addXP(20,'Interaktive Übung gelöst');saveState()}}
+};
+window.ixCheckAtom=function(){
+const a=window._ixAtom;const p=parseInt(document.getElementById('ixP').value);const n=parseInt(document.getElementById('ixN').value);const e=parseInt(document.getElementById('ixE').value);
+const fb=document.getElementById('ixFb');
+if(p===a.z&&n===(a.m-a.z)&&e===a.z){fb.className='ix-feedback pass';fb.textContent='\u2705 Richtig! '+a.sym+' hat '+a.z+' Protonen, '+(a.m-a.z)+' Neutronen und '+a.z+' Elektronen.';
+if(!state.interactiveResults[1]){state.interactiveResults[1]=true;addXP(20,'Interaktive Übung gelöst');saveState()}}
+else{fb.className='ix-feedback fail';fb.textContent='\u274C Nicht ganz! Tipp: Ordnungszahl = Protonen = Elektronen, Neutronen = Massenzahl - Ordnungszahl.'}
+};
+window.ixCheckBond=function(ans){const fb=document.getElementById('ixFb');if(ans===window._ixBond.a){fb.className='ix-feedback pass';fb.textContent='\u2705 Richtig!';if(!state.interactiveResults[2]){state.interactiveResults[2]=true;addXP(20,'Interaktive Übung gelöst');saveState()}}else{fb.className='ix-feedback fail';fb.textContent='\u274C Falsch! Richtig w\u00E4re: '+(window._ixBond.a==='ion'?'Ionenbindung':window._ixBond.a==='kov'?'Kovalente Bindung':'Metallbindung')}};
+window.ixCheckEq=function(){const c1=parseInt(document.getElementById('ixC1').value);const c2=parseInt(document.getElementById('ixC2').value);const c3=parseInt(document.getElementById('ixC3').value);const fb=document.getElementById('ixFb');
+if(c1===2&&c2===1&&c3===2){fb.className='ix-feedback pass';fb.textContent='\u2705 Richtig! 2 H\u2082 + 1 O\u2082 \u2192 2 H\u2082O';if(!state.interactiveResults[3]){state.interactiveResults[3]=true;addXP(20,'Interaktive Übung gelöst');saveState()}}else{fb.className='ix-feedback fail';fb.textContent='\u274C Nicht korrekt. Tipp: Zähle H und O auf beiden Seiten!'}};
+window.ixCheckOx=function(ans){const fb=document.getElementById('ixFb');if(ans===window._ixOx.a){fb.className='ix-feedback pass';fb.textContent='\u2705 Richtig! Oxidationszahl = '+ans;if(!state.interactiveResults[5]){state.interactiveResults[5]=true;addXP(20,'Interaktive Übung gelöst');saveState()}}else{fb.className='ix-feedback fail';fb.textContent='\u274C Falsch! Richtige Oxidationszahl: '+window._ixOx.a}};
+window.ixCheckEn=function(ans){const fb=document.getElementById('ixFb');if(ans===window._ixEn.a){fb.className='ix-feedback pass';fb.textContent='\u2705 Richtig! Die Reaktion ist '+(ans==='exo'?'exotherm':'endotherm')+'.';if(!state.interactiveResults[7]){state.interactiveResults[7]=true;addXP(20,'Interaktive Übung gelöst');saveState()}}else{fb.className='ix-feedback fail';fb.textContent='\u274C Falsch! Richtig w\u00E4re: '+(window._ixEn.a==='exo'?'Exotherm':'Endotherm')}};
+window.ixCheckEl=function(ans){const fb=document.getElementById('ixFb');if(ans===window._ixEl.a){fb.className='ix-feedback pass';fb.textContent='\u2705 Richtig!';if(!state.interactiveResults[8]){state.interactiveResults[8]=true;addXP(20,'Interaktive Übung gelöst');saveState()}}else{fb.className='ix-feedback fail';fb.textContent='\u274C Falsch! Richtig w\u00E4re: '+(window._ixEl.a==='anode'?'Anode':'Kathode')}};
+
+// === Start App ===
+function startApp(){
+const name=document.getElementById('nameInput').value.trim();if(!name)return;
+state.name=name;state.started=true;saveState();
+document.getElementById('welcomeScreen').style.display='none';
+renderModule(0);updateStreak();
+}
+
+// === Init ===
+(function init(){
+if(loadState()&&state.started){
+document.getElementById('welcomeScreen').style.display='none';
+document.documentElement.setAttribute('data-theme',state.designTheme);
+renderModule(state.currentModule);updateUI();updateStreak();
+}else{
+document.documentElement.setAttribute('data-theme',state.designTheme);
+buildThemePicker();
+}
+renderSidebar();
+document.addEventListener('click',e=>{if(!e.target.closest('.theme-picker-wrap'))document.getElementById('themePickerDD')?.classList.remove('open')});
+})();
+</script>
+
+<script>
+(function(){
+var KEY=null;
+var scripts=document.querySelectorAll('script');
+for(var i=0;i<scripts.length;i++){
+var km=scripts[i].textContent.match(/STORAGE_KEY\s*=\s*['"](\w+)['"]/);
+if(km){KEY=km[1];break;}
+}
+if(!location.hash.match(/modules=/)){try{Object.keys(localStorage).filter(function(k){return k.indexOf("_allowed_modules")!==-1}).forEach(function(k){localStorage.removeItem(k)})}catch(e){}}
+var LOCK_KEY=(KEY||'app')+'_allowed_modules';
+var h=location.hash.match(/modules=([0-9,]+)/);
+var allowed=null;
+if(h){
+allowed=h[1].split(",").map(Number);
+try{localStorage.setItem(LOCK_KEY,JSON.stringify(allowed));}catch(e){}
+}else{
+try{var stored=localStorage.getItem(LOCK_KEY);if(stored)allowed=JSON.parse(stored);}catch(e){}
+}
+if(!allowed||!allowed.length)return;
+function filterSidebar(){
+var items=document.querySelectorAll("#sidebarModules > *");
+for(var i=0;i<items.length;i++){
+items[i].style.display=(allowed.indexOf(i)===-1)?"none":"";
+}
+}
+var sb=document.getElementById("sidebarModules");
+if(sb){new MutationObserver(filterSidebar).observe(sb,{childList:true});filterSidebar();}
+document.addEventListener("click",function(e){
+var t=e.target.closest("[onclick]");
+if(!t)return;
+var oc=t.getAttribute("onclick")||"";
+var idx=oc.indexOf("renderModule(");
+if(idx===-1)return;
+var num=parseInt(oc.substring(idx+13));
+if(!isNaN(num)&&allowed.indexOf(num)===-1){e.preventDefault();e.stopImmediatePropagation();}
+},true);
+setTimeout(filterSidebar,500);
+window.addEventListener("hashchange",function(){
+var hh=location.hash.match(/modules=([0-9,]+)/);
+if(hh){
+allowed=hh[1].split(",").map(Number);
+try{localStorage.setItem(LOCK_KEY,JSON.stringify(allowed));}catch(e){}
+filterSidebar();
+}
+});
+})();
+</script>
+
+<div class="zoom-controls" role="toolbar" aria-label="Zoom-Steuerung">
+<button class="zoom-btn" onclick="zoomOut()" title="Verkleinern (Taste -)" aria-label="Verkleinern">&#8722;</button>
+<button class="zoom-btn" onclick="zoomReset()" title="Zoom zurücksetzen" aria-label="Zoom zurücksetzen" style="font-size:10px;position:relative"><span id="zoomLvl">100%</span></button>
+<button class="zoom-btn" onclick="zoomIn()" title="Vergrößern (Taste +)" aria-label="Vergrößern">+</button>
+</div>
+
+<script>
+(function(){
+var zl=100;
+function applyZoom(){document.body.style.zoom=zl/100;var e=document.getElementById('zoomLvl');if(e)e.textContent=zl+'%';}
+window.zoomIn=function(){if(zl<200){zl+=10;applyZoom();}};
+window.zoomOut=function(){if(zl>50){zl-=10;applyZoom();}};
+window.zoomReset=function(){zl=100;applyZoom();};
+document.addEventListener('keydown',function(e){
+if(e.target.tagName==='INPUT'||e.target.tagName==='TEXTAREA'||e.target.isContentEditable)return;
+if((e.key==='+'||e.key==='=')&&!e.ctrlKey&&!e.metaKey){e.preventDefault();zoomIn();}
+else if((e.key==='-'||e.key==='_')&&!e.ctrlKey&&!e.metaKey){e.preventDefault();zoomOut();}
+else if(e.key==='0'&&!e.ctrlKey&&!e.metaKey){e.preventDefault();zoomReset();}
+});
+})();
+</script>
+
+<script>
+/* A11y: Focus trap for modal overlays */
+document.addEventListener('keydown',function(e){if(e.key==='Tab'){var ov=document.querySelector('.cert-overlay.active,.modal-overlay.active,[role="dialog"].active');if(ov){var fc=ov.querySelectorAll('button,a,[tabindex="0"],input,select,textarea');if(fc.length){var f=fc[0],l=fc[fc.length-1];if(e.shiftKey&&document.activeElement===f){e.preventDefault();l.focus()}else if(!e.shiftKey&&document.activeElement===l){e.preventDefault();f.focus()}}}}});
+</script>
+</body>
+</html>

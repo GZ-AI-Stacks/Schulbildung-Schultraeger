@@ -1,0 +1,898 @@
+<!DOCTYPE html>
+<html lang="de" data-theme="cyber-dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>WebExplorer — Web und IT-Grundlagen Klasse 3-6</title>
+<meta name="description" content="Interaktive Lern-App für Web und IT-Grundlagen, Klasse 3-6. 10 Module mit Quiz, Boss-Challenges und Gamification.">
+<style>
+@font-face{font-family:'Sora';src:url('../../../Klasse_7-10/Informatik/fonts/sora-latin-400-normal.woff2') format('woff2');font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:'Sora';src:url('../../../Klasse_7-10/Informatik/fonts/sora-latin-600-normal.woff2') format('woff2');font-weight:600;font-style:normal;font-display:swap}
+@font-face{font-family:'Sora';src:url('../../../Klasse_7-10/Informatik/fonts/sora-latin-700-normal.woff2') format('woff2');font-weight:700;font-style:normal;font-display:swap}
+@font-face{font-family:'JetBrains Mono';src:url('../../../Klasse_7-10/Informatik/fonts/jetbrains-mono-latin-400-normal.woff2') format('woff2');font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:'Playfair Display';src:url('../../../Klasse_7-10/Informatik/fonts/playfair-display-latin-700-normal.woff2') format('woff2');font-weight:700;font-style:normal;font-display:swap}
+@font-face{font-family:'Inter';src:url('../../../Klasse_7-10/Informatik/fonts/inter-latin-400-normal.woff2') format('woff2');font-weight:400;font-style:normal;font-display:swap}
+
+:root{--neon:#3b82f6;--neon-dim:rgba(59,130,246,.15);--neon-glow:rgba(59,130,246,.3);--bg:#0a0e14;--bg2:#111827;--bg3:#1f2937;--card:#161e2e;--card-hover:#1e293b;--border:#2a3444;--border-light:#374151;--text:#d4dce8;--text-dim:#8899aa;--text-bright:#f1f5f9;--heading:#ffffff;--link:#60a5fa;--success:#22c55e;--warning:#f59e0b;--danger:#ef4444;--xp-purple:#a855f7;--badge-cyan:#06b6d4;--streak-red:#ef4444;--radius:12px;--radius-sm:8px;--radius-lg:16px;--shadow:0 4px 24px rgba(0,0,0,.4);--shadow-lg:0 8px 40px rgba(0,0,0,.5);--font:'Sora','Segoe UI',system-ui,sans-serif;--mono:'JetBrains Mono','Cascadia Code',monospace;--serif:'Playfair Display','Georgia',serif;--sidebar-w:280px;--header-h:60px;--card-border-w:1px;--card-border-style:solid;--glow:1}
+[data-theme="cyber-dark"]{--neon:#3b82f6;--neon-dim:rgba(59,130,246,.15);--neon-glow:rgba(59,130,246,.3);--bg:#0a0e14;--bg2:#111827;--bg3:#1f2937;--card:#161e2e;--card-hover:#1e293b;--border:#2a3444;--border-light:#374151;--text:#d4dce8;--text-dim:#8899aa;--text-bright:#f1f5f9;--heading:#ffffff;--link:#60a5fa;--success:#22c55e;--warning:#f59e0b;--danger:#ef4444;--xp-purple:#a855f7;--badge-cyan:#06b6d4;--streak-red:#ef4444;--radius:12px;--radius-sm:8px;--radius-lg:16px;--shadow:0 4px 24px rgba(0,0,0,.4);--shadow-lg:0 8px 40px rgba(0,0,0,.5);--font:'Sora','Segoe UI',system-ui,sans-serif;--card-border-w:1px;--card-border-style:solid;--glow:1}
+[data-theme="cyber-light"]{--neon:#1d4ed8;--neon-dim:rgba(29,78,216,.1);--neon-glow:rgba(29,78,216,.2);--bg:#f8f9fb;--bg2:#f0f2f5;--bg3:#e5e7eb;--card:#ffffff;--card-hover:#f5f7fa;--border:#d1d5db;--border-light:#e5e7eb;--text:#374151;--text-dim:#4b5563;--text-bright:#111827;--heading:#111827;--link:#2563eb;--success:#22c55e;--warning:#f59e0b;--danger:#ef4444;--xp-purple:#a855f7;--badge-cyan:#06b6d4;--streak-red:#ef4444;--radius:12px;--radius-sm:8px;--radius-lg:16px;--shadow:0 4px 24px rgba(0,0,0,.08);--shadow-lg:0 8px 40px rgba(0,0,0,.12);--font:'Sora','Segoe UI',system-ui,sans-serif;--card-border-w:1px;--card-border-style:solid;--glow:0}
+[data-theme="retro-dark"]{--neon:#ffd700;--neon-dim:rgba(255,215,0,.12);--neon-glow:rgba(255,215,0,.3);--bg:#0d0208;--bg2:#1a0a1e;--bg3:#2d1233;--card:#1a0a1e;--card-hover:#2d1233;--border:#4a1942;--border-light:#5c2d5c;--text:#e0d0f0;--text-dim:#9080a0;--text-bright:#fff;--heading:#ffd700;--link:#ff6b9d;--success:#00e676;--warning:#ffab00;--danger:#ff1744;--xp-purple:#e040fb;--badge-cyan:#00e5ff;--streak-red:#ff1744;--radius:0px;--radius-sm:0px;--radius-lg:0px;--shadow:4px 4px 0 rgba(0,0,0,.8);--shadow-lg:6px 6px 0 rgba(0,0,0,.9);--font:'Courier New','Consolas',monospace;--card-border-w:3px;--card-border-style:solid;--glow:0}
+[data-theme="retro-light"]{--neon:#b8860b;--neon-dim:rgba(184,134,11,.1);--neon-glow:rgba(184,134,11,.2);--bg:#fff8e1;--bg2:#fff3cd;--bg3:#ffe0b2;--card:#ffffff;--card-hover:#fff9f0;--border:#d4a017;--border-light:#e6c84d;--text:#3e2723;--text-dim:#6d4c41;--text-bright:#1b0000;--heading:#b8860b;--link:#c2185b;--success:#2e7d32;--warning:#ef6c00;--danger:#c62828;--xp-purple:#8e24aa;--badge-cyan:#00838f;--streak-red:#c62828;--radius:0px;--radius-sm:0px;--radius-lg:0px;--shadow:3px 3px 0 rgba(0,0,0,.15);--shadow-lg:5px 5px 0 rgba(0,0,0,.2);--font:'Courier New','Consolas',monospace;--card-border-w:3px;--card-border-style:solid;--glow:0}
+[data-theme="nature-dark"]{--neon:#4ade80;--neon-dim:rgba(74,222,128,.12);--neon-glow:rgba(74,222,128,.25);--bg:#0c1a0f;--bg2:#132617;--bg3:#1e3a24;--card:#15291a;--card-hover:#1e3a24;--border:#2d5a36;--border-light:#3a7044;--text:#c8e6c9;--text-dim:#81a784;--text-bright:#e8f5e9;--heading:#e8f5e9;--link:#81c784;--success:#66bb6a;--warning:#ffa726;--danger:#ef5350;--xp-purple:#ab47bc;--badge-cyan:#26a69a;--streak-red:#ef5350;--radius:20px;--radius-sm:14px;--radius-lg:28px;--shadow:0 4px 20px rgba(0,0,0,.3);--shadow-lg:0 8px 32px rgba(0,0,0,.4);--font:'Segoe UI','Helvetica Neue',system-ui,sans-serif;--card-border-w:1px;--card-border-style:solid;--glow:0}
+[data-theme="nature-light"]{--neon:#2e7d32;--neon-dim:rgba(46,125,50,.08);--neon-glow:rgba(46,125,50,.15);--bg:#f1f8e9;--bg2:#e8f5e9;--bg3:#c8e6c9;--card:#ffffff;--card-hover:#f1faf1;--border:#a5d6a7;--border-light:#c8e6c9;--text:#33691e;--text-dim:#3e6e1c;--text-bright:#1b5e20;--heading:#1b5e20;--link:#2e7d32;--success:#388e3c;--warning:#ef6c00;--danger:#c62828;--xp-purple:#7b1fa2;--badge-cyan:#00695c;--streak-red:#c62828;--radius:20px;--radius-sm:14px;--radius-lg:28px;--shadow:0 4px 16px rgba(0,0,0,.06);--shadow-lg:0 8px 28px rgba(0,0,0,.1);--font:'Segoe UI','Helvetica Neue',system-ui,sans-serif;--card-border-w:1px;--card-border-style:solid;--glow:0}
+[data-theme="space-dark"]{--neon:#c084fc;--neon-dim:rgba(192,132,252,.12);--neon-glow:rgba(192,132,252,.3);--bg:#07020e;--bg2:#0f0720;--bg3:#1a0e35;--card:#110a28;--card-hover:#1a0e35;--border:#2e1a5e;--border-light:#3d2478;--text:#d4c8f0;--text-dim:#9080b8;--text-bright:#f0e8ff;--heading:#f0e8ff;--link:#f0abfc;--success:#34d399;--warning:#fbbf24;--danger:#fb7185;--xp-purple:#f472b6;--badge-cyan:#67e8f9;--streak-red:#fb7185;--radius:4px;--radius-sm:2px;--radius-lg:6px;--shadow:0 4px 24px rgba(100,50,200,.2);--shadow-lg:0 8px 40px rgba(100,50,200,.3);--font:'Segoe UI',system-ui,sans-serif;--card-border-w:1px;--card-border-style:solid;--glow:1}
+[data-theme="space-light"]{--neon:#7c3aed;--neon-dim:rgba(124,58,237,.08);--neon-glow:rgba(124,58,237,.15);--bg:#faf5ff;--bg2:#f3e8ff;--bg3:#e9d5ff;--card:#ffffff;--card-hover:#faf5ff;--border:#c4b5fd;--border-light:#ddd6fe;--text:#4c1d95;--text-dim:#5b21b6;--text-bright:#2e1065;--heading:#2e1065;--link:#7c3aed;--success:#059669;--warning:#d97706;--danger:#dc2626;--xp-purple:#db2777;--badge-cyan:#0891b2;--streak-red:#dc2626;--radius:4px;--radius-sm:2px;--radius-lg:6px;--shadow:0 4px 16px rgba(100,50,200,.06);--shadow-lg:0 8px 28px rgba(100,50,200,.1);--font:'Segoe UI',system-ui,sans-serif;--card-border-w:1px;--card-border-style:solid;--glow:0}
+[data-theme="comic-dark"]{--neon:#ff6b6b;--neon-dim:rgba(255,107,107,.12);--neon-glow:rgba(255,107,107,.3);--bg:#1a1a2e;--bg2:#222244;--bg3:#2e2e55;--card:#262650;--card-hover:#2e2e55;--border:#4a4a7a;--border-light:#5a5a8a;--text:#e8e0ff;--text-dim:#a098c0;--text-bright:#fff;--heading:#fff;--link:#ffa94d;--success:#51cf66;--warning:#fcc419;--danger:#ff6b6b;--xp-purple:#cc5de8;--badge-cyan:#22b8cf;--streak-red:#ff6b6b;--radius:16px;--radius-sm:12px;--radius-lg:24px;--shadow:4px 4px 0 rgba(0,0,0,.5);--shadow-lg:6px 6px 0 rgba(0,0,0,.6);--font:'Comic Sans MS','Chalkboard SE',cursive,system-ui,sans-serif;--card-border-w:3px;--card-border-style:solid;--glow:0}
+[data-theme="comic-light"]{--neon:#e03131;--neon-dim:rgba(224,49,49,.08);--neon-glow:rgba(224,49,49,.15);--bg:#fff9db;--bg2:#fff3bf;--bg3:#ffe066;--card:#ffffff;--card-hover:#fffdf0;--border:#fab005;--border-light:#fcc419;--text:#2b2b2b;--text-dim:#555;--text-bright:#000;--heading:#000;--link:#e8590c;--success:#2f9e44;--warning:#e8590c;--danger:#c92a2a;--xp-purple:#9c36b5;--badge-cyan:#1098ad;--streak-red:#c92a2a;--radius:16px;--radius-sm:12px;--radius-lg:24px;--shadow:3px 3px 0 rgba(0,0,0,.2);--shadow-lg:5px 5px 0 rgba(0,0,0,.25);--font:'Comic Sans MS','Chalkboard SE',cursive,system-ui,sans-serif;--card-border-w:3px;--card-border-style:solid;--glow:0}
+[data-theme="sketchy-dark"]{--neon:#d97706;--neon-dim:rgba(217,119,6,.15);--neon-glow:rgba(217,119,6,.3);--bg:#2a1f0f;--bg2:#3a2a1a;--bg3:#4a3a2a;--card:#362414;--card-hover:#462a1a;--border:#5a4030;--border-light:#6a5040;--text:#d4c4b0;--text-dim:#a09080;--text-bright:#e8d8c8;--heading:#f5ead5;--link:#e8a550;--success:#84cc16;--warning:#d97706;--danger:#e74c3c;--xp-purple:#d946ef;--badge-cyan:#06b6d4;--streak-red:#e74c3c;--radius:24px;--radius-sm:16px;--radius-lg:32px;--shadow:0 6px 20px rgba(0,0,0,.3);--shadow-lg:0 10px 40px rgba(0,0,0,.4);--font:'Playfair Display','Georgia',serif;--card-border-w:2px;--card-border-style:dashed;--glow:0}
+[data-theme="sketchy-light"]{--neon:#b45309;--neon-dim:rgba(180,83,9,.1);--neon-glow:rgba(180,83,9,.2);--bg:#fef3e2;--bg2:#fde8cc;--bg3:#f9d5b8;--card:#ffffff;--card-hover:#fffaf5;--border:#d4a574;--border-light:#e8c4a0;--text:#5c4033;--text-dim:#8b6f47;--text-bright:#3e2723;--heading:#3e2723;--link:#c2600c;--success:#65a30d;--warning:#b45309;--danger:#d25c4d;--xp-purple:#c084fc;--badge-cyan:#0891b2;--streak-red:#d25c4d;--radius:24px;--radius-sm:16px;--radius-lg:32px;--shadow:0 4px 12px rgba(0,0,0,.08);--shadow-lg:0 8px 24px rgba(0,0,0,.12);--font:'Playfair Display','Georgia',serif;--card-border-w:2px;--card-border-style:dashed;--glow:0}
+[data-theme="nature-code-dark"]{--neon:#10b981;--neon-dim:rgba(16,185,129,.15);--neon-glow:rgba(16,185,129,.25);--bg:#0a1f12;--bg2:#0d2818;--bg3:#1a3a2a;--card:#0f281a;--card-hover:#1a3a2a;--border:#2d5a3d;--border-light:#3a7050;--text:#c8e6d0;--text-dim:#7ba890;--text-bright:#e8f5ed;--heading:#e8f5ed;--link:#34d399;--success:#10b981;--warning:#f59e0b;--danger:#f87171;--xp-purple:#a78bfa;--badge-cyan:#22d3ee;--streak-red:#f87171;--radius:20px;--radius-sm:14px;--radius-lg:28px;--shadow:0 4px 20px rgba(0,100,50,.2);--shadow-lg:0 8px 32px rgba(0,100,50,.3);--font:'Segoe UI','Helvetica Neue',system-ui,sans-serif;--card-border-w:1px;--card-border-style:solid;--glow:0}
+[data-theme="nature-code-light"]{--neon:#059669;--neon-dim:rgba(5,150,105,.1);--neon-glow:rgba(5,150,105,.15);--bg:#f0fdf8;--bg2:#e8faf2;--bg3:#d1f2e0;--card:#ffffff;--card-hover:#f5fbf7;--border:#86efac;--border-light:#bbf7d0;--text:#164e3f;--text-dim:#2d6e4f;--text-bright:#052e16;--heading:#052e16;--link:#059669;--success:#10b981;--warning:#d97706;--danger:#dc2626;--xp-purple:#8b5cf6;--badge-cyan:#06b6d4;--streak-red:#dc2626;--radius:20px;--radius-sm:14px;--radius-lg:28px;--shadow:0 4px 16px rgba(0,100,50,.06);--shadow-lg:0 8px 28px rgba(0,100,50,.1);--font:'Segoe UI','Helvetica Neue',system-ui,sans-serif;--card-border-w:1px;--card-border-style:solid;--glow:0}
+[data-theme="glass-dark"]{--neon:#00d9ff;--neon-dim:rgba(0,217,255,.12);--neon-glow:rgba(0,217,255,.25);--bg:#0f0f23;--bg2:#1a1a3e;--bg3:#25254a;--card:rgba(30,30,60,.4);--card-hover:rgba(40,40,80,.5);--border:rgba(100,150,255,.2);--border-light:rgba(100,150,255,.3);--text:#e4e8f0;--text-dim:#8899aa;--text-bright:#f5f7ff;--heading:#ffffff;--link:#00d9ff;--success:#34d399;--warning:#fbbf24;--danger:#ff6b9d;--xp-purple:#b991f7;--badge-cyan:#00d9ff;--streak-red:#ff6b9d;--radius:16px;--radius-sm:12px;--radius-lg:20px;--shadow:0 8px 32px rgba(0,200,255,.1);--shadow-lg:0 16px 64px rgba(0,200,255,.15);--font:'Segoe UI',system-ui,sans-serif;--card-border-w:1px;--card-border-style:solid;--glow:1}
+[data-theme="glass-light"]{--neon:#0891b2;--neon-dim:rgba(8,145,178,.08);--neon-glow:rgba(8,145,178,.15);--bg:#f8fafc;--bg2:#f1f5f9;--bg3:#e2e8f0;--card:rgba(255,255,255,.4);--card-hover:rgba(255,255,255,.6);--border:rgba(100,180,255,.2);--border-light:rgba(100,180,255,.3);--text:#1e293b;--text-dim:#475569;--text-bright:#0f172a;--heading:#0f172a;--link:#0891b2;--success:#059669;--warning:#d97706;--danger:#dc2626;--xp-purple:#7c3aed;--badge-cyan:#0891b2;--streak-red:#dc2626;--radius:16px;--radius-sm:12px;--radius-lg:20px;--shadow:0 8px 32px rgba(100,150,255,.08);--shadow-lg:0 16px 64px rgba(100,150,255,.12);--font:'Segoe UI',system-ui,sans-serif;--card-border-w:1px;--card-border-style:solid;--glow:0}
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}body{font-family:var(--font);background:var(--bg);color:var(--text);line-height:1.6;min-height:100vh;overflow-x:hidden;transition:background .3s,color .3s}h1,h2,h3,h4{color:var(--heading);line-height:1.3}a{color:var(--link);text-decoration:none}a:hover{text-decoration:underline}button{font-family:var(--font);cursor:pointer;border:none;background:none;color:inherit}code,pre{font-family:var(--mono)}:focus-visible{outline:2px solid var(--neon);outline-offset:2px;border-radius:4px}::selection{background:var(--neon);color:#fff}::-webkit-scrollbar{width:8px}::-webkit-scrollbar-track{background:var(--bg2)}::-webkit-scrollbar-thumb{background:var(--border);border-radius:4px}::-webkit-scrollbar-thumb:hover{background:var(--text-dim)}
+.site-header{position:fixed;top:0;left:0;right:0;height:var(--header-h);background:var(--bg2);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 20px;z-index:100;backdrop-filter:blur(12px)}.header-logo{display:flex;align-items:center;gap:12px;font-weight:700;font-size:18px;color:var(--heading)}.header-logo-text{display:flex;flex-direction:column;line-height:1.2}.header-logo-main{font-size:20px;font-weight:800}.header-logo-sub{font-size:11px;font-weight:600;color:var(--neon);letter-spacing:1px;text-transform:uppercase;margin-top:2px}.header-right{margin-left:auto;display:flex;align-items:center;gap:12px}.header-xp{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--xp-purple);font-weight:600}.header-xp-bar{width:80px;height:6px;background:var(--bg3);border-radius:3px;overflow:hidden}.header-xp-fill{height:100%;background:var(--xp-purple);border-radius:3px;transition:width .5s}.header-streak{display:flex;align-items:center;gap:4px;font-size:13px;color:var(--streak-red);font-weight:600}
+.theme-toggle{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:var(--bg3);transition:background .2s}.theme-toggle:hover{background:var(--border)}.theme-picker-wrap{position:relative}.theme-picker-btn{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:var(--bg3);transition:background .2s;font-size:16px}.theme-picker-btn:hover{background:var(--border)}.theme-picker-dd{position:absolute;top:calc(100% + 8px);right:0;background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:12px;box-shadow:var(--shadow-lg);z-index:200;display:none;min-width:240px}.theme-picker-dd.open{display:block}.theme-picker-dd .tp-label{font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--text-dim);margin-bottom:8px}.tp-world{display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:var(--radius-sm);cursor:pointer;transition:background .15s;margin-bottom:2px}.tp-world:hover{background:var(--bg3)}.tp-world.active{background:var(--neon-dim)}.tp-world-color{width:28px;height:28px;border-radius:6px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:14px}.tp-world-info{flex:1;min-width:0}.tp-world-name{font-size:13px;font-weight:600;color:var(--heading)}.tp-world-desc{font-size:10px;color:var(--text-dim)}.tp-divider{height:1px;background:var(--border);margin:8px 0}.tp-mode-row{display:flex;align-items:center;justify-content:space-between;padding:4px 10px}.tp-mode-label{font-size:12px;color:var(--text);font-weight:600}.tp-mode-switch{width:44px;height:24px;border-radius:12px;background:var(--bg3);position:relative;cursor:pointer;transition:background .2s}.tp-mode-switch.light{background:var(--neon)}.tp-mode-switch::after{content:'';position:absolute;top:3px;left:3px;width:18px;height:18px;border-radius:50%;background:#fff;transition:transform .2s;box-shadow:0 1px 3px rgba(0,0,0,.3)}.tp-mode-switch.light::after{transform:translateX(20px)}.menu-btn{display:none;width:36px;height:36px;border-radius:8px;align-items:center;justify-content:center;background:var(--bg3)}
+.sidebar{position:fixed;top:var(--header-h);left:0;width:var(--sidebar-w);height:calc(100vh - var(--header-h));background:var(--bg2);border-right:1px solid var(--border);overflow-y:auto;padding:16px 12px;z-index:90;transition:transform .3s}.sidebar-section{margin-bottom:20px}.sidebar-label{font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--text-dim);padding:0 8px;margin-bottom:8px}.sidebar-level{padding:8px 12px;background:var(--neon-dim);border-radius:var(--radius-sm);margin-bottom:12px;text-align:center}.sidebar-level-title{font-size:14px;font-weight:700;color:var(--neon)}.sidebar-level-sub{font-size:11px;color:var(--text-dim);margin-top:2px}.sidebar-xp-bar{width:100%;height:8px;background:var(--bg3);border-radius:4px;overflow:hidden;margin-top:6px}.sidebar-xp-fill{height:100%;background:linear-gradient(90deg,var(--xp-purple),var(--neon));border-radius:4px;transition:width .6s}.mod-link{display:flex;align-items:center;gap:10px;padding:8px 12px;border-radius:var(--radius-sm);transition:background .15s;color:var(--text);font-size:13px;text-decoration:none;position:relative;cursor:pointer}.mod-link:hover{background:var(--bg3);text-decoration:none}.mod-link.active{background:var(--neon-dim);color:var(--neon);font-weight:600}.mod-link.completed::after{content:'\2713';position:absolute;right:10px;color:var(--success);font-weight:700;font-size:12px}.mod-link .mod-icon{width:28px;height:28px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
+.main{margin-left:var(--sidebar-w);margin-top:var(--header-h);min-height:calc(100vh - var(--header-h));padding:32px;max-width:900px}.module-header{margin-bottom:32px}.module-header .mod-badge{display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--neon);margin-bottom:8px}.module-header h1{font-size:28px;margin-bottom:8px}.module-header .mod-desc{font-size:15px;color:var(--text-dim);max-width:600px}
+.lesson-card{background:var(--card);border:var(--card-border-w) var(--card-border-style) var(--border);border-radius:var(--radius);padding:24px;margin-bottom:20px;transition:border-color .2s}.lesson-card:hover{border-color:var(--neon)}.lesson-card h3{font-size:18px;margin-bottom:12px;display:flex;align-items:center;gap:8px}.lesson-card p,.lesson-card li{font-size:14px;line-height:1.7;color:var(--text)}.lesson-card ul,.lesson-card ol{margin:8px 0 8px 20px}.lesson-card code{background:var(--bg3);padding:2px 6px;border-radius:4px;font-size:13px;color:var(--neon)}.lesson-card .info-box{background:var(--neon-dim);border-left:3px solid var(--neon);padding:12px 16px;border-radius:0 var(--radius-sm) var(--radius-sm) 0;margin:12px 0;font-size:13px}
+.interactive-area{background:var(--card);border:calc(var(--card-border-w) + 1px) dashed var(--border);border-radius:var(--radius);padding:24px;margin:20px 0;min-height:200px}.interactive-area h4{font-size:15px;color:var(--neon);margin-bottom:12px}.ix-grid{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;margin:16px 0}.ix-item{background:var(--bg3);border:2px solid var(--border);border-radius:var(--radius-sm);padding:14px 20px;font-size:16px;cursor:pointer;transition:all .2s;user-select:none;text-align:center;min-width:60px}.ix-item:hover{border-color:var(--neon);background:var(--neon-dim)}.ix-item.selected{border-color:var(--neon);background:var(--neon-dim)}.ix-item.correct{border-color:var(--success);background:rgba(34,197,94,.1)}.ix-item.wrong{border-color:var(--danger);background:rgba(239,68,68,.1)}.ix-item.placed{opacity:.4;pointer-events:none}.ix-btn{background:var(--neon);color:#fff;border:none;padding:10px 24px;border-radius:var(--radius-sm);font-size:14px;font-weight:700;cursor:pointer;font-family:var(--font);margin-top:12px;transition:opacity .2s}.ix-btn:hover{opacity:.85}.ix-feedback{text-align:center;padding:14px;border-radius:var(--radius-sm);font-size:16px;font-weight:700;margin-top:12px;display:none}.ix-feedback.pass{display:block;background:rgba(34,197,94,.12);color:var(--success)}.ix-feedback.fail{display:block;background:rgba(239,68,68,.12);color:var(--danger)}
+.quiz-section{background:var(--card);border:var(--card-border-w) var(--card-border-style) var(--border);border-radius:var(--radius);padding:24px;margin-top:24px}.quiz-section h3{font-size:18px;margin-bottom:16px;color:var(--xp-purple)}.quiz-q{margin-bottom:20px}.quiz-q p{font-size:14px;font-weight:600;margin-bottom:10px}.quiz-q label{display:flex;align-items:flex-start;gap:10px;padding:10px 14px;border-radius:var(--radius-sm);border:1px solid var(--border);cursor:pointer;transition:all .15s;font-size:14px;margin-bottom:6px}.quiz-q label:hover{border-color:var(--neon);background:var(--neon-dim)}.quiz-q input[type="radio"]{margin-top:3px;accent-color:var(--neon)}.quiz-q label.correct{border-color:var(--success);background:rgba(34,197,94,.1)}.quiz-q label.wrong{border-color:var(--danger);background:rgba(239,68,68,.1)}.quiz-submit{padding:10px 24px;font-size:14px;font-weight:700;border-radius:var(--radius-sm);background:var(--xp-purple);color:#fff;transition:opacity .2s;margin-top:8px}.quiz-submit:hover{opacity:.85}.quiz-result{padding:16px;border-radius:var(--radius-sm);margin-top:16px;font-size:14px;font-weight:600;text-align:center}.quiz-result.pass{background:rgba(34,197,94,.12);color:var(--success);border:1px solid rgba(34,197,94,.3)}.quiz-result.fail{background:rgba(239,68,68,.12);color:var(--danger);border:1px solid rgba(239,68,68,.3)}.quiz-explanation{margin-top:6px;padding:8px 14px;border-radius:var(--radius-sm);background:rgba(34,197,94,.08);border-left:3px solid var(--success);font-size:13px;color:var(--success);font-weight:600}
+.boss-section{background:linear-gradient(135deg,rgba(168,85,247,.08),rgba(59,130,246,.08));border:2px solid var(--xp-purple);border-radius:var(--radius);padding:24px;margin-top:24px}.boss-section h3{color:var(--xp-purple);font-size:20px;margin-bottom:4px}.boss-section .boss-sub{font-size:13px;color:var(--text-dim);margin-bottom:16px}
+.badge-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(100px,1fr));gap:12px;margin-top:12px}.badge-item{text-align:center;padding:12px 8px;border-radius:var(--radius-sm);background:var(--bg3);opacity:.4;transition:all .3s}.badge-item.earned{opacity:1;background:var(--neon-dim);border:1px solid var(--neon)}.badge-item .badge-icon{font-size:28px;margin-bottom:4px}.badge-item .badge-name{font-size:10px;font-weight:600;color:var(--text-dim)}.badge-item.earned .badge-name{color:var(--neon)}
+.stats-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px;margin-top:12px}.stat-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius-sm);padding:16px;text-align:center}.stat-card .stat-val{font-size:28px;font-weight:700;color:var(--neon)}.stat-card .stat-label{font-size:12px;color:var(--text-dim);margin-top:4px}
+.notif{position:fixed;top:80px;right:20px;background:var(--card);border:1px solid var(--neon);border-radius:var(--radius);padding:16px 20px;box-shadow:var(--shadow-lg);z-index:200;transform:translateX(120%);transition:transform .4s cubic-bezier(.22,1,.36,1);max-width:320px}.notif.show{transform:translateX(0)}.notif-title{font-size:14px;font-weight:700;color:var(--heading);margin-bottom:2px}.notif-text{font-size:12px;color:var(--text-dim)}.notif.xp{border-color:var(--xp-purple)}.notif.badge{border-color:var(--badge-cyan)}.notif.level{border-color:var(--success)}.notif.streak{border-color:var(--streak-red)}
+.level-up-overlay{position:fixed;inset:0;background:rgba(0,0,0,.7);display:none;align-items:center;justify-content:center;z-index:300}.level-up-overlay.active{display:flex}.level-up-box{text-align:center;padding:40px;animation:lvlPop .5s ease-out}.level-up-box .lvl-icon{font-size:64px;margin-bottom:12px}.level-up-box .lvl-title{font-size:28px;font-weight:900;color:var(--heading)}.level-up-box .lvl-name{font-size:20px;color:var(--xp-purple);font-weight:700;margin-top:4px}@keyframes lvlPop{from{transform:scale(.5);opacity:0}to{transform:scale(1);opacity:1}}
+.welcome-screen{display:flex;align-items:center;justify-content:center;min-height:calc(100vh - var(--header-h));text-align:center;padding:40px 20px}.welcome-box{max-width:480px}.welcome-box h1{font-size:36px;margin-bottom:8px}.welcome-box .ws-sub{color:var(--text-dim);font-size:15px;margin-bottom:32px}.welcome-box input{width:100%;max-width:320px;padding:12px 16px;font-size:16px;border-radius:var(--radius-sm);border:1px solid var(--border);background:var(--bg3);color:var(--heading);font-family:var(--font);text-align:center;margin-bottom:16px}.welcome-box input:focus{border-color:var(--neon);outline:none}.welcome-box .ws-start{padding:14px 40px;font-size:16px;font-weight:700;border-radius:var(--radius-sm);background:var(--neon);color:#fff;transition:opacity .2s}.welcome-box .ws-start:hover{opacity:.85}.welcome-box .ws-start:disabled{opacity:.4;cursor:not-allowed}
+.cert-overlay{position:fixed;inset:0;background:rgba(0,0,0,.88);display:none;align-items:center;justify-content:center;z-index:400;padding:20px;flex-direction:column;backdrop-filter:blur(8px)}.cert-overlay.active{display:flex}.cert-picker{display:flex;gap:12px;justify-content:center;margin-bottom:20px;flex-wrap:wrap}.cert-pick-btn{padding:10px 20px;font-size:13px;font-weight:700;border-radius:12px;border:2px solid rgba(255,255,255,.15);background:rgba(255,255,255,.06);color:rgba(255,255,255,.7);transition:all .3s;backdrop-filter:blur(4px)}.cert-pick-btn:hover{border-color:rgba(255,255,255,.3);color:#fff;transform:translateY(-2px)}.cert-pick-btn.active{border-color:#ffd700;color:#ffd700;background:rgba(255,215,0,.1);box-shadow:0 0 20px rgba(255,215,0,.15)}.cert-frame{width:720px;max-width:100%;aspect-ratio:1.414;position:relative;overflow:hidden}.cert-actions{display:flex;gap:12px;justify-content:center;margin-top:16px}.cert-actions button{padding:12px 28px;font-size:13px;font-weight:700;border-radius:12px;background:linear-gradient(135deg,var(--neon),var(--link));color:#fff;transition:transform .2s,box-shadow .2s}.cert-actions button:hover{transform:translateY(-2px);box-shadow:0 4px 20px rgba(0,0,0,.3)}
+.confetti-container{position:fixed;inset:0;pointer-events:none;z-index:600;overflow:hidden}
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.6);display:none;align-items:center;justify-content:center;z-index:500;padding:20px}.modal-overlay.active{display:flex}.modal{background:var(--card);border:1px solid var(--border);border-radius:var(--radius-lg);max-width:640px;width:100%;max-height:85vh;overflow-y:auto;padding:32px;position:relative}.modal-close{position:absolute;top:12px;right:16px;font-size:24px;color:var(--text-dim);background:none;border:none;cursor:pointer}
+@media(max-width:800px){.menu-btn{display:flex}.sidebar{transform:translateX(-100%)}.sidebar.open{transform:translateX(0)}.main{margin-left:0;padding:16px}}
+@media print{*{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}.site-header,.sidebar,.notif,.level-up-overlay,.confetti-container{display:none!important}.main{margin-left:0!important;padding:20px!important}.lesson-card{break-inside:avoid;page-break-inside:avoid}}
+
+/* Audio/Speech */
+.tts-btn{background:none;border:none;cursor:pointer;font-size:.9em;opacity:.5;transition:all .2s;vertical-align:middle;margin-left:8px;padding:2px 6px;border-radius:4px}
+.tts-btn:hover{opacity:1;background:var(--bg2)}.tts-btn.speaking{opacity:1;color:var(--neon);animation:tts-pulse 1s infinite}
+@keyframes tts-pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.15)}}
+.tts-bar{display:flex;align-items:center;gap:8px;padding:6px 12px;background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);margin:8px 0;font-size:.8rem;flex-wrap:wrap}
+.tts-bar select{background:var(--bg);color:var(--text);border:1px solid var(--border);border-radius:4px;padding:2px 6px;font-size:.78rem}
+.tts-bar button{background:none;border:1px solid var(--border);border-radius:4px;padding:2px 8px;cursor:pointer;color:var(--text);font-size:.8rem}
+.tts-bar button:hover{background:var(--bg)}
+.speech-ex{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:16px;margin:12px 0;text-align:center}
+.speech-ex h4{margin:0 0 8px;font-size:1rem}
+.mic-btn{font-size:1.6em;background:none;border:2px solid var(--neon);border-radius:50%;width:52px;height:52px;cursor:pointer;transition:all .3s;color:var(--text);display:inline-flex;align-items:center;justify-content:center}
+.mic-btn:hover{background:var(--neon);color:var(--bg)}.mic-btn.rec{background:#ef4444;border-color:#ef4444;color:#fff;animation:tts-pulse 1s infinite}
+.sr-res{margin-top:8px;padding:6px 10px;border-radius:4px;font-weight:600;font-size:.85rem;display:inline-block}
+.sr-res.good{background:#22c55e22;color:#22c55e}.sr-res.retry{background:#f59e0b22;color:#f59e0b}
+.sr-na{font-size:.8rem;color:var(--text-dim);margin-top:8px}
+</style>
+</head>
+<body>
+<a href="#mainContent" class="skip-nav" style="position:absolute;top:-50px;left:8px;background:var(--neon);color:#fff;padding:8px 16px;z-index:9999;border-radius:0 0 8px 8px;font-weight:700;text-decoration:none">Zum Inhalt springen</a>
+<header class="site-header">
+  <button class="menu-btn" onclick="toggleSidebar()" aria-label="Menu">&#9776;</button>
+  <div class="header-logo">
+    <svg viewBox="0 0 40 40" width="40" height="40" fill="none" aria-hidden="true"><rect x="4" y="4" width="32" height="32" rx="8" fill="var(--neon-dim)" stroke="var(--neon)" stroke-width="1.5"/><text x="20" y="26" text-anchor="middle" font-size="18" font-weight="900" fill="var(--neon)">W</text></svg>
+    <div class="header-logo-text"><div class="header-logo-main">WebExplorer</div><div class="header-logo-sub">Web und IT-Grundlagen Klasse 3-6</div></div>
+  </div>
+  <div class="header-right">
+    <div class="header-xp"><span id="headerLevel">Level 1</span><div class="header-xp-bar"><div class="header-xp-fill" style="width:0%"></div></div><span id="headerXP">0 XP</span></div>
+    <div class="header-streak" id="headerStreak">&#128293; 0</div>
+    <div class="theme-picker-wrap"><button class="theme-picker-btn" onclick="toggleThemePicker()" aria-label="Theme wählen">&#127912;</button><div class="theme-picker-dd" id="themePickerDD"></div></div>
+    <button class="theme-toggle" onclick="toggleMode()" aria-label="Dark/Light umschalten">&#127769;</button>
+  </div>
+</header>
+<nav class="sidebar" id="sidebar" role="navigation" aria-label="Module">
+  <div class="sidebar-section"><div class="sidebar-level"><div class="sidebar-level-title" id="sidebarLevel">Anfänger</div><div class="sidebar-level-sub" id="sidebarXP">0 XP</div><div class="sidebar-xp-bar"><div class="sidebar-xp-fill" id="sidebarXPFill" style="width:0%"></div></div></div></div>
+  <div class="sidebar-section"><div class="sidebar-label">Module</div><div id="sidebarModules"></div></div>
+  <div class="sidebar-section" style="border-top:1px solid var(--border);padding-top:12px;margin-top:12px">
+    <a class="mod-link" onclick="showBadges()"><span class="mod-icon">&#127941;</span>Abzeichen</a>
+    <a class="mod-link" onclick="showStats()"><span class="mod-icon">&#128202;</span>Statistik</a>
+    <a class="mod-link" onclick="showCert()"><span class="mod-icon">&#127891;</span>Urkunde</a>
+  </div>
+  <div class="sidebar-section" style="border-top:1px solid var(--border);padding-top:12px;margin-top:12px">
+    <a class="mod-link" onclick="exportData()"><span class="mod-icon">&#128190;</span>Speichern</a>
+    <a class="mod-link" onclick="exportFortschritt()"><span class="mod-icon">📄</span>Fortschritt (TXT)</a>
+    <label class="mod-link" style="cursor:pointer"><span class="mod-icon">&#128194;</span>Laden<input type="file" accept=".json" onchange="importData(event)" style="display:none"></label>
+    <a class="mod-link" onclick="if(confirm('Wirklich alles zurücksetzen?')){localStorage.removeItem(STORAGE_KEY);location.reload()}" style="color:var(--danger)"><span class="mod-icon">&#128465;</span>Zurücksetzen</a>
+  </div>
+  <div style="padding:16px 8px 8px;border-top:1px solid var(--border);margin-top:12px;font-size:11px;color:var(--text-dim)">
+    <a onclick="showImpressum()" style="cursor:pointer;color:var(--text-dim)">Impressum</a> &middot;
+    <a onclick="showDatenschutz()" style="cursor:pointer;color:var(--text-dim)">Datenschutz</a>
+  </div>
+</nav>
+<main class="main" id="mainContent">
+  <div class="welcome-screen" id="welcomeScreen"><div class="welcome-box"><div style="font-size:64px;margin-bottom:16px">🌐</div><h1>WebExplorer</h1><p class="ws-sub">Entdecke die Welt des Internets und der IT! 10 Module mit Quiz, Boss-Challenges und Übungen.</p><input type="text" id="nameInput" placeholder="Dein Name" maxlength="24" aria-label="Dein Name" oninput="document.getElementById('startBtn').disabled=!this.value.trim()"><br><button class="ws-start" id="startBtn" disabled onclick="startApp()">🚀 Erkunden starten!</button></div></div>
+  <div id="moduleContent" style="display:none"></div>
+  <div id="badgesView" style="display:none"></div>
+  <div id="statsView" style="display:none"></div>
+</main>
+<div class="notif" id="notif"><div class="notif-title" id="notifTitle"></div><div class="notif-text" id="notifText"></div></div>
+<div class="level-up-overlay" id="levelUpOverlay"><div class="level-up-box" id="levelUpBox"></div></div>
+<div class="confetti-container" id="confetti"></div>
+<div class="cert-overlay" id="certOverlay" role="dialog" aria-label="Urkunde" aria-modal="true"><div class="cert-picker" id="certPicker"></div><div class="cert-frame" id="certFrame"></div><div class="cert-actions"><button onclick="printCert()">&#128424; Drucken / PDF</button><button onclick="closeCert()">Schließen</button></div></div>
+<div class="modal-overlay" id="impressumOverlay"><div class="modal"><button class="modal-close" onclick="document.getElementById('impressumOverlay').classList.remove('active')">&times;</button><h2>Impressum</h2><p><strong>© 2026 GZ AI Stacks - Gerd Zimmermann</strong></p><p>Diese Lern-App wurde mit Claude Code (Anthropic) entwickelt.</p></div></div>
+<div class="modal-overlay" id="datenschutzOverlay"><div class="modal"><button class="modal-close" onclick="document.getElementById('datenschutzOverlay').classList.remove('active')">&times;</button><h2>Datenschutzerklärung</h2><p>Diese App speichert Daten <strong>ausschließlich lokal</strong> in Ihrem Browser (LocalStorage). Es werden keine Daten an Server übertragen.</p><ul><li>Keine Cookies</li><li>Kein Tracking oder Analytics</li><li>Keine externen Ressourcen</li><li>Keine Registrierung</li><li>Alle Daten verbleiben auf Ihrem Gerät</li></ul><p>Sie können Ihre gespeicherten Daten jederzeit über die "Zurücksetzen"-Funktion löschen.</p></div></div>
+<script>
+function showImpressum(){document.getElementById('impressumOverlay').classList.add('active')}
+function showDatenschutz(){document.getElementById('datenschutzOverlay').classList.add('active')}
+
+
+// === Audio (TTS) ===
+const _synth=window.speechSynthesis,_LANG='de-DE';let _ttsOn=false,_ttsRate=1,_ttsTimer=null;
+function speakLesson(i){if(_ttsOn){stopTTS();return}const c=document.querySelectorAll('.lesson-card');if(!c[i]||!_synth)return;stopTTS();const u=new SpeechSynthesisUtterance(c[i].innerText);u.lang=_LANG;u.rate=_ttsRate;u.onstart=()=>{_ttsOn=true;updTTSUI();startTTSTimer()};u.onend=()=>{_ttsOn=false;updTTSUI();clearTTSTimer()};u.onerror=()=>{_ttsOn=false;updTTSUI();clearTTSTimer()};_synth.speak(u);showTTSBar()}
+function speakText(t,lang){if(!_synth)return;stopTTS();const u=new SpeechSynthesisUtterance(t);u.lang=lang||_LANG;u.rate=_ttsRate;u.onstart=()=>{_ttsOn=true;updTTSUI();startTTSTimer()};u.onend=()=>{_ttsOn=false;updTTSUI();clearTTSTimer()};u.onerror=()=>{_ttsOn=false;updTTSUI();clearTTSTimer()};_synth.speak(u)}
+function stopTTS(){if(_synth){_synth.cancel()}_ttsOn=false;updTTSUI();clearTTSTimer()}
+function updTTSUI(){document.querySelectorAll('.tts-btn').forEach(b=>b.classList.toggle('speaking',_ttsOn))}
+function setTTSRate(r){_ttsRate=parseFloat(r)}
+function startTTSTimer(){clearTTSTimer();_ttsTimer=setInterval(()=>{if(_synth&&_synth.speaking&&!_synth.paused){_synth.pause();_synth.resume()}},10000)}
+function clearTTSTimer(){if(_ttsTimer){clearInterval(_ttsTimer);_ttsTimer=null}}
+function showTTSBar(){if(document.getElementById('ttsBar'))return;const mc=document.getElementById('moduleContent');if(!mc)return;const b=document.createElement('div');b.className='tts-bar';b.id='ttsBar';b.innerHTML='\u{1F50A} <select onchange="setTTSRate(this.value)"><option value="0.7">Langsam</option><option value="1" selected>Normal</option><option value="1.3">Schnell</option></select> <button onclick="stopTTS()">\u25A0 Stopp</button>';mc.prepend(b)}
+
+
+/* === Fortschritt-Export (TXT) === */
+function exportFortschritt(){
+  var t=document.title.replace(/\s*[\u2014\u2013|].*/,'').trim();
+  var d=new Date();
+  var dd=String(d.getDate()).padStart(2,'0');
+  var mm=String(d.getMonth()+1).padStart(2,'0');
+  var yyyy=d.getFullYear();
+  var datum=dd+'.'+mm+'.'+yyyy;
+  var datumFile=yyyy+'-'+mm+'-'+dd;
+
+  var mc=state.modulesCompleted||[];
+  var total=modules.length;
+  var done=mc.length;
+
+  var lvl=0;
+  for(var i=LEVELS.length-1;i>=0;i--){if(state.xp>=LEVELS[i].xp){lvl=i;break;}}
+  var lvlName=LEVELS[lvl]?LEVELS[lvl].name:'';
+
+  var sep='\u2550'.repeat(42);
+  var sep2='\u2500'.repeat(42);
+  var lines=[];
+  lines.push(sep);
+  lines.push('  LERNFORTSCHRITT \u2014 '+t);
+  lines.push(sep);
+  lines.push('');
+  lines.push('  Sch\u00FCler:   '+(state.name||'(kein Name)'));
+  lines.push('  Datum:     '+datum);
+  lines.push('  Level:     '+(lvl+1)+' \u2014 '+lvlName+' ('+state.xp+' XP)');
+  lines.push('  Streak:    '+(state.streak||0)+' Tage in Folge');
+  lines.push('');
+  lines.push(sep2);
+  lines.push('  MODULE ('+done+'/'+total+' abgeschlossen)');
+  lines.push(sep2);
+  lines.push('');
+
+  for(var m=0;m<modules.length;m++){
+    var mod=modules[m];
+    var isDone=mc.indexOf(m)!==-1;
+    var icon=isDone?'\u2705':'\u2B1C';
+    var line='  '+icon+' Modul '+(m+1)+': '+mod.title;
+    if(isDone){
+      var qs=state.quizResults&&state.quizResults[m]!=null?state.quizResults[m]:'?';
+      var bs=state.bossResults&&state.bossResults[m]!=null?state.bossResults[m]:'?';
+      line+='\n        Quiz: '+qs+'/5 | Boss: '+bs+'/3';
+    }
+    lines.push(line);
+  }
+
+  var earnedBadges=(state.badges||[]);
+  lines.push('');
+  lines.push(sep2);
+  lines.push('  ABZEICHEN ('+earnedBadges.length+'/'+BADGES.length+')');
+  lines.push(sep2);
+  lines.push('');
+  if(earnedBadges.length===0){
+    lines.push('  (noch keine)');
+  }else{
+    for(var b=0;b<BADGES.length;b++){
+      if(earnedBadges.indexOf(BADGES[b].id)!==-1){
+        lines.push('  '+BADGES[b].icon+' '+BADGES[b].name);
+      }
+    }
+  }
+
+  lines.push('');
+  lines.push(sep);
+  lines.push('  (c) 2026 GZ AI Stacks \u2014 Gerd Zimmermann');
+  lines.push(sep);
+
+  var txt=lines.join('\n');
+  var safeName=(state.name||'Schueler').replace(/[^a-zA-Z0-9\u00C0-\u017F]/g,'_');
+  var fileName='Fortschritt_'+t.replace(/[^a-zA-Z0-9\u00C0-\u017F]/g,'_')+'_'+safeName+'_'+datumFile+'.txt';
+  var a=document.createElement('a');
+  a.download=fileName;
+  a.href=URL.createObjectURL(new Blob([txt],{type:'text/plain;charset=utf-8'}));
+  a.click();
+}
+
+const _qk=[0x4A,0x7F,0x2B,0x61,0x5C,0x3E,0x18,0x73];
+function _d(h,i){return h^_qk[i%_qk.length]}
+
+const LEVELS=[{"name":"Web-Anfänger","xp":0},{"name":"HTML-Entdecker","xp":40},{"name":"Tag-Schreiber","xp":100},{"name":"Link-Finder","xp":180},{"name":"Seiten-Bauer","xp":280},{"name":"CSS-Kenner","xp":400},{"name":"Stil-Designer","xp":540},{"name":"Netzwerk-Forscher","xp":700},{"name":"Daten-Detektiv","xp":880},{"name":"Algorithmus-Denker","xp":1080},{"name":"Logik-Meister","xp":1300},{"name":"Code-Versteher","xp":1540},{"name":"Internet-Experte","xp":1800},{"name":"Sicherheits-Profi","xp":2080},{"name":"Web-Architekt","xp":2380},{"name":"Digital-Talent","xp":2700},{"name":"IT-Profi","xp":3040},{"name":"Technik-Genie","xp":3400},{"name":"Cyber-Held","xp":3780},{"name":"Web-Champion","xp":4200}];
+const BADGES=[{"id":"m0","name":"HTML-Starter","icon":"📄","desc":"Modul 1 abgeschlossen"},{"id":"m1","name":"CSS-Styler","icon":"🎨","desc":"Modul 2 abgeschlossen"},{"id":"m2","name":"Link-Meister","icon":"🔗","desc":"Modul 3 abgeschlossen"},{"id":"m3","name":"Netzwerk-Kenner","icon":"🌐","desc":"Modul 4 abgeschlossen"},{"id":"m4","name":"Such-Profi","icon":"🔍","desc":"Modul 5 abgeschlossen"},{"id":"m5","name":"Algorithmus-Held","icon":"🧩","desc":"Modul 6 abgeschlossen"},{"id":"m6","name":"Daten-Experte","icon":"💾","desc":"Modul 7 abgeschlossen"},{"id":"m7","name":"Sicherheits-Wächter","icon":"🛡️","desc":"Modul 8 abgeschlossen"},{"id":"m8","name":"Medien-Kenner","icon":"📱","desc":"Modul 9 abgeschlossen"},{"id":"m9","name":"Digital-Bürger","icon":"🏅","desc":"Modul 10 abgeschlossen"},{"id":"first_quiz","name":"Quiz-Neuling","icon":"❓","desc":"Erstes Quiz bestanden"},{"id":"perfect_quiz","name":"Perfektionist","icon":"💎","desc":"Quiz mit 5/5 bestanden"},{"id":"first_boss","name":"Boss-Bezwinger","icon":"👑","desc":"Erste Boss-Challenge bestanden"},{"id":"all_bosses","name":"Endgegner","icon":"🏆","desc":"Alle Boss-Challenges bestanden"},{"id":"streak3","name":"Durchstarter","icon":"🔥","desc":"3 Tage in Folge gelernt"},{"id":"streak7","name":"Wochenkrieger","icon":"⚔️","desc":"7 Tage in Folge gelernt"},{"id":"half_done","name":"Halbzeit","icon":"⏳","desc":"5 Module abgeschlossen"},{"id":"speed_quiz","name":"Blitz-Denker","icon":"⚡","desc":"Quiz in unter 60 Sekunden"},{"id":"explorer","name":"Entdecker","icon":"🗺️","desc":"Alle Module angesehen"},{"id":"graduate","name":"Absolvent","icon":"🎓","desc":"Alle 10 Module abgeschlossen"}];
+const THEME_CONFIG={
+  cyber:{name:'Cyber Neon',emoji:'🖥',color:'#3b82f6',desc:'Futuristisch & Digital'},
+  retro:{name:'Retro Arcade',emoji:'🕹',color:'#ffd700',desc:'80er Arcade-Feeling'},
+  nature:{name:'Nature Forest',emoji:'🌳',color:'#4ade80',desc:'Natürlich & Organisch'},
+  space:{name:'Deep Space',emoji:'🚀',color:'#c084fc',desc:'Kosmisch & Geheimnisvoll'},
+  comic:{name:'Comic Pop',emoji:'💥',color:'#ff6b6b',desc:'Bunt & Verspielt'},
+  sketchy:{name:'Sketchy',emoji:'✍️',color:'#d97706',desc:'Handgemacht & Warm'},
+  'nature-code':{name:'Nature x Code',emoji:'🌿',color:'#10b981',desc:'Natur trifft Technik'},
+  glass:{name:'Glasmorphism',emoji:'💠',color:'#00d9ff',desc:'Modern & Transparent'}
+};
+const modules=[{id:0,title:"HTML-Grundlagen",icon:"📄",
+lessons:[
+{title:"Was ist HTML?",html:'<h3>📄 HTML — Die Sprache des Webs</h3><p><strong>HTML</strong> steht für <em>Hypertext Markup Language</em>. Es ist die Sprache, mit der Webseiten gebaut werden.</p><p>HTML besteht aus <strong>Tags</strong> — das sind besondere Befehle in spitzen Klammern:</p><div class="code-box"><code>&lt;h1&gt;Das ist eine Überschrift&lt;/h1&gt;<br>&lt;p&gt;Das ist ein Absatz.&lt;/p&gt;</code></div><div class="info-box">💡 Jeder Tag hat ein <strong>öffnendes</strong> Tag &lt;p&gt; und ein <strong>schließendes</strong> Tag &lt;/p&gt; mit einem Schrägstrich.</div>'},
+{title:"Wichtige HTML-Tags",html:'<h3>📄 Die wichtigsten Tags</h3><ul><li><code>&lt;h1&gt;</code> bis <code>&lt;h6&gt;</code> — <strong>Überschriften</strong> (h1 = größte)</li><li><code>&lt;p&gt;</code> — <strong>Absatz</strong> (Paragraph)</li><li><code>&lt;img&gt;</code> — <strong>Bild</strong> einfügen</li><li><code>&lt;a&gt;</code> — <strong>Link</strong> zu einer anderen Seite</li><li><code>&lt;ul&gt;</code> und <code>&lt;li&gt;</code> — <strong>Aufzählung/Liste</strong></li></ul><div class="info-box">🌐 <strong>Tipp:</strong> Jede Webseite, die du im Internet siehst, ist mit HTML gebaut!</div>'}
+],quiz:[
+{q:"Wofür steht HTML?",a:["Happy Text Making Language","Hypertext Markup Language","Home Tool Making List","High Tech Media Link"],_h:0x4B},
+{q:"Was sind Tags in HTML?",a:["Bilder","Befehle in spitzen Klammern","Farben","Programme"],_h:0x7E},
+{q:"Welcher Tag macht eine Überschrift?",a:["<p>","<img>","<h1>","<a>"],_h:0x29},
+{q:"Was hat jeder HTML-Tag?",a:["Nur ein öffnendes Tag","Ein öffnendes und ein schließendes Tag","Nur Farben","Nur Bilder"],_h:0x62},
+{q:"Welcher Tag macht einen Absatz?",a:["<h1>","<img>","<a>","<p>"],_h:0x58}
+],boss:[
+{q:"Was bedeutet das / im schließenden Tag?",a:["Es ist ein Link","Es zeigt das Ende des Elements an","Es macht den Text fett","Es fügt ein Bild ein"],_h:0x4B},
+{q:"Welcher Tag fügt ein Bild ein?",a:["<p>","<h1>","<img>","<a>"],_h:0x7D},
+{q:"Womit werden alle Webseiten gebaut?",a:["Paint","Word","HTML","Excel"],_h:0x29}
+]},{id:1,title:"CSS — Webseiten stylen",icon:"🎨",
+lessons:[
+{title:"Was ist CSS?",html:'<h3>🎨 CSS — Farben und Design</h3><p><strong>CSS</strong> steht für <em>Cascading Style Sheets</em>. Damit kannst du das <strong>Aussehen</strong> von Webseiten verändern.</p><p>Mit CSS bestimmst du:</p><ul><li><strong>Farben</strong> — Hintergrund, Textfarbe</li><li><strong>Schriftgröße</strong> — groß oder klein</li><li><strong>Abstände</strong> — Platz zwischen Elementen</li><li><strong>Rahmen</strong> — Linien um Elemente</li></ul>'},
+{title:"CSS-Beispiele",html:'<h3>🎨 So sieht CSS aus</h3><div class="code-box"><code>h1 {<br>&nbsp;&nbsp;color: blue;<br>&nbsp;&nbsp;font-size: 24px;<br>}<br><br>p {<br>&nbsp;&nbsp;background-color: yellow;<br>}</code></div><p>Das bedeutet: Die Überschrift wird <strong>blau</strong> und der Absatz bekommt einen <strong>gelben Hintergrund</strong>.</p><div class="info-box">💡 HTML = <strong>Was</strong> auf der Seite steht. CSS = <strong>Wie</strong> es aussieht.</div>'}
+],quiz:[
+{q:"Wofür steht CSS?",a:["Computer Style System","Cascading Style Sheets","Cool Smart Styling","Creative Site Setup"],_h:0x4A},
+{q:"Was bestimmt CSS?",a:["Den Inhalt der Seite","Das Aussehen der Seite","Die Links","Die Programme"],_h:0x7E},
+{q:"Was ändert 'color: blue'?",a:["Den Hintergrund","Die Textfarbe auf blau","Die Schriftgröße","Den Rahmen"],_h:0x29},
+{q:"Was ist der Unterschied zwischen HTML und CSS?",a:["Kein Unterschied","HTML = Was, CSS = Wie es aussieht","HTML = Farben, CSS = Text","HTML = Bilder, CSS = Links"],_h:0x62},
+{q:"Was ändert 'background-color'?",a:["Die Textfarbe","Die Schriftart","Die Hintergrundfarbe","Die Überschrift"],_h:0x5D}
+],boss:[
+{q:"Welche Eigenschaft ändert die Schriftgröße?",a:["color","background-color","font-size","border"],_h:0x4B},
+{q:"Was braucht eine Webseite für Design?",a:["Nur HTML","HTML und CSS zusammen","Nur CSS","Nur Bilder"],_h:0x7E},
+{q:"Was macht CSS mit einer Webseite?",a:["Es löscht den Text","Es macht die Seite schöner","Es fügt neue Seiten hinzu","Es erstellt Programme"],_h:0x29}
+]},{id:2,title:"Links und Navigation",icon:"🔗",
+lessons:[
+{title:"Links im Internet",html:'<h3>🔗 Links — Springe zu anderen Seiten</h3><p>Ein <strong>Link</strong> verbindet eine Webseite mit einer anderen. Wenn du auf einen Link klickst, kommst du zu einer neuen Seite.</p><p>So sieht ein Link in HTML aus:</p><div class="code-box"><code>&lt;a href="https://example.com"&gt;Hier klicken&lt;/a&gt;</code></div><p><strong>href</strong> sagt dem Browser, <strong>wohin</strong> der Link führt.</p>'},
+{title:"Navigation auf Webseiten",html:'<h3>🔗 Navigation verstehen</h3><p>Jede Webseite hat eine <strong>Navigation</strong> — das ist ein Menü mit Links zu verschiedenen Bereichen:</p><ul><li><strong>Startseite</strong> — die Hauptseite</li><li><strong>Über uns</strong> — wer hinter der Seite steckt</li><li><strong>Kontakt</strong> — wie man jemanden erreicht</li></ul><div class="info-box">💡 Die Navigation ist meist <strong>oben</strong> auf der Webseite oder an der <strong>Seite</strong>.</div>'}
+],quiz:[
+{q:"Was macht ein Link?",a:["Er löscht Text","Er verbindet zwei Webseiten","Er macht Bilder größer","Er ändert die Farbe"],_h:0x4B},
+{q:"Welcher HTML-Tag erstellt einen Link?",a:["<p>","<h1>","<a>","<img>"],_h:0x7D},
+{q:"Was bedeutet 'href' bei einem Link?",a:["Die Farbe des Links","Die Zieladresse des Links","Die Größe des Links","Der Name des Links"],_h:0x29},
+{q:"Wo findet man die Navigation?",a:["Ganz unten versteckt","Meist oben oder an der Seite","In einem separaten Programm","Im Papierkorb"],_h:0x62},
+{q:"Was passiert wenn man auf einen Link klickt?",a:["Der Computer geht aus","Man kommt zu einer neuen Seite","Das Bild wird größer","Der Text wird fett"],_h:0x5D}
+],boss:[
+{q:"Was braucht jeder Link?",a:["Nur einen Namen","Eine Zieladresse (href)","Nur eine Farbe","Nur ein Bild"],_h:0x4B},
+{q:"Was ist eine Navigation auf einer Webseite?",a:["Ein Bild","Ein Menü mit Links zu verschiedenen Bereichen","Ein Passwort","Ein Spiel"],_h:0x7E},
+{q:"Wie erkennt man einen Link auf einer Webseite?",a:["Er ist rot und fett","Er ist oft blau und unterstrichen","Er blinkt immer","Er ist unsichtbar"],_h:0x29}
+]},{id:3,title:"Netzwerke und Internet",icon:"🌐",
+lessons:[
+{title:"Was ist ein Netzwerk?",html:'<h3>🌐 Netzwerke</h3><p>Ein <strong>Netzwerk</strong> verbindet mehrere Computer miteinander, damit sie Daten austauschen können.</p><p>Arten von Netzwerken:</p><ul><li><strong>LAN</strong> — Lokales Netzwerk (z.B. in der Schule)</li><li><strong>WLAN</strong> — Drahtloses lokales Netzwerk</li><li><strong>Internet</strong> — Das größte Netzwerk der Welt</li></ul>'},
+{title:"Wie funktioniert das Internet?",html:'<h3>🌐 So funktioniert das Internet</h3><p>Wenn du eine Webseite aufrufst, passiert Folgendes:</p><ol><li>Du tippst eine <strong>Adresse</strong> ein (z.B. www.example.com)</li><li>Dein Computer fragt einen <strong>Server</strong> nach der Seite</li><li>Der Server schickt die <strong>Daten</strong> zu dir</li><li>Dein Browser zeigt die <strong>Webseite</strong> an</li></ol><div class="info-box">💡 Ein <strong>Server</strong> ist ein leistungsstarker Computer, der Webseiten für alle bereithält.</div>'}
+],quiz:[
+{q:"Was verbindet ein Netzwerk?",a:["Nur Drucker","Mehrere Computer miteinander","Nur Telefone","Nur Bildschirme"],_h:0x4B},
+{q:"Wofür steht WLAN?",a:["World Language Network","Wireless Local Area Network","Web Link Application Net","Wide Learning Access Node"],_h:0x7E},
+{q:"Was ist ein Server?",a:["Ein kleiner USB-Stick","Ein Computer der Webseiten bereithält","Ein Drucker","Eine Tastatur"],_h:0x29},
+{q:"Was passiert wenn du eine Webadresse eingibst?",a:["Nichts","Dein Computer fragt einen Server","Der Computer geht aus","Die Tastatur leuchtet"],_h:0x62},
+{q:"Was ist das Internet?",a:["Ein einzelner Computer","Das größte Netzwerk der Welt","Ein Programm","Eine Datei"],_h:0x5D}
+],boss:[
+{q:"Was ist der Unterschied zwischen LAN und WLAN?",a:["Kein Unterschied","LAN = mit Kabel, WLAN = drahtlos","LAN = schneller","WLAN = teurer"],_h:0x4B},
+{q:"Wer zeigt dir die Webseite auf dem Bildschirm?",a:["Der Server","Das Netzwerkkabel","Der Browser","Der Drucker"],_h:0x7D},
+{q:"Warum braucht man einen Server?",a:["Zum Drucken","Um Webseiten für alle bereitzuhalten","Zum Malen","Zum Telefonieren"],_h:0x29}
+]},{id:4,title:"Suchmaschinen nutzen",icon:"🔍",
+lessons:[
+{title:"Richtig suchen",html:'<h3>🔍 Suchmaschinen</h3><p>Eine <strong>Suchmaschine</strong> hilft dir, Informationen im Internet zu finden. Die bekannteste ist <strong>Google</strong>.</p><p>Tipps zum guten Suchen:</p><ul><li>Nutze <strong>klare Suchbegriffe</strong> (z.B. "Hauptstadt Deutschland" statt "Wo ist was?")</li><li>Schreibe <strong>2-4 Wörter</strong> — nicht zu wenig, nicht zu viel</li><li>Prüfe die <strong>Ergebnisse</strong> — nicht alles im Internet stimmt!</li></ul>'},
+{title:"Quellen bewerten",html:'<h3>🔍 Stimmt das wirklich?</h3><p>Nicht alles im Internet ist <strong>wahr</strong>! So prüfst du Informationen:</p><ul><li>📌 <strong>Wer</strong> hat es geschrieben? (bekannte Seite oder unbekannt?)</li><li>📅 <strong>Wann</strong> wurde es geschrieben? (alt oder aktuell?)</li><li>🔄 <strong>Andere Quellen</strong> — steht das Gleiche auch woanders?</li></ul><div class="info-box">💡 <strong>Faustregel:</strong> Wenn etwas auf mindestens <strong>3 verschiedenen Seiten</strong> steht, ist es wahrscheinlich richtig.</div>'}
+],quiz:[
+{q:"Was macht eine Suchmaschine?",a:["Sie erstellt Webseiten","Sie findet Informationen im Internet","Sie druckt Texte","Sie speichert Fotos"],_h:0x4B},
+{q:"Wie viele Suchbegriffe sind ideal?",a:["10-20 Wörter","Nur 1 Buchstabe","2-4 Wörter","Die ganze Frage"],_h:0x7D},
+{q:"Wie prüft man ob eine Information stimmt?",a:["Man glaubt es einfach","Man prüft andere Quellen","Man fragt die Suchmaschine nochmal","Man ignoriert es"],_h:0x29},
+{q:"Was ist wichtig bei den Suchergebnissen?",a:["Immer das erste Ergebnis nehmen","Die Ergebnisse kritisch prüfen","Möglichst viel klicken","Nur Bilder anschauen"],_h:0x62},
+{q:"Welche Suchmaschine ist die bekannteste?",a:["Paint","Word","Google","Excel"],_h:0x5D}
+],boss:[
+{q:"Was macht einen guten Suchbegriff aus?",a:["Möglichst viele Wörter","Klar und auf den Punkt","Nur Abkürzungen","Nur Großbuchstaben"],_h:0x4B},
+{q:"Wann ist eine Information wahrscheinlich richtig?",a:["Wenn sie lustig ist","Wenn sie auf mehreren Seiten steht","Wenn sie bunt ist","Wenn sie lang ist"],_h:0x7E},
+{q:"Wem kannst du im Internet eher vertrauen?",a:["Jeder beliebigen Seite","Bekannten Seiten wie Nachrichtenportale","Seiten mit vielen Werbeanzeigen","Kommentaren von Fremden"],_h:0x2A}
+]},{id:5,title:"Algorithmen verstehen",icon:"🧩",
+lessons:[
+{title:"Was ist ein Algorithmus?",html:'<h3>🧩 Algorithmen — Schritt-für-Schritt-Anleitungen</h3><p>Ein <strong>Algorithmus</strong> ist eine genaue <strong>Anleitung</strong>, wie man etwas macht. Wie ein Rezept zum Kochen!</p><p>Beispiel: Zähneputzen als Algorithmus:</p><ol><li>Zahnbürste nehmen</li><li>Zahnpasta drauf tun</li><li>Zähne 2 Minuten putzen</li><li>Mund ausspülen</li><li>Zahnbürste wegräumen</li></ol>'},
+{title:"Algorithmen im Computer",html:'<h3>🧩 Computer und Algorithmen</h3><p>Computer folgen <strong>Algorithmen</strong>, um Aufgaben zu lösen. Jedes Programm ist ein Algorithmus!</p><p>Wichtige Begriffe:</p><ul><li><strong>Eingabe</strong> — Was der Computer bekommt (z.B. dein Suchbegriff)</li><li><strong>Verarbeitung</strong> — Was der Computer damit macht</li><li><strong>Ausgabe</strong> — Was der Computer zurückgibt (z.B. Suchergebnisse)</li></ul><div class="info-box">💡 Das <strong>EVA-Prinzip</strong>: Eingabe → Verarbeitung → Ausgabe</div>'}
+],quiz:[
+{q:"Was ist ein Algorithmus?",a:["Ein Computer","Eine Schritt-für-Schritt-Anleitung","Ein Bild","Ein Passwort"],_h:0x4B},
+{q:"Was ist ein gutes Beispiel für einen Algorithmus?",a:["Ein Foto","Ein Kochrezept","Ein Lied","Ein Buch"],_h:0x7E},
+{q:"Wofür steht EVA?",a:["Eingabe, Verarbeitung, Ausgabe","Erstellen, Verändern, Abschließen","Ende, Vorlauf, Anfang","Etwas Verrücktes Ausprobieren"],_h:0x2A},
+{q:"Was ist die Eingabe bei einer Suchmaschine?",a:["Die Werbung","Der Suchbegriff","Das Ergebnis","Die Farbe"],_h:0x62},
+{q:"Was macht ein Algorithmus im Computer?",a:["Er malt Bilder","Er löst Aufgaben Schritt für Schritt","Er spielt Musik","Er druckt Texte"],_h:0x5D}
+],boss:[
+{q:"Warum brauchen Computer Algorithmen?",a:["Zum Dekorieren","Um Aufgaben systematisch zu lösen","Zum Abschalten","Um hübscher auszusehen"],_h:0x4B},
+{q:"Was kommt beim EVA-Prinzip nach der Eingabe?",a:["Ausgabe","Fehler","Verarbeitung","Ende"],_h:0x7D},
+{q:"Was hat ein Kochrezept mit einem Algorithmus gemeinsam?",a:["Beide brauchen Mehl","Beide sind Schritt-für-Schritt-Anleitungen","Beide sind Programme","Beide sind Webseiten"],_h:0x29}
+]},{id:6,title:"Daten und Speicher",icon:"💾",
+lessons:[
+{title:"Was sind Daten?",html:'<h3>💾 Daten — alles ist Information</h3><p><strong>Daten</strong> sind alle Informationen, die ein Computer verarbeiten kann:</p><ul><li>📝 <strong>Texte</strong> — Buchstaben und Wörter</li><li>🔢 <strong>Zahlen</strong> — für Berechnungen</li><li>🖼️ <strong>Bilder</strong> — Fotos und Grafiken</li><li>🎵 <strong>Töne</strong> — Musik und Sprache</li></ul><p>Der Computer speichert alles als <strong>Nullen und Einsen</strong> (Binärcode): 0 und 1.</p>'},
+{title:"Speichermedien",html:'<h3>💾 Wo werden Daten gespeichert?</h3><ul><li><strong>Festplatte (HDD/SSD)</strong> — im Computer eingebaut, viel Platz</li><li><strong>USB-Stick</strong> — klein, tragbar, zum Mitnehmen</li><li><strong>Cloud</strong> — Speicher im Internet</li><li><strong>SD-Karte</strong> — klein, für Kameras und Handys</li></ul><div class="info-box">💡 <strong>Speichergrößen:</strong> KB (Kilobyte) < MB (Megabyte) < GB (Gigabyte) < TB (Terabyte). Ein Foto hat ca. 3-5 MB.</div>'}
+],quiz:[
+{q:"Wie speichert ein Computer Daten?",a:["Als Buchstaben","Als Nullen und Einsen","Als Farben","Als Töne"],_h:0x4B},
+{q:"Was ist ein USB-Stick?",a:["Ein Bildschirm","Ein tragbarer Speicher","Ein Drucker","Eine Tastatur"],_h:0x7E},
+{q:"Was ist die Cloud?",a:["Eine Wolke am Himmel","Speicher im Internet","Ein Computerspiel","Ein Ordner auf dem Desktop"],_h:0x29},
+{q:"Was ist größer: MB oder GB?",a:["MB ist größer","Beide sind gleich","GB ist größer","Keins von beiden"],_h:0x63},
+{q:"Welche Daten kann ein Computer verarbeiten?",a:["Nur Texte","Nur Bilder","Texte, Zahlen, Bilder, Töne und mehr","Nur Zahlen"],_h:0x5D}
+],boss:[
+{q:"Wie groß ist ungefähr ein Foto?",a:["3-5 KB","3-5 MB","3-5 GB","3-5 TB"],_h:0x4B},
+{q:"Was bedeutet Binärcode?",a:["Code mit Farben","Code aus Nullen und Einsen","Code mit Buchstaben","Code mit Bildern"],_h:0x7E},
+{q:"Wo speichert man Daten um sie überall zu nutzen?",a:["Auf der Festplatte","In der Cloud","Auf Papier","Im Drucker"],_h:0x29}
+]},{id:7,title:"Sicherheit im Netz",icon:"🛡️",
+lessons:[
+{title:"Gefahren erkennen",html:'<h3>🛡️ Gefahren im Internet erkennen</h3><p>Im Internet gibt es verschiedene <strong>Gefahren</strong>:</p><ul><li>🎣 <strong>Phishing</strong> — falsche E-Mails, die nach Passwörtern fragen</li><li>🦠 <strong>Viren</strong> — schädliche Programme, die den Computer kaputt machen</li><li>🎭 <strong>Fake-Profile</strong> — Personen geben sich als andere aus</li></ul><div class="info-box">⚠️ <strong>Wichtig:</strong> Öffne nie Anhänge von unbekannten Absendern!</div>'},
+{title:"Sich schützen",html:'<h3>🛡️ So schützt du dich</h3><ul><li>🔑 <strong>Sichere Passwörter</strong> verwenden (mindestens 8 Zeichen, Buchstaben + Zahlen + Sonderzeichen)</li><li>🔄 <strong>Updates</strong> installieren — sie schließen Sicherheitslücken</li><li>🚫 <strong>Keine persönlichen Daten</strong> an Fremde geben</li><li>👨‍👩‍👧 <strong>Erwachsene fragen</strong> wenn etwas komisch ist</li></ul><div class="info-box">💡 Ein <strong>Antivirenprogramm</strong> schützt deinen Computer vor Viren.</div>'}
+],quiz:[
+{q:"Was ist Phishing?",a:["Ein Computerspiel","Falsche E-Mails die Passwörter stehlen wollen","Ein Netzwerk","Ein Browser"],_h:0x4B},
+{q:"Was sind Computer-Viren?",a:["Kranke Computer","Schädliche Programme","Kaputte Bildschirme","Langsames Internet"],_h:0x7E},
+{q:"Warum sind Updates wichtig?",a:["Sie machen den Computer bunter","Sie schließen Sicherheitslücken","Sie löschen Dateien","Sie installieren Spiele"],_h:0x29},
+{q:"Was soll man bei komischen E-Mails tun?",a:["Den Anhang öffnen","Antworten","Einen Erwachsenen fragen","Weiterleiten"],_h:0x63},
+{q:"Was hilft gegen Viren?",a:["Ein Antivirenprogramm","Lauter Musik","Viele Fenster öffnen","Den Bildschirm putzen"],_h:0x5A}
+],boss:[
+{q:"Woran erkennst du eine Phishing-Mail?",a:["Sie kommt von einem Freund","Unbekannter Absender, fragt nach Passwort","Sie hat ein Bild","Sie ist kurz"],_h:0x4B},
+{q:"Was gehört zu einem sicheren Passwort?",a:["Nur dein Name","Mindestens 8 Zeichen mit Mix","Nur Zahlen","12345678"],_h:0x7E},
+{q:"Was ist ein Fake-Profil?",a:["Ein echtes Profil","Jemand gibt sich als andere Person aus","Ein Computerspiel","Ein Passwort"],_h:0x29}
+]},{id:8,title:"Digitale Medien",icon:"📱",
+lessons:[
+{title:"Medienarten",html:'<h3>📱 Digitale Medien</h3><p><strong>Digitale Medien</strong> sind alle elektronischen Informationsträger:</p><ul><li>📱 <strong>Smartphone</strong> — Telefon, Kamera und Computer in einem</li><li>💻 <strong>Laptop/Tablet</strong> — tragbare Computer</li><li>🎮 <strong>Spielkonsole</strong> — zum Spielen und Streamen</li><li>📺 <strong>Smart-TV</strong> — Fernseher mit Internet</li></ul>'},
+{title:"Medien verantwortungsvoll nutzen",html:'<h3>📱 Medienzeit und Pausen</h3><p>Digitale Medien sind toll, aber man sollte sie <strong>bewusst nutzen</strong>:</p><ul><li>⏰ <strong>Zeitlimit setzen</strong> — nicht den ganzen Tag am Bildschirm</li><li>🏃 <strong>Bewegung</strong> — auch mal rausgehen und spielen</li><li>📖 <strong>Abwechslung</strong> — auch mal ein Buch lesen</li><li>😴 <strong>Vor dem Schlafen</strong> — 1 Stunde vorher kein Bildschirm</li></ul><div class="info-box">💡 Die <strong>Empfehlung</strong> für Kinder: Maximal 1-2 Stunden Bildschirmzeit pro Tag.</div>'}
+],quiz:[
+{q:"Was ist ein digitales Medium?",a:["Ein Buch","Ein Smartphone","Ein Fahrrad","Ein Stift"],_h:0x4B},
+{q:"Wie lange sollte die Bildschirmzeit für Kinder sein?",a:["Unbegrenzt","10 Stunden","Maximal 1-2 Stunden pro Tag","Nur 5 Minuten"],_h:0x7D},
+{q:"Was sollte man vor dem Schlafen tun?",a:["Noch eine Stunde spielen","1 Stunde vorher keinen Bildschirm","Alle Geräte anschalten","Videos schauen"],_h:0x29},
+{q:"Was ist ein Smart-TV?",a:["Ein normaler Fernseher","Ein Fernseher mit Internet","Ein Computer","Ein Radio"],_h:0x62},
+{q:"Warum braucht man Pausen vom Bildschirm?",a:["Damit der Computer abkühlt","Für Augen und Gesundheit","Damit das WLAN schneller wird","Das braucht man nicht"],_h:0x5D}
+],boss:[
+{q:"Was gehört NICHT zu digitalen Medien?",a:["Smartphone","Tablet","Fahrrad","Spielkonsole"],_h:0x4B},
+{q:"Warum ist Abwechslung wichtig?",a:["Damit die Geräte länger halten","Für eine gesunde Entwicklung","Damit man mehr Apps hat","Ist nicht wichtig"],_h:0x7E},
+{q:"Was kannst du statt Bildschirmzeit machen?",a:["Noch mehr Videos schauen","Draußen spielen, lesen, Sport","Mehr Spiele runterladen","Lauter Musik hören"],_h:0x29}
+]},{id:9,title:"Digitale Bürgerschaft",icon:"🏅",
+lessons:[
+{title:"Netiquette",html:'<h3>🏅 Netiquette — Regeln im Internet</h3><p><strong>Netiquette</strong> sind die Benimmregeln für das Internet:</p><ul><li>💬 <strong>Freundlich</strong> kommunizieren — kein Schreien (GROSSBUCHSTABEN)</li><li>🤝 <strong>Respekt</strong> zeigen — andere Meinungen akzeptieren</li><li>📸 <strong>Privatsphäre</strong> achten — keine Fotos anderer ohne Erlaubnis</li><li>©️ <strong>Urheberrecht</strong> beachten — nicht einfach kopieren</li></ul>'},
+{title:"Digitale Spuren",html:'<h3>🏅 Dein digitaler Fußabdruck</h3><p>Alles was du im Internet machst, hinterlässt <strong>Spuren</strong>:</p><ul><li>💬 Kommentare und Nachrichten</li><li>📸 Hochgeladene Fotos</li><li>❤️ Likes und Bewertungen</li><li>🔍 Suchanfragen</li></ul><div class="info-box">⚠️ <strong>Wichtig:</strong> Diese Spuren bleiben <strong>lange</strong> bestehen! Überlege vorher, was du postest. Einmal im Internet = schwer zu löschen!</div>'}
+],quiz:[
+{q:"Was ist Netiquette?",a:["Ein Computerspiel","Benimmregeln im Internet","Ein Passwort","Ein Netzwerk"],_h:0x4A},
+{q:"Was bedeutet GROSSBUCHSTABEN im Chat?",a:["Man ist müde","Es wirkt wie Schreien","Man ist fröhlich","Es ist höflich"],_h:0x7E},
+{q:"Was ist ein digitaler Fußabdruck?",a:["Ein Fußabdruck am Strand","Spuren die man im Internet hinterlässt","Ein Computervirus","Ein Passwort"],_h:0x29},
+{q:"Was sollte man beachten bevor man etwas postet?",a:["Ob es genug Likes bekommt","Ob es lange im Internet bleiben kann","Ob es bunt genug ist","Nur die Uhrzeit"],_h:0x62},
+{q:"Was bedeutet Urheberrecht?",a:["Alles ist frei kopierbar","Werke gehören dem Erschaffer","Computer sind teuer","Internet ist langsam"],_h:0x5D}
+],boss:[
+{q:"Darf man Fotos von Klassenkameraden einfach posten?",a:["Ja, immer","Nein, nur mit Erlaubnis","Nur wenn sie lustig sind","Nur am Wochenende"],_h:0x4B},
+{q:"Was kann man tun um seinen digitalen Fußabdruck klein zu halten?",a:["Alles posten","Wenig persönliches teilen und überlegt handeln","So viel wie möglich hochladen","Nur nachts posten"],_h:0x7E},
+{q:"Warum ist Respekt im Internet wichtig?",a:["Damit man Likes bekommt","Weil hinter jedem Bildschirm ein Mensch sitzt","Damit der Computer schneller wird","Ist nicht wichtig"],_h:0x29}
+]}]
+
+const STORAGE_KEY='webexplorer_progress';
+let state={name:'',started:false,currentModule:0,xp:0,level:0,streak:0,lastVisit:null,modulesCompleted:[],quizResults:{},bossResults:{},badges:[],quizShuffleMap:{},modulesViewed:[],interactiveResults:{},designTheme:'cyber-dark'};
+
+function saveState(){try{localStorage.setItem(STORAGE_KEY,JSON.stringify(state))}catch(e){}}
+function loadState(){try{const s=localStorage.getItem(STORAGE_KEY);if(s){Object.assign(state,JSON.parse(s));return true}}catch(e){}return false}
+function exportData(){const a=document.createElement('a');a.download='webexplorer-'+state.name+'.json';a.href=URL.createObjectURL(new Blob([JSON.stringify(state,null,2)],{type:'application/json'}));a.click()}
+function importData(e){const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=ev=>{try{const d=JSON.parse(ev.target.result);Object.assign(state,d);saveState();location.reload()}catch(err){alert('Datei konnte nicht gelesen werden.')}};r.readAsText(f)}
+
+function getLevel(xp){let lv=0;for(let i=LEVELS.length-1;i>=0;i--){if(xp>=LEVELS[i].xp){lv=i;break}}return lv}
+function getLevelProgress(xp){const lv=getLevel(xp);const cur=LEVELS[lv].xp;const next=lv<LEVELS.length-1?LEVELS[lv+1].xp:cur;if(next===cur)return 100;return Math.min(100,Math.round((xp-cur)/(next-cur)*100))}
+function addXP(amount,reason){const old=getLevel(state.xp);state.xp+=amount;const nw=getLevel(state.xp);saveState();updateUI();showNotif('xp','+'+amount+' XP',reason);if(nw>old){state.level=nw;saveState();setTimeout(()=>showLevelUp(nw),800)}}
+
+function updateStreak(){const today=new Date().toDateString();if(state.lastVisit===today)return;const yesterday=new Date(Date.now()-86400000).toDateString();if(state.lastVisit===yesterday){state.streak++;showNotif('streak','\uD83D\uDD25 '+state.streak+' Tage Streak!','Weiter so!');if(state.streak>=3)awardBadge('streak3');if(state.streak>=7)awardBadge('streak7')}else if(state.lastVisit!==today){state.streak=1}state.lastVisit=today;saveState()}
+
+function awardBadge(id){if(state.badges.includes(id))return;state.badges.push(id);saveState();const b=BADGES.find(x=>x.id===id);if(b)showNotif('badge',b.icon+' Badge: '+b.name,b.desc)}
+
+let notifQueue=[],notifActive=false;
+function showNotif(type,title,text){notifQueue.push({type,title,text});if(!notifActive)processNotif()}
+function processNotif(){if(!notifQueue.length){notifActive=false;return}notifActive=true;const{type,title,text}=notifQueue.shift();const el=document.getElementById('notif');el.className='notif '+type;document.getElementById('notifTitle').textContent=title;document.getElementById('notifText').textContent=text;el.classList.add('show');setTimeout(()=>{el.classList.remove('show');setTimeout(processNotif,300)},2500)}
+
+function showLevelUp(lv){const ov=document.getElementById('levelUpOverlay');const box=document.getElementById('levelUpBox');box.innerHTML='<div class="lvl-icon">⬆️</div><div class="lvl-title">Level Up!</div><div class="lvl-name">Level '+(lv+1)+': '+LEVELS[lv].name+'<\/div>';ov.classList.add('active');spawnConfetti();setTimeout(()=>ov.classList.remove('active'),3000)}
+function spawnConfetti(){const c=document.getElementById('confetti');c.innerHTML='';const cols=['#3b82f6','#a855f7','#22c55e','#f59e0b','#ef4444','#06b6d4'];for(let i=0;i<60;i++){const p=document.createElement('div');p.style.cssText='position:absolute;left:'+Math.random()*100+'%;background:'+cols[i%cols.length]+';width:'+(6+Math.random()*8)+'px;height:'+(6+Math.random()*8)+'px;border-radius:'+(Math.random()>.5?'50%':'2px')+';animation:confettiFall '+(1.5+Math.random()*2)+'s ease-out '+Math.random()*.5+'s forwards';c.appendChild(p)}if(!document.getElementById('confettiStyle')){const s=document.createElement('style');s.id='confettiStyle';s.textContent='@keyframes confettiFall{0%{opacity:1;transform:translateY(0) rotate(0deg)}100%{opacity:0;transform:translateY(100vh) rotate(720deg)}}';document.head.appendChild(s)}setTimeout(()=>c.innerHTML='',4000)}
+
+function shuffleQuiz(modId,quiz){const key='m'+modId;if(state.quizShuffleMap[key])return state.quizShuffleMap[key];const idx=[...Array(quiz.length).keys()];for(let i=idx.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[idx[i],idx[j]]=[idx[j],idx[i]]}state.quizShuffleMap[key]=idx;saveState();return idx}
+
+function renderQuiz(modId,quiz,isBoss){
+  const pf=isBoss?'boss':'quiz';const idx=isBoss?[...Array(quiz.length).keys()]:shuffleQuiz(modId,quiz);
+  let h='<div class="'+(isBoss?'boss-section':'quiz-section')+'">';
+  h+=isBoss?'<h3>👑 Boss-Challenge<\/h3><p class="boss-sub">Alle '+quiz.length+' Fragen richtig beantworten!<\/p>':'<h3>📝 Quiz — Teste dein Wissen<\/h3>';
+  idx.forEach((qi,di)=>{const q=quiz[qi];h+='<div class="quiz-q" data-qi="'+qi+'"><p>'+(di+1)+'. '+q.q+'<\/p>';q.a.forEach((a,ai)=>{h+='<label><input type="radio" name="'+pf+'_'+modId+'_'+qi+'" value="'+ai+'"> '+a+'<\/label>'});h+='<\/div>'});
+  h+='<button class="quiz-submit" onclick="checkQuiz('+modId+','+isBoss+')">'+(isBoss?'Boss besiegen!':'Antworten prüfen')+'<\/button>';
+  h+='<div class="quiz-result" id="'+pf+'Result'+modId+'" style="display:none"><\/div><\/div>';return h;
+}
+
+function checkQuiz(modId,isBoss){
+  const pf=isBoss?'boss':'quiz';const quiz=isBoss?modules[modId].boss:modules[modId].quiz;
+  let correct=0;const total=quiz.length;const startTime=window._quizStart||Date.now();
+  quiz.forEach((q,qi)=>{
+    const sel=document.querySelector('input[name="'+pf+'_'+modId+'_'+qi+'"]:checked');
+    const labels=document.querySelectorAll('[data-qi="'+qi+'"] label');
+    const ci=_d(q._h,qi);
+    labels.forEach((l,li)=>{l.classList.remove('correct','wrong');if(li===ci)l.classList.add('correct');else if(sel&&parseInt(sel.value)===li)l.classList.add('wrong')});
+    const qDiv=labels[0]?.closest('.quiz-q');if(qDiv){const old=qDiv.querySelector('.quiz-explanation');if(old)old.remove()}
+    if(!sel||parseInt(sel.value)!==ci){if(qDiv){const exp=document.createElement('div');exp.className='quiz-explanation';exp.textContent='→ Richtige Antwort: '+q.a[ci];qDiv.appendChild(exp)}}
+    if(sel&&parseInt(sel.value)===ci)correct++;
+  });
+  const rEl=document.getElementById(pf+'Result'+modId);rEl.style.display='block';
+  if(isBoss){
+    if(correct===total){rEl.className='quiz-result pass';rEl.textContent='👑 Boss besiegt! '+correct+'/'+total+' — Perfekt!';if(!state.bossResults[modId]){state.bossResults[modId]=true;addXP(100,'Boss-Challenge bestanden!');if(!state.badges.includes('first_boss'))awardBadge('first_boss');if(modules.every((_,i)=>state.bossResults[i]))awardBadge('all_bosses');checkModuleComplete(modId)}}
+    else{rEl.className='quiz-result fail';rEl.textContent='💀 '+correct+'/'+total+' — Alle müssen richtig sein! Versuch es nochmal.';setTimeout(()=>{document.querySelectorAll('input[name^="'+pf+'_'+modId+'"]').forEach(r=>{r.disabled=false;r.checked=false});document.querySelectorAll('[data-qi] label').forEach(l=>l.classList.remove('correct','wrong'));document.querySelectorAll('.quiz-explanation').forEach(e=>e.remove());rEl.style.display='none'},2000);return}
+  }else{
+    const passed=correct>=Math.ceil(total*0.6);rEl.className='quiz-result '+(passed?'pass':'fail');
+    rEl.textContent=passed?'✅ '+correct+'/'+total+' richtig — Bestanden!':'❌ '+correct+'/'+total+' richtig — Mindestens '+Math.ceil(total*0.6)+' nötig.';
+    if(passed&&!state.quizResults[modId]){state.quizResults[modId]=correct;addXP(correct*15+50,'Quiz bestanden ('+correct+'/'+total+')');if(!state.badges.includes('first_quiz'))awardBadge('first_quiz');if(correct===total)awardBadge('perfect_quiz');if(Date.now()-startTime<60000)awardBadge('speed_quiz');checkModuleComplete(modId)}
+  }
+  saveState();document.querySelectorAll('input[name^="'+pf+'_'+modId+'"]').forEach(r=>r.disabled=true);window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function checkModuleComplete(modId){
+  if(state.quizResults[modId]!==undefined&&state.bossResults[modId]&&!state.modulesCompleted.includes(modId)){
+    state.modulesCompleted.push(modId);awardBadge('m'+modId);
+    if(state.modulesCompleted.length>=5)awardBadge('half_done');
+    if(state.modulesCompleted.length>=10){awardBadge('graduate');setTimeout(()=>showCert(),1500)}
+    saveState();renderSidebar();
+  }
+}
+
+function renderModule(modId){
+  state.currentModule=modId;
+  if(!state.modulesViewed.includes(modId)){state.modulesViewed.push(modId);addXP(10,'Neues Modul geöffnet');if(state.modulesViewed.length>=10)awardBadge('explorer')}
+  saveState();closeSidebar();
+  const m=modules[modId];
+  let h='<div class="module-header"><div class="mod-badge">'+m.icon+' Modul '+(modId+1)+'<\/div><h1>'+m.title+'<\/h1><p class="mod-desc">'+m.description+'<\/p><\/div>';
+  m.lessons.forEach((l,i)=>{h+='<div class="lesson-card"><h3><span style="color:var(--neon)">'+String(i+1).padStart(2,'0')+'<\/span> '+l.title+' <button class="tts-btn" onclick="speakLesson('+i+')" title="Vorlesen">&#128266;<\/button><\/h3>'+l.content+'<\/div>'});
+  h+='<div class="interactive-area"><h4>🧪 Interaktive Übung<\/h4><div id="interactiveContent">Lädt...<\/div><\/div>';
+  window._quizStart=Date.now();
+  h+=renderQuiz(modId,m.quiz,false);
+  h+=renderQuiz(modId,m.boss,true);
+  document.getElementById('welcomeScreen').style.display='none';
+  document.getElementById('badgesView').style.display='none';
+  document.getElementById('statsView').style.display='none';
+  const mc=document.getElementById('moduleContent');mc.style.display='block';mc.innerHTML=h;
+  renderSidebar();window.scrollTo({top:0,behavior:'smooth'});
+  setTimeout(()=>initInteractive(modId),100);
+}
+
+function renderSidebar(){
+  const el=document.getElementById('sidebarModules');
+  el.innerHTML=modules.map((m,i)=>{
+    const done=state.modulesCompleted.includes(i);
+    const act=state.currentModule===i&&document.getElementById('moduleContent').style.display==='block';
+    return '<a class="mod-link'+(act?' active':'')+(done?' completed':'')+'" onclick="renderModule('+i+')"><span class="mod-icon">'+m.icon+'<\/span>'+m.title+'<\/a>';
+  }).join('');
+  const lv=getLevel(state.xp);
+  const lvEl=document.querySelector('.sidebar-level-title');
+  if(lvEl)lvEl.textContent=LEVELS[lv].name;
+  const xpFill=document.querySelector('.sidebar-xp-fill');
+  if(xpFill)xpFill.style.width=getLevelProgress(state.xp)+'%';
+}
+function toggleSidebar(){document.getElementById('sidebar').classList.toggle('open')}
+function closeSidebar(){document.getElementById('sidebar').classList.remove('open')}
+
+function showBadges(){
+  document.getElementById('welcomeScreen').style.display='none';document.getElementById('moduleContent').style.display='none';document.getElementById('statsView').style.display='none';
+  const v=document.getElementById('badgesView');v.style.display='block';closeSidebar();
+  let h='<div class="module-header"><h1>🏅 Deine Abzeichen<\/h1><p class="mod-desc">'+state.badges.length+' von '+BADGES.length+' gesammelt<\/p><\/div><div class="badge-grid">';
+  BADGES.forEach(b=>{const earned=state.badges.includes(b.id);h+='<div class="badge-item'+(earned?' earned':' locked')+'"><div class="badge-icon">'+(earned?b.icon:'🔒')+'<\/div><div class="badge-name">'+b.name+'<\/div><\/div>'});
+  h+='<\/div>';v.innerHTML=h;
+}
+
+function showStats(){
+  document.getElementById('welcomeScreen').style.display='none';document.getElementById('moduleContent').style.display='none';document.getElementById('badgesView').style.display='none';
+  const v=document.getElementById('statsView');v.style.display='block';closeSidebar();
+  const lv=getLevel(state.xp);
+  let h='<div class="module-header"><h1>📊 Statistik<\/h1><\/div><div class="stats-grid">';
+  h+='<div class="stat-card"><div class="stat-val">'+state.xp+'<\/div><div class="stat-label">XP gesammelt<\/div><\/div>';
+  h+='<div class="stat-card"><div class="stat-val">'+LEVELS[lv].name+'<\/div><div class="stat-label">Aktueller Rang<\/div><\/div>';
+  h+='<div class="stat-card"><div class="stat-val">'+state.modulesCompleted.length+'/10<\/div><div class="stat-label">Module abgeschlossen<\/div><\/div>';
+  h+='<div class="stat-card"><div class="stat-val">'+Object.keys(state.quizResults).length+'<\/div><div class="stat-label">Quizze bestanden<\/div><\/div>';
+  h+='<div class="stat-card"><div class="stat-val">'+Object.keys(state.bossResults).length+'<\/div><div class="stat-label">Bosse besiegt<\/div><\/div>';
+  h+='<div class="stat-card"><div class="stat-val">'+state.badges.length+'<\/div><div class="stat-label">Abzeichen<\/div><\/div>';
+  h+='<div class="stat-card"><div class="stat-val">🔥 '+state.streak+'<\/div><div class="stat-label">Tage-Streak<\/div><\/div>';
+  h+='<\/div>';v.innerHTML=h;
+}
+
+let certStyle='akademie';
+function showCert(){
+  const ov=document.getElementById('certOverlay');ov.classList.add('active');
+  document.getElementById('certPicker').innerHTML=
+    ['🏛 Akademie','💻 Hacker','🕹 Pixel','🚀 Zukunft'].map((l,i)=>{
+      const s=['akademie','hacker','pixel','zukunft'][i];
+      return '<button class="cert-pick-btn'+(certStyle===s?' active':'')+'" onclick="certStyle=\''+s+'\';showCert()">'+l+'<\/button>';
+    }).join('');
+  renderCert();
+}
+function closeCert(){document.getElementById('certOverlay').classList.remove('active')}
+function generateCertCode(){const n=state.name||'X';const d=new Date();return 'WE-'+d.getFullYear()+'-'+((n.charCodeAt(0)*7+state.xp)%9999).toString(16).toUpperCase().padStart(4,'0')}
+
+function renderCert(){
+  const f=document.getElementById('certFrame');if(!f)return;
+  const n=state.name||'Schüler';const d=new Date().toLocaleDateString('de-DE',{day:'2-digit',month:'long',year:'numeric'});
+  const code=generateCertCode();const pct=Math.round(state.modulesCompleted.length/10*100);
+  const styles={
+    akademie:{bg:'linear-gradient(135deg,#1a1a4e,#2d2d7a)',border:'#c9a84c',title:'#c9a84c',text:'#d4d0ff',accent:'#c9a84c',font:"'Playfair Display',serif"},
+    hacker:{bg:'linear-gradient(135deg,#0a0e14,#1a2332)',border:'#00ff88',title:'#00ff88',text:'#b0f0d0',accent:'#00ff88',font:"'JetBrains Mono',monospace"},
+    pixel:{bg:'linear-gradient(135deg,#1a0a2e,#2d1055)',border:'#ffd700',title:'#ffd700',text:'#e0d0f0',accent:'#ff6b9d',font:"'Courier New',monospace"},
+    zukunft:{bg:'linear-gradient(135deg,#0f0f23,#1a1a3e)',border:'#00d9ff',title:'#00d9ff',text:'#d0e8ff',accent:'#00d9ff',font:"'Sora',sans-serif"}
+  };
+  const s=styles[certStyle]||styles.akademie;
+  f.innerHTML='<div style="width:100%;height:100%;background:'+s.bg+';border:3px solid '+s.border+';border-radius:12px;padding:40px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;font-family:'+s.font+';position:relative;overflow:hidden">'
+    +'<div style="font-size:14px;letter-spacing:4px;text-transform:uppercase;color:'+s.accent+';margin-bottom:8px">Zertifikat</div>'
+    +'<div style="font-size:28px;font-weight:700;color:'+s.title+';margin-bottom:4px">WebExplorer</div>'
+    +'<div style="font-size:13px;color:'+s.text+';margin-bottom:20px">Web und IT-Grundlagen Klasse 3-6</div>'
+    +'<div style="font-size:14px;color:'+s.text+'">Hiermit wird bestätigt, dass</div>'
+    +'<div style="font-size:24px;font-weight:700;color:'+s.title+';margin:8px 0;border-bottom:2px solid '+s.accent+';padding-bottom:4px">'+n+'</div>'
+    +'<div style="font-size:14px;color:'+s.text+';max-width:400px;line-height:1.6">den Kurs <strong>WebExplorer</strong> mit <strong>'+pct+'%</strong> Abschluss und <strong>'+state.xp+' XP</strong> erfolgreich absolviert hat.</div>'
+    +'<div style="font-size:12px;color:'+s.accent+';margin-top:16px">'+d+'</div>'
+    +'<div style="font-size:10px;color:'+s.text+';opacity:0.6;margin-top:8px">Code: '+code+' | © 2026 GZ AI Stacks</div>'
+    +'</div>';
+}
+function printCert(){window.print()}
+
+function updateUI(){
+  const lv=getLevel(state.xp);
+  const xpEl=document.querySelector('.header-xp');
+  if(xpEl)xpEl.innerHTML=LEVELS[lv].name+' <span style="margin-left:8px">'+state.xp+' XP<\/span>';
+  const fill=document.querySelector('.header-xp-fill');
+  if(fill)fill.style.width=getLevelProgress(state.xp)+'%';
+  const streakEl=document.querySelector('.header-streak');
+  if(streakEl)streakEl.textContent='🔥 '+state.streak;
+  renderSidebar();
+}
+
+function setDesignTheme(world,mode){
+  state.designTheme=world+'-'+mode;document.documentElement.setAttribute('data-theme',state.designTheme);saveState();buildThemePicker();
+}
+function getCurrentThemeParts(){const p=state.designTheme.split('-');return{world:p.slice(0,-1).join('-'),mode:p[p.length-1]||'dark'}}
+function toggleMode(){const{world,mode}=getCurrentThemeParts();setDesignTheme(world,mode==='dark'?'light':'dark')}
+function buildThemePicker(){
+  const dd=document.getElementById('themePickerDD');if(!dd)return;
+  const{world,mode}=getCurrentThemeParts();
+  let h='<div class="tp-label">Theme wählen<\/div>';
+  Object.keys(THEME_CONFIG).forEach(w=>{
+    const t=THEME_CONFIG[w];
+    h+='<div class="tp-world'+(w===world?' active':'')+'" onclick="setDesignTheme(\''+w+'\',\''+mode+'\')">';
+    h+='<div class="tp-world-color" style="background:'+t.color+'">'+t.emoji+'<\/div>';
+    h+='<div class="tp-world-info"><div class="tp-world-name">'+t.name+'<\/div><div class="tp-world-desc">'+t.desc+'<\/div><\/div><\/div>';
+  });
+  h+='<div class="tp-divider"><\/div>';
+  h+='<div class="tp-mode-row"><span class="tp-mode-label">'+(mode==='dark'?'🌙 Dark':'☀️ Light')+'<\/span>';
+  h+='<div class="tp-mode-switch'+(mode==='light'?' light':'')+'" onclick="toggleMode()"><\/div><\/div>';
+  dd.innerHTML=h;
+}
+function toggleThemePicker(){document.getElementById('themePickerDD').classList.toggle('open')}
+
+
+function initInteractive(modId) {
+    const container = document.getElementById('interactive-content');
+    if (!container) return;
+
+    const exercises = {
+        0: function() {
+            // HTML-Grundlagen - Tags zuordnen
+            const tags = [
+                { tag: '&lt;h1&gt;', purpose: 'Überschrift' },
+                { tag: '&lt;p&gt;', purpose: 'Absatz' },
+                { tag: '&lt;img&gt;', purpose: 'Bild einfügen' },
+                { tag: '&lt;a&gt;', purpose: 'Link erstellen' },
+                { tag: '&lt;ul&gt;', purpose: 'Aufzählungsliste' }
+            ];
+            const shuffled = tags.map(t => t.purpose).sort(() => Math.random() - 0.5);
+            let html = '<h3>Ordne die HTML-Tags ihrer Bedeutung zu!</h3>';
+            tags.forEach((t, i) => {
+                html += '<div style="display:flex;align-items:center;gap:10px;margin:8px 0;flex-wrap:wrap"><span style="min-width:100px;padding:8px 16px;background:var(--neon-dim);border:2px solid var(--neon);border-radius:8px;text-align:center;font-family:var(--mono);font-weight:bold">' + t.tag + '</span>' +
+                    '<select class="we-tag" data-idx="' + i + '" style="flex:1;padding:8px;border-radius:8px;border:2px solid var(--border-color);background:var(--card-bg);color:var(--text-color)"><option value="">-- wählen --</option>' +
+                    shuffled.map(p => '<option value="' + p + '">' + p + '</option>').join('') + '</select></div>';
+            });
+            html += '<button onclick="checkWeEx0()" class="btn-primary" style="margin:10px auto;display:block">Prüfen</button><div id="we-fb" style="text-align:center;margin-top:15px"></div>';
+            container.innerHTML = html;
+            window.checkWeEx0 = function() {
+                let correct = 0;
+                document.querySelectorAll('.we-tag').forEach(sel => {
+                    const idx = parseInt(sel.dataset.idx);
+                    if (sel.value === tags[idx].purpose) { correct++; sel.style.borderColor = '#4CAF50'; }
+                    else { sel.style.borderColor = '#f44336'; }
+                });
+                document.getElementById('we-fb').innerHTML = '<p style="font-size:1.2em">' + (correct >= 4 ? '🎉 Super!' : '🤔 Versuch es nochmal!') + ' ' + correct + '/5 richtig!</p>';
+            };
+        },
+        1: function() {
+            // CSS - Eigenschaft und Wirkung zuordnen
+            const props = [
+                { prop: 'color', effect: 'Textfarbe ändern' },
+                { prop: 'background-color', effect: 'Hintergrundfarbe ändern' },
+                { prop: 'font-size', effect: 'Schriftgröße ändern' },
+                { prop: 'border', effect: 'Rahmen hinzufügen' },
+                { prop: 'margin', effect: 'Außenabstand setzen' }
+            ];
+            const shuffled = props.map(p => p.effect).sort(() => Math.random() - 0.5);
+            let html = '<h3>Was macht welche CSS-Eigenschaft?</h3>';
+            props.forEach((p, i) => {
+                html += '<div style="display:flex;align-items:center;gap:10px;margin:8px 0;flex-wrap:wrap"><span style="min-width:160px;padding:8px;background:var(--card-bg);border-radius:8px;font-family:var(--mono);font-weight:bold">' + p.prop + '</span>' +
+                    '<select class="we-css" data-idx="' + i + '" style="flex:1;padding:8px;border-radius:8px;border:2px solid var(--border-color);background:var(--card-bg);color:var(--text-color)"><option value="">-- wählen --</option>' +
+                    shuffled.map(e => '<option value="' + e + '">' + e + '</option>').join('') + '</select></div>';
+            });
+            html += '<button onclick="checkWeEx1()" class="btn-primary" style="margin:10px auto;display:block">Prüfen</button><div id="we-fb1" style="text-align:center;margin-top:15px"></div>';
+            container.innerHTML = html;
+            window.checkWeEx1 = function() {
+                let correct = 0;
+                document.querySelectorAll('.we-css').forEach(sel => {
+                    const idx = parseInt(sel.dataset.idx);
+                    if (sel.value === props[idx].effect) { correct++; sel.style.borderColor = '#4CAF50'; }
+                    else { sel.style.borderColor = '#f44336'; }
+                });
+                document.getElementById('we-fb1').innerHTML = '<p style="font-size:1.2em">' + (correct >= 4 ? '🎉 CSS-Profi!' : '🤔 Noch üben!') + ' ' + correct + '/5 richtig!</p>';
+            };
+        },
+        2: function() {
+            // Links - Teile eines Links zuordnen
+            var parts = [
+                { part: 'https://', meaning: 'Protokoll (sichere Verbindung)' },
+                { part: 'www', meaning: 'World Wide Web' },
+                { part: '.example', meaning: 'Domainname' },
+                { part: '.de', meaning: 'Länderkennung (Deutschland)' },
+                { part: '/seite', meaning: 'Pfad zur Unterseite' }
+            ];
+            var shuffled = parts.map(function(p) { return p.meaning; }).sort(function() { return Math.random() - 0.5; });
+            var html = '<h3>Teile einer Webadresse zuordnen!</h3><p style="font-family:var(--mono);text-align:center;font-size:1.1em;padding:10px;background:var(--card-bg);border-radius:8px">https://www.example.de/seite</p>';
+            parts.forEach(function(p, i) {
+                html += '<div style="display:flex;align-items:center;gap:10px;margin:8px 0;flex-wrap:wrap"><span style="min-width:100px;padding:8px;background:var(--neon-dim);border-radius:8px;font-family:var(--mono);font-weight:bold;text-align:center">' + p.part + '</span>' +
+                    '<select class="we-url" data-idx="' + i + '" style="flex:1;padding:8px;border-radius:8px;border:2px solid var(--border-color);background:var(--card-bg);color:var(--text-color)"><option value="">-- wählen --</option>' +
+                    shuffled.map(function(m) { return '<option value="' + m + '">' + m + '</option>'; }).join('') + '</select></div>';
+            });
+            html += '<button onclick="checkWeEx2()" class="btn-primary" style="margin:10px auto;display:block">Prüfen</button><div id="we-fb2" style="text-align:center;margin-top:15px"></div>';
+            container.innerHTML = html;
+            window.checkWeEx2 = function() {
+                var correct = 0;
+                document.querySelectorAll('.we-url').forEach(function(sel) {
+                    var idx = parseInt(sel.dataset.idx);
+                    if (sel.value === parts[idx].meaning) { correct++; sel.style.borderColor = '#4CAF50'; }
+                    else { sel.style.borderColor = '#f44336'; }
+                });
+                document.getElementById('we-fb2').innerHTML = '<p style="font-size:1.2em">' + (correct >= 4 ? '🎉 URL-Experte!' : '🤔 Versuch es nochmal!') + ' ' + correct + '/5 richtig!</p>';
+            };
+        },
+        3: function() {
+            // Netzwerke - Begriffe zuordnen
+            var terms = [
+                { term: 'LAN', def: 'Lokales Netzwerk mit Kabel' },
+                { term: 'WLAN', def: 'Drahtloses lokales Netzwerk' },
+                { term: 'Server', def: 'Computer der Webseiten bereitstellt' },
+                { term: 'Browser', def: 'Programm zum Anzeigen von Webseiten' },
+                { term: 'Router', def: 'Gerät das Netzwerke verbindet' }
+            ];
+            var shuffled = terms.map(function(t) { return t.def; }).sort(function() { return Math.random() - 0.5; });
+            var html = '<h3>Netzwerk-Begriffe zuordnen!</h3>';
+            terms.forEach(function(t, i) {
+                html += '<div style="display:flex;align-items:center;gap:10px;margin:8px 0;flex-wrap:wrap"><span style="min-width:100px;font-weight:bold;padding:8px;background:var(--card-bg);border-radius:8px;text-align:center">🌐 ' + t.term + '</span>' +
+                    '<select class="we-net" data-idx="' + i + '" style="flex:1;padding:8px;border-radius:8px;border:2px solid var(--border-color);background:var(--card-bg);color:var(--text-color)"><option value="">-- wählen --</option>' +
+                    shuffled.map(function(d) { return '<option value="' + d + '">' + d + '</option>'; }).join('') + '</select></div>';
+            });
+            html += '<button onclick="checkWeEx3()" class="btn-primary" style="margin:10px auto;display:block">Prüfen</button><div id="we-fb3" style="text-align:center;margin-top:15px"></div>';
+            container.innerHTML = html;
+            window.checkWeEx3 = function() {
+                var correct = 0;
+                document.querySelectorAll('.we-net').forEach(function(sel) {
+                    var idx = parseInt(sel.dataset.idx);
+                    if (sel.value === terms[idx].def) { correct++; sel.style.borderColor = '#4CAF50'; }
+                    else { sel.style.borderColor = '#f44336'; }
+                });
+                document.getElementById('we-fb3').innerHTML = '<p style="font-size:1.2em">' + (correct >= 4 ? '🎉 Netzwerk-Profi!' : '🤔 Noch üben!') + ' ' + correct + '/5 richtig!</p>';
+            };
+        },
+        4: function() {
+            // Suchmaschinen - Guter oder schlechter Suchbegriff?
+            var queries = [
+                { query: 'Hauptstadt Deutschland', good: true },
+                { query: 'Wo ist das was ich suche?', good: false },
+                { query: 'Eiffelturm Höhe Meter', good: true },
+                { query: 'sdfghjkl', good: false },
+                { query: 'Rezept Pfannkuchen einfach', good: true },
+                { query: 'Ich möchte gerne wissen welches Tier am schnellsten ist', good: false }
+            ];
+            var html = '<h3>Guter oder schlechter Suchbegriff?</h3>';
+            queries.forEach(function(q, i) {
+                html += '<div class="we-query" style="padding:12px;margin:8px 0;background:var(--card-bg);border-radius:8px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px">' +
+                    '<span style="font-family:var(--mono);flex:1">"' + q.query + '"</span>' +
+                    '<div><button onclick="checkQuery(' + i + ',true)" class="we-qu' + i + '" style="padding:6px 12px;border-radius:6px;border:1px solid var(--border-color);background:var(--card-bg);color:var(--text-color);cursor:pointer;margin:2px">👍 Gut</button>' +
+                    '<button onclick="checkQuery(' + i + ',false)" class="we-qu' + i + '" style="padding:6px 12px;border-radius:6px;border:1px solid var(--border-color);background:var(--card-bg);color:var(--text-color);cursor:pointer;margin:2px">👎 Schlecht</button></div></div>';
+            });
+            html += '<div id="we-fb4" style="text-align:center;margin-top:15px"></div>';
+            container.innerHTML = html;
+            window.weQueryScore = 0; window.weQueryDone = 0;
+            window.checkQuery = function(idx, guess) {
+                var btns = document.querySelectorAll('.we-qu' + idx);
+                btns.forEach(function(b) { b.disabled = true; b.style.opacity = '0.5'; });
+                var ok = guess === queries[idx].good;
+                if (ok) window.weQueryScore++;
+                window.weQueryDone++;
+                btns[0].closest('.we-query').style.borderLeft = '4px solid ' + (ok ? '#4CAF50' : '#f44336');
+                if (window.weQueryDone === queries.length) {
+                    document.getElementById('we-fb4').innerHTML = '<p style="font-size:1.2em">' + (window.weQueryScore >= 5 ? '🎉 Such-Profi!' : '🤔 Noch üben!') + ' ' + window.weQueryScore + '/' + queries.length + ' richtig!</p>';
+                }
+            };
+        },
+        5: function() {
+            // Algorithmen - Reihenfolge ordnen
+            var steps = [
+                { text: "Problem verstehen", order: 1 },
+                { text: "Schritte planen", order: 2 },
+                { text: "Jeden Schritt ausführen", order: 3 },
+                { text: "Ergebnis prüfen", order: 4 },
+                { text: "Bei Fehler: verbessern", order: 5 }
+            ];
+            var shuffled = steps.slice().sort(function() { return Math.random() - 0.5; });
+            var html = '<h3>Bringe den Algorithmus in die richtige Reihenfolge!</h3><p style="color:var(--text-muted)">Klicke die Schritte in der richtigen Reihenfolge an.</p><div id="we-steps">';
+            shuffled.forEach(function(s) {
+                html += '<div class="we-step" data-order="' + s.order + '" onclick="selectWeStep(this)" style="padding:12px;margin:8px 0;background:var(--card-bg);border-radius:8px;cursor:pointer;border:2px solid var(--border-color);transition:all 0.3s">' + s.text + '</div>';
+            });
+            html += '</div><div id="we-ordered5" style="margin-top:15px"></div><button onclick="resetWeEx5()" style="margin:10px auto;display:block;padding:8px 20px;border-radius:8px;border:1px solid var(--border-color);background:var(--card-bg);color:var(--text-color);cursor:pointer">Zurücksetzen</button><div id="we-fb5" style="text-align:center;margin-top:15px"></div>';
+            container.innerHTML = html;
+            window.weOrder5 = [];
+            window.selectWeStep = function(el) {
+                if (el.style.opacity === '0.3') return;
+                window.weOrder5.push(parseInt(el.dataset.order));
+                el.style.opacity = '0.3'; el.style.pointerEvents = 'none';
+                document.getElementById('we-ordered5').innerHTML += '<div style="padding:8px;margin:4px 0;background:var(--primary-color);color:white;border-radius:8px;font-size:0.9em">' + window.weOrder5.length + '. ' + el.textContent + '</div>';
+                if (window.weOrder5.length === 5) {
+                    var ok = window.weOrder5.every(function(v, i) { return v === i + 1; });
+                    document.getElementById('we-fb5').innerHTML = '<p style="font-size:1.2em">' + (ok ? '🎉 Perfekt!' : '🤔 Nicht ganz!') + '</p>';
+                }
+            };
+            window.resetWeEx5 = function() {
+                window.weOrder5 = [];
+                document.getElementById('we-ordered5').innerHTML = '';
+                document.getElementById('we-fb5').innerHTML = '';
+                document.querySelectorAll('.we-step').forEach(function(el) { el.style.opacity = '1'; el.style.pointerEvents = 'auto'; });
+            };
+        },
+        6: function() {
+            // Daten und Speicher - Größen sortieren
+            var sizes = [
+                { unit: 'KB (Kilobyte)', rank: 1 },
+                { unit: 'MB (Megabyte)', rank: 2 },
+                { unit: 'GB (Gigabyte)', rank: 3 },
+                { unit: 'TB (Terabyte)', rank: 4 }
+            ];
+            var shuffled = sizes.slice().sort(function() { return Math.random() - 0.5; });
+            var html = '<h3>Sortiere die Speichergrößen von klein nach groß!</h3><p style="color:var(--text-muted)">Klicke in der richtigen Reihenfolge.</p><div id="we-sizes">';
+            shuffled.forEach(function(s) {
+                html += '<div class="we-size" data-rank="' + s.rank + '" onclick="selectWeSize(this)" style="padding:14px;margin:8px 0;background:var(--card-bg);border-radius:8px;cursor:pointer;border:2px solid var(--border-color);text-align:center;font-weight:bold;font-size:1.1em;transition:all 0.3s">' + s.unit + '</div>';
+            });
+            html += '</div><div id="we-sorted6" style="margin-top:15px"></div><button onclick="resetWeEx6()" style="margin:10px auto;display:block;padding:8px 20px;border-radius:8px;border:1px solid var(--border-color);background:var(--card-bg);color:var(--text-color);cursor:pointer">Zurücksetzen</button><div id="we-fb6" style="text-align:center;margin-top:15px"></div>';
+            container.innerHTML = html;
+            window.weRanks = [];
+            window.selectWeSize = function(el) {
+                if (el.style.opacity === '0.3') return;
+                window.weRanks.push(parseInt(el.dataset.rank));
+                el.style.opacity = '0.3'; el.style.pointerEvents = 'none';
+                document.getElementById('we-sorted6').innerHTML += '<div style="padding:8px;margin:4px 0;background:var(--primary-color);color:white;border-radius:8px">' + window.weRanks.length + '. ' + el.textContent + '</div>';
+                if (window.weRanks.length === 4) {
+                    var ok = window.weRanks.every(function(v, i) { return v === i + 1; });
+                    document.getElementById('we-fb6').innerHTML = '<p style="font-size:1.2em">' + (ok ? '🎉 Richtig sortiert!' : '🤔 Nicht ganz!') + '</p>';
+                }
+            };
+            window.resetWeEx6 = function() {
+                window.weRanks = [];
+                document.getElementById('we-sorted6').innerHTML = '';
+                document.getElementById('we-fb6').innerHTML = '';
+                document.querySelectorAll('.we-size').forEach(function(el) { el.style.opacity = '1'; el.style.pointerEvents = 'auto'; });
+            };
+        },
+        7: function() {
+            // Sicherheit - Phishing erkennen
+            var emails = [
+                { subject: "Deine Bestellung #4523", from: "amazon@echtemail.com", phishing: true },
+                { subject: "Neues Passwort einrichten", from: "support@deineschule.de", phishing: false },
+                { subject: "DRINGEND: Konto gesperrt!!!", from: "bank-xyz@gratis-mail.ru", phishing: true },
+                { subject: "Einladung Klassenfahrt", from: "lehrer@grundschule.de", phishing: false },
+                { subject: "Du hast 1000€ gewonnen!", from: "gewinn@superlotto.xyz", phishing: true }
+            ];
+            var html = '<h3>Phishing erkennen! Echt oder Fake?</h3>';
+            emails.forEach(function(e, i) {
+                html += '<div class="we-mail" style="padding:12px;margin:8px 0;background:var(--card-bg);border-radius:8px;border:2px solid var(--border-color)">' +
+                    '<div style="font-weight:bold">' + e.subject + '</div><div style="font-size:0.85em;color:var(--text-muted)">Von: ' + e.from + '</div>' +
+                    '<div style="margin-top:8px"><button onclick="checkMail(' + i + ',true)" class="we-ma' + i + '" style="padding:5px 12px;border-radius:6px;border:1px solid var(--border-color);background:var(--card-bg);color:var(--text-color);cursor:pointer;margin:2px">⚠️ Phishing</button>' +
+                    '<button onclick="checkMail(' + i + ',false)" class="we-ma' + i + '" style="padding:5px 12px;border-radius:6px;border:1px solid var(--border-color);background:var(--card-bg);color:var(--text-color);cursor:pointer;margin:2px">✅ Echt</button></div></div>';
+            });
+            html += '<div id="we-fb7" style="text-align:center;margin-top:15px"></div>';
+            container.innerHTML = html;
+            window.weMailScore = 0; window.weMailDone = 0;
+            window.checkMail = function(idx, guessPhishing) {
+                var btns = document.querySelectorAll('.we-ma' + idx);
+                btns.forEach(function(b) { b.disabled = true; b.style.opacity = '0.5'; });
+                var ok = guessPhishing === emails[idx].phishing;
+                if (ok) window.weMailScore++;
+                window.weMailDone++;
+                btns[0].closest('.we-mail').style.borderColor = ok ? '#4CAF50' : '#f44336';
+                if (window.weMailDone === emails.length) {
+                    document.getElementById('we-fb7').innerHTML = '<p style="font-size:1.2em">' + (window.weMailScore >= 4 ? '🎉 Sicherheits-Experte!' : '🤔 Noch üben!') + ' ' + window.weMailScore + '/' + emails.length + ' richtig!</p>';
+                }
+            };
+        },
+        8: function() {
+            // Digitale Medien - Gerät und Funktion zuordnen
+            var devices = [
+                { device: '📱 Smartphone', main: 'Telefonieren, Apps, Kamera' },
+                { device: '💻 Laptop', main: 'Arbeiten, Lernen, Programme' },
+                { device: '🎮 Spielkonsole', main: 'Spielen, Streamen' },
+                { device: '📺 Smart-TV', main: 'Fernsehen mit Internet' },
+                { device: '⌚ Smartwatch', main: 'Fitness, Nachrichten, Uhr' }
+            ];
+            var shuffled = devices.map(function(d) { return d.main; }).sort(function() { return Math.random() - 0.5; });
+            var html = '<h3>Ordne den Geräten ihre Hauptfunktion zu!</h3>';
+            devices.forEach(function(d, i) {
+                html += '<div style="display:flex;align-items:center;gap:10px;margin:8px 0;flex-wrap:wrap"><span style="min-width:150px;font-weight:bold;padding:8px;background:var(--card-bg);border-radius:8px">' + d.device + '</span>' +
+                    '<select class="we-dev" data-idx="' + i + '" style="flex:1;padding:8px;border-radius:8px;border:2px solid var(--border-color);background:var(--card-bg);color:var(--text-color)"><option value="">-- wählen --</option>' +
+                    shuffled.map(function(m) { return '<option value="' + m + '">' + m + '</option>'; }).join('') + '</select></div>';
+            });
+            html += '<button onclick="checkWeEx8()" class="btn-primary" style="margin:10px auto;display:block">Prüfen</button><div id="we-fb8" style="text-align:center;margin-top:15px"></div>';
+            container.innerHTML = html;
+            window.checkWeEx8 = function() {
+                var correct = 0;
+                document.querySelectorAll('.we-dev').forEach(function(sel) {
+                    var idx = parseInt(sel.dataset.idx);
+                    if (sel.value === devices[idx].main) { correct++; sel.style.borderColor = '#4CAF50'; }
+                    else { sel.style.borderColor = '#f44336'; }
+                });
+                document.getElementById('we-fb8').innerHTML = '<p style="font-size:1.2em">' + (correct >= 4 ? '🎉 Medien-Kenner!' : '🤔 Noch üben!') + ' ' + correct + '/5 richtig!</p>';
+            };
+        },
+        9: function() {
+            // Digitale Bürgerschaft - Netiquette-Quiz
+            var situations = [
+                { text: "Jemanden im Chat ANSCHREIEN", ok: false },
+                { text: "Freundlich Danke sagen", ok: true },
+                { text: "Foto von Freund ohne Fragen posten", ok: false },
+                { text: "Quellen angeben beim Kopieren", ok: true },
+                { text: "Beleidigungen in Kommentaren schreiben", ok: false },
+                { text: "Andere Meinung respektieren", ok: true }
+            ];
+            var html = '<h3>Gute Netiquette oder nicht?</h3>';
+            situations.forEach(function(s, i) {
+                html += '<div class="we-neti" style="padding:12px;margin:8px 0;background:var(--card-bg);border-radius:8px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px">' +
+                    '<span style="flex:1">' + s.text + '</span>' +
+                    '<div><button onclick="checkNeti(' + i + ',true)" class="we-ne' + i + '" style="padding:6px 12px;border-radius:6px;border:1px solid var(--border-color);background:var(--card-bg);color:var(--text-color);cursor:pointer;margin:2px">👍 Gut</button>' +
+                    '<button onclick="checkNeti(' + i + ',false)" class="we-ne' + i + '" style="padding:6px 12px;border-radius:6px;border:1px solid var(--border-color);background:var(--card-bg);color:var(--text-color);cursor:pointer;margin:2px">👎 Schlecht</button></div></div>';
+            });
+            html += '<div id="we-fb9" style="text-align:center;margin-top:15px"></div>';
+            container.innerHTML = html;
+            window.weNetiScore = 0; window.weNetiDone = 0;
+            window.checkNeti = function(idx, guess) {
+                var btns = document.querySelectorAll('.we-ne' + idx);
+                btns.forEach(function(b) { b.disabled = true; b.style.opacity = '0.5'; });
+                var ok = guess === situations[idx].ok;
+                if (ok) window.weNetiScore++;
+                window.weNetiDone++;
+                btns[0].closest('.we-neti').style.borderLeft = '4px solid ' + (ok ? '#4CAF50' : '#f44336');
+                if (window.weNetiDone === situations.length) {
+                    document.getElementById('we-fb9').innerHTML = '<p style="font-size:1.2em">' + (window.weNetiScore >= 5 ? '🎉 Netiquette-Profi!' : '🤔 Noch üben!') + ' ' + window.weNetiScore + '/' + situations.length + ' richtig!</p>';
+                }
+            };
+        }
+    };
+
+    if (exercises[modId]) exercises[modId]();
+}
+
+function startApp(){
+  const name=document.getElementById('nameInput').value.trim();if(!name)return;
+  state.name=name;state.started=true;saveState();
+  document.getElementById('welcomeScreen').style.display='none';
+  renderModule(0);updateStreak();
+}
+
+(function init(){
+  if(loadState()&&state.started){
+    document.getElementById('welcomeScreen').style.display='none';
+    document.documentElement.setAttribute('data-theme',state.designTheme);
+    renderModule(state.currentModule);updateUI();updateStreak();
+  }else{
+    document.documentElement.setAttribute('data-theme',state.designTheme);
+    buildThemePicker();
+  }
+  renderSidebar();
+  document.addEventListener('click',e=>{if(!e.target.closest('.theme-picker-wrap'))document.getElementById('themePickerDD')?.classList.remove('open')});
+})();
+</script>
+</body>
+</html>

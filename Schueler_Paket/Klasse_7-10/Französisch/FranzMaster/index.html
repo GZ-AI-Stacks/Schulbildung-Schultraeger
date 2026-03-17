@@ -1,0 +1,770 @@
+<!DOCTYPE html>
+<html lang="de" data-theme="cyber-dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>FranzMaster — Französisch Fortgeschritten Klasse 7-10</title>
+<meta name="description" content="Interaktive Lern-App für fortgeschrittenes Französisch, Klasse 7-10. 10 Module mit Textanalyse, Grammatik und Literatur.">
+<style>
+@font-face{font-family:'Sora';src:url('../../Informatik/fonts/sora-latin-400-normal.woff2') format('woff2');font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:'Sora';src:url('../../Informatik/fonts/sora-latin-600-normal.woff2') format('woff2');font-weight:600;font-style:normal;font-display:swap}
+@font-face{font-family:'Sora';src:url('../../Informatik/fonts/sora-latin-700-normal.woff2') format('woff2');font-weight:700;font-style:normal;font-display:swap}
+@font-face{font-family:'JetBrains Mono';src:url('../../Informatik/fonts/jetbrains-mono-latin-400-normal.woff2') format('woff2');font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:'Playfair Display';src:url('../../Informatik/fonts/playfair-display-latin-700-normal.woff2') format('woff2');font-weight:700;font-style:normal;font-display:swap}
+@font-face{font-family:'Inter';src:url('../../Informatik/fonts/inter-latin-400-normal.woff2') format('woff2');font-weight:400;font-style:normal;font-display:swap}
+
+:root{--neon:#3b82f6;--neon-dim:rgba(59,130,246,.15);--neon-glow:rgba(59,130,246,.3);--bg:#0a0e14;--bg2:#111827;--bg3:#1f2937;--card:#161e2e;--card-hover:#1e293b;--border:#2a3444;--border-light:#374151;--text:#d4dce8;--text-dim:#8899aa;--text-bright:#f1f5f9;--heading:#ffffff;--link:#60a5fa;--success:#22c55e;--warning:#f59e0b;--danger:#ef4444;--xp-purple:#a855f7;--badge-cyan:#06b6d4;--streak-red:#ef4444;--radius:12px;--radius-sm:8px;--radius-lg:16px;--shadow:0 4px 24px rgba(0,0,0,.4);--shadow-lg:0 8px 40px rgba(0,0,0,.5);--font:'Sora','Segoe UI',system-ui,sans-serif;--mono:'JetBrains Mono','Cascadia Code',monospace;--serif:'Playfair Display','Georgia',serif;--sidebar-w:280px;--header-h:60px;--card-border-w:1px;--card-border-style:solid;--glow:1}
+[data-theme="cyber-dark"]{--neon:#3b82f6;--neon-dim:rgba(59,130,246,.15);--neon-glow:rgba(59,130,246,.3);--bg:#0a0e14;--bg2:#111827;--bg3:#1f2937;--card:#161e2e;--card-hover:#1e293b;--border:#2a3444;--border-light:#374151;--text:#d4dce8;--text-dim:#8899aa;--text-bright:#f1f5f9;--heading:#ffffff;--link:#60a5fa;--success:#22c55e;--warning:#f59e0b;--danger:#ef4444;--xp-purple:#a855f7;--badge-cyan:#06b6d4;--streak-red:#ef4444;--radius:12px;--radius-sm:8px;--radius-lg:16px;--shadow:0 4px 24px rgba(0,0,0,.4);--shadow-lg:0 8px 40px rgba(0,0,0,.5);--font:'Sora','Segoe UI',system-ui,sans-serif;--card-border-w:1px;--card-border-style:solid;--glow:1}
+[data-theme="cyber-light"]{--neon:#1d4ed8;--neon-dim:rgba(29,78,216,.1);--neon-glow:rgba(29,78,216,.2);--bg:#f8f9fb;--bg2:#f0f2f5;--bg3:#e5e7eb;--card:#ffffff;--card-hover:#f5f7fa;--border:#d1d5db;--border-light:#e5e7eb;--text:#374151;--text-dim:#4b5563;--text-bright:#111827;--heading:#111827;--link:#2563eb;--success:#22c55e;--warning:#f59e0b;--danger:#ef4444;--xp-purple:#a855f7;--badge-cyan:#06b6d4;--streak-red:#ef4444;--radius:12px;--radius-sm:8px;--radius-lg:16px;--shadow:0 4px 24px rgba(0,0,0,.08);--shadow-lg:0 8px 40px rgba(0,0,0,.12);--font:'Sora','Segoe UI',system-ui,sans-serif;--card-border-w:1px;--card-border-style:solid;--glow:0}
+[data-theme="retro-dark"]{--neon:#ffd700;--neon-dim:rgba(255,215,0,.12);--neon-glow:rgba(255,215,0,.3);--bg:#0d0208;--bg2:#1a0a1e;--bg3:#2d1233;--card:#1a0a1e;--card-hover:#2d1233;--border:#4a1942;--border-light:#5c2d5c;--text:#e0d0f0;--text-dim:#9080a0;--text-bright:#fff;--heading:#ffd700;--link:#ff6b9d;--success:#00e676;--warning:#ffab00;--danger:#ff1744;--xp-purple:#e040fb;--badge-cyan:#00e5ff;--streak-red:#ff1744;--radius:0px;--radius-sm:0px;--radius-lg:0px;--shadow:4px 4px 0 rgba(0,0,0,.8);--shadow-lg:6px 6px 0 rgba(0,0,0,.9);--font:'Courier New','Consolas',monospace;--card-border-w:3px;--card-border-style:solid;--glow:0}
+[data-theme="retro-light"]{--neon:#b8860b;--neon-dim:rgba(184,134,11,.1);--neon-glow:rgba(184,134,11,.2);--bg:#fff8e1;--bg2:#fff3cd;--bg3:#ffe0b2;--card:#ffffff;--card-hover:#fff9f0;--border:#d4a017;--border-light:#e6c84d;--text:#3e2723;--text-dim:#6d4c41;--text-bright:#1b0000;--heading:#b8860b;--link:#c2185b;--success:#2e7d32;--warning:#ef6c00;--danger:#c62828;--xp-purple:#8e24aa;--badge-cyan:#00838f;--streak-red:#c62828;--radius:0px;--radius-sm:0px;--radius-lg:0px;--shadow:3px 3px 0 rgba(0,0,0,.15);--shadow-lg:5px 5px 0 rgba(0,0,0,.2);--font:'Courier New','Consolas',monospace;--card-border-w:3px;--card-border-style:solid;--glow:0}
+[data-theme="nature-dark"]{--neon:#4ade80;--neon-dim:rgba(74,222,128,.12);--neon-glow:rgba(74,222,128,.25);--bg:#0c1a0f;--bg2:#132617;--bg3:#1e3a24;--card:#15291a;--card-hover:#1e3a24;--border:#2d5a36;--border-light:#3a7044;--text:#c8e6c9;--text-dim:#81a784;--text-bright:#e8f5e9;--heading:#e8f5e9;--link:#81c784;--success:#66bb6a;--warning:#ffa726;--danger:#ef5350;--xp-purple:#ab47bc;--badge-cyan:#26a69a;--streak-red:#ef5350;--radius:20px;--radius-sm:14px;--radius-lg:28px;--shadow:0 4px 20px rgba(0,0,0,.3);--shadow-lg:0 8px 32px rgba(0,0,0,.4);--font:'Segoe UI','Helvetica Neue',system-ui,sans-serif;--card-border-w:1px;--card-border-style:solid;--glow:0}
+[data-theme="nature-light"]{--neon:#2e7d32;--neon-dim:rgba(46,125,50,.08);--neon-glow:rgba(46,125,50,.15);--bg:#f1f8e9;--bg2:#e8f5e9;--bg3:#c8e6c9;--card:#ffffff;--card-hover:#f1faf1;--border:#a5d6a7;--border-light:#c8e6c9;--text:#33691e;--text-dim:#3e6e1c;--text-bright:#1b5e20;--heading:#1b5e20;--link:#2e7d32;--success:#388e3c;--warning:#ef6c00;--danger:#c62828;--xp-purple:#7b1fa2;--badge-cyan:#00695c;--streak-red:#c62828;--radius:20px;--radius-sm:14px;--radius-lg:28px;--shadow:0 4px 16px rgba(0,0,0,.06);--shadow-lg:0 8px 28px rgba(0,0,0,.1);--font:'Segoe UI','Helvetica Neue',system-ui,sans-serif;--card-border-w:1px;--card-border-style:solid;--glow:0}
+[data-theme="space-dark"]{--neon:#c084fc;--neon-dim:rgba(192,132,252,.12);--neon-glow:rgba(192,132,252,.3);--bg:#07020e;--bg2:#0f0720;--bg3:#1a0e35;--card:#110a28;--card-hover:#1a0e35;--border:#2e1a5e;--border-light:#3d2478;--text:#d4c8f0;--text-dim:#9080b8;--text-bright:#f0e8ff;--heading:#f0e8ff;--link:#f0abfc;--success:#34d399;--warning:#fbbf24;--danger:#fb7185;--xp-purple:#f472b6;--badge-cyan:#67e8f9;--streak-red:#fb7185;--radius:4px;--radius-sm:2px;--radius-lg:6px;--shadow:0 4px 24px rgba(100,50,200,.2);--shadow-lg:0 8px 40px rgba(100,50,200,.3);--font:'Segoe UI',system-ui,sans-serif;--card-border-w:1px;--card-border-style:solid;--glow:1}
+[data-theme="space-light"]{--neon:#7c3aed;--neon-dim:rgba(124,58,237,.08);--neon-glow:rgba(124,58,237,.15);--bg:#faf5ff;--bg2:#f3e8ff;--bg3:#e9d5ff;--card:#ffffff;--card-hover:#faf5ff;--border:#c4b5fd;--border-light:#ddd6fe;--text:#4c1d95;--text-dim:#5b21b6;--text-bright:#2e1065;--heading:#2e1065;--link:#7c3aed;--success:#059669;--warning:#d97706;--danger:#dc2626;--xp-purple:#db2777;--badge-cyan:#0891b2;--streak-red:#dc2626;--radius:4px;--radius-sm:2px;--radius-lg:6px;--shadow:0 4px 16px rgba(100,50,200,.06);--shadow-lg:0 8px 28px rgba(100,50,200,.1);--font:'Segoe UI',system-ui,sans-serif;--card-border-w:1px;--card-border-style:solid;--glow:0}
+[data-theme="comic-dark"]{--neon:#ff6b6b;--neon-dim:rgba(255,107,107,.12);--neon-glow:rgba(255,107,107,.3);--bg:#1a1a2e;--bg2:#222244;--bg3:#2e2e55;--card:#262650;--card-hover:#2e2e55;--border:#4a4a7a;--border-light:#5a5a8a;--text:#e8e0ff;--text-dim:#a098c0;--text-bright:#fff;--heading:#fff;--link:#ffa94d;--success:#51cf66;--warning:#fcc419;--danger:#ff6b6b;--xp-purple:#cc5de8;--badge-cyan:#22b8cf;--streak-red:#ff6b6b;--radius:16px;--radius-sm:12px;--radius-lg:24px;--shadow:4px 4px 0 rgba(0,0,0,.5);--shadow-lg:6px 6px 0 rgba(0,0,0,.6);--font:'Comic Sans MS','Chalkboard SE',cursive,system-ui,sans-serif;--card-border-w:3px;--card-border-style:solid;--glow:0}
+[data-theme="comic-light"]{--neon:#e03131;--neon-dim:rgba(224,49,49,.08);--neon-glow:rgba(224,49,49,.15);--bg:#fff9db;--bg2:#fff3bf;--bg3:#ffe066;--card:#ffffff;--card-hover:#fffdf0;--border:#fab005;--border-light:#fcc419;--text:#2b2b2b;--text-dim:#555;--text-bright:#000;--heading:#000;--link:#e8590c;--success:#2f9e44;--warning:#e8590c;--danger:#c92a2a;--xp-purple:#9c36b5;--badge-cyan:#1098ad;--streak-red:#c92a2a;--radius:16px;--radius-sm:12px;--radius-lg:24px;--shadow:3px 3px 0 rgba(0,0,0,.2);--shadow-lg:5px 5px 0 rgba(0,0,0,.25);--font:'Comic Sans MS','Chalkboard SE',cursive,system-ui,sans-serif;--card-border-w:3px;--card-border-style:solid;--glow:0}
+[data-theme="sketchy-dark"]{--neon:#d97706;--neon-dim:rgba(217,119,6,.15);--neon-glow:rgba(217,119,6,.3);--bg:#2a1f0f;--bg2:#3a2a1a;--bg3:#4a3a2a;--card:#362414;--card-hover:#462a1a;--border:#5a4030;--border-light:#6a5040;--text:#d4c4b0;--text-dim:#a09080;--text-bright:#e8d8c8;--heading:#f5ead5;--link:#e8a550;--success:#84cc16;--warning:#d97706;--danger:#e74c3c;--xp-purple:#d946ef;--badge-cyan:#06b6d4;--streak-red:#e74c3c;--radius:24px;--radius-sm:16px;--radius-lg:32px;--shadow:0 6px 20px rgba(0,0,0,.3);--shadow-lg:0 10px 40px rgba(0,0,0,.4);--font:'Playfair Display','Georgia',serif;--card-border-w:2px;--card-border-style:dashed;--glow:0}
+[data-theme="sketchy-light"]{--neon:#b45309;--neon-dim:rgba(180,83,9,.1);--neon-glow:rgba(180,83,9,.2);--bg:#fef3e2;--bg2:#fde8cc;--bg3:#f9d5b8;--card:#ffffff;--card-hover:#fffaf5;--border:#d4a574;--border-light:#e8c4a0;--text:#5c4033;--text-dim:#8b6f47;--text-bright:#3e2723;--heading:#3e2723;--link:#c2600c;--success:#65a30d;--warning:#b45309;--danger:#d25c4d;--xp-purple:#c084fc;--badge-cyan:#0891b2;--streak-red:#d25c4d;--radius:24px;--radius-sm:16px;--radius-lg:32px;--shadow:0 4px 12px rgba(0,0,0,.08);--shadow-lg:0 8px 24px rgba(0,0,0,.12);--font:'Playfair Display','Georgia',serif;--card-border-w:2px;--card-border-style:dashed;--glow:0}
+[data-theme="nature-code-dark"]{--neon:#10b981;--neon-dim:rgba(16,185,129,.15);--neon-glow:rgba(16,185,129,.25);--bg:#0a1f12;--bg2:#0d2818;--bg3:#1a3a2a;--card:#0f281a;--card-hover:#1a3a2a;--border:#2d5a3d;--border-light:#3a7050;--text:#c8e6d0;--text-dim:#7ba890;--text-bright:#e8f5ed;--heading:#e8f5ed;--link:#34d399;--success:#10b981;--warning:#f59e0b;--danger:#f87171;--xp-purple:#a78bfa;--badge-cyan:#22d3ee;--streak-red:#f87171;--radius:20px;--radius-sm:14px;--radius-lg:28px;--shadow:0 4px 20px rgba(0,100,50,.2);--shadow-lg:0 8px 32px rgba(0,100,50,.3);--font:'Segoe UI','Helvetica Neue',system-ui,sans-serif;--card-border-w:1px;--card-border-style:solid;--glow:0}
+[data-theme="nature-code-light"]{--neon:#059669;--neon-dim:rgba(5,150,105,.1);--neon-glow:rgba(5,150,105,.15);--bg:#f0fdf8;--bg2:#e8faf2;--bg3:#d1f2e0;--card:#ffffff;--card-hover:#f5fbf7;--border:#86efac;--border-light:#bbf7d0;--text:#164e3f;--text-dim:#2d6e4f;--text-bright:#052e16;--heading:#052e16;--link:#059669;--success:#10b981;--warning:#d97706;--danger:#dc2626;--xp-purple:#8b5cf6;--badge-cyan:#06b6d4;--streak-red:#dc2626;--radius:20px;--radius-sm:14px;--radius-lg:28px;--shadow:0 4px 16px rgba(0,100,50,.06);--shadow-lg:0 8px 28px rgba(0,100,50,.1);--font:'Segoe UI','Helvetica Neue',system-ui,sans-serif;--card-border-w:1px;--card-border-style:solid;--glow:0}
+[data-theme="glass-dark"]{--neon:#00d9ff;--neon-dim:rgba(0,217,255,.12);--neon-glow:rgba(0,217,255,.25);--bg:#0f0f23;--bg2:#1a1a3e;--bg3:#25254a;--card:rgba(30,30,60,.4);--card-hover:rgba(40,40,80,.5);--border:rgba(100,150,255,.2);--border-light:rgba(100,150,255,.3);--text:#e4e8f0;--text-dim:#8899aa;--text-bright:#f5f7ff;--heading:#ffffff;--link:#00d9ff;--success:#34d399;--warning:#fbbf24;--danger:#ff6b9d;--xp-purple:#b991f7;--badge-cyan:#00d9ff;--streak-red:#ff6b9d;--radius:16px;--radius-sm:12px;--radius-lg:20px;--shadow:0 8px 32px rgba(0,200,255,.1);--shadow-lg:0 16px 64px rgba(0,200,255,.15);--font:'Segoe UI',system-ui,sans-serif;--card-border-w:1px;--card-border-style:solid;--glow:1}
+[data-theme="glass-light"]{--neon:#0891b2;--neon-dim:rgba(8,145,178,.08);--neon-glow:rgba(8,145,178,.15);--bg:#f8fafc;--bg2:#f1f5f9;--bg3:#e2e8f0;--card:rgba(255,255,255,.4);--card-hover:rgba(255,255,255,.6);--border:rgba(100,180,255,.2);--border-light:rgba(100,180,255,.3);--text:#1e293b;--text-dim:#475569;--text-bright:#0f172a;--heading:#0f172a;--link:#0891b2;--success:#059669;--warning:#d97706;--danger:#dc2626;--xp-purple:#7c3aed;--badge-cyan:#0891b2;--streak-red:#dc2626;--radius:16px;--radius-sm:12px;--radius-lg:20px;--shadow:0 8px 32px rgba(100,150,255,.08);--shadow-lg:0 16px 64px rgba(100,150,255,.12);--font:'Segoe UI',system-ui,sans-serif;--card-border-w:1px;--card-border-style:solid;--glow:0}
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}body{font-family:var(--font);background:var(--bg);color:var(--text);line-height:1.6;min-height:100vh;overflow-x:hidden;transition:background .3s,color .3s}h1,h2,h3,h4{color:var(--heading);line-height:1.3}a{color:var(--link);text-decoration:none}a:hover{text-decoration:underline}button{font-family:var(--font);cursor:pointer;border:none;background:none;color:inherit}code,pre{font-family:var(--mono)}:focus-visible{outline:2px solid var(--neon);outline-offset:2px;border-radius:4px}::selection{background:var(--neon);color:#fff}::-webkit-scrollbar{width:8px}::-webkit-scrollbar-track{background:var(--bg2)}::-webkit-scrollbar-thumb{background:var(--border);border-radius:4px}::-webkit-scrollbar-thumb:hover{background:var(--text-dim)}
+.site-header{position:fixed;top:0;left:0;right:0;height:var(--header-h);background:var(--bg2);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 20px;z-index:100;backdrop-filter:blur(12px)}.header-logo{display:flex;align-items:center;gap:12px;font-weight:700;font-size:18px;color:var(--heading)}.header-logo-text{display:flex;flex-direction:column;line-height:1.2}.header-logo-main{font-size:20px;font-weight:800}.header-logo-sub{font-size:11px;font-weight:600;color:var(--neon);letter-spacing:1px;text-transform:uppercase;margin-top:2px}.header-right{margin-left:auto;display:flex;align-items:center;gap:12px}.header-xp{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--xp-purple);font-weight:600}.header-xp-bar{width:80px;height:6px;background:var(--bg3);border-radius:3px;overflow:hidden}.header-xp-fill{height:100%;background:var(--xp-purple);border-radius:3px;transition:width .5s}.header-streak{display:flex;align-items:center;gap:4px;font-size:13px;color:var(--streak-red);font-weight:600}
+.theme-toggle{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:var(--bg3);transition:background .2s}.theme-toggle:hover{background:var(--border)}.theme-picker-wrap{position:relative}.theme-picker-btn{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:var(--bg3);transition:background .2s;font-size:16px}.theme-picker-btn:hover{background:var(--border)}.theme-picker-dd{position:absolute;top:calc(100% + 8px);right:0;background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:12px;box-shadow:var(--shadow-lg);z-index:200;display:none;min-width:240px}.theme-picker-dd.open{display:block}.theme-picker-dd .tp-label{font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--text-dim);margin-bottom:8px}.tp-world{display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:var(--radius-sm);cursor:pointer;transition:background .15s;margin-bottom:2px}.tp-world:hover{background:var(--bg3)}.tp-world.active{background:var(--neon-dim)}.tp-world-color{width:28px;height:28px;border-radius:6px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:14px}.tp-world-info{flex:1;min-width:0}.tp-world-name{font-size:13px;font-weight:600;color:var(--heading)}.tp-world-desc{font-size:10px;color:var(--text-dim)}.tp-divider{height:1px;background:var(--border);margin:8px 0}.tp-mode-row{display:flex;align-items:center;justify-content:space-between;padding:4px 10px}.tp-mode-label{font-size:12px;color:var(--text);font-weight:600}.tp-mode-switch{width:44px;height:24px;border-radius:12px;background:var(--bg3);position:relative;cursor:pointer;transition:background .2s}.tp-mode-switch.light{background:var(--neon)}.tp-mode-switch::after{content:'';position:absolute;top:3px;left:3px;width:18px;height:18px;border-radius:50%;background:#fff;transition:transform .2s;box-shadow:0 1px 3px rgba(0,0,0,.3)}.tp-mode-switch.light::after{transform:translateX(20px)}.menu-btn{display:none;width:36px;height:36px;border-radius:8px;align-items:center;justify-content:center;background:var(--bg3)}
+.sidebar{position:fixed;top:var(--header-h);left:0;width:var(--sidebar-w);height:calc(100vh - var(--header-h));background:var(--bg2);border-right:1px solid var(--border);overflow-y:auto;padding:16px 12px;z-index:90;transition:transform .3s}.sidebar-section{margin-bottom:20px}.sidebar-label{font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--text-dim);padding:0 8px;margin-bottom:8px}.sidebar-level{padding:8px 12px;background:var(--neon-dim);border-radius:var(--radius-sm);margin-bottom:12px;text-align:center}.sidebar-level-title{font-size:14px;font-weight:700;color:var(--neon)}.sidebar-level-sub{font-size:11px;color:var(--text-dim);margin-top:2px}.sidebar-xp-bar{width:100%;height:8px;background:var(--bg3);border-radius:4px;overflow:hidden;margin-top:6px}.sidebar-xp-fill{height:100%;background:linear-gradient(90deg,var(--xp-purple),var(--neon));border-radius:4px;transition:width .6s}.mod-link{display:flex;align-items:center;gap:10px;padding:8px 12px;border-radius:var(--radius-sm);transition:background .15s;color:var(--text);font-size:13px;text-decoration:none;position:relative;cursor:pointer}.mod-link:hover{background:var(--bg3);text-decoration:none}.mod-link.active{background:var(--neon-dim);color:var(--neon);font-weight:600}.mod-link.completed::after{content:'\2713';position:absolute;right:10px;color:var(--success);font-weight:700;font-size:12px}.mod-link .mod-icon{width:28px;height:28px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
+.main{margin-left:var(--sidebar-w);margin-top:var(--header-h);min-height:calc(100vh - var(--header-h));padding:32px;max-width:900px}.module-header{margin-bottom:32px}.module-header .mod-badge{display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--neon);margin-bottom:8px}.module-header h1{font-size:28px;margin-bottom:8px}.module-header .mod-desc{font-size:15px;color:var(--text-dim);max-width:600px}
+.lesson-card{background:var(--card);border:var(--card-border-w) var(--card-border-style) var(--border);border-radius:var(--radius);padding:24px;margin-bottom:20px;transition:border-color .2s}.lesson-card:hover{border-color:var(--neon)}.lesson-card h3{font-size:18px;margin-bottom:12px;display:flex;align-items:center;gap:8px}.lesson-card p,.lesson-card li{font-size:14px;line-height:1.7;color:var(--text)}.lesson-card ul,.lesson-card ol{margin:8px 0 8px 20px}.lesson-card code{background:var(--bg3);padding:2px 6px;border-radius:4px;font-size:13px;color:var(--neon)}.lesson-card .info-box{background:var(--neon-dim);border-left:3px solid var(--neon);padding:12px 16px;border-radius:0 var(--radius-sm) var(--radius-sm) 0;margin:12px 0;font-size:13px}
+.interactive-area{background:var(--card);border:calc(var(--card-border-w) + 1px) dashed var(--border);border-radius:var(--radius);padding:24px;margin:20px 0;min-height:200px}.interactive-area h4{font-size:15px;color:var(--neon);margin-bottom:12px}.ix-grid{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;margin:16px 0}.ix-item{background:var(--bg3);border:2px solid var(--border);border-radius:var(--radius-sm);padding:14px 20px;font-size:16px;cursor:pointer;transition:all .2s;user-select:none;text-align:center;min-width:60px}.ix-item:hover{border-color:var(--neon);background:var(--neon-dim)}.ix-item.selected{border-color:var(--neon);background:var(--neon-dim)}.ix-item.correct{border-color:var(--success);background:rgba(34,197,94,.1)}.ix-item.wrong{border-color:var(--danger);background:rgba(239,68,68,.1)}.ix-item.placed{opacity:.4;pointer-events:none}.ix-btn{background:var(--neon);color:#fff;border:none;padding:10px 24px;border-radius:var(--radius-sm);font-size:14px;font-weight:700;cursor:pointer;font-family:var(--font);margin-top:12px;transition:opacity .2s}.ix-btn:hover{opacity:.85}.ix-feedback{text-align:center;padding:14px;border-radius:var(--radius-sm);font-size:16px;font-weight:700;margin-top:12px;display:none}.ix-feedback.pass{display:block;background:rgba(34,197,94,.12);color:var(--success)}.ix-feedback.fail{display:block;background:rgba(239,68,68,.12);color:var(--danger)}
+.quiz-section{background:var(--card);border:var(--card-border-w) var(--card-border-style) var(--border);border-radius:var(--radius);padding:24px;margin-top:24px}.quiz-section h3{font-size:18px;margin-bottom:16px;color:var(--xp-purple)}.quiz-q{margin-bottom:20px}.quiz-q p{font-size:14px;font-weight:600;margin-bottom:10px}.quiz-q label{display:flex;align-items:flex-start;gap:10px;padding:10px 14px;border-radius:var(--radius-sm);border:1px solid var(--border);cursor:pointer;transition:all .15s;font-size:14px;margin-bottom:6px}.quiz-q label:hover{border-color:var(--neon);background:var(--neon-dim)}.quiz-q input[type="radio"]{margin-top:3px;accent-color:var(--neon)}.quiz-q label.correct{border-color:var(--success);background:rgba(34,197,94,.1)}.quiz-q label.wrong{border-color:var(--danger);background:rgba(239,68,68,.1)}.quiz-submit{padding:10px 24px;font-size:14px;font-weight:700;border-radius:var(--radius-sm);background:var(--xp-purple);color:#fff;transition:opacity .2s;margin-top:8px}.quiz-submit:hover{opacity:.85}.quiz-result{padding:16px;border-radius:var(--radius-sm);margin-top:16px;font-size:14px;font-weight:600;text-align:center}.quiz-result.pass{background:rgba(34,197,94,.12);color:var(--success);border:1px solid rgba(34,197,94,.3)}.quiz-result.fail{background:rgba(239,68,68,.12);color:var(--danger);border:1px solid rgba(239,68,68,.3)}.quiz-explanation{margin-top:6px;padding:8px 14px;border-radius:var(--radius-sm);background:rgba(34,197,94,.08);border-left:3px solid var(--success);font-size:13px;color:var(--success);font-weight:600}
+.boss-section{background:linear-gradient(135deg,rgba(168,85,247,.08),rgba(59,130,246,.08));border:2px solid var(--xp-purple);border-radius:var(--radius);padding:24px;margin-top:24px}.boss-section h3{color:var(--xp-purple);font-size:20px;margin-bottom:4px}.boss-section .boss-sub{font-size:13px;color:var(--text-dim);margin-bottom:16px}
+.badge-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(100px,1fr));gap:12px;margin-top:12px}.badge-item{text-align:center;padding:12px 8px;border-radius:var(--radius-sm);background:var(--bg3);opacity:.4;transition:all .3s}.badge-item.earned{opacity:1;background:var(--neon-dim);border:1px solid var(--neon)}.badge-item .badge-icon{font-size:28px;margin-bottom:4px}.badge-item .badge-name{font-size:10px;font-weight:600;color:var(--text-dim)}.badge-item.earned .badge-name{color:var(--neon)}
+.stats-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px;margin-top:12px}.stat-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius-sm);padding:16px;text-align:center}.stat-card .stat-val{font-size:28px;font-weight:700;color:var(--neon)}.stat-card .stat-label{font-size:12px;color:var(--text-dim);margin-top:4px}
+.notif{position:fixed;top:80px;right:20px;background:var(--card);border:1px solid var(--neon);border-radius:var(--radius);padding:16px 20px;box-shadow:var(--shadow-lg);z-index:200;transform:translateX(120%);transition:transform .4s cubic-bezier(.22,1,.36,1);max-width:320px}.notif.show{transform:translateX(0)}.notif-title{font-size:14px;font-weight:700;color:var(--heading);margin-bottom:2px}.notif-text{font-size:12px;color:var(--text-dim)}.notif.xp{border-color:var(--xp-purple)}.notif.badge{border-color:var(--badge-cyan)}.notif.level{border-color:var(--success)}.notif.streak{border-color:var(--streak-red)}
+.level-up-overlay{position:fixed;inset:0;background:rgba(0,0,0,.7);display:none;align-items:center;justify-content:center;z-index:300}.level-up-overlay.active{display:flex}.level-up-box{text-align:center;padding:40px;animation:lvlPop .5s ease-out}.level-up-box .lvl-icon{font-size:64px;margin-bottom:12px}.level-up-box .lvl-title{font-size:28px;font-weight:900;color:var(--heading)}.level-up-box .lvl-name{font-size:20px;color:var(--xp-purple);font-weight:700;margin-top:4px}@keyframes lvlPop{from{transform:scale(.5);opacity:0}to{transform:scale(1);opacity:1}}
+.welcome-screen{display:flex;align-items:center;justify-content:center;min-height:calc(100vh - var(--header-h));text-align:center;padding:40px 20px}.welcome-box{max-width:480px}.welcome-box h1{font-size:36px;margin-bottom:8px}.welcome-box .ws-sub{color:var(--text-dim);font-size:15px;margin-bottom:32px}.welcome-box input{width:100%;max-width:320px;padding:12px 16px;font-size:16px;border-radius:var(--radius-sm);border:1px solid var(--border);background:var(--bg3);color:var(--heading);font-family:var(--font);text-align:center;margin-bottom:16px}.welcome-box input:focus{border-color:var(--neon);outline:none}.welcome-box .ws-start{padding:14px 40px;font-size:16px;font-weight:700;border-radius:var(--radius-sm);background:var(--neon);color:#fff;transition:opacity .2s}.welcome-box .ws-start:hover{opacity:.85}.welcome-box .ws-start:disabled{opacity:.4;cursor:not-allowed}
+.cert-overlay{position:fixed;inset:0;background:rgba(0,0,0,.88);display:none;align-items:center;justify-content:center;z-index:400;padding:20px;flex-direction:column;backdrop-filter:blur(8px)}.cert-overlay.active{display:flex}.cert-picker{display:flex;gap:12px;justify-content:center;margin-bottom:20px;flex-wrap:wrap}.cert-pick-btn{padding:10px 20px;font-size:13px;font-weight:700;border-radius:12px;border:2px solid rgba(255,255,255,.15);background:rgba(255,255,255,.06);color:rgba(255,255,255,.7);transition:all .3s;backdrop-filter:blur(4px)}.cert-pick-btn:hover{border-color:rgba(255,255,255,.3);color:#fff;transform:translateY(-2px)}.cert-pick-btn.active{border-color:#ffd700;color:#ffd700;background:rgba(255,215,0,.1);box-shadow:0 0 20px rgba(255,215,0,.15)}.cert-frame{width:720px;max-width:100%;aspect-ratio:1.414;position:relative;overflow:hidden}.cert-actions{display:flex;gap:12px;justify-content:center;margin-top:16px}.cert-actions button{padding:12px 28px;font-size:13px;font-weight:700;border-radius:12px;background:linear-gradient(135deg,var(--neon),var(--link));color:#fff;transition:transform .2s,box-shadow .2s}.cert-actions button:hover{transform:translateY(-2px);box-shadow:0 4px 20px rgba(0,0,0,.3)}
+.confetti-container{position:fixed;inset:0;pointer-events:none;z-index:600;overflow:hidden}
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.6);display:none;align-items:center;justify-content:center;z-index:500;padding:20px}.modal-overlay.active{display:flex}.modal{background:var(--card);border:1px solid var(--border);border-radius:var(--radius-lg);max-width:640px;width:100%;max-height:85vh;overflow-y:auto;padding:32px;position:relative}.modal-close{position:absolute;top:12px;right:16px;font-size:24px;color:var(--text-dim);background:none;border:none;cursor:pointer}
+@media(max-width:800px){.menu-btn{display:flex}.sidebar{transform:translateX(-100%)}.sidebar.open{transform:translateX(0)}.main{margin-left:0;padding:16px}}
+@media print{*{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}.site-header,.sidebar,.notif,.level-up-overlay,.confetti-container{display:none!important}.main{margin-left:0!important;padding:20px!important}.lesson-card{break-inside:avoid;page-break-inside:avoid}}
+
+/* Audio/Speech */
+.tts-btn{background:none;border:none;cursor:pointer;font-size:.9em;opacity:.5;transition:all .2s;vertical-align:middle;margin-left:8px;padding:2px 6px;border-radius:4px}
+.tts-btn:hover{opacity:1;background:var(--bg2)}.tts-btn.speaking{opacity:1;color:var(--neon);animation:tts-pulse 1s infinite}
+@keyframes tts-pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.15)}}
+.tts-bar{display:flex;align-items:center;gap:8px;padding:6px 12px;background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);margin:8px 0;font-size:.8rem;flex-wrap:wrap}
+.tts-bar select{background:var(--bg);color:var(--text);border:1px solid var(--border);border-radius:4px;padding:2px 6px;font-size:.78rem}
+.tts-bar button{background:none;border:1px solid var(--border);border-radius:4px;padding:2px 8px;cursor:pointer;color:var(--text);font-size:.8rem}
+.tts-bar button:hover{background:var(--bg)}
+.speech-ex{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:16px;margin:12px 0;text-align:center}
+.speech-ex h4{margin:0 0 8px;font-size:1rem}
+.mic-btn{font-size:1.6em;background:none;border:2px solid var(--neon);border-radius:50%;width:52px;height:52px;cursor:pointer;transition:all .3s;color:var(--text);display:inline-flex;align-items:center;justify-content:center}
+.mic-btn:hover{background:var(--neon);color:var(--bg)}.mic-btn.rec{background:#ef4444;border-color:#ef4444;color:#fff;animation:tts-pulse 1s infinite}
+.sr-res{margin-top:8px;padding:6px 10px;border-radius:4px;font-weight:600;font-size:.85rem;display:inline-block}
+.sr-res.good{background:#22c55e22;color:#22c55e}.sr-res.retry{background:#f59e0b22;color:#f59e0b}
+.sr-na{font-size:.8rem;color:var(--text-dim);margin-top:8px}
+</style>
+</head>
+<body>
+<a href="#mainContent" class="skip-nav" style="position:absolute;top:-50px;left:8px;background:var(--neon);color:#fff;padding:8px 16px;z-index:9999;border-radius:0 0 8px 8px;font-weight:700;text-decoration:none">Zum Inhalt springen</a>
+<header class="site-header">
+  <button class="menu-btn" onclick="toggleSidebar()" aria-label="Menu">&#9776;</button>
+  <div class="header-logo">
+    <svg viewBox="0 0 40 40" width="40" height="40" fill="none" aria-hidden="true"><rect x="4" y="4" width="32" height="32" rx="8" fill="var(--neon-dim)" stroke="var(--neon)" stroke-width="1.5"/><text x="20" y="26" text-anchor="middle" font-size="18" font-weight="900" fill="var(--neon)">F</text></svg>
+    <div class="header-logo-text"><div class="header-logo-main">FranzMaster</div><div class="header-logo-sub">Französisch Fortgeschritten Klasse 7-10</div></div>
+  </div>
+  <div class="header-right">
+    <div class="header-xp"><span id="headerLevel">Level 1</span><div class="header-xp-bar"><div class="header-xp-fill" style="width:0%"></div></div><span id="headerXP">0 XP</span></div>
+    <div class="header-streak" id="headerStreak">&#128293; 0</div>
+    <div class="theme-picker-wrap"><button class="theme-picker-btn" onclick="toggleThemePicker()" aria-label="Theme wählen">&#127912;</button><div class="theme-picker-dd" id="themePickerDD"></div></div>
+    <button class="theme-toggle" onclick="toggleMode()" aria-label="Dark/Light umschalten">&#127769;</button>
+  </div>
+</header>
+<nav class="sidebar" id="sidebar" role="navigation" aria-label="Module">
+  <div class="sidebar-section"><div class="sidebar-level"><div class="sidebar-level-title" id="sidebarLevel">Anfänger</div><div class="sidebar-level-sub" id="sidebarXP">0 XP</div><div class="sidebar-xp-bar"><div class="sidebar-xp-fill" id="sidebarXPFill" style="width:0%"></div></div></div></div>
+  <div class="sidebar-section"><div class="sidebar-label">Module</div><div id="sidebarModules"></div></div>
+  <div class="sidebar-section" style="border-top:1px solid var(--border);padding-top:12px;margin-top:12px">
+    <a class="mod-link" onclick="showBadges()"><span class="mod-icon">&#127941;</span>Abzeichen</a>
+    <a class="mod-link" onclick="showStats()"><span class="mod-icon">&#128202;</span>Statistik</a>
+    <a class="mod-link" onclick="showCert()"><span class="mod-icon">&#127891;</span>Urkunde</a>
+  </div>
+  <div class="sidebar-section" style="border-top:1px solid var(--border);padding-top:12px;margin-top:12px">
+    <a class="mod-link" onclick="exportData()"><span class="mod-icon">&#128190;</span>Speichern</a>
+    <label class="mod-link" style="cursor:pointer"><span class="mod-icon">&#128194;</span>Laden<input type="file" accept=".json" onchange="importData(event)" style="display:none"></label>
+    <a class="mod-link" onclick="if(confirm('Wirklich alles zurücksetzen?')){localStorage.removeItem(STORAGE_KEY);location.reload()}" style="color:var(--danger)"><span class="mod-icon">&#128465;</span>Zurücksetzen</a>
+  </div>
+  <div style="padding:16px 8px 8px;border-top:1px solid var(--border);margin-top:12px;font-size:11px;color:var(--text-dim)">
+    <a onclick="showImpressum()" style="cursor:pointer;color:var(--text-dim)">Impressum</a> &middot;
+    <a onclick="showDatenschutz()" style="cursor:pointer;color:var(--text-dim)">Datenschutz</a>
+  </div>
+</nav>
+<main class="main" id="mainContent">
+  <div class="welcome-screen" id="welcomeScreen"><div class="welcome-box"><div style="font-size:64px;margin-bottom:16px">🇫🇷</div><h1>FranzMaster</h1><p class="ws-sub">Maîtrisez le français! 10 Module mit Grammatik, Textanalyse, Literatur und Kultur.</p><input type="text" id="nameInput" placeholder="Dein Name" maxlength="24" aria-label="Dein Name" oninput="document.getElementById('startBtn').disabled=!this.value.trim()"><br><button class="ws-start" id="startBtn" disabled onclick="startApp()">🗼 Commençons!</button></div></div>
+  <div id="moduleContent" style="display:none"></div>
+  <div id="badgesView" style="display:none"></div>
+  <div id="statsView" style="display:none"></div>
+</main>
+<div class="notif" id="notif"><div class="notif-title" id="notifTitle"></div><div class="notif-text" id="notifText"></div></div>
+<div class="level-up-overlay" id="levelUpOverlay"><div class="level-up-box" id="levelUpBox"></div></div>
+<div class="confetti-container" id="confetti"></div>
+<div class="cert-overlay" id="certOverlay" role="dialog" aria-label="Urkunde" aria-modal="true"><div class="cert-picker" id="certPicker"></div><div class="cert-frame" id="certFrame"></div><div class="cert-actions"><button onclick="printCert()">&#128424; Drucken / PDF</button><button onclick="closeCert()">Schließen</button></div></div>
+<div class="modal-overlay" id="impressumOverlay"><div class="modal"><button class="modal-close" onclick="document.getElementById('impressumOverlay').classList.remove('active')">&times;</button><h2>Impressum</h2><p><strong>© 2026 GZ AI Stacks - Gerd Zimmermann</strong></p><p>Diese Lern-App wurde mit Claude Code (Anthropic) entwickelt.</p></div></div>
+<div class="modal-overlay" id="datenschutzOverlay"><div class="modal"><button class="modal-close" onclick="document.getElementById('datenschutzOverlay').classList.remove('active')">&times;</button><h2>Datenschutzerklärung</h2><p>Diese App speichert Daten <strong>ausschließlich lokal</strong> in Ihrem Browser (LocalStorage). Es werden keine Daten an Server übertragen.</p><ul><li>Keine Cookies</li><li>Kein Tracking oder Analytics</li><li>Keine externen Ressourcen</li><li>Keine Registrierung</li><li>Alle Daten verbleiben auf Ihrem Gerät</li></ul><p>Sie können Ihre gespeicherten Daten jederzeit über die "Zurücksetzen"-Funktion löschen.</p></div></div>
+<script>
+function showImpressum(){document.getElementById('impressumOverlay').classList.add('active')}
+function showDatenschutz(){document.getElementById('datenschutzOverlay').classList.add('active')}
+
+
+// === Audio (TTS) ===
+const _synth=window.speechSynthesis,_LANG='fr-FR';let _ttsOn=false,_ttsRate=1,_ttsTimer=null;
+function speakLesson(i){if(_ttsOn){stopTTS();return}const c=document.querySelectorAll('.lesson-card');if(!c[i]||!_synth)return;stopTTS();const u=new SpeechSynthesisUtterance(c[i].innerText);u.lang=_LANG;u.rate=_ttsRate;u.onstart=()=>{_ttsOn=true;updTTSUI();startTTSTimer()};u.onend=()=>{_ttsOn=false;updTTSUI();clearTTSTimer()};u.onerror=()=>{_ttsOn=false;updTTSUI();clearTTSTimer()};_synth.speak(u);showTTSBar()}
+function speakText(t,lang){if(!_synth)return;stopTTS();const u=new SpeechSynthesisUtterance(t);u.lang=lang||_LANG;u.rate=_ttsRate;u.onstart=()=>{_ttsOn=true;updTTSUI();startTTSTimer()};u.onend=()=>{_ttsOn=false;updTTSUI();clearTTSTimer()};u.onerror=()=>{_ttsOn=false;updTTSUI();clearTTSTimer()};_synth.speak(u)}
+function stopTTS(){if(_synth){_synth.cancel()}_ttsOn=false;updTTSUI();clearTTSTimer()}
+function updTTSUI(){document.querySelectorAll('.tts-btn').forEach(b=>b.classList.toggle('speaking',_ttsOn))}
+function setTTSRate(r){_ttsRate=parseFloat(r)}
+function startTTSTimer(){clearTTSTimer();_ttsTimer=setInterval(()=>{if(_synth&&_synth.speaking&&!_synth.paused){_synth.pause();_synth.resume()}},10000)}
+function clearTTSTimer(){if(_ttsTimer){clearInterval(_ttsTimer);_ttsTimer=null}}
+function showTTSBar(){if(document.getElementById('ttsBar'))return;const mc=document.getElementById('moduleContent');if(!mc)return;const b=document.createElement('div');b.className='tts-bar';b.id='ttsBar';b.innerHTML='\u{1F50A} <select onchange="setTTSRate(this.value)"><option value="0.7">Langsam</option><option value="1" selected>Normal</option><option value="1.3">Schnell</option></select> <button onclick="stopTTS()">\u25A0 Stopp</button>';mc.prepend(b)}
+
+// === Audio (STT) ===
+const _SR=window.SpeechRecognition||window.webkitSpeechRecognition;let _rec=null,_recCB=null;
+function initSR(){if(!_SR)return false;_rec=new _SR();_rec.lang=_LANG;_rec.continuous=false;_rec.interimResults=false;_rec.onresult=e=>{const t=e.results[0][0].transcript.toLowerCase().trim();if(_recCB)_recCB(t,e.results[0][0].confidence)};_rec.onerror=()=>{document.querySelectorAll('.mic-btn').forEach(b=>b.classList.remove('rec'))};_rec.onend=()=>{document.querySelectorAll('.mic-btn').forEach(b=>b.classList.remove('rec'))};return true}
+function startSR(cb){if(!_rec&&!initSR()){cb(null,0);return}_recCB=cb;document.querySelectorAll('.mic-btn').forEach(b=>b.classList.add('rec'));try{_rec.start()}catch(e){cb(null,0)}}
+let _spIdx=0,_spSen=[];
+function initSpEx(m){const mod=modules[m];const d=document.createElement('div');d.innerHTML=mod.lessons.map(l=>l.content).join(' ');_spSen=d.textContent.split(/[.!?]+/).map(s=>s.trim()).filter(s=>s.length>15&&s.length<100).slice(0,5);_spIdx=0;renderSpEx()}
+function renderSpEx(){const el=document.getElementById('speechExArea');if(!el)return;if(!_spSen.length){el.innerHTML='<p class="sr-na">Keine S\u00E4tze f\u00FCr Sprach\u00FCbung verf\u00FCgbar.</p>';return}const s=_spSen[_spIdx].replace(/"/g,'&quot;').replace(/'/g,'&#39;');el.innerHTML='<p style="font-size:1.05em;color:var(--neon);margin:10px 0;font-style:italic">&bdquo;'+_spSen[_spIdx]+'&ldquo;</p><div style="display:flex;justify-content:center;gap:16px;margin:12px 0"><button class="tts-btn" onclick="speakText(this.closest(\'.speech-ex\').querySelector(\'p\').textContent)" style="font-size:1.5em;opacity:1" title="Vorlesen">&#128266;</button>'+(_SR?'<button class="mic-btn" onclick="doSpCheck()" title="Nachsprechen">&#127908;</button>':'<p class="sr-na">Spracherkennung nicht verf\u00FCgbar.</p>')+'</div><div id="srRes"></div><div style="font-size:.78rem;color:var(--text-dim);margin-top:8px">Satz '+(_spIdx+1)+' von '+_spSen.length+'</div>'}
+function doSpCheck(){const expected=_spSen[_spIdx].toLowerCase().replace(/[^a-z\u00e4\u00f6\u00fc\u00df\u00e9\u00e8\u00ea\u00e0 0-9]/g,'');startSR((spoken,conf)=>{const el=document.getElementById('srRes');if(!el)return;if(!spoken){el.innerHTML='<span class="sr-res retry">Nicht erkannt \u2014 nochmal versuchen</span>';return}const sim=calcSim(spoken.replace(/[^a-z\u00e4\u00f6\u00fc\u00df\u00e9\u00e8\u00ea\u00e0 0-9]/g,''),expected);if(sim>.45){el.innerHTML='<span class="sr-res good">\u2714 Gut! ('+Math.round(sim*100)+'%)</span>';_spIdx++;setTimeout(()=>{if(_spIdx<_spSen.length)renderSpEx();else{el.innerHTML='<span class="sr-res good">\u2714 Alle S\u00E4tze geschafft!</span>';if(typeof addXP==='function'&&typeof state!=='undefined'&&!state.interactiveResults['sp_'+state.currentModule]){state.interactiveResults['sp_'+state.currentModule]=true;addXP(30,'Sprach\u00FCbung');saveState()}}},1200)}else{el.innerHTML='<span class="sr-res retry">\u21BB Nochmal: &quot;'+spoken+'&quot;</span>'}})}
+function calcSim(a,b){const wa=a.split(/\s+/).filter(Boolean),wb=b.split(/\s+/).filter(Boolean);if(!wa.length||!wb.length)return 0;let c=0;wa.forEach(w=>{if(wb.some(x=>x.includes(w)||w.includes(x)))c++});return c/Math.max(wa.length,wb.length)}
+
+const _qk=[0x4A,0x7F,0x2B,0x61,0x5C,0x3E,0x18,0x73];
+function _d(h,i){return h^_qk[i%_qk.length]}
+
+const LEVELS=[{"name":"Débutant","xp":0},{"name":"Vocabulaire-Starter","xp":40},{"name":"Grammaire-Entdecker","xp":100},{"name":"Phrase-Builder","xp":180},{"name":"Texte-Leser","xp":280},{"name":"Analyse-Anfänger","xp":400},{"name":"Conjugaison-Kenner","xp":540},{"name":"Expression-Sammler","xp":700},{"name":"Littérature-Fan","xp":880},{"name":"Rédaction-Talent","xp":1080},{"name":"Argumentation-Pro","xp":1300},{"name":"Débat-Starter","xp":1540},{"name":"Culture-Experte","xp":1800},{"name":"Style-Meister","xp":2080},{"name":"Prose-Virtuose","xp":2380},{"name":"Académique-Profi","xp":2700},{"name":"Rhétorique-Talent","xp":3040},{"name":"Français Avancé","xp":3400},{"name":"Petit Génie","xp":3780},{"name":"Maître du Français","xp":4200}];
+const BADGES=[{"id":"m0","name":"Temps-Experte","icon":"⏰","desc":"Modul 1 abgeschlossen"},{"id":"m1","name":"Subjonctif-Profi","icon":"🔀","desc":"Modul 2 abgeschlossen"},{"id":"m2","name":"Texte-Analyst","icon":"🔍","desc":"Modul 3 abgeschlossen"},{"id":"m3","name":"Rédaction-Star","icon":"✍️","desc":"Modul 4 abgeschlossen"},{"id":"m4","name":"Littérature-Kenner","icon":"📚","desc":"Modul 5 abgeschlossen"},{"id":"m5","name":"Vocabulaire-Meister","icon":"📖","desc":"Modul 6 abgeschlossen"},{"id":"m6","name":"Média-Analyst","icon":"📰","desc":"Modul 7 abgeschlossen"},{"id":"m7","name":"Débat-Champion","icon":"🎤","desc":"Modul 8 abgeschlossen"},{"id":"m8","name":"Culture-Experte","icon":"🗼","desc":"Modul 9 abgeschlossen"},{"id":"m9","name":"Francophonie-Star","icon":"🌍","desc":"Modul 10 abgeschlossen"},{"id":"first_quiz","name":"Quiz-Neuling","icon":"❓","desc":"Erstes Quiz bestanden"},{"id":"perfect_quiz","name":"Perfektionist","icon":"💎","desc":"Quiz mit 5/5 bestanden"},{"id":"first_boss","name":"Boss-Bezwinger","icon":"👑","desc":"Erste Boss-Challenge bestanden"},{"id":"all_bosses","name":"Endgegner","icon":"🏆","desc":"Alle Boss-Challenges bestanden"},{"id":"streak3","name":"Durchstarter","icon":"🔥","desc":"3 Tage in Folge gelernt"},{"id":"streak7","name":"Wochenkrieger","icon":"⚔️","desc":"7 Tage in Folge gelernt"},{"id":"half_done","name":"Halbzeit","icon":"⏳","desc":"5 Module abgeschlossen"},{"id":"speed_quiz","name":"Blitz-Denker","icon":"⚡","desc":"Quiz in unter 60 Sekunden"},{"id":"explorer","name":"Entdecker","icon":"🗺️","desc":"Alle Module angesehen"},{"id":"graduate","name":"Absolvent","icon":"🎓","desc":"Alle 10 Module abgeschlossen"}];
+const THEME_CONFIG={
+  cyber:{name:'Cyber Neon',emoji:'🖥',color:'#3b82f6',desc:'Futuristisch & Digital'},
+  retro:{name:'Retro Arcade',emoji:'🕹',color:'#ffd700',desc:'80er Arcade-Feeling'},
+  nature:{name:'Nature Forest',emoji:'🌳',color:'#4ade80',desc:'Natürlich & Organisch'},
+  space:{name:'Deep Space',emoji:'🚀',color:'#c084fc',desc:'Kosmisch & Geheimnisvoll'},
+  comic:{name:'Comic Pop',emoji:'💥',color:'#ff6b6b',desc:'Bunt & Verspielt'},
+  sketchy:{name:'Sketchy',emoji:'✍️',color:'#d97706',desc:'Handgemacht & Warm'},
+  'nature-code':{name:'Nature x Code',emoji:'🌿',color:'#10b981',desc:'Natur trifft Technik'},
+  glass:{name:'Glasmorphism',emoji:'💠',color:'#00d9ff',desc:'Modern & Transparent'}
+};
+const modules=[{id:0,title:'Les temps verbaux',icon:'⏰',duration:'30 Min.',description:'Beherrsche alle wichtigen Zeitformen des Französischen.',lessons:[{title:'Présent, Passé composé, Imparfait',content:`<p>Die drei wichtigsten <strong>Zeitformen</strong> im Französischen:</p>
+<ul><li><strong>Présent</strong> — Gegenwart: <em>Je parle français.</em> (Ich spreche Französisch.)</li><li><strong>Passé composé</strong> — abgeschlossene Vergangenheit: <em>J'ai parlé avec Marie.</em> (Ich habe mit Marie gesprochen.)</li><li><strong>Imparfait</strong> — Hintergrund/Gewohnheit: <em>Quand j'étais petit, je parlais anglais.</em> (Als ich klein war, sprach ich Englisch.)</li></ul>
+<p><strong>Passé composé</strong> wird gebildet mit: <em>avoir/être</em> + Participe passé</p>
+<div class="info-box">💡 <strong>Merke:</strong> Das Passé composé beschreibt <em>Ereignisse</em>, das Imparfait beschreibt <em>Zustände und Gewohnheiten</em>.</div>`},{title:'Futur, Conditionnel, Plus-que-parfait',content:`<p>Weitere wichtige Zeitformen:</p>
+<ul><li><strong>Futur simple</strong> — Zukunft: <em>Je parlerai demain.</em> (Ich werde morgen sprechen.)</li><li><strong>Conditionnel présent</strong> — Möglichkeit/Höflichkeit: <em>Je voudrais un café.</em> (Ich hätte gerne einen Kaffee.)</li><li><strong>Plus-que-parfait</strong> — Vorvergangenheit: <em>J'avais déjà mangé.</em> (Ich hatte bereits gegessen.)</li></ul>
+<div class="info-box">💡 <strong>Tipp:</strong> Das Futur simple wird direkt an den Infinitiv angehängt: parler → je parler<strong>ai</strong>, tu parler<strong>as</strong>, il parler<strong>a</strong>.</div>`}],quiz:[{q:'Welche Zeitform beschreibt abgeschlossene Handlungen in der Vergangenheit?',a:['Imparfait','Présent','Passé composé','Futur simple'],_h:0x48},{q:'Wie wird das Passé composé gebildet?',a:['Infinitiv + Endung','avoir/être + Participe passé','Stamm + Endung','Nur Participe passé'],_h:0x7E},{q:'Wofür wird das Imparfait verwendet?',a:['Zukünftige Handlungen','Einzelne Ereignisse','Zustände und Gewohnheiten in der Vergangenheit','Höfliche Bitten'],_h:0x29},{q:'Was bedeutet „Je voudrais"?',a:['Ich werde','Ich hatte','Ich möchte / Ich hätte gerne','Ich bin'],_h:0x63},{q:'Welche Endung hat das Futur simple für „je"?',a:['-ais','-ai','-é','-ons'],_h:0x5D}],boss:[{q:'„Quand je suis arrivé, il avait déjà mangé." — Welche Zeitform ist „avait mangé"?',a:['Passé composé','Imparfait','Plus-que-parfait','Conditionnel'],_h:0x48},{q:'Wann verwendet man Passé composé statt Imparfait?',a:['Für Zustände','Für einmalige, abgeschlossene Ereignisse','Für Beschreibungen','Für Gewohnheiten'],_h:0x7E},{q:'Wie lautet „nous parlerons" auf Deutsch?',a:['Wir sprechen','Wir haben gesprochen','Wir werden sprechen','Wir sprachen'],_h:0x29}]},
+{id:1,title:'Le subjonctif',icon:'🔀',duration:'30 Min.',description:'Verstehe und verwende den Subjonctif richtig.',lessons:[{title:'Was ist der Subjonctif?',content:`<p>Der <strong>Subjonctif</strong> ist ein Modus, der im Deutschen kaum vorkommt. Er drückt aus:</p>
+<ul><li><strong>Wünsche:</strong> <em>Je veux que tu viennes.</em> (Ich will, dass du kommst.)</li><li><strong>Gefühle:</strong> <em>Je suis content qu'il soit là.</em> (Ich bin froh, dass er da ist.)</li><li><strong>Zweifel:</strong> <em>Je doute qu'il puisse venir.</em> (Ich bezweifle, dass er kommen kann.)</li><li><strong>Notwendigkeit:</strong> <em>Il faut que nous partions.</em> (Wir müssen gehen.)</li></ul>
+<div class="info-box">💡 <strong>Merke:</strong> Der Subjonctif steht nach <em>que</em> und bestimmten Auslösern (Wunsch, Gefühl, Zweifel, Notwendigkeit).</div>`},{title:'Bildung und Auslöser',content:`<p><strong>Bildung des Subjonctif présent:</strong></p>
+<ul><li>Stamm: 3. Person Plural Présent (ils parlent → parl-)</li><li>Endungen: -e, -es, -e, -ions, -iez, -ent</li><li><em>que je parle, que tu parles, qu'il parle, que nous parlions, que vous parliez, qu'ils parlent</em></li></ul>
+<p><strong>Wichtige Auslöser:</strong></p>
+<ul><li><em>Il faut que...</em> (Man muss...)</li><li><em>Je veux que...</em> (Ich will, dass...)</li><li><em>Bien que...</em> (Obwohl...)</li><li><em>Pour que...</em> (Damit...)</li><li><em>Avant que...</em> (Bevor...)</li></ul>
+<div class="info-box">💡 <strong>Achtung:</strong> Unregelmäßige Formen: <em>être</em> → que je sois, <em>avoir</em> → que j'aie, <em>faire</em> → que je fasse, <em>aller</em> → que j'aille.</div>`}],quiz:[{q:'Wann verwendet man den Subjonctif?',a:['Für Fakten','Für Wünsche, Gefühle, Zweifel','Für die Vergangenheit','Für die Zukunft'],_h:0x4B},{q:'Nach welchem Wort steht der Subjonctif immer?',a:['si','que','et','ou'],_h:0x7E},{q:'Wie lautet der Subjonctif von „être" für „je"?',a:['que je suis','que je sois','que je serai','que j\'étais'],_h:0x2A},{q:'Was bedeutet „Il faut que tu partes"?',a:['Du sprichst','Du musst gehen','Du bist gegangen','Du wirst gehen'],_h:0x60},{q:'Welcher Auslöser verlangt KEINEN Subjonctif?',a:['Je veux que...','Il faut que...','Je pense que... (bejahend)','Je doute que...'],_h:0x5E}],boss:[{q:'Warum steht nach „Je pense que..." kein Subjonctif?',a:['Weil es eine Meinung ist','Weil es Sicherheit ausdrückt, keinen Zweifel','Weil es ein Fehler wäre','Weil „penser" ein Ausnahme-Verb ist'],_h:0x4B},{q:'Wie lautet „Il faut que nous (faire) nos devoirs" korrekt?',a:['faisons','fassions','ferons','ferions'],_h:0x7E},{q:'Was drückt „Bien que..." aus?',a:['Obwohl — ein Einräumungssatz','Weil — ein Grund','Wenn — eine Bedingung','Damit — ein Zweck'],_h:0x2B}]},
+{id:2,title:'Analyse de texte',icon:'🔍',duration:'30 Min.',description:'Lerne Techniken zur Analyse französischer Texte.',lessons:[{title:'Lesestrategien',content:`<p><strong>Lesestrategien</strong> für französische Texte:</p>
+<ul><li><strong>Lecture globale</strong> — Überblick: Titel, Untertitel, erster/letzter Absatz</li><li><strong>Lecture détaillée</strong> — detailliertes Lesen mit Markierungen</li><li><strong>Mots-clés</strong> — Schlüsselwörter identifizieren</li><li><strong>Connecteurs logiques</strong> — Verknüpfungswörter beachten (mais, donc, car, en effet)</li></ul>
+<div class="info-box">💡 <strong>Tipp:</strong> Lies den Text immer zweimal: einmal global, dann detailliert!</div>`},{title:'Textanalyse-Methoden',content:`<p>Bei der <strong>Textanalyse</strong> achte auf:</p>
+<ul><li><strong>Type de texte</strong> — Textsorte (article, lettre, récit, poème, discours)</li><li><strong>Thème principal</strong> — Hauptthema</li><li><strong>Point de vue</strong> — Perspektive des Autors</li><li><strong>Ton</strong> — Tonfall (ironique, sérieux, humoristique, critique)</li><li><strong>Figures de style</strong> — Stilmittel (métaphore, comparaison, hyperbole)</li></ul>
+<p><strong>Analyse-Vokabular:</strong></p>
+<ul><li><em>L'auteur souligne que...</em> — Der Autor betont, dass...</li><li><em>Le texte traite de...</em> — Der Text handelt von...</li><li><em>L'auteur utilise une métaphore pour...</em> — Der Autor verwendet eine Metapher, um...</li></ul>
+<div class="info-box">💡 <strong>Merke:</strong> Eine gute Analyse zitiert immer <em>Textstellen</em> als Beleg!</div>`}],quiz:[{q:'Was bedeutet „lecture globale"?',a:['Detailliertes Lesen','Überblick verschaffen','Wort für Wort übersetzen','Laut vorlesen'],_h:0x4B},{q:'Was sind „connecteurs logiques"?',a:['Grammatikregeln','Verknüpfungswörter wie mais, donc, car','Stilmittel','Redewendungen'],_h:0x7E},{q:'Wie analysiert man den „ton" eines Textes?',a:['Man zählt die Wörter','Man untersucht den emotionalen Grundton','Man schaut auf die Länge','Man übersetzt wörtlich'],_h:0x2A},{q:'Was ist eine „métaphore"?',a:['Ein Witz','Ein indirekter Vergleich ohne „wie"','Eine Übertreibung','Eine Frage'],_h:0x60},{q:'Was bedeutet „L\'auteur souligne que..."?',a:['Der Autor zweifelt','Der Autor ignoriert','Der Autor betont, dass...','Der Autor fragt'],_h:0x5E}],boss:[{q:'Was unterscheidet einen „récit" von einem „article"?',a:['Kein Unterschied','Ein récit ist eine Erzählung, ein article ein Zeitungstext','Ein article ist länger','Ein récit hat keine Absätze'],_h:0x4B},{q:'Warum ist es wichtig, Textstellen zu zitieren?',a:['Um den Text länger zu machen','Um die Analyse mit Belegen zu unterstützen','Weil es Pflicht ist','Um den Autor zu loben'],_h:0x7E},{q:'Was bedeutet „hyperbole" als Stilmittel?',a:['Eine Untertreibung','Eine Übertreibung','Ein Vergleich','Eine Wiederholung'],_h:0x2B}]},
+{id:3,title:'La rédaction',icon:'✍️',duration:'35 Min.',description:'Lerne das Verfassen strukturierter französischer Texte.',lessons:[{title:'Textstruktur',content:`<p>Ein guter französischer <strong>Aufsatz</strong> (rédaction) hat eine klare Struktur:</p>
+<ol><li><strong>Introduction</strong> — Einleitung: Thema vorstellen, These formulieren</li><li><strong>Développement</strong> — Hauptteil: 2-3 Argumente mit Beispielen</li><li><strong>Conclusion</strong> — Schluss: Zusammenfassung, Ausblick</li></ol>
+<p><strong>Wichtige Strukturwörter:</strong></p>
+<ul><li><em>Tout d'abord...</em> — Zunächst...</li><li><em>Ensuite...</em> — Dann...</li><li><em>De plus...</em> — Außerdem...</li><li><em>En revanche...</em> — Hingegen...</li><li><em>En conclusion...</em> — Zusammenfassend...</li></ul>
+<div class="info-box">💡 <strong>Merke:</strong> Jeder Absatz hat einen <em>argument</em> (These), ein <em>exemple</em> (Beispiel) und eine <em>explication</em> (Erklärung).</div>`},{title:'Argumentation',content:`<p>Techniken der <strong>Argumentation</strong>:</p>
+<ul><li><strong>Argument + Exemple:</strong> <em>Les langues sont importantes. Par exemple, en voyage, on peut communiquer.</em></li><li><strong>Cause-Conséquence:</strong> <em>Comme il pleut, nous restons à la maison.</em></li><li><strong>Comparaison:</strong> <em>Contrairement à..., cependant...</em></li><li><strong>Concession:</strong> <em>Certes... mais... / Il est vrai que... néanmoins...</em></li></ul>
+<div class="info-box">💡 <strong>Tipp:</strong> Verwende <em>certes... mais...</em> (zwar... aber...) um Gegenargumente einzuräumen und dann zu entkräften!</div>`}],quiz:[{q:'Aus welchen drei Teilen besteht ein Aufsatz?',a:['Titel, Text, Ende','Introduction, Développement, Conclusion','Anfang, Mitte, Schluss','These, Beispiel, Beweis'],_h:0x4B},{q:'Was bedeutet „Tout d\'abord"?',a:['Schließlich','Hingegen','Zunächst','Außerdem'],_h:0x7F},{q:'Was ist eine „concession"?',a:['Eine Zusammenfassung','Ein Einräumungssatz (zwar... aber...)','Ein Beispiel','Eine Frage'],_h:0x2A},{q:'Welches Wort leitet eine Gegenüberstellung ein?',a:['De plus','En conclusion','En revanche','Tout d\'abord'],_h:0x63},{q:'Was gehört in jeden Argumentationsabsatz?',a:['Nur eine Meinung','Argument, Beispiel, Erklärung','Nur Fakten','Nur Zitate'],_h:0x5D}],boss:[{q:'Was bedeutet „Certes le sport est fatigant, mais il est bon pour la santé"?',a:['Sport ist schlecht','Sport ist zwar anstrengend, aber gut für die Gesundheit','Sport macht müde','Man sollte keinen Sport machen'],_h:0x4B},{q:'Warum ist die Conclusion wichtig?',a:['Sie fasst zusammen und gibt einen Ausblick','Sie wiederholt die Einleitung','Sie ist optional','Sie enthält neue Argumente'],_h:0x7F},{q:'Was unterscheidet „de plus" von „en revanche"?',a:['Kein Unterschied','De plus = Addition, En revanche = Gegensatz','Beides bedeutet außerdem','En revanche ist formeller'],_h:0x29}]},
+{id:4,title:'La littérature française',icon:'📚',duration:'30 Min.',description:'Entdecke wichtige Werke und Autoren der französischen Literatur.',lessons:[{title:'Wichtige Autoren und Epochen',content:`<p>Große <strong>französische Autoren</strong>:</p>
+<ul><li><strong>Molière</strong> (17. Jh.) — Komödien: <em>Le Malade imaginaire, Le Bourgeois gentilhomme</em></li><li><strong>Victor Hugo</strong> (19. Jh.) — <em>Les Misérables, Notre-Dame de Paris</em></li><li><strong>Albert Camus</strong> (20. Jh.) — <em>L'Étranger</em> (Der Fremde)</li><li><strong>Antoine de Saint-Exupéry</strong> — <em>Le Petit Prince</em> (Der kleine Prinz)</li></ul>
+<p><strong>Literarische Gattungen:</strong></p>
+<ul><li><strong>Le roman</strong> — Roman</li><li><strong>La poésie</strong> — Dichtung</li><li><strong>Le théâtre</strong> — Theater</li><li><strong>La nouvelle</strong> — Kurzgeschichte</li></ul>
+<div class="info-box">💡 <strong>Fun Fact:</strong> <em>Le Petit Prince</em> ist nach der Bibel das meistübersetzte Buch der Welt!</div>`},{title:'Literarische Analyse',content:`<p><strong>Stilmittel</strong> in der französischen Literatur:</p>
+<ul><li><strong>La métaphore</strong> — indirekter Vergleich: <em>La vie est un voyage.</em></li><li><strong>La comparaison</strong> — Vergleich mit „comme": <em>Fort comme un lion.</em></li><li><strong>L'hyperbole</strong> — Übertreibung: <em>J'ai mille choses à faire.</em></li><li><strong>La personnification</strong> — Vermenschlichung: <em>Le vent murmure.</em></li><li><strong>L'ironie</strong> — das Gegenteil meinen</li></ul>
+<div class="info-box">💡 <strong>Analyse-Schema:</strong> „L'auteur utilise [Stilmittel] pour [Wirkung]." Beispiel: „L'auteur utilise une métaphore pour souligner la beauté de la nature."</div>`}],quiz:[{q:'Wer schrieb „Le Petit Prince"?',a:['Victor Hugo','Molière','Albert Camus','Antoine de Saint-Exupéry'],_h:0x5F},{q:'Was ist „La comparaison"?',a:['Eine Übertreibung','Ein Vergleich mit „comme"','Eine Vermenschlichung','Ein Widerspruch'],_h:0x7E},{q:'Welche Gattung ist „Le théâtre"?',a:['Roman','Kurzgeschichte','Theater/Drama','Dichtung'],_h:0x29},{q:'Wer schrieb „Les Misérables"?',a:['Molière','Albert Camus','Saint-Exupéry','Victor Hugo'],_h:0x62},{q:'Was bedeutet „L\'hyperbole"?',a:['Untertreibung','Vergleich','Übertreibung','Wiederholung'],_h:0x5E}],boss:[{q:'Was macht Molière als Dramatiker besonders?',a:['Er schrieb Tragödien','Er schrieb gesellschaftskritische Komödien','Er schrieb nur Romane','Er war Dichter'],_h:0x4B},{q:'Wie analysiert man ein Stilmittel?',a:['Man benennt es nur','Man beschreibt Stilmittel und erklärt seine Wirkung','Man übersetzt es','Man ignoriert es'],_h:0x7E},{q:'Warum ist „Le Petit Prince" ein philosophisches Werk?',a:['Weil es lang ist','Weil es Lebensweisheiten in einer Kindergeschichte vermittelt','Weil es schwer zu lesen ist','Weil es in Frankreich spielt'],_h:0x29}]},
+{id:5,title:'Vocabulaire avancé',icon:'📖',duration:'25 Min.',description:'Erweitere deinen Wortschatz mit Redewendungen und Wortfamilien.',lessons:[{title:'Expressions idiomatiques',content:`<p>Wichtige <strong>Redewendungen</strong> (expressions idiomatiques):</p>
+<ul><li><strong>Avoir le cafard</strong> — traurig/niedergeschlagen sein (wörtl.: eine Kakerlake haben)</li><li><strong>Coûter les yeux de la tête</strong> — ein Vermögen kosten (wörtl.: die Augen vom Kopf kosten)</li><li><strong>Mettre les pieds dans le plat</strong> — ins Fettnäpfchen treten</li><li><strong>Avoir du pain sur la planche</strong> — viel zu tun haben</li><li><strong>Tomber dans les pommes</strong> — in Ohnmacht fallen (wörtl.: in die Äpfel fallen)</li></ul>
+<div class="info-box">💡 <strong>Tipp:</strong> Redewendungen kann man nicht wörtlich übersetzen — lerne sie als feste Ausdrücke!</div>`},{title:'Faux amis und Register',content:`<p><strong>Faux amis</strong> (Falsche Freunde) Deutsch-Französisch:</p>
+<ul><li><strong>attendre</strong> ≠ aufpassen — attendre = warten</li><li><strong>la figure</strong> ≠ die Figur — la figure = das Gesicht</li><li><strong>blesser</strong> ≠ blasen — blesser = verletzen</li><li><strong>le journal</strong> ≠ das Journal — le journal = die Zeitung</li></ul>
+<p><strong>Sprachregister:</strong></p>
+<ul><li><strong>Langue familière</strong> — Umgangssprache: <em>C'est cool! / J'ai la dalle.</em></li><li><strong>Langue courante</strong> — Standardsprache: <em>C'est bien. / J'ai faim.</em></li><li><strong>Langue soutenue</strong> — gehobene Sprache: <em>C'est excellent. / Je suis affamé.</em></li></ul>
+<div class="info-box">💡 <strong>Merke:</strong> Im Aufsatz verwende <em>langue courante</em> oder <em>soutenue</em>, nicht <em>familière</em>!</div>`}],quiz:[{q:'Was bedeutet „avoir le cafard"?',a:['Eine Kakerlake haben','Kaffee trinken','Traurig sein','Angst haben'],_h:0x48},{q:'Was ist ein „faux ami"?',a:['Ein schlechter Freund','Ein ähnlich klingendes Wort mit anderer Bedeutung','Ein Grammatikfehler','Ein Dialekt'],_h:0x7E},{q:'Was heißt „attendre" auf Deutsch?',a:['Aufpassen','Besuchen','Warten','Antworten'],_h:0x29},{q:'Welches Sprachregister passt in einen Aufsatz?',a:['Langue familière','Langue courante / soutenue','Nur langue soutenue','Alle gleich'],_h:0x60},{q:'Was bedeutet „tomber dans les pommes"?',a:['Äpfel pflücken','In Ohnmacht fallen','Vom Baum fallen','Einen Kuchen backen'],_h:0x5D}],boss:[{q:'Warum heißen falsche Freunde „faux amis"?',a:['Weil sie unfreundlich klingen','Weil sie ähnlich aussehen, aber in die Irre führen','Weil sie falsch geschrieben sind','Weil sie veraltet sind'],_h:0x4B},{q:'Was ist der Unterschied zwischen „J\'ai la dalle" und „J\'ai faim"?',a:['Kein Unterschied','Ersteres ist Umgangssprache, Letzteres Standardsprache','Ersteres ist höflicher','Letzteres ist umgangssprachlich'],_h:0x7E},{q:'Wie übersetzt man „Avoir du pain sur la planche"?',a:['Brot auf dem Brett haben','Im Supermarkt einkaufen','Viel zu tun haben','Brot backen'],_h:0x29}]},
+{id:6,title:'Les médias',icon:'📰',duration:'25 Min.',description:'Analysiere französische Medientexte und erkenne Meinungen.',lessons:[{title:'Französische Medien',content:`<p>Wichtige <strong>französische Medien</strong>:</p>
+<ul><li><strong>Le Monde</strong> — seriöse Tageszeitung</li><li><strong>Libération</strong> — linksliberale Zeitung</li><li><strong>Le Figaro</strong> — konservative Zeitung</li><li><strong>France 24</strong> — internationaler Nachrichtensender</li><li><strong>TV5 Monde</strong> — frankophoner Fernsehsender</li></ul>
+<p><strong>Medien-Textsorten:</strong></p>
+<ul><li><strong>L'article d'information</strong> — neutraler Bericht</li><li><strong>L'éditorial</strong> — Kommentar mit Meinung</li><li><strong>Le reportage</strong> — ausführlicher Bericht</li><li><strong>L'interview</strong> — Gespräch/Befragung</li></ul>
+<div class="info-box">💡 <strong>Tipp:</strong> Beim Lesen französischer Zeitungen: Achte auf die <em>tendance</em> (politische Ausrichtung) der Zeitung!</div>`},{title:'Meinung erkennen und ausdrücken',content:`<p><strong>Meinungswörter</strong> in französischen Texten:</p>
+<ul><li><strong>Neutral:</strong> <em>selon l'auteur, d'après le texte</em> (laut dem Autor)</li><li><strong>Zustimmung:</strong> <em>Je suis d'accord, je partage l'avis</em></li><li><strong>Ablehnung:</strong> <em>Je ne suis pas d'accord, je m'oppose à</em></li><li><strong>Vermutung:</strong> <em>Il semble que, il paraît que</em></li></ul>
+<p><strong>Bias erkennen:</strong></p>
+<ul><li>Übertriebene Adjektive: <em>terrible, formidable, catastrophique</em></li><li>Verallgemeinerungen: <em>tous, toujours, jamais</em></li><li>Emotionale Appelle</li></ul>
+<div class="info-box">💡 <strong>Merke:</strong> <em>Selon</em> (laut) ist neutral, <em>prétend</em> (behauptet) ist kritisch — die Wortwahl verrät die Haltung!</div>`}],quiz:[{q:'Welche ist eine seriöse französische Tageszeitung?',a:['Paris Match','Vogue','Le Monde','Marie Claire'],_h:0x4A},{q:'Was ist ein „éditorial"?',a:['Ein neutraler Bericht','Ein Kommentar mit Meinung','Eine Anzeige','Ein Interview'],_h:0x7E},{q:'Was bedeutet „selon l\'auteur"?',a:['Der Autor irrt sich','Laut dem Autor','Der Autor ist dagegen','Gegen den Autor'],_h:0x29},{q:'Welches Wort signalisiert Bias/Voreingenommenheit?',a:['Selon','Tous (alle)','D\'après','Il semble'],_h:0x60},{q:'Was ist ein „reportage"?',a:['Ein kurzer Kommentar','Ein ausführlicher Bericht','Eine Werbung','Ein Roman'],_h:0x5C}],boss:[{q:'Wie unterscheidet man einen „article d\'information" von einem „éditorial"?',a:['Kein Unterschied','Der Article ist neutral, das Éditorial enthält die Meinung des Autors','Der Article ist kürzer','Das Éditorial hat keine Quellen'],_h:0x4B},{q:'Was verrät die Wortwahl „prétend" über die Haltung des Autors?',a:['Neutralität','Zustimmung','Kritische Distanz / Skepsis','Begeisterung'],_h:0x7D},{q:'Warum sollte man mehrere Quellen vergleichen?',a:['Um mehr zu lesen','Um verschiedene Perspektiven zu erkennen und Bias zu identifizieren','Um die längste zu finden','Es ist nicht nötig'],_h:0x29}]},
+{id:7,title:'Le débat',icon:'🎤',duration:'30 Min.',description:'Lerne auf Französisch zu argumentieren und zu debattieren.',lessons:[{title:'Meinungen ausdrücken',content:`<p><strong>Meinung äußern</strong> auf Französisch:</p>
+<ul><li><strong>Starke Meinung:</strong> <em>Je suis convaincu(e) que... / Il est évident que...</em></li><li><strong>Moderate Meinung:</strong> <em>À mon avis... / Je pense que... / Selon moi...</em></li><li><strong>Zustimmung:</strong> <em>Je suis tout à fait d'accord. / C'est exactement ce que je pense.</em></li><li><strong>Widerspruch:</strong> <em>Je ne suis pas d'accord parce que... / Au contraire...</em></li></ul>
+<div class="info-box">💡 <strong>Tipp:</strong> Höflicher Widerspruch: <em>Je comprends votre point de vue, mais...</em> (Ich verstehe Ihren Standpunkt, aber...)</div>`},{title:'Argumentationsstruktur',content:`<p><strong>Aufbau eines Arguments</strong>:</p>
+<ol><li><strong>Thèse</strong> — Behauptung aufstellen</li><li><strong>Argument</strong> — Begründung liefern</li><li><strong>Exemple</strong> — Beispiel geben</li><li><strong>Conclusion partielle</strong> — Teilfazit ziehen</li></ol>
+<p><strong>Debattenregeln:</strong></p>
+<ul><li>Andere ausreden lassen</li><li>Argumente, nicht Personen angreifen</li><li>Fakten von Meinungen trennen</li><li>Gegenargumente aufgreifen und entkräften</li></ul>
+<div class="info-box">💡 <strong>Merke:</strong> Eine gute Debatte nutzt <em>Konzession</em>: „Certes..., mais..." — das zeigt, dass man beide Seiten kennt!</div>`}],quiz:[{q:'Wie drückt man eine starke Meinung auf Französisch aus?',a:['Peut-être...','Je suis convaincu(e) que...','Je ne sais pas...','Il semble que...'],_h:0x4B},{q:'Was bedeutet „Au contraire"?',a:['Im Gegenteil','Außerdem','Zum Beispiel','Zusammenfassend'],_h:0x7F},{q:'Wie widerspricht man höflich?',a:['\"Vous avez tort!\"','\"C\'est faux!\"','\"Je comprends votre point de vue, mais...\"','\"Non!\"'],_h:0x29},{q:'Was ist eine „thèse" in der Argumentation?',a:['Ein Beispiel','Eine Behauptung/Hauptaussage','Ein Fazit','Eine Frage'],_h:0x60},{q:'Was gehört zu einem guten Argument?',a:['Nur Meinung','Behauptung, Begründung und Beispiel','Nur Fakten','Nur Beispiele'],_h:0x5E}],boss:[{q:'Was bedeutet die Konzessionstechnik „Certes..., mais..."?',a:['Man gibt auf','Man räumt etwas ein, entkräftet es dann','Man stimmt komplett zu','Man wechselt das Thema'],_h:0x4B},{q:'Warum sollte man in einer Debatte Gegenargumente aufgreifen?',a:['Um den Gegner zu loben','Um zu zeigen, dass man beide Seiten kennt, und seine Position zu stärken','Um Zeit zu gewinnen','Es ist nicht nötig'],_h:0x7E},{q:'Was unterscheidet eine Meinung von einem Fakt?',a:['Fakten sind länger','Ein Fakt ist überprüfbar, eine Meinung ist subjektiv','Meinungen sind immer falsch','Kein Unterschied'],_h:0x29}]},
+{id:8,title:'La culture française',icon:'🗼',duration:'25 Min.',description:'Entdecke die französische Kultur, Traditionen und Lebensart.',lessons:[{title:'Frankreich und seine Kultur',content:`<p>Wichtige Aspekte der <strong>französischen Kultur</strong>:</p>
+<ul><li><strong>La gastronomie</strong> — Die Küche: Baguette, Croissant, Käse, Wein (UNESCO-Weltkulturerbe!)</li><li><strong>L'art de vivre</strong> — Die Lebenskunst: Genuss, Savoir-vivre</li><li><strong>Paris</strong> — Hauptstadt mit Eiffelturm, Louvre, Notre-Dame</li><li><strong>Les fêtes</strong> — Feiertage: 14 juillet (Nationalfeiertag), Noël, Pâques</li><li><strong>La mode</strong> — Paris als Modehauptstadt: Chanel, Dior, Louis Vuitton</li></ul>
+<div class="info-box">💡 <strong>Fun Fact:</strong> Frankreich hat mit über 1.500 Käsesorten die größte Käsevielfalt der Welt!</div>`},{title:'Regionen und Unterschiede',content:`<p><strong>Französische Regionen</strong> und ihre Besonderheiten:</p>
+<ul><li><strong>Île-de-France</strong> — Paris und Umgebung, politisches Zentrum</li><li><strong>Provence</strong> — Lavendelfelder, Mittelmeer, Bouillabaisse</li><li><strong>Bretagne</strong> — Atlantikküste, Crêpes, keltische Kultur</li><li><strong>Alsace (Elsass)</strong> — deutsch-französische Mischkultur, Flammkuchen</li><li><strong>Côte d'Azur</strong> — Riviera, Nizza, Cannes, Filmfestival</li></ul>
+<p><strong>Deutsch-französische Beziehungen:</strong></p>
+<ul><li>Élysée-Vertrag 1963 — Grundlage der Freundschaft</li><li>ARTE — deutsch-französischer Kultursender</li><li>Erasmus — Austauschprogramm</li></ul>
+<div class="info-box">🇫🇷🇩🇪 <strong>Merke:</strong> Deutschland und Frankreich gelten als „Motor Europas" — ihre Zusammenarbeit ist zentral für die EU!</div>`}],quiz:[{q:'Was ist „l\'art de vivre"?',a:['Die Kunst des Kochens','Die Lebenskunst','Eine Kunstgalerie','Ein Museum'],_h:0x4B},{q:'Wann ist der französische Nationalfeiertag?',a:['1. Mai','14. Juli','25. Dezember','1. Januar'],_h:0x7E},{q:'Welche Region ist für Lavendelfelder bekannt?',a:['Bretagne','Alsace','Provence','Île-de-France'],_h:0x29},{q:'Was ist der Élysée-Vertrag?',a:['Ein Handelsabkommen','Grundlage der deutsch-französischen Freundschaft','Ein Kriegsvertrag','Eine EU-Richtlinie'],_h:0x60},{q:'Welcher Sender verbindet deutsche und französische Kultur?',a:['BBC','ARTE','CNN','TV5'],_h:0x5D}],boss:[{q:'Warum ist die französische Gastronomie UNESCO-Weltkulturerbe?',a:['Weil sie teuer ist','Weil sie als kulturelle Tradition und Lebensart anerkannt wurde','Weil sie die älteste ist','Weil Frankreich dafür bezahlt hat'],_h:0x4B},{q:'Was verbindet die Regionen Alsace und Deutschland kulturell?',a:['Nichts','Gemeinsame Geschichte, Sprache (Elsässisch) und Küche','Nur die Grenze','Sport'],_h:0x7E},{q:'Was symbolisiert die deutsch-französische Freundschaft für Europa?',a:['Handelsbeziehungen','Den „Motor Europas" — ihre Zusammenarbeit ist zentral für die EU','Eine reine Formalität','Ein historisches Relikt'],_h:0x29}]},
+{id:9,title:'La Francophonie',icon:'🌍',duration:'25 Min.',description:'Entdecke die frankophone Welt und die Vielfalt des Französischen.',lessons:[{title:'Wo wird Französisch gesprochen?',content:`<p><strong>Französisch</strong> wird in vielen Ländern gesprochen:</p>
+<ul><li><strong>Europa:</strong> Frankreich, Belgien (Wallonie), Schweiz (Romandie), Luxemburg, Monaco</li><li><strong>Nordamerika:</strong> Kanada (Québec), Haiti</li><li><strong>Afrika:</strong> Senegal, Kamerun, Kongo, Côte d'Ivoire, Marokko, Tunesien, Algerien</li><li><strong>Asien/Ozeanien:</strong> Libanon, Vietnam (historisch), Neukaledonien</li></ul>
+<p><strong>Zahlen:</strong></p>
+<ul><li>Über <strong>300 Millionen</strong> Frankophone weltweit</li><li><strong>29 Staaten</strong> mit Französisch als Amtssprache</li><li>Französisch ist 5. meistgesprochene Sprache der Welt</li></ul>
+<div class="info-box">💡 <strong>Fun Fact:</strong> Die meisten Französischsprechenden leben in <em>Afrika</em>, nicht in Frankreich!</div>`},{title:'Varianten des Französischen',content:`<p><strong>Varianten</strong> des Französischen weltweit:</p>
+<ul><li><strong>Québécois</strong> (Kanada) — eigene Ausdrücke: <em>char</em> statt <em>voiture</em> (Auto)</li><li><strong>Français africain</strong> — eigene Redewendungen, Einfluss lokaler Sprachen</li><li><strong>Français belge</strong> — <em>septante</em> (70) statt <em>soixante-dix</em></li><li><strong>Français suisse</strong> — ähnlich wie Belgien, eigene Wörter</li></ul>
+<p><strong>Organisation internationale de la Francophonie (OIF):</strong></p>
+<ul><li>Fördert die französische Sprache weltweit</li><li>88 Mitgliedsstaaten und -regierungen</li><li>Organisiert die <em>Jeux de la Francophonie</em> (Francophonie-Spiele)</li></ul>
+<div class="info-box">🌍 <strong>Merke:</strong> Es gibt kein „richtiges" Französisch — die Vielfalt ist ein Reichtum der Sprache!</div>`}],quiz:[{q:'Wie viele Menschen sprechen weltweit Französisch?',a:['50 Millionen','150 Millionen','Über 300 Millionen','1 Milliarde'],_h:0x48},{q:'Wo leben die meisten Frankophonen?',a:['In Frankreich','In Kanada','In Afrika','In Belgien'],_h:0x7E},{q:'Wie sagen Belgier „70"?',a:['Soixante-dix','Septante','Soixante-dix-sept','Huitante'],_h:0x2A},{q:'Was ist die OIF?',a:['Eine Sprachschule','Organisation zur Förderung der französischen Sprache weltweit','Ein Wörterbuch','Eine Universität'],_h:0x60},{q:'In welchem kanadischen Bundesstaat spricht man Französisch?',a:['Ontario','British Columbia','Québec','Alberta'],_h:0x5E}],boss:[{q:'Warum ist die Francophonie mehr als nur eine Sprachgemeinschaft?',a:['Ist sie nicht','Sie verbindet Kulturen, fördert Zusammenarbeit und kulturelle Vielfalt','Sie ist nur politisch','Sie existiert nur auf dem Papier'],_h:0x4B},{q:'Was unterscheidet das Québécois vom Standardfranzösischen?',a:['Es ist eine andere Sprache','Eigene Ausdrücke und Aussprache, beeinflusst durch Isolation und Englisch','Nur die Schrift','Nichts'],_h:0x7E},{q:'Warum spricht man in vielen afrikanischen Ländern Französisch?',a:['Zufall','Historisches Erbe der französischen Kolonialzeit','Weil Französisch einfach ist','Weil Afrika nahe an Frankreich liegt'],_h:0x29}]}]
+
+const STORAGE_KEY='franzmaster_progress';
+let state={name:'',started:false,currentModule:0,xp:0,level:0,streak:0,lastVisit:null,modulesCompleted:[],quizResults:{},bossResults:{},badges:[],quizShuffleMap:{},modulesViewed:[],interactiveResults:{},designTheme:'cyber-dark'};
+
+function saveState(){try{localStorage.setItem(STORAGE_KEY,JSON.stringify(state))}catch(e){}}
+function loadState(){try{const s=localStorage.getItem(STORAGE_KEY);if(s){Object.assign(state,JSON.parse(s));return true}}catch(e){}return false}
+function exportData(){const a=document.createElement('a');a.download='franzmaster-'+state.name+'.json';a.href=URL.createObjectURL(new Blob([JSON.stringify(state,null,2)],{type:'application/json'}));a.click()}
+function importData(e){const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=ev=>{try{const d=JSON.parse(ev.target.result);Object.assign(state,d);saveState();location.reload()}catch(err){alert('Datei konnte nicht gelesen werden.')}};r.readAsText(f)}
+
+function getLevel(xp){let lv=0;for(let i=LEVELS.length-1;i>=0;i--){if(xp>=LEVELS[i].xp){lv=i;break}}return lv}
+function getLevelProgress(xp){const lv=getLevel(xp);const cur=LEVELS[lv].xp;const next=lv<LEVELS.length-1?LEVELS[lv+1].xp:cur;if(next===cur)return 100;return Math.min(100,Math.round((xp-cur)/(next-cur)*100))}
+function addXP(amount,reason){const old=getLevel(state.xp);state.xp+=amount;const nw=getLevel(state.xp);saveState();updateUI();showNotif('xp','+'+amount+' XP',reason);if(nw>old){state.level=nw;saveState();setTimeout(()=>showLevelUp(nw),800)}}
+
+function updateStreak(){const today=new Date().toDateString();if(state.lastVisit===today)return;const yesterday=new Date(Date.now()-86400000).toDateString();if(state.lastVisit===yesterday){state.streak++;showNotif('streak','\uD83D\uDD25 '+state.streak+' Tage Streak!','Weiter so!');if(state.streak>=3)awardBadge('streak3');if(state.streak>=7)awardBadge('streak7')}else if(state.lastVisit!==today){state.streak=1}state.lastVisit=today;saveState()}
+
+function awardBadge(id){if(state.badges.includes(id))return;state.badges.push(id);saveState();const b=BADGES.find(x=>x.id===id);if(b)showNotif('badge',b.icon+' Badge: '+b.name,b.desc)}
+
+let notifQueue=[],notifActive=false;
+function showNotif(type,title,text){notifQueue.push({type,title,text});if(!notifActive)processNotif()}
+function processNotif(){if(!notifQueue.length){notifActive=false;return}notifActive=true;const{type,title,text}=notifQueue.shift();const el=document.getElementById('notif');el.className='notif '+type;document.getElementById('notifTitle').textContent=title;document.getElementById('notifText').textContent=text;el.classList.add('show');setTimeout(()=>{el.classList.remove('show');setTimeout(processNotif,300)},2500)}
+
+function showLevelUp(lv){const ov=document.getElementById('levelUpOverlay');const box=document.getElementById('levelUpBox');box.innerHTML='<div class="lvl-icon">⬆️</div><div class="lvl-title">Level Up!</div><div class="lvl-name">Level '+(lv+1)+': '+LEVELS[lv].name+'<\/div>';ov.classList.add('active');spawnConfetti();setTimeout(()=>ov.classList.remove('active'),3000)}
+function spawnConfetti(){const c=document.getElementById('confetti');c.innerHTML='';const cols=['#3b82f6','#a855f7','#22c55e','#f59e0b','#ef4444','#06b6d4'];for(let i=0;i<60;i++){const p=document.createElement('div');p.style.cssText='position:absolute;left:'+Math.random()*100+'%;background:'+cols[i%cols.length]+';width:'+(6+Math.random()*8)+'px;height:'+(6+Math.random()*8)+'px;border-radius:'+(Math.random()>.5?'50%':'2px')+';animation:confettiFall '+(1.5+Math.random()*2)+'s ease-out '+Math.random()*.5+'s forwards';c.appendChild(p)}if(!document.getElementById('confettiStyle')){const s=document.createElement('style');s.id='confettiStyle';s.textContent='@keyframes confettiFall{0%{opacity:1;transform:translateY(0) rotate(0deg)}100%{opacity:0;transform:translateY(100vh) rotate(720deg)}}';document.head.appendChild(s)}setTimeout(()=>c.innerHTML='',4000)}
+
+function shuffleQuiz(modId,quiz){const key='m'+modId;if(state.quizShuffleMap[key])return state.quizShuffleMap[key];const idx=[...Array(quiz.length).keys()];for(let i=idx.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[idx[i],idx[j]]=[idx[j],idx[i]]}state.quizShuffleMap[key]=idx;saveState();return idx}
+
+function renderQuiz(modId,quiz,isBoss){
+  const pf=isBoss?'boss':'quiz';const idx=isBoss?[...Array(quiz.length).keys()]:shuffleQuiz(modId,quiz);
+  let h='<div class="'+(isBoss?'boss-section':'quiz-section')+'">';
+  h+=isBoss?'<h3>👑 Boss-Challenge<\/h3><p class="boss-sub">Alle '+quiz.length+' Fragen richtig beantworten!<\/p>':'<h3>📝 Quiz — Teste dein Wissen<\/h3>';
+  idx.forEach((qi,di)=>{const q=quiz[qi];h+='<div class="quiz-q" data-qi="'+qi+'"><p>'+(di+1)+'. '+q.q+'<\/p>';q.a.forEach((a,ai)=>{h+='<label><input type="radio" name="'+pf+'_'+modId+'_'+qi+'" value="'+ai+'"> '+a+'<\/label>'});h+='<\/div>'});
+  h+='<button class="quiz-submit" onclick="checkQuiz('+modId+','+isBoss+')">'+(isBoss?'Boss besiegen!':'Antworten prüfen')+'<\/button>';
+  h+='<div class="quiz-result" id="'+pf+'Result'+modId+'" style="display:none"><\/div><\/div>';return h;
+}
+
+function checkQuiz(modId,isBoss){
+  const pf=isBoss?'boss':'quiz';const quiz=isBoss?modules[modId].boss:modules[modId].quiz;
+  let correct=0;const total=quiz.length;const startTime=window._quizStart||Date.now();
+  quiz.forEach((q,qi)=>{
+    const sel=document.querySelector('input[name="'+pf+'_'+modId+'_'+qi+'"]:checked');
+    const labels=document.querySelectorAll('[data-qi="'+qi+'"] label');
+    const ci=_d(q._h,qi);
+    labels.forEach((l,li)=>{l.classList.remove('correct','wrong');if(li===ci)l.classList.add('correct');else if(sel&&parseInt(sel.value)===li)l.classList.add('wrong')});
+    const qDiv=labels[0]?.closest('.quiz-q');if(qDiv){const old=qDiv.querySelector('.quiz-explanation');if(old)old.remove()}
+    if(!sel||parseInt(sel.value)!==ci){if(qDiv){const exp=document.createElement('div');exp.className='quiz-explanation';exp.textContent='→ Richtige Antwort: '+q.a[ci];qDiv.appendChild(exp)}}
+    if(sel&&parseInt(sel.value)===ci)correct++;
+  });
+  const rEl=document.getElementById(pf+'Result'+modId);rEl.style.display='block';
+  if(isBoss){
+    if(correct===total){rEl.className='quiz-result pass';rEl.textContent='👑 Boss besiegt! '+correct+'/'+total+' — Perfekt!';if(!state.bossResults[modId]){state.bossResults[modId]=true;addXP(100,'Boss-Challenge bestanden!');if(!state.badges.includes('first_boss'))awardBadge('first_boss');if(modules.every((_,i)=>state.bossResults[i]))awardBadge('all_bosses');checkModuleComplete(modId)}}
+    else{rEl.className='quiz-result fail';rEl.textContent='💀 '+correct+'/'+total+' — Alle müssen richtig sein! Versuch es nochmal.';setTimeout(()=>{document.querySelectorAll('input[name^="'+pf+'_'+modId+'"]').forEach(r=>{r.disabled=false;r.checked=false});document.querySelectorAll('[data-qi] label').forEach(l=>l.classList.remove('correct','wrong'));document.querySelectorAll('.quiz-explanation').forEach(e=>e.remove());rEl.style.display='none'},2000);return}
+  }else{
+    const passed=correct>=Math.ceil(total*0.6);rEl.className='quiz-result '+(passed?'pass':'fail');
+    rEl.textContent=passed?'✅ '+correct+'/'+total+' richtig — Bestanden!':'❌ '+correct+'/'+total+' richtig — Mindestens '+Math.ceil(total*0.6)+' nötig.';
+    if(passed&&!state.quizResults[modId]){state.quizResults[modId]=correct;addXP(correct*15+50,'Quiz bestanden ('+correct+'/'+total+')');if(!state.badges.includes('first_quiz'))awardBadge('first_quiz');if(correct===total)awardBadge('perfect_quiz');if(Date.now()-startTime<60000)awardBadge('speed_quiz');checkModuleComplete(modId)}
+  }
+  saveState();document.querySelectorAll('input[name^="'+pf+'_'+modId+'"]').forEach(r=>r.disabled=true);window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function checkModuleComplete(modId){
+  if(state.quizResults[modId]!==undefined&&state.bossResults[modId]&&!state.modulesCompleted.includes(modId)){
+    state.modulesCompleted.push(modId);awardBadge('m'+modId);
+    if(state.modulesCompleted.length>=5)awardBadge('half_done');
+    if(state.modulesCompleted.length>=10){awardBadge('graduate');setTimeout(()=>showCert(),1500)}
+    saveState();renderSidebar();
+  }
+}
+
+function renderModule(modId){
+  state.currentModule=modId;
+  if(!state.modulesViewed.includes(modId)){state.modulesViewed.push(modId);addXP(10,'Neues Modul geöffnet');if(state.modulesViewed.length>=10)awardBadge('explorer')}
+  saveState();closeSidebar();
+  const m=modules[modId];
+  let h='<div class="module-header"><div class="mod-badge">'+m.icon+' Modul '+(modId+1)+'<\/div><h1>'+m.title+'<\/h1><p class="mod-desc">'+m.description+'<\/p><\/div>';
+  m.lessons.forEach((l,i)=>{h+='<div class="lesson-card"><h3><span style="color:var(--neon)">'+String(i+1).padStart(2,'0')+'<\/span> '+l.title+' <button class="tts-btn" onclick="speakLesson('+i+')" title="Vorlesen">&#128266;<\/button><\/h3>'+l.content+'<\/div>'});
+  h+='<div class="interactive-area"><h4>🧪 Interaktive Übung<\/h4><div id="interactiveContent">Lädt...<\/div><\/div>';
+  window._quizStart=Date.now();
+  h+='<div class="speech-ex"><h4>Sprach\u00FCbung \u{1F3A4}<\/h4><div id="speechExArea"><\/div><\/div>';
+h+=renderQuiz(modId,m.quiz,false);
+  h+=renderQuiz(modId,m.boss,true);
+  document.getElementById('welcomeScreen').style.display='none';
+  document.getElementById('badgesView').style.display='none';
+  document.getElementById('statsView').style.display='none';
+  const mc=document.getElementById('moduleContent');mc.style.display='block';mc.innerHTML=h;
+  renderSidebar();window.scrollTo({top:0,behavior:'smooth'});
+  setTimeout(()=>initInteractive(modId),100);
+}
+
+function renderSidebar(){
+  const el=document.getElementById('sidebarModules');
+  el.innerHTML=modules.map((m,i)=>{
+    const done=state.modulesCompleted.includes(i);
+    const act=state.currentModule===i&&document.getElementById('moduleContent').style.display==='block';
+    return '<a class="mod-link'+(act?' active':'')+(done?' completed':'')+'" onclick="renderModule('+i+')"><span class="mod-icon">'+m.icon+'<\/span>'+m.title+'<\/a>';
+  }).join('');
+  const lv=getLevel(state.xp);
+  const lvEl=document.querySelector('.sidebar-level-title');
+  if(lvEl)lvEl.textContent=LEVELS[lv].name;
+  const xpFill=document.querySelector('.sidebar-xp-fill');
+  if(xpFill)xpFill.style.width=getLevelProgress(state.xp)+'%';
+}
+function toggleSidebar(){document.getElementById('sidebar').classList.toggle('open')}
+function closeSidebar(){document.getElementById('sidebar').classList.remove('open')}
+
+function showBadges(){
+  document.getElementById('welcomeScreen').style.display='none';document.getElementById('moduleContent').style.display='none';document.getElementById('statsView').style.display='none';
+  const v=document.getElementById('badgesView');v.style.display='block';closeSidebar();
+  let h='<div class="module-header"><h1>🏅 Deine Abzeichen<\/h1><p class="mod-desc">'+state.badges.length+' von '+BADGES.length+' gesammelt<\/p><\/div><div class="badge-grid">';
+  BADGES.forEach(b=>{const earned=state.badges.includes(b.id);h+='<div class="badge-item'+(earned?' earned':' locked')+'"><div class="badge-icon">'+(earned?b.icon:'🔒')+'<\/div><div class="badge-name">'+b.name+'<\/div><\/div>'});
+  h+='<\/div>';v.innerHTML=h;
+}
+
+function showStats(){
+  document.getElementById('welcomeScreen').style.display='none';document.getElementById('moduleContent').style.display='none';document.getElementById('badgesView').style.display='none';
+  const v=document.getElementById('statsView');v.style.display='block';closeSidebar();
+  const lv=getLevel(state.xp);
+  let h='<div class="module-header"><h1>📊 Statistik<\/h1><\/div><div class="stats-grid">';
+  h+='<div class="stat-card"><div class="stat-val">'+state.xp+'<\/div><div class="stat-label">XP gesammelt<\/div><\/div>';
+  h+='<div class="stat-card"><div class="stat-val">'+LEVELS[lv].name+'<\/div><div class="stat-label">Aktueller Rang<\/div><\/div>';
+  h+='<div class="stat-card"><div class="stat-val">'+state.modulesCompleted.length+'/10<\/div><div class="stat-label">Module abgeschlossen<\/div><\/div>';
+  h+='<div class="stat-card"><div class="stat-val">'+Object.keys(state.quizResults).length+'<\/div><div class="stat-label">Quizze bestanden<\/div><\/div>';
+  h+='<div class="stat-card"><div class="stat-val">'+Object.keys(state.bossResults).length+'<\/div><div class="stat-label">Bosse besiegt<\/div><\/div>';
+  h+='<div class="stat-card"><div class="stat-val">'+state.badges.length+'<\/div><div class="stat-label">Abzeichen<\/div><\/div>';
+  h+='<div class="stat-card"><div class="stat-val">🔥 '+state.streak+'<\/div><div class="stat-label">Tage-Streak<\/div><\/div>';
+  h+='<\/div>';v.innerHTML=h;
+}
+
+let certStyle='akademie';
+function showCert(){
+  const ov=document.getElementById('certOverlay');ov.classList.add('active');
+  document.getElementById('certPicker').innerHTML=
+    ['🏛 Akademie','💻 Hacker','🕹 Pixel','🚀 Zukunft'].map((l,i)=>{
+      const s=['akademie','hacker','pixel','zukunft'][i];
+      return '<button class="cert-pick-btn'+(certStyle===s?' active':'')+'" onclick="certStyle=\''+s+'\';showCert()">'+l+'<\/button>';
+    }).join('');
+  renderCert();
+}
+function closeCert(){document.getElementById('certOverlay').classList.remove('active')}
+function generateCertCode(){const n=state.name||'X';const d=new Date();return 'FM-'+d.getFullYear()+'-'+((n.charCodeAt(0)*7+state.xp)%9999).toString(16).toUpperCase().padStart(4,'0')}
+
+function renderCert(){
+  const f=document.getElementById('certFrame');if(!f)return;
+  const n=state.name||'Schüler';const d=new Date().toLocaleDateString('de-DE',{day:'2-digit',month:'long',year:'numeric'});
+  const code=generateCertCode();const pct=Math.round(state.modulesCompleted.length/10*100);
+  const styles={
+    akademie:{bg:'linear-gradient(135deg,#1a1a4e,#2d2d7a)',border:'#c9a84c',title:'#c9a84c',text:'#d4d0ff',accent:'#c9a84c',font:"'Playfair Display',serif"},
+    hacker:{bg:'linear-gradient(135deg,#0a0e14,#1a2332)',border:'#00ff88',title:'#00ff88',text:'#b0f0d0',accent:'#00ff88',font:"'JetBrains Mono',monospace"},
+    pixel:{bg:'linear-gradient(135deg,#1a0a2e,#2d1055)',border:'#ffd700',title:'#ffd700',text:'#e0d0f0',accent:'#ff6b9d',font:"'Courier New',monospace"},
+    zukunft:{bg:'linear-gradient(135deg,#0f0f23,#1a1a3e)',border:'#00d9ff',title:'#00d9ff',text:'#d0e8ff',accent:'#00d9ff',font:"'Sora',sans-serif"}
+  };
+  const s=styles[certStyle]||styles.akademie;
+  f.innerHTML='<div style="width:100%;height:100%;background:'+s.bg+';border:3px solid '+s.border+';border-radius:12px;padding:40px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;font-family:'+s.font+';position:relative;overflow:hidden">'
+    +'<div style="font-size:14px;letter-spacing:4px;text-transform:uppercase;color:'+s.accent+';margin-bottom:8px">Zertifikat</div>'
+    +'<div style="font-size:28px;font-weight:700;color:'+s.title+';margin-bottom:4px">FranzMaster</div>'
+    +'<div style="font-size:13px;color:'+s.text+';margin-bottom:20px">Französisch Fortgeschritten Klasse 7-10</div>'
+    +'<div style="font-size:14px;color:'+s.text+'">Hiermit wird bestätigt, dass</div>'
+    +'<div style="font-size:24px;font-weight:700;color:'+s.title+';margin:8px 0;border-bottom:2px solid '+s.accent+';padding-bottom:4px">'+n+'</div>'
+    +'<div style="font-size:14px;color:'+s.text+';max-width:400px;line-height:1.6">den Kurs <strong>FranzMaster</strong> mit <strong>'+pct+'%</strong> Abschluss und <strong>'+state.xp+' XP</strong> erfolgreich absolviert hat.</div>'
+    +'<div style="font-size:12px;color:'+s.accent+';margin-top:16px">'+d+'</div>'
+    +'<div style="font-size:10px;color:'+s.text+';opacity:0.6;margin-top:8px">Code: '+code+' | © 2026 GZ AI Stacks</div>'
+    +'</div>';
+}
+function printCert(){window.print()}
+
+function updateUI(){
+  const lv=getLevel(state.xp);
+  const xpEl=document.querySelector('.header-xp');
+  if(xpEl)xpEl.innerHTML=LEVELS[lv].name+' <span style="margin-left:8px">'+state.xp+' XP<\/span>';
+  const fill=document.querySelector('.header-xp-fill');
+  if(fill)fill.style.width=getLevelProgress(state.xp)+'%';
+  const streakEl=document.querySelector('.header-streak');
+  if(streakEl)streakEl.textContent='🔥 '+state.streak;
+  renderSidebar();
+}
+
+function setDesignTheme(world,mode){
+  state.designTheme=world+'-'+mode;document.documentElement.setAttribute('data-theme',state.designTheme);saveState();buildThemePicker();
+}
+function getCurrentThemeParts(){const p=state.designTheme.split('-');return{world:p.slice(0,-1).join('-'),mode:p[p.length-1]||'dark'}}
+function toggleMode(){const{world,mode}=getCurrentThemeParts();setDesignTheme(world,mode==='dark'?'light':'dark')}
+function buildThemePicker(){
+  const dd=document.getElementById('themePickerDD');if(!dd)return;
+  const{world,mode}=getCurrentThemeParts();
+  let h='<div class="tp-label">Theme wählen<\/div>';
+  Object.keys(THEME_CONFIG).forEach(w=>{
+    const t=THEME_CONFIG[w];
+    h+='<div class="tp-world'+(w===world?' active':'')+'" onclick="setDesignTheme(\''+w+'\',\''+mode+'\')">';
+    h+='<div class="tp-world-color" style="background:'+t.color+'">'+t.emoji+'<\/div>';
+    h+='<div class="tp-world-info"><div class="tp-world-name">'+t.name+'<\/div><div class="tp-world-desc">'+t.desc+'<\/div><\/div><\/div>';
+  });
+  h+='<div class="tp-divider"><\/div>';
+  h+='<div class="tp-mode-row"><span class="tp-mode-label">'+(mode==='dark'?'🌙 Dark':'☀️ Light')+'<\/span>';
+  h+='<div class="tp-mode-switch'+(mode==='light'?' light':'')+'" onclick="toggleMode()"><\/div><\/div>';
+  dd.innerHTML=h;
+}
+function toggleThemePicker(){document.getElementById('themePickerDD').classList.toggle('open')}
+
+
+function initInteractive(modId) {
+    const container = document.getElementById('interactive-content');
+    if (!container) return;
+
+    const exercises = {
+        0: function() {
+            // Les temps verbaux - Verb-Zeitform zuordnen
+            const pairs = [
+                { verb: 'je mange', tense: 'Présent' },
+                { verb: "j'ai mangé", tense: 'Passé composé' },
+                { verb: 'je mangeais', tense: 'Imparfait' },
+                { verb: 'je mangerai', tense: 'Futur simple' },
+                { verb: 'je mangerais', tense: 'Conditionnel' },
+                { verb: "j'avais mangé", tense: 'Plus-que-parfait' }
+            ];
+            const shuffledTenses = pairs.map(p => p.tense).sort(() => Math.random() - 0.5);
+            let html = '<h3>Ordne die Verbformen den Zeiten zu!</h3><div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;max-width:500px;margin:0 auto">';
+            pairs.forEach((p, i) => {
+                html += '<div style="padding:10px;background:var(--card-bg);border-radius:8px;text-align:center;font-weight:bold">' + p.verb + '</div>';
+                html += '<select class="fm-sel" data-idx="' + i + '" style="padding:10px;border-radius:8px;border:2px solid var(--border-color);background:var(--card-bg);color:var(--text-color);font-size:1em"><option value="">-- wählen --</option>';
+                shuffledTenses.forEach(t => { html += '<option value="' + t + '">' + t + '</option>'; });
+                html += '</select>';
+            });
+            html += '</div><br><button onclick="checkFmEx0()" class="btn-primary" style="margin:0 auto;display:block">Prüfen</button><div id="fm-fb" style="text-align:center;margin-top:15px"></div>';
+            container.innerHTML = html;
+            window.checkFmEx0 = function() {
+                let correct = 0;
+                document.querySelectorAll('.fm-sel').forEach(sel => {
+                    const idx = parseInt(sel.dataset.idx);
+                    if (sel.value === pairs[idx].tense) { correct++; sel.style.borderColor = '#4CAF50'; }
+                    else { sel.style.borderColor = '#f44336'; }
+                });
+                document.getElementById('fm-fb').innerHTML = '<p style="font-size:1.2em">' + (correct >= 5 ? '🎉' : '🤔') + ' ' + correct + '/6 richtig!</p>';
+            };
+        },
+        1: function() {
+            // Le subjonctif - Lückentext
+            const sentences = [
+                { text: "Il faut que tu ___ tes devoirs.", correct: "fasses", options: ["fais", "fasses", "feras", "ferais"] },
+                { text: "Je veux qu'il ___ heureux.", correct: "soit", options: ["est", "soit", "sera", "serait"] },
+                { text: "Bien qu'elle ___ malade, elle travaille.", correct: "soit", options: ["est", "soit", "sera", "était"] },
+                { text: "Il est important que nous ___ à l'heure.", correct: "soyons", options: ["sommes", "soyons", "serons", "étions"] },
+                { text: "Je doute qu'ils ___ la vérité.", correct: "sachent", options: ["savent", "sachent", "sauront", "savaient"] }
+            ];
+            let html = '<h3>Wähle die richtige Subjonctif-Form!</h3>';
+            sentences.forEach((s, i) => {
+                html += '<div style="margin:12px 0;padding:12px;background:var(--card-bg);border-radius:8px"><p>' + s.text.replace('___', '<select class="fm-sub" data-idx="' + i + '" style="padding:5px 10px;border-radius:6px;border:2px solid var(--border-color);background:var(--bg-color);color:var(--text-color);font-size:1em">' +
+                    '<option value="">...</option>' + s.options.map(o => '<option value="' + o + '">' + o + '</option>').join('') + '</select>') + '</p></div>';
+            });
+            html += '<button onclick="checkFmEx1()" class="btn-primary" style="margin:10px auto;display:block">Prüfen</button><div id="fm-fb1" style="text-align:center;margin-top:15px"></div>';
+            container.innerHTML = html;
+            window.checkFmEx1 = function() {
+                let correct = 0;
+                document.querySelectorAll('.fm-sub').forEach(sel => {
+                    const idx = parseInt(sel.dataset.idx);
+                    if (sel.value === sentences[idx].correct) { correct++; sel.style.borderColor = '#4CAF50'; }
+                    else { sel.style.borderColor = '#f44336'; }
+                });
+                document.getElementById('fm-fb1').innerHTML = '<p style="font-size:1.2em">' + (correct >= 4 ? '🎉 Très bien!' : '🤔 Essaie encore!') + ' ' + correct + '/5 richtig!</p>';
+            };
+        },
+        2: function() {
+            // Analyse de texte - Begriffe zuordnen
+            const terms = [
+                { term: 'Métaphore', def: 'Bildlicher Vergleich ohne "wie"' },
+                { term: 'Comparaison', def: 'Vergleich mit "comme"' },
+                { term: 'Hyperbole', def: 'Starke Übertreibung' },
+                { term: 'Antithèse', def: 'Gegenüberstellung von Gegensätzen' },
+                { term: 'Ironie', def: 'Das Gegenteil meinen' }
+            ];
+            const shuffledDefs = terms.map(t => t.def).sort(() => Math.random() - 0.5);
+            let html = '<h3>Ordne die Stilmittel ihren Definitionen zu!</h3>';
+            terms.forEach((t, i) => {
+                html += '<div style="display:flex;align-items:center;gap:10px;margin:8px 0"><span style="min-width:120px;font-weight:bold;padding:8px;background:var(--card-bg);border-radius:8px;text-align:center">' + t.term + '</span>' +
+                    '<select class="fm-txt" data-idx="' + i + '" style="flex:1;padding:8px;border-radius:8px;border:2px solid var(--border-color);background:var(--card-bg);color:var(--text-color)"><option value="">-- wählen --</option>' +
+                    shuffledDefs.map(d => '<option value="' + d + '">' + d + '</option>').join('') + '</select></div>';
+            });
+            html += '<button onclick="checkFmEx2()" class="btn-primary" style="margin:10px auto;display:block">Prüfen</button><div id="fm-fb2" style="text-align:center;margin-top:15px"></div>';
+            container.innerHTML = html;
+            window.checkFmEx2 = function() {
+                let correct = 0;
+                document.querySelectorAll('.fm-txt').forEach(sel => {
+                    const idx = parseInt(sel.dataset.idx);
+                    if (sel.value === terms[idx].def) { correct++; sel.style.borderColor = '#4CAF50'; }
+                    else { sel.style.borderColor = '#f44336'; }
+                });
+                document.getElementById('fm-fb2').innerHTML = '<p style="font-size:1.2em">' + (correct >= 4 ? '🎉' : '🤔') + ' ' + correct + '/5 richtig!</p>';
+            };
+        },
+        3: function() {
+            // La rédaction - Textstruktur ordnen
+            const parts = [
+                { text: "Introduction: Présentation du sujet et problématique", order: 1 },
+                { text: "Thèse: Premier argument avec exemple", order: 2 },
+                { text: "Antithèse: Contre-argument avec exemple", order: 3 },
+                { text: "Synthèse: Bilan des arguments", order: 4 },
+                { text: "Conclusion: Réponse à la problématique", order: 5 }
+            ];
+            const shuffled = [...parts].sort(() => Math.random() - 0.5);
+            let html = '<h3>Bringe die Teile einer Dissertation in die richtige Reihenfolge!</h3><p style="color:var(--text-muted)">Klicke die Teile in der richtigen Reihenfolge an.</p><div id="fm-parts">';
+            shuffled.forEach((p, i) => {
+                html += '<div class="fm-part" data-order="' + p.order + '" onclick="selectFmPart(this)" style="padding:12px;margin:8px 0;background:var(--card-bg);border-radius:8px;cursor:pointer;border:2px solid var(--border-color);transition:all 0.3s">' + p.text + '</div>';
+            });
+            html += '</div><div id="fm-ordered" style="margin-top:15px"></div><button onclick="resetFmEx3()" style="margin:10px auto;display:block;padding:8px 20px;border-radius:8px;border:1px solid var(--border-color);background:var(--card-bg);color:var(--text-color);cursor:pointer">Zurücksetzen</button><div id="fm-fb3" style="text-align:center;margin-top:15px"></div>';
+            container.innerHTML = html;
+            window.fmOrder = [];
+            window.selectFmPart = function(el) {
+                if (el.style.opacity === '0.3') return;
+                window.fmOrder.push(parseInt(el.dataset.order));
+                el.style.opacity = '0.3';
+                el.style.pointerEvents = 'none';
+                const ordDiv = document.getElementById('fm-ordered');
+                ordDiv.innerHTML += '<div style="padding:8px;margin:4px 0;background:var(--primary-color);color:white;border-radius:8px;font-size:0.9em">' + window.fmOrder.length + '. ' + el.textContent + '</div>';
+                if (window.fmOrder.length === 5) {
+                    const isCorrect = window.fmOrder.every((v, i) => v === i + 1);
+                    document.getElementById('fm-fb3').innerHTML = '<p style="font-size:1.2em">' + (isCorrect ? '🎉 Parfait! Die Reihenfolge stimmt!' : '🤔 Nicht ganz richtig. Versuche es nochmal!') + '</p>';
+                }
+            };
+            window.resetFmEx3 = function() {
+                window.fmOrder = [];
+                document.getElementById('fm-ordered').innerHTML = '';
+                document.getElementById('fm-fb3').innerHTML = '';
+                document.querySelectorAll('.fm-part').forEach(el => { el.style.opacity = '1'; el.style.pointerEvents = 'auto'; });
+            };
+        },
+        4: function() {
+            // La littérature française - Werk und Autor zuordnen
+            const works = [
+                { title: 'Le Petit Prince', author: 'Saint-Exupéry' },
+                { title: 'Les Misérables', author: 'Victor Hugo' },
+                { title: "L'Étranger", author: 'Albert Camus' },
+                { title: 'Le Malade imaginaire', author: 'Molière' },
+                { title: 'Le Petit Nicolas', author: 'René Goscinny' }
+            ];
+            const shuffledAuthors = works.map(w => w.author).sort(() => Math.random() - 0.5);
+            let html = '<h3>Ordne die Werke den Autoren zu!</h3>';
+            works.forEach((w, i) => {
+                html += '<div style="display:flex;align-items:center;gap:10px;margin:8px 0"><span style="min-width:180px;font-weight:bold;padding:8px;background:var(--card-bg);border-radius:8px">📖 ' + w.title + '</span>' +
+                    '<select class="fm-lit" data-idx="' + i + '" style="flex:1;padding:8px;border-radius:8px;border:2px solid var(--border-color);background:var(--card-bg);color:var(--text-color)"><option value="">-- wählen --</option>' +
+                    shuffledAuthors.map(a => '<option value="' + a + '">' + a + '</option>').join('') + '</select></div>';
+            });
+            html += '<button onclick="checkFmEx4()" class="btn-primary" style="margin:10px auto;display:block">Prüfen</button><div id="fm-fb4" style="text-align:center;margin-top:15px"></div>';
+            container.innerHTML = html;
+            window.checkFmEx4 = function() {
+                let correct = 0;
+                document.querySelectorAll('.fm-lit').forEach(sel => {
+                    const idx = parseInt(sel.dataset.idx);
+                    if (sel.value === works[idx].author) { correct++; sel.style.borderColor = '#4CAF50'; }
+                    else { sel.style.borderColor = '#f44336'; }
+                });
+                document.getElementById('fm-fb4').innerHTML = '<p style="font-size:1.2em">' + (correct >= 4 ? '🎉 Excellent!' : '🤔 Essaie encore!') + ' ' + correct + '/5 richtig!</p>';
+            };
+        },
+        5: function() {
+            // Vocabulaire avancé - Faux amis erkennen
+            const words = [
+                { french: 'actuellement', wrongDE: 'aktuell', correctDE: 'gegenwärtig/zurzeit', isFaux: true },
+                { french: 'bibliothèque', wrongDE: 'Bibliothek', correctDE: 'Bibliothek', isFaux: false },
+                { french: 'blesser', wrongDE: 'blessen (hinterlassen)', correctDE: 'verletzen', isFaux: true },
+                { french: 'journée', wrongDE: 'Journal', correctDE: 'Tag/Tageszeit', isFaux: true },
+                { french: 'regarder', wrongDE: 'regal', correctDE: 'anschauen', isFaux: false },
+                { french: 'monnaie', wrongDE: 'Moneten', correctDE: 'Wechselgeld/Währung', isFaux: true }
+            ];
+            let html = '<h3>Faux amis erkennen!</h3><p style="color:var(--text-muted)">Klicke auf "Faux ami" oder "Kein Faux ami".</p>';
+            words.forEach((w, i) => {
+                html += '<div class="fm-faux" style="padding:12px;margin:8px 0;background:var(--card-bg);border-radius:8px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px">' +
+                    '<span><strong>' + w.french + '</strong> → "' + w.wrongDE + '"?</span>' +
+                    '<div><button onclick="checkFaux(' + i + ',true)" class="fm-fb' + i + '" style="padding:6px 12px;border-radius:6px;border:1px solid var(--border-color);background:var(--card-bg);color:var(--text-color);cursor:pointer;margin:2px">Faux ami</button>' +
+                    '<button onclick="checkFaux(' + i + ',false)" class="fm-fb' + i + '" style="padding:6px 12px;border-radius:6px;border:1px solid var(--border-color);background:var(--card-bg);color:var(--text-color);cursor:pointer;margin:2px">Kein Faux ami</button></div></div>';
+            });
+            html += '<div id="fm-fb5" style="text-align:center;margin-top:15px"></div>';
+            container.innerHTML = html;
+            window.fmFauxScore = 0;
+            window.fmFauxDone = 0;
+            window.checkFaux = function(idx, guessedFaux) {
+                const btns = document.querySelectorAll('.fm-fb' + idx);
+                btns.forEach(b => { b.disabled = true; b.style.opacity = '0.5'; });
+                const isCorrect = guessedFaux === words[idx].isFaux;
+                if (isCorrect) window.fmFauxScore++;
+                window.fmFauxDone++;
+                const parent = btns[0].closest('.fm-faux');
+                parent.style.borderLeft = '4px solid ' + (isCorrect ? '#4CAF50' : '#f44336');
+                parent.innerHTML += '<div style="font-size:0.85em;color:var(--text-muted);width:100%;margin-top:4px">→ Bedeutung: ' + words[idx].correctDE + '</div>';
+                if (window.fmFauxDone === words.length) {
+                    document.getElementById('fm-fb5').innerHTML = '<p style="font-size:1.2em">' + (window.fmFauxScore >= 5 ? '🎉' : '🤔') + ' ' + window.fmFauxScore + '/' + words.length + ' richtig!</p>';
+                }
+            };
+        },
+        6: function() {
+            // Les médias - Fait ou opinion?
+            const statements = [
+                { text: "La France compte 67 millions d'habitants.", type: "fait" },
+                { text: "Le français est la plus belle langue du monde.", type: "opinion" },
+                { text: "Paris est la capitale de la France.", type: "fait" },
+                { text: "Les réseaux sociaux sont dangereux pour les jeunes.", type: "opinion" },
+                { text: "Le Tour de France a lieu chaque année en juillet.", type: "fait" },
+                { text: "La cuisine française est meilleure que la cuisine italienne.", type: "opinion" }
+            ];
+            let html = '<h3>Fait ou opinion? Fakt oder Meinung?</h3>';
+            statements.forEach((s, i) => {
+                html += '<div class="fm-stmt" style="padding:12px;margin:8px 0;background:var(--card-bg);border-radius:8px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px">' +
+                    '<span style="flex:1">"' + s.text + '"</span>' +
+                    '<div><button onclick="checkStmt(' + i + ',\'fait\')" class="fm-st' + i + '" style="padding:6px 12px;border-radius:6px;border:1px solid var(--border-color);background:var(--card-bg);color:var(--text-color);cursor:pointer;margin:2px">📰 Fait</button>' +
+                    '<button onclick="checkStmt(' + i + ',\'opinion\')" class="fm-st' + i + '" style="padding:6px 12px;border-radius:6px;border:1px solid var(--border-color);background:var(--card-bg);color:var(--text-color);cursor:pointer;margin:2px">💭 Opinion</button></div></div>';
+            });
+            html += '<div id="fm-fb6" style="text-align:center;margin-top:15px"></div>';
+            container.innerHTML = html;
+            window.fmStmtScore = 0;
+            window.fmStmtDone = 0;
+            window.checkStmt = function(idx, guess) {
+                const btns = document.querySelectorAll('.fm-st' + idx);
+                btns.forEach(b => { b.disabled = true; b.style.opacity = '0.5'; });
+                const isCorrect = guess === statements[idx].type;
+                if (isCorrect) window.fmStmtScore++;
+                window.fmStmtDone++;
+                const parent = btns[0].closest('.fm-stmt');
+                parent.style.borderLeft = '4px solid ' + (isCorrect ? '#4CAF50' : '#f44336');
+                if (window.fmStmtDone === statements.length) {
+                    document.getElementById('fm-fb6').innerHTML = '<p style="font-size:1.2em">' + (window.fmStmtScore >= 5 ? '🎉 Bravo!' : '🤔 Essaie encore!') + ' ' + window.fmStmtScore + '/' + statements.length + ' richtig!</p>';
+                }
+            };
+        },
+        7: function() {
+            // Le débat - Phrases utiles zuordnen
+            const phrases = [
+                { phrase: "Je suis convaincu(e) que...", category: "Meinung äußern" },
+                { phrase: "En revanche,...", category: "Gegenargument" },
+                { phrase: "Par exemple,...", category: "Beispiel geben" },
+                { phrase: "En conclusion,...", category: "Zusammenfassen" },
+                { phrase: "D'une part... d'autre part...", category: "Gegenüberstellung" },
+                { phrase: "Il me semble que...", category: "Meinung äußern" }
+            ];
+            const categories = ["Meinung äußern", "Gegenargument", "Beispiel geben", "Zusammenfassen", "Gegenüberstellung"];
+            let html = '<h3>Ordne die Redewendungen den Kategorien zu!</h3>';
+            phrases.forEach((p, i) => {
+                html += '<div style="display:flex;align-items:center;gap:10px;margin:8px 0;flex-wrap:wrap"><span style="min-width:220px;padding:8px;background:var(--card-bg);border-radius:8px;font-style:italic">"' + p.phrase + '"</span>' +
+                    '<select class="fm-deb" data-idx="' + i + '" style="flex:1;padding:8px;border-radius:8px;border:2px solid var(--border-color);background:var(--card-bg);color:var(--text-color)"><option value="">-- wählen --</option>' +
+                    categories.map(c => '<option value="' + c + '">' + c + '</option>').join('') + '</select></div>';
+            });
+            html += '<button onclick="checkFmEx7()" class="btn-primary" style="margin:10px auto;display:block">Prüfen</button><div id="fm-fb7" style="text-align:center;margin-top:15px"></div>';
+            container.innerHTML = html;
+            window.checkFmEx7 = function() {
+                let correct = 0;
+                document.querySelectorAll('.fm-deb').forEach(sel => {
+                    const idx = parseInt(sel.dataset.idx);
+                    if (sel.value === phrases[idx].category) { correct++; sel.style.borderColor = '#4CAF50'; }
+                    else { sel.style.borderColor = '#f44336'; }
+                });
+                document.getElementById('fm-fb7').innerHTML = '<p style="font-size:1.2em">' + (correct >= 5 ? '🎉' : '🤔') + ' ' + correct + '/6 richtig!</p>';
+            };
+        },
+        8: function() {
+            // La culture française - Quiz
+            const questions = [
+                { q: "Welches Gebäck ist typisch französisch?", options: ["Brezel", "Croissant", "Donut", "Bagel"], correct: 1 },
+                { q: "Wie heißt der französische Nationalfeiertag?", options: ["1. Mai", "14. Juli", "11. November", "25. Dezember"], correct: 1 },
+                { q: "Welche Stadt ist für Lavendel bekannt?", options: ["Paris", "Lyon", "Provence/Grasse", "Marseille"], correct: 2 },
+                { q: "Was ist die \"Bise\"?", options: ["Ein Tanz", "Eine Begrüßung mit Wangenkuss", "Ein Dessert", "Ein Lied"], correct: 1 },
+                { q: "Welcher Käse kommt aus Frankreich?", options: ["Gouda", "Mozzarella", "Camembert", "Emmentaler"], correct: 2 }
+            ];
+            let html = '<h3>Kulturquiz - La France!</h3>';
+            questions.forEach((q, i) => {
+                html += '<div style="padding:12px;margin:8px 0;background:var(--card-bg);border-radius:8px"><p style="font-weight:bold">' + (i+1) + '. ' + q.q + '</p><div style="display:grid;grid-template-columns:1fr 1fr;gap:6px">';
+                q.options.forEach((o, j) => {
+                    html += '<button onclick="checkCulture(' + i + ',' + j + ')" class="fm-cu' + i + '" data-val="' + j + '" style="padding:8px;border-radius:6px;border:2px solid var(--border-color);background:var(--card-bg);color:var(--text-color);cursor:pointer;transition:all 0.3s">' + o + '</button>';
+                });
+                html += '</div></div>';
+            });
+            html += '<div id="fm-fb8" style="text-align:center;margin-top:15px"></div>';
+            container.innerHTML = html;
+            window.fmCuScore = 0;
+            window.fmCuDone = 0;
+            window.checkCulture = function(qi, ai) {
+                const btns = document.querySelectorAll('.fm-cu' + qi);
+                btns.forEach(b => { b.disabled = true; });
+                const isCorrect = ai === questions[qi].correct;
+                if (isCorrect) window.fmCuScore++;
+                window.fmCuDone++;
+                btns.forEach(b => {
+                    if (parseInt(b.dataset.val) === questions[qi].correct) b.style.borderColor = '#4CAF50';
+                    else if (parseInt(b.dataset.val) === ai && !isCorrect) b.style.borderColor = '#f44336';
+                });
+                if (window.fmCuDone === questions.length) {
+                    document.getElementById('fm-fb8').innerHTML = '<p style="font-size:1.2em">' + (window.fmCuScore >= 4 ? '🎉 Magnifique!' : '🤔 Pas mal!') + ' ' + window.fmCuScore + '/' + questions.length + ' richtig!</p>';
+                }
+            };
+        },
+        9: function() {
+            // La Francophonie - Länder zuordnen
+            const countries = [
+                { name: 'Sénégal', continent: 'Afrika' },
+                { name: 'Québec (Canada)', continent: 'Nordamerika' },
+                { name: 'Belgique', continent: 'Europa' },
+                { name: 'Madagascar', continent: 'Afrika' },
+                { name: 'Haïti', continent: 'Karibik' },
+                { name: 'Suisse', continent: 'Europa' }
+            ];
+            const continents = ['Afrika', 'Europa', 'Nordamerika', 'Karibik'];
+            let html = '<h3>Ordne die frankophonen Länder den Kontinenten zu!</h3>';
+            countries.forEach((c, i) => {
+                html += '<div style="display:flex;align-items:center;gap:10px;margin:8px 0"><span style="min-width:160px;font-weight:bold;padding:8px;background:var(--card-bg);border-radius:8px">🌍 ' + c.name + '</span>' +
+                    '<select class="fm-fra" data-idx="' + i + '" style="flex:1;padding:8px;border-radius:8px;border:2px solid var(--border-color);background:var(--card-bg);color:var(--text-color)"><option value="">-- wählen --</option>' +
+                    continents.map(ct => '<option value="' + ct + '">' + ct + '</option>').join('') + '</select></div>';
+            });
+            html += '<button onclick="checkFmEx9()" class="btn-primary" style="margin:10px auto;display:block">Prüfen</button><div id="fm-fb9" style="text-align:center;margin-top:15px"></div>';
+            container.innerHTML = html;
+            window.checkFmEx9 = function() {
+                let correct = 0;
+                document.querySelectorAll('.fm-fra').forEach(sel => {
+                    const idx = parseInt(sel.dataset.idx);
+                    if (sel.value === countries[idx].continent) { correct++; sel.style.borderColor = '#4CAF50'; }
+                    else { sel.style.borderColor = '#f44336'; }
+                });
+                document.getElementById('fm-fb9').innerHTML = '<p style="font-size:1.2em">' + (correct >= 5 ? '🎉 Excellent!' : '🤔 Essaie encore!') + ' ' + correct + '/6 richtig!</p>';
+            };
+        }
+    };
+
+    if (exercises[modId]) exercises[modId]();
+}
+
+function startApp(){
+  const name=document.getElementById('nameInput').value.trim();if(!name)return;
+  state.name=name;state.started=true;saveState();
+  document.getElementById('welcomeScreen').style.display='none';
+  renderModule(0);updateStreak();
+}
+
+(function init(){
+  if(loadState()&&state.started){
+    document.getElementById('welcomeScreen').style.display='none';
+    document.documentElement.setAttribute('data-theme',state.designTheme);
+    renderModule(state.currentModule);updateUI();updateStreak();
+  }else{
+    document.documentElement.setAttribute('data-theme',state.designTheme);
+    buildThemePicker();
+  }
+  renderSidebar();
+  document.addEventListener('click',e=>{if(!e.target.closest('.theme-picker-wrap'))document.getElementById('themePickerDD')?.classList.remove('open')});
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="de" data-theme="cyber-dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>MusikForscher - Musik Klasse 3-6</title>
+<meta name="description" content="Interaktive Lern-App für Musik, Klasse 3-6. 10 Module mit Quiz, Boss-Challenges und Gamification. Entdecke Noten, Instrumente, Komponisten und mehr!">
+<style>
+@font-face{font-family:'Sora';src:url('../../../Klasse_7-10/Informatik/fonts/sora-latin-400-normal.woff2') format('woff2');font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:'Sora';src:url('../../../Klasse_7-10/Informatik/fonts/sora-latin-600-normal.woff2') format('woff2');font-weight:600;font-style:normal;font-display:swap}
+@font-face{font-family:'Sora';src:url('../../../Klasse_7-10/Informatik/fonts/sora-latin-700-normal.woff2') format('woff2');font-weight:700;font-style:normal;font-display:swap}
+@font-face{font-family:'JetBrains Mono';src:url('../../../Klasse_7-10/Informatik/fonts/jetbrains-mono-latin-400-normal.woff2') format('woff2');font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:'Playfair Display';src:url('../../../Klasse_7-10/Informatik/fonts/playfair-display-latin-700-normal.woff2') format('woff2');font-weight:700;font-style:normal;font-display:swap}
+@font-face{font-family:'Inter';src:url('../../../Klasse_7-10/Informatik/fonts/inter-latin-400-normal.woff2') format('woff2');font-weight:400;font-style:normal;font-display:swap}
+
+:root{--neon:#3b82f6;--neon-dim:rgba(59,130,246,.15);--neon-glow:rgba(59,130,246,.3);--bg:#0a0e14;--bg2:#111827;--bg3:#1f2937;--card:#161e2e;--card-hover:#1e293b;--border:#2a3444;--border-light:#374151;--text:#d4dce8;--text-dim:#8899aa;--text-bright:#f1f5f9;--heading:#ffffff;--link:#60a5fa;--success:#22c55e;--warning:#f59e0b;--danger:#ef4444;--xp-purple:#a855f7;--badge-cyan:#06b6d4;--streak-red:#ef4444;--radius:12px;--radius-sm:8px;--radius-lg:16px;--shadow:0 4px 24px rgba(0,0,0,.4);--shadow-lg:0 8px 40px rgba(0,0,0,.5);--font:'Sora','Segoe UI',system-ui,sans-serif;--mono:'JetBrains Mono','Cascadia Code',monospace;--serif:'Playfair Display','Georgia',serif;--sidebar-w:280px;--header-h:60px;--card-border-w:1px;--card-border-style:solid;--glow:1}
+[data-theme="cyber-dark"]{--neon:#3b82f6;--neon-dim:rgba(59,130,246,.15);--neon-glow:rgba(59,130,246,.3);--bg:#0a0e14;--bg2:#111827;--bg3:#1f2937;--card:#161e2e;--card-hover:#1e293b;--border:#2a3444;--border-light:#374151;--text:#d4dce8;--text-dim:#8899aa;--text-bright:#f1f5f9;--heading:#ffffff;--link:#60a5fa;--success:#22c55e;--warning:#f59e0b;--danger:#ef4444;--xp-purple:#a855f7;--badge-cyan:#06b6d4;--streak-red:#ef4444;--radius:12px;--radius-sm:8px;--radius-lg:16px;--shadow:0 4px 24px rgba(0,0,0,.4);--shadow-lg:0 8px 40px rgba(0,0,0,.5);--font:'Sora','Segoe UI',system-ui,sans-serif;--card-border-w:1px;--card-border-style:solid;--glow:1}
+[data-theme="cyber-light"]{--neon:#1d4ed8;--neon-dim:rgba(29,78,216,.1);--neon-glow:rgba(29,78,216,.2);--bg:#f8f9fb;--bg2:#f0f2f5;--bg3:#e5e7eb;--card:#ffffff;--card-hover:#f5f7fa;--border:#d1d5db;--border-light:#e5e7eb;--text:#374151;--text-dim:#4b5563;--text-bright:#111827;--heading:#111827;--link:#2563eb;--success:#22c55e;--warning:#f59e0b;--danger:#ef4444;--xp-purple:#a855f7;--badge-cyan:#06b6d4;--streak-red:#ef4444;--radius:12px;--radius-sm:8px;--radius-lg:16px;--shadow:0 4px 24px rgba(0,0,0,.08);--shadow-lg:0 8px 40px rgba(0,0,0,.12);--font:'Sora','Segoe UI',system-ui,sans-serif;--card-border-w:1px;--card-border-style:solid;--glow:0}
+[data-theme="retro-dark"]{--neon:#ffd700;--neon-dim:rgba(255,215,0,.12);--neon-glow:rgba(255,215,0,.3);--bg:#0d0208;--bg2:#1a0a1e;--bg3:#2d1233;--card:#1a0a1e;--card-hover:#2d1233;--border:#4a1942;--border-light:#5c2d5c;--text:#e0d0f0;--text-dim:#9080a0;--text-bright:#fff;--heading:#ffd700;--link:#ff6b9d;--success:#00e676;--warning:#ffab00;--danger:#ff1744;--xp-purple:#e040fb;--badge-cyan:#00e5ff;--streak-red:#ff1744;--radius:0px;--radius-sm:0px;--radius-lg:0px;--shadow:4px 4px 0 rgba(0,0,0,.8);--shadow-lg:6px 6px 0 rgba(0,0,0,.9);--font:'Courier New','Consolas',monospace;--card-border-w:3px;--card-border-style:solid;--glow:0}
+[data-theme="retro-light"]{--neon:#b8860b;--neon-dim:rgba(184,134,11,.1);--neon-glow:rgba(184,134,11,.2);--bg:#fff8e1;--bg2:#fff3cd;--bg3:#ffe0b2;--card:#ffffff;--card-hover:#fff9f0;--border:#d4a017;--border-light:#e6c84d;--text:#3e2723;--text-dim:#6d4c41;--text-bright:#1b0000;--heading:#b8860b;--link:#c2185b;--success:#2e7d32;--warning:#ef6c00;--danger:#c62828;--xp-purple:#8e24aa;--badge-cyan:#00838f;--streak-red:#c62828;--radius:0px;--radius-sm:0px;--radius-lg:0px;--shadow:3px 3px 0 rgba(0,0,0,.15);--shadow-lg:5px 5px 0 rgba(0,0,0,.2);--font:'Courier New','Consolas',monospace;--card-border-w:3px;--card-border-style:solid;--glow:0}
+[data-theme="nature-dark"]{--neon:#4ade80;--neon-dim:rgba(74,222,128,.12);--neon-glow:rgba(74,222,128,.25);--bg:#0c1a0f;--bg2:#132617;--bg3:#1e3a24;--card:#15291a;--card-hover:#1e3a24;--border:#2d5a36;--border-light:#3a7044;--text:#c8e6c9;--text-dim:#81a784;--text-bright:#e8f5e9;--heading:#e8f5e9;--link:#81c784;--success:#66bb6a;--warning:#ffa726;--danger:#ef5350;--xp-purple:#ab47bc;--badge-cyan:#26a69a;--streak-red:#ef5350;--radius:20px;--radius-sm:14px;--radius-lg:28px;--shadow:0 4px 20px rgba(0,0,0,.3);--shadow-lg:0 8px 32px rgba(0,0,0,.4);--font:'Segoe UI','Helvetica Neue',system-ui,sans-serif;--card-border-w:1px;--card-border-style:solid;--glow:0}
+[data-theme="nature-light"]{--neon:#2e7d32;--neon-dim:rgba(46,125,50,.08);--neon-glow:rgba(46,125,50,.15);--bg:#f1f8e9;--bg2:#e8f5e9;--bg3:#c8e6c9;--card:#ffffff;--card-hover:#f1faf1;--border:#a5d6a7;--border-light:#c8e6c9;--text:#33691e;--text-dim:#3e6e1c;--text-bright:#1b5e20;--heading:#1b5e20;--link:#2e7d32;--success:#388e3c;--warning:#ef6c00;--danger:#c62828;--xp-purple:#7b1fa2;--badge-cyan:#00695c;--streak-red:#c62828;--radius:20px;--radius-sm:14px;--radius-lg:28px;--shadow:0 4px 16px rgba(0,0,0,.06);--shadow-lg:0 8px 28px rgba(0,0,0,.1);--font:'Segoe UI','Helvetica Neue',system-ui,sans-serif;--card-border-w:1px;--card-border-style:solid;--glow:0}
+[data-theme="space-dark"]{--neon:#c084fc;--neon-dim:rgba(192,132,252,.12);--neon-glow:rgba(192,132,252,.3);--bg:#07020e;--bg2:#0f0720;--bg3:#1a0e35;--card:#110a28;--card-hover:#1a0e35;--border:#2e1a5e;--border-light:#3d2478;--text:#d4c8f0;--text-dim:#9080b8;--text-bright:#f0e8ff;--heading:#f0e8ff;--link:#f0abfc;--success:#34d399;--warning:#fbbf24;--danger:#fb7185;--xp-purple:#f472b6;--badge-cyan:#67e8f9;--streak-red:#fb7185;--radius:4px;--radius-sm:2px;--radius-lg:6px;--shadow:0 4px 24px rgba(100,50,200,.2);--shadow-lg:0 8px 40px rgba(100,50,200,.3);--font:'Segoe UI',system-ui,sans-serif;--card-border-w:1px;--card-border-style:solid;--glow:1}
+[data-theme="space-light"]{--neon:#7c3aed;--neon-dim:rgba(124,58,237,.08);--neon-glow:rgba(124,58,237,.15);--bg:#faf5ff;--bg2:#f3e8ff;--bg3:#e9d5ff;--card:#ffffff;--card-hover:#faf5ff;--border:#c4b5fd;--border-light:#ddd6fe;--text:#4c1d95;--text-dim:#5b21b6;--text-bright:#2e1065;--heading:#2e1065;--link:#7c3aed;--success:#059669;--warning:#d97706;--danger:#dc2626;--xp-purple:#db2777;--badge-cyan:#0891b2;--streak-red:#dc2626;--radius:4px;--radius-sm:2px;--radius-lg:6px;--shadow:0 4px 16px rgba(100,50,200,.06);--shadow-lg:0 8px 28px rgba(100,50,200,.1);--font:'Segoe UI',system-ui,sans-serif;--card-border-w:1px;--card-border-style:solid;--glow:0}
+[data-theme="comic-dark"]{--neon:#ff6b6b;--neon-dim:rgba(255,107,107,.12);--neon-glow:rgba(255,107,107,.3);--bg:#1a1a2e;--bg2:#222244;--bg3:#2e2e55;--card:#262650;--card-hover:#2e2e55;--border:#4a4a7a;--border-light:#5a5a8a;--text:#e8e0ff;--text-dim:#a098c0;--text-bright:#fff;--heading:#fff;--link:#ffa94d;--success:#51cf66;--warning:#fcc419;--danger:#ff6b6b;--xp-purple:#cc5de8;--badge-cyan:#22b8cf;--streak-red:#ff6b6b;--radius:16px;--radius-sm:12px;--radius-lg:24px;--shadow:4px 4px 0 rgba(0,0,0,.5);--shadow-lg:6px 6px 0 rgba(0,0,0,.6);--font:'Comic Sans MS','Chalkboard SE',cursive,system-ui,sans-serif;--card-border-w:3px;--card-border-style:solid;--glow:0}
+[data-theme="comic-light"]{--neon:#e03131;--neon-dim:rgba(224,49,49,.08);--neon-glow:rgba(224,49,49,.15);--bg:#fff9db;--bg2:#fff3bf;--bg3:#ffe066;--card:#ffffff;--card-hover:#fffdf0;--border:#fab005;--border-light:#fcc419;--text:#2b2b2b;--text-dim:#555;--text-bright:#000;--heading:#000;--link:#e8590c;--success:#2f9e44;--warning:#e8590c;--danger:#c92a2a;--xp-purple:#9c36b5;--badge-cyan:#1098ad;--streak-red:#c92a2a;--radius:16px;--radius-sm:12px;--radius-lg:24px;--shadow:3px 3px 0 rgba(0,0,0,.2);--shadow-lg:5px 5px 0 rgba(0,0,0,.25);--font:'Comic Sans MS','Chalkboard SE',cursive,system-ui,sans-serif;--card-border-w:3px;--card-border-style:solid;--glow:0}
+[data-theme="sketchy-dark"]{--neon:#d97706;--neon-dim:rgba(217,119,6,.15);--neon-glow:rgba(217,119,6,.3);--bg:#2a1f0f;--bg2:#3a2a1a;--bg3:#4a3a2a;--card:#362414;--card-hover:#462a1a;--border:#5a4030;--border-light:#6a5040;--text:#d4c4b0;--text-dim:#a09080;--text-bright:#e8d8c8;--heading:#f5ead5;--link:#e8a550;--success:#84cc16;--warning:#d97706;--danger:#e74c3c;--xp-purple:#d946ef;--badge-cyan:#06b6d4;--streak-red:#e74c3c;--radius:24px;--radius-sm:16px;--radius-lg:32px;--shadow:0 6px 20px rgba(0,0,0,.3);--shadow-lg:0 10px 40px rgba(0,0,0,.4);--font:'Playfair Display','Georgia',serif;--card-border-w:2px;--card-border-style:dashed;--glow:0}
+[data-theme="sketchy-light"]{--neon:#b45309;--neon-dim:rgba(180,83,9,.1);--neon-glow:rgba(180,83,9,.2);--bg:#fef3e2;--bg2:#fde8cc;--bg3:#f9d5b8;--card:#ffffff;--card-hover:#fffaf5;--border:#d4a574;--border-light:#e8c4a0;--text:#5c4033;--text-dim:#8b6f47;--text-bright:#3e2723;--heading:#3e2723;--link:#c2600c;--success:#65a30d;--warning:#b45309;--danger:#d25c4d;--xp-purple:#c084fc;--badge-cyan:#0891b2;--streak-red:#d25c4d;--radius:24px;--radius-sm:16px;--radius-lg:32px;--shadow:0 4px 12px rgba(0,0,0,.08);--shadow-lg:0 8px 24px rgba(0,0,0,.12);--font:'Playfair Display','Georgia',serif;--card-border-w:2px;--card-border-style:dashed;--glow:0}
+[data-theme="nature-code-dark"]{--neon:#10b981;--neon-dim:rgba(16,185,129,.15);--neon-glow:rgba(16,185,129,.25);--bg:#0a1f12;--bg2:#0d2818;--bg3:#1a3a2a;--card:#0f281a;--card-hover:#1a3a2a;--border:#2d5a3d;--border-light:#3a7050;--text:#c8e6d0;--text-dim:#7ba890;--text-bright:#e8f5ed;--heading:#e8f5ed;--link:#34d399;--success:#10b981;--warning:#f59e0b;--danger:#f87171;--xp-purple:#a78bfa;--badge-cyan:#22d3ee;--streak-red:#f87171;--radius:20px;--radius-sm:14px;--radius-lg:28px;--shadow:0 4px 20px rgba(0,100,50,.2);--shadow-lg:0 8px 32px rgba(0,100,50,.3);--font:'Segoe UI','Helvetica Neue',system-ui,sans-serif;--card-border-w:1px;--card-border-style:solid;--glow:0}
+[data-theme="nature-code-light"]{--neon:#059669;--neon-dim:rgba(5,150,105,.1);--neon-glow:rgba(5,150,105,.15);--bg:#f0fdf8;--bg2:#e8faf2;--bg3:#d1f2e0;--card:#ffffff;--card-hover:#f5fbf7;--border:#86efac;--border-light:#bbf7d0;--text:#164e3f;--text-dim:#2d6e4f;--text-bright:#052e16;--heading:#052e16;--link:#059669;--success:#10b981;--warning:#d97706;--danger:#dc2626;--xp-purple:#8b5cf6;--badge-cyan:#06b6d4;--streak-red:#dc2626;--radius:20px;--radius-sm:14px;--radius-lg:28px;--shadow:0 4px 16px rgba(0,100,50,.06);--shadow-lg:0 8px 28px rgba(0,100,50,.1);--font:'Segoe UI','Helvetica Neue',system-ui,sans-serif;--card-border-w:1px;--card-border-style:solid;--glow:0}
+[data-theme="glass-dark"]{--neon:#00d9ff;--neon-dim:rgba(0,217,255,.12);--neon-glow:rgba(0,217,255,.25);--bg:#0f0f23;--bg2:#1a1a3e;--bg3:#25254a;--card:rgba(30,30,60,.4);--card-hover:rgba(40,40,80,.5);--border:rgba(100,150,255,.2);--border-light:rgba(100,150,255,.3);--text:#e4e8f0;--text-dim:#8899aa;--text-bright:#f5f7ff;--heading:#ffffff;--link:#00d9ff;--success:#34d399;--warning:#fbbf24;--danger:#ff6b9d;--xp-purple:#b991f7;--badge-cyan:#00d9ff;--streak-red:#ff6b9d;--radius:16px;--radius-sm:12px;--radius-lg:20px;--shadow:0 8px 32px rgba(0,200,255,.1);--shadow-lg:0 16px 64px rgba(0,200,255,.15);--font:'Segoe UI',system-ui,sans-serif;--card-border-w:1px;--card-border-style:solid;--glow:1}
+[data-theme="glass-light"]{--neon:#0891b2;--neon-dim:rgba(8,145,178,.08);--neon-glow:rgba(8,145,178,.15);--bg:#f8fafc;--bg2:#f1f5f9;--bg3:#e2e8f0;--card:rgba(255,255,255,.4);--card-hover:rgba(255,255,255,.6);--border:rgba(100,180,255,.2);--border-light:rgba(100,180,255,.3);--text:#1e293b;--text-dim:#475569;--text-bright:#0f172a;--heading:#0f172a;--link:#0891b2;--success:#059669;--warning:#d97706;--danger:#dc2626;--xp-purple:#7c3aed;--badge-cyan:#0891b2;--streak-red:#dc2626;--radius:16px;--radius-sm:12px;--radius-lg:20px;--shadow:0 8px 32px rgba(100,150,255,.08);--shadow-lg:0 16px 64px rgba(100,150,255,.12);--font:'Segoe UI',system-ui,sans-serif;--card-border-w:1px;--card-border-style:solid;--glow:0}
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}body{font-family:var(--font);background:var(--bg);color:var(--text);line-height:1.6;min-height:100vh;overflow-x:hidden;transition:background .3s,color .3s}h1,h2,h3,h4{color:var(--heading);line-height:1.3}a{color:var(--link);text-decoration:none}a:hover{text-decoration:underline}button{font-family:var(--font);cursor:pointer;border:none;background:none;color:inherit}code,pre{font-family:var(--mono)}:focus-visible{outline:2px solid var(--neon);outline-offset:2px;border-radius:4px}::selection{background:var(--neon);color:#fff}::-webkit-scrollbar{width:8px}::-webkit-scrollbar-track{background:var(--bg2)}::-webkit-scrollbar-thumb{background:var(--border);border-radius:4px}::-webkit-scrollbar-thumb:hover{background:var(--text-dim)}
+.site-header{position:fixed;top:0;left:0;right:0;height:var(--header-h);background:var(--bg2);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 20px;z-index:100;backdrop-filter:blur(12px)}.header-logo{display:flex;align-items:center;gap:12px;font-weight:700;font-size:18px;color:var(--heading)}.header-logo-text{display:flex;flex-direction:column;line-height:1.2}.header-logo-main{font-size:20px;font-weight:800}.header-logo-sub{font-size:11px;font-weight:600;color:var(--neon);letter-spacing:1px;text-transform:uppercase;margin-top:2px}.header-right{margin-left:auto;display:flex;align-items:center;gap:12px}.header-xp{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--xp-purple);font-weight:600}.header-xp-bar{width:80px;height:6px;background:var(--bg3);border-radius:3px;overflow:hidden}.header-xp-fill{height:100%;background:var(--xp-purple);border-radius:3px;transition:width .5s}.header-streak{display:flex;align-items:center;gap:4px;font-size:13px;color:var(--streak-red);font-weight:600}
+.theme-toggle{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:var(--bg3);transition:background .2s}.theme-toggle:hover{background:var(--border)}.theme-picker-wrap{position:relative}.theme-picker-btn{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:var(--bg3);transition:background .2s;font-size:16px}.theme-picker-btn:hover{background:var(--border)}.theme-picker-dd{position:absolute;top:calc(100% + 8px);right:0;background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:12px;box-shadow:var(--shadow-lg);z-index:200;display:none;min-width:240px}.theme-picker-dd.open{display:block}.theme-picker-dd .tp-label{font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--text-dim);margin-bottom:8px}.tp-world{display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:var(--radius-sm);cursor:pointer;transition:background .15s;margin-bottom:2px}.tp-world:hover{background:var(--bg3)}.tp-world.active{background:var(--neon-dim)}.tp-world-color{width:28px;height:28px;border-radius:6px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:14px}.tp-world-info{flex:1;min-width:0}.tp-world-name{font-size:13px;font-weight:600;color:var(--heading)}.tp-world-desc{font-size:10px;color:var(--text-dim)}.tp-divider{height:1px;background:var(--border);margin:8px 0}.tp-mode-row{display:flex;align-items:center;justify-content:space-between;padding:4px 10px}.tp-mode-label{font-size:12px;color:var(--text);font-weight:600}.tp-mode-switch{width:44px;height:24px;border-radius:12px;background:var(--bg3);position:relative;cursor:pointer;transition:background .2s}.tp-mode-switch.light{background:var(--neon)}.tp-mode-switch::after{content:'';position:absolute;top:3px;left:3px;width:18px;height:18px;border-radius:50%;background:#fff;transition:transform .2s;box-shadow:0 1px 3px rgba(0,0,0,.3)}.tp-mode-switch.light::after{transform:translateX(20px)}.menu-btn{display:none;width:36px;height:36px;border-radius:8px;align-items:center;justify-content:center;background:var(--bg3)}
+.sidebar{position:fixed;top:var(--header-h);left:0;width:var(--sidebar-w);height:calc(100vh - var(--header-h));background:var(--bg2);border-right:1px solid var(--border);overflow-y:auto;padding:16px 12px;z-index:90;transition:transform .3s}.sidebar-section{margin-bottom:20px}.sidebar-label{font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--text-dim);padding:0 8px;margin-bottom:8px}.sidebar-level{padding:8px 12px;background:var(--neon-dim);border-radius:var(--radius-sm);margin-bottom:12px;text-align:center}.sidebar-level-title{font-size:14px;font-weight:700;color:var(--neon)}.sidebar-level-sub{font-size:11px;color:var(--text-dim);margin-top:2px}.sidebar-xp-bar{width:100%;height:8px;background:var(--bg3);border-radius:4px;overflow:hidden;margin-top:6px}.sidebar-xp-fill{height:100%;background:linear-gradient(90deg,var(--xp-purple),var(--neon));border-radius:4px;transition:width .6s}.mod-link{display:flex;align-items:center;gap:10px;padding:8px 12px;border-radius:var(--radius-sm);transition:background .15s;color:var(--text);font-size:13px;text-decoration:none;position:relative;cursor:pointer}.mod-link:hover{background:var(--bg3);text-decoration:none}.mod-link.active{background:var(--neon-dim);color:var(--neon);font-weight:600}.mod-link.completed::after{content:'\2713';position:absolute;right:10px;color:var(--success);font-weight:700;font-size:12px}.mod-link .mod-icon{width:28px;height:28px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
+.main{margin-left:var(--sidebar-w);margin-top:var(--header-h);min-height:calc(100vh - var(--header-h));padding:32px;max-width:900px}.module-header{margin-bottom:32px}.module-header .mod-badge{display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--neon);margin-bottom:8px}.module-header h1{font-size:28px;margin-bottom:8px}.module-header .mod-desc{font-size:15px;color:var(--text-dim);max-width:600px}
+.lesson-card{background:var(--card);border:var(--card-border-w) var(--card-border-style) var(--border);border-radius:var(--radius);padding:24px;margin-bottom:20px;transition:border-color .2s}.lesson-card:hover{border-color:var(--neon)}.lesson-card h3{font-size:18px;margin-bottom:12px;display:flex;align-items:center;gap:8px}.lesson-card p,.lesson-card li{font-size:14px;line-height:1.7;color:var(--text)}.lesson-card ul,.lesson-card ol{margin:8px 0 8px 20px}.lesson-card code{background:var(--bg3);padding:2px 6px;border-radius:4px;font-size:13px;color:var(--neon)}.lesson-card .info-box{background:var(--neon-dim);border-left:3px solid var(--neon);padding:12px 16px;border-radius:0 var(--radius-sm) var(--radius-sm) 0;margin:12px 0;font-size:13px}
+.interactive-area{background:var(--card);border:calc(var(--card-border-w) + 1px) dashed var(--border);border-radius:var(--radius);padding:24px;margin:20px 0;min-height:200px}.interactive-area h4{font-size:15px;color:var(--neon);margin-bottom:12px}.ix-grid{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;margin:16px 0}.ix-item{background:var(--bg3);border:2px solid var(--border);border-radius:var(--radius-sm);padding:14px 20px;font-size:16px;cursor:pointer;transition:all .2s;user-select:none;text-align:center;min-width:60px}.ix-item:hover{border-color:var(--neon);background:var(--neon-dim)}.ix-item.selected{border-color:var(--neon);background:var(--neon-dim)}.ix-item.correct{border-color:var(--success);background:rgba(34,197,94,.1)}.ix-item.wrong{border-color:var(--danger);background:rgba(239,68,68,.1)}.ix-item.placed{opacity:.4;pointer-events:none}.ix-btn{background:var(--neon);color:#fff;border:none;padding:10px 24px;border-radius:var(--radius-sm);font-size:14px;font-weight:700;cursor:pointer;font-family:var(--font);margin-top:12px;transition:opacity .2s}.ix-btn:hover{opacity:.85}.ix-feedback{text-align:center;padding:14px;border-radius:var(--radius-sm);font-size:16px;font-weight:700;margin-top:12px;display:none}.ix-feedback.pass{display:block;background:rgba(34,197,94,.12);color:var(--success)}.ix-feedback.fail{display:block;background:rgba(239,68,68,.12);color:var(--danger)}
+.quiz-section{background:var(--card);border:var(--card-border-w) var(--card-border-style) var(--border);border-radius:var(--radius);padding:24px;margin-top:24px}.quiz-section h3{font-size:18px;margin-bottom:16px;color:var(--xp-purple)}.quiz-q{margin-bottom:20px}.quiz-q p{font-size:14px;font-weight:600;margin-bottom:10px}.quiz-q label{display:flex;align-items:flex-start;gap:10px;padding:10px 14px;border-radius:var(--radius-sm);border:1px solid var(--border);cursor:pointer;transition:all .15s;font-size:14px;margin-bottom:6px}.quiz-q label:hover{border-color:var(--neon);background:var(--neon-dim)}.quiz-q input[type="radio"]{margin-top:3px;accent-color:var(--neon)}.quiz-q label.correct{border-color:var(--success);background:rgba(34,197,94,.1)}.quiz-q label.wrong{border-color:var(--danger);background:rgba(239,68,68,.1)}.quiz-submit{padding:10px 24px;font-size:14px;font-weight:700;border-radius:var(--radius-sm);background:var(--xp-purple);color:#fff;transition:opacity .2s;margin-top:8px}.quiz-submit:hover{opacity:.85}.quiz-result{padding:16px;border-radius:var(--radius-sm);margin-top:16px;font-size:14px;font-weight:600;text-align:center}.quiz-result.pass{background:rgba(34,197,94,.12);color:var(--success);border:1px solid rgba(34,197,94,.3)}.quiz-result.fail{background:rgba(239,68,68,.12);color:var(--danger);border:1px solid rgba(239,68,68,.3)}.quiz-explanation{margin-top:6px;padding:8px 14px;border-radius:var(--radius-sm);background:rgba(34,197,94,.08);border-left:3px solid var(--success);font-size:13px;color:var(--success);font-weight:600}
+.boss-section{background:linear-gradient(135deg,rgba(168,85,247,.08),rgba(59,130,246,.08));border:2px solid var(--xp-purple);border-radius:var(--radius);padding:24px;margin-top:24px}.boss-section h3{color:var(--xp-purple);font-size:20px;margin-bottom:4px}.boss-section .boss-sub{font-size:13px;color:var(--text-dim);margin-bottom:16px}
+.badge-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(100px,1fr));gap:12px;margin-top:12px}.badge-item{text-align:center;padding:12px 8px;border-radius:var(--radius-sm);background:var(--bg3);opacity:.4;transition:all .3s}.badge-item.earned{opacity:1;background:var(--neon-dim);border:1px solid var(--neon)}.badge-item .badge-icon{font-size:28px;margin-bottom:4px}.badge-item .badge-name{font-size:10px;font-weight:600;color:var(--text-dim)}.badge-item.earned .badge-name{color:var(--neon)}
+.stats-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px;margin-top:12px}.stat-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius-sm);padding:16px;text-align:center}.stat-card .stat-val{font-size:28px;font-weight:700;color:var(--neon)}.stat-card .stat-label{font-size:12px;color:var(--text-dim);margin-top:4px}
+.notif{position:fixed;top:80px;right:20px;background:var(--card);border:1px solid var(--neon);border-radius:var(--radius);padding:16px 20px;box-shadow:var(--shadow-lg);z-index:200;transform:translateX(120%);transition:transform .4s cubic-bezier(.22,1,.36,1);max-width:320px}.notif.show{transform:translateX(0)}.notif-title{font-size:14px;font-weight:700;color:var(--heading);margin-bottom:2px}.notif-text{font-size:12px;color:var(--text-dim)}.notif.xp{border-color:var(--xp-purple)}.notif.badge{border-color:var(--badge-cyan)}.notif.level{border-color:var(--success)}.notif.streak{border-color:var(--streak-red)}
+.level-up-overlay{position:fixed;inset:0;background:rgba(0,0,0,.7);display:none;align-items:center;justify-content:center;z-index:300}.level-up-overlay.active{display:flex}.level-up-box{text-align:center;padding:40px;animation:lvlPop .5s ease-out}.level-up-box .lvl-icon{font-size:64px;margin-bottom:12px}.level-up-box .lvl-title{font-size:28px;font-weight:900;color:var(--heading)}.level-up-box .lvl-name{font-size:20px;color:var(--xp-purple);font-weight:700;margin-top:4px}@keyframes lvlPop{from{transform:scale(.5);opacity:0}to{transform:scale(1);opacity:1}}
+.welcome-screen{display:flex;align-items:center;justify-content:center;min-height:calc(100vh - var(--header-h));text-align:center;padding:40px 20px}.welcome-box{max-width:480px}.welcome-box h1{font-size:36px;margin-bottom:8px}.welcome-box .ws-sub{color:var(--text-dim);font-size:15px;margin-bottom:32px}.welcome-box input{width:100%;max-width:320px;padding:12px 16px;font-size:16px;border-radius:var(--radius-sm);border:1px solid var(--border);background:var(--bg3);color:var(--heading);font-family:var(--font);text-align:center;margin-bottom:16px}.welcome-box input:focus{border-color:var(--neon);outline:none}.welcome-box .ws-start{padding:14px 40px;font-size:16px;font-weight:700;border-radius:var(--radius-sm);background:var(--neon);color:#fff;transition:opacity .2s}.welcome-box .ws-start:hover{opacity:.85}.welcome-box .ws-start:disabled{opacity:.4;cursor:not-allowed}
+.cert-overlay{position:fixed;inset:0;background:rgba(0,0,0,.88);display:none;align-items:center;justify-content:center;z-index:400;padding:20px;flex-direction:column;backdrop-filter:blur(8px)}.cert-overlay.active{display:flex}.cert-picker{display:flex;gap:12px;justify-content:center;margin-bottom:20px;flex-wrap:wrap}.cert-pick-btn{padding:10px 20px;font-size:13px;font-weight:700;border-radius:12px;border:2px solid rgba(255,255,255,.15);background:rgba(255,255,255,.06);color:rgba(255,255,255,.7);transition:all .3s;backdrop-filter:blur(4px)}.cert-pick-btn:hover{border-color:rgba(255,255,255,.3);color:#fff;transform:translateY(-2px)}.cert-pick-btn.active{border-color:#ffd700;color:#ffd700;background:rgba(255,215,0,.1);box-shadow:0 0 20px rgba(255,215,0,.15)}.cert-frame{width:720px;max-width:100%;aspect-ratio:1.414;position:relative;overflow:hidden}.cert-actions{display:flex;gap:12px;justify-content:center;margin-top:16px}.cert-actions button{padding:12px 28px;font-size:13px;font-weight:700;border-radius:12px;background:linear-gradient(135deg,var(--neon),var(--link));color:#fff;transition:transform .2s,box-shadow .2s}.cert-actions button:hover{transform:translateY(-2px);box-shadow:0 4px 20px rgba(0,0,0,.3)}
+.confetti-container{position:fixed;inset:0;pointer-events:none;z-index:600;overflow:hidden}
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.6);display:none;align-items:center;justify-content:center;z-index:500;padding:20px}.modal-overlay.active{display:flex}.modal{background:var(--card);border:1px solid var(--border);border-radius:var(--radius-lg);max-width:640px;width:100%;max-height:85vh;overflow-y:auto;padding:32px;position:relative}.modal-close{position:absolute;top:12px;right:16px;font-size:24px;color:var(--text-dim);background:none;border:none;cursor:pointer}
+@media(max-width:800px){.menu-btn{display:flex}.sidebar{transform:translateX(-100%)}.sidebar.open{transform:translateX(0)}.main{margin-left:0;padding:16px}}
+@media print{*{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}.site-header,.sidebar,.notif,.level-up-overlay,.confetti-container{display:none!important}.main{margin-left:0!important;padding:20px!important}.lesson-card{break-inside:avoid;page-break-inside:avoid}}
+
+/* Audio/Speech */
+.tts-btn{background:none;border:none;cursor:pointer;font-size:.9em;opacity:.5;transition:all .2s;vertical-align:middle;margin-left:8px;padding:2px 6px;border-radius:4px}
+.tts-btn:hover{opacity:1;background:var(--bg2)}.tts-btn.speaking{opacity:1;color:var(--neon);animation:tts-pulse 1s infinite}
+@keyframes tts-pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.15)}}
+.tts-bar{display:flex;align-items:center;gap:8px;padding:6px 12px;background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);margin:8px 0;font-size:.8rem;flex-wrap:wrap}
+.tts-bar select{background:var(--bg);color:var(--text);border:1px solid var(--border);border-radius:4px;padding:2px 6px;font-size:.78rem}
+.tts-bar button{background:none;border:1px solid var(--border);border-radius:4px;padding:2px 8px;cursor:pointer;color:var(--text);font-size:.8rem}
+.tts-bar button:hover{background:var(--bg)}
+.speech-ex{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:16px;margin:12px 0;text-align:center}
+.speech-ex h4{margin:0 0 8px;font-size:1rem}
+.mic-btn{font-size:1.6em;background:none;border:2px solid var(--neon);border-radius:50%;width:52px;height:52px;cursor:pointer;transition:all .3s;color:var(--text);display:inline-flex;align-items:center;justify-content:center}
+.mic-btn:hover{background:var(--neon);color:var(--bg)}.mic-btn.rec{background:#ef4444;border-color:#ef4444;color:#fff;animation:tts-pulse 1s infinite}
+.sr-res{margin-top:8px;padding:6px 10px;border-radius:4px;font-weight:600;font-size:.85rem;display:inline-block}
+.sr-res.good{background:#22c55e22;color:#22c55e}.sr-res.retry{background:#f59e0b22;color:#f59e0b}
+.sr-na{font-size:.8rem;color:var(--text-dim);margin-top:8px}
+</style>
+</head>
+<body>
+<a href="#mainContent" class="skip-nav" style="position:absolute;top:-50px;left:8px;background:var(--neon);color:#fff;padding:8px 16px;z-index:9999;border-radius:0 0 8px 8px;font-weight:700;text-decoration:none">Zum Inhalt springen</a>
+<header class="site-header">
+  <button class="menu-btn" onclick="toggleSidebar()" aria-label="Menu">&#9776;</button>
+  <div class="header-logo">
+    <svg viewBox="0 0 40 40" width="40" height="40" fill="none" aria-hidden="true"><rect x="4" y="4" width="32" height="32" rx="8" fill="var(--neon-dim)" stroke="var(--neon)" stroke-width="1.5"/><text x="20" y="26" text-anchor="middle" font-size="18" font-weight="900" fill="var(--neon)">M</text></svg>
+    <div class="header-logo-text"><div class="header-logo-main">MusikForscher</div><div class="header-logo-sub">Musik Klasse 3-6</div></div>
+  </div>
+  <div class="header-right">
+    <div class="header-xp"><span id="headerLevel">Level 1</span><div class="header-xp-bar"><div class="header-xp-fill" style="width:0%"></div></div><span id="headerXP">0 XP</span></div>
+    <div class="header-streak" id="headerStreak">&#128293; 0</div>
+    <div class="theme-picker-wrap"><button class="theme-picker-btn" onclick="toggleThemePicker()" aria-label="Theme wählen">&#127912;</button><div class="theme-picker-dd" id="themePickerDD"></div></div>
+    <button class="theme-toggle" onclick="toggleMode()" aria-label="Dark/Light umschalten">&#127769;</button>
+  </div>
+</header>
+<nav class="sidebar" id="sidebar" role="navigation" aria-label="Module">
+  <div class="sidebar-section"><div class="sidebar-level"><div class="sidebar-level-title" id="sidebarLevel">Anfänger</div><div class="sidebar-level-sub" id="sidebarXP">0 XP</div><div class="sidebar-xp-bar"><div class="sidebar-xp-fill" id="sidebarXPFill" style="width:0%"></div></div></div></div>
+  <div class="sidebar-section"><div class="sidebar-label">Module</div><div id="sidebarModules"></div></div>
+  <div class="sidebar-section" style="border-top:1px solid var(--border);padding-top:12px;margin-top:12px">
+    <a class="mod-link" onclick="showBadges()"><span class="mod-icon">&#127941;</span>Abzeichen</a>
+    <a class="mod-link" onclick="showStats()"><span class="mod-icon">&#128202;</span>Statistik</a>
+    <a class="mod-link" onclick="showCert()"><span class="mod-icon">&#127891;</span>Urkunde</a>
+  </div>
+  <div class="sidebar-section" style="border-top:1px solid var(--border);padding-top:12px;margin-top:12px">
+    <a class="mod-link" onclick="exportData()"><span class="mod-icon">&#128190;</span>Speichern</a>
+    <label class="mod-link" style="cursor:pointer"><span class="mod-icon">&#128194;</span>Laden<input type="file" accept=".json" onchange="importData(event)" style="display:none"></label>
+    <a class="mod-link" onclick="if(confirm('Wirklich alles zurücksetzen?')){localStorage.removeItem(STORAGE_KEY);location.reload()}" style="color:var(--danger)"><span class="mod-icon">&#128465;</span>Zurücksetzen</a>
+  </div>
+  <div style="padding:16px 8px 8px;border-top:1px solid var(--border);margin-top:12px;font-size:11px;color:var(--text-dim)">
+    <a onclick="showImpressum()" style="cursor:pointer;color:var(--text-dim)">Impressum</a> &middot;
+    <a onclick="showDatenschutz()" style="cursor:pointer;color:var(--text-dim)">Datenschutz</a>
+  </div>
+</nav>
+<main class="main" id="mainContent">
+  <div class="welcome-screen" id="welcomeScreen"><div class="welcome-box"><div style="font-size:64px;margin-bottom:16px">🎵</div><h1>MusikForscher</h1><p class="ws-sub">Entdecke die Welt der Musik! 10 Module mit Quiz, Boss-Challenges und spannenden Übungen zu Noten, Instrumenten und Komponisten.</p><input type="text" id="nameInput" placeholder="Dein Name" maxlength="24" aria-label="Dein Name" oninput="document.getElementById('startBtn').disabled=!this.value.trim()"><br><button class="ws-start" id="startBtn" disabled onclick="startApp()">🎵 Musik entdecken!</button></div></div>
+  <div id="moduleContent" style="display:none"></div>
+  <div id="badgesView" style="display:none"></div>
+  <div id="statsView" style="display:none"></div>
+</main>
+<div class="notif" id="notif"><div class="notif-title" id="notifTitle"></div><div class="notif-text" id="notifText"></div></div>
+<div class="level-up-overlay" id="levelUpOverlay"><div class="level-up-box" id="levelUpBox"></div></div>
+<div class="confetti-container" id="confetti"></div>
+<div class="cert-overlay" id="certOverlay" role="dialog" aria-label="Urkunde" aria-modal="true"><div class="cert-picker" id="certPicker"></div><div class="cert-frame" id="certFrame"></div><div class="cert-actions"><button onclick="printCert()">&#128424; Drucken / PDF</button><button onclick="closeCert()">Schließen</button></div></div>
+<div class="modal-overlay" id="impressumOverlay"><div class="modal"><button class="modal-close" onclick="document.getElementById('impressumOverlay').classList.remove('active')">&times;</button><h2>Impressum</h2><p><strong>© 2026 GZ AI Stacks - Gerd Zimmermann</strong></p><p>Diese Lern-App wurde mit Claude Code (Anthropic) entwickelt.</p></div></div>
+<div class="modal-overlay" id="datenschutzOverlay"><div class="modal"><button class="modal-close" onclick="document.getElementById('datenschutzOverlay').classList.remove('active')">&times;</button><h2>Datenschutzerklärung</h2><p>Diese App speichert Daten <strong>ausschließlich lokal</strong> in Ihrem Browser (LocalStorage). Es werden keine Daten an Server übertragen.</p><ul><li>Keine Cookies</li><li>Kein Tracking oder Analytics</li><li>Keine externen Ressourcen</li><li>Keine Registrierung</li><li>Alle Daten verbleiben auf Ihrem Gerät</li></ul><p>Sie können Ihre gespeicherten Daten jederzeit über die "Zurücksetzen"-Funktion löschen.</p></div></div>
+<script>
+function showImpressum(){document.getElementById('impressumOverlay').classList.add('active')}
+function showDatenschutz(){document.getElementById('datenschutzOverlay').classList.add('active')}
+
+
+// === Audio (TTS) ===
+const _synth=window.speechSynthesis,_LANG='de-DE';let _ttsOn=false,_ttsRate=1,_ttsTimer=null;
+function speakLesson(i){if(_ttsOn){stopTTS();return}const c=document.querySelectorAll('.lesson-card');if(!c[i]||!_synth)return;stopTTS();const u=new SpeechSynthesisUtterance(c[i].innerText);u.lang=_LANG;u.rate=_ttsRate;u.onstart=()=>{_ttsOn=true;updTTSUI();startTTSTimer()};u.onend=()=>{_ttsOn=false;updTTSUI();clearTTSTimer()};u.onerror=()=>{_ttsOn=false;updTTSUI();clearTTSTimer()};_synth.speak(u);showTTSBar()}
+function speakText(t,lang){if(!_synth)return;stopTTS();const u=new SpeechSynthesisUtterance(t);u.lang=lang||_LANG;u.rate=_ttsRate;u.onstart=()=>{_ttsOn=true;updTTSUI();startTTSTimer()};u.onend=()=>{_ttsOn=false;updTTSUI();clearTTSTimer()};u.onerror=()=>{_ttsOn=false;updTTSUI();clearTTSTimer()};_synth.speak(u)}
+function stopTTS(){if(_synth){_synth.cancel()}_ttsOn=false;updTTSUI();clearTTSTimer()}
+function updTTSUI(){document.querySelectorAll('.tts-btn').forEach(b=>b.classList.toggle('speaking',_ttsOn))}
+function setTTSRate(r){_ttsRate=parseFloat(r)}
+function startTTSTimer(){clearTTSTimer();_ttsTimer=setInterval(()=>{if(_synth&&_synth.speaking&&!_synth.paused){_synth.pause();_synth.resume()}},10000)}
+function clearTTSTimer(){if(_ttsTimer){clearInterval(_ttsTimer);_ttsTimer=null}}
+function showTTSBar(){if(document.getElementById('ttsBar'))return;const mc=document.getElementById('moduleContent');if(!mc)return;const b=document.createElement('div');b.className='tts-bar';b.id='ttsBar';b.innerHTML='\u{1F50A} <select onchange="setTTSRate(this.value)"><option value="0.7">Langsam</option><option value="1" selected>Normal</option><option value="1.3">Schnell</option></select> <button onclick="stopTTS()">\u25A0 Stopp</button>';mc.prepend(b)}
+
+const _qk=[0x4A,0x7F,0x2B,0x61,0x5C,0x3E,0x18,0x73];
+function _d(h,i){return h^_qk[i%_qk.length]}
+
+const LEVELS=[{name:'Musikhörer',xp:0},{name:'Rhythmiker',xp:50},{name:'Melodiker',xp:120},{name:'Notenfinder',xp:200},{name:'Taktgeber',xp:300},{name:'Harmoniker',xp:420},{name:'Tonkünstler',xp:560},{name:'Arrangeur',xp:720},{name:'Instrumentalist',xp:900},{name:'Orchesterkenner',xp:1100},{name:'Epochenforscher',xp:1320},{name:'Komponist',xp:1560},{name:'Musikwissenschaftler',xp:1820},{name:'Kapellmeister',xp:2100},{name:'Virtuose',xp:2400},{name:'Konzertmeister',xp:2720},{name:'Musikproduzent',xp:3060},{name:'Dirigent',xp:3420},{name:'Maestro',xp:3800},{name:'MusikForscher-Legende',xp:4200}];
+const BADGES=[{id:'mod1',name:'Noten-Kenner',icon:'🎼',desc:'Modul 1 abgeschlossen'},{id:'mod2',name:'Tonleiter-Profi',icon:'🎹',desc:'Modul 2 abgeschlossen'},{id:'mod3',name:'Rhythmus-Meister',icon:'🥁',desc:'Modul 3 abgeschlossen'},{id:'mod4',name:'Instrumenten-Experte',icon:'🎻',desc:'Modul 4 abgeschlossen'},{id:'mod5',name:'Komponisten-Kenner',icon:'📜',desc:'Modul 5 abgeschlossen'},{id:'mod6',name:'Epochen-Forscher',icon:'🏛️',desc:'Modul 6 abgeschlossen'},{id:'mod7',name:'Harmonie-Experte',icon:'🎶',desc:'Modul 7 abgeschlossen'},{id:'mod8',name:'Liedform-Kenner',icon:'📋',desc:'Modul 8 abgeschlossen'},{id:'mod9',name:'Weltmusik-Forscher',icon:'🌍',desc:'Modul 9 abgeschlossen'},{id:'mod10',name:'Technik-Pionier',icon:'💻',desc:'Modul 10 abgeschlossen'},{id:'first_quiz',name:'Erster Akkord',icon:'🎵',desc:'Erstes Quiz bestanden'},{id:'streak_3',name:'Übe-Serie',icon:'🔥',desc:'3 Tage Streak'},{id:'streak_7',name:'Musik-Woche',icon:'📅',desc:'7 Tage Streak'},{id:'all_quiz',name:'Musik-Meister',icon:'🏆',desc:'Alle Quizze bestanden'},{id:'all_boss',name:'Musik-Legende',icon:'👑',desc:'Alle Bosse besiegt'},{id:'speed_demon',name:'Presto',icon:'⚡',desc:'Quiz unter 30 Sekunden'},{id:'perfect',name:'Perfekte Harmonie',icon:'💯',desc:'Quiz ohne Fehler'},{id:'night_owl',name:'Nachtsonate',icon:'🦉',desc:'Nach 22 Uhr gelernt'},{id:'early_bird',name:'Morgenserenade',icon:'🌅',desc:'Vor 7 Uhr gelernt'},{id:'xp_master',name:'XP-Virtuose',icon:'⭐',desc:'1000 XP erreicht'}];
+const THEME_CONFIG={
+  cyber:{name:'Cyber Neon',emoji:'🖥',color:'#3b82f6',desc:'Futuristisch & Digital'},
+  retro:{name:'Retro Arcade',emoji:'🕹',color:'#ffd700',desc:'80er Arcade-Feeling'},
+  nature:{name:'Nature Forest',emoji:'🌳',color:'#4ade80',desc:'Natürlich & Organisch'},
+  space:{name:'Deep Space',emoji:'🚀',color:'#c084fc',desc:'Kosmisch & Geheimnisvoll'},
+  comic:{name:'Comic Pop',emoji:'💥',color:'#ff6b6b',desc:'Bunt & Verspielt'},
+  sketchy:{name:'Sketchy',emoji:'✍️',color:'#d97706',desc:'Handgemacht & Warm'},
+  'nature-code':{name:'Nature x Code',emoji:'🌿',color:'#10b981',desc:'Natur trifft Technik'},
+  glass:{name:'Glasmorphism',emoji:'💠',color:'#00d9ff',desc:'Modern & Transparent'}
+};
+const modules=[{id:0,title:'Notenlesen',icon:'🎼',duration:'25 Min.',description:'Lerne Notenlinien, Notenschlüssel und Notenwerte kennen — die Grundlagen des Notenlesens.',lessons:[{title:'Die Notenlinien und der Violinschlüssel',content:`<p>Musik wird auf fünf Linien aufgeschrieben — dem <strong>Notensystem</strong> (oder Liniensystem).</p>
+<ul><li>📏 Es gibt <strong>5 Linien</strong> und <strong>4 Zwischenräume</strong></li><li>🎼 Am Anfang steht der <strong>Notenschlüssel</strong> — er bestimmt, welche Töne wo liegen</li><li>Der häufigste ist der <strong>Violinschlüssel</strong> (G-Schlüssel) — er zeigt, wo das G liegt</li><li>Für tiefe Töne gibt es den <strong>Bassschlüssel</strong> (F-Schlüssel)</li></ul>
+<div class="info-box">💡 <strong>Merke:</strong> Ohne Notenschlüssel wüsste man nicht, welcher Ton auf welcher Linie liegt!</div>`},{title:'Die Tonnamen im Violinschlüssel',content:`<p>Die Noten auf den <strong>Linien</strong> im Violinschlüssel heißen (von unten nach oben):</p>
+<ul><li><strong>E – G – H – D – F</strong></li><li>Merksatz: <em>„Es Geht Hurtig Durch Fleiß"</em></li></ul>
+<p>Die Noten in den <strong>Zwischenräumen</strong> heißen:</p>
+<ul><li><strong>F – A – C – E</strong> (sprich: „FACE" wie das englische Wort für Gesicht)</li></ul>
+<div class="info-box">🔍 <strong>Tipp:</strong> Übe die Tonnamen jeden Tag ein paar Minuten — bald kannst du sie im Schlaf!</div>`},{title:'Notenwerte — wie lang klingt ein Ton?',content:`<p>Noten haben verschiedene <strong>Dauern</strong> (Notenwerte):</p>
+<ul><li>○ <strong>Ganze Note</strong> = 4 Schläge (ein leerer Kreis)</li><li>𝅗𝅥 <strong>Halbe Note</strong> = 2 Schläge (leerer Kreis mit Hals)</li><li>♩ <strong>Viertelnote</strong> = 1 Schlag (ausgefüllter Kreis mit Hals)</li><li>♪ <strong>Achtelnote</strong> = ½ Schlag (mit Fähnchen)</li></ul>
+<div class="info-box">💡 <strong>Regel:</strong> Eine ganze Note = 2 halbe Noten = 4 Viertelnoten = 8 Achtelnoten</div>`}],quiz:[{q:'Wie viele Linien hat ein Notensystem?',o:['3','4','5','6'],_h:72},{q:'Was zeigt der Violinschlüssel an?',o:['Wo das C liegt','Wo das G liegt','Wo das F liegt','Wie laut man spielen soll'],_h:126},{q:'Wie viele Schläge hat eine ganze Note?',o:['1 Schlag','2 Schläge','3 Schläge','4 Schläge'],_h:40},{q:'Wie heißen die Noten auf den Linien im Violinschlüssel von unten?',o:['C-D-E-F-G','E-G-H-D-F','F-A-C-E-G','A-H-C-D-E'],_h:96},{q:'Wie viele Viertelnoten ergeben eine ganze Note?',o:['2','3','4','8'],_h:94}],boss:[{q:'Warum braucht man einen Notenschlüssel am Anfang jedes Notensystems?',o:['Weil es schön aussieht','Damit man weiß, welche Töne auf welchen Linien liegen','Weil der Komponist es will','Um die Lautstärke anzuzeigen'],_h:75},{q:'Eine halbe Note und zwei Viertelnoten — wie viele Schläge sind das zusammen?',o:['2 Schläge','3 Schläge','4 Schläge','5 Schläge'],_h:125},{q:'Warum hat eine Achtelnote ein Fähnchen?',o:['Damit sie hübscher aussieht','Um zu zeigen, dass sie nur einen halben Schlag dauert','Weil sie lauter gespielt wird','Weil sie höher klingt'],_h:42}]},{id:1,title:'Tonleitern',icon:'🎹',duration:'25 Min.',description:'Entdecke die C-Dur Tonleiter, Halb- und Ganztonschritte und die Moll-Tonleiter.',lessons:[{title:'Die C-Dur Tonleiter',content:`<p>Eine <strong>Tonleiter</strong> ist eine Reihe von Tönen, die stufenweise aufwärts oder abwärts gehen.</p>
+<ul><li>Die bekannteste ist die <strong>C-Dur Tonleiter</strong>: C – D – E – F – G – A – H – C</li><li>Sie besteht aus <strong>8 Tönen</strong> (der achte ist wieder der erste, nur höher)</li><li>Am Klavier spielt man sie nur auf den <strong>weißen Tasten</strong></li></ul>
+<div class="info-box">💡 <strong>Merke:</strong> „Do-Re-Mi-Fa-Sol-La-Si-Do" — das ist die Tonleiter als Solmisation!</div>`},{title:'Ganzton- und Halbtonschritte',content:`<p>Zwischen den Tönen gibt es zwei Arten von Abständen:</p>
+<ul><li>🔵 <strong>Ganztonschritt</strong> = großer Abstand (z.B. C→D, D→E)</li><li>🔴 <strong>Halbtonschritt</strong> = kleiner Abstand (z.B. E→F, H→C)</li></ul>
+<p>Die <strong>Dur-Tonleiter</strong> folgt immer diesem Muster:</p>
+<p><strong>Ganz – Ganz – Halb – Ganz – Ganz – Ganz – Halb</strong></p>
+<div class="info-box">🔍 <strong>Am Klavier:</strong> Zwischen E und F sowie zwischen H und C liegt <em>keine schwarze Taste</em> — das sind die Halbtonschritte!</div>`},{title:'Die Moll-Tonleiter',content:`<p>Neben Dur gibt es <strong>Moll</strong> — es klingt trauriger und dunkler.</p>
+<ul><li>Die <strong>a-Moll Tonleiter</strong> (natürlich): A – H – C – D – E – F – G – A</li><li>Sie verwendet dieselben Töne wie C-Dur, beginnt aber bei A</li><li>Das Muster ist anders: <strong>Ganz – Halb – Ganz – Ganz – Halb – Ganz – Ganz</strong></li></ul>
+<p>Dur und Moll sind <strong>Tongeschlechter</strong>:</p>
+<ul><li>🌞 <strong>Dur</strong> = fröhlich, hell, strahlend</li><li>🌙 <strong>Moll</strong> = traurig, dunkel, melancholisch</li></ul>
+<div class="info-box">💡 <strong>Merke:</strong> Jede Dur-Tonleiter hat eine <em>parallele Moll-Tonleiter</em> mit denselben Tönen!</div>`}],quiz:[{q:'Aus wie vielen Tönen besteht eine Tonleiter?',o:['5','6','7','8'],_h:73},{q:'Wo liegen die Halbtonschritte in der C-Dur Tonleiter?',o:['C-D und F-G','D-E und G-A','E-F und H-C','Überall gleich'],_h:125},{q:'Wie klingt eine Moll-Tonleiter im Vergleich zu Dur?',o:['Fröhlicher','Lauter','Trauriger und dunkler','Schneller'],_h:41},{q:'Welche Tonleiter beginnt und endet auf dem Ton C?',o:['a-Moll','C-Dur','G-Dur','d-Moll'],_h:96},{q:'Was ist ein Ganztonschritt?',o:['Ein halber Ton Abstand','Ein großer Tonabstand aus zwei Halbtönen','Ein Sprung über drei Töne','Ein Akkord'],_h:93}],boss:[{q:'Warum klingt C-Dur fröhlich und a-Moll traurig, obwohl sie dieselben Töne verwenden?',o:['Weil man Moll leiser spielt','Weil der Startton und die Reihenfolge der Halb- und Ganztonschritte anders ist','Weil Moll weniger Töne hat','Weil es Zufall ist'],_h:75},{q:'Am Klavier liegt zwischen E und F keine schwarze Taste. Was bedeutet das?',o:['E und F sind gleich','E und F bilden einen Halbtonschritt','Man darf sie nicht zusammen spielen','E und F sind keine richtigen Töne'],_h:126},{q:'Wenn du eine Dur-Tonleiter auf G beginnen willst, was musst du ändern?',o:['Nichts, es klingt gleich','Du musst ein Fis (F#) spielen, damit das Ganz-Ganz-Halb-Muster stimmt','Du spielst nur schwarze Tasten','Du lässt das H weg'],_h:42}]},{id:2,title:'Rhythmus-Profi',icon:'🥁',duration:'25 Min.',description:'Lerne Taktarten, Pausen und Rhythmusmuster kennen und verstehen.',lessons:[{title:'Was ist ein Takt?',content:`<p>Musik wird in gleichmäßige Abschnitte unterteilt — die <strong>Takte</strong>.</p>
+<ul><li>Ein Takt enthält eine bestimmte Anzahl von <strong>Schlägen</strong> (Zählzeiten)</li><li>Die <strong>Taktart</strong> steht am Anfang eines Stücks als Bruch</li><li>Der <strong>obere Wert</strong> zeigt die Anzahl der Schläge pro Takt</li><li>Der <strong>untere Wert</strong> zeigt den Notenwert eines Schlags</li></ul>
+<div class="info-box">💡 <strong>Beispiel:</strong> 4/4-Takt = 4 Schläge pro Takt, jeder Schlag ist eine Viertelnote</div>`},{title:'Wichtige Taktarten',content:`<p>Die häufigsten Taktarten sind:</p>
+<ul><li>🎵 <strong>4/4-Takt</strong> — der häufigste! Pop, Rock, Marsch. Zähle: 1-2-3-4</li><li>🎶 <strong>3/4-Takt</strong> — der Walzer-Takt. Zähle: 1-2-3 (betont-unbetont-unbetont)</li><li>🎷 <strong>6/8-Takt</strong> — zwei Gruppen zu je 3 Achteln. Beschwingtes Gefühl</li></ul>
+<p>Der erste Schlag jedes Takts ist immer <strong>betont</strong> — das gibt der Musik ihre Struktur.</p>
+<div class="info-box">🔍 <strong>Probiere es:</strong> Klatsche einen Walzer: STARK-leicht-leicht, STARK-leicht-leicht...</div>`},{title:'Pausen und Rhythmusmuster',content:`<p>Auch <strong>Stille</strong> gehört zur Musik! Pausen haben die gleichen Dauern wie Noten:</p>
+<ul><li>𝄻 <strong>Ganze Pause</strong> = 4 Schläge Stille (hängt unter der Linie)</li><li>𝄼 <strong>Halbe Pause</strong> = 2 Schläge Stille (liegt auf der Linie)</li><li>𝄾 <strong>Viertelpause</strong> = 1 Schlag Stille</li><li>𝄿 <strong>Achtelpause</strong> = ½ Schlag Stille</li></ul>
+<p><strong>Rhythmusmuster</strong> sind wiederkehrende Abfolgen von Noten und Pausen — sie geben einem Stück seinen besonderen Charakter.</p>
+<div class="info-box">💡 <strong>Merke:</strong> Pausen sind genauso wichtig wie Töne — sie lassen die Musik atmen!</div>`}],quiz:[{q:'Was zeigt die obere Zahl einer Taktart an?',o:['Den Notenwert','Die Anzahl der Schläge pro Takt','Die Geschwindigkeit','Die Tonhöhe'],_h:75},{q:'Welche Taktart hat ein Walzer?',o:['2/4','3/4','4/4','6/8'],_h:126},{q:'Wie viele Schläge Stille hat eine ganze Pause?',o:['1','2','3','4'],_h:40},{q:'Welcher Schlag im Takt ist immer betont?',o:['Der letzte','Der zweite','Der erste','Keiner'],_h:97},{q:'Was ist ein Rhythmusmuster?',o:['Eine Melodie','Eine wiederkehrende Abfolge von Noten und Pausen','Ein Instrument','Ein Notenschlüssel'],_h:93}],boss:[{q:'Warum ist der 4/4-Takt die häufigste Taktart in der Popmusik?',o:['Weil er am einfachsten zu spielen ist','Weil sein gerader Rhythmus natürlich zum Tanzen und Mitklatschen einlädt','Weil er am lautesten klingt','Weil Popmusiker keinen Walzer können'],_h:75},{q:'Ein Takt im 3/4-Takt ist mit einer halben Note und einer Viertelnote gefüllt. Stimmt das?',o:['Nein, das sind zu wenig Schläge','Ja, 2 + 1 = 3 Schläge, genau richtig','Nein, das sind zu viele Schläge','Man kann keine verschiedenen Notenwerte mischen'],_h:126},{q:'Warum sind Pausen in der Musik genauso wichtig wie Töne?',o:['Sie sind nicht wichtig','Weil sie Spannung und Struktur erzeugen und der Musik Raum zum Atmen geben','Weil der Musiker sich ausruhen muss','Weil Pausen lauter sind'],_h:42}]},{id:3,title:'Instrumentenfamilien',icon:'🎻',duration:'25 Min.',description:'Entdecke die vier großen Instrumentenfamilien: Streich-, Blas-, Schlag- und Tasteninstrumente.',lessons:[{title:'Streichinstrumente',content:`<p>Bei <strong>Streichinstrumenten</strong> werden die Saiten mit einem Bogen gestrichen oder gezupft:</p>
+<ul><li>🎻 <strong>Violine (Geige)</strong> — das kleinste und höchste Streichinstrument</li><li>🎻 <strong>Bratsche (Viola)</strong> — etwas größer, wärmerer Klang</li><li>🎻 <strong>Violoncello (Cello)</strong> — tieferer Klang, zwischen den Knien gespielt</li><li>🎻 <strong>Kontrabass</strong> — das größte, tiefste Streichinstrument</li></ul>
+<p><strong>Regel:</strong> Je größer das Instrument, desto tiefer der Ton!</p>
+<div class="info-box">💡 <strong>Merke:</strong> Saiten schwingen und erzeugen den Ton. Der Holzkörper verstärkt den Klang.</div>`},{title:'Blasinstrumente',content:`<p><strong>Blasinstrumente</strong> werden in zwei Gruppen unterteilt:</p>
+<p><strong>Holzblasinstrumente:</strong></p>
+<ul><li>🎵 <strong>Querflöte</strong> — Luft wird über ein Loch geblasen</li><li>🎵 <strong>Klarinette</strong> — hat ein einfaches Rohrblatt</li><li>🎵 <strong>Oboe</strong> — hat ein Doppelrohrblatt</li><li>🎵 <strong>Fagott</strong> — das größte Holzblasinstrument</li></ul>
+<p><strong>Blechblasinstrumente:</strong></p>
+<ul><li>🎺 <strong>Trompete</strong> — hell und strahlend</li><li>📯 <strong>Horn</strong> — warmer, runder Klang</li><li>🎺 <strong>Posaune</strong> — hat einen Zug statt Ventile</li><li>📯 <strong>Tuba</strong> — das tiefste Blechblasinstrument</li></ul>
+<div class="info-box">🔍 <strong>Unterschied:</strong> Holzbläser erzeugen den Ton mit Rohrblättern oder Luft über einem Loch. Blechbläser mit den vibrierenden Lippen!</div>`},{title:'Schlag- und Tasteninstrumente',content:`<p><strong>Schlaginstrumente</strong> werden geschlagen, geschüttelt oder gerieben:</p>
+<ul><li>🥁 <strong>Schlagzeug</strong> — Snare, Bass Drum, Hi-Hat, Becken</li><li>🪘 <strong>Pauke</strong> — große Kesseltrommel im Orchester</li><li>🔔 <strong>Xylophon</strong> — Klangstäbe aus Holz</li><li>🎶 <strong>Glockenspiel</strong> — Klangstäbe aus Metall</li><li>🪇 <strong>Maracas, Triangel, Tamburin</strong> — kleine Perkussionsinstrumente</li></ul>
+<p><strong>Tasteninstrumente:</strong></p>
+<ul><li>🎹 <strong>Klavier</strong> — Hämmer schlagen auf Saiten</li><li>⛪ <strong>Orgel</strong> — Luft strömt durch Pfeifen</li><li>🎹 <strong>Keyboard/Synthesizer</strong> — elektronisch</li></ul>
+<div class="info-box">💡 <strong>Wusstest du?</strong> Das Klavier ist gleichzeitig Saiten- UND Schlaginstrument, weil Hämmer auf Saiten schlagen!</div>`}],quiz:[{q:'Welches ist das kleinste Streichinstrument?',o:['Cello','Kontrabass','Bratsche','Violine'],_h:73},{q:'Was unterscheidet Holz- von Blechblasinstrumenten?',o:['Die Farbe','Holzbläser nutzen Rohrblätter oder Luftstrom, Blechbläser die Lippen','Die Größe','Nichts'],_h:126},{q:'Welches Instrument wird mit einem Zug gespielt?',o:['Trompete','Horn','Posaune','Tuba'],_h:41},{q:'Was ist ein Xylophon?',o:['Ein Streichinstrument','Ein Schlaginstrument mit Holzklangstäben','Ein Blasinstrument','Ein Tasteninstrument'],_h:96},{q:'Warum klingt ein Kontrabass tiefer als eine Geige?',o:['Weil er lauter ist','Weil er schneller gespielt wird','Weil er größer ist und längere Saiten hat','Weil er aus anderem Holz ist'],_h:94}],boss:[{q:'Das Klavier wird oft als Tasteninstrument bezeichnet, aber warum könnte man es auch als Schlaginstrument sehen?',o:['Weil man draufschlägt','Weil kleine Hämmer im Inneren auf die Saiten schlagen','Weil es laut ist','Weil es groß ist'],_h:75},{q:'Warum klingt ein großes Instrument tiefer als ein kleines der gleichen Familie?',o:['Weil es schwerer ist','Weil längere Saiten oder Luftsäulen langsamer schwingen und tiefere Töne erzeugen','Weil es leiser ist','Weil der Musiker stärker blasen muss'],_h:126},{q:'Eine Querflöte ist aus Metall — warum zählt sie trotzdem zu den Holzblasinstrumenten?',o:['Weil sie silbern ist','Weil sie ursprünglich aus Holz war und der Ton durch Luftstrom über ein Loch entsteht','Weil sie klein ist','Weil sie so klingt'],_h:42}]},{id:4,title:'Berühmte Komponisten',icon:'📜',duration:'25 Min.',description:'Lerne Bach, Mozart und Beethoven kennen — drei Giganten der Musikgeschichte.',lessons:[{title:'Johann Sebastian Bach (1685–1750)',content:`<p><strong>Johann Sebastian Bach</strong> gilt als einer der größten Komponisten aller Zeiten.</p>
+<ul><li>🏠 Geboren in <strong>Eisenach</strong> (Deutschland) in eine Musikerfamilie</li><li>🎵 War Organist, Kantor und Komponist</li><li>Schrieb über <strong>1000 Werke</strong>: Fugen, Kantaten, Konzerte</li><li>Berühmte Werke: <strong>Brandenburgische Konzerte</strong>, <strong>Matthäus-Passion</strong>, <strong>Das Wohltemperierte Klavier</strong></li></ul>
+<div class="info-box">💡 <strong>Merke:</strong> Bach war der Meister der <em>Polyphonie</em> — mehrere Melodien gleichzeitig erklingen zu lassen!</div>`},{title:'Wolfgang Amadeus Mozart (1756–1791)',content:`<p><strong>Wolfgang Amadeus Mozart</strong> war ein musikalisches Genie aus Salzburg.</p>
+<ul><li>🌟 <strong>Wunderkind:</strong> Er komponierte mit 5 Jahren sein erstes Stück!</li><li>🎹 Spielte Klavier und Geige schon als kleines Kind perfekt</li><li>🏠 Geboren in <strong>Salzburg</strong>, lebte später in Wien</li><li>Schrieb über <strong>600 Werke</strong>: Opern, Sinfonien, Konzerte, Kammermusik</li><li>Berühmte Werke: <strong>Die Zauberflöte</strong>, <strong>Eine kleine Nachtmusik</strong>, <strong>Requiem</strong></li></ul>
+<div class="info-box">🔍 <strong>Wusstest du?</strong> Mozart wurde nur <em>35 Jahre</em> alt — und schuf trotzdem ein riesiges Werk!</div>`},{title:'Ludwig van Beethoven (1770–1827)',content:`<p><strong>Ludwig van Beethoven</strong> revolutionierte die Musik und wurde zum Symbol für Willenskraft.</p>
+<ul><li>🏠 Geboren in <strong>Bonn</strong>, lebte in Wien</li><li>🔇 Wurde im Alter von etwa 30 Jahren zunehmend <strong>taub</strong></li><li>Trotz Taubheit komponierte er weiter — seine größten Werke entstanden, als er fast nichts mehr hörte!</li><li>Berühmte Werke: <strong>Für Elise</strong>, <strong>9. Sinfonie</strong> (mit „Ode an die Freude"), <strong>Mondscheinsonate</strong></li></ul>
+<div class="info-box">💡 <strong>Beeindruckend:</strong> Die „Ode an die Freude" aus Beethovens 9. Sinfonie ist heute die <em>Europahymne</em>!</div>`}],quiz:[{q:'In welcher Stadt wurde Mozart geboren?',o:['Wien','Bonn','Salzburg','Eisenach'],_h:72},{q:'Was ist Bachs besondere musikalische Fähigkeit?',o:['Er spielte Schlagzeug','Er beherrschte die Polyphonie — mehrere Melodien gleichzeitig','Er sang besonders hoch','Er spielte besonders schnell'],_h:126},{q:'Was passierte Beethoven im Alter von etwa 30 Jahren?',o:['Er wurde blind','Er wurde taub','Er zog nach Paris','Er hörte auf zu komponieren'],_h:42},{q:'Welches Stück von Beethoven ist die Europahymne?',o:['Mondscheinsonate','Für Elise','Ode an die Freude aus der 9. Sinfonie','Frühlingssonate'],_h:97},{q:'In welchem Alter komponierte Mozart sein erstes Stück?',o:['Mit 3 Jahren','Mit 5 Jahren','Mit 10 Jahren','Mit 15 Jahren'],_h:93}],boss:[{q:'Warum ist es besonders bemerkenswert, dass Beethoven trotz Taubheit weiter komponierte?',o:['Weil er keine Hilfe hatte','Weil er die Musik nur noch in seinem Kopf hören konnte und trotzdem Meisterwerke schuf','Weil taube Menschen besser komponieren','Weil er nicht wirklich taub war'],_h:75},{q:'Was bedeutet Polyphonie, wofür Bach berühmt war?',o:['Sehr lautes Spielen','Mehrere unabhängige Melodiestimmen erklingen gleichzeitig','Nur eine einzige Melodie','Sehr schnelles Spielen'],_h:126},{q:'Warum wird Mozart als Wunderkind bezeichnet?',o:['Weil er zaubern konnte','Weil er schon als kleines Kind außergewöhnlich musizierte und komponierte','Weil er viel Geld hatte','Weil er viele Geschwister hatte'],_h:42}]},{id:5,title:'Musikepochen',icon:'🏛️',duration:'25 Min.',description:'Reise durch die Musikgeschichte von Barock über Klassik und Romantik bis zur Moderne.',lessons:[{title:'Barock (ca. 1600–1750)',content:`<p>Das <strong>Barock</strong> war eine Zeit prächtiger, verzierter Musik:</p>
+<ul><li>🎻 Viele <strong>Verzierungen</strong> (Triller, Mordente) schmücken die Melodie</li><li>⛪ Musik diente oft der <strong>Kirche</strong> oder dem Adel</li><li>🎹 Das <strong>Cembalo</strong> war das wichtigste Tasteninstrument</li><li>Wichtige Komponisten: <strong>Bach</strong>, <strong>Händel</strong>, <strong>Vivaldi</strong></li></ul>
+<div class="info-box">💡 <strong>Merke:</strong> Das Wort „Barock" bedeutet „unregelmäßige Perle" — die Musik war reich und kunstvoll!</div>`},{title:'Klassik (ca. 1750–1820) und Romantik (ca. 1820–1900)',content:`<p>Die <strong>Klassik</strong> brachte Klarheit und Ordnung:</p>
+<ul><li>🎹 Das <strong>Klavier</strong> ersetzte das Cembalo</li><li>Klare Formen: <strong>Sonate</strong>, <strong>Sinfonie</strong>, <strong>Konzert</strong></li><li>Komponisten: <strong>Mozart</strong>, <strong>Haydn</strong>, früher <strong>Beethoven</strong></li></ul>
+<p>Die <strong>Romantik</strong> betonte Gefühle und Fantasie:</p>
+<ul><li>💕 Musik drückt starke <strong>Emotionen</strong> aus</li><li>🌲 Inspiration aus <strong>Natur</strong>, Märchen, Sagen</li><li>🎼 Größere Orchester, längere Werke</li><li>Komponisten: <strong>Schumann</strong>, <strong>Chopin</strong>, <strong>Brahms</strong>, <strong>Tschaikowski</strong></li></ul>
+<div class="info-box">🔍 <strong>Unterschied:</strong> Klassik = Ordnung und Klarheit. Romantik = Gefühl und Ausdruck!</div>`},{title:'Moderne (ab ca. 1900)',content:`<p>Die <strong>Moderne</strong> brachte viele neue Ideen in die Musik:</p>
+<ul><li>🎵 <strong>Impressionismus</strong> — klangmalerisch, wie ein Gemälde (Debussy)</li><li>🎶 <strong>Atonale Musik</strong> — ohne feste Tonart (Schönberg)</li><li>🎸 <strong>Jazz</strong> — Improvisation, Swing, Blues (Armstrong, Ellington)</li><li>🎤 <strong>Pop und Rock</strong> — ab den 1950ern weltweite Musikkultur</li><li>💻 <strong>Elektronische Musik</strong> — Synthesizer, Computer, DJs</li></ul>
+<div class="info-box">💡 <strong>Spannend:</strong> In der Moderne gibt es keine festen Regeln mehr — alles ist erlaubt!</div>`}],quiz:[{q:'Welche Epoche ist für prächtige, verzierte Musik bekannt?',o:['Klassik','Romantik','Barock','Moderne'],_h:72},{q:'Welches Tasteninstrument war im Barock am wichtigsten?',o:['Klavier','Orgel','Cembalo','Keyboard'],_h:125},{q:'Was betonte die Romantik besonders?',o:['Strenge Regeln','Gefühle und Emotionen','Elektronische Klänge','Einfache Melodien'],_h:42},{q:'Wer gehört NICHT zur Epoche der Klassik?',o:['Mozart','Haydn','Bach','Beethoven'],_h:97},{q:'Was ist ein Merkmal der modernen Musik?',o:['Nur Kirchenmusik','Immer gleiche Regeln','Vielfalt: Jazz, Pop, elektronische Musik und mehr','Nur Orchestermusik'],_h:94}],boss:[{q:'Warum hat sich die Musik vom Barock zur Klassik verändert?',o:['Weil die Instrumente kaputt waren','Weil die Gesellschaft sich veränderte und klarere, einfachere Formen bevorzugte','Weil es keine Musiker mehr gab','Weil der König es befahl'],_h:75},{q:'Warum werden in der Romantik die Orchester größer?',o:['Weil mehr Musiker arbeitslos waren','Um stärkere Gefühle und dramatischere Klangfarben auszudrücken','Weil die Konzertsäle größer waren','Weil man lauter spielen musste'],_h:126},{q:'Warum ist die Moderne so vielfältig in ihren Musikstilen?',o:['Weil niemand Regeln kennt','Weil neue Technologien, Globalisierung und künstlerische Freiheit viele Stile ermöglichen','Weil es mehr Instrumente gibt','Weil die Menschen unmusikalischer wurden'],_h:42}]},{id:6,title:'Harmonie und Akkorde',icon:'🎶',duration:'25 Min.',description:'Verstehe Dreiklänge, Dur- und Moll-Akkorde und das Tongeschlecht.',lessons:[{title:'Was ist ein Akkord?',content:`<p>Ein <strong>Akkord</strong> entsteht, wenn <strong>mindestens drei Töne gleichzeitig</strong> erklingen.</p>
+<ul><li>Der einfachste Akkord ist der <strong>Dreiklang</strong> — er besteht aus drei Tönen</li><li>Die Töne werden übereinander <strong>gestapelt</strong> (in Terzen)</li><li>Der unterste Ton heißt <strong>Grundton</strong> — er gibt dem Akkord seinen Namen</li></ul>
+<p>Beispiel: <strong>C-Dur Dreiklang</strong> = C – E – G</p>
+<div class="info-box">💡 <strong>Merke:</strong> Ein Akkord ist wie ein Klang-Sandwich — mehrere Töne übereinander!</div>`},{title:'Dur- und Moll-Akkorde',content:`<p>Es gibt zwei wichtige Arten von Dreiklängen:</p>
+<ul><li>🌞 <strong>Dur-Dreiklang</strong> = große Terz + kleine Terz → klingt fröhlich</li><li>🌙 <strong>Moll-Dreiklang</strong> = kleine Terz + große Terz → klingt traurig</li></ul>
+<p>Beispiele:</p>
+<ul><li><strong>C-Dur:</strong> C – E – G (fröhlich)</li><li><strong>c-Moll:</strong> C – Es – G (traurig, das E wird zum Es erniedrigt)</li><li><strong>G-Dur:</strong> G – H – D</li><li><strong>a-Moll:</strong> A – C – E</li></ul>
+<div class="info-box">🔍 <strong>Tipp:</strong> Spiele am Klavier erst C-E-G (Dur), dann C-Es-G (Moll) — hörst du den Unterschied?</div>`},{title:'Akkorde in der Musik',content:`<p>Akkorde bilden das <strong>harmonische Fundament</strong> eines Liedes:</p>
+<ul><li>🎸 In Pop und Rock begleiten oft nur <strong>3-4 Akkorde</strong> ein ganzes Lied</li><li>🎹 Die wichtigsten Akkorde einer Tonart heißen <strong>Tonika</strong> (I), <strong>Subdominante</strong> (IV) und <strong>Dominante</strong> (V)</li><li>In C-Dur: <strong>C</strong> (Tonika) – <strong>F</strong> (Subdominante) – <strong>G</strong> (Dominante)</li></ul>
+<p>Eine <strong>Akkordfolge</strong> (Kadenz) sorgt für Spannung und Auflösung in der Musik.</p>
+<div class="info-box">💡 <strong>Wusstest du?</strong> Viele berühmte Popsongs verwenden genau die gleiche Akkordfolge: I – V – vi – IV!</div>`}],quiz:[{q:'Aus wie vielen Tönen besteht ein Dreiklang?',o:['2','3','4','5'],_h:75},{q:'Wie klingt ein Dur-Akkord?',o:['Traurig','Fröhlich','Gruselig','Neutral'],_h:126},{q:'Welche Töne bilden den C-Dur Dreiklang?',o:['C-D-E','C-E-G','C-F-A','C-G-H'],_h:42},{q:'Was ist die Tonika in C-Dur?',o:['F','G','C','A'],_h:97},{q:'Was unterscheidet Dur von Moll beim Dreiklang?',o:['Die Lautstärke','Die Reihenfolge von großer und kleiner Terz','Die Anzahl der Töne','Nichts'],_h:93}],boss:[{q:'Warum klingen Dur-Akkorde fröhlich und Moll-Akkorde traurig?',o:['Weil es Zufall ist','Weil die unterschiedliche Abfolge der Terzintervalle verschiedene Schwingungsverhältnisse erzeugt','Weil Dur lauter ist','Weil Moll weniger Töne hat'],_h:75},{q:'Warum kann man mit nur drei Akkorden (I, IV, V) viele Lieder begleiten?',o:['Weil Musik einfach ist','Weil diese drei Akkorde alle Töne der Tonleiter abdecken und die grundlegende harmonische Spannung erzeugen','Weil es nur drei Akkorde gibt','Weil die Sänger es so wollen'],_h:126},{q:'Was passiert musikalisch, wenn in einem fröhlichen Dur-Stück plötzlich ein Moll-Akkord kommt?',o:['Nichts','Es erzeugt einen überraschenden Stimmungswechsel — einen Moment der Nachdenklichkeit','Das Stück wird kaputt','Der Musiker hat sich verspielt'],_h:42}]},{id:7,title:'Liedformen',icon:'📋',duration:'25 Min.',description:'Lerne die wichtigsten musikalischen Formen kennen: Strophe, Refrain, ABA-Form, Rondo und Kanon.',lessons:[{title:'Strophe und Refrain',content:`<p>Die meisten Lieder bestehen aus <strong>Strophen</strong> und einem <strong>Refrain</strong>:</p>
+<ul><li>📝 <strong>Strophe</strong> — gleiche Melodie, aber verschiedener Text bei jeder Wiederholung</li><li>🔁 <strong>Refrain</strong> — gleiche Melodie UND gleicher Text, wird mehrfach wiederholt</li><li>Der Refrain ist meist der <strong>eingängigste</strong> Teil — die Stelle, die man mitsingen kann</li></ul>
+<p>Typischer Aufbau: <strong>Strophe 1 – Refrain – Strophe 2 – Refrain – Bridge – Refrain</strong></p>
+<div class="info-box">💡 <strong>Merke:</strong> Der Refrain ist der „Ohrwurm" eines Liedes — er bleibt im Kopf!</div>`},{title:'Die ABA-Form und das Rondo',content:`<p>In der klassischen Musik gibt es klare <strong>Formen</strong>:</p>
+<p><strong>ABA-Form (Liedform):</strong></p>
+<ul><li><strong>A</strong> = erstes Thema</li><li><strong>B</strong> = neues, kontrastierendes Thema</li><li><strong>A</strong> = Rückkehr des ersten Themas</li></ul>
+<p><strong>Rondo-Form:</strong></p>
+<ul><li>Ein Hauptthema (A) kehrt immer wieder, dazwischen kommen neue Teile</li><li>Aufbau: <strong>A – B – A – C – A – D – A</strong></li><li>Das A ist wie ein „Heimkehr-Thema"</li></ul>
+<div class="info-box">🔍 <strong>Tipp:</strong> Beim Rondo kannst du mitzählen, wie oft das Hauptthema wiederkommt!</div>`},{title:'Der Kanon',content:`<p>Ein <strong>Kanon</strong> ist eine besondere musikalische Form:</p>
+<ul><li>🎵 <strong>Eine Melodie</strong> wird von mehreren Stimmen nacheinander gesungen</li><li>Jede Stimme beginnt <strong>zeitversetzt</strong>, singt aber <strong>dieselbe Melodie</strong></li><li>Die Stimmen überlagern sich und erzeugen einen besonderen Klang</li></ul>
+<p>Berühmte Kanons:</p>
+<ul><li>🎶 <strong>„Bruder Jakob"</strong> — der wohl bekannteste Kanon</li><li>🎶 <strong>„Pachelbels Kanon in D"</strong> — ein Meisterwerk aus dem Barock</li></ul>
+<div class="info-box">💡 <strong>Probiere es:</strong> Singt zu dritt „Bruder Jakob" — jeder beginnt einen Takt später!</div>`}],quiz:[{q:'Was bleibt beim Refrain immer gleich?',o:['Nur die Melodie','Nur der Text','Melodie und Text','Nichts'],_h:72},{q:'Was ist die ABA-Form?',o:['Drei verschiedene Teile','Ein Thema, ein Kontrast, Rückkehr zum ersten Thema','Nur Wiederholungen','Ein Kanon'],_h:126},{q:'Was passiert beim Rondo?',o:['Alles wird nur einmal gespielt','Das Hauptthema kehrt immer wieder zwischen neuen Teilen','Es gibt keinen festen Aufbau','Nur Strophe und Refrain'],_h:42},{q:'Was ist ein Kanon?',o:['Ein lautes Instrument','Eine Melodie, die zeitversetzt von mehreren Stimmen gesungen wird','Ein sehr langes Stück','Ein einzelner Ton'],_h:96},{q:'Welches Lied ist ein bekannter Kanon?',o:['Happy Birthday','Stille Nacht','Bruder Jakob','Alle meine Entchen'],_h:94}],boss:[{q:'Warum ist der Refrain meist der eingängigste Teil eines Liedes?',o:['Weil er lauter ist','Weil er durch Wiederholung im Gedächtnis bleibt und oft die emotionale Kernaussage enthält','Weil er am Anfang kommt','Weil er kürzer ist'],_h:75},{q:'Warum funktioniert ein Kanon wie „Bruder Jakob" musikalisch?',o:['Weil alle gleichzeitig singen','Weil die Melodie so konstruiert ist, dass sie harmonisch zu sich selbst passt, wenn sie zeitversetzt erklingt','Weil es ein kurzes Lied ist','Weil die Stimmen sich nicht hören'],_h:126},{q:'Warum erzeugt die ABA-Form ein Gefühl der Zufriedenheit?',o:['Weil A langweilig ist','Weil die Rückkehr zum bekannten Thema A nach dem Kontrast B ein Gefühl von Heimkehr und Abschluss gibt','Weil B unwichtig ist','Weil es kurz ist'],_h:42}]},{id:8,title:'Weltmusik',icon:'🌍',duration:'25 Min.',description:'Entdecke afrikanische Trommelmusik, indische Ragas und lateinamerikanische Rhythmen.',lessons:[{title:'Afrikanische Trommelmusik',content:`<p><strong>Afrikanische Musik</strong> ist unglaublich rhythmisch und vielfältig:</p>
+<ul><li>🪘 <strong>Djembé</strong> — die bekannteste westafrikanische Trommel</li><li>🥁 <strong>Polyrhythmik</strong> — mehrere verschiedene Rhythmen erklingen gleichzeitig</li><li>🗣️ <strong>Call and Response</strong> — ein Vorsänger singt, die Gruppe antwortet</li><li>💃 Musik, <strong>Tanz und Gesang</strong> gehören zusammen — sie sind Teil des täglichen Lebens</li></ul>
+<div class="info-box">💡 <strong>Merke:</strong> In vielen afrikanischen Kulturen ist Musik nicht nur Unterhaltung, sondern Teil von Festen, Ritualen und Geschichtenerzählen!</div>`},{title:'Indische Musik und Ragas',content:`<p>Die <strong>indische Musik</strong> hat ein ganz eigenes System:</p>
+<ul><li>🎵 <strong>Raga</strong> — eine Tonfolge (ähnlich einer Tonleiter), die eine bestimmte Stimmung oder Tageszeit darstellt</li><li>🥁 <strong>Tala</strong> — ein zyklisches Rhythmusmuster</li><li>🪕 <strong>Sitar</strong> — das berühmteste indische Saiteninstrument</li><li>🪘 <strong>Tabla</strong> — ein Paar kleiner Handtrommeln</li></ul>
+<p>Indische Musik basiert stark auf <strong>Improvisation</strong> — die Musiker gestalten die Raga frei innerhalb fester Regeln.</p>
+<div class="info-box">🔍 <strong>Spannend:</strong> Es gibt Morgen-Ragas, Abend-Ragas und sogar Ragas für die Regenzeit!</div>`},{title:'Lateinamerikanische Rhythmen',content:`<p><strong>Lateinamerikanische Musik</strong> ist eine Mischung aus drei Kulturen:</p>
+<ul><li>🌍 <strong>Afrikanische</strong> Rhythmen (durch die Sklaverei nach Amerika gebracht)</li><li>🇪🇸 <strong>Europäische</strong> Harmonien und Instrumente (spanische und portugiesische Kolonisierung)</li><li>🪶 <strong>Indigene</strong> Melodien und Instrumente</li></ul>
+<p>Bekannte Stile:</p>
+<ul><li>💃 <strong>Samba</strong> (Brasilien) — mitreißender Karnevals-Rhythmus</li><li>🕺 <strong>Salsa</strong> (Kuba) — lebhafter Tanzrhythmus</li><li>🎵 <strong>Bossa Nova</strong> (Brasilien) — sanfter, eleganter Rhythmus</li><li>🪗 <strong>Tango</strong> (Argentinien) — leidenschaftlicher Tanz</li></ul>
+<div class="info-box">💡 <strong>Wusstest du?</strong> Samba hat über 200 verschiedene Rhythmusmuster — alle gespielt auf verschiedenen Trommeln gleichzeitig!</div>`}],quiz:[{q:'Wie heißt die bekannteste westafrikanische Trommel?',o:['Tabla','Djembé','Conga','Bongo'],_h:75},{q:'Was bedeutet „Call and Response"?',o:['Alle singen gleichzeitig','Ein Vorsänger singt, die Gruppe antwortet','Man spielt alleine','Man klatscht im Takt'],_h:126},{q:'Was ist eine Raga in der indischen Musik?',o:['Ein Rhythmus','Ein Instrument','Eine Tonfolge, die eine Stimmung ausdrückt','Ein Tanz'],_h:41},{q:'Aus welchem Land kommt der Tango?',o:['Brasilien','Kuba','Argentinien','Mexiko'],_h:97},{q:'Was macht lateinamerikanische Musik besonders?',o:['Sie hat keine Instrumente','Sie mischt afrikanische, europäische und indigene Einflüsse','Sie wird nur gesungen','Sie ist immer langsam'],_h:93}],boss:[{q:'Warum ist Polyrhythmik typisch für afrikanische Musik?',o:['Weil nur eine Trommel gespielt wird','Weil verschiedene Rhythmen gleichzeitig gespielt werden und so ein komplexes Geflecht entsteht','Weil alle den gleichen Rhythmus spielen','Weil es einfacher ist'],_h:75},{q:'Warum sind Ragas bestimmten Tageszeiten zugeordnet?',o:['Weil Musiker nur zu bestimmten Zeiten spielen dürfen','Weil verschiedene Tonfolgen verschiedene Stimmungen erzeugen, die zur jeweiligen Tageszeit passen','Weil es ein Gesetz ist','Weil die Instrumente nur abends funktionieren'],_h:126},{q:'Warum entstand in Lateinamerika eine so vielfältige Musik?',o:['Weil es dort viele Instrumente gibt','Weil die Vermischung afrikanischer, europäischer und indigener Musiktraditionen neue Stile hervorbrachte','Weil es dort immer warm ist','Weil alle die gleiche Sprache sprechen'],_h:42}]},{id:9,title:'Musik und Technik',icon:'💻',duration:'25 Min.',description:'Erfahre alles über Aufnahmetechnik, elektronische Musik, Sampling und Synthesizer.',lessons:[{title:'Von der Schallplatte zur digitalen Aufnahme',content:`<p>Die <strong>Aufnahmetechnik</strong> hat die Musik revolutioniert:</p>
+<ul><li>📻 <strong>1877:</strong> Thomas Edison erfand den <strong>Phonographen</strong> — die erste Tonaufnahme!</li><li>💿 <strong>Schallplatte</strong> — Rillen in Vinyl speichern den Klang (analog)</li><li>📼 <strong>Kassette</strong> — Magnetband speichert Musik</li><li>💿 <strong>CD</strong> — digitale Speicherung mit Laser (ab 1982)</li><li>🎵 <strong>MP3/Streaming</strong> — Musik als Datei, überall abrufbar</li></ul>
+<div class="info-box">💡 <strong>Merke:</strong> Analog = Schallwellen werden direkt aufgezeichnet. Digital = Schallwellen werden in Zahlen umgewandelt!</div>`},{title:'Synthesizer und elektronische Musik',content:`<p>Ein <strong>Synthesizer</strong> erzeugt Klänge <strong>elektronisch</strong> — ohne akustische Instrumente:</p>
+<ul><li>🎛️ Er kann Klänge <strong>künstlich erzeugen</strong> und verändern</li><li>🔊 Verschiedene <strong>Wellenformen</strong> (Sinus, Sägezahn, Rechteck) ergeben verschiedene Klänge</li><li>🎹 Filter, Hüllkurven und Effekte formen den Sound</li></ul>
+<p>Geschichte der elektronischen Musik:</p>
+<ul><li>🎵 <strong>1960er:</strong> Erste Synthesizer (Moog, Buchla)</li><li>🎶 <strong>1970er:</strong> Kraftwerk — Pioniere der elektronischen Popmusik</li><li>🎧 <strong>1980er:</strong> Drumcomputer und Synthesizer prägen Pop und New Wave</li><li>💻 <strong>Heute:</strong> Jeder kann am Computer Musik produzieren!</li></ul>
+<div class="info-box">🔍 <strong>Wusstest du?</strong> Die Band Kraftwerk aus Düsseldorf gilt als Erfinder der elektronischen Popmusik!</div>`},{title:'Sampling und moderne Musikproduktion',content:`<p><strong>Sampling</strong> bedeutet, einen kurzen Ausschnitt einer bestehenden Aufnahme in einem neuen Stück zu verwenden:</p>
+<ul><li>✂️ Ein <strong>Sample</strong> kann ein Trommelschlag, eine Melodie oder sogar eine Stimme sein</li><li>🎤 <strong>Hip-Hop</strong> und elektronische Musik nutzen Sampling intensiv</li><li>💻 Mit einem <strong>Sampler</strong> kann man Klänge aufnehmen, bearbeiten und neu zusammensetzen</li></ul>
+<p>Moderne <strong>Musikproduktion</strong> am Computer:</p>
+<ul><li>🖥️ <strong>DAW</strong> (Digital Audio Workstation) — Software zum Musikmachen</li><li>🎚️ <strong>Mischen</strong> — verschiedene Spuren in Balance bringen</li><li>🎛️ <strong>Mastering</strong> — das fertige Stück klanglich optimieren</li></ul>
+<div class="info-box">💡 <strong>Spannend:</strong> Heute kann jeder mit einem Computer und kostenloser Software professionell klingende Musik produzieren!</div>`}],quiz:[{q:'Was war der Phonograph?',o:['Ein Telefon','Das erste Gerät zur Tonaufnahme','Ein Musikinstrument','Ein Radio'],_h:75},{q:'Was macht ein Synthesizer?',o:['Er verstärkt Gitarren','Er erzeugt Klänge elektronisch','Er spielt Schallplatten ab','Er nimmt Gesang auf'],_h:126},{q:'Was ist Sampling?',o:['Sehr schnell spielen','Einen Ausschnitt einer Aufnahme in einem neuen Stück verwenden','Eine Melodie singen','Ein Instrument stimmen'],_h:42},{q:'Wofür steht DAW?',o:['Digital Audio Welt','Digital Audio Workstation','Deutscher Audio Wandler','Drahtlose Audio Wiedergabe'],_h:96},{q:'Welche deutsche Band gilt als Pionier der elektronischen Musik?',o:['Rammstein','Die Ärzte','Kraftwerk','Scorpions'],_h:94}],boss:[{q:'Warum hat die digitale Aufnahmetechnik die Musik verändert?',o:['Weil Musik lauter wurde','Weil Musik ohne Qualitätsverlust kopiert, bearbeitet und weltweit geteilt werden kann','Weil analoge Musik schlecht klang','Weil Computer billiger sind'],_h:75},{q:'Warum ist Sampling rechtlich umstritten?',o:['Weil es schlecht klingt','Weil man das Urheberrecht der Originalaufnahme beachten muss und eventuell Genehmigungen braucht','Weil es verboten ist','Weil Computer fehlerhaft arbeiten'],_h:126},{q:'Warum können heute viel mehr Menschen Musik produzieren als früher?',o:['Weil alle besser singen können','Weil Computer und kostenlose Software die teuren Studios und Instrumente ersetzen können','Weil es mehr Musikschulen gibt','Weil Musik einfacher geworden ist'],_h:42}]}]
+
+const STORAGE_KEY='musikforscher_progress';
+let state={name:'',started:false,currentModule:0,xp:0,level:0,streak:0,lastVisit:null,modulesCompleted:[],quizResults:{},bossResults:{},badges:[],quizShuffleMap:{},modulesViewed:[],interactiveResults:{},designTheme:'cyber-dark'};
+
+function saveState(){try{localStorage.setItem(STORAGE_KEY,JSON.stringify(state))}catch(e){}}
+function loadState(){try{const s=localStorage.getItem(STORAGE_KEY);if(s){Object.assign(state,JSON.parse(s));return true}}catch(e){}return false}
+function exportData(){const a=document.createElement('a');a.download='musikforscher_backup-'+state.name+'.json';a.href=URL.createObjectURL(new Blob([JSON.stringify(state,null,2)],{type:'application/json'}));a.click()}
+function importData(e){const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=ev=>{try{const d=JSON.parse(ev.target.result);Object.assign(state,d);saveState();location.reload()}catch(err){alert('Datei konnte nicht gelesen werden.')}};r.readAsText(f)}
+
+function getLevel(xp){let lv=0;for(let i=LEVELS.length-1;i>=0;i--){if(xp>=LEVELS[i].xp){lv=i;break}}return lv}
+function getLevelProgress(xp){const lv=getLevel(xp);const cur=LEVELS[lv].xp;const next=lv<LEVELS.length-1?LEVELS[lv+1].xp:cur;if(next===cur)return 100;return Math.min(100,Math.round((xp-cur)/(next-cur)*100))}
+function addXP(amount,reason){const old=getLevel(state.xp);state.xp+=amount;const nw=getLevel(state.xp);saveState();updateUI();showNotif('xp','+'+amount+' XP',reason);if(nw>old){state.level=nw;saveState();setTimeout(()=>showLevelUp(nw),800)}}
+
+function updateStreak(){const today=new Date().toDateString();if(state.lastVisit===today)return;const yesterday=new Date(Date.now()-86400000).toDateString();if(state.lastVisit===yesterday){state.streak++;showNotif('streak','\uD83D\uDD25 '+state.streak+' Tage Streak!','Weiter so!');if(state.streak>=3)awardBadge('streak_3');if(state.streak>=7)awardBadge('streak_7')}else if(state.lastVisit!==today){state.streak=1}state.lastVisit=today;saveState()}
+
+function awardBadge(id){if(state.badges.includes(id))return;state.badges.push(id);saveState();const b=BADGES.find(x=>x.id===id);if(b)showNotif('badge',b.icon+' Badge: '+b.name,b.desc)}
+
+let notifQueue=[],notifActive=false;
+function showNotif(type,title,text){notifQueue.push({type,title,text});if(!notifActive)processNotif()}
+function processNotif(){if(!notifQueue.length){notifActive=false;return}notifActive=true;const{type,title,text}=notifQueue.shift();const el=document.getElementById('notif');el.className='notif '+type;document.getElementById('notifTitle').textContent=title;document.getElementById('notifText').textContent=text;el.classList.add('show');setTimeout(()=>{el.classList.remove('show');setTimeout(processNotif,300)},2500)}
+
+function showLevelUp(lv){const ov=document.getElementById('levelUpOverlay');const box=document.getElementById('levelUpBox');box.innerHTML='<div class="lvl-icon">⬆️</div><div class="lvl-title">Level Up!</div><div class="lvl-name">Level '+(lv+1)+': '+LEVELS[lv].name+'<\/div>';ov.classList.add('active');spawnConfetti();setTimeout(()=>ov.classList.remove('active'),3000)}
+function spawnConfetti(){const c=document.getElementById('confetti');c.innerHTML='';const cols=['#3b82f6','#a855f7','#22c55e','#f59e0b','#ef4444','#06b6d4'];for(let i=0;i<60;i++){const p=document.createElement('div');p.style.cssText='position:absolute;left:'+Math.random()*100+'%;background:'+cols[i%cols.length]+';width:'+(6+Math.random()*8)+'px;height:'+(6+Math.random()*8)+'px;border-radius:'+(Math.random()>.5?'50%':'2px')+';animation:confettiFall '+(1.5+Math.random()*2)+'s ease-out '+Math.random()*.5+'s forwards';c.appendChild(p)}if(!document.getElementById('confettiStyle')){const s=document.createElement('style');s.id='confettiStyle';s.textContent='@keyframes confettiFall{0%{opacity:1;transform:translateY(0) rotate(0deg)}100%{opacity:0;transform:translateY(100vh) rotate(720deg)}}';document.head.appendChild(s)}setTimeout(()=>c.innerHTML='',4000)}
+
+function shuffleQuiz(modId,quiz){const key='m'+modId;if(state.quizShuffleMap[key])return state.quizShuffleMap[key];const idx=[...Array(quiz.length).keys()];for(let i=idx.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[idx[i],idx[j]]=[idx[j],idx[i]]}state.quizShuffleMap[key]=idx;saveState();return idx}
+
+function renderQuiz(modId,quiz,isBoss){
+  const pf=isBoss?'boss':'quiz';const idx=isBoss?[...Array(quiz.length).keys()]:shuffleQuiz(modId,quiz);
+  let h='<div class="'+(isBoss?'boss-section':'quiz-section')+'">';
+  h+=isBoss?'<h3>👑 Boss-Challenge<\/h3><p class="boss-sub">Alle '+quiz.length+' Fragen richtig beantworten!<\/p>':'<h3>📝 Quiz — Teste dein Wissen<\/h3>';
+  idx.forEach((qi,di)=>{const q=quiz[qi];h+='<div class="quiz-q" data-qi="'+qi+'"><p>'+(di+1)+'. '+q.q+'<\/p>';q.o.forEach((a,ai)=>{h+='<label><input type="radio" name="'+pf+'_'+modId+'_'+qi+'" value="'+ai+'"> '+a+'<\/label>'});h+='<\/div>'});
+  h+='<button class="quiz-submit" onclick="checkQuiz('+modId+','+isBoss+')">'+(isBoss?'Boss besiegen!':'Antworten prüfen')+'<\/button>';
+  h+='<div class="quiz-result" id="'+pf+'Result'+modId+'" style="display:none"><\/div><\/div>';return h;
+}
+
+function checkQuiz(modId,isBoss){
+  const pf=isBoss?'boss':'quiz';const quiz=isBoss?modules[modId].boss:modules[modId].quiz;
+  let correct=0;const total=quiz.length;const startTime=window._quizStart||Date.now();
+  quiz.forEach((q,qi)=>{
+    const sel=document.querySelector('input[name="'+pf+'_'+modId+'_'+qi+'"]:checked');
+    const labels=document.querySelectorAll('[data-qi="'+qi+'"] label');
+    const ci=_d(q._h,qi);
+    labels.forEach((l,li)=>{l.classList.remove('correct','wrong');if(li===ci)l.classList.add('correct');else if(sel&&parseInt(sel.value)===li)l.classList.add('wrong')});
+    const qDiv=labels[0]?.closest('.quiz-q');if(qDiv){const old=qDiv.querySelector('.quiz-explanation');if(old)old.remove()}
+    if(!sel||parseInt(sel.value)!==ci){if(qDiv){const exp=document.createElement('div');exp.className='quiz-explanation';exp.textContent='→ Richtige Antwort: '+q.o[ci];qDiv.appendChild(exp)}}
+    if(sel&&parseInt(sel.value)===ci)correct++;
+  });
+  const rEl=document.getElementById(pf+'Result'+modId);rEl.style.display='block';
+  if(isBoss){
+    if(correct===total){rEl.className='quiz-result pass';rEl.textContent='👑 Boss besiegt! '+correct+'/'+total+' — Perfekt!';if(!state.bossResults[modId]){state.bossResults[modId]=true;addXP(100,'Boss-Challenge bestanden!');if(modules.every((_,i)=>state.bossResults[i]))awardBadge('all_boss');checkModuleComplete(modId)}}
+    else{rEl.className='quiz-result fail';rEl.textContent='💀 '+correct+'/'+total+' — Alle müssen richtig sein! Versuch es nochmal.';setTimeout(()=>{document.querySelectorAll('input[name^="'+pf+'_'+modId+'"]').forEach(r=>{r.disabled=false;r.checked=false});document.querySelectorAll('[data-qi] label').forEach(l=>l.classList.remove('correct','wrong'));document.querySelectorAll('.quiz-explanation').forEach(e=>e.remove());rEl.style.display='none'},2000);return}
+  }else{
+    const passed=correct>=Math.ceil(total*0.6);rEl.className='quiz-result '+(passed?'pass':'fail');
+    rEl.textContent=passed?'✅ '+correct+'/'+total+' richtig — Bestanden!':'❌ '+correct+'/'+total+' richtig — Mindestens '+Math.ceil(total*0.6)+' nötig.';
+    if(passed&&!state.quizResults[modId]){state.quizResults[modId]=correct;addXP(correct*15+50,'Quiz bestanden ('+correct+'/'+total+')');if(!state.badges.includes('first_quiz'))awardBadge('first_quiz');if(correct===total)awardBadge('perfect');if(Date.now()-startTime<30000)awardBadge('speed_demon');const hr=new Date().getHours();if(hr>=22)awardBadge('night_owl');if(hr<7)awardBadge('early_bird');if(state.xp>=1000)awardBadge('xp_master');if(modules.every((_,i)=>state.quizResults[i]!==undefined))awardBadge('all_quiz');checkModuleComplete(modId)}
+  }
+  saveState();document.querySelectorAll('input[name^="'+pf+'_'+modId+'"]').forEach(r=>r.disabled=true);window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function checkModuleComplete(modId){
+  if(state.quizResults[modId]!==undefined&&state.bossResults[modId]&&!state.modulesCompleted.includes(modId)){
+    state.modulesCompleted.push(modId);awardBadge('mod'+(modId+1));
+    if(state.modulesCompleted.length>=10){setTimeout(()=>showCert(),1500)}
+    saveState();renderSidebar();
+  }
+}
+
+function renderModule(modId){
+  state.currentModule=modId;
+  if(!state.modulesViewed.includes(modId)){state.modulesViewed.push(modId);addXP(10,'Neues Modul geöffnet')}
+  saveState();closeSidebar();
+  const m=modules[modId];
+  let h='<div class="module-header"><div class="mod-badge">'+m.icon+' Modul '+(modId+1)+'<\/div><h1>'+m.title+'<\/h1><p class="mod-desc">'+m.description+'<\/p><\/div>';
+  m.lessons.forEach((l,i)=>{h+='<div class="lesson-card"><h3><span style="color:var(--neon)">'+String(i+1).padStart(2,'0')+'<\/span> '+l.title+' <button class="tts-btn" onclick="speakLesson('+i+')" title="Vorlesen">&#128266;<\/button><\/h3>'+l.content+'<\/div>'});
+  h+='<div class="interactive-area"><h4>🧪 Interaktive Übung<\/h4><div id="interactiveArea">Lädt...<\/div><\/div>';
+  window._quizStart=Date.now();
+  h+=renderQuiz(modId,m.quiz,false);
+  h+=renderQuiz(modId,m.boss,true);
+  document.getElementById('welcomeScreen').style.display='none';
+  document.getElementById('badgesView').style.display='none';
+  document.getElementById('statsView').style.display='none';
+  const mc=document.getElementById('moduleContent');mc.style.display='block';mc.innerHTML=h;
+  renderSidebar();window.scrollTo({top:0,behavior:'smooth'});
+  setTimeout(()=>initInteractive(modId),100);
+}
+
+function renderSidebar(){
+  const el=document.getElementById('sidebarModules');
+  el.innerHTML=modules.map((m,i)=>{
+    const done=state.modulesCompleted.includes(i);
+    const act=state.currentModule===i&&document.getElementById('moduleContent').style.display==='block';
+    return '<a class="mod-link'+(act?' active':'')+(done?' completed':'')+'" onclick="renderModule('+i+')"><span class="mod-icon">'+m.icon+'<\/span>'+m.title+'<\/a>';
+  }).join('');
+  const lv=getLevel(state.xp);
+  const lvEl=document.querySelector('.sidebar-level-title');
+  if(lvEl)lvEl.textContent=LEVELS[lv].name;
+  const xpFill=document.querySelector('.sidebar-xp-fill');
+  if(xpFill)xpFill.style.width=getLevelProgress(state.xp)+'%';
+}
+function toggleSidebar(){document.getElementById('sidebar').classList.toggle('open')}
+function closeSidebar(){document.getElementById('sidebar').classList.remove('open')}
+
+function showBadges(){
+  document.getElementById('welcomeScreen').style.display='none';document.getElementById('moduleContent').style.display='none';document.getElementById('statsView').style.display='none';
+  const v=document.getElementById('badgesView');v.style.display='block';closeSidebar();
+  let h='<div class="module-header"><h1>🏅 Deine Abzeichen<\/h1><p class="mod-desc">'+state.badges.length+' von '+BADGES.length+' gesammelt<\/p><\/div><div class="badge-grid">';
+  BADGES.forEach(b=>{const earned=state.badges.includes(b.id);h+='<div class="badge-item'+(earned?' earned':' locked')+'"><div class="badge-icon">'+(earned?b.icon:'🔒')+'<\/div><div class="badge-name">'+b.name+'<\/div><\/div>'});
+  h+='<\/div>';v.innerHTML=h;
+}
+
+function showStats(){
+  document.getElementById('welcomeScreen').style.display='none';document.getElementById('moduleContent').style.display='none';document.getElementById('badgesView').style.display='none';
+  const v=document.getElementById('statsView');v.style.display='block';closeSidebar();
+  const lv=getLevel(state.xp);
+  let h='<div class="module-header"><h1>📊 Statistik<\/h1><\/div><div class="stats-grid">';
+  h+='<div class="stat-card"><div class="stat-val">'+state.xp+'<\/div><div class="stat-label">XP gesammelt<\/div><\/div>';
+  h+='<div class="stat-card"><div class="stat-val">'+LEVELS[lv].name+'<\/div><div class="stat-label">Aktueller Rang<\/div><\/div>';
+  h+='<div class="stat-card"><div class="stat-val">'+state.modulesCompleted.length+'/10<\/div><div class="stat-label">Module abgeschlossen<\/div><\/div>';
+  h+='<div class="stat-card"><div class="stat-val">'+Object.keys(state.quizResults).length+'<\/div><div class="stat-label">Quizze bestanden<\/div><\/div>';
+  h+='<div class="stat-card"><div class="stat-val">'+Object.keys(state.bossResults).length+'<\/div><div class="stat-label">Bosse besiegt<\/div><\/div>';
+  h+='<div class="stat-card"><div class="stat-val">'+state.badges.length+'<\/div><div class="stat-label">Abzeichen<\/div><\/div>';
+  h+='<div class="stat-card"><div class="stat-val">🔥 '+state.streak+'<\/div><div class="stat-label">Tage-Streak<\/div><\/div>';
+  h+='<\/div>';v.innerHTML=h;
+}
+
+let certStyle='akademie';
+function showCert(){
+  const ov=document.getElementById('certOverlay');ov.classList.add('active');
+  document.getElementById('certPicker').innerHTML=
+    ['🏛 Akademie','💻 Hacker','🕹 Pixel','🚀 Zukunft'].map((l,i)=>{
+      const s=['akademie','hacker','pixel','zukunft'][i];
+      return '<button class="cert-pick-btn'+(certStyle===s?' active':'')+'" onclick="certStyle=\''+s+'\';showCert()">'+l+'<\/button>';
+    }).join('');
+  renderCert();
+}
+function closeCert(){document.getElementById('certOverlay').classList.remove('active')}
+function generateCertCode(){const n=state.name||'X';const d=new Date();return 'MF-'+d.getFullYear()+'-'+((n.charCodeAt(0)*7+state.xp)%9999).toString(16).toUpperCase().padStart(4,'0')}
+
+function renderCert(){
+  const f=document.getElementById('certFrame');if(!f)return;
+  const n=state.name||'Schüler';const d=new Date().toLocaleDateString('de-DE',{day:'2-digit',month:'long',year:'numeric'});
+  const code=generateCertCode();const pct=Math.round(state.modulesCompleted.length/10*100);
+  const styles={
+    akademie:{bg:'linear-gradient(135deg,#1a1a4e,#2d2d7a)',border:'#c9a84c',title:'#c9a84c',text:'#d4d0ff',accent:'#c9a84c',font:"'Playfair Display',serif"},
+    hacker:{bg:'linear-gradient(135deg,#0a0e14,#1a2332)',border:'#00ff88',title:'#00ff88',text:'#b0f0d0',accent:'#00ff88',font:"'JetBrains Mono',monospace"},
+    pixel:{bg:'linear-gradient(135deg,#1a0a2e,#2d1055)',border:'#ffd700',title:'#ffd700',text:'#e0d0f0',accent:'#ff6b9d',font:"'Courier New',monospace"},
+    zukunft:{bg:'linear-gradient(135deg,#0f0f23,#1a1a3e)',border:'#00d9ff',title:'#00d9ff',text:'#d0e8ff',accent:'#00d9ff',font:"'Sora',sans-serif"}
+  };
+  const s=styles[certStyle]||styles.akademie;
+  f.innerHTML='<div style="width:100%;height:100%;background:'+s.bg+';border:3px solid '+s.border+';border-radius:12px;padding:40px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;font-family:'+s.font+';position:relative;overflow:hidden">'
+    +'<div style="font-size:14px;letter-spacing:4px;text-transform:uppercase;color:'+s.accent+';margin-bottom:8px">Zertifikat</div>'
+    +'<div style="font-size:28px;font-weight:700;color:'+s.title+';margin-bottom:4px">MusikForscher</div>'
+    +'<div style="font-size:13px;color:'+s.text+';margin-bottom:20px">Musik Klasse 3-6</div>'
+    +'<div style="font-size:14px;color:'+s.text+'">Hiermit wird bestätigt, dass</div>'
+    +'<div style="font-size:24px;font-weight:700;color:'+s.title+';margin:8px 0;border-bottom:2px solid '+s.accent+';padding-bottom:4px">'+n+'</div>'
+    +'<div style="font-size:14px;color:'+s.text+';max-width:400px;line-height:1.6">den Kurs <strong>MusikForscher</strong> mit <strong>'+pct+'%</strong> Abschluss und <strong>'+state.xp+' XP</strong> erfolgreich absolviert hat.</div>'
+    +'<div style="font-size:12px;color:'+s.accent+';margin-top:16px">'+d+'</div>'
+    +'<div style="font-size:10px;color:'+s.text+';opacity:0.6;margin-top:8px">Code: '+code+' | © 2026 GZ AI Stacks</div>'
+    +'</div>';
+}
+function printCert(){window.print()}
+
+function updateUI(){
+  const lv=getLevel(state.xp);
+  const xpEl=document.querySelector('.header-xp');
+  if(xpEl)xpEl.innerHTML=LEVELS[lv].name+' <span style="margin-left:8px">'+state.xp+' XP<\/span>';
+  const fill=document.querySelector('.header-xp-fill');
+  if(fill)fill.style.width=getLevelProgress(state.xp)+'%';
+  const streakEl=document.querySelector('.header-streak');
+  if(streakEl)streakEl.textContent='🔥 '+state.streak;
+  renderSidebar();
+}
+
+function setDesignTheme(world,mode){
+  state.designTheme=world+'-'+mode;document.documentElement.setAttribute('data-theme',state.designTheme);saveState();buildThemePicker();
+}
+function getCurrentThemeParts(){const p=state.designTheme.split('-');return{world:p.slice(0,-1).join('-'),mode:p[p.length-1]||'dark'}}
+function toggleMode(){const{world,mode}=getCurrentThemeParts();setDesignTheme(world,mode==='dark'?'light':'dark')}
+function buildThemePicker(){
+  const dd=document.getElementById('themePickerDD');if(!dd)return;
+  const{world,mode}=getCurrentThemeParts();
+  let h='<div class="tp-label">Theme wählen<\/div>';
+  Object.keys(THEME_CONFIG).forEach(w=>{
+    const t=THEME_CONFIG[w];
+    h+='<div class="tp-world'+(w===world?' active':'')+'" onclick="setDesignTheme(\''+w+'\',\''+mode+'\')">';
+    h+='<div class="tp-world-color" style="background:'+t.color+'">'+t.emoji+'<\/div>';
+    h+='<div class="tp-world-info"><div class="tp-world-name">'+t.name+'<\/div><div class="tp-world-desc">'+t.desc+'<\/div><\/div><\/div>';
+  });
+  h+='<div class="tp-divider"><\/div>';
+  h+='<div class="tp-mode-row"><span class="tp-mode-label">'+(mode==='dark'?'🌙 Dark':'☀️ Light')+'<\/span>';
+  h+='<div class="tp-mode-switch'+(mode==='light'?' light':'')+'" onclick="toggleMode()"><\/div><\/div>';
+  dd.innerHTML=h;
+}
+function toggleThemePicker(){document.getElementById('themePickerDD').classList.toggle('open')}
+
+
+function initInteractive(modId) {
+const area = document.getElementById('interactiveArea');
+if(!area) return;
+const exercises = {
+0: function() {
+  const items = [
+    {symbol:'○',name:'Ganze Note',schlaege:'4 Schläge'},
+    {symbol:'𝅗𝅥',name:'Halbe Note',schlaege:'2 Schläge'},
+    {symbol:'♩',name:'Viertelnote',schlaege:'1 Schlag'},
+    {symbol:'♪',name:'Achtelnote',schlaege:'½ Schlag'}
+  ];
+  let current=0;let score=0;
+  const namen=items.map(function(i){return i.name;}).sort(function(){return Math.random()-0.5;});
+  function show(){
+    if(current>=items.length){area.innerHTML='<div class="info-box">✅ Ergebnis: '+score+'/'+items.length+' richtig!</div>';return;}
+    area.innerHTML='<h4>Ordne den Notenwert zu! ('+(current+1)+'/'+items.length+')</h4><p style="font-size:2em;margin:18px 0">'+items[current].symbol+' <small style="font-size:0.5em">('+items[current].schlaege+')</small></p>'+namen.map(function(n){return '<button class="quiz-opt" style="margin:4px" onclick="window._checkNote(\''+n+'\')">'+n+'</button>';}).join('')+'<div id="noteFb" style="margin-top:12px"></div>';
+  }
+  window._checkNote=function(ans){
+    var correct=ans===items[current].name;
+    if(correct)score++;
+    document.getElementById('noteFb').innerHTML=correct?'<span style="color:var(--success)">✅ Richtig!</span>':'<span style="color:var(--danger)">❌ Das ist: '+items[current].name+'</span>';
+    current++;setTimeout(show,1200);
+  };show();
+},
+1: function() {
+  var toene=['C','D','E','F','G','A','H','C'];
+  var schritte=['Ganzton','Ganzton','Halbton','Ganzton','Ganzton','Ganzton','Halbton'];
+  var current=0;var score=0;
+  function show(){
+    if(current>=schritte.length){area.innerHTML='<div class="info-box">✅ Ergebnis: '+score+'/'+schritte.length+' richtig! Du kennst die C-Dur Tonleiter!</div>';return;}
+    area.innerHTML='<h4>Ganzton oder Halbton? ('+(current+1)+'/'+schritte.length+')</h4><p style="font-size:1.3em;margin:18px 0">🎹 <strong>'+toene[current]+' → '+toene[current+1]+'</strong></p><button class="quiz-opt" onclick="window._checkStep(\'Ganzton\')">Ganztonschritt</button> <button class="quiz-opt" onclick="window._checkStep(\'Halbton\')">Halbtonschritt</button><div id="stepFb" style="margin-top:12px"></div>';
+  }
+  window._checkStep=function(ans){
+    var correct=ans===schritte[current];
+    if(correct)score++;
+    document.getElementById('stepFb').innerHTML=correct?'<span style="color:var(--success)">✅ Richtig!</span>':'<span style="color:var(--danger)">❌ '+toene[current]+' → '+toene[current+1]+' ist ein '+schritte[current]+'schritt!</span>';
+    current++;setTimeout(show,1200);
+  };show();
+},
+2: function() {
+  var items=[
+    {beschreibung:'Walzer',taktart:'3/4'},
+    {beschreibung:'Popmusik, Rock, Marsch',taktart:'4/4'},
+    {beschreibung:'Beschwingter Rhythmus, Tarantella',taktart:'6/8'},
+    {beschreibung:'Polka, Marsch (schnell)',taktart:'2/4'},
+    {beschreibung:'Menuett (historischer Tanz)',taktart:'3/4'},
+    {beschreibung:'Die meisten modernen Lieder',taktart:'4/4'}
+  ];
+  var taktarten=['2/4','3/4','4/4','6/8'];
+  var current=0;var score=0;
+  function show(){
+    if(current>=items.length){area.innerHTML='<div class="info-box">✅ Ergebnis: '+score+'/'+items.length+' richtig!</div>';return;}
+    area.innerHTML='<h4>Welche Taktart passt? ('+(current+1)+'/'+items.length+')</h4><p style="font-size:1.1em;margin:18px 0">🥁 <strong>'+items[current].beschreibung+'</strong></p>'+taktarten.map(function(t){return '<button class="quiz-opt" style="margin:4px" onclick="window._checkTakt(\''+t+'\')">'+t+'-Takt</button>';}).join('')+'<div id="taktFb" style="margin-top:12px"></div>';
+  }
+  window._checkTakt=function(ans){
+    var correct=ans===items[current].taktart;
+    if(correct)score++;
+    document.getElementById('taktFb').innerHTML=correct?'<span style="color:var(--success)">✅ Richtig!</span>':'<span style="color:var(--danger)">❌ '+items[current].beschreibung+' hat den '+items[current].taktart+'-Takt!</span>';
+    current++;setTimeout(show,1200);
+  };show();
+},
+3: function() {
+  var instrumente=[
+    {name:'Violine',familie:'Streichinstrumente'},
+    {name:'Trompete',familie:'Blechblasinstrumente'},
+    {name:'Klarinette',familie:'Holzblasinstrumente'},
+    {name:'Pauke',familie:'Schlaginstrumente'},
+    {name:'Klavier',familie:'Tasteninstrumente'},
+    {name:'Cello',familie:'Streichinstrumente'},
+    {name:'Querflöte',familie:'Holzblasinstrumente'},
+    {name:'Xylophon',familie:'Schlaginstrumente'}
+  ];
+  var familien=['Streichinstrumente','Holzblasinstrumente','Blechblasinstrumente','Schlaginstrumente','Tasteninstrumente'];
+  var current=0;var score=0;
+  function show(){
+    if(current>=instrumente.length){area.innerHTML='<div class="info-box">✅ Ergebnis: '+score+'/'+instrumente.length+' richtig!</div>';return;}
+    area.innerHTML='<h4>Zu welcher Familie gehört das Instrument? ('+(current+1)+'/'+instrumente.length+')</h4><p style="font-size:1.3em;margin:18px 0">🎵 <strong>'+instrumente[current].name+'</strong></p>'+familien.map(function(f){return '<button class="quiz-opt" style="margin:4px;text-align:left" onclick="window._checkInstr(\''+f+'\')">'+f+'</button>';}).join('')+'<div id="instrFb" style="margin-top:12px"></div>';
+  }
+  window._checkInstr=function(ans){
+    var correct=ans===instrumente[current].familie;
+    if(correct)score++;
+    document.getElementById('instrFb').innerHTML=correct?'<span style="color:var(--success)">✅ Richtig!</span>':'<span style="color:var(--danger)">❌ '+instrumente[current].name+' gehört zu: '+instrumente[current].familie+'</span>';
+    current++;setTimeout(show,1200);
+  };show();
+},
+4: function() {
+  var items=[
+    {werk:'Brandenburgische Konzerte',komponist:'Bach'},
+    {werk:'Die Zauberflöte',komponist:'Mozart'},
+    {werk:'Für Elise',komponist:'Beethoven'},
+    {werk:'Eine kleine Nachtmusik',komponist:'Mozart'},
+    {werk:'Mondscheinsonate',komponist:'Beethoven'},
+    {werk:'Matthäus-Passion',komponist:'Bach'}
+  ];
+  var komponisten=['Bach','Mozart','Beethoven'];
+  var current=0;var score=0;
+  function show(){
+    if(current>=items.length){area.innerHTML='<div class="info-box">✅ Ergebnis: '+score+'/'+items.length+' richtig!</div>';return;}
+    area.innerHTML='<h4>Welcher Komponist schrieb dieses Werk? ('+(current+1)+'/'+items.length+')</h4><p style="font-size:1.2em;margin:18px 0">📜 <strong>'+items[current].werk+'</strong></p>'+komponisten.map(function(k){return '<button class="quiz-opt" style="margin:8px" onclick="window._checkKomp(\''+k+'\')">'+k+'</button>';}).join('')+'<div id="kompFb" style="margin-top:12px"></div>';
+  }
+  window._checkKomp=function(ans){
+    var correct=ans===items[current].komponist;
+    if(correct)score++;
+    document.getElementById('kompFb').innerHTML=correct?'<span style="color:var(--success)">✅ Richtig!</span>':'<span style="color:var(--danger)">❌ Das Werk ist von '+items[current].komponist+'!</span>';
+    current++;setTimeout(show,1200);
+  };show();
+},
+5: function() {
+  var items=[
+    {merkmal:'Verzierte Musik, Cembalo, Polyphonie',epoche:'Barock'},
+    {merkmal:'Klarheit, Sonate, Sinfonie',epoche:'Klassik'},
+    {merkmal:'Starke Gefühle, große Orchester, Naturinspiration',epoche:'Romantik'},
+    {merkmal:'Jazz, elektronische Musik, Pop',epoche:'Moderne'},
+    {merkmal:'Bach, Händel, Vivaldi',epoche:'Barock'},
+    {merkmal:'Schumann, Chopin, Tschaikowski',epoche:'Romantik'}
+  ];
+  var epochen=['Barock','Klassik','Romantik','Moderne'];
+  var current=0;var score=0;
+  function show(){
+    if(current>=items.length){area.innerHTML='<div class="info-box">✅ Ergebnis: '+score+'/'+items.length+' richtig!</div>';return;}
+    area.innerHTML='<h4>Welche Musikepoche? ('+(current+1)+'/'+items.length+')</h4><p style="font-size:1.1em;margin:18px 0">🏛️ <strong>'+items[current].merkmal+'</strong></p>'+epochen.map(function(e){return '<button class="quiz-opt" style="margin:4px" onclick="window._checkEpoche(\''+e+'\')">'+e+'</button>';}).join('')+'<div id="epocheFb" style="margin-top:12px"></div>';
+  }
+  window._checkEpoche=function(ans){
+    var correct=ans===items[current].epoche;
+    if(correct)score++;
+    document.getElementById('epocheFb').innerHTML=correct?'<span style="color:var(--success)">✅ Richtig!</span>':'<span style="color:var(--danger)">❌ Das gehört zur Epoche: '+items[current].epoche+'!</span>';
+    current++;setTimeout(show,1200);
+  };show();
+},
+6: function() {
+  var akkorde=[
+    {name:'C-Dur',toene:'C – E – G',typ:'Dur'},
+    {name:'a-Moll',toene:'A – C – E',typ:'Moll'},
+    {name:'G-Dur',toene:'G – H – D',typ:'Dur'},
+    {name:'e-Moll',toene:'E – G – H',typ:'Moll'},
+    {name:'F-Dur',toene:'F – A – C',typ:'Dur'},
+    {name:'d-Moll',toene:'D – F – A',typ:'Moll'}
+  ];
+  var current=0;var score=0;
+  function show(){
+    if(current>=akkorde.length){area.innerHTML='<div class="info-box">✅ Ergebnis: '+score+'/'+akkorde.length+' richtig!</div>';return;}
+    area.innerHTML='<h4>Dur oder Moll? ('+(current+1)+'/'+akkorde.length+')</h4><p style="font-size:1.2em;margin:18px 0">🎶 <strong>'+akkorde[current].name+'</strong> ('+akkorde[current].toene+')</p><button class="quiz-opt" onclick="window._checkAkkord(\'Dur\')">🌞 Dur (fröhlich)</button> <button class="quiz-opt" onclick="window._checkAkkord(\'Moll\')">🌙 Moll (traurig)</button><div id="akkordFb" style="margin-top:12px"></div>';
+  }
+  window._checkAkkord=function(ans){
+    var correct=ans===akkorde[current].typ;
+    if(correct)score++;
+    document.getElementById('akkordFb').innerHTML=correct?'<span style="color:var(--success)">✅ Richtig!</span>':'<span style="color:var(--danger)">❌ '+akkorde[current].name+' ist ein '+akkorde[current].typ+'-Akkord!</span>';
+    current++;setTimeout(show,1200);
+  };show();
+},
+7: function() {
+  var items=[
+    {beschreibung:'Gleiche Melodie, verschiedener Text bei jeder Wiederholung',form:'Strophe'},
+    {beschreibung:'Gleiche Melodie UND gleicher Text, wird wiederholt',form:'Refrain'},
+    {beschreibung:'A – B – A (Thema, Kontrast, Rückkehr)',form:'ABA-Form'},
+    {beschreibung:'A – B – A – C – A (Hauptthema kehrt immer wieder)',form:'Rondo'},
+    {beschreibung:'Melodie wird zeitversetzt von mehreren Stimmen gesungen',form:'Kanon'},
+    {beschreibung:'Teil zwischen Strophen, der nur einmal vorkommt',form:'Bridge'}
+  ];
+  var formen=['Strophe','Refrain','ABA-Form','Rondo','Kanon','Bridge'];
+  var current=0;var score=0;
+  function show(){
+    if(current>=items.length){area.innerHTML='<div class="info-box">✅ Ergebnis: '+score+'/'+items.length+' richtig!</div>';return;}
+    area.innerHTML='<h4>Welche Liedform ist das? ('+(current+1)+'/'+items.length+')</h4><p style="font-size:1.1em;margin:18px 0">📋 <strong>'+items[current].beschreibung+'</strong></p>'+formen.map(function(f){return '<button class="quiz-opt" style="margin:4px" onclick="window._checkForm(\''+f+'\')">'+f+'</button>';}).join('')+'<div id="formFb" style="margin-top:12px"></div>';
+  }
+  window._checkForm=function(ans){
+    var correct=ans===items[current].form;
+    if(correct)score++;
+    document.getElementById('formFb').innerHTML=correct?'<span style="color:var(--success)">✅ Richtig!</span>':'<span style="color:var(--danger)">❌ Das ist: '+items[current].form+'!</span>';
+    current++;setTimeout(show,1200);
+  };show();
+},
+8: function() {
+  var items=[
+    {element:'Djembé',herkunft:'Afrika'},
+    {element:'Sitar',herkunft:'Indien'},
+    {element:'Samba',herkunft:'Lateinamerika'},
+    {element:'Tabla',herkunft:'Indien'},
+    {element:'Call and Response',herkunft:'Afrika'},
+    {element:'Tango',herkunft:'Lateinamerika'},
+    {element:'Raga',herkunft:'Indien'},
+    {element:'Polyrhythmik',herkunft:'Afrika'}
+  ];
+  var regionen=['Afrika','Indien','Lateinamerika'];
+  var current=0;var score=0;
+  function show(){
+    if(current>=items.length){area.innerHTML='<div class="info-box">✅ Ergebnis: '+score+'/'+items.length+' richtig! Du bist ein Weltmusik-Experte!</div>';return;}
+    area.innerHTML='<h4>Welche Musikregion? ('+(current+1)+'/'+items.length+')</h4><p style="font-size:1.2em;margin:18px 0">🌍 <strong>'+items[current].element+'</strong></p>'+regionen.map(function(r){return '<button class="quiz-opt" style="margin:8px" onclick="window._checkWelt(\''+r+'\')">'+r+'</button>';}).join('')+'<div id="weltFb" style="margin-top:12px"></div>';
+  }
+  window._checkWelt=function(ans){
+    var correct=ans===items[current].herkunft;
+    if(correct)score++;
+    document.getElementById('weltFb').innerHTML=correct?'<span style="color:var(--success)">✅ Richtig!</span>':'<span style="color:var(--danger)">❌ '+items[current].element+' kommt aus: '+items[current].herkunft+'!</span>';
+    current++;setTimeout(show,1200);
+  };show();
+},
+9: function() {
+  var items=[
+    {begriff:'DAW',beschreibung:'Software zum Musikproduzieren am Computer'},
+    {begriff:'Sampling',beschreibung:'Einen Ausschnitt einer Aufnahme in neuem Stück verwenden'},
+    {begriff:'Synthesizer',beschreibung:'Gerät, das Klänge elektronisch erzeugt'},
+    {begriff:'Mastering',beschreibung:'Fertige Aufnahme klanglich optimieren'},
+    {begriff:'Phonograph',beschreibung:'Erstes Gerät zur Tonaufnahme (1877)'},
+    {begriff:'Mischen',beschreibung:'Verschiedene Tonspuren in Balance bringen'}
+  ];
+  var beschreibungen=items.map(function(i){return i.beschreibung;}).sort(function(){return Math.random()-0.5;});
+  var current=0;var score=0;
+  function show(){
+    if(current>=items.length){area.innerHTML='<div class="info-box">✅ Ergebnis: '+score+'/'+items.length+' richtig!</div>';return;}
+    area.innerHTML='<h4>Was bedeutet dieser Begriff? ('+(current+1)+'/'+items.length+')</h4><p style="font-size:1.3em;margin:18px 0">💻 <strong>'+items[current].begriff+'</strong></p>'+beschreibungen.map(function(b){return '<button class="quiz-opt" style="margin:4px;text-align:left" onclick="window._checkTech(\''+b.replace(/'/g,"\\'")+'\')">'+b+'</button>';}).join('')+'<div id="techFb" style="margin-top:12px"></div>';
+  }
+  window._checkTech=function(ans){
+    var correct=ans===items[current].beschreibung;
+    if(correct)score++;
+    document.getElementById('techFb').innerHTML=correct?'<span style="color:var(--success)">✅ Richtig!</span>':'<span style="color:var(--danger)">❌ '+items[current].begriff+' = '+items[current].beschreibung+'</span>';
+    current++;setTimeout(show,1200);
+  };show();
+}
+};
+if(exercises[modId]) exercises[modId]();
+else area.innerHTML='<p>Übung wird geladen...</p>';
+}
+
+function startApp(){
+  const name=document.getElementById('nameInput').value.trim();if(!name)return;
+  state.name=name;state.started=true;saveState();
+  document.getElementById('welcomeScreen').style.display='none';
+  renderModule(0);updateStreak();
+}
+
+(function init(){
+  if(loadState()&&state.started){
+    document.getElementById('welcomeScreen').style.display='none';
+    document.documentElement.setAttribute('data-theme',state.designTheme);
+    renderModule(state.currentModule);updateUI();updateStreak();
+  }else{
+    document.documentElement.setAttribute('data-theme',state.designTheme);
+    buildThemePicker();
+  }
+  renderSidebar();
+  document.addEventListener('click',e=>{if(!e.target.closest('.theme-picker-wrap'))document.getElementById('themePickerDD')?.classList.remove('open')});
+})();
+</script>
+</body>
+</html>

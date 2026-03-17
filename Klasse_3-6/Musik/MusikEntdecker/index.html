@@ -1,0 +1,1104 @@
+<!DOCTYPE html>
+<html lang="de" data-theme="cyber-dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>MusikEntdecker — Interaktive Musik-Lernapp</title>
+<meta name="description" content="Interaktive Musik-Lernapp für Klasse 3-6 mit Gamification, Quizzen und Boss-Challenges">
+<style>
+@font-face{font-family:'Sora';src:url('../../../Klasse_7-10/Informatik/fonts/sora-latin-400-normal.woff2') format('woff2');font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:'Sora';src:url('../../../Klasse_7-10/Informatik/fonts/sora-latin-600-normal.woff2') format('woff2');font-weight:600;font-style:normal;font-display:swap}
+@font-face{font-family:'Sora';src:url('../../../Klasse_7-10/Informatik/fonts/sora-latin-700-normal.woff2') format('woff2');font-weight:700;font-style:normal;font-display:swap}
+@font-face{font-family:'JetBrains Mono';src:url('../../../Klasse_7-10/Informatik/fonts/jetbrains-mono-latin-400-normal.woff2') format('woff2');font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:'Playfair Display';src:url('../../../Klasse_7-10/Informatik/fonts/playfair-display-latin-700-normal.woff2') format('woff2');font-weight:700;font-style:normal;font-display:swap}
+@font-face{font-family:'Inter';src:url('../../../Klasse_7-10/Informatik/fonts/inter-latin-400-normal.woff2') format('woff2');font-weight:400;font-style:normal;font-display:swap}
+
+:root{
+--neon:#3b82f6;--neon-dim:rgba(59,130,246,.15);--neon-glow:rgba(59,130,246,.3);
+--bg:#0a0e14;--bg2:#111827;--bg3:#1f2937;--card:#161e2e;--card-hover:#1e293b;
+--border:#2a3444;--border-light:#374151;
+--text:#d4dce8;--text-dim:#8899aa;--text-bright:#f1f5f9;
+--heading:#ffffff;--link:#60a5fa;
+--success:#22c55e;--warning:#f59e0b;--danger:#ef4444;
+--xp-purple:#a855f7;--badge-cyan:#06b6d4;--streak-red:#ef4444;
+--radius:12px;--radius-sm:8px;--radius-lg:16px;
+--shadow:0 4px 24px rgba(0,0,0,.4);--shadow-lg:0 8px 40px rgba(0,0,0,.5);
+--font:'Sora','Segoe UI',system-ui,sans-serif;
+--mono:'JetBrains Mono','Cascadia Code',monospace;
+--serif:'Playfair Display','Georgia',serif;
+--sidebar-w:280px;--header-h:60px;
+--card-border-w:1px;--card-border-style:solid;--glow:1
+}
+[data-theme="cyber-dark"]{--neon:#3b82f6;--neon-dim:rgba(59,130,246,.15);--neon-glow:rgba(59,130,246,.3);--bg:#0a0e14;--bg2:#111827;--bg3:#1f2937;--card:#161e2e;--card-hover:#1e293b;--border:#2a3444;--border-light:#374151;--text:#d4dce8;--text-dim:#8899aa;--text-bright:#f1f5f9;--heading:#ffffff;--link:#60a5fa;--success:#22c55e;--warning:#f59e0b;--danger:#ef4444;--xp-purple:#a855f7;--badge-cyan:#06b6d4;--streak-red:#ef4444;--radius:12px;--radius-sm:8px;--radius-lg:16px;--shadow:0 4px 24px rgba(0,0,0,.4);--shadow-lg:0 8px 40px rgba(0,0,0,.5);--font:'Sora','Segoe UI',system-ui,sans-serif;--card-border-w:1px;--card-border-style:solid;--glow:1}
+[data-theme="cyber-light"]{--neon:#1d4ed8;--neon-dim:rgba(29,78,216,.1);--neon-glow:rgba(29,78,216,.2);--bg:#f8f9fb;--bg2:#f0f2f5;--bg3:#e5e7eb;--card:#ffffff;--card-hover:#f5f7fa;--border:#d1d5db;--border-light:#e5e7eb;--text:#374151;--text-dim:#4b5563;--text-bright:#111827;--heading:#111827;--link:#2563eb;--success:#22c55e;--warning:#f59e0b;--danger:#ef4444;--xp-purple:#a855f7;--badge-cyan:#06b6d4;--streak-red:#ef4444;--radius:12px;--radius-sm:8px;--radius-lg:16px;--shadow:0 4px 24px rgba(0,0,0,.08);--shadow-lg:0 8px 40px rgba(0,0,0,.12);--font:'Sora','Segoe UI',system-ui,sans-serif;--card-border-w:1px;--card-border-style:solid;--glow:0}
+[data-theme="retro-dark"]{--neon:#ffd700;--neon-dim:rgba(255,215,0,.12);--neon-glow:rgba(255,215,0,.3);--bg:#0d0208;--bg2:#1a0a1e;--bg3:#2d1233;--card:#1a0a1e;--card-hover:#2d1233;--border:#4a1942;--border-light:#5c2d5c;--text:#e0d0f0;--text-dim:#9080a0;--text-bright:#fff;--heading:#ffd700;--link:#ff6b9d;--success:#00e676;--warning:#ffab00;--danger:#ff1744;--xp-purple:#e040fb;--badge-cyan:#00e5ff;--streak-red:#ff1744;--radius:0px;--radius-sm:0px;--radius-lg:0px;--shadow:4px 4px 0 rgba(0,0,0,.8);--shadow-lg:6px 6px 0 rgba(0,0,0,.9);--font:'Courier New','Consolas',monospace;--card-border-w:3px;--card-border-style:solid;--glow:0}
+[data-theme="retro-light"]{--neon:#b8860b;--neon-dim:rgba(184,134,11,.1);--neon-glow:rgba(184,134,11,.2);--bg:#fff8e1;--bg2:#fff3cd;--bg3:#ffe0b2;--card:#ffffff;--card-hover:#fff9f0;--border:#d4a017;--border-light:#e6c84d;--text:#3e2723;--text-dim:#6d4c41;--text-bright:#1b0000;--heading:#b8860b;--link:#c2185b;--success:#2e7d32;--warning:#ef6c00;--danger:#c62828;--xp-purple:#8e24aa;--badge-cyan:#00838f;--streak-red:#c62828;--radius:0px;--radius-sm:0px;--radius-lg:0px;--shadow:3px 3px 0 rgba(0,0,0,.15);--shadow-lg:5px 5px 0 rgba(0,0,0,.2);--font:'Courier New','Consolas',monospace;--card-border-w:3px;--card-border-style:solid;--glow:0}
+[data-theme="nature-dark"]{--neon:#4ade80;--neon-dim:rgba(74,222,128,.12);--neon-glow:rgba(74,222,128,.25);--bg:#0c1a0f;--bg2:#132617;--bg3:#1e3a24;--card:#15291a;--card-hover:#1e3a24;--border:#2d5a36;--border-light:#3a7044;--text:#c8e6c9;--text-dim:#81a784;--text-bright:#e8f5e9;--heading:#e8f5e9;--link:#81c784;--success:#66bb6a;--warning:#ffa726;--danger:#ef5350;--xp-purple:#ab47bc;--badge-cyan:#26a69a;--streak-red:#ef5350;--radius:20px;--radius-sm:14px;--radius-lg:28px;--shadow:0 4px 20px rgba(0,0,0,.3);--shadow-lg:0 8px 32px rgba(0,0,0,.4);--font:'Segoe UI','Helvetica Neue',system-ui,sans-serif;--card-border-w:1px;--card-border-style:solid;--glow:0}
+[data-theme="nature-light"]{--neon:#2e7d32;--neon-dim:rgba(46,125,50,.08);--neon-glow:rgba(46,125,50,.15);--bg:#f1f8e9;--bg2:#e8f5e9;--bg3:#c8e6c9;--card:#ffffff;--card-hover:#f1faf1;--border:#a5d6a7;--border-light:#c8e6c9;--text:#33691e;--text-dim:#3e6e1c;--text-bright:#1b5e20;--heading:#1b5e20;--link:#2e7d32;--success:#388e3c;--warning:#ef6c00;--danger:#c62828;--xp-purple:#7b1fa2;--badge-cyan:#00695c;--streak-red:#c62828;--radius:20px;--radius-sm:14px;--radius-lg:28px;--shadow:0 4px 16px rgba(0,0,0,.06);--shadow-lg:0 8px 28px rgba(0,0,0,.1);--font:'Segoe UI','Helvetica Neue',system-ui,sans-serif;--card-border-w:1px;--card-border-style:solid;--glow:0}
+[data-theme="space-dark"]{--neon:#c084fc;--neon-dim:rgba(192,132,252,.12);--neon-glow:rgba(192,132,252,.3);--bg:#07020e;--bg2:#0f0720;--bg3:#1a0e35;--card:#110a28;--card-hover:#1a0e35;--border:#2e1a5e;--border-light:#3d2478;--text:#d4c8f0;--text-dim:#9080b8;--text-bright:#f0e8ff;--heading:#f0e8ff;--link:#f0abfc;--success:#34d399;--warning:#fbbf24;--danger:#fb7185;--xp-purple:#f472b6;--badge-cyan:#67e8f9;--streak-red:#fb7185;--radius:4px;--radius-sm:2px;--radius-lg:6px;--shadow:0 4px 24px rgba(100,50,200,.2);--shadow-lg:0 8px 40px rgba(100,50,200,.3);--font:'Segoe UI',system-ui,sans-serif;--card-border-w:1px;--card-border-style:solid;--glow:1}
+[data-theme="space-light"]{--neon:#7c3aed;--neon-dim:rgba(124,58,237,.08);--neon-glow:rgba(124,58,237,.15);--bg:#faf5ff;--bg2:#f3e8ff;--bg3:#e9d5ff;--card:#ffffff;--card-hover:#faf5ff;--border:#c4b5fd;--border-light:#ddd6fe;--text:#4c1d95;--text-dim:#5b21b6;--text-bright:#2e1065;--heading:#2e1065;--link:#7c3aed;--success:#059669;--warning:#d97706;--danger:#dc2626;--xp-purple:#db2777;--badge-cyan:#0891b2;--streak-red:#dc2626;--radius:4px;--radius-sm:2px;--radius-lg:6px;--shadow:0 4px 16px rgba(100,50,200,.06);--shadow-lg:0 8px 28px rgba(100,50,200,.1);--font:'Segoe UI',system-ui,sans-serif;--card-border-w:1px;--card-border-style:solid;--glow:0}
+[data-theme="comic-dark"]{--neon:#ff6b6b;--neon-dim:rgba(255,107,107,.12);--neon-glow:rgba(255,107,107,.3);--bg:#1a1a2e;--bg2:#222244;--bg3:#2e2e55;--card:#262650;--card-hover:#2e2e55;--border:#4a4a7a;--border-light:#5a5a8a;--text:#e8e0ff;--text-dim:#a098c0;--text-bright:#fff;--heading:#fff;--link:#ffa94d;--success:#51cf66;--warning:#fcc419;--danger:#ff6b6b;--xp-purple:#cc5de8;--badge-cyan:#22b8cf;--streak-red:#ff6b6b;--radius:16px;--radius-sm:12px;--radius-lg:24px;--shadow:4px 4px 0 rgba(0,0,0,.5);--shadow-lg:6px 6px 0 rgba(0,0,0,.6);--font:'Comic Sans MS','Chalkboard SE',cursive,system-ui,sans-serif;--card-border-w:3px;--card-border-style:solid;--glow:0}
+[data-theme="comic-light"]{--neon:#e03131;--neon-dim:rgba(224,49,49,.08);--neon-glow:rgba(224,49,49,.15);--bg:#fff9db;--bg2:#fff3bf;--bg3:#ffe066;--card:#ffffff;--card-hover:#fffdf0;--border:#fab005;--border-light:#fcc419;--text:#2b2b2b;--text-dim:#555;--text-bright:#000;--heading:#000;--link:#e8590c;--success:#2f9e44;--warning:#e8590c;--danger:#c92a2a;--xp-purple:#9c36b5;--badge-cyan:#1098ad;--streak-red:#c92a2a;--radius:16px;--radius-sm:12px;--radius-lg:24px;--shadow:3px 3px 0 rgba(0,0,0,.2);--shadow-lg:5px 5px 0 rgba(0,0,0,.25);--font:'Comic Sans MS','Chalkboard SE',cursive,system-ui,sans-serif;--card-border-w:3px;--card-border-style:solid;--glow:0}
+[data-theme="sketchy-dark"]{--neon:#d97706;--neon-dim:rgba(217,119,6,.15);--neon-glow:rgba(217,119,6,.3);--bg:#2a1f0f;--bg2:#3a2a1a;--bg3:#4a3a2a;--card:#362414;--card-hover:#462a1a;--border:#5a4030;--border-light:#6a5040;--text:#d4c4b0;--text-dim:#a09080;--text-bright:#e8d8c8;--heading:#f5ead5;--link:#e8a550;--success:#84cc16;--warning:#d97706;--danger:#e74c3c;--xp-purple:#d946ef;--badge-cyan:#06b6d4;--streak-red:#e74c3c;--radius:24px;--radius-sm:16px;--radius-lg:32px;--shadow:0 6px 20px rgba(0,0,0,.3);--shadow-lg:0 10px 40px rgba(0,0,0,.4);--font:'Playfair Display','Georgia',serif;--card-border-w:2px;--card-border-style:dashed;--glow:0}
+[data-theme="sketchy-light"]{--neon:#b45309;--neon-dim:rgba(180,83,9,.1);--neon-glow:rgba(180,83,9,.2);--bg:#fef3e2;--bg2:#fde8cc;--bg3:#f9d5b8;--card:#ffffff;--card-hover:#fffaf5;--border:#d4a574;--border-light:#e8c4a0;--text:#5c4033;--text-dim:#8b6f47;--text-bright:#3e2723;--heading:#3e2723;--link:#c2600c;--success:#65a30d;--warning:#b45309;--danger:#d25c4d;--xp-purple:#c084fc;--badge-cyan:#0891b2;--streak-red:#d25c4d;--radius:24px;--radius-sm:16px;--radius-lg:32px;--shadow:0 4px 12px rgba(0,0,0,.08);--shadow-lg:0 8px 24px rgba(0,0,0,.12);--font:'Playfair Display','Georgia',serif;--card-border-w:2px;--card-border-style:dashed;--glow:0}
+[data-theme="nature-code-dark"]{--neon:#10b981;--neon-dim:rgba(16,185,129,.15);--neon-glow:rgba(16,185,129,.25);--bg:#0a1f12;--bg2:#0d2818;--bg3:#1a3a2a;--card:#0f281a;--card-hover:#1a3a2a;--border:#2d5a3d;--border-light:#3a7050;--text:#c8e6d0;--text-dim:#7ba890;--text-bright:#e8f5ed;--heading:#e8f5ed;--link:#34d399;--success:#10b981;--warning:#f59e0b;--danger:#f87171;--xp-purple:#a78bfa;--badge-cyan:#22d3ee;--streak-red:#f87171;--radius:20px;--radius-sm:14px;--radius-lg:28px;--shadow:0 4px 20px rgba(0,100,50,.2);--shadow-lg:0 8px 32px rgba(0,100,50,.3);--font:'Segoe UI','Helvetica Neue',system-ui,sans-serif;--card-border-w:1px;--card-border-style:solid;--glow:0}
+[data-theme="nature-code-light"]{--neon:#059669;--neon-dim:rgba(5,150,105,.1);--neon-glow:rgba(5,150,105,.15);--bg:#f0fdf8;--bg2:#e8faf2;--bg3:#d1f2e0;--card:#ffffff;--card-hover:#f5fbf7;--border:#86efac;--border-light:#bbf7d0;--text:#164e3f;--text-dim:#2d6e4f;--text-bright:#052e16;--heading:#052e16;--link:#059669;--success:#10b981;--warning:#d97706;--danger:#dc2626;--xp-purple:#8b5cf6;--badge-cyan:#06b6d4;--streak-red:#dc2626;--radius:20px;--radius-sm:14px;--radius-lg:28px;--shadow:0 4px 16px rgba(0,100,50,.06);--shadow-lg:0 8px 28px rgba(0,100,50,.1);--font:'Segoe UI','Helvetica Neue',system-ui,sans-serif;--card-border-w:1px;--card-border-style:solid;--glow:0}
+[data-theme="glass-dark"]{--neon:#00d9ff;--neon-dim:rgba(0,217,255,.12);--neon-glow:rgba(0,217,255,.25);--bg:#0f0f23;--bg2:#1a1a3e;--bg3:#25254a;--card:rgba(30,30,60,.4);--card-hover:rgba(40,40,80,.5);--border:rgba(100,150,255,.2);--border-light:rgba(100,150,255,.3);--text:#e4e8f0;--text-dim:#8899aa;--text-bright:#f5f7ff;--heading:#ffffff;--link:#00d9ff;--success:#34d399;--warning:#fbbf24;--danger:#ff6b9d;--xp-purple:#b991f7;--badge-cyan:#00d9ff;--streak-red:#ff6b9d;--radius:16px;--radius-sm:12px;--radius-lg:20px;--shadow:0 8px 32px rgba(0,200,255,.1);--shadow-lg:0 16px 64px rgba(0,200,255,.15);--font:'Segoe UI',system-ui,sans-serif;--card-border-w:1px;--card-border-style:solid;--glow:1}
+[data-theme="glass-light"]{--neon:#0891b2;--neon-dim:rgba(8,145,178,.08);--neon-glow:rgba(8,145,178,.15);--bg:#f8fafc;--bg2:#f1f5f9;--bg3:#e2e8f0;--card:rgba(255,255,255,.4);--card-hover:rgba(255,255,255,.6);--border:rgba(100,180,255,.2);--border-light:rgba(100,180,255,.3);--text:#1e293b;--text-dim:#475569;--text-bright:#0f172a;--heading:#0f172a;--link:#0891b2;--success:#059669;--warning:#d97706;--danger:#dc2626;--xp-purple:#7c3aed;--badge-cyan:#0891b2;--streak-red:#dc2626;--radius:16px;--radius-sm:12px;--radius-lg:20px;--shadow:0 8px 32px rgba(100,150,255,.08);--shadow-lg:0 16px 64px rgba(100,150,255,.12);--font:'Segoe UI',system-ui,sans-serif;--card-border-w:1px;--card-border-style:solid;--glow:0}
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{font-family:var(--font);background:var(--bg);color:var(--text);line-height:1.6;min-height:100vh;overflow-x:hidden;transition:background .3s,color .3s}
+h1,h2,h3,h4{color:var(--heading);line-height:1.3}
+a{color:var(--link);text-decoration:none}
+a:hover{text-decoration:underline}
+button{font-family:var(--font);cursor:pointer;border:none;background:none;color:inherit}
+code,pre{font-family:var(--mono)}
+:focus-visible{outline:2px solid var(--neon);outline-offset:2px;border-radius:4px}
+::selection{background:var(--neon);color:#fff}
+::-webkit-scrollbar{width:8px}
+::-webkit-scrollbar-track{background:var(--bg2)}
+::-webkit-scrollbar-thumb{background:var(--border);border-radius:4px}
+::-webkit-scrollbar-thumb:hover{background:var(--text-dim)}
+.site-header{position:fixed;top:0;left:0;right:0;height:var(--header-h);background:var(--bg2);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 20px;z-index:100;backdrop-filter:blur(12px)}
+.header-logo{display:flex;align-items:center;gap:12px;font-weight:700;font-size:18px;color:var(--heading)}
+.header-logo-text{display:flex;flex-direction:column;line-height:1.2}
+.header-logo-main{font-size:20px;font-weight:800}
+.header-logo-sub{font-size:11px;font-weight:600;color:var(--neon);letter-spacing:1px;text-transform:uppercase;margin-top:2px}
+.header-right{margin-left:auto;display:flex;align-items:center;gap:12px}
+.header-xp{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--xp-purple);font-weight:600}
+.header-xp-bar{width:80px;height:6px;background:var(--bg3);border-radius:3px;overflow:hidden}
+.header-xp-fill{height:100%;background:var(--xp-purple);border-radius:3px;transition:width .5s}
+.header-streak{display:flex;align-items:center;gap:4px;font-size:13px;color:var(--streak-red);font-weight:600}
+.theme-toggle{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:var(--bg3);transition:background .2s}
+.theme-toggle:hover{background:var(--border)}
+.theme-picker-wrap{position:relative}
+.theme-picker-btn{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:var(--bg3);transition:background .2s;font-size:16px}
+.theme-picker-btn:hover{background:var(--border)}
+.theme-picker-dd{position:absolute;top:calc(100% + 8px);right:0;background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:12px;box-shadow:var(--shadow-lg);z-index:200;display:none;min-width:240px}
+.theme-picker-dd.open{display:block}
+.theme-picker-dd .tp-label{font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--text-dim);margin-bottom:8px}
+.tp-world{display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:var(--radius-sm);cursor:pointer;transition:background .15s;margin-bottom:2px}
+.tp-world:hover{background:var(--bg3)}
+.tp-world.active{background:var(--neon-dim)}
+.tp-world-color{width:28px;height:28px;border-radius:6px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:14px}
+.tp-world-info{flex:1;min-width:0}
+.tp-world-name{font-size:13px;font-weight:600;color:var(--heading)}
+.tp-world-desc{font-size:10px;color:var(--text-dim)}
+.tp-divider{height:1px;background:var(--border);margin:8px 0}
+.tp-mode-row{display:flex;align-items:center;justify-content:space-between;padding:4px 10px}
+.tp-mode-label{font-size:12px;color:var(--text);font-weight:600}
+.tp-mode-switch{width:44px;height:24px;border-radius:12px;background:var(--bg3);position:relative;cursor:pointer;transition:background .2s}
+.tp-mode-switch.light{background:var(--neon)}
+.tp-mode-switch::after{content:'';position:absolute;top:3px;left:3px;width:18px;height:18px;border-radius:50%;background:#fff;transition:transform .2s;box-shadow:0 1px 3px rgba(0,0,0,.3)}
+.tp-mode-switch.light::after{transform:translateX(20px)}
+.menu-btn{display:none;width:36px;height:36px;border-radius:8px;align-items:center;justify-content:center;background:var(--bg3)}
+.sidebar{position:fixed;top:var(--header-h);left:0;width:var(--sidebar-w);height:calc(100vh - var(--header-h));background:var(--bg2);border-right:1px solid var(--border);overflow-y:auto;padding:16px 12px;z-index:90;transition:transform .3s}
+.sidebar-section{margin-bottom:20px}
+.sidebar-label{font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--text-dim);padding:0 8px;margin-bottom:8px}
+.sidebar-level{padding:8px 12px;background:var(--neon-dim);border-radius:var(--radius-sm);margin-bottom:12px;text-align:center}
+.sidebar-level-title{font-size:14px;font-weight:700;color:var(--neon)}
+.sidebar-level-sub{font-size:11px;color:var(--text-dim);margin-top:2px}
+.sidebar-xp-bar{width:100%;height:8px;background:var(--bg3);border-radius:4px;overflow:hidden;margin-top:6px}
+.sidebar-xp-fill{height:100%;background:linear-gradient(90deg,var(--xp-purple),var(--neon));border-radius:4px;transition:width .6s}
+.mod-link{display:flex;align-items:center;gap:10px;padding:8px 12px;border-radius:var(--radius-sm);transition:background .15s;color:var(--text);font-size:13px;text-decoration:none;position:relative;cursor:pointer}
+.mod-link:hover{background:var(--bg3);text-decoration:none}
+.mod-link.active{background:var(--neon-dim);color:var(--neon);font-weight:600}
+.mod-link.completed::after{content:'\2713';position:absolute;right:10px;color:var(--success);font-weight:700;font-size:12px}
+.mod-link .mod-icon{width:28px;height:28px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
+.main{margin-left:var(--sidebar-w);margin-top:var(--header-h);min-height:calc(100vh - var(--header-h));padding:32px;max-width:900px}
+.module-header{margin-bottom:32px}
+.module-header .mod-badge{display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--neon);margin-bottom:8px}
+.module-header h1{font-size:28px;margin-bottom:8px}
+.module-header .mod-desc{font-size:15px;color:var(--text-dim);max-width:600px}
+.lesson-card{background:var(--card);border:var(--card-border-w) var(--card-border-style) var(--border);border-radius:var(--radius);padding:24px;margin-bottom:20px;transition:border-color .2s}
+.lesson-card:hover{border-color:var(--neon)}
+.lesson-card h3{font-size:18px;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.lesson-card p,.lesson-card li{font-size:14px;line-height:1.7;color:var(--text)}
+.lesson-card ul,.lesson-card ol{margin:8px 0 8px 20px}
+.lesson-card code{background:var(--bg3);padding:2px 6px;border-radius:4px;font-size:13px;color:var(--neon)}
+.lesson-card pre{background:var(--bg);border:1px solid var(--border);border-radius:var(--radius-sm);padding:16px;overflow-x:auto;margin:12px 0;font-size:13px;line-height:1.5}
+.lesson-card .info-box{background:var(--neon-dim);border-left:3px solid var(--neon);padding:12px 16px;border-radius:0 var(--radius-sm) var(--radius-sm) 0;margin:12px 0;font-size:13px}
+.interactive-area{background:var(--card);border:calc(var(--card-border-w) + 1px) dashed var(--border);border-radius:var(--radius);padding:24px;margin:20px 0;min-height:200px}
+.interactive-area h4{font-size:15px;color:var(--neon);margin-bottom:12px}
+.ia-toolbar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+.ia-btn{padding:6px 14px;font-size:12px;font-weight:600;border-radius:var(--radius-sm);background:var(--neon-dim);color:var(--neon);border:1px solid transparent;transition:all .15s}
+.ia-btn:hover{background:var(--neon);color:#fff}
+.ia-btn.active{background:var(--neon);color:#fff}
+.ix-grid{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;margin:16px 0}
+.ix-item{background:var(--bg3);border:2px solid var(--border);border-radius:var(--radius-sm);padding:14px 20px;font-size:20px;cursor:pointer;transition:all .2s;user-select:none;text-align:center;min-width:60px}
+.ix-item:hover{border-color:var(--neon);background:var(--neon-dim)}
+.ix-item.selected{border-color:var(--neon);background:var(--neon-dim)}
+.ix-item.correct{border-color:var(--success);background:rgba(34,197,94,.1)}
+.ix-item.wrong{border-color:var(--danger);background:rgba(239,68,68,.1)}
+.ix-item.placed{opacity:.4;pointer-events:none}
+.ix-btn{background:var(--neon);color:#fff;border:none;padding:10px 24px;border-radius:var(--radius-sm);font-size:14px;font-weight:700;cursor:pointer;font-family:var(--font);margin-top:12px;transition:opacity .2s}
+.ix-btn:hover{opacity:.85}
+.ix-btn:disabled{opacity:.4;cursor:not-allowed}
+.ix-feedback{text-align:center;padding:14px;border-radius:var(--radius-sm);font-size:16px;font-weight:700;margin-top:12px;display:none}
+.ix-feedback.pass{display:block;background:rgba(34,197,94,.12);color:var(--success)}
+.ix-feedback.fail{display:block;background:rgba(239,68,68,.12);color:var(--danger)}
+.quiz-section{background:var(--card);border:var(--card-border-w) var(--card-border-style) var(--border);border-radius:var(--radius);padding:24px;margin-top:24px}
+.quiz-section h3{font-size:18px;margin-bottom:16px;color:var(--xp-purple)}
+.quiz-q{margin-bottom:20px}
+.quiz-q p{font-size:14px;font-weight:600;margin-bottom:10px}
+.quiz-q label{display:flex;align-items:flex-start;gap:10px;padding:10px 14px;border-radius:var(--radius-sm);border:1px solid var(--border);cursor:pointer;transition:all .15s;font-size:14px;margin-bottom:6px}
+.quiz-q label:hover{border-color:var(--neon);background:var(--neon-dim)}
+.quiz-q input[type="radio"]{margin-top:3px;accent-color:var(--neon)}
+.quiz-q label.correct{border-color:var(--success);background:rgba(34,197,94,.1)}
+.quiz-q label.wrong{border-color:var(--danger);background:rgba(239,68,68,.1)}
+.quiz-submit{padding:10px 24px;font-size:14px;font-weight:700;border-radius:var(--radius-sm);background:var(--xp-purple);color:#fff;transition:opacity .2s;margin-top:8px}
+.quiz-submit:hover{opacity:.85}
+.quiz-result{padding:16px;border-radius:var(--radius-sm);margin-top:16px;font-size:14px;font-weight:600;text-align:center}
+.quiz-result.pass{background:rgba(34,197,94,.12);color:var(--success);border:1px solid rgba(34,197,94,.3)}
+.quiz-result.fail{background:rgba(239,68,68,.12);color:var(--danger);border:1px solid rgba(239,68,68,.3)}
+.quiz-explanation{margin-top:6px;padding:8px 14px;border-radius:var(--radius-sm);background:rgba(34,197,94,.08);border-left:3px solid var(--success);font-size:13px;color:var(--success);font-weight:600}
+.boss-section{background:linear-gradient(135deg,rgba(168,85,247,.08),rgba(59,130,246,.08));border:2px solid var(--xp-purple);border-radius:var(--radius);padding:24px;margin-top:24px}
+.boss-section h3{color:var(--xp-purple);font-size:20px;margin-bottom:4px}
+.boss-section .boss-sub{font-size:13px;color:var(--text-dim);margin-bottom:16px}
+.badge-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(100px,1fr));gap:12px;margin-top:12px}
+.badge-item{text-align:center;padding:12px 8px;border-radius:var(--radius-sm);background:var(--bg3);opacity:.4;transition:all .3s}
+.badge-item.earned{opacity:1;background:var(--neon-dim);border:1px solid var(--neon)}
+.badge-item .badge-icon{font-size:28px;margin-bottom:4px}
+.badge-item .badge-name{font-size:10px;font-weight:600;color:var(--text-dim)}
+.badge-item.earned .badge-name{color:var(--neon)}
+.stats-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px;margin-top:12px}
+.stat-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius-sm);padding:16px;text-align:center}
+.stat-card .stat-val{font-size:28px;font-weight:700;color:var(--neon)}
+.stat-card .stat-label{font-size:12px;color:var(--text-dim);margin-top:4px}
+.notif{position:fixed;top:80px;right:20px;background:var(--card);border:1px solid var(--neon);border-radius:var(--radius);padding:16px 20px;box-shadow:var(--shadow-lg);z-index:200;transform:translateX(120%);transition:transform .4s cubic-bezier(.22,1,.36,1);max-width:320px}
+.notif.show{transform:translateX(0)}
+.notif-title{font-size:14px;font-weight:700;color:var(--heading);margin-bottom:2px}
+.notif-text{font-size:12px;color:var(--text-dim)}
+.notif.xp{border-color:var(--xp-purple)}
+.notif.badge{border-color:var(--badge-cyan)}
+.notif.level{border-color:var(--success)}
+.notif.streak{border-color:var(--streak-red)}
+.level-up-overlay{position:fixed;inset:0;background:rgba(0,0,0,.7);display:none;align-items:center;justify-content:center;z-index:300}
+.level-up-overlay.active{display:flex}
+.level-up-box{text-align:center;padding:40px;animation:lvlPop .5s ease-out}
+.level-up-box .lvl-icon{font-size:64px;margin-bottom:12px}
+.level-up-box .lvl-title{font-size:28px;font-weight:900;color:var(--heading)}
+.level-up-box .lvl-name{font-size:20px;color:var(--xp-purple);font-weight:700;margin-top:4px}
+@keyframes lvlPop{from{transform:scale(.5);opacity:0}to{transform:scale(1);opacity:1}}
+.welcome-screen{display:flex;align-items:center;justify-content:center;min-height:calc(100vh - var(--header-h));text-align:center;padding:40px 20px}
+.welcome-box{max-width:480px}
+.welcome-box h1{font-size:36px;margin-bottom:8px}
+.welcome-box .ws-sub{color:var(--text-dim);font-size:15px;margin-bottom:32px}
+.welcome-box input{width:100%;max-width:320px;padding:12px 16px;font-size:16px;border-radius:var(--radius-sm);border:1px solid var(--border);background:var(--bg3);color:var(--heading);font-family:var(--font);text-align:center;margin-bottom:16px}
+.welcome-box input:focus{border-color:var(--neon);outline:2px solid var(--neon);outline-offset:2px}
+.welcome-box .ws-start{padding:14px 40px;font-size:16px;font-weight:700;border-radius:var(--radius-sm);background:var(--neon);color:#fff;transition:opacity .2s}
+.welcome-box .ws-start:hover{opacity:.85}
+.welcome-box .ws-start:disabled{opacity:.4;cursor:not-allowed}
+.cert-overlay{position:fixed;inset:0;background:rgba(0,0,0,.88);display:none;align-items:center;justify-content:center;z-index:400;padding:20px;flex-direction:column;backdrop-filter:blur(8px)}
+.cert-overlay.active{display:flex}
+.cert-picker{display:flex;gap:12px;justify-content:center;margin-bottom:20px;flex-wrap:wrap}
+.cert-pick-btn{padding:10px 20px;font-size:13px;font-weight:700;border-radius:12px;border:2px solid rgba(255,255,255,.15);background:rgba(255,255,255,.06);color:rgba(255,255,255,.7);transition:all .3s;backdrop-filter:blur(4px)}
+.cert-pick-btn:hover{border-color:rgba(255,255,255,.3);color:#fff;transform:translateY(-2px)}
+.cert-pick-btn.active{border-color:#ffd700;color:#ffd700;background:rgba(255,215,0,.1);box-shadow:0 0 20px rgba(255,215,0,.15)}
+.cert-frame{width:720px;max-width:100%;aspect-ratio:1.414;position:relative;overflow:hidden;animation:certEntrance .6s cubic-bezier(.34,1.56,.64,1) both}
+.cert-actions{display:flex;gap:12px;justify-content:center;margin-top:16px}
+.cert-actions button{padding:12px 28px;font-size:13px;font-weight:700;border-radius:12px;background:linear-gradient(135deg,var(--neon),var(--link));color:#fff;transition:transform .2s,box-shadow .2s}
+.cert-actions button:hover{transform:translateY(-2px);box-shadow:0 4px 20px rgba(0,0,0,.3)}
+@keyframes certEntrance{0%{opacity:0;transform:scale(.8) translateY(30px)}100%{opacity:1;transform:scale(1) translateY(0)}}
+@keyframes shimmer{0%{background-position:-200% 0}100%{background-position:200% 0}}
+@keyframes blink{50%{opacity:0}}
+@keyframes glitch{0%,93%{text-shadow:0 0 20px rgba(0,212,255,.5)}94%{text-shadow:-3px 0 #ff0040,3px 0 #00d4ff;transform:skewX(-2deg)}95%{text-shadow:3px 0 #ff0040,-3px 0 #00d4ff;transform:skewX(2deg)}96%{text-shadow:-1px 2px #ff0040,1px -2px #00d4ff}97%,100%{text-shadow:0 0 20px rgba(0,212,255,.5);transform:skewX(0)}}
+@keyframes pixelBlink{50%{opacity:0}}
+@keyframes holoSpin{to{transform:rotate(360deg)}}
+@keyframes aurora{0%{background-position:0% 50%}25%{background-position:50% 100%}50%{background-position:100% 50%}75%{background-position:50% 0%}100%{background-position:0% 50%}}
+@keyframes goldShimmer{0%{background-position:-100% 0}100%{background-position:200% 0}}
+@keyframes neonPulse{0%,100%{box-shadow:0 0 5px #00ff41,0 0 10px #00ff41,0 0 20px rgba(0,255,65,.3)}50%{box-shadow:0 0 10px #00ff41,0 0 25px #00ff41,0 0 50px rgba(0,255,65,.4)}}
+@keyframes matrixFall{0%{transform:translateY(-100%);opacity:1}100%{transform:translateY(100vh);opacity:0}}
+.cert-common-stats{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin:10px 0}
+.cert-stat{padding:4px 10px;border-radius:20px;font-size:11px;font-weight:700;display:inline-flex;align-items:center;gap:4px}
+.cert-badge-row{display:flex;gap:6px;justify-content:center;flex-wrap:wrap;margin:8px 0}
+.cert-badge-item{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px}
+.cert-verification{font-size:10px;letter-spacing:2px;margin-top:8px;opacity:.5;font-family:var(--mono)}
+.cert-logo-footer{display:flex;align-items:center;justify-content:center;gap:6px;margin-top:10px;opacity:.4;font-size:10px}
+.cert-logo-footer svg{width:16px;height:16px}
+.cert-akademie{background:linear-gradient(145deg,#faf6e8,#f0e8d0,#e8dfc0);border:none;padding:0;text-align:center;font-family:var(--serif);color:#1a1a3e;position:relative;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;overflow:hidden}
+.cert-akademie::before{content:'';position:absolute;inset:0;background:url("data:image/svg+xml,%3Csvg width='60' height='60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 5 L35 20 L30 15 L25 20Z' fill='%23c5a54e' opacity='.04'/%3E%3C/svg%3E");pointer-events:none}
+.cert-akademie::after{content:'';position:absolute;inset:8px;border:2px solid rgba(197,165,78,.35);border-radius:2px;pointer-events:none}
+.cert-akademie .cert-inner{position:relative;z-index:1;padding:36px 32px;width:100%}
+.cert-akademie .cert-corner{position:absolute;width:60px;height:60px;z-index:2}
+.cert-akademie .cert-corner svg{width:100%;height:100%}
+.cert-akademie .cert-corner-tl{top:14px;left:14px}
+.cert-akademie .cert-corner-tr{top:14px;right:14px;transform:scaleX(-1)}
+.cert-akademie .cert-corner-bl{bottom:14px;left:14px;transform:scaleY(-1)}
+.cert-akademie .cert-corner-br{bottom:14px;right:14px;transform:scale(-1)}
+.cert-akademie .cert-title{font-size:36px;font-weight:700;color:#1a1a3e;margin-bottom:2px;letter-spacing:3px}
+.cert-akademie .cert-sub{font-size:11px;color:#8a7d5e;letter-spacing:5px;text-transform:uppercase;margin-bottom:16px}
+.cert-akademie .cert-hr{width:200px;height:2px;background:linear-gradient(90deg,transparent,#c5a54e,transparent);margin:10px auto}
+.cert-akademie .cert-body{font-size:14px;line-height:1.7;color:#3d3422;margin-bottom:8px}
+.cert-akademie .cert-name{font-size:32px;font-weight:700;background:linear-gradient(135deg,#c5a54e,#e8c84e,#c5a54e);background-size:200% auto;animation:goldShimmer 3s linear infinite;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin:12px 0;font-style:italic}
+.cert-akademie .cert-seal-wrap{margin:12px auto;position:relative;width:90px;height:90px}
+.cert-akademie .cert-seal-ring{position:absolute;inset:0;border:3px solid #c5a54e;border-radius:50%;opacity:.3}
+.cert-akademie .cert-seal{width:76px;height:76px;margin:7px;background:radial-gradient(circle at 35% 35%,#e8c84e,#c5a54e,#8a6914);border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 16px rgba(160,134,54,.5),inset 0 2px 4px rgba(255,255,255,.3)}
+.cert-akademie .cert-stat{background:rgba(197,165,78,.12);color:#8a6914;border:1px solid rgba(197,165,78,.25)}
+.cert-akademie .cert-badge-item{background:rgba(197,165,78,.15);border:1px solid rgba(197,165,78,.3)}
+.cert-akademie .cert-date{font-size:11px;color:#8a7d5e;margin-top:8px;font-style:italic}
+.cert-hacker{background:#050505;border:2px solid #00ff41;padding:0;font-family:var(--mono);color:#00ff41;position:relative;overflow:hidden;height:100%;display:flex;flex-direction:column;justify-content:center;box-shadow:0 0 30px rgba(0,255,65,.15),inset 0 0 60px rgba(0,255,65,.03);animation:neonPulse 4s ease-in-out infinite}
+.cert-hacker::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(transparent,transparent 2px,rgba(0,255,65,.025) 2px,rgba(0,255,65,.025) 4px);pointer-events:none;z-index:1}
+.cert-hacker::after{content:'> > > CERTIFIED > > > CERTIFIED > > > CERTIFIED > > >';position:absolute;bottom:0;left:0;right:0;font-size:9px;color:rgba(0,255,65,.08);letter-spacing:3px;padding:4px;white-space:nowrap;overflow:hidden;z-index:1}
+.cert-hacker .cert-inner{position:relative;z-index:2;padding:30px 32px}
+.cert-hacker .cert-matrix-col{position:absolute;top:-100%;font-size:11px;color:#00ff41;opacity:.08;z-index:0;font-family:var(--mono);line-height:1.1;animation:matrixFall linear infinite;white-space:pre}
+.cert-hacker .cert-title{font-size:22px;font-weight:700;text-shadow:0 0 15px rgba(0,255,65,.6);margin-bottom:4px}
+.cert-hacker .cert-access{font-size:32px;font-weight:700;color:#00d4ff;text-shadow:0 0 30px rgba(0,212,255,.6),0 0 60px rgba(0,212,255,.2);margin:14px 0;animation:glitch 4s infinite;letter-spacing:4px}
+.cert-hacker .cert-body{font-size:12px;line-height:2;color:#33cc55}
+.cert-hacker .cert-name{font-size:24px;color:#00d4ff;margin:12px 0;text-shadow:0 0 10px rgba(0,212,255,.4)}
+.cert-hacker .cert-prompt{color:#444;font-size:11px}
+.cert-hacker .cert-prompt span{color:#00ff41}
+.cert-hacker .cursor-blink{animation:blink 1s step-end infinite}
+.cert-hacker .cert-hex-seal{width:70px;height:70px;margin:12px auto;border:2px solid #00ff41;border-radius:50%;display:flex;align-items:center;justify-content:center;position:relative;box-shadow:0 0 15px rgba(0,255,65,.2)}
+.cert-hacker .cert-stat{background:rgba(0,255,65,.08);color:#00ff41;border:1px solid rgba(0,255,65,.2)}
+.cert-hacker .cert-badge-item{background:rgba(0,255,65,.08);border:1px solid rgba(0,255,65,.2)}
+.cert-pixel{background:linear-gradient(180deg,#0f0f2e,#1a1a3e,#0f0f2e);border:6px solid #ffd700;padding:0;text-align:center;color:#fff;font-family:var(--font);position:relative;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;overflow:hidden;box-shadow:inset 0 0 80px rgba(255,215,0,.05)}
+.cert-pixel .cert-inner{position:relative;z-index:1;padding:28px 24px;width:100%}
+.cert-pixel .cert-complete{font-size:20px;color:#00e676;margin:6px 0;animation:pixelBlink 1.2s step-end infinite;text-shadow:0 0 10px rgba(0,230,118,.4);letter-spacing:3px;font-weight:900}
+.cert-pixel .cert-title{font-size:32px;font-weight:900;color:#ffd700;text-transform:uppercase;letter-spacing:5px;text-shadow:4px 4px 0 #e4002b}
+.cert-pixel .cert-name{font-size:26px;font-weight:900;color:#fff;margin:14px 0;text-shadow:2px 2px 0 rgba(0,0,0,.5)}
+.cert-pixel .cert-stars{font-size:28px;margin:8px 0;letter-spacing:6px;color:#ffd700;text-shadow:0 0 10px rgba(255,215,0,.4)}
+.cert-pixel .cert-body{font-size:12px;color:#aaa;line-height:1.7}
+.cert-pixel .cert-score{font-size:18px;color:#ff4757;font-weight:900;margin-top:6px;text-shadow:2px 2px 0 rgba(0,0,0,.5);letter-spacing:2px}
+.cert-pixel .cert-xp-bar{width:200px;height:14px;background:#111;border:2px solid #ffd700;margin:8px auto;position:relative;overflow:hidden}
+.cert-pixel .cert-xp-fill{height:100%;background:repeating-linear-gradient(90deg,#ffd700 0px,#ffd700 8px,#ffaa00 8px,#ffaa00 16px);box-shadow:0 0 8px rgba(255,215,0,.4)}
+.cert-pixel .cert-xp-label{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:900;color:#fff;text-shadow:1px 1px 0 #000;z-index:1}
+.cert-pixel .cert-stat{background:rgba(255,215,0,.1);color:#ffd700;border:2px solid rgba(255,215,0,.3)}
+.cert-pixel .cert-badge-item{background:rgba(255,215,0,.1);border:2px solid rgba(255,215,0,.25)}
+.cert-zukunft{background:linear-gradient(135deg,#0a0a2e,#1a0a3e,#0a1a3e);border:1px solid rgba(255,255,255,.1);border-radius:20px;padding:0;text-align:center;color:#fff;font-family:var(--font);position:relative;overflow:hidden;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.cert-zukunft::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(99,102,241,.15),rgba(236,72,153,.15),rgba(245,158,11,.15),rgba(34,197,94,.15),rgba(99,102,241,.15));background-size:400% 400%;animation:aurora 8s ease infinite;pointer-events:none}
+.cert-zukunft .cert-inner{position:relative;z-index:1;padding:30px 28px;width:100%}
+.cert-zukunft .cert-particle{position:absolute;width:3px;height:3px;border-radius:50%;z-index:0}
+.cert-zukunft .cert-title{font-size:30px;font-weight:900;background:linear-gradient(135deg,#6366f1,#ec4899,#f59e0b,#22c55e);background-size:200% auto;animation:shimmer 4s linear infinite;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.cert-zukunft .cert-sub{font-size:11px;color:rgba(255,255,255,.5);letter-spacing:4px;text-transform:uppercase;margin-bottom:14px}
+.cert-zukunft .cert-name{font-size:28px;font-weight:700;margin:12px 0;background:linear-gradient(90deg,#a78bfa,#f472b6,#fbbf24);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.cert-zukunft .cert-body{font-size:13px;color:rgba(255,255,255,.65);line-height:1.7}
+.cert-zukunft .cert-seal-holo{width:80px;height:80px;margin:12px auto;border-radius:50%;background:conic-gradient(#6366f1,#ec4899,#f59e0b,#22c55e,#06b6d4,#6366f1);display:flex;align-items:center;justify-content:center;animation:holoSpin 6s linear infinite;box-shadow:0 0 30px rgba(99,102,241,.3)}
+.cert-zukunft .cert-seal-mid{width:68px;height:68px;border-radius:50%;border:2px solid rgba(255,255,255,.15);background:transparent;display:flex;align-items:center;justify-content:center;animation:holoSpin 10s linear infinite reverse}
+.cert-zukunft .cert-seal-inner{width:52px;height:52px;border-radius:50%;background:rgba(10,10,30,.9);display:flex;align-items:center;justify-content:center;backdrop-filter:blur(4px)}
+.cert-zukunft .cert-date{font-size:10px;color:rgba(255,255,255,.35);margin-top:10px;letter-spacing:2px}
+.cert-zukunft .cert-stat{background:rgba(99,102,241,.12);color:#a78bfa;border:1px solid rgba(99,102,241,.25)}
+.cert-zukunft .cert-badge-item{background:rgba(99,102,241,.1);border:1px solid rgba(99,102,241,.2)}
+.confetti-container{position:fixed;inset:0;pointer-events:none;z-index:600;overflow:hidden}
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.6);display:none;align-items:center;justify-content:center;z-index:500;padding:20px}
+.modal-overlay.active{display:flex}
+.modal{background:var(--card);border:1px solid var(--border);border-radius:var(--radius-lg);max-width:640px;width:100%;max-height:85vh;overflow-y:auto;padding:32px;position:relative}
+.modal-close{position:absolute;top:12px;right:12px;font-size:24px;color:var(--text-dim);background:none;border:none;cursor:pointer}
+@media(max-width:800px){
+.menu-btn{display:flex}
+.sidebar{transform:translateX(-100%)}
+.sidebar.open{transform:translateX(0)}
+.main{margin-left:0;padding:16px}
+}
+@media print{
+*{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}
+.site-header,.sidebar,.notif,.level-up-overlay,.confetti-container{display:none!important}
+.main{margin-left:0!important;padding:20px!important}
+.lesson-card{break-inside:avoid;page-break-inside:avoid}
+}
+
+.zoom-controls{position:fixed;bottom:16px;left:16px;display:flex;gap:4px;z-index:9999}
+.zoom-btn{width:32px;height:32px;border-radius:50%;border:1px solid var(--border,#2a3444);background:var(--bg2,#111827);color:var(--text,#d4dce8);cursor:pointer;font-size:15px;display:flex;align-items:center;justify-content:center;transition:all .2s;font-family:inherit;line-height:1}
+.zoom-btn:hover{border-color:var(--neon,#3b82f6);color:var(--neon,#3b82f6);transform:scale(1.1)}
+.zoom-btn:focus-visible{outline:2px solid var(--neon,#3b82f6);outline-offset:2px}
+.zoom-level{font-size:10px;position:absolute;top:-16px;left:50%;transform:translateX(-50%);color:var(--text-dim,#8899aa);white-space:nowrap;pointer-events:none}
+
+/* A11y: Print improvements */
+@media print{body{background:#fff!important;color:#000!important}.cert-overlay,.modal-overlay,.level-up-overlay,.theme-overlay,.zoom-controls{display:none!important}.lesson-card,.quiz-section,.boss-section,.interactive-area{break-inside:avoid;page-break-inside:avoid}}
+
+/* Audio/Speech */
+.tts-btn{background:none;border:none;cursor:pointer;font-size:.9em;opacity:.5;transition:all .2s;vertical-align:middle;margin-left:8px;padding:2px 6px;border-radius:4px}
+.tts-btn:hover{opacity:1;background:var(--bg2)}.tts-btn.speaking{opacity:1;color:var(--neon);animation:tts-pulse 1s infinite}
+@keyframes tts-pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.15)}}
+.tts-bar{display:flex;align-items:center;gap:8px;padding:6px 12px;background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);margin:8px 0;font-size:.8rem;flex-wrap:wrap}
+.tts-bar select{background:var(--bg);color:var(--text);border:1px solid var(--border);border-radius:4px;padding:2px 6px;font-size:.78rem}
+.tts-bar button{background:none;border:1px solid var(--border);border-radius:4px;padding:2px 8px;cursor:pointer;color:var(--text);font-size:.8rem}
+.tts-bar button:hover{background:var(--bg)}
+.speech-ex{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:16px;margin:12px 0;text-align:center}
+.speech-ex h4{margin:0 0 8px;font-size:1rem}
+.mic-btn{font-size:1.6em;background:none;border:2px solid var(--neon);border-radius:50%;width:52px;height:52px;cursor:pointer;transition:all .3s;color:var(--text);display:inline-flex;align-items:center;justify-content:center}
+.mic-btn:hover{background:var(--neon);color:var(--bg)}.mic-btn.rec{background:#ef4444;border-color:#ef4444;color:#fff;animation:tts-pulse 1s infinite}
+.sr-res{margin-top:8px;padding:6px 10px;border-radius:4px;font-weight:600;font-size:.85rem;display:inline-block}
+.sr-res.good{background:#22c55e22;color:#22c55e}.sr-res.retry{background:#f59e0b22;color:#f59e0b}
+.sr-na{font-size:.8rem;color:var(--text-dim);margin-top:8px}
+</style>
+</head>
+<body>
+<a href="#mainContent" class="skip-nav" style="position:absolute;top:-50px;left:8px;background:var(--neon);color:#fff;padding:8px 16px;z-index:9999;border-radius:0 0 8px 8px;font-weight:700;text-decoration:none">Zum Inhalt springen</a>
+<header class="site-header">
+<button class="menu-btn" onclick="toggleSidebar()" aria-label="Menu">&#9776;</button>
+<div class="header-logo">
+<svg viewBox="0 0 40 40" width="40" height="40" fill="none" aria-hidden="true">
+<rect x="4" y="4" width="32" height="32" rx="8" fill="var(--neon-dim)" stroke="var(--neon)" stroke-width="1.5"/>
+<text x="20" y="26" text-anchor="middle" font-size="18" font-weight="900" fill="var(--neon)">Z</text>
+</svg>
+<div class="header-logo-text">
+<div class="header-logo-main">MusikEntdecker</div>
+<div class="header-logo-sub">Musik Klasse 3-6</div>
+</div>
+</div>
+<div class="header-right">
+<div class="header-xp"><span id="headerLevel">Level 1</span><div class="header-xp-bar"><div class="header-xp-fill" style="width:0%"></div></div><span id="headerXP">0 XP</span></div>
+<div class="header-streak" id="headerStreak">&#128293; 0</div>
+<div class="theme-picker-wrap">
+<button class="theme-picker-btn" onclick="toggleThemePicker()" aria-label="Theme wählen">&#127912;</button>
+<div class="theme-picker-dd" id="themePickerDD"></div>
+</div>
+<button class="theme-toggle" onclick="toggleMode()" aria-label="Dark/Light umschalten">&#127769;</button>
+</div>
+</header>
+<nav class="sidebar" id="sidebar" role="navigation" aria-label="Module">
+<div class="sidebar-section">
+<div class="sidebar-level">
+<div class="sidebar-level-title" id="sidebarLevel">Musik-Neuling</div>
+<div class="sidebar-level-sub" id="sidebarXP">0 XP</div>
+<div class="sidebar-xp-bar"><div class="sidebar-xp-fill" id="sidebarXPFill" style="width:0%"></div></div>
+</div>
+</div>
+<div class="sidebar-section">
+<div class="sidebar-label">Module</div>
+<div id="sidebarModules"></div>
+</div>
+<div class="sidebar-section" style="border-top:1px solid var(--border);padding-top:12px;margin-top:12px">
+<a class="mod-link" onclick="showBadges()"><span class="mod-icon">&#127941;</span>Abzeichen</a>
+<a class="mod-link" onclick="showStats()"><span class="mod-icon">&#128202;</span>Statistik</a>
+<a class="mod-link" onclick="showCert()"><span class="mod-icon">&#127891;</span>Urkunde</a>
+</div>
+<div class="sidebar-section" style="border-top:1px solid var(--border);padding-top:12px;margin-top:12px">
+<a class="mod-link" onclick="exportData()"><span class="mod-icon">&#128190;</span>Speichern</a>
+    <a class="mod-link" onclick="exportFortschritt()"><span class="mod-icon">📄</span>Fortschritt (TXT)</a>
+<label class="mod-link" style="cursor:pointer"><span class="mod-icon">&#128194;</span>Laden<input type="file" accept=".json" onchange="importData(event)" style="display:none"></label>
+<a class="mod-link" onclick="if(confirm('Wirklich alles zurücksetzen?')){localStorage.removeItem(STORAGE_KEY);location.reload()}" style="color:var(--danger)"><span class="mod-icon">&#128465;</span>Zurücksetzen</a>
+</div>
+<div style="padding:16px 8px 8px;border-top:1px solid var(--border);margin-top:12px;font-size:11px;color:var(--text-dim)">
+<a onclick="showImpressum()" style="cursor:pointer;color:var(--text-dim)">Impressum</a> &middot;
+<a onclick="showDatenschutz()" style="cursor:pointer;color:var(--text-dim)">Datenschutz</a>
+</div>
+</nav>
+<main class="main" id="mainContent">
+<div class="welcome-screen" id="welcomeScreen">
+<div class="welcome-box">
+<div style="font-size:64px;margin-bottom:16px">&#127925;</div>
+<h1>MusikEntdecker</h1>
+<p class="ws-sub">Entdecke Noten, Rhythmus, Instrumente und die Welt der Musik!</p>
+<input type="text" id="nameInput" placeholder="Dein Name" maxlength="24" aria-label="Dein Name" oninput="document.getElementById('startBtn').disabled=!this.value.trim()">
+<br>
+<button class="ws-start" id="startBtn" disabled onclick="startApp()">Los geht's! &#9203;</button>
+</div>
+</div>
+<div id="moduleContent" style="display:none"></div>
+<div id="badgesView" style="display:none"></div>
+<div id="statsView" style="display:none"></div>
+</main>
+<div class="notif" id="notif" role="status" aria-live="polite" aria-atomic="true"><div class="notif-title" id="notifTitle"></div><div class="notif-text" id="notifText"></div></div>
+<div class="level-up-overlay" id="levelUpOverlay"><div class="level-up-box" id="levelUpBox"></div></div>
+<div class="confetti-container" id="confetti"></div>
+<div class="cert-overlay" id="certOverlay" role="dialog" aria-label="Urkunde" aria-modal="true">
+<div class="cert-picker" id="certPicker"></div>
+<div class="cert-frame" id="certFrame"></div>
+<div class="cert-actions">
+<button onclick="printCert()">&#128424; Drucken / PDF</button>
+<button onclick="closeCert()">Schließen</button>
+</div>
+</div>
+<div class="modal-overlay" id="impressumOverlay">
+<div class="modal">
+<button class="modal-close" onclick="document.getElementById('impressumOverlay').classList.remove('active')">&times;</button>
+<h2>Impressum</h2>
+<p><strong>&copy; 2026 GZ AI Stacks - Gerd Zimmermann</strong></p>
+<p>MusikEntdecker — Interaktive Musik-Lernapp für Klasse 3-6.</p>
+<p>Entwickelt mit Claude Code (Anthropic).</p>
+<p>Kontakt: gz-ai-stacks@example.com</p>
+</div>
+</div>
+<div class="modal-overlay" id="datenschutzOverlay">
+<div class="modal">
+<button class="modal-close" onclick="document.getElementById('datenschutzOverlay').classList.remove('active')">&times;</button>
+<h2>Datenschutzerklärung</h2>
+<p>Diese App speichert Daten <strong>ausschließlich lokal</strong> auf Ihrem Gerät.</p>
+<ul>
+<li>Keine Cookies</li>
+<li>Kein Tracking oder Analytics</li>
+<li>Keine externen Ressourcen</li>
+<li>Keine Registrierung</li>
+<li>Alle Daten verbleiben auf Ihrem Gerät</li>
+</ul>
+<p>Sie können Ihre gespeicherten Daten jederzeit über die "Zurücksetzen"-Funktion löschen.</p>
+</div>
+</div>
+<script>
+function showImpressum(){document.getElementById('impressumOverlay').classList.add('active')}
+function showDatenschutz(){document.getElementById('datenschutzOverlay').classList.add('active')}
+
+// === XOR Quiz Encryption ===
+
+// === Audio (TTS) ===
+const _synth=window.speechSynthesis,_LANG='de-DE';let _ttsOn=false,_ttsRate=1,_ttsTimer=null;
+function speakLesson(i){if(_ttsOn){stopTTS();return}const c=document.querySelectorAll('.lesson-card');if(!c[i]||!_synth)return;stopTTS();const u=new SpeechSynthesisUtterance(c[i].innerText);u.lang=_LANG;u.rate=_ttsRate;u.onstart=()=>{_ttsOn=true;updTTSUI();startTTSTimer()};u.onend=()=>{_ttsOn=false;updTTSUI();clearTTSTimer()};u.onerror=()=>{_ttsOn=false;updTTSUI();clearTTSTimer()};_synth.speak(u);showTTSBar()}
+function speakText(t,lang){if(!_synth)return;stopTTS();const u=new SpeechSynthesisUtterance(t);u.lang=lang||_LANG;u.rate=_ttsRate;u.onstart=()=>{_ttsOn=true;updTTSUI();startTTSTimer()};u.onend=()=>{_ttsOn=false;updTTSUI();clearTTSTimer()};u.onerror=()=>{_ttsOn=false;updTTSUI();clearTTSTimer()};_synth.speak(u)}
+function stopTTS(){if(_synth){_synth.cancel()}_ttsOn=false;updTTSUI();clearTTSTimer()}
+function updTTSUI(){document.querySelectorAll('.tts-btn').forEach(b=>b.classList.toggle('speaking',_ttsOn))}
+function setTTSRate(r){_ttsRate=parseFloat(r)}
+function startTTSTimer(){clearTTSTimer();_ttsTimer=setInterval(()=>{if(_synth&&_synth.speaking&&!_synth.paused){_synth.pause();_synth.resume()}},10000)}
+function clearTTSTimer(){if(_ttsTimer){clearInterval(_ttsTimer);_ttsTimer=null}}
+function showTTSBar(){if(document.getElementById('ttsBar'))return;const mc=document.getElementById('moduleContent');if(!mc)return;const b=document.createElement('div');b.className='tts-bar';b.id='ttsBar';b.innerHTML='\u{1F50A} <select onchange="setTTSRate(this.value)"><option value="0.7">Langsam</option><option value="1" selected>Normal</option><option value="1.3">Schnell</option></select> <button onclick="stopTTS()">\u25A0 Stopp</button>';mc.prepend(b)}
+
+
+/* === Fortschritt-Export (TXT) === */
+function exportFortschritt(){
+  var t=document.title.replace(/\s*[\u2014\u2013|].*/,'').trim();
+  var d=new Date();
+  var dd=String(d.getDate()).padStart(2,'0');
+  var mm=String(d.getMonth()+1).padStart(2,'0');
+  var yyyy=d.getFullYear();
+  var datum=dd+'.'+mm+'.'+yyyy;
+  var datumFile=yyyy+'-'+mm+'-'+dd;
+
+  var mc=state.modulesCompleted||[];
+  var total=modules.length;
+  var done=mc.length;
+
+  var lvl=0;
+  for(var i=LEVELS.length-1;i>=0;i--){if(state.xp>=LEVELS[i].xp){lvl=i;break;}}
+  var lvlName=LEVELS[lvl]?LEVELS[lvl].name:'';
+
+  var sep='\u2550'.repeat(42);
+  var sep2='\u2500'.repeat(42);
+  var lines=[];
+  lines.push(sep);
+  lines.push('  LERNFORTSCHRITT \u2014 '+t);
+  lines.push(sep);
+  lines.push('');
+  lines.push('  Sch\u00FCler:   '+(state.name||'(kein Name)'));
+  lines.push('  Datum:     '+datum);
+  lines.push('  Level:     '+(lvl+1)+' \u2014 '+lvlName+' ('+state.xp+' XP)');
+  lines.push('  Streak:    '+(state.streak||0)+' Tage in Folge');
+  lines.push('');
+  lines.push(sep2);
+  lines.push('  MODULE ('+done+'/'+total+' abgeschlossen)');
+  lines.push(sep2);
+  lines.push('');
+
+  for(var m=0;m<modules.length;m++){
+    var mod=modules[m];
+    var isDone=mc.indexOf(m)!==-1;
+    var icon=isDone?'\u2705':'\u2B1C';
+    var line='  '+icon+' Modul '+(m+1)+': '+mod.title;
+    if(isDone){
+      var qs=state.quizResults&&state.quizResults[m]!=null?state.quizResults[m]:'?';
+      var bs=state.bossResults&&state.bossResults[m]!=null?state.bossResults[m]:'?';
+      line+='\n        Quiz: '+qs+'/5 | Boss: '+bs+'/3';
+    }
+    lines.push(line);
+  }
+
+  var earnedBadges=(state.badges||[]);
+  lines.push('');
+  lines.push(sep2);
+  lines.push('  ABZEICHEN ('+earnedBadges.length+'/'+BADGES.length+')');
+  lines.push(sep2);
+  lines.push('');
+  if(earnedBadges.length===0){
+    lines.push('  (noch keine)');
+  }else{
+    for(var b=0;b<BADGES.length;b++){
+      if(earnedBadges.indexOf(BADGES[b].id)!==-1){
+        lines.push('  '+BADGES[b].icon+' '+BADGES[b].name);
+      }
+    }
+  }
+
+  lines.push('');
+  lines.push(sep);
+  lines.push('  (c) 2026 GZ AI Stacks \u2014 Gerd Zimmermann');
+  lines.push(sep);
+
+  var txt=lines.join('\n');
+  var safeName=(state.name||'Schueler').replace(/[^a-zA-Z0-9\u00C0-\u017F]/g,'_');
+  var fileName='Fortschritt_'+t.replace(/[^a-zA-Z0-9\u00C0-\u017F]/g,'_')+'_'+safeName+'_'+datumFile+'.txt';
+  var a=document.createElement('a');
+  a.download=fileName;
+  a.href=URL.createObjectURL(new Blob([txt],{type:'text/plain;charset=utf-8'}));
+  a.click();
+}
+
+const _qk=[0x4A,0x7F,0x2B,0x61,0x5C,0x3E,0x18,0x73];
+function _d(h,i){return h^_qk[i%_qk.length]}
+
+// === Levels ===
+const LEVELS=[
+{name:'Musik-Neuling',xp:0},{name:'Taktgeber',xp:40},{name:'Notenleser',xp:100},
+{name:'Rhythmusforscher',xp:180},{name:'Tonentdecker',xp:280},{name:'Melodiemacher',xp:400},
+{name:'Harmonieforscher',xp:540},{name:'Instrumentenkenner',xp:700},{name:'Klangkünstler',xp:880},
+{name:'Orchesterkenner',xp:1080},{name:'Komponist',xp:1300},{name:'Dirigent',xp:1540},
+{name:'Musikhistoriker',xp:1800},{name:'Stilexperte',xp:2080},{name:'Partiturleser',xp:2380},
+{name:'Musiktheoretiker',xp:2700},{name:'Konzertmeister',xp:3040},{name:'Virtuose',xp:3400},
+{name:'Musikgelehrter',xp:3780},{name:'Musikgenie',xp:4200}
+];
+
+// === Badges ===
+const BADGES=[
+{id:'m0',name:'Noten-Entdecker',icon:'🎵',desc:'Modul 1 abgeschlossen'},
+{id:'m1',name:'Rhythmus-Profi',icon:'🥁',desc:'Modul 2 abgeschlossen'},
+{id:'m2',name:'Instrumenten-Kenner',icon:'🎸',desc:'Modul 3 abgeschlossen'},
+{id:'m3',name:'Musikhistoriker',icon:'📜',desc:'Modul 4 abgeschlossen'},
+{id:'m4',name:'Tonleiter-Meister',icon:'🎹',desc:'Modul 5 abgeschlossen'},
+{id:'m5',name:'Harmonie-Forscher',icon:'🎶',desc:'Modul 6 abgeschlossen'},
+{id:'m6',name:'Komponisten-Kenner',icon:'🎼',desc:'Modul 7 abgeschlossen'},
+{id:'m7',name:'Stil-Experte',icon:'🎧',desc:'Modul 8 abgeschlossen'},
+{id:'m8',name:'Gesangs-Star',icon:'🎤',desc:'Modul 9 abgeschlossen'},
+{id:'m9',name:'Musik-Theoretiker',icon:'🏆',desc:'Modul 10 abgeschlossen'},
+{id:'first_quiz',name:'Quiz-Neuling',icon:'❓',desc:'Erstes Quiz bestanden'},
+{id:'perfect_quiz',name:'Perfektionist',icon:'💎',desc:'Quiz mit 5/5 bestanden'},
+{id:'first_boss',name:'Boss-Bezwinger',icon:'👑',desc:'Erste Boss-Challenge bestanden'},
+{id:'all_bosses',name:'Endgegner',icon:'🏆',desc:'Alle Boss-Challenges bestanden'},
+{id:'streak3',name:'Durchstarter',icon:'🔥',desc:'3 Tage in Folge gelernt'},
+{id:'streak7',name:'Wochenkrieger',icon:'⚔️',desc:'7 Tage in Folge gelernt'},
+{id:'half_done',name:'Halbzeit',icon:'⏳',desc:'5 Module abgeschlossen'},
+{id:'speed_quiz',name:'Blitz-Denker',icon:'⚡',desc:'Quiz in unter 60 Sekunden'},
+{id:'explorer',name:'Entdecker',icon:'🗺️',desc:'Alle Module angesehen'},
+{id:'graduate',name:'Absolvent',icon:'🎓',desc:'Alle 10 Module abgeschlossen'}
+];
+
+// === Theme Config ===
+const THEME_CONFIG={
+cyber:{name:'Cyber Neon',emoji:'\uD83D\uDDA5',color:'#3b82f6',desc:'Futuristisch & Digital'},
+retro:{name:'Retro Arcade',emoji:'\uD83D\uDD79',color:'#ffd700',desc:'80er Arcade-Feeling'},
+nature:{name:'Nature Forest',emoji:'\uD83C\uDF33',color:'#4ade80',desc:'Natürlich & Organisch'},
+space:{name:'Deep Space',emoji:'\uD83D\uDE80',color:'#c084fc',desc:'Kosmisch & Geheimnisvoll'},
+comic:{name:'Comic Pop',emoji:'\uD83D\uDCA5',color:'#ff6b6b',desc:'Bunt & Verspielt'},
+sketchy:{name:'Sketchy',emoji:'\u270D\uFE0F',color:'#d97706',desc:'Handgemacht & Warm'},
+'nature-code':{name:'Nature x Code',emoji:'\uD83C\uDF3F',color:'#10b981',desc:'Natur trifft Technik'},
+glass:{name:'Glasmorphism',emoji:'\uD83D\uDCA0',color:'#00d9ff',desc:'Modern & Transparent'}
+};
+
+// === Modules ===
+// === Modules ===
+const modules=[
+{id:0,title:'Noten lesen',icon:'\uD83C\uDFB5',duration:'20 Min.',description:'Notenwerte, Notensystem, Violin- und Bassschl\u00fcssel verstehen!',
+lessons:[
+{title:'Das Notensystem',content:'<p>Musik wird in einem <strong>Notensystem</strong> aufgeschrieben, das aus <strong>5 Linien</strong> besteht.</p><p><strong>Wichtige Begriffe:</strong></p><ul><li><strong>Notensystem:</strong> 5 waagerechte Linien und 4 Zwischenr\u00e4ume</li><li><strong>Violinschl\u00fcssel (G-Schl\u00fcssel):</strong> Steht am Anfang f\u00fcr hohe T\u00f6ne (rechte Hand am Klavier)</li><li><strong>Bassschl\u00fcssel (F-Schl\u00fcssel):</strong> Steht am Anfang f\u00fcr tiefe T\u00f6ne (linke Hand am Klavier)</li></ul><p><strong>Die Stammt\u00f6ne:</strong></p><ul><li>Es gibt <strong>7 Stammt\u00f6ne:</strong> C, D, E, F, G, A, H</li><li>Danach beginnt es wieder von vorne (eine <strong>Oktave</strong> h\u00f6her)</li><li>Im Violinschl\u00fcssel liegt das <strong>eingestrichene C</strong> auf einer Hilfslinie unter dem System</li></ul><div class=\"info-box\">\uD83D\uDCA1 <strong>Merke:</strong> Die Noten auf den <strong>Linien</strong> im Violinschl\u00fcssel hei\u00dfen von unten: <strong>E, G, H, D, F</strong> \u2014 Merksatz: <strong>E</strong>s <strong>G</strong>eht <strong>H</strong>urtig <strong>D</strong>urch <strong>F</strong>lei\u00df!</div>'},
+{title:'Notenwerte \u2014 wie lange klingt ein Ton?',content:'<p>Jede Note hat einen bestimmten <strong>Wert</strong>, der angibt, wie lange sie klingt.</p><p><strong>Die wichtigsten Notenwerte:</strong></p><ul><li><strong>Ganze Note (\u25CB):</strong> 4 Schl\u00e4ge \u2014 der l\u00e4ngste Standardwert</li><li><strong>Halbe Note (\uD834\uDD5F):</strong> 2 Schl\u00e4ge \u2014 halb so lang wie eine ganze Note</li><li><strong>Viertelnote (\u2669):</strong> 1 Schlag \u2014 der \"Grundschlag\"</li><li><strong>Achtelnote (\u266A):</strong> \u00BD Schlag \u2014 doppelt so schnell wie eine Viertelnote</li></ul><p><strong>Pausen:</strong></p><ul><li>Zu jedem Notenwert gibt es eine <strong>Pause</strong> gleicher L\u00e4nge</li><li>Ganze Pause, halbe Pause, Viertelpause, Achtelpause</li><li>W\u00e4hrend einer Pause wird <strong>kein Ton</strong> gespielt</li></ul><div class=\"info-box\">\uD83D\uDCA1 <strong>Wusstest du?</strong> Zwei Achtelnoten dauern zusammen genauso lang wie <strong>eine Viertelnote</strong>!</div>'}
+],
+quiz:[
+{q:'Aus wie vielen Linien besteht ein Notensystem?',a:['3','4','5','6'],_h:0x48},
+{q:'Welcher Schl\u00fcssel steht f\u00fcr hohe T\u00f6ne?',a:['Bassschl\u00fcssel','Violinschl\u00fcssel','Altschl\u00fcssel','Tenorschl\u00fcssel'],_h:0x7E},
+{q:'Wie viele Schl\u00e4ge hat eine ganze Note?',a:['1','2','4','8'],_h:0x29},
+{q:'Wie viele Stammt\u00f6ne gibt es?',a:['5','6','7','8'],_h:0x63},
+{q:'Wie lang klingt eine Viertelnote?',a:['1 Schlag','2 Schl\u00e4ge','4 Schl\u00e4ge','\u00BD Schlag'],_h:0x5C}
+],
+boss:[
+{q:'Warum braucht man verschiedene Notenwerte?',a:['Damit es sch\u00f6ner aussieht','Um verschiedene Rhythmen und Tonl\u00e4ngen darstellen zu k\u00f6nnen','Weil es Pflicht ist','Aus Tradition'],_h:0x4B},
+{q:'Was passiert, wenn man einen Punkt hinter eine Note setzt?',a:['Sie wird leiser','Sie wird um die H\u00e4lfte ihres Wertes verl\u00e4ngert','Sie wird k\u00fcrzer','Nichts'],_h:0x7E},
+{q:'Warum gibt es sowohl Violin- als auch Bassschl\u00fcssel?',a:['Zur Dekoration','Um den gesamten Tonumfang von hohen bis tiefen T\u00f6nen abdecken zu k\u00f6nnen','Weil einer f\u00fcr Kinder ist','Weil es zwei H\u00e4nde gibt'],_h:0x29}
+]},
+{id:1,title:'Rhythmus und Takt',icon:'\uD83E\uDD41',duration:'20 Min.',description:'Taktarten, Rhythmus, Pausen und Metrum \u2014 der Puls der Musik!',
+lessons:[
+{title:'Was ist Rhythmus?',content:'<p><strong>Rhythmus</strong> ist die zeitliche Ordnung der Musik \u2014 er bestimmt, <strong>wann</strong> T\u00f6ne erklingen und wie lange sie dauern.</p><p><strong>Wichtige Begriffe:</strong></p><ul><li><strong>Metrum:</strong> Der gleichm\u00e4\u00dfige Grundschlag \u2014 wie ein Herzschlag der Musik</li><li><strong>Rhythmus:</strong> Das Muster aus langen und kurzen T\u00f6nen \u00fcber dem Metrum</li><li><strong>Tempo:</strong> Wie schnell oder langsam das Metrum ist</li></ul><p><strong>Rhythmus im Alltag:</strong></p><ul><li>Das Ticken einer Uhr = gleichm\u00e4\u00dfiges Metrum</li><li>Dein Herzschlag = nat\u00fcrlicher Rhythmus</li><li>Klatschen zu einem Lied = du klatschst den Rhythmus</li></ul><div class=\"info-box\">\uD83D\uDCA1 <strong>Merke:</strong> Das <strong>Metrum</strong> ist gleichm\u00e4\u00dfig wie ein Uhrwerk, der <strong>Rhythmus</strong> tanzt dar\u00fcber!</div>'},
+{title:'Taktarten verstehen',content:'<p>Ein <strong>Takt</strong> ist eine Gruppe von Schl\u00e4gen, die durch Taktstriche getrennt werden.</p><p><strong>Die wichtigsten Taktarten:</strong></p><ul><li><strong>4/4-Takt:</strong> 4 Viertelnoten pro Takt \u2014 der h\u00e4ufigste Takt (Pop, Rock, Marsch)</li><li><strong>3/4-Takt:</strong> 3 Viertelnoten pro Takt \u2014 typisch f\u00fcr den Walzer</li><li><strong>6/8-Takt:</strong> 6 Achtelnoten pro Takt \u2014 wiegend, t\u00e4nzerisch</li></ul><p><strong>Die Taktangabe:</strong></p><ul><li>Steht am Anfang eines St\u00fcckes nach dem Schl\u00fcssel</li><li>Obere Zahl = <strong>wie viele</strong> Schl\u00e4ge pro Takt</li><li>Untere Zahl = <strong>welcher Notenwert</strong> einen Schlag bekommt</li></ul><div class=\"info-box\">\uD83D\uDCA1 <strong>Wusstest du?</strong> Der 4/4-Takt wird auch <strong>Common Time</strong> genannt und oft mit einem <strong>C</strong> abgek\u00fcrzt!</div>'}
+],
+quiz:[
+{q:'Was ist das Metrum?',a:['Ein Instrument','Der gleichm\u00e4\u00dfige Grundschlag der Musik','Eine Tonart','Ein Notenwert'],_h:0x4B},
+{q:'Wie viele Viertelnoten passen in einen 4/4-Takt?',a:['2','3','4','6'],_h:0x7D},
+{q:'Welche Taktart ist typisch f\u00fcr einen Walzer?',a:['2/4-Takt','3/4-Takt','4/4-Takt','6/8-Takt'],_h:0x2A},
+{q:'Was zeigt die obere Zahl der Taktangabe an?',a:['Das Tempo','Die Tonart','Wie viele Schl\u00e4ge pro Takt','Die Lautst\u00e4rke'],_h:0x63},
+{q:'Was trennt einzelne Takte voneinander?',a:['Pausen','Taktstriche','Schl\u00fcssel','Noten'],_h:0x5D}
+],
+boss:[
+{q:'Warum ist der 4/4-Takt der h\u00e4ufigste Takt in der Popmusik?',a:['Zufall','Weil sein gleichm\u00e4\u00dfiger Viererrhythmus nat\u00fcrlich und eing\u00e4ngig wirkt','Weil er am einfachsten zu schreiben ist','Weil Instrumente nur 4 Saiten haben'],_h:0x4B},
+{q:'Was ist der Unterschied zwischen Rhythmus und Metrum?',a:['Es gibt keinen','Das Metrum ist der gleichm\u00e4\u00dfige Puls, der Rhythmus ist das wechselnde Muster aus langen und kurzen T\u00f6nen dar\u00fcber','Rhythmus ist langsamer','Metrum ist lauter'],_h:0x7E},
+{q:'Warum klingt ein Walzer so anders als ein Marsch?',a:['Wegen der Instrumente','Der Walzer hat einen schwingenden 3/4-Takt, der Marsch einen geraden 4/4-Takt','Weil der Walzer leiser ist','Weil M\u00e4rsche keine Noten haben'],_h:0x29}
+]},
+{id:2,title:'Instrumente der Welt',icon:'\uD83C\uDFB8',duration:'25 Min.',description:'Streich-, Blas-, Schlag-, Tasten- und Zupfinstrumente entdecken!',
+lessons:[
+{title:'Die Instrumentenfamilien',content:'<p>Instrumente werden nach ihrer <strong>Tonerzeugung</strong> in Familien eingeteilt.</p><p><strong>Die 5 Instrumentenfamilien:</strong></p><ul><li><strong>Streichinstrumente:</strong> Ton entsteht durch Streichen mit einem Bogen (Geige, Bratsche, Cello, Kontrabass)</li><li><strong>Blasinstrumente:</strong> Ton entsteht durch Anblasen<ul><li><strong>Holzbl\u00e4ser:</strong> Fl\u00f6te, Klarinette, Oboe, Fagott</li><li><strong>Blechbl\u00e4ser:</strong> Trompete, Posaune, Horn, Tuba</li></ul></li><li><strong>Schlaginstrumente:</strong> Ton entsteht durch Schlagen (Trommel, Pauke, Becken, Xylophon)</li><li><strong>Tasteninstrumente:</strong> Ton \u00fcber Tasten erzeugt (Klavier, Orgel, Keyboard)</li><li><strong>Zupfinstrumente:</strong> Saiten werden gezupft (Gitarre, Harfe, Laute, Ukulele)</li></ul><div class=\"info-box\">\uD83D\uDCA1 <strong>Wusstest du?</strong> Das <strong>Klavier</strong> ist eigentlich ein Schlaginstrument \u2014 kleine H\u00e4mmerchen schlagen auf die Saiten!</div>'},
+{title:'Das Orchester',content:'<p>Ein <strong>Sinfonieorchester</strong> besteht aus bis zu <strong>100 Musikern</strong> und allen Instrumentenfamilien!</p><p><strong>Die Sitzordnung:</strong></p><ul><li><strong>Vorne links:</strong> 1. Violinen (Geigen)</li><li><strong>Vorne rechts:</strong> 2. Violinen, Bratschen, Celli</li><li><strong>Mitte:</strong> Holzbl\u00e4ser (Fl\u00f6ten, Oboen, Klarinetten, Fagotte)</li><li><strong>Dahinter:</strong> Blechbl\u00e4ser (H\u00f6rner, Trompeten, Posaunen, Tuba)</li><li><strong>Ganz hinten:</strong> Schlagwerk (Pauken, Becken, Triangel)</li></ul><p>Der <strong>Dirigent</strong> steht vorne und leitet das Orchester mit dem Taktstock.</p><div class=\"info-box\">\uD83D\uDCA1 <strong>Merke:</strong> Die gr\u00f6\u00dfte Gruppe im Orchester sind die <strong>Streichinstrumente</strong> \u2014 sie machen \u00fcber die H\u00e4lfte der Musiker aus!</div>'}
+],
+quiz:[
+{q:'Wie erzeugt eine Geige ihren Ton?',a:['Durch Blasen','Durch Schlagen','Durch Streichen mit einem Bogen','Durch Tasten'],_h:0x48},
+{q:'Welches Instrument geh\u00f6rt zu den Holzbl\u00e4sern?',a:['Trompete','Klarinette','Geige','Trommel'],_h:0x7E},
+{q:'Wer leitet ein Orchester?',a:['Der Pianist','Der Dirigent','Der S\u00e4nger','Der Gitarrist'],_h:0x2A},
+{q:'Zu welcher Familie geh\u00f6rt die Gitarre?',a:['Streichinstrumente','Schlaginstrumente','Zupfinstrumente','Blasinstrumente'],_h:0x63},
+{q:'Welche Instrumentengruppe ist im Orchester am gr\u00f6\u00dften?',a:['Blechbl\u00e4ser','Holzbl\u00e4ser','Streichinstrumente','Schlaginstrumente'],_h:0x5E}
+],
+boss:[
+{q:'Warum hat das Klavier sowohl Tasten als auch Saiten?',a:['Damit es sch\u00f6ner aussieht','Die Tasten bet\u00e4tigen H\u00e4mmerchen, die auf Saiten schlagen \u2014 es ist also gleichzeitig Tasten- und Saiteninstrument','Weil es alt ist','Damit man es stimmen kann'],_h:0x4B},
+{q:'Warum sitzen die Streichinstrumente im Orchester vorne?',a:['Weil sie leiser sind als Bl\u00e4ser und so besser geh\u00f6rt werden k\u00f6nnen','Weil sie wichtiger sind','Zufall','Weil sie kleiner sind'],_h:0x4A},
+{q:'Was unterscheidet Holz- von Blechbl\u00e4sern?',a:['Die Farbe','Holzbl\u00e4ser erzeugen den Ton durch ein Rohrblatt oder Anblasen einer Kante, Blechbl\u00e4ser durch Lippenschwingung in ein Kesselmund\u00adst\u00fcck','Holzbl\u00e4ser sind lauter','Blechbl\u00e4ser haben Tasten'],_h:0x29}
+]},
+{id:3,title:'Musikgeschichte',icon:'\uD83D\uDCDC',duration:'25 Min.',description:'Von Barock \u00fcber Klassik bis zur Moderne \u2014 die gro\u00dfen Epochen!',
+lessons:[
+{title:'Die Epochen der Musikgeschichte',content:'<p>Die Musikgeschichte wird in gro\u00dfe <strong>Epochen</strong> eingeteilt, die sich in Stil und Klang unterscheiden.</p><p><strong>Die wichtigsten Epochen:</strong></p><ul><li><strong>Barock (ca. 1600\u20131750):</strong> Prachtvolle, verzierte Musik. Wichtige Komponisten: Bach, H\u00e4ndel, Vivaldi</li><li><strong>Klassik (ca. 1750\u20131820):</strong> Klare, elegante Formen. Wichtige Komponisten: Mozart, Haydn, Beethoven</li><li><strong>Romantik (ca. 1820\u20131900):</strong> Gef\u00fchlvolle, ausdrucksstarke Musik. Wichtige Komponisten: Schubert, Schumann, Tschaikowsky, Brahms</li><li><strong>Moderne (ab ca. 1900):</strong> Experimentell, neue Kl\u00e4nge. Wichtige Komponisten: Strawinsky, Sch\u00f6nberg, Bart\u00f3k</li></ul><div class=\"info-box\">\uD83D\uDCA1 <strong>Merke:</strong> Jede Epoche hat ihren eigenen <strong>Klangcharakter</strong> \u2014 vom prunkvollen Barock bis zur experimentellen Moderne!</div>'},
+{title:'Musik im Wandel der Zeit',content:'<p>Musik hat sich \u00fcber die Jahrhunderte stark ver\u00e4ndert.</p><p><strong>Ver\u00e4nderungen:</strong></p><ul><li><strong>Instrumente:</strong> Vom Cembalo zum Klavier, von der Laute zur Gitarre</li><li><strong>Auff\u00fchrungsorte:</strong> Von Kirchen und Schl\u00f6ssern zu Konzertsälen und Stadien</li><li><strong>Notation:</strong> Von einfachen Neumen zu unserem heutigen Notensystem</li><li><strong>Verbreitung:</strong> Von Live-Auff\u00fchrungen zu Schallplatte, CD und Streaming</li></ul><p><strong>Wichtige Meilensteine:</strong></p><ul><li><strong>1600:</strong> Die Oper wird erfunden</li><li><strong>1709:</strong> Das Klavier wird gebaut</li><li><strong>1877:</strong> Thomas Edison erfindet den Phonographen</li><li><strong>1950er:</strong> Rock \'n\' Roll ver\u00e4ndert die Musikwelt</li></ul><div class=\"info-box\">\uD83D\uDCA1 <strong>Wusstest du?</strong> Fr\u00fcher konnte man Musik <strong>nur live</strong> h\u00f6ren \u2014 es gab keine Aufnahmen!</div>'}
+],
+quiz:[
+{q:'In welche Epoche geh\u00f6rt Johann Sebastian Bach?',a:['Klassik','Romantik','Barock','Moderne'],_h:0x48},
+{q:'Welche Epoche ist bekannt f\u00fcr klare, elegante Formen?',a:['Barock','Klassik','Romantik','Moderne'],_h:0x7E},
+{q:'Wer erfand den Phonographen?',a:['Mozart','Bach','Thomas Edison','Beethoven'],_h:0x29},
+{q:'Welche Epoche ist besonders gef\u00fchlvoll und ausdrucksstark?',a:['Barock','Klassik','Romantik','Moderne'],_h:0x63},
+{q:'Wann wurde die Oper ungef\u00e4hr erfunden?',a:['Um 1400','Um 1600','Um 1800','Um 1900'],_h:0x5D}
+],
+boss:[
+{q:'Warum hat sich der Musikstil \u00fcber die Jahrhunderte ver\u00e4ndert?',a:['Zufall','Gesellschaftliche Ver\u00e4nderungen, neue Instrumente und das Streben nach neuen Ausdrucksformen trieben die Entwicklung voran','Weil die Noten sich ge\u00e4ndert haben','Weil Musiker gelangweilt waren'],_h:0x4B},
+{q:'Was unterscheidet die Klassik vom Barock?',a:['Nichts','Die Klassik bevorzugt klare Formen und Schlichtheit, w\u00e4hrend der Barock auf Verzierungen und Prunk setzt','Die Klassik ist \u00e4lter','Der Barock hat mehr Instrumente'],_h:0x7E},
+{q:'Warum war die Erfindung der Tonaufnahme revolution\u00e4r?',a:['Weil Platten sch\u00f6n aussehen','Erstmals konnte Musik unabh\u00e4ngig von Live-Auff\u00fchrungen geh\u00f6rt und f\u00fcr die Nachwelt bewahrt werden','Weil es billiger war','Weil Musiker nicht mehr \u00fcben mussten'],_h:0x29}
+]},
+{id:4,title:'Tonleitern und Intervalle',icon:'\uD83C\uDFB9',duration:'25 Min.',description:'Dur, Moll, Halbtonschritte und Intervalle \u2014 die Bausteine der Melodie!',
+lessons:[
+{title:'Dur- und Moll-Tonleitern',content:'<p>Eine <strong>Tonleiter</strong> ist eine Folge von T\u00f6nen, die nach bestimmten Regeln aufsteigen.</p><p><strong>Die Dur-Tonleiter:</strong></p><ul><li>Klingt <strong>fr\u00f6hlich und hell</strong></li><li>Aufbau: Ganzton-Ganzton-<strong>Halbton</strong>-Ganzton-Ganzton-Ganzton-<strong>Halbton</strong></li><li>Beispiel: C-Dur = C, D, E, F, G, A, H, C (nur wei\u00dfe Tasten!)</li></ul><p><strong>Die Moll-Tonleiter:</strong></p><ul><li>Klingt <strong>traurig und dunkel</strong></li><li>Aufbau: Ganzton-<strong>Halbton</strong>-Ganzton-Ganzton-<strong>Halbton</strong>-Ganzton-Ganzton</li><li>Beispiel: a-Moll = A, H, C, D, E, F, G, A (auch nur wei\u00dfe Tasten!)</li></ul><div class=\"info-box\">\uD83D\uDCA1 <strong>Merke:</strong> Dur und Moll verwenden die <strong>gleichen T\u00f6ne</strong>, starten aber an verschiedenen Stellen \u2014 das ver\u00e4ndert die Stimmung komplett!</div>'},
+{title:'Intervalle \u2014 der Abstand zwischen T\u00f6nen',content:'<p>Ein <strong>Intervall</strong> ist der Abstand zwischen zwei T\u00f6nen.</p><p><strong>Die wichtigsten Intervalle:</strong></p><ul><li><strong>Prime:</strong> Gleicher Ton (C \u2192 C) \u2014 kein Abstand</li><li><strong>Sekunde:</strong> 1 Tonschritt (C \u2192 D)</li><li><strong>Terz:</strong> 2 Tonschritte (C \u2192 E) \u2014 bestimmt Dur oder Moll!</li><li><strong>Quarte:</strong> 3 Tonschritte (C \u2192 F)</li><li><strong>Quinte:</strong> 4 Tonschritte (C \u2192 G) \u2014 klingt stabil</li><li><strong>Sexte:</strong> 5 Tonschritte (C \u2192 A)</li><li><strong>Septime:</strong> 6 Tonschritte (C \u2192 H)</li><li><strong>Oktave:</strong> 7 Tonschritte (C \u2192 C) \u2014 gleicher Ton, aber h\u00f6her</li></ul><div class=\"info-box\">\uD83D\uDCA1 <strong>Wusstest du?</strong> Die <strong>Quinte</strong> ist das stabilste Intervall und bildet die Grundlage f\u00fcr den Quintenzirkel!</div>'}
+],
+quiz:[
+{q:'Wie klingt eine Dur-Tonleiter?',a:['Traurig','Fr\u00f6hlich und hell','Gruselig','Langweilig'],_h:0x4B},
+{q:'Welches Intervall hat keinen Tonabstand?',a:['Prime','Sekunde','Terz','Quinte'],_h:0x7F},
+{q:'Aus welchen Schritten besteht die Dur-Tonleiter?',a:['Nur Ganzt\u00f6ne','Ganzton-Ganzton-Halbton-Ganzton-Ganzton-Ganzton-Halbton','Nur Halbt\u00f6ne','Halbton-Ganzton-Halbton'],_h:0x2A},
+{q:'Welches Intervall entscheidet, ob ein Akkord Dur oder Moll ist?',a:['Prime','Quinte','Terz','Oktave'],_h:0x63},
+{q:'Was ist eine Oktave?',a:['Ein Akkord','Der Abstand von 7 Tonschritten zum gleichen Ton in h\u00f6herer Lage','Ein Rhythmus','Eine Taktart'],_h:0x5D}
+],
+boss:[
+{q:'Warum klingt Moll traurig und Dur fr\u00f6hlich?',a:['Zufall','Die kleine Terz in Moll erzeugt eine dunklere Klangfarbe als die gro\u00dfe Terz in Dur','Weil Moll langsamer ist','Weil Dur lauter ist'],_h:0x4B},
+{q:'Warum enth\u00e4lt C-Dur und a-Moll die gleichen T\u00f6ne, klingen aber unterschiedlich?',a:['Tun sie nicht','Weil sie von verschiedenen Grundt\u00f6nen ausgehen und dadurch die Halb- und Ganzt\u00f6ne an anderen Stellen liegen','Weil eines lauter ist','Weil verschiedene Instrumente spielen'],_h:0x7E},
+{q:'Was ist der Quintenzirkel?',a:['Ein Instrument','Eine kreisf\u00f6rmige Anordnung aller 12 Tonarten nach Quintverwandtschaft, die zeigt, welche Tonarten eng miteinander verwandt sind','Ein Rhythmus','Ein Tanz'],_h:0x29}
+]},
+{id:5,title:'Harmonie und Akkorde',icon:'\uD83C\uDFB6',duration:'25 Min.',description:'Dreikl\u00e4nge, Dur, Moll und Umkehrungen \u2014 so entsteht Harmonie!',
+lessons:[
+{title:'Was sind Akkorde?',content:'<p>Ein <strong>Akkord</strong> entsteht, wenn <strong>mindestens drei T\u00f6ne gleichzeitig</strong> erklingen.</p><p><strong>Der Dreiklang:</strong></p><ul><li>Besteht aus <strong>Grundton + Terz + Quinte</strong></li><li><strong>Dur-Dreiklang:</strong> Gro\u00dfe Terz + kleine Terz = fr\u00f6hlich (C-E-G)</li><li><strong>Moll-Dreiklang:</strong> Kleine Terz + gro\u00dfe Terz = traurig (A-C-E)</li></ul><p><strong>Wichtige Akkorde in C-Dur:</strong></p><ul><li><strong>C-Dur:</strong> C-E-G (Tonika \u2014 \"Heimat\")</li><li><strong>F-Dur:</strong> F-A-C (Subdominante)</li><li><strong>G-Dur:</strong> G-H-D (Dominante \u2014 \"Spannung\")</li></ul><div class=\"info-box\">\uD83D\uDCA1 <strong>Merke:</strong> Mit nur <strong>3 Akkorden</strong> (Tonika, Subdominante, Dominante) kann man tausende Lieder begleiten!</div>'},
+{title:'Grundstellung und Umkehrungen',content:'<p>Akkorde k\u00f6nnen in verschiedenen <strong>Lagen</strong> gespielt werden.</p><p><strong>Lagen des Dreiklangs:</strong></p><ul><li><strong>Grundstellung:</strong> Grundton ist der tiefste Ton (C-E-G)</li><li><strong>1. Umkehrung (Sextakkord):</strong> Terz ist der tiefste Ton (E-G-C)</li><li><strong>2. Umkehrung (Quartsextakkord):</strong> Quinte ist der tiefste Ton (G-C-E)</li></ul><p><strong>Warum Umkehrungen?</strong></p><ul><li>Gleicher Akkord, aber anderer Klangcharakter</li><li>Erm\u00f6glicht <strong>fl\u00fcssigere \u00dcberg\u00e4nge</strong> zwischen Akkorden</li><li>Die Begleitstimme muss weniger springen</li></ul><div class=\"info-box\">\uD83D\uDCA1 <strong>Wusstest du?</strong> In der Popmusik werden oft nur <strong>4 Akkorde</strong> verwendet \u2014 trotzdem klingen alle Lieder unterschiedlich!</div>'}
+],
+quiz:[
+{q:'Aus wie vielen T\u00f6nen besteht ein Dreiklang?',a:['2','3','4','5'],_h:0x4B},
+{q:'Wie klingt ein Dur-Dreiklang?',a:['Traurig','Fr\u00f6hlich','Gruselig','Neutral'],_h:0x7F},
+{q:'Aus welchen T\u00f6nen besteht C-Dur?',a:['C-D-E','C-E-G','C-F-A','C-G-H'],_h:0x2A},
+{q:'Was ist eine Umkehrung eines Akkords?',a:['Ein falscher Akkord','Der gleiche Akkord mit einem anderen Ton als tiefstem Ton','Ein neuer Akkord','Ein Rhythmus'],_h:0x60},
+{q:'Wie viele Hauptakkorde braucht man zum Liedbegleiten?',a:['1','2','3','10'],_h:0x5E}
+],
+boss:[
+{q:'Was unterscheidet einen Dur-Dreiklang von einem Moll-Dreiklang?',a:['Die Anzahl der T\u00f6ne','Beim Dur-Dreiklang ist die untere Terz gro\u00df, beim Moll-Dreiklang klein \u2014 das bestimmt die Stimmung','Die Lautst\u00e4rke','Die Tonh\u00f6he'],_h:0x4B},
+{q:'Warum funktionieren so viele Popsongs mit den gleichen 4 Akkorden?',a:['Zufall','Diese Akkordfolge erzeugt eine nat\u00fcrliche Spannung und Aufl\u00f6sung, die unser Gehirn als angenehm empfindet','Weil Popmusiker faul sind','Weil es keine anderen Akkorde gibt'],_h:0x7E},
+{q:'Was ist die Funktion der Dominante in einer Akkordfolge?',a:['Sie ist unwichtig','Sie erzeugt Spannung, die sich zur Tonika hin aufl\u00f6st und so ein Gef\u00fchl von Abschluss schafft','Sie ist der lauteste Akkord','Sie ist der schnellste Akkord'],_h:0x29}
+]},
+{id:6,title:'Ber\u00fchmte Komponisten',icon:'\uD83C\uDFBC',duration:'25 Min.',description:'Bach, Mozart, Beethoven, Vivaldi, Tschaikowsky \u2014 die Meister der Musik!',
+lessons:[
+{title:'Die gro\u00dfen Meister',content:'<p>Diese Komponisten haben die Musikgeschichte <strong>f\u00fcr immer ver\u00e4ndert</strong>.</p><p><strong>Johann Sebastian Bach (1685\u20131750):</strong></p><ul><li>Meister des <strong>Barock</strong> und der Fuge</li><li>Ber\u00fchmte Werke: Brandenburgische Konzerte, Matth\u00e4us-Passion, Toccata und Fuge in d-Moll</li></ul><p><strong>Wolfgang Amadeus Mozart (1756\u20131791):</strong></p><ul><li>Wunderkind der <strong>Klassik</strong>, komponierte ab 5 Jahren</li><li>Ber\u00fchmte Werke: Eine kleine Nachtmusik, Die Zauberfl\u00f6te, Requiem</li></ul><p><strong>Ludwig van Beethoven (1770\u20131827):</strong></p><ul><li>Br\u00fccke zwischen Klassik und Romantik, wurde im Alter <strong>taub</strong></li><li>Ber\u00fchmte Werke: F\u00fcr Elise, 9. Sinfonie (\"Ode an die Freude\"), Mondscheinsonate</li></ul><div class=\"info-box\">\uD83D\uDCA1 <strong>Wusstest du?</strong> Beethoven komponierte seine ber\u00fchmtesten Werke, als er schon fast <strong>vollst\u00e4ndig taub</strong> war!</div>'},
+{title:'Weitere gro\u00dfe Komponisten',content:'<p>Neben den drei Gr\u00f6\u00dften gibt es viele weitere bedeutende Komponisten.</p><p><strong>Antonio Vivaldi (1678\u20131741):</strong></p><ul><li>Italienischer Barock-Meister, Priester und Geigenvirtuose</li><li>Ber\u00fchmtestes Werk: <strong>Die vier Jahreszeiten</strong> \u2014 vier Violinkonzerte, die Fr\u00fchling, Sommer, Herbst und Winter in Musik verwandeln</li></ul><p><strong>Pjotr Iljitsch Tschaikowsky (1840\u20131893):</strong></p><ul><li>Russischer Romantiker mit dramatischer, emotionaler Musik</li><li>Ber\u00fchmte Werke: Schwanensee, Der Nussknacker, Dornr\u00f6schen, 1812-Ouvert\u00fcre</li></ul><p><strong>Weitere wichtige Komponisten:</strong></p><ul><li><strong>H\u00e4ndel:</strong> Feuerwerksmusik, Messiah</li><li><strong>Schubert:</strong> Der Erlk\u00f6nig, Unvollendete Sinfonie</li><li><strong>Clara Schumann:</strong> Pianistin und Komponistin der Romantik</li></ul><div class=\"info-box\">\uD83D\uDCA1 <strong>Merke:</strong> Auch <strong>Frauen</strong> wie Clara Schumann komponierten gro\u00dfartige Musik \u2014 sie wurden nur oft nicht gleich anerkannt!</div>'}
+],
+quiz:[
+{q:'Wer komponierte \"Die vier Jahreszeiten\"?',a:['Mozart','Vivaldi','Beethoven','Bach'],_h:0x4B},
+{q:'Was war besonders an Beethoven?',a:['Er war blind','Er wurde taub und komponierte trotzdem weiter','Er war K\u00f6nig','Er spielte nur Gitarre'],_h:0x7E},
+{q:'In welchem Alter begann Mozart zu komponieren?',a:['Mit 15','Mit 10','Mit 5','Mit 20'],_h:0x29},
+{q:'Welches Werk stammt von Bach?',a:['Die Zauberfl\u00f6te','Schwanensee','Toccata und Fuge in d-Moll','F\u00fcr Elise'],_h:0x63},
+{q:'Wer komponierte \"Schwanensee\"?',a:['Mozart','Bach','Vivaldi','Tschaikowsky'],_h:0x5F}
+],
+boss:[
+{q:'Warum gilt Beethoven als Br\u00fccke zwischen Klassik und Romantik?',a:['Zufall','Er begann im klassischen Stil und entwickelte zunehmend emotionalere, freiere Formen, die die Romantik einleiteten','Weil er zwei Namen hatte','Weil er auf einer Br\u00fccke wohnte'],_h:0x4B},
+{q:'Warum ist es bemerkenswert, dass Beethoven taub komponierte?',a:['Ist es nicht','Er hatte die Musik so verinnerlicht, dass er sie im Kopf h\u00f6ren und aufschreiben konnte \u2014 das zeigt seine au\u00dferordentliche Begabung','Weil es unm\u00f6glich ist','Weil er laut spielte'],_h:0x7E},
+{q:'Warum war Mozart ein \"Wunderkind\"?',a:['Weil er gro\u00df war','Er komponierte und spielte bereits mit 5 Jahren auf h\u00f6chstem Niveau, was f\u00fcr Kinder \u00e4u\u00dferst ungew\u00f6hnlich ist','Weil er viele Geschwister hatte','Weil er gut aussah'],_h:0x29}
+]},
+{id:7,title:'Musikstile und Genres',icon:'\uD83C\uDFA7',duration:'25 Min.',description:'Klassik, Jazz, Rock, Pop, Hip-Hop und elektronische Musik \u2014 die Vielfalt!',
+lessons:[
+{title:'Die wichtigsten Musikgenres',content:'<p>Musik gibt es in unz\u00e4hligen <strong>Stilen</strong> und <strong>Genres</strong>.</p><p><strong>Die gro\u00dfen Genres:</strong></p><ul><li><strong>Klassische Musik:</strong> Orchesterwerke, Opern, Kammermusik \u2014 Jahrhunderte alte Tradition</li><li><strong>Jazz:</strong> Entstanden um 1900 in den USA, gepr\u00e4gt von <strong>Improvisation</strong> und Swing</li><li><strong>Rock:</strong> Ab den 1950ern, E-Gitarre im Mittelpunkt (Elvis, Beatles, Rolling Stones)</li><li><strong>Pop:</strong> Eing\u00e4ngige Melodien, breites Publikum (Michael Jackson, Madonna, Taylor Swift)</li><li><strong>Hip-Hop/Rap:</strong> Ab den 1970ern in New York, rhythmischer Sprechgesang</li><li><strong>Elektronische Musik:</strong> Musik aus Synthesizern und Computern (Techno, House, EDM)</li></ul><div class=\"info-box\">\uD83D\uDCA1 <strong>Merke:</strong> Viele moderne Genres haben ihre <strong>Wurzeln</strong> in \u00e4lteren Stilen \u2014 Rock kommt vom Blues, Hip-Hop vom Funk!</div>'},
+{title:'Was macht jedes Genre besonders?',content:'<p>Jedes Genre hat typische <strong>Merkmale</strong>, an denen man es erkennt.</p><p><strong>Typische Merkmale:</strong></p><ul><li><strong>Jazz:</strong> Improvisation, Swing-Rhythmus, Blue Notes, komplexe Harmonien</li><li><strong>Rock:</strong> Verzerrte E-Gitarre, starker Beat, Schlagzeug, Bass</li><li><strong>Pop:</strong> Eing\u00e4ngiger Refrain, Strophe-Refrain-Form, elektronische Produktion</li><li><strong>Hip-Hop:</strong> Beats, Sprechgesang (Rap), Sampling, DJ-Techniken</li><li><strong>Elektronische Musik:</strong> Synthesizer, Computer, repetitive Beats, Drops</li></ul><p><strong>Genres vermischen sich:</strong></p><ul><li>Pop-Rock, Jazz-Funk, Elektro-Pop \u2014 Genre-Grenzen verschwimmen</li><li>Jedes Jahrzehnt bringt neue Mischformen hervor</li></ul><div class=\"info-box\">\uD83D\uDCA1 <strong>Wusstest du?</strong> Das meistgestreamte Genre weltweit ist <strong>Pop</strong>, gefolgt von <strong>Hip-Hop</strong>!</div>'}
+],
+quiz:[
+{q:'Wo entstand der Jazz?',a:['In Deutschland','In den USA','In Japan','In Australien'],_h:0x4B},
+{q:'Welches Instrument ist typisch f\u00fcr Rock?',a:['Fl\u00f6te','E-Gitarre','Harfe','Oboe'],_h:0x7E},
+{q:'Was bedeutet Improvisation im Jazz?',a:['Nach Noten spielen','Spontan eigene Melodien und Variationen erfinden','Laut spielen','Schnell spielen'],_h:0x29},
+{q:'Ab welchem Jahrzehnt gibt es Hip-Hop?',a:['1950er','1960er','1970er','1990er'],_h:0x63},
+{q:'Welches Genre nutzt vor allem Synthesizer und Computer?',a:['Jazz','Rock','Volksmusik','Elektronische Musik'],_h:0x5F}
+],
+boss:[
+{q:'Warum gilt Jazz als besonders kreatives Genre?',a:['Weil er laut ist','Weil Improvisation im Mittelpunkt steht \u2014 Musiker erfinden spontan Melodien und reagieren aufeinander','Weil er alt ist','Weil er aus Amerika kommt'],_h:0x4B},
+{q:'Warum haben viele moderne Genres ihre Wurzeln im Blues?',a:['Zufall','Der Blues brachte wichtige Elemente wie Blue Notes, Call-and-Response und emotionalen Ausdruck hervor, die in Rock, Jazz und Pop weiterleben','Weil Blues das einzige Genre war','Weil alle Musiker Blues m\u00f6gen'],_h:0x7E},
+{q:'Warum verschwimmen die Grenzen zwischen Musikgenres immer mehr?',a:['Weil Musiker faul sind','Durch Globalisierung und Streaming haben K\u00fcnstler Zugang zu allen Stilen und experimentieren mit Mischungen','Weil es keine Regeln gibt','Weil Computer alles gleich klingen lassen'],_h:0x29}
+]},
+{id:8,title:'Singen und Stimme',icon:'\uD83C\uDFA4',duration:'20 Min.',description:'Stimmlagen, Chorgesang, Atmung und Stimmbildung \u2014 die Stimme als Instrument!',
+lessons:[
+{title:'Die menschliche Stimme',content:'<p>Die <strong>Stimme</strong> ist das nat\u00fcrlichste und vielseitigste Instrument \u00fcberhaupt!</p><p><strong>Wie entsteht der Ton?</strong></p><ul><li>Luft str\u00f6mt aus der <strong>Lunge</strong> durch die Luftr\u00f6hre</li><li>Im <strong>Kehlkopf</strong> befinden sich die <strong>Stimmbänder</strong></li><li>Die Stimmbänder schwingen und erzeugen den Ton</li><li>Mund, Nase und Rachen formen den Klang</li></ul><p><strong>Die 4 Stimmlagen:</strong></p><ul><li><strong>Sopran:</strong> H\u00f6chste Frauenstimme</li><li><strong>Alt:</strong> Tiefe Frauenstimme</li><li><strong>Tenor:</strong> Hohe M\u00e4nnerstimme</li><li><strong>Bass:</strong> Tiefste M\u00e4nnerstimme</li></ul><div class=\"info-box\">\uD83D\uDCA1 <strong>Merke:</strong> Von hoch nach tief: <strong>Sopran \u2192 Alt \u2192 Tenor \u2192 Bass</strong> \u2014 Merksatz: <strong>S</strong>inge <strong>A</strong>lle <strong>T</strong>\u00f6ne <strong>B</strong>itte!</div>'},
+{title:'Chor und Stimmbildung',content:'<p>Im <strong>Chor</strong> singen viele Stimmen zusammen und erzeugen mehrstimmige Harmonien.</p><p><strong>Chorarten:</strong></p><ul><li><strong>Gemischter Chor:</strong> Sopran, Alt, Tenor, Bass (SATB)</li><li><strong>Kinderchor:</strong> Helle, ungebrochene Stimmen</li><li><strong>M\u00e4nnerchor / Frauenchor:</strong> Nur eine Stimmgruppe</li></ul><p><strong>Stimmbildung:</strong></p><ul><li><strong>Atmung:</strong> Tiefe Bauchatmung ist die Basis f\u00fcr gutes Singen</li><li><strong>Aufw\u00e4rmen:</strong> Summen, Tonleitern singen, Lippen-Triller</li><li><strong>Haltung:</strong> Aufrecht stehen, Schultern locker</li><li><strong>Artikulation:</strong> Deutlich und klar singen</li></ul><div class=\"info-box\">\uD83D\uDCA1 <strong>Wusstest du?</strong> Im Stimmbruch (Mutation) wachsen die Stimmbänder bei Jungen um ca. <strong>1 cm</strong> \u2014 die Stimme wird dadurch eine Oktave tiefer!</div>'}
+],
+quiz:[
+{q:'Welche Stimmlage ist die h\u00f6chste?',a:['Bass','Tenor','Alt','Sopran'],_h:0x49},
+{q:'Was erzeugt den Ton beim Singen?',a:['Die Zunge','Die Stimmbänder im Kehlkopf','Die Lippen','Die Nase'],_h:0x7E},
+{q:'Wof\u00fcr steht die Abk\u00fcrzung SATB?',a:['Schnell-Alt-Tief-Breit','Sopran-Alt-Tenor-Bass','Singen-Atmen-Tanzen-Bewegen','Stimme-Akkord-Ton-Beat'],_h:0x2A},
+{q:'Was ist die Basis f\u00fcr gutes Singen?',a:['Laut sein','Schnell atmen','Tiefe Bauchatmung','Durch die Nase atmen'],_h:0x63},
+{q:'Was passiert im Stimmbruch?',a:['Die Stimme wird h\u00f6her','Die Stimmbänder wachsen und die Stimme wird tiefer','Man verliert die Stimme','Man singt besser'],_h:0x5D}
+],
+boss:[
+{q:'Warum ist die Bauchatmung beim Singen besser als die Brustatmung?',a:['Ist sie nicht','Die Bauchatmung nutzt das Zwerchfell und erm\u00f6glicht eine kontrollierte, gleichm\u00e4\u00dfige Luftabgabe f\u00fcr l\u00e4ngere T\u00f6ne','Weil der Bauch gr\u00f6\u00dfer ist','Weil es leiser ist'],_h:0x4B},
+{q:'Warum klingt ein Chor anders als ein Solos\u00e4nger?',a:['Weil ein Chor lauter ist','Viele Stimmen erzeugen zusammen Obert\u00f6ne und Harmonien, die eine einzelne Stimme nicht produzieren kann','Weil im Chor bessere S\u00e4nger sind','Weil im Chor nur Frauen singen'],_h:0x7E},
+{q:'Warum \u00e4ndert sich die Stimme im Stimmbruch?',a:['Durch Erk\u00e4ltung','Durch Hormone wachsen die Stimmbänder und der Kehlkopf, wodurch die Stimme tiefer und voller wird','Durch zu viel Singen','Durch das Alter'],_h:0x29}
+]},
+{id:9,title:'Musik-Meister',icon:'\uD83C\uDFC6',duration:'30 Min.',description:'Alles zusammen: Notation, Rhythmus, Instrumente, Theorie und Komponisten!',
+lessons:[
+{title:'Musik verstehen \u2014 die gro\u00dfe Zusammenfassung',content:'<p>Du hast viel gelernt! Hier fassen wir die <strong>wichtigsten Themen</strong> zusammen.</p><p><strong>Notation:</strong></p><ul><li>5-Linien-System, Violinschl\u00fcssel und Bassschl\u00fcssel</li><li>Notenwerte: Ganze \u2192 Halbe \u2192 Viertel \u2192 Achtel</li><li>Taktarten: 4/4, 3/4, 6/8</li></ul><p><strong>Tonleitern und Harmonien:</strong></p><ul><li>Dur = fr\u00f6hlich, Moll = traurig</li><li>Dreikl\u00e4nge aus Grundton + Terz + Quinte</li><li>Intervalle von der Prime bis zur Oktave</li></ul><p><strong>Instrumente:</strong></p><ul><li>5 Familien: Streicher, Holzbl\u00e4ser, Blechbl\u00e4ser, Schlaginstrumente, Tasteninstrumente</li><li>Das Orchester vereint alle Familien unter einem Dirigenten</li></ul><div class=\"info-box\">\uD83D\uDCA1 <strong>Merke:</strong> Musik ist eine <strong>Sprache</strong> \u2014 wenn du Noten lesen kannst, kannst du Musik aus der ganzen Welt verstehen!</div>'},
+{title:'Musik erleben und weiterforschen',content:'<p>Musik ist mehr als Theorie \u2014 sie will <strong>erlebt</strong> werden!</p><p><strong>Wie du Musik erleben kannst:</strong></p><ul><li><strong>Selbst spielen:</strong> Ein Instrument lernen oder singen</li><li><strong>Aktiv h\u00f6ren:</strong> Auf einzelne Instrumente, Rhythmen oder Harmonien achten</li><li><strong>Konzerte besuchen:</strong> Live-Musik ist ein besonderes Erlebnis</li><li><strong>Musik machen:</strong> Im Chor, in der Band oder alleine</li></ul><p><strong>Spannende Musikthemen zum Weiterforschen:</strong></p><ul><li><strong>Filmmusik:</strong> Wie Musik Emotionen im Film verst\u00e4rkt</li><li><strong>Musikproduktion:</strong> Wie moderne Musik am Computer entsteht</li><li><strong>Weltmusik:</strong> Traditionelle Musik aus anderen Kulturen</li><li><strong>Musiktherapie:</strong> Wie Musik heilen kann</li></ul><div class=\"info-box\">\uD83D\uDCA1 <strong>Wusstest du?</strong> Musik aktiviert <strong>mehr Hirnbereiche gleichzeitig</strong> als fast jede andere menschliche T\u00e4tigkeit!</div>'}
+],
+quiz:[
+{q:'Wie viele Stammt\u00f6ne gibt es in der Musik?',a:['5','6','7','12'],_h:0x48},
+{q:'Welcher Komponist wurde taub?',a:['Mozart','Bach','Beethoven','Vivaldi'],_h:0x7D},
+{q:'Welches Genre basiert auf Improvisation?',a:['Pop','Rock','Jazz','Techno'],_h:0x29},
+{q:'Was ist ein Dreiklang?',a:['Drei Lieder','Drei gleichzeitig klingende T\u00f6ne','Drei Takte','Drei Instrumente'],_h:0x60},
+{q:'Welche Stimmlage ist die tiefste?',a:['Sopran','Alt','Tenor','Bass'],_h:0x5F}
+],
+boss:[
+{q:'Warum wird Musik als universelle Sprache bezeichnet?',a:['Weil alle Musik gleich klingt','Musik kommuniziert Emotionen \u00fcber Kulturgrenzen hinweg \u2014 Menschen aller Nationen k\u00f6nnen Freude, Trauer oder Spannung in Musik f\u00fchlen, auch ohne Worte','Weil alle die gleichen Lieder kennen','Weil Musik aus Buchstaben besteht'],_h:0x4B},
+{q:'Was haben Notation, Harmonie und Rhythmus gemeinsam?',a:['Nichts','Sie sind die drei Grundpfeiler der Musiktheorie, die zusammen erm\u00f6glichen, Musik zu verstehen, aufzuschreiben und wiederzugeben','Sie sind alle Instrumente','Sie sind alle Komponisten'],_h:0x7E},
+{q:'Warum ist aktives Musikh\u00f6ren wertvoller als passives?',a:['Ist es nicht','Beim aktiven H\u00f6ren achtet man bewusst auf Strukturen, Instrumente und Emotionen und vertieft so das Musikverst\u00e4ndnis','Weil es lauter ist','Weil man dabei steht'],_h:0x29}
+]}
+];
+
+// === State Management ===
+const STORAGE_KEY='musikentdecker_progress';
+let state={name:'',started:false,currentModule:0,xp:0,level:0,streak:0,lastVisit:null,modulesCompleted:[],quizResults:{},bossResults:{},badges:[],quizShuffleMap:{},modulesViewed:[],interactiveResults:{},designTheme:'cyber-dark'};
+function saveState(){try{localStorage.setItem(STORAGE_KEY,JSON.stringify(state))}catch(e){}}
+function loadState(){try{const s=localStorage.getItem(STORAGE_KEY);if(s){Object.assign(state,JSON.parse(s));return true}}catch(e){}return false}
+function exportData(){const a=document.createElement('a');a.download='musikentdecker-'+state.name+'.json';a.href=URL.createObjectURL(new Blob([JSON.stringify(state,null,2)],{type:'application/json'}));a.click()}
+function importData(e){const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=ev=>{try{const d=JSON.parse(ev.target.result);Object.assign(state,d);saveState();location.reload()}catch(err){alert('Datei konnte nicht gelesen werden.')}};r.readAsText(f)}
+
+// === XP & Level ===
+function getLevel(xp){let lv=0;for(let i=LEVELS.length-1;i>=0;i--){if(xp>=LEVELS[i].xp){lv=i;break}}return lv}
+function getLevelProgress(xp){const lv=getLevel(xp);const cur=LEVELS[lv].xp;const next=lv<LEVELS.length-1?LEVELS[lv+1].xp:cur;if(next===cur)return 100;return Math.min(100,Math.round((xp-cur)/(next-cur)*100))}
+function addXP(amount,reason){const old=getLevel(state.xp);state.xp+=amount;const nw=getLevel(state.xp);saveState();updateUI();showNotif('xp','+'+amount+' XP',reason);if(nw>old){state.level=nw;saveState();setTimeout(()=>showLevelUp(nw),800)}}
+
+// === Streak ===
+function updateStreak(){const today=new Date().toDateString();if(state.lastVisit===today)return;const yesterday=new Date(Date.now()-86400000).toDateString();if(state.lastVisit===yesterday){state.streak++;showNotif('streak','\uD83D\uDD25 '+state.streak+' Tage Streak!','Weiter so!');if(state.streak>=3)awardBadge('streak3');if(state.streak>=7)awardBadge('streak7')}else if(state.lastVisit!==today){state.streak=1}state.lastVisit=today;saveState()}
+
+// === Badges ===
+function awardBadge(id){if(state.badges.includes(id))return;state.badges.push(id);saveState();const b=BADGES.find(x=>x.id===id);if(b)showNotif('badge',b.icon+' Badge: '+b.name,b.desc)}
+
+// === Notifications ===
+let notifQueue=[],notifActive=false;
+function showNotif(type,title,text){notifQueue.push({type,title,text});if(!notifActive)processNotif()}
+function processNotif(){if(!notifQueue.length){notifActive=false;return}notifActive=true;const{type,title,text}=notifQueue.shift();const el=document.getElementById('notif');el.className='notif '+type;document.getElementById('notifTitle').textContent=title;document.getElementById('notifText').textContent=text;el.classList.add('show');setTimeout(()=>{el.classList.remove('show');setTimeout(processNotif,300)},2500)}
+
+// === Level Up + Confetti ===
+function showLevelUp(lv){const ov=document.getElementById('levelUpOverlay');const box=document.getElementById('levelUpBox');box.innerHTML='<div class="lvl-icon">\u2B06\uFE0F</div><div class="lvl-title">Level Up!</div><div class="lvl-name">Level '+(lv+1)+': '+LEVELS[lv].name+'</div>';ov.classList.add('active');spawnConfetti();setTimeout(()=>ov.classList.remove('active'),3000)}
+function spawnConfetti(){const c=document.getElementById('confetti');c.innerHTML='';const cols=['#3b82f6','#a855f7','#22c55e','#f59e0b','#ef4444','#06b6d4'];for(let i=0;i<60;i++){const p=document.createElement('div');p.style.cssText='position:absolute;left:'+Math.random()*100+'%;background:'+cols[i%cols.length]+';width:'+(6+Math.random()*8)+'px;height:'+(6+Math.random()*8)+'px;border-radius:'+(Math.random()>.5?'50%':'2px')+';animation:confettiFall '+(1.5+Math.random()*2)+'s ease-out '+Math.random()*.5+'s forwards';c.appendChild(p)}if(!document.getElementById('confettiStyle')){const s=document.createElement('style');s.id='confettiStyle';s.textContent='@keyframes confettiFall{0%{opacity:1;transform:translateY(0) rotate(0deg)}100%{opacity:0;transform:translateY(100vh) rotate(720deg)}}';document.head.appendChild(s)}setTimeout(()=>c.innerHTML='',4000)}
+
+// === Quiz Engine ===
+function shuffleQuiz(modId,quiz){const key='m'+modId;if(state.quizShuffleMap[key])return state.quizShuffleMap[key];const idx=[...Array(quiz.length).keys()];for(let i=idx.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[idx[i],idx[j]]=[idx[j],idx[i]]}state.quizShuffleMap[key]=idx;saveState();return idx}
+function renderQuiz(modId,quiz,isBoss){
+const pf=isBoss?'boss':'quiz';const idx=isBoss?[...Array(quiz.length).keys()]:shuffleQuiz(modId,quiz);
+let h='<div class="'+(isBoss?'boss-section':'quiz-section')+'">';
+h+=isBoss?'<h3>\uD83D\uDC51 Boss-Challenge</h3><p class="boss-sub">Alle '+quiz.length+' Fragen richtig beantworten!</p>':'<h3>\uD83D\uDCDD Quiz \u2014 Teste dein Wissen</h3>';
+idx.forEach((qi,di)=>{const q=quiz[qi];h+='<div class="quiz-q" data-qi="'+qi+'"><p>'+(di+1)+'. '+q.q+'</p>';q.a.forEach((a,ai)=>{h+='<label><input type="radio" name="'+pf+'_'+modId+'_'+qi+'" value="'+ai+'"> '+a+'<\/label>'});h+='<\/div>'});
+h+='<button class="quiz-submit" onclick="checkQuiz('+modId+','+isBoss+')">'+(isBoss?'Boss besiegen!':'Antworten prüfen')+'<\/button>';
+h+='<div class="quiz-result" id="'+pf+'Result'+modId+'" style="display:none"><\/div><\/div>';return h;
+}
+function checkQuiz(modId,isBoss){
+const pf=isBoss?'boss':'quiz';const quiz=isBoss?modules[modId].boss:modules[modId].quiz;
+let correct=0;const total=quiz.length;const startTime=window._quizStart||Date.now();
+quiz.forEach((q,qi)=>{
+const sel=document.querySelector('input[name="'+pf+'_'+modId+'_'+qi+'"]:checked');
+const labels=document.querySelectorAll('[data-qi="'+qi+'"] label');
+const ci=_d(q._h,qi);
+labels.forEach((l,li)=>{l.classList.remove('correct','wrong');if(li===ci)l.classList.add('correct');else if(sel&&parseInt(sel.value)===li)l.classList.add('wrong')});
+const qDiv=labels[0]?.closest('.quiz-q');if(qDiv){const old=qDiv.querySelector('.quiz-explanation');if(old)old.remove()}
+if(!sel||parseInt(sel.value)!==ci){if(qDiv){const exp=document.createElement('div');exp.className='quiz-explanation';exp.textContent='\u2192 Richtige Antwort: '+q.a[ci];qDiv.appendChild(exp)}}
+if(sel&&parseInt(sel.value)===ci)correct++;
+});
+const rEl=document.getElementById(pf+'Result'+modId);rEl.style.display='block';
+if(isBoss){
+if(correct===total){
+rEl.className='quiz-result pass';rEl.textContent='\uD83D\uDC51 Boss besiegt! '+correct+'/'+total+' \u2014 Perfekt!';
+if(!state.bossResults[modId]){state.bossResults[modId]=true;addXP(100,'Boss-Challenge bestanden!');if(!state.badges.includes('first_boss'))awardBadge('first_boss');if(modules.every((_,i)=>state.bossResults[i]))awardBadge('all_bosses');checkModuleComplete(modId)}
+}else{rEl.className='quiz-result fail';rEl.textContent='\uD83D\uDC80 '+correct+'/'+total+' \u2014 Alle müssen richtig sein! Versuch es nochmal.';setTimeout(()=>{document.querySelectorAll('input[name^="'+pf+'_'+modId+'"]').forEach(r=>{r.disabled=false;r.checked=false});document.querySelectorAll('[data-qi] label').forEach(l=>l.classList.remove('correct','wrong'));document.querySelectorAll('.quiz-explanation').forEach(e=>e.remove());rEl.style.display='none'},2000);return}
+}else{
+const passed=correct>=Math.ceil(total*0.6);rEl.className='quiz-result '+(passed?'pass':'fail');
+rEl.textContent=passed?'\u2705 '+correct+'/'+total+' richtig \u2014 Bestanden!':'\u274C '+correct+'/'+total+' richtig \u2014 Mindestens '+Math.ceil(total*0.6)+' nötig.';
+if(passed&&!state.quizResults[modId]){state.quizResults[modId]=correct;addXP(correct*15+50,'Quiz bestanden ('+correct+'/'+total+')');if(!state.badges.includes('first_quiz'))awardBadge('first_quiz');if(correct===total)awardBadge('perfect_quiz');if(Date.now()-startTime<60000)awardBadge('speed_quiz');checkModuleComplete(modId)}
+}
+saveState();document.querySelectorAll('input[name^="'+pf+'_'+modId+'"]').forEach(r=>r.disabled=true);
+window.scrollTo({top:0,behavior:'smooth'});
+}
+function checkModuleComplete(modId){
+if(state.quizResults[modId]!==undefined&&state.bossResults[modId]&&!state.modulesCompleted.includes(modId)){
+state.modulesCompleted.push(modId);awardBadge('m'+modId);
+if(state.modulesCompleted.length>=5)awardBadge('half_done');
+if(state.modulesCompleted.length>=10){awardBadge('graduate');setTimeout(()=>showCert(),1500)}
+saveState();renderSidebar();
+}
+}
+
+// === Render Module ===
+function renderModule(modId){
+state.currentModule=modId;
+if(!state.modulesViewed.includes(modId)){state.modulesViewed.push(modId);addXP(10,'Neues Modul geöffnet');if(state.modulesViewed.length>=10)awardBadge('explorer')}
+saveState();closeSidebar();
+const m=modules[modId];
+let h='<div class="module-header"><div class="mod-badge">'+m.icon+' Modul '+(modId+1)+'<\/div><h1>'+m.title+'<\/h1><p class="mod-desc">'+m.description+'<\/p><\/div>';
+m.lessons.forEach((l,i)=>{h+='<div class="lesson-card"><h3><span style="color:var(--neon)">'+String(i+1).padStart(2,'0')+'<\/span> '+l.title+' <button class="tts-btn" onclick="speakLesson('+i+')" title="Vorlesen">&#128266;<\/button><\/h3>'+l.content+'<\/div>'});
+h+='<div class="interactive-area"><h4>\uD83D\uDCDD Interaktive Übung<\/h4><div id="interactiveContent">Lädt...<\/div><\/div>';
+window._quizStart=Date.now();
+h+=renderQuiz(modId,m.quiz,false);
+h+=renderQuiz(modId,m.boss,true);
+document.getElementById('welcomeScreen').style.display='none';
+document.getElementById('badgesView').style.display='none';
+document.getElementById('statsView').style.display='none';
+const mc=document.getElementById('moduleContent');mc.style.display='block';mc.innerHTML=h;
+renderSidebar();setTimeout(()=>{initInteractive(modId);window.scrollTo(0,0)},100);
+}
+
+// === Sidebar ===
+function renderSidebar(){
+const el=document.getElementById('sidebarModules');
+el.innerHTML=modules.map((m,i)=>{
+const done=state.modulesCompleted.includes(i);
+const act=state.currentModule===i&&document.getElementById('moduleContent').style.display==='block';
+return '<a class="mod-link'+(act?' active':'')+(done?' completed':'')+'" onclick="renderModule('+i+')"><span class="mod-icon">'+m.icon+'<\/span>'+m.title+'<\/a>';
+}).join('');
+const lv=getLevel(state.xp);
+const lvEl=document.getElementById('sidebarLevel');if(lvEl)lvEl.textContent=LEVELS[lv].name;
+const xpEl=document.getElementById('sidebarXP');if(xpEl)xpEl.textContent=state.xp+' XP';
+const xpFill=document.getElementById('sidebarXPFill');if(xpFill)xpFill.style.width=getLevelProgress(state.xp)+'%';
+}
+function toggleSidebar(){document.getElementById('sidebar').classList.toggle('open')}
+function closeSidebar(){document.getElementById('sidebar').classList.remove('open')}
+
+// === Badges & Stats ===
+function showBadges(){
+document.getElementById('welcomeScreen').style.display='none';
+document.getElementById('moduleContent').style.display='none';
+document.getElementById('statsView').style.display='none';
+const v=document.getElementById('badgesView');v.style.display='block';closeSidebar();
+let h='<div class="module-header"><h1>\uD83C\uDFC5 Deine Abzeichen<\/h1><p class="mod-desc">'+state.badges.length+' von '+BADGES.length+' gesammelt<\/p><\/div><div class="badge-grid">';
+BADGES.forEach(b=>{const earned=state.badges.includes(b.id);h+='<div class="badge-item'+(earned?' earned':' locked')+'"><div class="badge-icon">'+(earned?b.icon:'\uD83D\uDD12')+'<\/div><div class="badge-name">'+b.name+'<\/div><\/div>'});
+h+='<\/div>';v.innerHTML=h;
+}
+function showStats(){
+document.getElementById('welcomeScreen').style.display='none';
+document.getElementById('moduleContent').style.display='none';
+document.getElementById('badgesView').style.display='none';
+const v=document.getElementById('statsView');v.style.display='block';closeSidebar();
+const lv=getLevel(state.xp);
+let h='<div class="module-header"><h1>\uD83D\uDCCA Statistik<\/h1><\/div><div class="stats-grid">';
+h+='<div class="stat-card"><div class="stat-val">'+state.xp+'<\/div><div class="stat-label">XP gesammelt<\/div><\/div>';
+h+='<div class="stat-card"><div class="stat-val">'+LEVELS[lv].name+'<\/div><div class="stat-label">Aktueller Rang<\/div><\/div>';
+h+='<div class="stat-card"><div class="stat-val">'+state.modulesCompleted.length+'/10<\/div><div class="stat-label">Module abgeschlossen<\/div><\/div>';
+h+='<div class="stat-card"><div class="stat-val">'+Object.keys(state.quizResults).length+'<\/div><div class="stat-label">Quizze bestanden<\/div><\/div>';
+h+='<div class="stat-card"><div class="stat-val">'+Object.keys(state.bossResults).length+'<\/div><div class="stat-label">Bosse besiegt<\/div><\/div>';
+h+='<div class="stat-card"><div class="stat-val">'+state.badges.length+'<\/div><div class="stat-label">Abzeichen<\/div><\/div>';
+h+='<div class="stat-card"><div class="stat-val">\uD83D\uDD25 '+state.streak+'<\/div><div class="stat-label">Tage-Streak<\/div><\/div>';
+h+='<\/div>';v.innerHTML=h;
+}
+
+// === Certificate ===
+let certStyle='akademie';
+function showCert(){window._lastFocus=document.activeElement;
+const ov=document.getElementById('certOverlay');
+const styles=['akademie','hacker','pixel','zukunft'];
+const labels=['\uD83C\uDFDB Akademie','\uD83D\uDCBB Hacker','\uD83D\uDD79 Pixel','\u2728 Zukunft'];
+document.getElementById('certPicker').innerHTML=styles.map((s,i)=>'<button class="cert-pick-btn '+(s===certStyle?'active':'')+'" onclick="certStyle=\''+s+'\';renderCert()">'+labels[i]+'<\/button>').join('');
+renderCert();ov.classList.add('active');
+}
+function closeCert(){document.getElementById('certOverlay').classList.remove('active');if(window._lastFocus){window._lastFocus.focus();window._lastFocus=null}}
+function generateCertCode(){const n=state.name||'X';const d=new Date();return 'TP-'+d.getFullYear()+'-'+((n.charCodeAt(0)*7+state.xp)%9999).toString(16).toUpperCase().padStart(4,'0')}
+function printCert(){window.print()}
+function certBadgeRow(){
+const earned=state.badges||[];if(earned.length===0)return'';
+return'<div class="cert-badge-row">'+earned.slice(0,8).map(bid=>{const b=BADGES.find(x=>x.id===bid);return b?'<div class="cert-badge-item" title="'+b.name+'">'+b.icon+'<\/div>':''}).join('')+(earned.length>8?'<div class="cert-badge-item" title="'+(earned.length-8)+' weitere">+'+(earned.length-8)+'<\/div>':'')+'<\/div>';
+}
+function certStatsRow(){
+const mods=state.modulesCompleted.length;const quizDone=Object.keys(state.quizResults).length;const bossDone=Object.keys(state.bossResults).length;
+return'<div class="cert-common-stats"><div class="cert-stat">\uD83D\uDCDA '+mods+'/10<\/div><div class="cert-stat">\uD83D\uDCDD '+quizDone+' Quizze<\/div><div class="cert-stat">\uD83D\uDC51 '+bossDone+' Bosse<\/div><div class="cert-stat">\uD83D\uDD25 '+state.streak+'d Streak<\/div><\/div>';
+}
+function certLogoFooter(dark){
+const fill=dark?'rgba(255,255,255,.4)':'rgba(0,0,0,.35)';
+return'<div class="cert-logo-footer"><svg viewBox="0 0 32 32" fill="none"><g transform="translate(16,16)"><circle cx="-10" cy="-9" r="1.2" fill="'+fill+'" opacity=".6"/><circle cx="10" cy="-9" r="1.2" fill="'+fill+'" opacity=".6"/><rect x="-7" y="-5.5" width="14" height="11" rx="3.5" fill="none" stroke="'+fill+'" stroke-width="1"/><text x="0" y="0" text-anchor="middle" dominant-baseline="central" font-family="system-ui" font-size="7.5" font-weight="900" fill="'+fill+'" letter-spacing="1">AI<\/text><\/g><\/svg><span style="color:'+fill+'">GZ AI Stacks<\/span><\/div>';
+}
+function svgCorner(){return'<svg viewBox="0 0 60 60" fill="none"><path d="M5 55 L5 15 Q5 5 15 5 L55 5" stroke="#c5a54e" stroke-width="1.5" fill="none" opacity=".4"/><circle cx="8" cy="8" r="3" fill="#c5a54e" opacity=".2"/><\/svg>';}
+function svgLaurelSeal(){return'<svg viewBox="0 0 90 90" fill="none"><circle cx="45" cy="45" r="32" fill="url(#cg)"/><defs><radialGradient id="cg"><stop offset="0%" stop-color="#e8c84e"/><stop offset="100%" stop-color="#8a6914"/><\/radialGradient><\/defs><text x="45" y="47" text-anchor="middle" dominant-baseline="central" font-family="serif" font-size="22" font-weight="900" fill="#fff">\u2605<\/text><\/svg>';}
+function svgHexSeal(){return'<svg viewBox="0 0 70 70" fill="none"><circle cx="35" cy="35" r="22" stroke="#00d4ff" stroke-width="1.5" opacity=".5"/><circle cx="35" cy="35" r="16" fill="rgba(0,255,65,.08)"/><text x="35" y="33" text-anchor="middle" dominant-baseline="central" font-family="monospace" font-size="8" font-weight="700" fill="#00ff41" opacity=".7">VERIFIED<\/text><text x="35" y="42" text-anchor="middle" font-family="monospace" font-size="7" fill="#00d4ff">\u2713<\/text><\/svg>';}
+function matrixCols(){const chars='01\u30A2\u30A4\u30A6\u30A8\u30AA{}[]<>';let h='';for(let i=0;i<10;i++){const x=5+i*9;const d=3+Math.random()*6;let col='';for(let j=0;j<25;j++)col+=chars[Math.floor(Math.random()*chars.length)]+'\n';h+='<div class="cert-matrix-col" style="left:'+x+'%;animation-duration:'+d+'s;animation-delay:'+Math.random()*4+'s">'+col+'<\/div>';}return h;}
+function renderCert(){
+const f=document.getElementById('certFrame');
+const name=state.name||'Unbekannt';const date=new Date().toLocaleDateString('de-DE',{day:'numeric',month:'long',year:'numeric'});
+const xp=state.xp;const mods=state.modulesCompleted.length;const rank=LEVELS[getLevel(xp)].name;const code=generateCertCode();const badges=certBadgeRow();
+document.querySelectorAll('.cert-pick-btn').forEach(b=>b.classList.toggle('active',b.textContent.toLowerCase().includes(certStyle)));
+if(certStyle==='akademie'){
+const corner=svgCorner();
+f.innerHTML='<div class="cert-akademie"><div class="cert-corner cert-corner-tl">'+corner+'<\/div><div class="cert-corner cert-corner-tr">'+corner+'<\/div><div class="cert-corner cert-corner-bl">'+corner+'<\/div><div class="cert-corner cert-corner-br">'+corner+'<\/div><div class="cert-inner"><div class="cert-sub">MusikEntdecker \u00B7 Musik-Akademie<\/div><div class="cert-title">Diplom<\/div><div class="cert-hr"><\/div><div class="cert-body">Die Musik-Akademie verleiht hiermit<\/div><div class="cert-name">'+name+'<\/div><div class="cert-body">die Anerkennung als<br><strong style="font-size:18px;color:#1a1a3e">Musik-'+rank+'<\/strong><br>f\u00FCr die erfolgreiche Absolvierung von<br>\u201EMusikEntdecker \u2014 Musik Klasse 3-6\u201C<\/div>'+certStatsRow()+badges+'<div class="cert-seal-wrap"><div class="cert-seal-ring"><\/div><div class="cert-seal">'+svgLaurelSeal()+'<\/div><\/div><div class="cert-date">'+date+'<\/div><div class="cert-verification">'+code+'<\/div>'+certLogoFooter(false)+'<\/div><\/div>';
+}else if(certStyle==='hacker'){
+f.innerHTML='<div class="cert-hacker">'+matrixCols()+'<div class="cert-inner"><div class="cert-prompt">root@musikentdecker:~$ <span>verify --user "'+name+'" --deep-scan<\/span><\/div><div class="cert-title">&gt;&gt; SYSTEM CERTIFICATION &lt;&lt;<\/div><div class="cert-access">ACCESS GRANTED<span class="cursor-blink">_<\/span><\/div><div class="cert-body">&gt; User..........: <strong style="color:#00d4ff">'+name+'<\/strong><br>&gt; Rank..........: '+rank+'<br>&gt; Modules.......: [<span style="color:#00ff41">'+ '\u2588'.repeat(mods)+'\u2591'.repeat(10-mods)+'<\/span>] '+mods+'/10<br>&gt; XP............: '+xp+' pts<br>&gt; Status........: <span style="color:#00ff41">VERIFIED<\/span> \u2713<\/div>'+certStatsRow()+badges+'<div class="cert-hex-seal">'+svgHexSeal()+'<\/div><div class="cert-body" style="font-size:11px">&gt; Certificate ID: '+code+'<br>&gt; Issued: '+date+'<br>&gt; Authority: MusikEntdecker Akademie<\/div><div class="cert-prompt">root@musikentdecker:~$ <span class="cursor-blink">_<\/span><\/div>'+certLogoFooter(true)+'<\/div><\/div>';
+}else if(certStyle==='pixel'){
+const stars='\u2605'.repeat(Math.min(5,Math.ceil(mods/2)))+'\u2606'.repeat(Math.max(0,5-Math.ceil(mods/2)));
+const pct=Math.min(100,Math.round(xp/42));
+f.innerHTML='<div class="cert-pixel"><div class="cert-inner"><div class="cert-complete">\u25C6 LEVEL COMPLETE! \u25C6<\/div><div class="cert-title">CHAMPION<\/div><div class="cert-name">'+name+'<\/div><div class="cert-stars">'+stars+'<\/div><div class="cert-xp-bar"><div class="cert-xp-fill" style="width:'+pct+'%"><\/div><div class="cert-xp-label">'+xp+' XP<\/div><\/div><div class="cert-body">RANK: <strong style="color:#ffd700">'+rank.toUpperCase()+'<\/strong><\/div>'+certStatsRow()+badges+'<div class="cert-score">HIGH SCORE: '+xp+' PTS<\/div><div style="margin-top:8px;font-size:10px;color:#555">'+date+' \u00B7 '+code+'<\/div>'+certLogoFooter(true)+'<\/div><\/div>';
+}else{
+const particles=Array.from({length:15},(_,i)=>{const colors=['#6366f1','#ec4899','#f59e0b','#22c55e','#06b6d4'];return'<div class="cert-particle" style="position:absolute;left:'+Math.random()*100+'%;top:'+Math.random()*100+'%;width:'+(2+Math.random()*3)+'px;height:'+(2+Math.random()*3)+'px;background:'+colors[i%5]+';opacity:'+(0.1+Math.random()*0.2)+';box-shadow:0 0 '+(6+Math.random()*9)+'px '+colors[i%5]+';border-radius:50%"><\/div>';}).join('');
+f.innerHTML='<div class="cert-zukunft">'+particles+'<div class="cert-inner"><div class="cert-sub">Zukunfts-Akademie \u00B7 '+new Date().getFullYear()+'<\/div><div class="cert-title">Zertifikat der Zukunft<\/div><div class="cert-body">Hiermit best\u00E4tigen wir, dass<\/div><div class="cert-name">'+name+'<\/div><div class="cert-body">den interaktiven Musik-Kurs<br>\u201EMusikEntdecker \u2014 Musik Klasse 3-6\u201C<br>erfolgreich absolviert hat.<\/div><div class="cert-body" style="margin:6px 0"><strong style="color:#a78bfa;font-size:16px">'+rank+'<\/strong><\/div>'+certStatsRow()+badges+'<div class="cert-seal-holo"><div class="cert-seal-mid"><div class="cert-seal-inner"><svg viewBox="0 0 40 40" fill="none"><text x="20" y="18" text-anchor="middle" font-size="14" fill="#a78bfa">\u2726<\/text><text x="20" y="28" text-anchor="middle" font-size="6" font-weight="700" fill="rgba(255,255,255,.6)" font-family="system-ui">MUS<\/text><\/svg><\/div><\/div><\/div><div class="cert-date">'+date+' \u00B7 '+code+'<\/div>'+certLogoFooter(true)+'<\/div><\/div>';
+}
+f.style.animation='none';f.offsetHeight;f.style.animation='certEntrance .6s cubic-bezier(.34,1.56,.64,1) both';
+}
+
+// === Theme System ===
+function setDesignTheme(world,mode){state.designTheme=world+'-'+mode;document.documentElement.setAttribute('data-theme',state.designTheme);saveState();buildThemePicker()}
+function getCurrentThemeParts(){const p=state.designTheme.split('-');return{world:p.slice(0,-1).join('-'),mode:p[p.length-1]||'dark'}}
+function toggleMode(){const{world,mode}=getCurrentThemeParts();setDesignTheme(world,mode==='dark'?'light':'dark')}
+function buildThemePicker(){
+const dd=document.getElementById('themePickerDD');if(!dd)return;
+const{world,mode}=getCurrentThemeParts();
+let h='<div class="tp-label">Theme wählen<\/div>';
+Object.keys(THEME_CONFIG).forEach(w=>{const t=THEME_CONFIG[w];h+='<div class="tp-world'+(w===world?' active':'')+'" onclick="setDesignTheme(\''+w+'\',\''+mode+'\')\"><div class="tp-world-color" style="background:'+t.color+'">'+t.emoji+'<\/div><div class="tp-world-info"><div class="tp-world-name">'+t.name+'<\/div><div class="tp-world-desc">'+t.desc+'<\/div><\/div><\/div>';});
+h+='<div class="tp-divider"><\/div><div class="tp-mode-row"><span class="tp-mode-label">'+(mode==='dark'?'\uD83C\uDF19 Dark':'\u2600\uFE0F Light')+'<\/span><div class="tp-mode-switch'+(mode==='light'?' light':'')+'" onclick="toggleMode()"><\/div><\/div>';
+dd.innerHTML=h;
+}
+function toggleThemePicker(){document.getElementById('themePickerDD').classList.toggle('open')}
+
+// === Interactive Exercises ===
+function initInteractive(modId){
+const el=document.getElementById('interactiveContent');if(!el)return;
+const exercises=[
+function(){el.innerHTML='<p>Ordne die Note dem richtigen Notenwert zu!<\/p><div class=\"ix-grid\" id=\"ixItems\"><\/div><div style=\"display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin:16px 0\"><button class=\"ix-btn\" onclick=\"ixDrop(0,\'lang\')\"> Lang (2-4 Schl\u00e4ge)<\/button><button class=\"ix-btn\" onclick=\"ixDrop(0,\'kurz\')\"> Kurz (\u00bd-1 Schlag)<\/button><\/div><div class=\"ix-feedback\" id=\"ixFb\"><\/div>';
+const items=[{n:'Ganze Note (4 Schl\u00e4ge)',t:'lang'},{n:'Achtelnote (\u00bd Schlag)',t:'kurz'},{n:'Halbe Note (2 Schl\u00e4ge)',t:'lang'},{n:'Viertelnote (1 Schlag)',t:'kurz'},{n:'Punktierte Halbe (3 Schl\u00e4ge)',t:'lang'},{n:'Sechzehntelnote (\u00bc Schlag)',t:'kurz'}];
+window._ixData={items,sel:null,done:0,correct:0};
+const g=document.getElementById('ixItems');items.forEach((it,i)=>{const d=document.createElement('div');d.className='ix-item';d.textContent=it.n;d.onclick=()=>{document.querySelectorAll('.ix-item').forEach(x=>x.classList.remove('selected'));d.classList.add('selected');window._ixData.sel=i};g.appendChild(d)});}
+,
+function(){el.innerHTML='<p>Welche Taktart passt zum Musikst\u00fcck?<\/p><div class=\"ix-grid\" id=\"ixItems\"><\/div><div style=\"display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin:16px 0\"><button class=\"ix-btn\" onclick=\"ixDrop(1,\'vier\')\"> 4/4-Takt<\/button><button class=\"ix-btn\" onclick=\"ixDrop(1,\'drei\')\"> 3/4-Takt<\/button><\/div><div class=\"ix-feedback\" id=\"ixFb\"><\/div>';
+const items=[{n:'Marschmusik',t:'vier'},{n:'Walzer',t:'drei'},{n:'Rockmusik',t:'vier'},{n:'Menuett',t:'drei'},{n:'Popmusik',t:'vier'},{n:'Wiener Walzer',t:'drei'}];
+window._ixData={items,sel:null,done:0,correct:0};
+const g=document.getElementById('ixItems');items.forEach((it,i)=>{const d=document.createElement('div');d.className='ix-item';d.textContent=it.n;d.onclick=()=>{document.querySelectorAll('.ix-item').forEach(x=>x.classList.remove('selected'));d.classList.add('selected');window._ixData.sel=i};g.appendChild(d)});}
+,
+function(){el.innerHTML='<p>Ordne das Instrument der richtigen Familie zu!<\/p><div class=\"ix-grid\" id=\"ixItems\"><\/div><div style=\"display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin:16px 0\"><button class=\"ix-btn\" onclick=\"ixDrop(2,\'streich\')\"> Streichinstrument<\/button><button class=\"ix-btn\" onclick=\"ixDrop(2,\'blas\')\"> Blasinstrument<\/button><button class=\"ix-btn\" onclick=\"ixDrop(2,\'schlag\')\"> Schlaginstrument<\/button><\/div><div class=\"ix-feedback\" id=\"ixFb\"><\/div>';
+const items=[{n:'Geige',t:'streich'},{n:'Trompete',t:'blas'},{n:'Pauke',t:'schlag'},{n:'Cello',t:'streich'},{n:'Klarinette',t:'blas'},{n:'Becken',t:'schlag'}];
+window._ixData={items,sel:null,done:0,correct:0};
+const g=document.getElementById('ixItems');items.forEach((it,i)=>{const d=document.createElement('div');d.className='ix-item';d.textContent=it.n;d.onclick=()=>{document.querySelectorAll('.ix-item').forEach(x=>x.classList.remove('selected'));d.classList.add('selected');window._ixData.sel=i};g.appendChild(d)});}
+,
+function(){el.innerHTML='<p>Ordne den Komponisten der richtigen Epoche zu!<\/p><div class=\"ix-grid\" id=\"ixItems\"><\/div><div style=\"display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin:16px 0\"><button class=\"ix-btn\" onclick=\"ixDrop(3,\'barock\')\"> Barock<\/button><button class=\"ix-btn\" onclick=\"ixDrop(3,\'klassik\')\"> Klassik<\/button><button class=\"ix-btn\" onclick=\"ixDrop(3,\'romantik\')\"> Romantik<\/button><\/div><div class=\"ix-feedback\" id=\"ixFb\"><\/div>';
+const items=[{n:'Bach',t:'barock'},{n:'Mozart',t:'klassik'},{n:'Tschaikowsky',t:'romantik'},{n:'Vivaldi',t:'barock'},{n:'Beethoven',t:'klassik'},{n:'Schubert',t:'romantik'}];
+window._ixData={items,sel:null,done:0,correct:0};
+const g=document.getElementById('ixItems');items.forEach((it,i)=>{const d=document.createElement('div');d.className='ix-item';d.textContent=it.n;d.onclick=()=>{document.querySelectorAll('.ix-item').forEach(x=>x.classList.remove('selected'));d.classList.add('selected');window._ixData.sel=i};g.appendChild(d)});}
+,
+function(){el.innerHTML='<p>Ist das Intervall klein oder gro\u00df?<\/p><div class=\"ix-grid\" id=\"ixItems\"><\/div><div style=\"display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin:16px 0\"><button class=\"ix-btn\" onclick=\"ixDrop(4,\'klein\')\"> Klein (0-2 Schritte)<\/button><button class=\"ix-btn\" onclick=\"ixDrop(4,\'gross\')\"> Gro\u00df (3+ Schritte)<\/button><\/div><div class=\"ix-feedback\" id=\"ixFb\"><\/div>';
+const items=[{n:'Sekunde (1 Schritt)',t:'klein'},{n:'Quinte (4 Schritte)',t:'gross'},{n:'Terz (2 Schritte)',t:'klein'},{n:'Oktave (7 Schritte)',t:'gross'},{n:'Prime (0 Schritte)',t:'klein'},{n:'Sexte (5 Schritte)',t:'gross'}];
+window._ixData={items,sel:null,done:0,correct:0};
+const g=document.getElementById('ixItems');items.forEach((it,i)=>{const d=document.createElement('div');d.className='ix-item';d.textContent=it.n;d.onclick=()=>{document.querySelectorAll('.ix-item').forEach(x=>x.classList.remove('selected'));d.classList.add('selected');window._ixData.sel=i};g.appendChild(d)});}
+,
+function(){el.innerHTML='<p>Ist der Akkord Dur oder Moll?<\/p><div class=\"ix-grid\" id=\"ixItems\"><\/div><div style=\"display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin:16px 0\"><button class=\"ix-btn\" onclick=\"ixDrop(5,\'dur\')\"> Dur (fr\u00f6hlich)<\/button><button class=\"ix-btn\" onclick=\"ixDrop(5,\'moll\')\"> Moll (traurig)<\/button><\/div><div class=\"ix-feedback\" id=\"ixFb\"><\/div>';
+const items=[{n:'C-E-G',t:'dur'},{n:'A-C-E',t:'moll'},{n:'F-A-C',t:'dur'},{n:'D-F-A',t:'moll'},{n:'G-H-D',t:'dur'},{n:'E-G-H',t:'moll'}];
+window._ixData={items,sel:null,done:0,correct:0};
+const g=document.getElementById('ixItems');items.forEach((it,i)=>{const d=document.createElement('div');d.className='ix-item';d.textContent=it.n;d.onclick=()=>{document.querySelectorAll('.ix-item').forEach(x=>x.classList.remove('selected'));d.classList.add('selected');window._ixData.sel=i};g.appendChild(d)});}
+,
+function(){el.innerHTML='<p>Bringe die Musikepochen in die richtige zeitliche Reihenfolge!<\/p><div class="ix-grid" id="ixItems"><\/div><div class="ix-feedback" id="ixFb"><\/div>';
+const items=[{n:'Barock (ca. 1600-1750)',o:0},{n:'Klassik (ca. 1750-1820)',o:1},{n:'Romantik (ca. 1820-1900)',o:2},{n:'Moderne (ab ca. 1900)',o:3},{n:'Gegenwart (ab ca. 1950)',o:4}];
+const shuffled=[...items].sort(()=>Math.random()-.5);window._ixOrder={items:shuffled,picked:[],step:0};
+const g=document.getElementById('ixItems');shuffled.forEach((it,i)=>{const d=document.createElement('div');d.className='ix-item';d.textContent=it.n;d.onclick=()=>{const od=window._ixOrder;if(d.classList.contains('placed'))return;if(it.o===od.step){d.classList.add('correct','placed');od.step++;od.picked.push(i);if(od.step>=items.length){const fb=document.getElementById('ixFb');fb.className='ix-feedback pass';fb.textContent='\u2705 Perfekt! Richtige Reihenfolge!';if(!state.interactiveResults[6]){state.interactiveResults[6]=true;addXP(20,'Interaktive \u00dcbung gel\u00f6st');saveState()}}}else{d.classList.add('wrong');setTimeout(()=>d.classList.remove('wrong'),800)}};g.appendChild(d)});}
+,
+function(){el.innerHTML='<p>Ordne das Genre dem richtigen Merkmal zu!<\/p><div class=\"ix-grid\" id=\"ixItems\"><\/div><div style=\"display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin:16px 0\"><button class=\"ix-btn\" onclick=\"ixDrop(7,\'jazz\')\"> Jazz<\/button><button class=\"ix-btn\" onclick=\"ixDrop(7,\'rock\')\"> Rock<\/button><button class=\"ix-btn\" onclick=\"ixDrop(7,\'klassik\')\"> Klassik<\/button><\/div><div class=\"ix-feedback\" id=\"ixFb\"><\/div>';
+const items=[{n:'Improvisation',t:'jazz'},{n:'E-Gitarre',t:'rock'},{n:'Orchester',t:'klassik'},{n:'Swing',t:'jazz'},{n:'Schlagzeug-Beat',t:'rock'},{n:'Dirigent',t:'klassik'}];
+window._ixData={items,sel:null,done:0,correct:0};
+const g=document.getElementById('ixItems');items.forEach((it,i)=>{const d=document.createElement('div');d.className='ix-item';d.textContent=it.n;d.onclick=()=>{document.querySelectorAll('.ix-item').forEach(x=>x.classList.remove('selected'));d.classList.add('selected');window._ixData.sel=i};g.appendChild(d)});}
+,
+function(){el.innerHTML='<p>Bringe die Stimmlagen von hoch nach tief in die richtige Reihenfolge!<\/p><div class="ix-grid" id="ixItems"><\/div><div class="ix-feedback" id="ixFb"><\/div>';
+const items=[{n:'Sopran (h\u00f6chste)',o:0},{n:'Alt',o:1},{n:'Tenor',o:2},{n:'Bariton',o:3},{n:'Bass (tiefste)',o:4}];
+const shuffled=[...items].sort(()=>Math.random()-.5);window._ixOrder={items:shuffled,picked:[],step:0};
+const g=document.getElementById('ixItems');shuffled.forEach((it,i)=>{const d=document.createElement('div');d.className='ix-item';d.textContent=it.n;d.onclick=()=>{const od=window._ixOrder;if(d.classList.contains('placed'))return;if(it.o===od.step){d.classList.add('correct','placed');od.step++;od.picked.push(i);if(od.step>=items.length){const fb=document.getElementById('ixFb');fb.className='ix-feedback pass';fb.textContent='\u2705 Perfekt! Richtige Reihenfolge!';if(!state.interactiveResults[8]){state.interactiveResults[8]=true;addXP(20,'Interaktive \u00dcbung gel\u00f6st');saveState()}}}else{d.classList.add('wrong');setTimeout(()=>d.classList.remove('wrong'),800)}};g.appendChild(d)});}
+,
+function(){el.innerHTML='<p>Geh\u00f6rt das zum Thema Musik-Theorie oder Musik-Praxis?<\/p><div class=\"ix-grid\" id=\"ixItems\"><\/div><div style=\"display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin:16px 0\"><button class=\"ix-btn\" onclick=\"ixDrop(9,\'theorie\')\"> Theorie<\/button><button class=\"ix-btn\" onclick=\"ixDrop(9,\'praxis\')\"> Praxis<\/button><\/div><div class=\"ix-feedback\" id=\"ixFb\"><\/div>';
+const items=[{n:'Notenlesen',t:'theorie'},{n:'Klavier spielen',t:'praxis'},{n:'Intervalle bestimmen',t:'theorie'},{n:'Im Chor singen',t:'praxis'},{n:'Akkorde analysieren',t:'theorie'},{n:'Gitarre \u00fcben',t:'praxis'}];
+window._ixData={items,sel:null,done:0,correct:0};
+const g=document.getElementById('ixItems');items.forEach((it,i)=>{const d=document.createElement('div');d.className='ix-item';d.textContent=it.n;d.onclick=()=>{document.querySelectorAll('.ix-item').forEach(x=>x.classList.remove('selected'));d.classList.add('selected');window._ixData.sel=i};g.appendChild(d)});}
+];
+if(exercises[modId])exercises[modId]();
+}
+
+// Interactive helpers
+window.ixDrop=function(modId,cat){
+const d=window._ixData;if(d.sel===null)return;
+const item=d.items[d.sel];const els=document.querySelectorAll('.ix-item');
+if(item.t===cat){els[d.sel].classList.add('correct');els[d.sel].classList.add('placed');d.correct++}
+else{els[d.sel].classList.add('wrong');setTimeout(()=>els[d.sel].classList.remove('wrong'),800)}
+d.done++;d.sel=null;els.forEach(e=>e.classList.remove('selected'));
+if(d.done>=d.items.length){const fb=document.getElementById('ixFb');fb.className='ix-feedback '+(d.correct>=4?'pass':'fail');fb.textContent=d.correct>=4?'\u2705 '+d.correct+'/'+d.items.length+' richtig!':'\u274C '+d.correct+'/'+d.items.length+' \u2014 Versuch es nochmal!';
+if(d.correct>=4&&!state.interactiveResults[modId]){state.interactiveResults[modId]=true;addXP(20,'Interaktive \u00DCbung gel\u00F6st');saveState()}}
+};
+function startApp(){const name=document.getElementById('nameInput').value.trim();if(!name)return;state.name=name;state.started=true;saveState();document.getElementById('welcomeScreen').style.display='none';renderModule(0);updateStreak()}
+if(loadState()&&state.started){
+document.getElementById('welcomeScreen').style.display='none';
+document.documentElement.setAttribute('data-theme',state.designTheme);
+renderModule(state.currentModule);updateUI();updateStreak();
+}else{
+document.documentElement.setAttribute('data-theme',state.designTheme);
+buildThemePicker();
+}
+renderSidebar();
+document.addEventListener('click',e=>{if(!e.target.closest('.theme-picker-wrap'))document.getElementById('themePickerDD')?.classList.remove('open')});
+</script>
+
+<script>
+(function(){
+var KEY=null;
+var scripts=document.querySelectorAll('script');
+for(var i=0;i<scripts.length;i++){
+var km=scripts[i].textContent.match(/STORAGE_KEY\s*=\s*['"](\w+)['"]/);
+if(km){KEY=km[1];break;}
+}
+if(!location.hash.match(/modules=/)){try{Object.keys(localStorage).filter(function(k){return k.indexOf("_allowed_modules")!==-1}).forEach(function(k){localStorage.removeItem(k)})}catch(e){}}
+var LOCK_KEY=(KEY||'app')+'_allowed_modules';
+var h=location.hash.match(/modules=([0-9,]+)/);
+var allowed=null;
+if(h){
+allowed=h[1].split(",").map(Number);
+try{localStorage.setItem(LOCK_KEY,JSON.stringify(allowed));}catch(e){}
+}else{
+try{var stored=localStorage.getItem(LOCK_KEY);if(stored)allowed=JSON.parse(stored);}catch(e){}
+}
+if(!allowed||!allowed.length)return;
+function filterSidebar(){
+var items=document.querySelectorAll("#sidebarModules > *");
+for(var i=0;i<items.length;i++){
+items[i].style.display=(allowed.indexOf(i)===-1)?"none":"";
+}
+}
+var sb=document.getElementById("sidebarModules");
+if(sb){new MutationObserver(filterSidebar).observe(sb,{childList:true});filterSidebar();}
+document.addEventListener("click",function(e){
+var t=e.target.closest("[onclick]");
+if(!t)return;
+var oc=t.getAttribute("onclick")||"";
+var idx=oc.indexOf("renderModule(");
+if(idx===-1)return;
+var num=parseInt(oc.substring(idx+13));
+if(!isNaN(num)&&allowed.indexOf(num)===-1){e.preventDefault();e.stopImmediatePropagation();}
+},true);
+setTimeout(filterSidebar,500);
+window.addEventListener("hashchange",function(){
+var hh=location.hash.match(/modules=([0-9,]+)/);
+if(hh){
+allowed=hh[1].split(",").map(Number);
+try{localStorage.setItem(LOCK_KEY,JSON.stringify(allowed));}catch(e){}
+filterSidebar();
+}
+});
+})();
+</script>
+
+<div class="zoom-controls" role="toolbar" aria-label="Zoom-Steuerung">
+<button class="zoom-btn" onclick="zoomOut()" title="Verkleinern (Taste -)" aria-label="Verkleinern">&#8722;</button>
+<button class="zoom-btn" onclick="zoomReset()" title="Zoom zurücksetzen" aria-label="Zoom zurücksetzen" style="font-size:10px;position:relative"><span id="zoomLvl">100%</span></button>
+<button class="zoom-btn" onclick="zoomIn()" title="Vergrößern (Taste +)" aria-label="Vergrößern">+</button>
+</div>
+
+<script>
+(function(){
+var zl=100;
+function applyZoom(){document.body.style.zoom=zl/100;var e=document.getElementById('zoomLvl');if(e)e.textContent=zl+'%';}
+window.zoomIn=function(){if(zl<200){zl+=10;applyZoom();}};
+window.zoomOut=function(){if(zl>50){zl-=10;applyZoom();}};
+window.zoomReset=function(){zl=100;applyZoom();};
+document.addEventListener('keydown',function(e){
+if(e.target.tagName==='INPUT'||e.target.tagName==='TEXTAREA'||e.target.isContentEditable)return;
+if((e.key==='+'||e.key==='=')&&!e.ctrlKey&&!e.metaKey){e.preventDefault();zoomIn();}
+else if((e.key==='-'||e.key==='_')&&!e.ctrlKey&&!e.metaKey){e.preventDefault();zoomOut();}
+else if(e.key==='0'&&!e.ctrlKey&&!e.metaKey){e.preventDefault();zoomReset();}
+});
+})();
+</script>
+
+<script>
+/* A11y: Focus trap for modal overlays */
+document.addEventListener('keydown',function(e){if(e.key==='Tab'){var ov=document.querySelector('.cert-overlay.active,.modal-overlay.active,[role="dialog"].active');if(ov){var fc=ov.querySelectorAll('button,a,[tabindex="0"],input,select,textarea');if(fc.length){var f=fc[0],l=fc[fc.length-1];if(e.shiftKey&&document.activeElement===f){e.preventDefault();l.focus()}else if(!e.shiftKey&&document.activeElement===l){e.preventDefault();f.focus()}}}}});
+</script>
+</body>
+</html>

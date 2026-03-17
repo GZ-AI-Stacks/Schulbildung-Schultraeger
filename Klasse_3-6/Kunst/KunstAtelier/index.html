@@ -1,0 +1,1104 @@
+<!DOCTYPE html>
+<html lang="de" data-theme="cyber-dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>KunstAtelier — Interaktive Kunst-Lernapp</title>
+<meta name="description" content="Interaktive Kunst-Lernapp für Klasse 3-6 mit Gamification, Quizzen und Boss-Challenges">
+<style>
+@font-face{font-family:'Sora';src:url('../../../Klasse_7-10/Informatik/fonts/sora-latin-400-normal.woff2') format('woff2');font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:'Sora';src:url('../../../Klasse_7-10/Informatik/fonts/sora-latin-600-normal.woff2') format('woff2');font-weight:600;font-style:normal;font-display:swap}
+@font-face{font-family:'Sora';src:url('../../../Klasse_7-10/Informatik/fonts/sora-latin-700-normal.woff2') format('woff2');font-weight:700;font-style:normal;font-display:swap}
+@font-face{font-family:'JetBrains Mono';src:url('../../../Klasse_7-10/Informatik/fonts/jetbrains-mono-latin-400-normal.woff2') format('woff2');font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:'Playfair Display';src:url('../../../Klasse_7-10/Informatik/fonts/playfair-display-latin-700-normal.woff2') format('woff2');font-weight:700;font-style:normal;font-display:swap}
+@font-face{font-family:'Inter';src:url('../../../Klasse_7-10/Informatik/fonts/inter-latin-400-normal.woff2') format('woff2');font-weight:400;font-style:normal;font-display:swap}
+
+:root{
+--neon:#3b82f6;--neon-dim:rgba(59,130,246,.15);--neon-glow:rgba(59,130,246,.3);
+--bg:#0a0e14;--bg2:#111827;--bg3:#1f2937;--card:#161e2e;--card-hover:#1e293b;
+--border:#2a3444;--border-light:#374151;
+--text:#d4dce8;--text-dim:#8899aa;--text-bright:#f1f5f9;
+--heading:#ffffff;--link:#60a5fa;
+--success:#22c55e;--warning:#f59e0b;--danger:#ef4444;
+--xp-purple:#a855f7;--badge-cyan:#06b6d4;--streak-red:#ef4444;
+--radius:12px;--radius-sm:8px;--radius-lg:16px;
+--shadow:0 4px 24px rgba(0,0,0,.4);--shadow-lg:0 8px 40px rgba(0,0,0,.5);
+--font:'Sora','Segoe UI',system-ui,sans-serif;
+--mono:'JetBrains Mono','Cascadia Code',monospace;
+--serif:'Playfair Display','Georgia',serif;
+--sidebar-w:280px;--header-h:60px;
+--card-border-w:1px;--card-border-style:solid;--glow:1
+}
+[data-theme="cyber-dark"]{--neon:#3b82f6;--neon-dim:rgba(59,130,246,.15);--neon-glow:rgba(59,130,246,.3);--bg:#0a0e14;--bg2:#111827;--bg3:#1f2937;--card:#161e2e;--card-hover:#1e293b;--border:#2a3444;--border-light:#374151;--text:#d4dce8;--text-dim:#8899aa;--text-bright:#f1f5f9;--heading:#ffffff;--link:#60a5fa;--success:#22c55e;--warning:#f59e0b;--danger:#ef4444;--xp-purple:#a855f7;--badge-cyan:#06b6d4;--streak-red:#ef4444;--radius:12px;--radius-sm:8px;--radius-lg:16px;--shadow:0 4px 24px rgba(0,0,0,.4);--shadow-lg:0 8px 40px rgba(0,0,0,.5);--font:'Sora','Segoe UI',system-ui,sans-serif;--card-border-w:1px;--card-border-style:solid;--glow:1}
+[data-theme="cyber-light"]{--neon:#1d4ed8;--neon-dim:rgba(29,78,216,.1);--neon-glow:rgba(29,78,216,.2);--bg:#f8f9fb;--bg2:#f0f2f5;--bg3:#e5e7eb;--card:#ffffff;--card-hover:#f5f7fa;--border:#d1d5db;--border-light:#e5e7eb;--text:#374151;--text-dim:#4b5563;--text-bright:#111827;--heading:#111827;--link:#2563eb;--success:#22c55e;--warning:#f59e0b;--danger:#ef4444;--xp-purple:#a855f7;--badge-cyan:#06b6d4;--streak-red:#ef4444;--radius:12px;--radius-sm:8px;--radius-lg:16px;--shadow:0 4px 24px rgba(0,0,0,.08);--shadow-lg:0 8px 40px rgba(0,0,0,.12);--font:'Sora','Segoe UI',system-ui,sans-serif;--card-border-w:1px;--card-border-style:solid;--glow:0}
+[data-theme="retro-dark"]{--neon:#ffd700;--neon-dim:rgba(255,215,0,.12);--neon-glow:rgba(255,215,0,.3);--bg:#0d0208;--bg2:#1a0a1e;--bg3:#2d1233;--card:#1a0a1e;--card-hover:#2d1233;--border:#4a1942;--border-light:#5c2d5c;--text:#e0d0f0;--text-dim:#9080a0;--text-bright:#fff;--heading:#ffd700;--link:#ff6b9d;--success:#00e676;--warning:#ffab00;--danger:#ff1744;--xp-purple:#e040fb;--badge-cyan:#00e5ff;--streak-red:#ff1744;--radius:0px;--radius-sm:0px;--radius-lg:0px;--shadow:4px 4px 0 rgba(0,0,0,.8);--shadow-lg:6px 6px 0 rgba(0,0,0,.9);--font:'Courier New','Consolas',monospace;--card-border-w:3px;--card-border-style:solid;--glow:0}
+[data-theme="retro-light"]{--neon:#b8860b;--neon-dim:rgba(184,134,11,.1);--neon-glow:rgba(184,134,11,.2);--bg:#fff8e1;--bg2:#fff3cd;--bg3:#ffe0b2;--card:#ffffff;--card-hover:#fff9f0;--border:#d4a017;--border-light:#e6c84d;--text:#3e2723;--text-dim:#6d4c41;--text-bright:#1b0000;--heading:#b8860b;--link:#c2185b;--success:#2e7d32;--warning:#ef6c00;--danger:#c62828;--xp-purple:#8e24aa;--badge-cyan:#00838f;--streak-red:#c62828;--radius:0px;--radius-sm:0px;--radius-lg:0px;--shadow:3px 3px 0 rgba(0,0,0,.15);--shadow-lg:5px 5px 0 rgba(0,0,0,.2);--font:'Courier New','Consolas',monospace;--card-border-w:3px;--card-border-style:solid;--glow:0}
+[data-theme="nature-dark"]{--neon:#4ade80;--neon-dim:rgba(74,222,128,.12);--neon-glow:rgba(74,222,128,.25);--bg:#0c1a0f;--bg2:#132617;--bg3:#1e3a24;--card:#15291a;--card-hover:#1e3a24;--border:#2d5a36;--border-light:#3a7044;--text:#c8e6c9;--text-dim:#81a784;--text-bright:#e8f5e9;--heading:#e8f5e9;--link:#81c784;--success:#66bb6a;--warning:#ffa726;--danger:#ef5350;--xp-purple:#ab47bc;--badge-cyan:#26a69a;--streak-red:#ef5350;--radius:20px;--radius-sm:14px;--radius-lg:28px;--shadow:0 4px 20px rgba(0,0,0,.3);--shadow-lg:0 8px 32px rgba(0,0,0,.4);--font:'Segoe UI','Helvetica Neue',system-ui,sans-serif;--card-border-w:1px;--card-border-style:solid;--glow:0}
+[data-theme="nature-light"]{--neon:#2e7d32;--neon-dim:rgba(46,125,50,.08);--neon-glow:rgba(46,125,50,.15);--bg:#f1f8e9;--bg2:#e8f5e9;--bg3:#c8e6c9;--card:#ffffff;--card-hover:#f1faf1;--border:#a5d6a7;--border-light:#c8e6c9;--text:#33691e;--text-dim:#3e6e1c;--text-bright:#1b5e20;--heading:#1b5e20;--link:#2e7d32;--success:#388e3c;--warning:#ef6c00;--danger:#c62828;--xp-purple:#7b1fa2;--badge-cyan:#00695c;--streak-red:#c62828;--radius:20px;--radius-sm:14px;--radius-lg:28px;--shadow:0 4px 16px rgba(0,0,0,.06);--shadow-lg:0 8px 28px rgba(0,0,0,.1);--font:'Segoe UI','Helvetica Neue',system-ui,sans-serif;--card-border-w:1px;--card-border-style:solid;--glow:0}
+[data-theme="space-dark"]{--neon:#c084fc;--neon-dim:rgba(192,132,252,.12);--neon-glow:rgba(192,132,252,.3);--bg:#07020e;--bg2:#0f0720;--bg3:#1a0e35;--card:#110a28;--card-hover:#1a0e35;--border:#2e1a5e;--border-light:#3d2478;--text:#d4c8f0;--text-dim:#9080b8;--text-bright:#f0e8ff;--heading:#f0e8ff;--link:#f0abfc;--success:#34d399;--warning:#fbbf24;--danger:#fb7185;--xp-purple:#f472b6;--badge-cyan:#67e8f9;--streak-red:#fb7185;--radius:4px;--radius-sm:2px;--radius-lg:6px;--shadow:0 4px 24px rgba(100,50,200,.2);--shadow-lg:0 8px 40px rgba(100,50,200,.3);--font:'Segoe UI',system-ui,sans-serif;--card-border-w:1px;--card-border-style:solid;--glow:1}
+[data-theme="space-light"]{--neon:#7c3aed;--neon-dim:rgba(124,58,237,.08);--neon-glow:rgba(124,58,237,.15);--bg:#faf5ff;--bg2:#f3e8ff;--bg3:#e9d5ff;--card:#ffffff;--card-hover:#faf5ff;--border:#c4b5fd;--border-light:#ddd6fe;--text:#4c1d95;--text-dim:#5b21b6;--text-bright:#2e1065;--heading:#2e1065;--link:#7c3aed;--success:#059669;--warning:#d97706;--danger:#dc2626;--xp-purple:#db2777;--badge-cyan:#0891b2;--streak-red:#dc2626;--radius:4px;--radius-sm:2px;--radius-lg:6px;--shadow:0 4px 16px rgba(100,50,200,.06);--shadow-lg:0 8px 28px rgba(100,50,200,.1);--font:'Segoe UI',system-ui,sans-serif;--card-border-w:1px;--card-border-style:solid;--glow:0}
+[data-theme="comic-dark"]{--neon:#ff6b6b;--neon-dim:rgba(255,107,107,.12);--neon-glow:rgba(255,107,107,.3);--bg:#1a1a2e;--bg2:#222244;--bg3:#2e2e55;--card:#262650;--card-hover:#2e2e55;--border:#4a4a7a;--border-light:#5a5a8a;--text:#e8e0ff;--text-dim:#a098c0;--text-bright:#fff;--heading:#fff;--link:#ffa94d;--success:#51cf66;--warning:#fcc419;--danger:#ff6b6b;--xp-purple:#cc5de8;--badge-cyan:#22b8cf;--streak-red:#ff6b6b;--radius:16px;--radius-sm:12px;--radius-lg:24px;--shadow:4px 4px 0 rgba(0,0,0,.5);--shadow-lg:6px 6px 0 rgba(0,0,0,.6);--font:'Comic Sans MS','Chalkboard SE',cursive,system-ui,sans-serif;--card-border-w:3px;--card-border-style:solid;--glow:0}
+[data-theme="comic-light"]{--neon:#e03131;--neon-dim:rgba(224,49,49,.08);--neon-glow:rgba(224,49,49,.15);--bg:#fff9db;--bg2:#fff3bf;--bg3:#ffe066;--card:#ffffff;--card-hover:#fffdf0;--border:#fab005;--border-light:#fcc419;--text:#2b2b2b;--text-dim:#555;--text-bright:#000;--heading:#000;--link:#e8590c;--success:#2f9e44;--warning:#e8590c;--danger:#c92a2a;--xp-purple:#9c36b5;--badge-cyan:#1098ad;--streak-red:#c92a2a;--radius:16px;--radius-sm:12px;--radius-lg:24px;--shadow:3px 3px 0 rgba(0,0,0,.2);--shadow-lg:5px 5px 0 rgba(0,0,0,.25);--font:'Comic Sans MS','Chalkboard SE',cursive,system-ui,sans-serif;--card-border-w:3px;--card-border-style:solid;--glow:0}
+[data-theme="sketchy-dark"]{--neon:#d97706;--neon-dim:rgba(217,119,6,.15);--neon-glow:rgba(217,119,6,.3);--bg:#2a1f0f;--bg2:#3a2a1a;--bg3:#4a3a2a;--card:#362414;--card-hover:#462a1a;--border:#5a4030;--border-light:#6a5040;--text:#d4c4b0;--text-dim:#a09080;--text-bright:#e8d8c8;--heading:#f5ead5;--link:#e8a550;--success:#84cc16;--warning:#d97706;--danger:#e74c3c;--xp-purple:#d946ef;--badge-cyan:#06b6d4;--streak-red:#e74c3c;--radius:24px;--radius-sm:16px;--radius-lg:32px;--shadow:0 6px 20px rgba(0,0,0,.3);--shadow-lg:0 10px 40px rgba(0,0,0,.4);--font:'Playfair Display','Georgia',serif;--card-border-w:2px;--card-border-style:dashed;--glow:0}
+[data-theme="sketchy-light"]{--neon:#b45309;--neon-dim:rgba(180,83,9,.1);--neon-glow:rgba(180,83,9,.2);--bg:#fef3e2;--bg2:#fde8cc;--bg3:#f9d5b8;--card:#ffffff;--card-hover:#fffaf5;--border:#d4a574;--border-light:#e8c4a0;--text:#5c4033;--text-dim:#8b6f47;--text-bright:#3e2723;--heading:#3e2723;--link:#c2600c;--success:#65a30d;--warning:#b45309;--danger:#d25c4d;--xp-purple:#c084fc;--badge-cyan:#0891b2;--streak-red:#d25c4d;--radius:24px;--radius-sm:16px;--radius-lg:32px;--shadow:0 4px 12px rgba(0,0,0,.08);--shadow-lg:0 8px 24px rgba(0,0,0,.12);--font:'Playfair Display','Georgia',serif;--card-border-w:2px;--card-border-style:dashed;--glow:0}
+[data-theme="nature-code-dark"]{--neon:#10b981;--neon-dim:rgba(16,185,129,.15);--neon-glow:rgba(16,185,129,.25);--bg:#0a1f12;--bg2:#0d2818;--bg3:#1a3a2a;--card:#0f281a;--card-hover:#1a3a2a;--border:#2d5a3d;--border-light:#3a7050;--text:#c8e6d0;--text-dim:#7ba890;--text-bright:#e8f5ed;--heading:#e8f5ed;--link:#34d399;--success:#10b981;--warning:#f59e0b;--danger:#f87171;--xp-purple:#a78bfa;--badge-cyan:#22d3ee;--streak-red:#f87171;--radius:20px;--radius-sm:14px;--radius-lg:28px;--shadow:0 4px 20px rgba(0,100,50,.2);--shadow-lg:0 8px 32px rgba(0,100,50,.3);--font:'Segoe UI','Helvetica Neue',system-ui,sans-serif;--card-border-w:1px;--card-border-style:solid;--glow:0}
+[data-theme="nature-code-light"]{--neon:#059669;--neon-dim:rgba(5,150,105,.1);--neon-glow:rgba(5,150,105,.15);--bg:#f0fdf8;--bg2:#e8faf2;--bg3:#d1f2e0;--card:#ffffff;--card-hover:#f5fbf7;--border:#86efac;--border-light:#bbf7d0;--text:#164e3f;--text-dim:#2d6e4f;--text-bright:#052e16;--heading:#052e16;--link:#059669;--success:#10b981;--warning:#d97706;--danger:#dc2626;--xp-purple:#8b5cf6;--badge-cyan:#06b6d4;--streak-red:#dc2626;--radius:20px;--radius-sm:14px;--radius-lg:28px;--shadow:0 4px 16px rgba(0,100,50,.06);--shadow-lg:0 8px 28px rgba(0,100,50,.1);--font:'Segoe UI','Helvetica Neue',system-ui,sans-serif;--card-border-w:1px;--card-border-style:solid;--glow:0}
+[data-theme="glass-dark"]{--neon:#00d9ff;--neon-dim:rgba(0,217,255,.12);--neon-glow:rgba(0,217,255,.25);--bg:#0f0f23;--bg2:#1a1a3e;--bg3:#25254a;--card:rgba(30,30,60,.4);--card-hover:rgba(40,40,80,.5);--border:rgba(100,150,255,.2);--border-light:rgba(100,150,255,.3);--text:#e4e8f0;--text-dim:#8899aa;--text-bright:#f5f7ff;--heading:#ffffff;--link:#00d9ff;--success:#34d399;--warning:#fbbf24;--danger:#ff6b9d;--xp-purple:#b991f7;--badge-cyan:#00d9ff;--streak-red:#ff6b9d;--radius:16px;--radius-sm:12px;--radius-lg:20px;--shadow:0 8px 32px rgba(0,200,255,.1);--shadow-lg:0 16px 64px rgba(0,200,255,.15);--font:'Segoe UI',system-ui,sans-serif;--card-border-w:1px;--card-border-style:solid;--glow:1}
+[data-theme="glass-light"]{--neon:#0891b2;--neon-dim:rgba(8,145,178,.08);--neon-glow:rgba(8,145,178,.15);--bg:#f8fafc;--bg2:#f1f5f9;--bg3:#e2e8f0;--card:rgba(255,255,255,.4);--card-hover:rgba(255,255,255,.6);--border:rgba(100,180,255,.2);--border-light:rgba(100,180,255,.3);--text:#1e293b;--text-dim:#475569;--text-bright:#0f172a;--heading:#0f172a;--link:#0891b2;--success:#059669;--warning:#d97706;--danger:#dc2626;--xp-purple:#7c3aed;--badge-cyan:#0891b2;--streak-red:#dc2626;--radius:16px;--radius-sm:12px;--radius-lg:20px;--shadow:0 8px 32px rgba(100,150,255,.08);--shadow-lg:0 16px 64px rgba(100,150,255,.12);--font:'Segoe UI',system-ui,sans-serif;--card-border-w:1px;--card-border-style:solid;--glow:0}
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{font-family:var(--font);background:var(--bg);color:var(--text);line-height:1.6;min-height:100vh;overflow-x:hidden;transition:background .3s,color .3s}
+h1,h2,h3,h4{color:var(--heading);line-height:1.3}
+a{color:var(--link);text-decoration:none}
+a:hover{text-decoration:underline}
+button{font-family:var(--font);cursor:pointer;border:none;background:none;color:inherit}
+code,pre{font-family:var(--mono)}
+:focus-visible{outline:2px solid var(--neon);outline-offset:2px;border-radius:4px}
+::selection{background:var(--neon);color:#fff}
+::-webkit-scrollbar{width:8px}
+::-webkit-scrollbar-track{background:var(--bg2)}
+::-webkit-scrollbar-thumb{background:var(--border);border-radius:4px}
+::-webkit-scrollbar-thumb:hover{background:var(--text-dim)}
+.site-header{position:fixed;top:0;left:0;right:0;height:var(--header-h);background:var(--bg2);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 20px;z-index:100;backdrop-filter:blur(12px)}
+.header-logo{display:flex;align-items:center;gap:12px;font-weight:700;font-size:18px;color:var(--heading)}
+.header-logo-text{display:flex;flex-direction:column;line-height:1.2}
+.header-logo-main{font-size:20px;font-weight:800}
+.header-logo-sub{font-size:11px;font-weight:600;color:var(--neon);letter-spacing:1px;text-transform:uppercase;margin-top:2px}
+.header-right{margin-left:auto;display:flex;align-items:center;gap:12px}
+.header-xp{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--xp-purple);font-weight:600}
+.header-xp-bar{width:80px;height:6px;background:var(--bg3);border-radius:3px;overflow:hidden}
+.header-xp-fill{height:100%;background:var(--xp-purple);border-radius:3px;transition:width .5s}
+.header-streak{display:flex;align-items:center;gap:4px;font-size:13px;color:var(--streak-red);font-weight:600}
+.theme-toggle{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:var(--bg3);transition:background .2s}
+.theme-toggle:hover{background:var(--border)}
+.theme-picker-wrap{position:relative}
+.theme-picker-btn{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:var(--bg3);transition:background .2s;font-size:16px}
+.theme-picker-btn:hover{background:var(--border)}
+.theme-picker-dd{position:absolute;top:calc(100% + 8px);right:0;background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:12px;box-shadow:var(--shadow-lg);z-index:200;display:none;min-width:240px}
+.theme-picker-dd.open{display:block}
+.theme-picker-dd .tp-label{font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--text-dim);margin-bottom:8px}
+.tp-world{display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:var(--radius-sm);cursor:pointer;transition:background .15s;margin-bottom:2px}
+.tp-world:hover{background:var(--bg3)}
+.tp-world.active{background:var(--neon-dim)}
+.tp-world-color{width:28px;height:28px;border-radius:6px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:14px}
+.tp-world-info{flex:1;min-width:0}
+.tp-world-name{font-size:13px;font-weight:600;color:var(--heading)}
+.tp-world-desc{font-size:10px;color:var(--text-dim)}
+.tp-divider{height:1px;background:var(--border);margin:8px 0}
+.tp-mode-row{display:flex;align-items:center;justify-content:space-between;padding:4px 10px}
+.tp-mode-label{font-size:12px;color:var(--text);font-weight:600}
+.tp-mode-switch{width:44px;height:24px;border-radius:12px;background:var(--bg3);position:relative;cursor:pointer;transition:background .2s}
+.tp-mode-switch.light{background:var(--neon)}
+.tp-mode-switch::after{content:'';position:absolute;top:3px;left:3px;width:18px;height:18px;border-radius:50%;background:#fff;transition:transform .2s;box-shadow:0 1px 3px rgba(0,0,0,.3)}
+.tp-mode-switch.light::after{transform:translateX(20px)}
+.menu-btn{display:none;width:36px;height:36px;border-radius:8px;align-items:center;justify-content:center;background:var(--bg3)}
+.sidebar{position:fixed;top:var(--header-h);left:0;width:var(--sidebar-w);height:calc(100vh - var(--header-h));background:var(--bg2);border-right:1px solid var(--border);overflow-y:auto;padding:16px 12px;z-index:90;transition:transform .3s}
+.sidebar-section{margin-bottom:20px}
+.sidebar-label{font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--text-dim);padding:0 8px;margin-bottom:8px}
+.sidebar-level{padding:8px 12px;background:var(--neon-dim);border-radius:var(--radius-sm);margin-bottom:12px;text-align:center}
+.sidebar-level-title{font-size:14px;font-weight:700;color:var(--neon)}
+.sidebar-level-sub{font-size:11px;color:var(--text-dim);margin-top:2px}
+.sidebar-xp-bar{width:100%;height:8px;background:var(--bg3);border-radius:4px;overflow:hidden;margin-top:6px}
+.sidebar-xp-fill{height:100%;background:linear-gradient(90deg,var(--xp-purple),var(--neon));border-radius:4px;transition:width .6s}
+.mod-link{display:flex;align-items:center;gap:10px;padding:8px 12px;border-radius:var(--radius-sm);transition:background .15s;color:var(--text);font-size:13px;text-decoration:none;position:relative;cursor:pointer}
+.mod-link:hover{background:var(--bg3);text-decoration:none}
+.mod-link.active{background:var(--neon-dim);color:var(--neon);font-weight:600}
+.mod-link.completed::after{content:'\2713';position:absolute;right:10px;color:var(--success);font-weight:700;font-size:12px}
+.mod-link .mod-icon{width:28px;height:28px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
+.main{margin-left:var(--sidebar-w);margin-top:var(--header-h);min-height:calc(100vh - var(--header-h));padding:32px;max-width:900px}
+.module-header{margin-bottom:32px}
+.module-header .mod-badge{display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--neon);margin-bottom:8px}
+.module-header h1{font-size:28px;margin-bottom:8px}
+.module-header .mod-desc{font-size:15px;color:var(--text-dim);max-width:600px}
+.lesson-card{background:var(--card);border:var(--card-border-w) var(--card-border-style) var(--border);border-radius:var(--radius);padding:24px;margin-bottom:20px;transition:border-color .2s}
+.lesson-card:hover{border-color:var(--neon)}
+.lesson-card h3{font-size:18px;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.lesson-card p,.lesson-card li{font-size:14px;line-height:1.7;color:var(--text)}
+.lesson-card ul,.lesson-card ol{margin:8px 0 8px 20px}
+.lesson-card code{background:var(--bg3);padding:2px 6px;border-radius:4px;font-size:13px;color:var(--neon)}
+.lesson-card pre{background:var(--bg);border:1px solid var(--border);border-radius:var(--radius-sm);padding:16px;overflow-x:auto;margin:12px 0;font-size:13px;line-height:1.5}
+.lesson-card .info-box{background:var(--neon-dim);border-left:3px solid var(--neon);padding:12px 16px;border-radius:0 var(--radius-sm) var(--radius-sm) 0;margin:12px 0;font-size:13px}
+.interactive-area{background:var(--card);border:calc(var(--card-border-w) + 1px) dashed var(--border);border-radius:var(--radius);padding:24px;margin:20px 0;min-height:200px}
+.interactive-area h4{font-size:15px;color:var(--neon);margin-bottom:12px}
+.ia-toolbar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+.ia-btn{padding:6px 14px;font-size:12px;font-weight:600;border-radius:var(--radius-sm);background:var(--neon-dim);color:var(--neon);border:1px solid transparent;transition:all .15s}
+.ia-btn:hover{background:var(--neon);color:#fff}
+.ia-btn.active{background:var(--neon);color:#fff}
+.ix-grid{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;margin:16px 0}
+.ix-item{background:var(--bg3);border:2px solid var(--border);border-radius:var(--radius-sm);padding:14px 20px;font-size:20px;cursor:pointer;transition:all .2s;user-select:none;text-align:center;min-width:60px}
+.ix-item:hover{border-color:var(--neon);background:var(--neon-dim)}
+.ix-item.selected{border-color:var(--neon);background:var(--neon-dim)}
+.ix-item.correct{border-color:var(--success);background:rgba(34,197,94,.1)}
+.ix-item.wrong{border-color:var(--danger);background:rgba(239,68,68,.1)}
+.ix-item.placed{opacity:.4;pointer-events:none}
+.ix-btn{background:var(--neon);color:#fff;border:none;padding:10px 24px;border-radius:var(--radius-sm);font-size:14px;font-weight:700;cursor:pointer;font-family:var(--font);margin-top:12px;transition:opacity .2s}
+.ix-btn:hover{opacity:.85}
+.ix-btn:disabled{opacity:.4;cursor:not-allowed}
+.ix-feedback{text-align:center;padding:14px;border-radius:var(--radius-sm);font-size:16px;font-weight:700;margin-top:12px;display:none}
+.ix-feedback.pass{display:block;background:rgba(34,197,94,.12);color:var(--success)}
+.ix-feedback.fail{display:block;background:rgba(239,68,68,.12);color:var(--danger)}
+.quiz-section{background:var(--card);border:var(--card-border-w) var(--card-border-style) var(--border);border-radius:var(--radius);padding:24px;margin-top:24px}
+.quiz-section h3{font-size:18px;margin-bottom:16px;color:var(--xp-purple)}
+.quiz-q{margin-bottom:20px}
+.quiz-q p{font-size:14px;font-weight:600;margin-bottom:10px}
+.quiz-q label{display:flex;align-items:flex-start;gap:10px;padding:10px 14px;border-radius:var(--radius-sm);border:1px solid var(--border);cursor:pointer;transition:all .15s;font-size:14px;margin-bottom:6px}
+.quiz-q label:hover{border-color:var(--neon);background:var(--neon-dim)}
+.quiz-q input[type="radio"]{margin-top:3px;accent-color:var(--neon)}
+.quiz-q label.correct{border-color:var(--success);background:rgba(34,197,94,.1)}
+.quiz-q label.wrong{border-color:var(--danger);background:rgba(239,68,68,.1)}
+.quiz-submit{padding:10px 24px;font-size:14px;font-weight:700;border-radius:var(--radius-sm);background:var(--xp-purple);color:#fff;transition:opacity .2s;margin-top:8px}
+.quiz-submit:hover{opacity:.85}
+.quiz-result{padding:16px;border-radius:var(--radius-sm);margin-top:16px;font-size:14px;font-weight:600;text-align:center}
+.quiz-result.pass{background:rgba(34,197,94,.12);color:var(--success);border:1px solid rgba(34,197,94,.3)}
+.quiz-result.fail{background:rgba(239,68,68,.12);color:var(--danger);border:1px solid rgba(239,68,68,.3)}
+.quiz-explanation{margin-top:6px;padding:8px 14px;border-radius:var(--radius-sm);background:rgba(34,197,94,.08);border-left:3px solid var(--success);font-size:13px;color:var(--success);font-weight:600}
+.boss-section{background:linear-gradient(135deg,rgba(168,85,247,.08),rgba(59,130,246,.08));border:2px solid var(--xp-purple);border-radius:var(--radius);padding:24px;margin-top:24px}
+.boss-section h3{color:var(--xp-purple);font-size:20px;margin-bottom:4px}
+.boss-section .boss-sub{font-size:13px;color:var(--text-dim);margin-bottom:16px}
+.badge-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(100px,1fr));gap:12px;margin-top:12px}
+.badge-item{text-align:center;padding:12px 8px;border-radius:var(--radius-sm);background:var(--bg3);opacity:.4;transition:all .3s}
+.badge-item.earned{opacity:1;background:var(--neon-dim);border:1px solid var(--neon)}
+.badge-item .badge-icon{font-size:28px;margin-bottom:4px}
+.badge-item .badge-name{font-size:10px;font-weight:600;color:var(--text-dim)}
+.badge-item.earned .badge-name{color:var(--neon)}
+.stats-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px;margin-top:12px}
+.stat-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius-sm);padding:16px;text-align:center}
+.stat-card .stat-val{font-size:28px;font-weight:700;color:var(--neon)}
+.stat-card .stat-label{font-size:12px;color:var(--text-dim);margin-top:4px}
+.notif{position:fixed;top:80px;right:20px;background:var(--card);border:1px solid var(--neon);border-radius:var(--radius);padding:16px 20px;box-shadow:var(--shadow-lg);z-index:200;transform:translateX(120%);transition:transform .4s cubic-bezier(.22,1,.36,1);max-width:320px}
+.notif.show{transform:translateX(0)}
+.notif-title{font-size:14px;font-weight:700;color:var(--heading);margin-bottom:2px}
+.notif-text{font-size:12px;color:var(--text-dim)}
+.notif.xp{border-color:var(--xp-purple)}
+.notif.badge{border-color:var(--badge-cyan)}
+.notif.level{border-color:var(--success)}
+.notif.streak{border-color:var(--streak-red)}
+.level-up-overlay{position:fixed;inset:0;background:rgba(0,0,0,.7);display:none;align-items:center;justify-content:center;z-index:300}
+.level-up-overlay.active{display:flex}
+.level-up-box{text-align:center;padding:40px;animation:lvlPop .5s ease-out}
+.level-up-box .lvl-icon{font-size:64px;margin-bottom:12px}
+.level-up-box .lvl-title{font-size:28px;font-weight:900;color:var(--heading)}
+.level-up-box .lvl-name{font-size:20px;color:var(--xp-purple);font-weight:700;margin-top:4px}
+@keyframes lvlPop{from{transform:scale(.5);opacity:0}to{transform:scale(1);opacity:1}}
+.welcome-screen{display:flex;align-items:center;justify-content:center;min-height:calc(100vh - var(--header-h));text-align:center;padding:40px 20px}
+.welcome-box{max-width:480px}
+.welcome-box h1{font-size:36px;margin-bottom:8px}
+.welcome-box .ws-sub{color:var(--text-dim);font-size:15px;margin-bottom:32px}
+.welcome-box input{width:100%;max-width:320px;padding:12px 16px;font-size:16px;border-radius:var(--radius-sm);border:1px solid var(--border);background:var(--bg3);color:var(--heading);font-family:var(--font);text-align:center;margin-bottom:16px}
+.welcome-box input:focus{border-color:var(--neon);outline:2px solid var(--neon);outline-offset:2px}
+.welcome-box .ws-start{padding:14px 40px;font-size:16px;font-weight:700;border-radius:var(--radius-sm);background:var(--neon);color:#fff;transition:opacity .2s}
+.welcome-box .ws-start:hover{opacity:.85}
+.welcome-box .ws-start:disabled{opacity:.4;cursor:not-allowed}
+.cert-overlay{position:fixed;inset:0;background:rgba(0,0,0,.88);display:none;align-items:center;justify-content:center;z-index:400;padding:20px;flex-direction:column;backdrop-filter:blur(8px)}
+.cert-overlay.active{display:flex}
+.cert-picker{display:flex;gap:12px;justify-content:center;margin-bottom:20px;flex-wrap:wrap}
+.cert-pick-btn{padding:10px 20px;font-size:13px;font-weight:700;border-radius:12px;border:2px solid rgba(255,255,255,.15);background:rgba(255,255,255,.06);color:rgba(255,255,255,.7);transition:all .3s;backdrop-filter:blur(4px)}
+.cert-pick-btn:hover{border-color:rgba(255,255,255,.3);color:#fff;transform:translateY(-2px)}
+.cert-pick-btn.active{border-color:#ffd700;color:#ffd700;background:rgba(255,215,0,.1);box-shadow:0 0 20px rgba(255,215,0,.15)}
+.cert-frame{width:720px;max-width:100%;aspect-ratio:1.414;position:relative;overflow:hidden;animation:certEntrance .6s cubic-bezier(.34,1.56,.64,1) both}
+.cert-actions{display:flex;gap:12px;justify-content:center;margin-top:16px}
+.cert-actions button{padding:12px 28px;font-size:13px;font-weight:700;border-radius:12px;background:linear-gradient(135deg,var(--neon),var(--link));color:#fff;transition:transform .2s,box-shadow .2s}
+.cert-actions button:hover{transform:translateY(-2px);box-shadow:0 4px 20px rgba(0,0,0,.3)}
+@keyframes certEntrance{0%{opacity:0;transform:scale(.8) translateY(30px)}100%{opacity:1;transform:scale(1) translateY(0)}}
+@keyframes shimmer{0%{background-position:-200% 0}100%{background-position:200% 0}}
+@keyframes blink{50%{opacity:0}}
+@keyframes glitch{0%,93%{text-shadow:0 0 20px rgba(0,212,255,.5)}94%{text-shadow:-3px 0 #ff0040,3px 0 #00d4ff;transform:skewX(-2deg)}95%{text-shadow:3px 0 #ff0040,-3px 0 #00d4ff;transform:skewX(2deg)}96%{text-shadow:-1px 2px #ff0040,1px -2px #00d4ff}97%,100%{text-shadow:0 0 20px rgba(0,212,255,.5);transform:skewX(0)}}
+@keyframes pixelBlink{50%{opacity:0}}
+@keyframes holoSpin{to{transform:rotate(360deg)}}
+@keyframes aurora{0%{background-position:0% 50%}25%{background-position:50% 100%}50%{background-position:100% 50%}75%{background-position:50% 0%}100%{background-position:0% 50%}}
+@keyframes goldShimmer{0%{background-position:-100% 0}100%{background-position:200% 0}}
+@keyframes neonPulse{0%,100%{box-shadow:0 0 5px #00ff41,0 0 10px #00ff41,0 0 20px rgba(0,255,65,.3)}50%{box-shadow:0 0 10px #00ff41,0 0 25px #00ff41,0 0 50px rgba(0,255,65,.4)}}
+@keyframes matrixFall{0%{transform:translateY(-100%);opacity:1}100%{transform:translateY(100vh);opacity:0}}
+.cert-common-stats{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin:10px 0}
+.cert-stat{padding:4px 10px;border-radius:20px;font-size:11px;font-weight:700;display:inline-flex;align-items:center;gap:4px}
+.cert-badge-row{display:flex;gap:6px;justify-content:center;flex-wrap:wrap;margin:8px 0}
+.cert-badge-item{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px}
+.cert-verification{font-size:10px;letter-spacing:2px;margin-top:8px;opacity:.5;font-family:var(--mono)}
+.cert-logo-footer{display:flex;align-items:center;justify-content:center;gap:6px;margin-top:10px;opacity:.4;font-size:10px}
+.cert-logo-footer svg{width:16px;height:16px}
+.cert-akademie{background:linear-gradient(145deg,#faf6e8,#f0e8d0,#e8dfc0);border:none;padding:0;text-align:center;font-family:var(--serif);color:#1a1a3e;position:relative;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;overflow:hidden}
+.cert-akademie::before{content:'';position:absolute;inset:0;background:url("data:image/svg+xml,%3Csvg width='60' height='60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 5 L35 20 L30 15 L25 20Z' fill='%23c5a54e' opacity='.04'/%3E%3C/svg%3E");pointer-events:none}
+.cert-akademie::after{content:'';position:absolute;inset:8px;border:2px solid rgba(197,165,78,.35);border-radius:2px;pointer-events:none}
+.cert-akademie .cert-inner{position:relative;z-index:1;padding:36px 32px;width:100%}
+.cert-akademie .cert-corner{position:absolute;width:60px;height:60px;z-index:2}
+.cert-akademie .cert-corner svg{width:100%;height:100%}
+.cert-akademie .cert-corner-tl{top:14px;left:14px}
+.cert-akademie .cert-corner-tr{top:14px;right:14px;transform:scaleX(-1)}
+.cert-akademie .cert-corner-bl{bottom:14px;left:14px;transform:scaleY(-1)}
+.cert-akademie .cert-corner-br{bottom:14px;right:14px;transform:scale(-1)}
+.cert-akademie .cert-title{font-size:36px;font-weight:700;color:#1a1a3e;margin-bottom:2px;letter-spacing:3px}
+.cert-akademie .cert-sub{font-size:11px;color:#8a7d5e;letter-spacing:5px;text-transform:uppercase;margin-bottom:16px}
+.cert-akademie .cert-hr{width:200px;height:2px;background:linear-gradient(90deg,transparent,#c5a54e,transparent);margin:10px auto}
+.cert-akademie .cert-body{font-size:14px;line-height:1.7;color:#3d3422;margin-bottom:8px}
+.cert-akademie .cert-name{font-size:32px;font-weight:700;background:linear-gradient(135deg,#c5a54e,#e8c84e,#c5a54e);background-size:200% auto;animation:goldShimmer 3s linear infinite;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin:12px 0;font-style:italic}
+.cert-akademie .cert-seal-wrap{margin:12px auto;position:relative;width:90px;height:90px}
+.cert-akademie .cert-seal-ring{position:absolute;inset:0;border:3px solid #c5a54e;border-radius:50%;opacity:.3}
+.cert-akademie .cert-seal{width:76px;height:76px;margin:7px;background:radial-gradient(circle at 35% 35%,#e8c84e,#c5a54e,#8a6914);border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 16px rgba(160,134,54,.5),inset 0 2px 4px rgba(255,255,255,.3)}
+.cert-akademie .cert-stat{background:rgba(197,165,78,.12);color:#8a6914;border:1px solid rgba(197,165,78,.25)}
+.cert-akademie .cert-badge-item{background:rgba(197,165,78,.15);border:1px solid rgba(197,165,78,.3)}
+.cert-akademie .cert-date{font-size:11px;color:#8a7d5e;margin-top:8px;font-style:italic}
+.cert-hacker{background:#050505;border:2px solid #00ff41;padding:0;font-family:var(--mono);color:#00ff41;position:relative;overflow:hidden;height:100%;display:flex;flex-direction:column;justify-content:center;box-shadow:0 0 30px rgba(0,255,65,.15),inset 0 0 60px rgba(0,255,65,.03);animation:neonPulse 4s ease-in-out infinite}
+.cert-hacker::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(transparent,transparent 2px,rgba(0,255,65,.025) 2px,rgba(0,255,65,.025) 4px);pointer-events:none;z-index:1}
+.cert-hacker::after{content:'> > > CERTIFIED > > > CERTIFIED > > > CERTIFIED > > >';position:absolute;bottom:0;left:0;right:0;font-size:9px;color:rgba(0,255,65,.08);letter-spacing:3px;padding:4px;white-space:nowrap;overflow:hidden;z-index:1}
+.cert-hacker .cert-inner{position:relative;z-index:2;padding:30px 32px}
+.cert-hacker .cert-matrix-col{position:absolute;top:-100%;font-size:11px;color:#00ff41;opacity:.08;z-index:0;font-family:var(--mono);line-height:1.1;animation:matrixFall linear infinite;white-space:pre}
+.cert-hacker .cert-title{font-size:22px;font-weight:700;text-shadow:0 0 15px rgba(0,255,65,.6);margin-bottom:4px}
+.cert-hacker .cert-access{font-size:32px;font-weight:700;color:#00d4ff;text-shadow:0 0 30px rgba(0,212,255,.6),0 0 60px rgba(0,212,255,.2);margin:14px 0;animation:glitch 4s infinite;letter-spacing:4px}
+.cert-hacker .cert-body{font-size:12px;line-height:2;color:#33cc55}
+.cert-hacker .cert-name{font-size:24px;color:#00d4ff;margin:12px 0;text-shadow:0 0 10px rgba(0,212,255,.4)}
+.cert-hacker .cert-prompt{color:#444;font-size:11px}
+.cert-hacker .cert-prompt span{color:#00ff41}
+.cert-hacker .cursor-blink{animation:blink 1s step-end infinite}
+.cert-hacker .cert-hex-seal{width:70px;height:70px;margin:12px auto;border:2px solid #00ff41;border-radius:50%;display:flex;align-items:center;justify-content:center;position:relative;box-shadow:0 0 15px rgba(0,255,65,.2)}
+.cert-hacker .cert-stat{background:rgba(0,255,65,.08);color:#00ff41;border:1px solid rgba(0,255,65,.2)}
+.cert-hacker .cert-badge-item{background:rgba(0,255,65,.08);border:1px solid rgba(0,255,65,.2)}
+.cert-pixel{background:linear-gradient(180deg,#0f0f2e,#1a1a3e,#0f0f2e);border:6px solid #ffd700;padding:0;text-align:center;color:#fff;font-family:var(--font);position:relative;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;overflow:hidden;box-shadow:inset 0 0 80px rgba(255,215,0,.05)}
+.cert-pixel .cert-inner{position:relative;z-index:1;padding:28px 24px;width:100%}
+.cert-pixel .cert-complete{font-size:20px;color:#00e676;margin:6px 0;animation:pixelBlink 1.2s step-end infinite;text-shadow:0 0 10px rgba(0,230,118,.4);letter-spacing:3px;font-weight:900}
+.cert-pixel .cert-title{font-size:32px;font-weight:900;color:#ffd700;text-transform:uppercase;letter-spacing:5px;text-shadow:4px 4px 0 #e4002b}
+.cert-pixel .cert-name{font-size:26px;font-weight:900;color:#fff;margin:14px 0;text-shadow:2px 2px 0 rgba(0,0,0,.5)}
+.cert-pixel .cert-stars{font-size:28px;margin:8px 0;letter-spacing:6px;color:#ffd700;text-shadow:0 0 10px rgba(255,215,0,.4)}
+.cert-pixel .cert-body{font-size:12px;color:#aaa;line-height:1.7}
+.cert-pixel .cert-score{font-size:18px;color:#ff4757;font-weight:900;margin-top:6px;text-shadow:2px 2px 0 rgba(0,0,0,.5);letter-spacing:2px}
+.cert-pixel .cert-xp-bar{width:200px;height:14px;background:#111;border:2px solid #ffd700;margin:8px auto;position:relative;overflow:hidden}
+.cert-pixel .cert-xp-fill{height:100%;background:repeating-linear-gradient(90deg,#ffd700 0px,#ffd700 8px,#ffaa00 8px,#ffaa00 16px);box-shadow:0 0 8px rgba(255,215,0,.4)}
+.cert-pixel .cert-xp-label{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:900;color:#fff;text-shadow:1px 1px 0 #000;z-index:1}
+.cert-pixel .cert-stat{background:rgba(255,215,0,.1);color:#ffd700;border:2px solid rgba(255,215,0,.3)}
+.cert-pixel .cert-badge-item{background:rgba(255,215,0,.1);border:2px solid rgba(255,215,0,.25)}
+.cert-zukunft{background:linear-gradient(135deg,#0a0a2e,#1a0a3e,#0a1a3e);border:1px solid rgba(255,255,255,.1);border-radius:20px;padding:0;text-align:center;color:#fff;font-family:var(--font);position:relative;overflow:hidden;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.cert-zukunft::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(99,102,241,.15),rgba(236,72,153,.15),rgba(245,158,11,.15),rgba(34,197,94,.15),rgba(99,102,241,.15));background-size:400% 400%;animation:aurora 8s ease infinite;pointer-events:none}
+.cert-zukunft .cert-inner{position:relative;z-index:1;padding:30px 28px;width:100%}
+.cert-zukunft .cert-particle{position:absolute;width:3px;height:3px;border-radius:50%;z-index:0}
+.cert-zukunft .cert-title{font-size:30px;font-weight:900;background:linear-gradient(135deg,#6366f1,#ec4899,#f59e0b,#22c55e);background-size:200% auto;animation:shimmer 4s linear infinite;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.cert-zukunft .cert-sub{font-size:11px;color:rgba(255,255,255,.5);letter-spacing:4px;text-transform:uppercase;margin-bottom:14px}
+.cert-zukunft .cert-name{font-size:28px;font-weight:700;margin:12px 0;background:linear-gradient(90deg,#a78bfa,#f472b6,#fbbf24);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.cert-zukunft .cert-body{font-size:13px;color:rgba(255,255,255,.65);line-height:1.7}
+.cert-zukunft .cert-seal-holo{width:80px;height:80px;margin:12px auto;border-radius:50%;background:conic-gradient(#6366f1,#ec4899,#f59e0b,#22c55e,#06b6d4,#6366f1);display:flex;align-items:center;justify-content:center;animation:holoSpin 6s linear infinite;box-shadow:0 0 30px rgba(99,102,241,.3)}
+.cert-zukunft .cert-seal-mid{width:68px;height:68px;border-radius:50%;border:2px solid rgba(255,255,255,.15);background:transparent;display:flex;align-items:center;justify-content:center;animation:holoSpin 10s linear infinite reverse}
+.cert-zukunft .cert-seal-inner{width:52px;height:52px;border-radius:50%;background:rgba(10,10,30,.9);display:flex;align-items:center;justify-content:center;backdrop-filter:blur(4px)}
+.cert-zukunft .cert-date{font-size:10px;color:rgba(255,255,255,.35);margin-top:10px;letter-spacing:2px}
+.cert-zukunft .cert-stat{background:rgba(99,102,241,.12);color:#a78bfa;border:1px solid rgba(99,102,241,.25)}
+.cert-zukunft .cert-badge-item{background:rgba(99,102,241,.1);border:1px solid rgba(99,102,241,.2)}
+.confetti-container{position:fixed;inset:0;pointer-events:none;z-index:600;overflow:hidden}
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.6);display:none;align-items:center;justify-content:center;z-index:500;padding:20px}
+.modal-overlay.active{display:flex}
+.modal{background:var(--card);border:1px solid var(--border);border-radius:var(--radius-lg);max-width:640px;width:100%;max-height:85vh;overflow-y:auto;padding:32px;position:relative}
+.modal-close{position:absolute;top:12px;right:12px;font-size:24px;color:var(--text-dim);background:none;border:none;cursor:pointer}
+@media(max-width:800px){
+.menu-btn{display:flex}
+.sidebar{transform:translateX(-100%)}
+.sidebar.open{transform:translateX(0)}
+.main{margin-left:0;padding:16px}
+}
+@media print{
+*{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}
+.site-header,.sidebar,.notif,.level-up-overlay,.confetti-container{display:none!important}
+.main{margin-left:0!important;padding:20px!important}
+.lesson-card{break-inside:avoid;page-break-inside:avoid}
+}
+
+.zoom-controls{position:fixed;bottom:16px;left:16px;display:flex;gap:4px;z-index:9999}
+.zoom-btn{width:32px;height:32px;border-radius:50%;border:1px solid var(--border,#2a3444);background:var(--bg2,#111827);color:var(--text,#d4dce8);cursor:pointer;font-size:15px;display:flex;align-items:center;justify-content:center;transition:all .2s;font-family:inherit;line-height:1}
+.zoom-btn:hover{border-color:var(--neon,#3b82f6);color:var(--neon,#3b82f6);transform:scale(1.1)}
+.zoom-btn:focus-visible{outline:2px solid var(--neon,#3b82f6);outline-offset:2px}
+.zoom-level{font-size:10px;position:absolute;top:-16px;left:50%;transform:translateX(-50%);color:var(--text-dim,#8899aa);white-space:nowrap;pointer-events:none}
+
+/* A11y: Print improvements */
+@media print{body{background:#fff!important;color:#000!important}.cert-overlay,.modal-overlay,.level-up-overlay,.theme-overlay,.zoom-controls{display:none!important}.lesson-card,.quiz-section,.boss-section,.interactive-area{break-inside:avoid;page-break-inside:avoid}}
+
+/* Audio/Speech */
+.tts-btn{background:none;border:none;cursor:pointer;font-size:.9em;opacity:.5;transition:all .2s;vertical-align:middle;margin-left:8px;padding:2px 6px;border-radius:4px}
+.tts-btn:hover{opacity:1;background:var(--bg2)}.tts-btn.speaking{opacity:1;color:var(--neon);animation:tts-pulse 1s infinite}
+@keyframes tts-pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.15)}}
+.tts-bar{display:flex;align-items:center;gap:8px;padding:6px 12px;background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);margin:8px 0;font-size:.8rem;flex-wrap:wrap}
+.tts-bar select{background:var(--bg);color:var(--text);border:1px solid var(--border);border-radius:4px;padding:2px 6px;font-size:.78rem}
+.tts-bar button{background:none;border:1px solid var(--border);border-radius:4px;padding:2px 8px;cursor:pointer;color:var(--text);font-size:.8rem}
+.tts-bar button:hover{background:var(--bg)}
+.speech-ex{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:16px;margin:12px 0;text-align:center}
+.speech-ex h4{margin:0 0 8px;font-size:1rem}
+.mic-btn{font-size:1.6em;background:none;border:2px solid var(--neon);border-radius:50%;width:52px;height:52px;cursor:pointer;transition:all .3s;color:var(--text);display:inline-flex;align-items:center;justify-content:center}
+.mic-btn:hover{background:var(--neon);color:var(--bg)}.mic-btn.rec{background:#ef4444;border-color:#ef4444;color:#fff;animation:tts-pulse 1s infinite}
+.sr-res{margin-top:8px;padding:6px 10px;border-radius:4px;font-weight:600;font-size:.85rem;display:inline-block}
+.sr-res.good{background:#22c55e22;color:#22c55e}.sr-res.retry{background:#f59e0b22;color:#f59e0b}
+.sr-na{font-size:.8rem;color:var(--text-dim);margin-top:8px}
+</style>
+</head>
+<body>
+<a href="#mainContent" class="skip-nav" style="position:absolute;top:-50px;left:8px;background:var(--neon);color:#fff;padding:8px 16px;z-index:9999;border-radius:0 0 8px 8px;font-weight:700;text-decoration:none">Zum Inhalt springen</a>
+<header class="site-header">
+<button class="menu-btn" onclick="toggleSidebar()" aria-label="Menu">&#9776;</button>
+<div class="header-logo">
+<svg viewBox="0 0 40 40" width="40" height="40" fill="none" aria-hidden="true">
+<rect x="4" y="4" width="32" height="32" rx="8" fill="var(--neon-dim)" stroke="var(--neon)" stroke-width="1.5"/>
+<text x="20" y="26" text-anchor="middle" font-size="18" font-weight="900" fill="var(--neon)">K</text>
+</svg>
+<div class="header-logo-text">
+<div class="header-logo-main">KunstAtelier</div>
+<div class="header-logo-sub">Kunst Klasse 3-6</div>
+</div>
+</div>
+<div class="header-right">
+<div class="header-xp"><span id="headerLevel">Level 1</span><div class="header-xp-bar"><div class="header-xp-fill" style="width:0%"></div></div><span id="headerXP">0 XP</span></div>
+<div class="header-streak" id="headerStreak">&#128293; 0</div>
+<div class="theme-picker-wrap">
+<button class="theme-picker-btn" onclick="toggleThemePicker()" aria-label="Theme wählen">&#127912;</button>
+<div class="theme-picker-dd" id="themePickerDD"></div>
+</div>
+<button class="theme-toggle" onclick="toggleMode()" aria-label="Dark/Light umschalten">&#127769;</button>
+</div>
+</header>
+<nav class="sidebar" id="sidebar" role="navigation" aria-label="Module">
+<div class="sidebar-section">
+<div class="sidebar-level">
+<div class="sidebar-level-title" id="sidebarLevel">Farbkleckser</div>
+<div class="sidebar-level-sub" id="sidebarXP">0 XP</div>
+<div class="sidebar-xp-bar"><div class="sidebar-xp-fill" id="sidebarXPFill" style="width:0%"></div></div>
+</div>
+</div>
+<div class="sidebar-section">
+<div class="sidebar-label">Module</div>
+<div id="sidebarModules"></div>
+</div>
+<div class="sidebar-section" style="border-top:1px solid var(--border);padding-top:12px;margin-top:12px">
+<a class="mod-link" onclick="showBadges()"><span class="mod-icon">&#127941;</span>Abzeichen</a>
+<a class="mod-link" onclick="showStats()"><span class="mod-icon">&#128202;</span>Statistik</a>
+<a class="mod-link" onclick="showCert()"><span class="mod-icon">&#127891;</span>Urkunde</a>
+</div>
+<div class="sidebar-section" style="border-top:1px solid var(--border);padding-top:12px;margin-top:12px">
+<a class="mod-link" onclick="exportData()"><span class="mod-icon">&#128190;</span>Speichern</a>
+    <a class="mod-link" onclick="exportFortschritt()"><span class="mod-icon">📄</span>Fortschritt (TXT)</a>
+<label class="mod-link" style="cursor:pointer"><span class="mod-icon">&#128194;</span>Laden<input type="file" accept=".json" onchange="importData(event)" style="display:none"></label>
+<a class="mod-link" onclick="if(confirm('Wirklich alles zurücksetzen?')){localStorage.removeItem(STORAGE_KEY);location.reload()}" style="color:var(--danger)"><span class="mod-icon">&#128465;</span>Zurücksetzen</a>
+</div>
+<div style="padding:16px 8px 8px;border-top:1px solid var(--border);margin-top:12px;font-size:11px;color:var(--text-dim)">
+<a onclick="showImpressum()" style="cursor:pointer;color:var(--text-dim)">Impressum</a> &middot;
+<a onclick="showDatenschutz()" style="cursor:pointer;color:var(--text-dim)">Datenschutz</a>
+</div>
+</nav>
+<main class="main" id="mainContent">
+<div class="welcome-screen" id="welcomeScreen">
+<div class="welcome-box">
+<div style="font-size:64px;margin-bottom:16px">&#127912;</div>
+<h1>KunstAtelier</h1>
+<p class="ws-sub">Entdecke die faszinierende Welt der Kunst!</p>
+<input type="text" id="nameInput" placeholder="Dein Name" maxlength="24" aria-label="Dein Name" oninput="document.getElementById('startBtn').disabled=!this.value.trim()">
+<br>
+<button class="ws-start" id="startBtn" disabled onclick="startApp()">Los geht's! &#127912;</button>
+</div>
+</div>
+<div id="moduleContent" style="display:none"></div>
+<div id="badgesView" style="display:none"></div>
+<div id="statsView" style="display:none"></div>
+</main>
+<div class="notif" id="notif" role="status" aria-live="polite" aria-atomic="true"><div class="notif-title" id="notifTitle"></div><div class="notif-text" id="notifText"></div></div>
+<div class="level-up-overlay" id="levelUpOverlay"><div class="level-up-box" id="levelUpBox"></div></div>
+<div class="confetti-container" id="confetti"></div>
+<div class="cert-overlay" id="certOverlay" role="dialog" aria-label="Urkunde" aria-modal="true">
+<div class="cert-picker" id="certPicker"></div>
+<div class="cert-frame" id="certFrame"></div>
+<div class="cert-actions">
+<button onclick="printCert()">&#128424; Drucken / PDF</button>
+<button onclick="closeCert()">Schließen</button>
+</div>
+</div>
+<div class="modal-overlay" id="impressumOverlay">
+<div class="modal">
+<button class="modal-close" onclick="document.getElementById('impressumOverlay').classList.remove('active')">&times;</button>
+<h2>Impressum</h2>
+<p><strong>&copy; 2026 GZ AI Stacks - Gerd Zimmermann</strong></p>
+<p>KunstAtelier — Interaktive Kunst-Lernapp für Klasse 3-6.</p>
+<p>Entwickelt mit Claude Code (Anthropic).</p>
+<p>Kontakt: gz-ai-stacks@example.com</p>
+</div>
+</div>
+<div class="modal-overlay" id="datenschutzOverlay">
+<div class="modal">
+<button class="modal-close" onclick="document.getElementById('datenschutzOverlay').classList.remove('active')">&times;</button>
+<h2>Datenschutzerklärung</h2>
+<p>Diese App speichert Daten <strong>ausschließlich lokal</strong> auf Ihrem Gerät.</p>
+<ul>
+<li>Keine Cookies</li>
+<li>Kein Tracking oder Analytics</li>
+<li>Keine externen Ressourcen</li>
+<li>Keine Registrierung</li>
+<li>Alle Daten verbleiben auf Ihrem Gerät</li>
+</ul>
+<p>Sie können Ihre gespeicherten Daten jederzeit über die "Zurücksetzen"-Funktion löschen.</p>
+</div>
+</div>
+<script>
+function showImpressum(){document.getElementById('impressumOverlay').classList.add('active')}
+function showDatenschutz(){document.getElementById('datenschutzOverlay').classList.add('active')}
+
+// === XOR Quiz Encryption ===
+
+// === Audio (TTS) ===
+const _synth=window.speechSynthesis,_LANG='de-DE';let _ttsOn=false,_ttsRate=1,_ttsTimer=null;
+function speakLesson(i){if(_ttsOn){stopTTS();return}const c=document.querySelectorAll('.lesson-card');if(!c[i]||!_synth)return;stopTTS();const u=new SpeechSynthesisUtterance(c[i].innerText);u.lang=_LANG;u.rate=_ttsRate;u.onstart=()=>{_ttsOn=true;updTTSUI();startTTSTimer()};u.onend=()=>{_ttsOn=false;updTTSUI();clearTTSTimer()};u.onerror=()=>{_ttsOn=false;updTTSUI();clearTTSTimer()};_synth.speak(u);showTTSBar()}
+function speakText(t,lang){if(!_synth)return;stopTTS();const u=new SpeechSynthesisUtterance(t);u.lang=lang||_LANG;u.rate=_ttsRate;u.onstart=()=>{_ttsOn=true;updTTSUI();startTTSTimer()};u.onend=()=>{_ttsOn=false;updTTSUI();clearTTSTimer()};u.onerror=()=>{_ttsOn=false;updTTSUI();clearTTSTimer()};_synth.speak(u)}
+function stopTTS(){if(_synth){_synth.cancel()}_ttsOn=false;updTTSUI();clearTTSTimer()}
+function updTTSUI(){document.querySelectorAll('.tts-btn').forEach(b=>b.classList.toggle('speaking',_ttsOn))}
+function setTTSRate(r){_ttsRate=parseFloat(r)}
+function startTTSTimer(){clearTTSTimer();_ttsTimer=setInterval(()=>{if(_synth&&_synth.speaking&&!_synth.paused){_synth.pause();_synth.resume()}},10000)}
+function clearTTSTimer(){if(_ttsTimer){clearInterval(_ttsTimer);_ttsTimer=null}}
+function showTTSBar(){if(document.getElementById('ttsBar'))return;const mc=document.getElementById('moduleContent');if(!mc)return;const b=document.createElement('div');b.className='tts-bar';b.id='ttsBar';b.innerHTML='\u{1F50A} <select onchange="setTTSRate(this.value)"><option value="0.7">Langsam</option><option value="1" selected>Normal</option><option value="1.3">Schnell</option></select> <button onclick="stopTTS()">\u25A0 Stopp</button>';mc.prepend(b)}
+
+
+/* === Fortschritt-Export (TXT) === */
+function exportFortschritt(){
+  var t=document.title.replace(/\s*[\u2014\u2013|].*/,'').trim();
+  var d=new Date();
+  var dd=String(d.getDate()).padStart(2,'0');
+  var mm=String(d.getMonth()+1).padStart(2,'0');
+  var yyyy=d.getFullYear();
+  var datum=dd+'.'+mm+'.'+yyyy;
+  var datumFile=yyyy+'-'+mm+'-'+dd;
+
+  var mc=state.modulesCompleted||[];
+  var total=modules.length;
+  var done=mc.length;
+
+  var lvl=0;
+  for(var i=LEVELS.length-1;i>=0;i--){if(state.xp>=LEVELS[i].xp){lvl=i;break;}}
+  var lvlName=LEVELS[lvl]?LEVELS[lvl].name:'';
+
+  var sep='\u2550'.repeat(42);
+  var sep2='\u2500'.repeat(42);
+  var lines=[];
+  lines.push(sep);
+  lines.push('  LERNFORTSCHRITT \u2014 '+t);
+  lines.push(sep);
+  lines.push('');
+  lines.push('  Sch\u00FCler:   '+(state.name||'(kein Name)'));
+  lines.push('  Datum:     '+datum);
+  lines.push('  Level:     '+(lvl+1)+' \u2014 '+lvlName+' ('+state.xp+' XP)');
+  lines.push('  Streak:    '+(state.streak||0)+' Tage in Folge');
+  lines.push('');
+  lines.push(sep2);
+  lines.push('  MODULE ('+done+'/'+total+' abgeschlossen)');
+  lines.push(sep2);
+  lines.push('');
+
+  for(var m=0;m<modules.length;m++){
+    var mod=modules[m];
+    var isDone=mc.indexOf(m)!==-1;
+    var icon=isDone?'\u2705':'\u2B1C';
+    var line='  '+icon+' Modul '+(m+1)+': '+mod.title;
+    if(isDone){
+      var qs=state.quizResults&&state.quizResults[m]!=null?state.quizResults[m]:'?';
+      var bs=state.bossResults&&state.bossResults[m]!=null?state.bossResults[m]:'?';
+      line+='\n        Quiz: '+qs+'/5 | Boss: '+bs+'/3';
+    }
+    lines.push(line);
+  }
+
+  var earnedBadges=(state.badges||[]);
+  lines.push('');
+  lines.push(sep2);
+  lines.push('  ABZEICHEN ('+earnedBadges.length+'/'+BADGES.length+')');
+  lines.push(sep2);
+  lines.push('');
+  if(earnedBadges.length===0){
+    lines.push('  (noch keine)');
+  }else{
+    for(var b=0;b<BADGES.length;b++){
+      if(earnedBadges.indexOf(BADGES[b].id)!==-1){
+        lines.push('  '+BADGES[b].icon+' '+BADGES[b].name);
+      }
+    }
+  }
+
+  lines.push('');
+  lines.push(sep);
+  lines.push('  (c) 2026 GZ AI Stacks \u2014 Gerd Zimmermann');
+  lines.push(sep);
+
+  var txt=lines.join('\n');
+  var safeName=(state.name||'Schueler').replace(/[^a-zA-Z0-9\u00C0-\u017F]/g,'_');
+  var fileName='Fortschritt_'+t.replace(/[^a-zA-Z0-9\u00C0-\u017F]/g,'_')+'_'+safeName+'_'+datumFile+'.txt';
+  var a=document.createElement('a');
+  a.download=fileName;
+  a.href=URL.createObjectURL(new Blob([txt],{type:'text/plain;charset=utf-8'}));
+  a.click();
+}
+
+const _qk=[0x4A,0x7F,0x2B,0x61,0x5C,0x3E,0x18,0x73];
+function _d(h,i){return h^_qk[i%_qk.length]}
+
+// === Levels ===
+const LEVELS=[
+{name:'Farbkleckser',xp:0},{name:'Stifthalter',xp:40},{name:'Skizzierer',xp:100},
+{name:'Farbmischer',xp:180},{name:'Linienkünstler',xp:280},{name:'Formenfinder',xp:400},
+{name:'Pinselführer',xp:540},{name:'Bildgestalter',xp:700},{name:'Perspektivkenner',xp:880},
+{name:'Kompositionsmeister',xp:1080},{name:'Stilkenner',xp:1300},{name:'Atelierprofi',xp:1540},
+{name:'Galeriebesucher',xp:1800},{name:'Kunstkenner',xp:2080},{name:'Kunstkritiker',xp:2380},
+{name:'Meisterschüler',xp:2700},{name:'Kunstprofessor',xp:3040},{name:'Kurator',xp:3400},
+{name:'Kunstgenie',xp:3780},{name:'Kunst-Legende',xp:4200}
+];
+
+// === Badges ===
+const BADGES=[
+{id:'m0',name:'Farbexperte',icon:'🎨',desc:'Modul 1 abgeschlossen'},
+{id:'m1',name:'Zeichenkönig',icon:'✏️',desc:'Modul 2 abgeschlossen'},
+{id:'m2',name:'Malmeister',icon:'🖌️',desc:'Modul 3 abgeschlossen'},
+{id:'m3',name:'Formenkenner',icon:'🔷',desc:'Modul 4 abgeschlossen'},
+{id:'m4',name:'Künstlerfan',icon:'🖼️',desc:'Modul 5 abgeschlossen'},
+{id:'m5',name:'Kunsthistoriker',icon:'🏛️',desc:'Modul 6 abgeschlossen'},
+{id:'m6',name:'Bildhauer',icon:'🗿',desc:'Modul 7 abgeschlossen'},
+{id:'m7',name:'Fotokünstler',icon:'📷',desc:'Modul 8 abgeschlossen'},
+{id:'m8',name:'Designprofi',icon:'✨',desc:'Modul 9 abgeschlossen'},
+{id:'m9',name:'Kunst-Meister',icon:'🏆',desc:'Modul 10 abgeschlossen'},
+{id:'first_quiz',name:'Quiz-Neuling',icon:'❓',desc:'Erstes Quiz bestanden'},
+{id:'perfect_quiz',name:'Perfektionist',icon:'💎',desc:'Quiz mit 5/5 bestanden'},
+{id:'first_boss',name:'Boss-Bezwinger',icon:'👑',desc:'Erste Boss-Challenge bestanden'},
+{id:'all_bosses',name:'Endgegner',icon:'🏆',desc:'Alle Boss-Challenges bestanden'},
+{id:'streak3',name:'Durchstarter',icon:'🔥',desc:'3 Tage in Folge gelernt'},
+{id:'streak7',name:'Wochenkrieger',icon:'⚔️',desc:'7 Tage in Folge gelernt'},
+{id:'half_done',name:'Halbzeit',icon:'⏳',desc:'5 Module abgeschlossen'},
+{id:'speed_quiz',name:'Blitz-Denker',icon:'⚡',desc:'Quiz in unter 60 Sekunden'},
+{id:'explorer',name:'Entdecker',icon:'🗺️',desc:'Alle Module angesehen'},
+{id:'graduate',name:'Absolvent',icon:'🎓',desc:'Alle 10 Module abgeschlossen'}
+];
+
+// === Theme Config ===
+const THEME_CONFIG={
+cyber:{name:'Cyber Neon',emoji:'\uD83D\uDDA5',color:'#3b82f6',desc:'Futuristisch & Digital'},
+retro:{name:'Retro Arcade',emoji:'\uD83D\uDD79',color:'#ffd700',desc:'80er Arcade-Feeling'},
+nature:{name:'Nature Forest',emoji:'\uD83C\uDF33',color:'#4ade80',desc:'Natürlich & Organisch'},
+space:{name:'Deep Space',emoji:'\uD83D\uDE80',color:'#c084fc',desc:'Kosmisch & Geheimnisvoll'},
+comic:{name:'Comic Pop',emoji:'\uD83D\uDCA5',color:'#ff6b6b',desc:'Bunt & Verspielt'},
+sketchy:{name:'Sketchy',emoji:'\u270D\uFE0F',color:'#d97706',desc:'Handgemacht & Warm'},
+'nature-code':{name:'Nature x Code',emoji:'\uD83C\uDF3F',color:'#10b981',desc:'Natur trifft Technik'},
+glass:{name:'Glasmorphism',emoji:'\uD83D\uDCA0',color:'#00d9ff',desc:'Modern & Transparent'}
+};
+
+// === Modules ===
+// === Modules ===
+const modules=[
+{id:0,title:'Farben und Farbenlehre',icon:'\uD83C\uDFA8',duration:'20 Min.',description:'Prim\u00e4rfarben, Sekund\u00e4rfarben, Farbkreis und Farbkontraste entdecken!',
+lessons:[
+{title:'Prim\u00e4r- und Sekund\u00e4rfarben',content:'<p>Farben sind die <strong>Grundlage der Kunst</strong>. Um sie zu verstehen, beginnen wir mit der <strong>Farbenlehre</strong>.</p><p><strong>Die 3 Prim\u00e4rfarben:</strong></p><ul><li><strong>Rot</strong> \u2014 warm und energiegeladen</li><li><strong>Gelb</strong> \u2014 hell und strahlend</li><li><strong>Blau</strong> \u2014 k\u00fchl und beruhigend</li></ul><p>Aus diesen drei Farben lassen sich <strong>alle anderen Farben</strong> mischen!</p><p><strong>Die 3 Sekund\u00e4rfarben:</strong></p><ul><li><strong>Orange</strong> = Rot + Gelb</li><li><strong>Gr\u00fcn</strong> = Gelb + Blau</li><li><strong>Violett</strong> = Rot + Blau</li></ul><div class=\"info-box\">\uD83D\uDCA1 <strong>Merke:</strong> Prim\u00e4rfarben kann man <strong>nicht</strong> durch Mischen erzeugen \u2014 sie sind die Grundfarben!</div>'},
+{title:'Farbkreis und Farbkontraste',content:'<p>Der <strong>Farbkreis nach Johannes Itten</strong> ordnet alle Farben in einem Kreis an.</p><p><strong>Aufbau des Farbkreises:</strong></p><ul><li><strong>Innen:</strong> 3 Prim\u00e4rfarben (Rot, Gelb, Blau)</li><li><strong>Mitte:</strong> 3 Sekund\u00e4rfarben (Orange, Gr\u00fcn, Violett)</li><li><strong>Au\u00dfen:</strong> 6 Terti\u00e4rfarben (Mischungen aus Prim\u00e4r- und Sekund\u00e4rfarben)</li></ul><p><strong>Wichtige Farbkontraste:</strong></p><ul><li><strong>Komplement\u00e4rkontrast:</strong> Gegen\u00fcberliegende Farben im Farbkreis (z.B. Rot-Gr\u00fcn)</li><li><strong>Kalt-Warm-Kontrast:</strong> Warme Farben (Rot, Orange, Gelb) vs. kalte Farben (Blau, Gr\u00fcn, Violett)</li><li><strong>Hell-Dunkel-Kontrast:</strong> Helle und dunkle Farbt\u00f6ne nebeneinander</li></ul><div class=\"info-box\">\uD83D\uDCA1 <strong>Wusstest du?</strong> Komplement\u00e4rfarben verst\u00e4rken sich gegenseitig \u2014 deshalb wirkt Rot neben Gr\u00fcn besonders kr\u00e4ftig!</div>'}
+],
+quiz:[
+{q:'Welche der folgenden ist eine Prim\u00e4rfarbe?',a:['Orange','Gr\u00fcn','Blau','Violett'],_h:0x48},
+{q:'Was ergibt Rot + Gelb?',a:['Gr\u00fcn','Violett','Orange','Braun'],_h:0x7D},
+{q:'Was sind Komplement\u00e4rfarben?',a:['Farben nebeneinander im Farbkreis','Gegen\u00fcberliegende Farben im Farbkreis','Alle warmen Farben','Alle kalten Farben'],_h:0x2A},
+{q:'Wer entwickelte den ber\u00fchmten Farbkreis?',a:['Picasso','Da Vinci','Johannes Itten','Monet'],_h:0x63},
+{q:'Welche Farbe ist eine kalte Farbe?',a:['Rot','Orange','Gelb','Blau'],_h:0x5F}
+],
+boss:[
+{q:'Warum kann man Prim\u00e4rfarben nicht durch Mischen erzeugen?',a:['Weil sie zu hell sind','Weil sie die Grundfarben sind, aus denen alle anderen Farben gemischt werden \u2014 sie selbst lassen sich nicht aus anderen Farben herstellen','Weil es verboten ist','Weil Farben nicht mischbar sind'],_h:0x4B},
+{q:'Warum verst\u00e4rken sich Komplement\u00e4rfarben gegenseitig?',a:['Zufall','Komplement\u00e4rfarben liegen im Farbkreis gegen\u00fcber und erzeugen den maximalen Kontrast, wodurch beide Farben intensiver wirken','Weil sie gleich sind','Weil sie heller werden'],_h:0x7E},
+{q:'Warum nutzen K\u00fcnstler den Kalt-Warm-Kontrast?',a:['Zur Dekoration','Warme Farben treten optisch hervor und kalte zur\u00fcck, wodurch Tiefe und R\u00e4umlichkeit im Bild entstehen','Weil es Pflicht ist','Weil kalte Farben billiger sind'],_h:0x29}
+]},
+{id:1,title:'Zeichnen und Skizzieren',icon:'\u270F\uFE0F',duration:'20 Min.',description:'Bleistift, Linien, Schraffuren und Perspektive \u2014 die Grundlagen des Zeichnens!',
+lessons:[
+{title:'Zeichenwerkzeuge und Bleistifth\u00e4rten',content:'<p>Das <strong>Zeichnen</strong> ist die Grundlage jeder k\u00fcnstlerischen Arbeit.</p><p><strong>Bleistifth\u00e4rten:</strong></p><ul><li><strong>H-Bleistifte</strong> (H, 2H, 3H): Hart, helle und feine Linien \u2014 f\u00fcr Vorzeichnungen</li><li><strong>HB-Bleistift:</strong> Mittelhart \u2014 der Allrounder</li><li><strong>B-Bleistifte</strong> (B, 2B, 4B, 6B): Weich, dunkle und kr\u00e4ftige Linien \u2014 f\u00fcr Schattierungen</li></ul><p><strong>Weitere Zeichenwerkzeuge:</strong></p><ul><li><strong>Kohle:</strong> Sehr weich, f\u00fcr dramatische Schattierungen</li><li><strong>Fineliner:</strong> F\u00fcr pr\u00e4zise, gleichm\u00e4\u00dfige Linien</li><li><strong>Radiergummi:</strong> Knetgummi f\u00fcr sanftes Aufhellen</li></ul><div class=\"info-box\">\uD83D\uDCA1 <strong>Merke:</strong> Je h\u00f6her die B-Zahl, desto <strong>weicher und dunkler</strong> ist der Stift. Je h\u00f6her die H-Zahl, desto <strong>h\u00e4rter und heller</strong>!</div>'},
+{title:'Schraffuren und Perspektive',content:'<p><strong>Schraffuren</strong> erzeugen Schatten und Tiefe in einer Zeichnung.</p><p><strong>Schraffurtechniken:</strong></p><ul><li><strong>Parallelschraffur:</strong> Gleichm\u00e4\u00dfige parallele Linien</li><li><strong>Kreuzschraffur:</strong> Zwei Lagen von Linien \u00fcbereinander \u2014 f\u00fcr tiefere Schatten</li><li><strong>Kreisschraffur:</strong> Kleine Kreisbewegungen \u2014 weiche \u00dcberg\u00e4nge</li></ul><p><strong>Perspektive:</strong></p><ul><li><strong>Fluchtpunktperspektive:</strong> Alle Linien laufen auf einen Punkt am Horizont zu</li><li><strong>Parallelperspektive:</strong> Einfache r\u00e4umliche Darstellung ohne Fluchtpunkt</li><li><strong>Vordergrund, Mittelgrund, Hintergrund:</strong> Schaffen r\u00e4umliche Tiefe</li></ul><div class=\"info-box\">\uD83D\uDCA1 <strong>Wusstest du?</strong> Leonardo da Vinci perfektionierte die <strong>Sfumato-Technik</strong> \u2014 dabei werden Konturen so sanft verwischt, dass keine harten Linien sichtbar sind!</div>'}
+],
+quiz:[
+{q:'Welcher Bleistift ist am weichsten?',a:['H','HB','2B','6B'],_h:0x49},
+{q:'Was ist eine Kreuzschraffur?',a:['Ein Kreuz zeichnen','Zwei \u00fcbereinanderliegende Lagen paralleler Linien','Ein Kreismuster','Eine Radiertechnik'],_h:0x7E},
+{q:'Was ist ein Fluchtpunkt?',a:['Der Mittelpunkt des Blattes','Der Punkt, auf den alle Linien in der Perspektive zulaufen','Ein Fehler in der Zeichnung','Der Startpunkt'],_h:0x2A},
+{q:'Wof\u00fcr eignen sich H-Bleistifte besonders?',a:['F\u00fcr tiefe Schatten','F\u00fcr feine Vorzeichnungen','F\u00fcr dicke Linien','F\u00fcr Farbzeichnungen'],_h:0x60},
+{q:'Welche Technik erzeugt weiche Schatten\u00fcberg\u00e4nge?',a:['Parallelschraffur','Kreuzschraffur','Kreisschraffur','Punktierung'],_h:0x5E}
+],
+boss:[
+{q:'Warum sind verschiedene Bleistifth\u00e4rten f\u00fcr Zeichner wichtig?',a:['Weil es so vorgeschrieben ist','Verschiedene H\u00e4rten erm\u00f6glichen feine Vorzeichnungen (H) und tiefe Schatten (B) im selben Bild','Weil weiche Stifte billiger sind','Weil man nur einen braucht'],_h:0x4B},
+{q:'Warum verleiht die Fluchtpunktperspektive einem Bild Tiefe?',a:['Zufall','Weil sie die Art nachahmt, wie unser Auge die Welt sieht \u2014 entfernte Objekte erscheinen kleiner und laufen auf einen Punkt zu','Weil das Bild gr\u00f6\u00dfer wird','Weil die Linien dicker werden'],_h:0x7E},
+{q:'Warum ist das Zeichnen die wichtigste Grundlage f\u00fcr alle Kunstformen?',a:['Ist es nicht','Zeichnen schult das genaue Beobachten, Hand-Auge-Koordination und Verst\u00e4ndnis f\u00fcr Proportionen, Licht und Schatten','Weil Malen schwerer ist','Weil alle K\u00fcnstler zeichnen m\u00fcssen'],_h:0x29}
+]},
+{id:2,title:'Malerei und Maltechniken',icon:'\uD83D\uDD8C\uFE0F',duration:'25 Min.',description:'Aquarell, Acryl, \u00d6l und Gouache \u2014 die Welt der Maltechniken!',
+lessons:[
+{title:'Die wichtigsten Maltechniken',content:'<p>Es gibt viele verschiedene <strong>Maltechniken</strong>, jede mit besonderen Eigenschaften.</p><p><strong>Aquarellmalerei:</strong></p><ul><li>Farbe ist <strong>transparent</strong> (durchsichtig)</li><li><strong>Nass-in-Nass-Technik:</strong> Farbe auf nasses Papier \u2014 weiche Verl\u00e4ufe</li><li><strong>Lasurtechnik:</strong> D\u00fcnne Farbschichten \u00fcbereinander</li><li>Fehler lassen sich kaum korrigieren!</li></ul><p><strong>Acrylmalerei:</strong></p><ul><li>Farbe ist <strong>deckend</strong> und <strong>schnelltrocknend</strong></li><li>Kann mit Wasser verd\u00fcnnt werden</li><li>Trocknet <strong>wasserfest</strong> auf</li><li>Sehr vielseitig: d\u00fcnn wie Aquarell oder dick wie \u00d6l</li></ul><div class=\"info-box\">\uD83D\uDCA1 <strong>Merke:</strong> Aquarell arbeitet von <strong>hell nach dunkel</strong> (das Wei\u00df ist das Papier!), Acryl und \u00d6l k\u00f6nnen <strong>helle Farbe \u00fcber dunkle</strong> auftragen!</div>'},
+{title:'\u00d6lmalerei und weitere Techniken',content:'<p>Die <strong>\u00d6lmalerei</strong> gilt als K\u00f6nigsdisziplin der Malerei.</p><p><strong>\u00d6lmalerei:</strong></p><ul><li>Farbe trocknet <strong>sehr langsam</strong> (Tage bis Wochen)</li><li>Erm\u00f6glicht perfekte <strong>Farbverl\u00e4ufe</strong> und \u00dcbermalungen</li><li>Auf <strong>Leinwand</strong> oder Holz gemalt</li><li>Ber\u00fchmte \u00d6lmaler: Rembrandt, Vermeer, Monet</li></ul><p><strong>Weitere Techniken:</strong></p><ul><li><strong>Gouache:</strong> Wie Aquarell, aber deckend \u2014 matter, samtiger Look</li><li><strong>Pastell:</strong> Trockene Farbkreiden \u2014 weiche, pudrige Wirkung</li><li><strong>Mischtechnik:</strong> Kombination verschiedener Materialien in einem Bild</li></ul><p><strong>Farbauftrag:</strong></p><ul><li><strong>Lasierend:</strong> D\u00fcnne, durchscheinende Schichten</li><li><strong>Pastos:</strong> Dicker, reliefartiger Farbauftrag</li></ul><div class=\"info-box\">\uD83D\uDCA1 <strong>Wusstest du?</strong> Vincent van Gogh malte so <strong>pastos</strong>, dass man die Pinselstriche als Relief auf der Leinwand f\u00fchlen kann!</div>'}
+],
+quiz:[
+{q:'Was ist das Besondere an Aquarellfarbe?',a:['Sie ist deckend','Sie ist transparent','Sie trocknet nie','Sie ist giftig'],_h:0x4B},
+{q:'Welche Maltechnik trocknet am langsamsten?',a:['Aquarell','Acryl','\u00d6lmalerei','Gouache'],_h:0x7D},
+{q:'Was bedeutet \u201Elasierend\u201C?',a:['Dick auftragen','D\u00fcnne, durchscheinende Farbschichten','Farbe abkratzen','Mit Wasser malen'],_h:0x2A},
+{q:'Welcher Farbauftrag erzeugt ein f\u00fchlbares Relief?',a:['Lasierend','Nass-in-Nass','Pastos','Verwaschen'],_h:0x63},
+{q:'Was trocknet bei Acrylfarbe wasserfest auf?',a:['Nichts','Die Farbe selbst','Nur der Pinsel','Nur das Papier'],_h:0x5C}
+],
+boss:[
+{q:'Warum arbeitet man bei Aquarell von hell nach dunkel?',a:['Aus Gewohnheit','Weil die Farbe transparent ist und das wei\u00dfe Papier als hellster Ton dient \u2014 einmal \u00fcbermalt, kann man es nicht zur\u00fcckholen','Weil dunkle Farben teurer sind','Weil helle Farben schneller trocknen'],_h:0x4B},
+{q:'Warum galt die \u00d6lmalerei jahrhundertelang als die beste Maltechnik?',a:['Weil sie bunt ist','Die langsame Trocknung erm\u00f6glicht perfekte Farbverl\u00e4ufe, Korrekturen und feinste Details \u2014 ideal f\u00fcr realistische Darstellungen','Weil sie billig ist','Weil sie am einfachsten ist'],_h:0x7E},
+{q:'Warum verwenden viele K\u00fcnstler heute Mischtechniken?',a:['Aus Faulheit','Durch die Kombination verschiedener Materialien entstehen neue Ausdrucksm\u00f6glichkeiten und Texturen, die mit einer einzigen Technik nicht erreichbar w\u00e4ren','Weil Farben ausgehen','Weil es billiger ist'],_h:0x29}
+]},
+{id:3,title:'Formen und Geometrie',icon:'\uD83D\uDD37',duration:'25 Min.',description:'Grundformen, Komposition, Goldener Schnitt und Symmetrie!',
+lessons:[
+{title:'Grundformen und Komposition',content:'<p>Alle Bilder und Kunstwerke basieren auf <strong>Grundformen</strong>.</p><p><strong>Die geometrischen Grundformen:</strong></p><ul><li><strong>Kreis:</strong> Harmonie, Unendlichkeit, Weichheit</li><li><strong>Quadrat:</strong> Stabilit\u00e4t, Ordnung, Ruhe</li><li><strong>Dreieck:</strong> Dynamik, Spannung, Richtung</li><li><strong>Rechteck:</strong> Rahmung, Ausgeglichenheit</li></ul><p><strong>Komposition \u2014 der Bildaufbau:</strong></p><ul><li><strong>Bildmitte:</strong> Zieht den Blick an, wirkt ruhig</li><li><strong>Drittelregel:</strong> Das Bild in 3\u00d73 Felder teilen, wichtige Elemente auf die Schnittpunkte setzen</li><li><strong>Diagonale:</strong> Erzeugt Bewegung und Dynamik</li><li><strong>Rahmen im Rahmen:</strong> Nat\u00fcrliche Elemente als Rahmen nutzen</li></ul><div class=\"info-box\">\uD83D\uDCA1 <strong>Merke:</strong> Gute <strong>Komposition</strong> lenkt den Blick des Betrachters und erzeugt eine bestimmte Stimmung!</div>'},
+{title:'Goldener Schnitt und Symmetrie',content:'<p>Der <strong>Goldene Schnitt</strong> ist ein besonderes Teilungsverh\u00e4ltnis, das als besonders sch\u00f6n empfunden wird.</p><p><strong>Der Goldene Schnitt (ca. 1:1,618):</strong></p><ul><li>Kommt in der <strong>Natur</strong> vor: Schneckenh\u00e4user, Bl\u00fctenbl\u00e4tter, Sonnenblumen</li><li>Wird in der <strong>Kunst</strong> seit der Antike verwendet</li><li>Erzeugt ein nat\u00fcrlich wirkendes, harmonisches Verh\u00e4ltnis</li></ul><p><strong>Symmetrie und Asymmetrie:</strong></p><ul><li><strong>Achsensymmetrie:</strong> Spiegelung an einer Achse \u2014 wirkt ruhig und geordnet</li><li><strong>Punktsymmetrie:</strong> Drehung um einen Mittelpunkt</li><li><strong>Asymmetrie:</strong> Bewusst ungleichm\u00e4\u00dfig \u2014 wirkt spannend und dynamisch</li></ul><div class=\"info-box\">\uD83D\uDCA1 <strong>Wusstest du?</strong> Die <strong>Mona Lisa</strong> von Leonardo da Vinci ist nach dem Goldenen Schnitt aufgebaut!</div>'}
+],
+quiz:[
+{q:'Welche Grundform steht f\u00fcr Dynamik und Spannung?',a:['Kreis','Quadrat','Dreieck','Rechteck'],_h:0x48},
+{q:'Was besagt die Drittelregel?',a:['Das Bild in 2 H\u00e4lften teilen','Wichtige Elemente auf die Schnittpunkte eines 3\u00d73-Rasters setzen','Nur ein Drittel des Blattes bemalen','Drei Farben verwenden'],_h:0x7E},
+{q:'Wie lautet das Verh\u00e4ltnis des Goldenen Schnitts ungef\u00e4hr?',a:['1:1','1:2','1:1,618','1:3'],_h:0x29},
+{q:'Was bewirkt Achsensymmetrie in einem Bild?',a:['Spannung','Unruhe','Ruhe und Ordnung','Chaos'],_h:0x63},
+{q:'Was erzeugt eine diagonale Komposition?',a:['Ruhe','Langeweile','Bewegung und Dynamik','Symmetrie'],_h:0x5E}
+],
+boss:[
+{q:'Warum wird der Goldene Schnitt als besonders sch\u00f6n empfunden?',a:['Zufall','Er kommt h\u00e4ufig in der Natur vor und unser Gehirn erkennt dieses Verh\u00e4ltnis als harmonisch und ausgeglichen','Weil er gerade ist','Weil er golden ist'],_h:0x4B},
+{q:'Warum nutzen K\u00fcnstler bewusst Asymmetrie?',a:['Weil sie nicht zeichnen k\u00f6nnen','Asymmetrie erzeugt Spannung und Dynamik und lenkt den Blick des Betrachters auf bestimmte Bildbereiche','Weil Symmetrie verboten ist','Aus Versehen'],_h:0x7E},
+{q:'Warum ist die Komposition so wichtig f\u00fcr ein Kunstwerk?',a:['Ist sie nicht','Sie bestimmt, wohin der Betrachter schaut, welche Stimmung entsteht und wie das Bild wirkt \u2014 sie ist die unsichtbare Struktur jedes Kunstwerks','Weil es Punkte gibt','Weil der Lehrer es will'],_h:0x29}
+]},
+{id:4,title:'Ber\u00fchmte K\u00fcnstler',icon:'\uD83D\uDDBC\uFE0F',duration:'25 Min.',description:'Da Vinci, Monet, Picasso, Frida Kahlo, Hokusai und van Gogh entdecken!',
+lessons:[
+{title:'Die gro\u00dfen Meister',content:'<p>Diese K\u00fcnstler haben die <strong>Kunstgeschichte f\u00fcr immer ver\u00e4ndert</strong>.</p><p><strong>Leonardo da Vinci (1452\u20131519):</strong></p><ul><li>Universalgenie der <strong>Renaissance</strong>: Maler, Erfinder, Wissenschaftler</li><li>Ber\u00fchmte Werke: <strong>Mona Lisa</strong>, Das letzte Abendmahl</li><li>Perfektionierte die <strong>Sfumato-Technik</strong> (weiche \u00dcberg\u00e4nge)</li></ul><p><strong>Claude Monet (1840\u20131926):</strong></p><ul><li>Begr\u00fcnder des <strong>Impressionismus</strong></li><li>Ber\u00fchmte Werke: <strong>Seerosen</strong>, Impression \u2014 Sonnenaufgang</li><li>Malte Licht und Atmosph\u00e4re statt scharfer Details</li></ul><p><strong>Pablo Picasso (1881\u20131973):</strong></p><ul><li>Mitbegr\u00fcnder des <strong>Kubismus</strong></li><li>Ber\u00fchmte Werke: <strong>Guernica</strong>, Les Demoiselles d\'Avignon</li><li>Zerlegte Formen in geometrische Fl\u00e4chen</li></ul><div class=\"info-box\">\uD83D\uDCA1 <strong>Wusstest du?</strong> Die <strong>Mona Lisa</strong> h\u00e4ngt im Louvre in Paris und wird t\u00e4glich von \u00fcber 30.000 Menschen besucht!</div>'},
+{title:'Weitere ber\u00fchmte K\u00fcnstler',content:'<p>Neben den drei Gro\u00dfen gibt es viele weitere bedeutende K\u00fcnstler.</p><p><strong>Frida Kahlo (1907\u20131954):</strong></p><ul><li>Mexikanische K\u00fcnstlerin, bekannt f\u00fcr <strong>Selbstportr\u00e4ts</strong></li><li>Malte Schmerz, Identit\u00e4t und mexikanische Kultur</li><li>Stil: <strong>Surrealismus</strong> gemischt mit Volkskunst</li></ul><p><strong>Katsushika Hokusai (1760\u20131849):</strong></p><ul><li>Japanischer Meister des <strong>Holzschnitts</strong></li><li>Ber\u00fchmtestes Werk: <strong>Die gro\u00dfe Welle vor Kanagawa</strong></li></ul><p><strong>Vincent van Gogh (1853\u20131890):</strong></p><ul><li>Niederl\u00e4ndischer <strong>Post-Impressionist</strong></li><li>Ber\u00fchmte Werke: <strong>Sternennacht</strong>, Sonnenblumen</li><li>Bekannt f\u00fcr expressive, wirbelnde Pinselstriche</li></ul><div class=\"info-box\">\uD83D\uDCA1 <strong>Merke:</strong> Kunst kennt keine Grenzen \u2014 gro\u00dfe K\u00fcnstler kommen aus <strong>aller Welt</strong> und allen Epochen!</div>'}
+],
+quiz:[
+{q:'Wer malte die Mona Lisa?',a:['Picasso','Monet','Leonardo da Vinci','Van Gogh'],_h:0x48},
+{q:'Welchen Kunststil begr\u00fcndete Monet?',a:['Kubismus','Impressionismus','Surrealismus','Barock'],_h:0x7E},
+{q:'Wof\u00fcr ist Frida Kahlo besonders bekannt?',a:['Landschaftsmalerei','Selbstportr\u00e4ts','Skulpturen','Holzschnitte'],_h:0x2A},
+{q:'Welches Werk stammt von Hokusai?',a:['Sternennacht','Guernica','Die gro\u00dfe Welle vor Kanagawa','Seerosen'],_h:0x63},
+{q:'Welcher K\u00fcnstler ist f\u00fcr den Kubismus bekannt?',a:['Monet','Van Gogh','Da Vinci','Picasso'],_h:0x5F}
+],
+boss:[
+{q:'Warum gilt Leonardo da Vinci als Universalgenie?',a:['Weil er reich war','Er war nicht nur Maler, sondern auch Wissenschaftler, Ingenieur und Erfinder \u2014 er verband Kunst und Wissenschaft wie kein anderer','Weil er alt wurde','Weil er ber\u00fchmt war'],_h:0x4B},
+{q:'Warum malte Monet dasselbe Motiv zu verschiedenen Tageszeiten?',a:['Weil er vergesslich war','Er wollte zeigen, wie sich Licht und Farben je nach Tageszeit und Wetter ver\u00e4ndern \u2014 das Licht war sein eigentliches Motiv','Weil er keine anderen Motive fand','Weil es Pflicht war'],_h:0x7E},
+{q:'Warum zerlegte Picasso Formen in geometrische Fl\u00e4chen?',a:['Weil er nicht zeichnen konnte','Er wollte einen Gegenstand gleichzeitig aus mehreren Blickwinkeln zeigen und so eine neue Art der Wahrnehmung schaffen','Weil es einfacher war','Weil Kreise sch\u00f6ner sind'],_h:0x29}
+]},
+{id:5,title:'Kunstgeschichte',icon:'\uD83C\uDFDB\uFE0F',duration:'25 Min.',description:'Von der Antike \u00fcber Renaissance bis zur Moderne \u2014 die gro\u00dfen Epochen!',
+lessons:[
+{title:'Von der Antike zur Renaissance',content:'<p>Die <strong>Kunstgeschichte</strong> zeigt, wie sich Kunst \u00fcber Jahrtausende entwickelt hat.</p><p><strong>Antike (ca. 3000 v.Chr.\u2013500 n.Chr.):</strong></p><ul><li><strong>Griechenland:</strong> Ideale K\u00f6rperproportionen, Marmorskulpturen, S\u00e4ulen</li><li><strong>Rom:</strong> Mosaike, Wandmalereien, monumentale Architektur</li><li>Kunst diente der Verehrung von G\u00f6ttern und Herrschern</li></ul><p><strong>Mittelalter (ca. 500\u20131400):</strong></p><ul><li>Religi\u00f6se Kunst: Kirchenfenster, Ikonenmalerei, Buchmalerei</li><li>Flache, symbolische Darstellungen ohne Perspektive</li></ul><p><strong>Renaissance (ca. 1400\u20131600):</strong></p><ul><li>Wiedergeburt der antiken Ideale</li><li>Erfindung der <strong>Zentralperspektive</strong></li><li>K\u00fcnstler: Da Vinci, Michelangelo, Raffael</li></ul><div class=\"info-box\">\uD83D\uDCA1 <strong>Merke:</strong> Die Renaissance war ein <strong>Wendepunkt</strong> \u2014 erstmals wurden K\u00fcnstler als Genies anerkannt, nicht nur als Handwerker!</div>'},
+{title:'Vom Barock zur Moderne',content:'<p>Nach der Renaissance entwickelten sich immer schneller neue Kunststile.</p><p><strong>Barock (ca. 1600\u20131750):</strong></p><ul><li>Dramatisch, bewegt, lichtdurchflutet</li><li>K\u00fcnstler: Rembrandt, Caravaggio, Vermeer</li></ul><p><strong>Impressionismus (ca. 1860\u20131900):</strong></p><ul><li>Licht und Farbe statt Details</li><li>K\u00fcnstler: Monet, Renoir, Degas</li></ul><p><strong>Expressionismus (ca. 1905\u20131925):</strong></p><ul><li>Starke Farben und verzerrte Formen dr\u00fccken Gef\u00fchle aus</li><li>K\u00fcnstler: Kirchner, Kandinsky, Munch</li></ul><p><strong>Moderne und Zeitgen\u00f6ssische Kunst (ab ca. 1900):</strong></p><ul><li>Abstraktion, Pop-Art, Konzeptkunst, Street Art</li><li>K\u00fcnstler: Mondrian, Warhol, Banksy</li></ul><div class=\"info-box\">\uD83D\uDCA1 <strong>Wusstest du?</strong> Der <strong>Impressionismus</strong> bekam seinen Namen durch Monets Bild \u201EImpression \u2014 Sonnenaufgang\u201C!</div>'}
+],
+quiz:[
+{q:'Was wurde in der Renaissance erfunden?',a:['Der Bleistift','Die Zentralperspektive','Die Fotografie','Die Druckerpresse'],_h:0x4B},
+{q:'Welche Epoche ist f\u00fcr dramatische Lichteffekte bekannt?',a:['Antike','Renaissance','Barock','Impressionismus'],_h:0x7D},
+{q:'Was malten die Impressionisten am liebsten?',a:['Religi\u00f6se Szenen','Licht und Atmosph\u00e4re','Geometrische Formen','Portr\u00e4ts von K\u00f6nigen'],_h:0x2A},
+{q:'Welcher Stil dr\u00fcckt Gef\u00fchle durch verzerrte Formen aus?',a:['Impressionismus','Barock','Expressionismus','Renaissance'],_h:0x63},
+{q:'Wer ist ein bekannter Street-Art-K\u00fcnstler?',a:['Monet','Rembrandt','Michelangelo','Banksy'],_h:0x5F}
+],
+boss:[
+{q:'Warum war die Erfindung der Zentralperspektive so revolution\u00e4r?',a:['Weil sie sch\u00f6n aussah','Erstmals konnten K\u00fcnstler den dreidimensionalen Raum realistisch auf einer flachen Fl\u00e4che darstellen','Weil es vorher keine Bilder gab','Weil Farben erfunden wurden'],_h:0x4B},
+{q:'Warum malten die Impressionisten oft im Freien?',a:['Weil ihre Ateliers zu klein waren','Um das nat\u00fcrliche Licht und seine Wirkung auf Farben direkt einzufangen \u2014 das war ihr Hauptmotiv','Weil es billiger war','Weil es vorgeschrieben war'],_h:0x7E},
+{q:'Warum gibt es in der modernen Kunst so viele verschiedene Stile?',a:['Weil K\u00fcnstler nicht malen k\u00f6nnen','Die Befreiung von festen Regeln erm\u00f6glichte es jedem K\u00fcnstler, eigene Ausdrucksformen zu finden \u2014 Vielfalt wurde zum Programm','Weil es keine Regeln gibt','Zufall'],_h:0x29}
+]},
+{id:6,title:'Skulptur und Plastik',icon:'\uD83D\uDDFF',duration:'25 Min.',description:'Ton, Holz, Metall und 3D-Formen \u2014 Kunst zum Anfassen!',
+lessons:[
+{title:'Materialien und Techniken der Bildhauerei',content:'<p><strong>Skulptur</strong> ist dreidimensionale Kunst \u2014 man kann sie von allen Seiten betrachten!</p><p><strong>Materialien:</strong></p><ul><li><strong>Ton/Keramik:</strong> Weich und formbar, wird im Ofen gebrannt</li><li><strong>Stein/Marmor:</strong> Hart und dauerhaft, wird mit Mei\u00dfel bearbeitet</li><li><strong>Holz:</strong> Warm und nat\u00fcrlich, wird geschnitzt</li><li><strong>Metall (Bronze, Stahl):</strong> Stabil, wird gegossen oder geschwei\u00dft</li><li><strong>Gips:</strong> F\u00fcr Modelle und Abg\u00fcsse</li></ul><p><strong>Techniken:</strong></p><ul><li><strong>Modellieren:</strong> Material aufbauen (Ton, Wachs) \u2014 <strong>additive Technik</strong></li><li><strong>Mei\u00dfeln/Schnitzen:</strong> Material abtragen (Stein, Holz) \u2014 <strong>subtraktive Technik</strong></li><li><strong>Gie\u00dfen:</strong> Fl\u00fcssiges Material in eine Form gie\u00dfen (Bronze)</li></ul><div class=\"info-box\">\uD83D\uDCA1 <strong>Merke:</strong> Beim <strong>Modellieren</strong> f\u00fcgt man Material hinzu, beim <strong>Mei\u00dfeln</strong> nimmt man es weg \u2014 zwei gegens\u00e4tzliche Ans\u00e4tze!</div>'},
+{title:'Ber\u00fchmte Skulpturen der Welt',content:'<p>Skulpturen geh\u00f6ren zu den \u00e4ltesten Kunstformen der Menschheit.</p><p><strong>Ber\u00fchmte Skulpturen:</strong></p><ul><li><strong>David (Michelangelo, 1504):</strong> 5,17 m hohe Marmorskulptur \u2014 Meisterwerk der Renaissance</li><li><strong>Der Denker (Rodin, 1902):</strong> Bronzeskulptur eines nachdenkenden Mannes</li><li><strong>Venus von Milo (ca. 130 v.Chr.):</strong> Antike griechische G\u00f6ttin aus Marmor</li><li><strong>Die Freiheitsstatue (Bartholdi, 1886):</strong> 93 m hoch, Kupfer auf Stahlger\u00fcst</li></ul><p><strong>Moderne Skulptur:</strong></p><ul><li><strong>Mobiles (Calder):</strong> H\u00e4ngende, bewegliche Skulpturen</li><li><strong>Installationen:</strong> Raumf\u00fcllende Kunstwerke</li><li><strong>Land Art:</strong> Skulpturen in und aus der Natur</li></ul><div class=\"info-box\">\uD83D\uDCA1 <strong>Wusstest du?</strong> Michelangelo arbeitete <strong>3 Jahre</strong> an seiner David-Skulptur \u2014 aus einem einzigen Marmorblock!</div>'}
+],
+quiz:[
+{q:'Welches Material wird beim Modellieren verwendet?',a:['Marmor','Ton','Stahl','Holz'],_h:0x4B},
+{q:'Was ist eine subtraktive Technik?',a:['Material hinzuf\u00fcgen','Material abtragen','Material gie\u00dfen','Material kleben'],_h:0x7E},
+{q:'Wer schuf die David-Skulptur?',a:['Rodin','Picasso','Michelangelo','Da Vinci'],_h:0x29},
+{q:'Aus welchem Material besteht die Freiheitsstatue?',a:['Marmor','Bronze','Kupfer auf Stahlger\u00fcst','Holz'],_h:0x63},
+{q:'Was sind Mobiles?',a:['Handyskulpturen','H\u00e4ngende, bewegliche Skulpturen','Steinfiguren','Holzschnitzereien'],_h:0x5D}
+],
+boss:[
+{q:'Warum ist Mei\u00dfeln besonders anspruchsvoll?',a:['Weil es laut ist','Weil jeder Schlag endg\u00fcltig ist \u2014 einmal abgetragenes Material kann nicht wieder hinzugef\u00fcgt werden','Weil der Stein schwer ist','Weil es alt ist'],_h:0x4B},
+{q:'Warum hat Michelangelo gesagt, er befreie die Figur aus dem Stein?',a:['Weil er verr\u00fcckt war','Er stellte sich die fertige Figur im Marmorblock vor und entfernte nur das \u00fcberfl\u00fcssige Material \u2014 eine poetische Beschreibung der subtraktiven Technik','Weil der Stein lebendig war','Weil es ein Sprichwort ist'],_h:0x7E},
+{q:'Warum nutzen moderne K\u00fcnstler ungew\u00f6hnliche Materialien f\u00fcr Skulpturen?',a:['Weil Bronze zu teuer ist','Neue Materialien erweitern die Ausdrucksm\u00f6glichkeiten und brechen mit traditionellen Vorstellungen davon, was Skulptur sein kann','Weil sie nicht schnitzen k\u00f6nnen','Aus Faulheit'],_h:0x29}
+]},
+{id:7,title:'Fotografie und digitale Kunst',icon:'\uD83D\uDCF7',duration:'25 Min.',description:'Bildkomposition, Perspektive, Licht und digitale Gestaltung!',
+lessons:[
+{title:'Grundlagen der Fotografie',content:'<p><strong>Fotografie</strong> ist die Kunst, mit Licht zu malen \u2014 das Wort bedeutet w\u00f6rtlich \u201ELichtschrift\u201C.</p><p><strong>Bildkomposition:</strong></p><ul><li><strong>Drittelregel:</strong> Das Bild in 9 gleiche Felder teilen \u2014 Hauptmotiv auf die Schnittpunkte</li><li><strong>F\u00fchrungslinien:</strong> Wege, Z\u00e4une oder Fl\u00fcsse f\u00fchren den Blick ins Bild</li><li><strong>Rahmen im Rahmen:</strong> Nat\u00fcrliche Rahmen (T\u00fcren, Fenster) nutzen</li></ul><p><strong>Perspektive:</strong></p><ul><li><strong>Froschperspektive:</strong> Von unten fotografiert \u2014 Motiv wirkt gro\u00df und m\u00e4chtig</li><li><strong>Vogelperspektive:</strong> Von oben fotografiert \u2014 \u00dcberblick</li><li><strong>Augeh\u00f6he:</strong> Nat\u00fcrlich und vertraut</li></ul><p><strong>Licht:</strong></p><ul><li><strong>Goldene Stunde:</strong> Kurz nach Sonnenaufgang / vor Sonnenuntergang \u2014 warmes, weiches Licht</li><li><strong>Gegenlicht:</strong> Lichtquelle hinter dem Motiv \u2014 dramatische Silhouetten</li></ul><div class=\"info-box\">\uD83D\uDCA1 <strong>Merke:</strong> Die <strong>Drittelregel</strong> ist die wichtigste Kompositionsregel in der Fotografie!</div>'},
+{title:'Digitale Kunst und Bildbearbeitung',content:'<p><strong>Digitale Kunst</strong> wird am Computer oder Tablet erstellt.</p><p><strong>Formen digitaler Kunst:</strong></p><ul><li><strong>Digitale Malerei:</strong> Mit Grafiktablett und Stift am Computer malen</li><li><strong>Fotomontage:</strong> Mehrere Fotos zu einem neuen Bild kombinieren</li><li><strong>3D-Modellierung:</strong> Dreidimensionale Objekte am Computer erstellen</li><li><strong>Pixelkunst:</strong> Bilder aus einzelnen Bildpunkten aufbauen</li></ul><p><strong>Grundlagen der Bildbearbeitung:</strong></p><ul><li><strong>Zuschneiden:</strong> Den Bildausschnitt verbessern</li><li><strong>Helligkeit/Kontrast:</strong> Lichtverh\u00e4ltnisse anpassen</li><li><strong>Filter:</strong> Farbstimmungen ver\u00e4ndern (Schwarz-Wei\u00df, Sepia)</li><li><strong>Ebenen:</strong> Verschiedene Bildteile \u00fcbereinander legen</li></ul><div class=\"info-box\">\uD83D\uDCA1 <strong>Wusstest du?</strong> Digitale Kunst ist heute genauso anerkannt wie traditionelle Kunst \u2014 viele Museen stellen sie aus!</div>'}
+],
+quiz:[
+{q:'Was bedeutet das Wort Fotografie?',a:['Bildmachung','Lichtschrift','Farbmalerei','Schattenkunst'],_h:0x4B},
+{q:'Welche Perspektive l\u00e4sst ein Motiv gro\u00df und m\u00e4chtig wirken?',a:['Vogelperspektive','Augenh\u00f6he','Froschperspektive','Seitenperspektive'],_h:0x7D},
+{q:'Was ist die Goldene Stunde?',a:['12 Uhr mittags','Die Zeit kurz nach Sonnenaufgang oder vor Sonnenuntergang','Mitternacht','Die erste Stunde des Tages'],_h:0x2A},
+{q:'Was ist Pixelkunst?',a:['Malerei mit Pinsel','Bilder aus einzelnen Bildpunkten','Skulpturen aus Pixeln','Fotos von Computern'],_h:0x60},
+{q:'Was macht man beim Zuschneiden eines Fotos?',a:['Farben \u00e4ndern','Den Bildausschnitt verbessern','Filter hinzuf\u00fcgen','Das Bild gr\u00f6\u00dfer machen'],_h:0x5D}
+],
+boss:[
+{q:'Warum ist Licht das wichtigste Element in der Fotografie?',a:['Weil es hell ist','Ohne Licht entsteht kein Bild \u2014 die Qualit\u00e4t und Richtung des Lichts bestimmen Stimmung, Schatten und r\u00e4umliche Wirkung eines Fotos','Weil die Kamera Licht braucht','Weil es sch\u00f6n ist'],_h:0x4B},
+{q:'Warum hat die Erfindung der Fotografie die Malerei ver\u00e4ndert?',a:['Hat sie nicht','Weil die Fotografie die realistische Abbildung \u00fcbernahm, konnten sich Maler auf Ausdruck, Farbe und Abstraktion konzentrieren \u2014 das f\u00f6rderte den Impressionismus','Weil Fotos billiger sind','Weil Maler arbeitslos wurden'],_h:0x7E},
+{q:'Warum ist digitale Kunst eine echte Kunstform?',a:['Ist sie nicht','Der K\u00fcnstler trifft die gleichen kreativen Entscheidungen \u00fcber Komposition, Farbe und Ausdruck \u2014 nur das Werkzeug ist digital statt analog','Weil Computer alles machen','Weil es einfacher ist'],_h:0x29}
+]},
+{id:8,title:'Design und Gestaltung',icon:'\u2728',duration:'20 Min.',description:'Plakate, Logos, Typografie und Layout \u2014 Gestaltung mit Wirkung!',
+lessons:[
+{title:'Plakatgestaltung und Logodesign',content:'<p><strong>Design</strong> ist Kunst mit einem Zweck \u2014 es soll eine Botschaft vermitteln!</p><p><strong>Plakatgestaltung:</strong></p><ul><li><strong>Blickfang:</strong> Ein starkes Bild oder eine gro\u00dfe \u00dcberschrift</li><li><strong>Wenig Text:</strong> Klare, kurze Botschaft</li><li><strong>Kontraste:</strong> Gut lesbar durch Farbkontraste</li><li><strong>Hierarchie:</strong> Wichtigstes zuerst, Details kleiner</li></ul><p><strong>Logodesign:</strong></p><ul><li><strong>Einfachheit:</strong> Ein gutes Logo ist simpel und einpr\u00e4gsam</li><li><strong>Wiedererkennbarkeit:</strong> Auch klein oder in Schwarz-Wei\u00df erkennbar</li><li><strong>Zeitlosigkeit:</strong> Soll auch in 20 Jahren noch funktionieren</li><li>Beispiele: Apple, Nike, McDonald\'s</li></ul><div class=\"info-box\">\uD83D\uDCA1 <strong>Merke:</strong> Ein gutes Logo erkennt man in <strong>unter 3 Sekunden</strong> \u2014 es muss sofort wirken!</div>'},
+{title:'Typografie und Layout',content:'<p><strong>Typografie</strong> ist die Kunst der Schriftgestaltung.</p><p><strong>Schriftarten-Familien:</strong></p><ul><li><strong>Serifen (z.B. Times):</strong> Kleine F\u00fc\u00dfchen an den Buchstaben \u2014 klassisch, seri\u00f6s</li><li><strong>Sans-Serif (z.B. Arial):</strong> Ohne Serifen \u2014 modern, klar</li><li><strong>Schreibschrift:</strong> Elegant, pers\u00f6nlich</li><li><strong>Display-Schriften:</strong> Dekorativ, f\u00fcr \u00dcberschriften</li></ul><p><strong>Layout-Grundlagen:</strong></p><ul><li><strong>Raster:</strong> Unsichtbare Hilfslinien f\u00fcr Ordnung</li><li><strong>Wei\u00dfraum:</strong> Freie Fl\u00e4chen lassen das Design atmen</li><li><strong>Ausrichtung:</strong> Elemente ordentlich anordnen</li><li><strong>Visueller Rhythmus:</strong> Wiederholung von Formen und Abst\u00e4nden</li></ul><p><strong>Gestaltgesetze:</strong></p><ul><li><strong>N\u00e4he:</strong> Nahe Elemente geh\u00f6ren zusammen</li><li><strong>\u00c4hnlichkeit:</strong> Gleich aussehende Elemente bilden eine Gruppe</li></ul><div class=\"info-box\">\uD83D\uDCA1 <strong>Wusstest du?</strong> <strong>Wei\u00dfraum</strong> (leere Fl\u00e4che) ist kein verschwendeter Platz \u2014 er macht Designs lesbarer und eleganter!</div>'}
+],
+quiz:[
+{q:'Was ist das Wichtigste bei einem Plakat?',a:['Viel Text','Ein starker Blickfang','Viele Farben','Kleine Schrift'],_h:0x4B},
+{q:'Welche Schriftart hat kleine F\u00fc\u00dfchen an den Buchstaben?',a:['Sans-Serif','Schreibschrift','Serifen-Schrift','Display-Schrift'],_h:0x7D},
+{q:'Was macht ein gutes Logo aus?',a:['Viele Details','Einfachheit und Wiedererkennbarkeit','Viele Farben','Gro\u00dfe Gr\u00f6\u00dfe'],_h:0x2A},
+{q:'Was ist Wei\u00dfraum im Design?',a:['Wei\u00dfe Farbe','Bewusst freigelassene Fl\u00e4che','Ein Fehler','Unbedrucktes Papier'],_h:0x60},
+{q:'Was besagt das Gestaltgesetz der N\u00e4he?',a:['Gro\u00dfe Elemente sind wichtiger','Nahe beieinanderliegende Elemente werden als zusammengeh\u00f6rig wahrgenommen','Farben m\u00fcssen nah sein','Texte m\u00fcssen eng stehen'],_h:0x5D}
+],
+boss:[
+{q:'Warum ist Typografie f\u00fcr gutes Design so wichtig?',a:['Weil Text sch\u00f6n sein muss','Die Schriftwahl beeinflusst Lesbarkeit, Stimmung und Wirkung einer Botschaft \u2014 sie transportiert Gef\u00fchle noch bevor man den Inhalt liest','Weil es Pflicht ist','Weil Computer Schriften brauchen'],_h:0x4B},
+{q:'Warum nutzen Designer bewusst Wei\u00dfraum?',a:['Weil ihnen nichts einf\u00e4llt','Wei\u00dfraum gibt wichtigen Elementen Raum zum Wirken, verbessert die Lesbarkeit und macht das Design professioneller','Weil Papier teuer ist','Weil es schneller geht'],_h:0x7E},
+{q:'Warum funktionieren einfache Logos besser als komplizierte?',a:['Weil Designer faul sind','Einfache Logos sind sofort erkennbar, funktionieren in jeder Gr\u00f6\u00dfe und bleiben besser im Ged\u00e4chtnis \u2014 Komplexit\u00e4t lenkt ab','Weil sie billiger sind','Zufall'],_h:0x29}
+]},
+{id:9,title:'Kunst-Meister',icon:'\uD83C\uDFC6',duration:'30 Min.',description:'Alles zusammen: Farben, Zeichnen, Malerei, K\u00fcnstler und Kunstgeschichte!',
+lessons:[
+{title:'Kunst verstehen \u2014 die gro\u00dfe Zusammenfassung',content:'<p>Du hast viel gelernt! Hier fassen wir die <strong>wichtigsten Themen</strong> zusammen.</p><p><strong>Farbenlehre:</strong></p><ul><li>3 Prim\u00e4rfarben: Rot, Gelb, Blau</li><li>Farbkreis nach Itten, Komplement\u00e4rfarben</li><li>Warm-Kalt-Kontrast, Hell-Dunkel-Kontrast</li></ul><p><strong>Techniken:</strong></p><ul><li>Zeichnen: Bleistifth\u00e4rten, Schraffuren, Perspektive</li><li>Malerei: Aquarell, Acryl, \u00d6l, Gouache</li><li>Skulptur: Modellieren (additiv), Mei\u00dfeln (subtraktiv)</li></ul><p><strong>Komposition:</strong></p><ul><li>Drittelregel, Goldener Schnitt, Symmetrie</li><li>Vordergrund, Mittelgrund, Hintergrund</li></ul><div class=\"info-box\">\uD83D\uDCA1 <strong>Merke:</strong> Kunst ist eine <strong>Sprache</strong> \u2014 wenn du die Grundlagen verstehst, kannst du Kunstwerke aus der ganzen Welt lesen!</div>'},
+{title:'Kunst erleben und weiterforschen',content:'<p>Kunst ist mehr als Theorie \u2014 sie will <strong>erlebt</strong> werden!</p><p><strong>Wie du Kunst erleben kannst:</strong></p><ul><li><strong>Selbst gestalten:</strong> Zeichnen, malen, formen, fotografieren</li><li><strong>Museen besuchen:</strong> Originale Kunstwerke wirken ganz anders als Abbildungen</li><li><strong>Genau hinschauen:</strong> Auf Farben, Formen, Komposition und Technik achten</li><li><strong>Experimentieren:</strong> Verschiedene Materialien und Techniken ausprobieren</li></ul><p><strong>Spannende Kunstthemen zum Weiterforschen:</strong></p><ul><li><strong>Street Art:</strong> Kunst im \u00f6ffentlichen Raum</li><li><strong>Architektur:</strong> Baukunst als gr\u00f6\u00dfte Kunstform</li><li><strong>Kunsttherapie:</strong> Wie Kunst heilen kann</li><li><strong>Medienkunst:</strong> Kunst mit neuen Technologien</li></ul><div class=\"info-box\">\uD83D\uDCA1 <strong>Wusstest du?</strong> Kunst f\u00f6rdert <strong>Kreativit\u00e4t, Probleml\u00f6sung und emotionale Intelligenz</strong> \u2014 F\u00e4higkeiten, die in jedem Beruf wertvoll sind!</div>'}
+],
+quiz:[
+{q:'Wie viele Prim\u00e4rfarben gibt es?',a:['2','3','4','6'],_h:0x4B},
+{q:'Welcher K\u00fcnstler malte die Seerosen?',a:['Picasso','Da Vinci','Monet','Van Gogh'],_h:0x7D},
+{q:'Was ist eine subtraktive Bildhauertechnik?',a:['Ton modellieren','Material abtragen (z.B. Mei\u00dfeln)','Bronze gie\u00dfen','Farbe auftragen'],_h:0x2A},
+{q:'Was besagt die Drittelregel?',a:['Ein Drittel des Bildes leer lassen','Das Bild in 9 Felder teilen, Hauptmotive auf die Schnittpunkte setzen','Drei Farben verwenden','Das Bild dritteln'],_h:0x60},
+{q:'Welche Maltechnik trocknet am schnellsten?',a:['\u00d6lmalerei','Aquarell','Acrylmalerei','Fresko'],_h:0x5E}
+],
+boss:[
+{q:'Warum wird Kunst als universelle Sprache bezeichnet?',a:['Weil alle Bilder gleich aussehen','Kunst kommuniziert Emotionen und Ideen \u00fcber Kulturgrenzen hinweg \u2014 Menschen aller Nationen k\u00f6nnen Sch\u00f6nheit, Trauer oder Freude in Kunstwerken empfinden','Weil alle die gleichen Bilder kennen','Weil Kunst aus Buchstaben besteht'],_h:0x4B},
+{q:'Was haben Farbenlehre, Komposition und Perspektive gemeinsam?',a:['Nichts','Sie sind die drei Grundpfeiler der Kunst, die zusammen erm\u00f6glichen, wirkungsvolle Bilder zu schaffen und zu verstehen','Sie sind alle Maltechniken','Sie sind alle K\u00fcnstler'],_h:0x7E},
+{q:'Warum ist das Betrachten von Kunst in einem Museum wertvoller als in einem Buch?',a:['Ist es nicht','Originale zeigen Gr\u00f6\u00dfe, Textur, Farbtiefe und Pinselstriche, die Abbildungen nicht transportieren k\u00f6nnen \u2014 man erlebt das Kunstwerk physisch','Weil Museen teuer sind','Weil B\u00fccher langweilig sind'],_h:0x29}
+]}
+];
+
+// === State Management ===
+const STORAGE_KEY='kunstatelier_progress';
+let state={name:'',started:false,currentModule:0,xp:0,level:0,streak:0,lastVisit:null,modulesCompleted:[],quizResults:{},bossResults:{},badges:[],quizShuffleMap:{},modulesViewed:[],interactiveResults:{},designTheme:'cyber-dark'};
+function saveState(){try{localStorage.setItem(STORAGE_KEY,JSON.stringify(state))}catch(e){}}
+function loadState(){try{const s=localStorage.getItem(STORAGE_KEY);if(s){Object.assign(state,JSON.parse(s));return true}}catch(e){}return false}
+function exportData(){const a=document.createElement('a');a.download='kunstatelier-'+state.name+'.json';a.href=URL.createObjectURL(new Blob([JSON.stringify(state,null,2)],{type:'application/json'}));a.click()}
+function importData(e){const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=ev=>{try{const d=JSON.parse(ev.target.result);Object.assign(state,d);saveState();location.reload()}catch(err){alert('Datei konnte nicht gelesen werden.')}};r.readAsText(f)}
+
+// === XP & Level ===
+function getLevel(xp){let lv=0;for(let i=LEVELS.length-1;i>=0;i--){if(xp>=LEVELS[i].xp){lv=i;break}}return lv}
+function getLevelProgress(xp){const lv=getLevel(xp);const cur=LEVELS[lv].xp;const next=lv<LEVELS.length-1?LEVELS[lv+1].xp:cur;if(next===cur)return 100;return Math.min(100,Math.round((xp-cur)/(next-cur)*100))}
+function addXP(amount,reason){const old=getLevel(state.xp);state.xp+=amount;const nw=getLevel(state.xp);saveState();updateUI();showNotif('xp','+'+amount+' XP',reason);if(nw>old){state.level=nw;saveState();setTimeout(()=>showLevelUp(nw),800)}}
+
+// === Streak ===
+function updateStreak(){const today=new Date().toDateString();if(state.lastVisit===today)return;const yesterday=new Date(Date.now()-86400000).toDateString();if(state.lastVisit===yesterday){state.streak++;showNotif('streak','\uD83D\uDD25 '+state.streak+' Tage Streak!','Weiter so!');if(state.streak>=3)awardBadge('streak3');if(state.streak>=7)awardBadge('streak7')}else if(state.lastVisit!==today){state.streak=1}state.lastVisit=today;saveState()}
+
+// === Badges ===
+function awardBadge(id){if(state.badges.includes(id))return;state.badges.push(id);saveState();const b=BADGES.find(x=>x.id===id);if(b)showNotif('badge',b.icon+' Badge: '+b.name,b.desc)}
+
+// === Notifications ===
+let notifQueue=[],notifActive=false;
+function showNotif(type,title,text){notifQueue.push({type,title,text});if(!notifActive)processNotif()}
+function processNotif(){if(!notifQueue.length){notifActive=false;return}notifActive=true;const{type,title,text}=notifQueue.shift();const el=document.getElementById('notif');el.className='notif '+type;document.getElementById('notifTitle').textContent=title;document.getElementById('notifText').textContent=text;el.classList.add('show');setTimeout(()=>{el.classList.remove('show');setTimeout(processNotif,300)},2500)}
+
+// === Level Up + Confetti ===
+function showLevelUp(lv){const ov=document.getElementById('levelUpOverlay');const box=document.getElementById('levelUpBox');box.innerHTML='<div class="lvl-icon">\u2B06\uFE0F</div><div class="lvl-title">Level Up!</div><div class="lvl-name">Level '+(lv+1)+': '+LEVELS[lv].name+'</div>';ov.classList.add('active');spawnConfetti();setTimeout(()=>ov.classList.remove('active'),3000)}
+function spawnConfetti(){const c=document.getElementById('confetti');c.innerHTML='';const cols=['#3b82f6','#a855f7','#22c55e','#f59e0b','#ef4444','#06b6d4'];for(let i=0;i<60;i++){const p=document.createElement('div');p.style.cssText='position:absolute;left:'+Math.random()*100+'%;background:'+cols[i%cols.length]+';width:'+(6+Math.random()*8)+'px;height:'+(6+Math.random()*8)+'px;border-radius:'+(Math.random()>.5?'50%':'2px')+';animation:confettiFall '+(1.5+Math.random()*2)+'s ease-out '+Math.random()*.5+'s forwards';c.appendChild(p)}if(!document.getElementById('confettiStyle')){const s=document.createElement('style');s.id='confettiStyle';s.textContent='@keyframes confettiFall{0%{opacity:1;transform:translateY(0) rotate(0deg)}100%{opacity:0;transform:translateY(100vh) rotate(720deg)}}';document.head.appendChild(s)}setTimeout(()=>c.innerHTML='',4000)}
+
+// === Quiz Engine ===
+function shuffleQuiz(modId,quiz){const key='m'+modId;if(state.quizShuffleMap[key])return state.quizShuffleMap[key];const idx=[...Array(quiz.length).keys()];for(let i=idx.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[idx[i],idx[j]]=[idx[j],idx[i]]}state.quizShuffleMap[key]=idx;saveState();return idx}
+function renderQuiz(modId,quiz,isBoss){
+const pf=isBoss?'boss':'quiz';const idx=isBoss?[...Array(quiz.length).keys()]:shuffleQuiz(modId,quiz);
+let h='<div class="'+(isBoss?'boss-section':'quiz-section')+'">';
+h+=isBoss?'<h3>\uD83D\uDC51 Boss-Challenge</h3><p class="boss-sub">Alle '+quiz.length+' Fragen richtig beantworten!</p>':'<h3>\uD83D\uDCDD Quiz \u2014 Teste dein Wissen</h3>';
+idx.forEach((qi,di)=>{const q=quiz[qi];h+='<div class="quiz-q" data-qi="'+qi+'"><p>'+(di+1)+'. '+q.q+'</p>';q.a.forEach((a,ai)=>{h+='<label><input type="radio" name="'+pf+'_'+modId+'_'+qi+'" value="'+ai+'"> '+a+'<\/label>'});h+='<\/div>'});
+h+='<button class="quiz-submit" onclick="checkQuiz('+modId+','+isBoss+')">'+(isBoss?'Boss besiegen!':'Antworten prüfen')+'<\/button>';
+h+='<div class="quiz-result" id="'+pf+'Result'+modId+'" style="display:none"><\/div><\/div>';return h;
+}
+function checkQuiz(modId,isBoss){
+const pf=isBoss?'boss':'quiz';const quiz=isBoss?modules[modId].boss:modules[modId].quiz;
+let correct=0;const total=quiz.length;const startTime=window._quizStart||Date.now();
+quiz.forEach((q,qi)=>{
+const sel=document.querySelector('input[name="'+pf+'_'+modId+'_'+qi+'"]:checked');
+const labels=document.querySelectorAll('[data-qi="'+qi+'"] label');
+const ci=_d(q._h,qi);
+labels.forEach((l,li)=>{l.classList.remove('correct','wrong');if(li===ci)l.classList.add('correct');else if(sel&&parseInt(sel.value)===li)l.classList.add('wrong')});
+const qDiv=labels[0]?.closest('.quiz-q');if(qDiv){const old=qDiv.querySelector('.quiz-explanation');if(old)old.remove()}
+if(!sel||parseInt(sel.value)!==ci){if(qDiv){const exp=document.createElement('div');exp.className='quiz-explanation';exp.textContent='\u2192 Richtige Antwort: '+q.a[ci];qDiv.appendChild(exp)}}
+if(sel&&parseInt(sel.value)===ci)correct++;
+});
+const rEl=document.getElementById(pf+'Result'+modId);rEl.style.display='block';
+if(isBoss){
+if(correct===total){
+rEl.className='quiz-result pass';rEl.textContent='\uD83D\uDC51 Boss besiegt! '+correct+'/'+total+' \u2014 Perfekt!';
+if(!state.bossResults[modId]){state.bossResults[modId]=true;addXP(100,'Boss-Challenge bestanden!');if(!state.badges.includes('first_boss'))awardBadge('first_boss');if(modules.every((_,i)=>state.bossResults[i]))awardBadge('all_bosses');checkModuleComplete(modId)}
+}else{rEl.className='quiz-result fail';rEl.textContent='\uD83D\uDC80 '+correct+'/'+total+' \u2014 Alle müssen richtig sein! Versuch es nochmal.';setTimeout(()=>{document.querySelectorAll('input[name^="'+pf+'_'+modId+'"]').forEach(r=>{r.disabled=false;r.checked=false});document.querySelectorAll('[data-qi] label').forEach(l=>l.classList.remove('correct','wrong'));document.querySelectorAll('.quiz-explanation').forEach(e=>e.remove());rEl.style.display='none'},2000);return}
+}else{
+const passed=correct>=Math.ceil(total*0.6);rEl.className='quiz-result '+(passed?'pass':'fail');
+rEl.textContent=passed?'\u2705 '+correct+'/'+total+' richtig \u2014 Bestanden!':'\u274C '+correct+'/'+total+' richtig \u2014 Mindestens '+Math.ceil(total*0.6)+' nötig.';
+if(passed&&!state.quizResults[modId]){state.quizResults[modId]=correct;addXP(correct*15+50,'Quiz bestanden ('+correct+'/'+total+')');if(!state.badges.includes('first_quiz'))awardBadge('first_quiz');if(correct===total)awardBadge('perfect_quiz');if(Date.now()-startTime<60000)awardBadge('speed_quiz');checkModuleComplete(modId)}
+}
+saveState();document.querySelectorAll('input[name^="'+pf+'_'+modId+'"]').forEach(r=>r.disabled=true);
+window.scrollTo({top:0,behavior:'smooth'});
+}
+function checkModuleComplete(modId){
+if(state.quizResults[modId]!==undefined&&state.bossResults[modId]&&!state.modulesCompleted.includes(modId)){
+state.modulesCompleted.push(modId);awardBadge('m'+modId);
+if(state.modulesCompleted.length>=5)awardBadge('half_done');
+if(state.modulesCompleted.length>=10){awardBadge('graduate');setTimeout(()=>showCert(),1500)}
+saveState();renderSidebar();
+}
+}
+
+// === Render Module ===
+function renderModule(modId){
+state.currentModule=modId;
+if(!state.modulesViewed.includes(modId)){state.modulesViewed.push(modId);addXP(10,'Neues Modul geöffnet');if(state.modulesViewed.length>=10)awardBadge('explorer')}
+saveState();closeSidebar();
+const m=modules[modId];
+let h='<div class="module-header"><div class="mod-badge">'+m.icon+' Modul '+(modId+1)+'<\/div><h1>'+m.title+'<\/h1><p class="mod-desc">'+m.description+'<\/p><\/div>';
+m.lessons.forEach((l,i)=>{h+='<div class="lesson-card"><h3><span style="color:var(--neon)">'+String(i+1).padStart(2,'0')+'<\/span> '+l.title+' <button class="tts-btn" onclick="speakLesson('+i+')" title="Vorlesen">&#128266;<\/button><\/h3>'+l.content+'<\/div>'});
+h+='<div class="interactive-area"><h4>\uD83D\uDCDD Interaktive Übung<\/h4><div id="interactiveContent">Lädt...<\/div><\/div>';
+window._quizStart=Date.now();
+h+=renderQuiz(modId,m.quiz,false);
+h+=renderQuiz(modId,m.boss,true);
+document.getElementById('welcomeScreen').style.display='none';
+document.getElementById('badgesView').style.display='none';
+document.getElementById('statsView').style.display='none';
+const mc=document.getElementById('moduleContent');mc.style.display='block';mc.innerHTML=h;
+renderSidebar();setTimeout(()=>{initInteractive(modId);window.scrollTo(0,0)},100);
+}
+
+// === Sidebar ===
+function renderSidebar(){
+const el=document.getElementById('sidebarModules');
+el.innerHTML=modules.map((m,i)=>{
+const done=state.modulesCompleted.includes(i);
+const act=state.currentModule===i&&document.getElementById('moduleContent').style.display==='block';
+return '<a class="mod-link'+(act?' active':'')+(done?' completed':'')+'" onclick="renderModule('+i+')"><span class="mod-icon">'+m.icon+'<\/span>'+m.title+'<\/a>';
+}).join('');
+const lv=getLevel(state.xp);
+const lvEl=document.getElementById('sidebarLevel');if(lvEl)lvEl.textContent=LEVELS[lv].name;
+const xpEl=document.getElementById('sidebarXP');if(xpEl)xpEl.textContent=state.xp+' XP';
+const xpFill=document.getElementById('sidebarXPFill');if(xpFill)xpFill.style.width=getLevelProgress(state.xp)+'%';
+}
+function toggleSidebar(){document.getElementById('sidebar').classList.toggle('open')}
+function closeSidebar(){document.getElementById('sidebar').classList.remove('open')}
+
+// === Badges & Stats ===
+function showBadges(){
+document.getElementById('welcomeScreen').style.display='none';
+document.getElementById('moduleContent').style.display='none';
+document.getElementById('statsView').style.display='none';
+const v=document.getElementById('badgesView');v.style.display='block';closeSidebar();
+let h='<div class="module-header"><h1>\uD83C\uDFC5 Deine Abzeichen<\/h1><p class="mod-desc">'+state.badges.length+' von '+BADGES.length+' gesammelt<\/p><\/div><div class="badge-grid">';
+BADGES.forEach(b=>{const earned=state.badges.includes(b.id);h+='<div class="badge-item'+(earned?' earned':' locked')+'"><div class="badge-icon">'+(earned?b.icon:'\uD83D\uDD12')+'<\/div><div class="badge-name">'+b.name+'<\/div><\/div>'});
+h+='<\/div>';v.innerHTML=h;
+}
+function showStats(){
+document.getElementById('welcomeScreen').style.display='none';
+document.getElementById('moduleContent').style.display='none';
+document.getElementById('badgesView').style.display='none';
+const v=document.getElementById('statsView');v.style.display='block';closeSidebar();
+const lv=getLevel(state.xp);
+let h='<div class="module-header"><h1>\uD83D\uDCCA Statistik<\/h1><\/div><div class="stats-grid">';
+h+='<div class="stat-card"><div class="stat-val">'+state.xp+'<\/div><div class="stat-label">XP gesammelt<\/div><\/div>';
+h+='<div class="stat-card"><div class="stat-val">'+LEVELS[lv].name+'<\/div><div class="stat-label">Aktueller Rang<\/div><\/div>';
+h+='<div class="stat-card"><div class="stat-val">'+state.modulesCompleted.length+'/10<\/div><div class="stat-label">Module abgeschlossen<\/div><\/div>';
+h+='<div class="stat-card"><div class="stat-val">'+Object.keys(state.quizResults).length+'<\/div><div class="stat-label">Quizze bestanden<\/div><\/div>';
+h+='<div class="stat-card"><div class="stat-val">'+Object.keys(state.bossResults).length+'<\/div><div class="stat-label">Bosse besiegt<\/div><\/div>';
+h+='<div class="stat-card"><div class="stat-val">'+state.badges.length+'<\/div><div class="stat-label">Abzeichen<\/div><\/div>';
+h+='<div class="stat-card"><div class="stat-val">\uD83D\uDD25 '+state.streak+'<\/div><div class="stat-label">Tage-Streak<\/div><\/div>';
+h+='<\/div>';v.innerHTML=h;
+}
+
+// === Certificate ===
+let certStyle='akademie';
+function showCert(){window._lastFocus=document.activeElement;
+const ov=document.getElementById('certOverlay');
+const styles=['akademie','hacker','pixel','zukunft'];
+const labels=['\uD83C\uDFDB Akademie','\uD83D\uDCBB Hacker','\uD83D\uDD79 Pixel','\u2728 Zukunft'];
+document.getElementById('certPicker').innerHTML=styles.map((s,i)=>'<button class="cert-pick-btn '+(s===certStyle?'active':'')+'" onclick="certStyle=\''+s+'\';renderCert()">'+labels[i]+'<\/button>').join('');
+renderCert();ov.classList.add('active');
+}
+function closeCert(){document.getElementById('certOverlay').classList.remove('active');if(window._lastFocus){window._lastFocus.focus();window._lastFocus=null}}
+function generateCertCode(){const n=state.name||'X';const d=new Date();return 'KA-'+d.getFullYear()+'-'+((n.charCodeAt(0)*7+state.xp)%9999).toString(16).toUpperCase().padStart(4,'0')}
+function printCert(){window.print()}
+function certBadgeRow(){
+const earned=state.badges||[];if(earned.length===0)return'';
+return'<div class="cert-badge-row">'+earned.slice(0,8).map(bid=>{const b=BADGES.find(x=>x.id===bid);return b?'<div class="cert-badge-item" title="'+b.name+'">'+b.icon+'<\/div>':''}).join('')+(earned.length>8?'<div class="cert-badge-item" title="'+(earned.length-8)+' weitere">+'+(earned.length-8)+'<\/div>':'')+'<\/div>';
+}
+function certStatsRow(){
+const mods=state.modulesCompleted.length;const quizDone=Object.keys(state.quizResults).length;const bossDone=Object.keys(state.bossResults).length;
+return'<div class="cert-common-stats"><div class="cert-stat">\uD83D\uDCDA '+mods+'/10<\/div><div class="cert-stat">\uD83D\uDCDD '+quizDone+' Quizze<\/div><div class="cert-stat">\uD83D\uDC51 '+bossDone+' Bosse<\/div><div class="cert-stat">\uD83D\uDD25 '+state.streak+'d Streak<\/div><\/div>';
+}
+function certLogoFooter(dark){
+const fill=dark?'rgba(255,255,255,.4)':'rgba(0,0,0,.35)';
+return'<div class="cert-logo-footer"><svg viewBox="0 0 32 32" fill="none"><g transform="translate(16,16)"><circle cx="-10" cy="-9" r="1.2" fill="'+fill+'" opacity=".6"/><circle cx="10" cy="-9" r="1.2" fill="'+fill+'" opacity=".6"/><rect x="-7" y="-5.5" width="14" height="11" rx="3.5" fill="none" stroke="'+fill+'" stroke-width="1"/><text x="0" y="0" text-anchor="middle" dominant-baseline="central" font-family="system-ui" font-size="7.5" font-weight="900" fill="'+fill+'" letter-spacing="1">AI<\/text><\/g><\/svg><span style="color:'+fill+'">GZ AI Stacks<\/span><\/div>';
+}
+function svgCorner(){return'<svg viewBox="0 0 60 60" fill="none"><path d="M5 55 L5 15 Q5 5 15 5 L55 5" stroke="#c5a54e" stroke-width="1.5" fill="none" opacity=".4"/><circle cx="8" cy="8" r="3" fill="#c5a54e" opacity=".2"/><\/svg>';}
+function svgLaurelSeal(){return'<svg viewBox="0 0 90 90" fill="none"><circle cx="45" cy="45" r="32" fill="url(#cg)"/><defs><radialGradient id="cg"><stop offset="0%" stop-color="#e8c84e"/><stop offset="100%" stop-color="#8a6914"/><\/radialGradient><\/defs><text x="45" y="47" text-anchor="middle" dominant-baseline="central" font-family="serif" font-size="22" font-weight="900" fill="#fff">\u2605<\/text><\/svg>';}
+function svgHexSeal(){return'<svg viewBox="0 0 70 70" fill="none"><circle cx="35" cy="35" r="22" stroke="#00d4ff" stroke-width="1.5" opacity=".5"/><circle cx="35" cy="35" r="16" fill="rgba(0,255,65,.08)"/><text x="35" y="33" text-anchor="middle" dominant-baseline="central" font-family="monospace" font-size="8" font-weight="700" fill="#00ff41" opacity=".7">VERIFIED<\/text><text x="35" y="42" text-anchor="middle" font-family="monospace" font-size="7" fill="#00d4ff">\u2713<\/text><\/svg>';}
+function matrixCols(){const chars='01\u30A2\u30A4\u30A6\u30A8\u30AA{}[]<>';let h='';for(let i=0;i<10;i++){const x=5+i*9;const d=3+Math.random()*6;let col='';for(let j=0;j<25;j++)col+=chars[Math.floor(Math.random()*chars.length)]+'\n';h+='<div class="cert-matrix-col" style="left:'+x+'%;animation-duration:'+d+'s;animation-delay:'+Math.random()*4+'s">'+col+'<\/div>';}return h;}
+function renderCert(){
+const f=document.getElementById('certFrame');
+const name=state.name||'Unbekannt';const date=new Date().toLocaleDateString('de-DE',{day:'numeric',month:'long',year:'numeric'});
+const xp=state.xp;const mods=state.modulesCompleted.length;const rank=LEVELS[getLevel(xp)].name;const code=generateCertCode();const badges=certBadgeRow();
+document.querySelectorAll('.cert-pick-btn').forEach(b=>b.classList.toggle('active',b.textContent.toLowerCase().includes(certStyle)));
+if(certStyle==='akademie'){
+const corner=svgCorner();
+f.innerHTML='<div class="cert-akademie"><div class="cert-corner cert-corner-tl">'+corner+'<\/div><div class="cert-corner cert-corner-tr">'+corner+'<\/div><div class="cert-corner cert-corner-bl">'+corner+'<\/div><div class="cert-corner cert-corner-br">'+corner+'<\/div><div class="cert-inner"><div class="cert-sub">KunstAtelier \u00B7 Kunst-Akademie<\/div><div class="cert-title">Diplom<\/div><div class="cert-hr"><\/div><div class="cert-body">Die Kunst-Akademie verleiht hiermit<\/div><div class="cert-name">'+name+'<\/div><div class="cert-body">die Anerkennung als<br><strong style="font-size:18px;color:#1a1a3e">Kunst-'+rank+'<\/strong><br>f\u00FCr die erfolgreiche Absolvierung von<br>\u201EKunstAtelier \u2014 Kunst Klasse 3-6\u201C<\/div>'+certStatsRow()+badges+'<div class="cert-seal-wrap"><div class="cert-seal-ring"><\/div><div class="cert-seal">'+svgLaurelSeal()+'<\/div><\/div><div class="cert-date">'+date+'<\/div><div class="cert-verification">'+code+'<\/div>'+certLogoFooter(false)+'<\/div><\/div>';
+}else if(certStyle==='hacker'){
+f.innerHTML='<div class="cert-hacker">'+matrixCols()+'<div class="cert-inner"><div class="cert-prompt">root@kunstatelier:~$ <span>verify --user "'+name+'" --deep-scan<\/span><\/div><div class="cert-title">&gt;&gt; SYSTEM CERTIFICATION &lt;&lt;<\/div><div class="cert-access">ACCESS GRANTED<span class="cursor-blink">_<\/span><\/div><div class="cert-body">&gt; User..........: <strong style="color:#00d4ff">'+name+'<\/strong><br>&gt; Rank..........: '+rank+'<br>&gt; Modules.......: [<span style="color:#00ff41">'+ '\u2588'.repeat(mods)+'\u2591'.repeat(10-mods)+'<\/span>] '+mods+'/10<br>&gt; XP............: '+xp+' pts<br>&gt; Status........: <span style="color:#00ff41">VERIFIED<\/span> \u2713<\/div>'+certStatsRow()+badges+'<div class="cert-hex-seal">'+svgHexSeal()+'<\/div><div class="cert-body" style="font-size:11px">&gt; Certificate ID: '+code+'<br>&gt; Issued: '+date+'<br>&gt; Authority: KunstAtelier Akademie<\/div><div class="cert-prompt">root@kunstatelier:~$ <span class="cursor-blink">_<\/span><\/div>'+certLogoFooter(true)+'<\/div><\/div>';
+}else if(certStyle==='pixel'){
+const stars='\u2605'.repeat(Math.min(5,Math.ceil(mods/2)))+'\u2606'.repeat(Math.max(0,5-Math.ceil(mods/2)));
+const pct=Math.min(100,Math.round(xp/42));
+f.innerHTML='<div class="cert-pixel"><div class="cert-inner"><div class="cert-complete">\u25C6 LEVEL COMPLETE! \u25C6<\/div><div class="cert-title">CHAMPION<\/div><div class="cert-name">'+name+'<\/div><div class="cert-stars">'+stars+'<\/div><div class="cert-xp-bar"><div class="cert-xp-fill" style="width:'+pct+'%"><\/div><div class="cert-xp-label">'+xp+' XP<\/div><\/div><div class="cert-body">RANK: <strong style="color:#ffd700">'+rank.toUpperCase()+'<\/strong><\/div>'+certStatsRow()+badges+'<div class="cert-score">HIGH SCORE: '+xp+' PTS<\/div><div style="margin-top:8px;font-size:10px;color:#555">'+date+' \u00B7 '+code+'<\/div>'+certLogoFooter(true)+'<\/div><\/div>';
+}else{
+const particles=Array.from({length:15},(_,i)=>{const colors=['#6366f1','#ec4899','#f59e0b','#22c55e','#06b6d4'];return'<div class="cert-particle" style="position:absolute;left:'+Math.random()*100+'%;top:'+Math.random()*100+'%;width:'+(2+Math.random()*3)+'px;height:'+(2+Math.random()*3)+'px;background:'+colors[i%5]+';opacity:'+(0.1+Math.random()*0.2)+';box-shadow:0 0 '+(6+Math.random()*9)+'px '+colors[i%5]+';border-radius:50%"><\/div>';}).join('');
+f.innerHTML='<div class="cert-zukunft">'+particles+'<div class="cert-inner"><div class="cert-sub">Zukunfts-Akademie \u00B7 '+new Date().getFullYear()+'<\/div><div class="cert-title">Zertifikat der Zukunft<\/div><div class="cert-body">Hiermit best\u00E4tigen wir, dass<\/div><div class="cert-name">'+name+'<\/div><div class="cert-body">den interaktiven Kunst-Kurs<br>\u201EKunstAtelier \u2014 Kunst Klasse 3-6\u201C<br>erfolgreich absolviert hat.<\/div><div class="cert-body" style="margin:6px 0"><strong style="color:#a78bfa;font-size:16px">'+rank+'<\/strong><\/div>'+certStatsRow()+badges+'<div class="cert-seal-holo"><div class="cert-seal-mid"><div class="cert-seal-inner"><svg viewBox="0 0 40 40" fill="none"><text x="20" y="18" text-anchor="middle" font-size="14" fill="#a78bfa">\u2726<\/text><text x="20" y="28" text-anchor="middle" font-size="6" font-weight="700" fill="rgba(255,255,255,.6)" font-family="system-ui">ART<\/text><\/svg><\/div><\/div><\/div><div class="cert-date">'+date+' \u00B7 '+code+'<\/div>'+certLogoFooter(true)+'<\/div><\/div>';
+}
+f.style.animation='none';f.offsetHeight;f.style.animation='certEntrance .6s cubic-bezier(.34,1.56,.64,1) both';
+}
+
+// === Theme System ===
+function setDesignTheme(world,mode){state.designTheme=world+'-'+mode;document.documentElement.setAttribute('data-theme',state.designTheme);saveState();buildThemePicker()}
+function getCurrentThemeParts(){const p=state.designTheme.split('-');return{world:p.slice(0,-1).join('-'),mode:p[p.length-1]||'dark'}}
+function toggleMode(){const{world,mode}=getCurrentThemeParts();setDesignTheme(world,mode==='dark'?'light':'dark')}
+function buildThemePicker(){
+const dd=document.getElementById('themePickerDD');if(!dd)return;
+const{world,mode}=getCurrentThemeParts();
+let h='<div class="tp-label">Theme wählen<\/div>';
+Object.keys(THEME_CONFIG).forEach(w=>{const t=THEME_CONFIG[w];h+='<div class="tp-world'+(w===world?' active':'')+'" onclick="setDesignTheme(\''+w+'\',\''+mode+'\')\"><div class="tp-world-color" style="background:'+t.color+'">'+t.emoji+'<\/div><div class="tp-world-info"><div class="tp-world-name">'+t.name+'<\/div><div class="tp-world-desc">'+t.desc+'<\/div><\/div><\/div>';});
+h+='<div class="tp-divider"><\/div><div class="tp-mode-row"><span class="tp-mode-label">'+(mode==='dark'?'\uD83C\uDF19 Dark':'\u2600\uFE0F Light')+'<\/span><div class="tp-mode-switch'+(mode==='light'?' light':'')+'" onclick="toggleMode()"><\/div><\/div>';
+dd.innerHTML=h;
+}
+function toggleThemePicker(){document.getElementById('themePickerDD').classList.toggle('open')}
+
+// === Interactive Exercises ===
+function initInteractive(modId){
+const el=document.getElementById('interactiveContent');if(!el)return;
+const exercises=[
+function(){el.innerHTML='<p>Ordne die Farbe der richtigen Kategorie zu!<\/p><div class=\"ix-grid\" id=\"ixItems\"><\/div><div style=\"display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin:16px 0\"><button class=\"ix-btn\" onclick=\"ixDrop(0,\'pri\')\"> Prim\u00e4rfarbe<\/button><button class=\"ix-btn\" onclick=\"ixDrop(0,\'sek\')\"> Sekund\u00e4rfarbe<\/button><\/div><div class=\"ix-feedback\" id=\"ixFb\"><\/div>';
+const items=[{n:'Rot',t:'pri'},{n:'Orange',t:'sek'},{n:'Gelb',t:'pri'},{n:'Gr\u00fcn',t:'sek'},{n:'Blau',t:'pri'},{n:'Violett',t:'sek'}];
+window._ixData={items,sel:null,done:0,correct:0};
+const g=document.getElementById('ixItems');items.forEach((it,i)=>{const d=document.createElement('div');d.className='ix-item';d.textContent=it.n;d.onclick=()=>{document.querySelectorAll('.ix-item').forEach(x=>x.classList.remove('selected'));d.classList.add('selected');window._ixData.sel=i};g.appendChild(d)});}
+,
+function(){el.innerHTML='<p>Ordne das Zeichenwerkzeug der richtigen Eigenschaft zu!<\/p><div class=\"ix-grid\" id=\"ixItems\"><\/div><div style=\"display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin:16px 0\"><button class=\"ix-btn\" onclick=\"ixDrop(1,\'weich\')\"> Weich (dunkle Linien)<\/button><button class=\"ix-btn\" onclick=\"ixDrop(1,\'hart\')\"> Hart (feine Linien)<\/button><\/div><div class=\"ix-feedback\" id=\"ixFb\"><\/div>';
+const items=[{n:'6B-Bleistift',t:'weich'},{n:'2H-Bleistift',t:'hart'},{n:'Kohle',t:'weich'},{n:'H-Bleistift',t:'hart'},{n:'4B-Bleistift',t:'weich'},{n:'3H-Bleistift',t:'hart'}];
+window._ixData={items,sel:null,done:0,correct:0};
+const g=document.getElementById('ixItems');items.forEach((it,i)=>{const d=document.createElement('div');d.className='ix-item';d.textContent=it.n;d.onclick=()=>{document.querySelectorAll('.ix-item').forEach(x=>x.classList.remove('selected'));d.classList.add('selected');window._ixData.sel=i};g.appendChild(d)});}
+,
+function(){el.innerHTML='<p>Ordne die Eigenschaft der richtigen Maltechnik zu!<\/p><div class=\"ix-grid\" id=\"ixItems\"><\/div><div style=\"display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin:16px 0\"><button class=\"ix-btn\" onclick=\"ixDrop(2,\'aqua\')\"> Aquarell<\/button><button class=\"ix-btn\" onclick=\"ixDrop(2,\'acryl\')\"> Acryl<\/button><button class=\"ix-btn\" onclick=\"ixDrop(2,\'oel\')\"> \u00d6l<\/button><\/div><div class=\"ix-feedback\" id=\"ixFb\"><\/div>';
+const items=[{n:'Transparent',t:'aqua'},{n:'Schnelltrocknend',t:'acryl'},{n:'Trocknet tagelang',t:'oel'},{n:'Nass-in-Nass',t:'aqua'},{n:'Wasserfest nach Trocknung',t:'acryl'},{n:'Perfekte Farbverl\u00e4ufe',t:'oel'}];
+window._ixData={items,sel:null,done:0,correct:0};
+const g=document.getElementById('ixItems');items.forEach((it,i)=>{const d=document.createElement('div');d.className='ix-item';d.textContent=it.n;d.onclick=()=>{document.querySelectorAll('.ix-item').forEach(x=>x.classList.remove('selected'));d.classList.add('selected');window._ixData.sel=i};g.appendChild(d)});}
+,
+function(){el.innerHTML='<p>Ordne die Form der richtigen Symmetrieart zu!<\/p><div class=\"ix-grid\" id=\"ixItems\"><\/div><div style=\"display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin:16px 0\"><button class=\"ix-btn\" onclick=\"ixDrop(3,\'achse\')\"> Achsensymmetrie<\/button><button class=\"ix-btn\" onclick=\"ixDrop(3,\'punkt\')\"> Punktsymmetrie<\/button><\/div><div class=\"ix-feedback\" id=\"ixFb\"><\/div>';
+const items=[{n:'Schmetterling',t:'achse'},{n:'Windrad',t:'punkt'},{n:'Gesicht',t:'achse'},{n:'Spielkarte',t:'punkt'},{n:'Weihnachtsbaum',t:'achse'},{n:'Propeller',t:'punkt'}];
+window._ixData={items,sel:null,done:0,correct:0};
+const g=document.getElementById('ixItems');items.forEach((it,i)=>{const d=document.createElement('div');d.className='ix-item';d.textContent=it.n;d.onclick=()=>{document.querySelectorAll('.ix-item').forEach(x=>x.classList.remove('selected'));d.classList.add('selected');window._ixData.sel=i};g.appendChild(d)});}
+,
+function(){el.innerHTML='<p>Ordne den K\u00fcnstler der richtigen Epoche zu!<\/p><div class=\"ix-grid\" id=\"ixItems\"><\/div><div style=\"display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin:16px 0\"><button class=\"ix-btn\" onclick=\"ixDrop(4,\'ren\')\"> Renaissance<\/button><button class=\"ix-btn\" onclick=\"ixDrop(4,\'imp\')\"> Impressionismus<\/button><button class=\"ix-btn\" onclick=\"ixDrop(4,\'mod\')\"> Moderne<\/button><\/div><div class=\"ix-feedback\" id=\"ixFb\"><\/div>';
+const items=[{n:'Da Vinci',t:'ren'},{n:'Monet',t:'imp'},{n:'Picasso',t:'mod'},{n:'Michelangelo',t:'ren'},{n:'Renoir',t:'imp'},{n:'Warhol',t:'mod'}];
+window._ixData={items,sel:null,done:0,correct:0};
+const g=document.getElementById('ixItems');items.forEach((it,i)=>{const d=document.createElement('div');d.className='ix-item';d.textContent=it.n;d.onclick=()=>{document.querySelectorAll('.ix-item').forEach(x=>x.classList.remove('selected'));d.classList.add('selected');window._ixData.sel=i};g.appendChild(d)});}
+,
+function(){el.innerHTML='<p>Bringe die Kunstepochen in die richtige zeitliche Reihenfolge!<\/p><div class="ix-grid" id="ixItems"><\/div><div class="ix-feedback" id="ixFb"><\/div>';
+const items=[{n:'Antike (ca. 3000 v.Chr.)',o:0},{n:'Renaissance (ca. 1400)',o:1},{n:'Barock (ca. 1600)',o:2},{n:'Impressionismus (ca. 1860)',o:3},{n:'Moderne (ab ca. 1900)',o:4}];
+const shuffled=[...items].sort(()=>Math.random()-.5);window._ixOrder={items:shuffled,picked:[],step:0};
+const g=document.getElementById('ixItems');shuffled.forEach((it,i)=>{const d=document.createElement('div');d.className='ix-item';d.textContent=it.n;d.onclick=()=>{const od=window._ixOrder;if(d.classList.contains('placed'))return;if(it.o===od.step){d.classList.add('correct','placed');od.step++;od.picked.push(i);if(od.step>=items.length){const fb=document.getElementById('ixFb');fb.className='ix-feedback pass';fb.textContent='\u2705 Perfekt! Richtige Reihenfolge!';if(!state.interactiveResults[5]){state.interactiveResults[5]=true;addXP(20,'Interaktive \u00dcbung gel\u00f6st');saveState()}}}else{d.classList.add('wrong');setTimeout(()=>d.classList.remove('wrong'),800)}};g.appendChild(d)});}
+,
+function(){el.innerHTML='<p>Ordne das Material der richtigen Kategorie zu!<\/p><div class=\"ix-grid\" id=\"ixItems\"><\/div><div style=\"display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin:16px 0\"><button class=\"ix-btn\" onclick=\"ixDrop(6,\'nat\')\"> Nat\u00fcrlich<\/button><button class=\"ix-btn\" onclick=\"ixDrop(6,\'kuenst\')\"> K\u00fcnstlich<\/button><\/div><div class=\"ix-feedback\" id=\"ixFb\"><\/div>';
+const items=[{n:'Ton',t:'nat'},{n:'Kunststoff',t:'kuenst'},{n:'Holz',t:'nat'},{n:'Stahl',t:'kuenst'},{n:'Marmor',t:'nat'},{n:'Gips',t:'kuenst'}];
+window._ixData={items,sel:null,done:0,correct:0};
+const g=document.getElementById('ixItems');items.forEach((it,i)=>{const d=document.createElement('div');d.className='ix-item';d.textContent=it.n;d.onclick=()=>{document.querySelectorAll('.ix-item').forEach(x=>x.classList.remove('selected'));d.classList.add('selected');window._ixData.sel=i};g.appendChild(d)});}
+,
+function(){el.innerHTML='<p>Gute oder schlechte Bildkomposition?<\/p><div class=\"ix-grid\" id=\"ixItems\"><\/div><div style=\"display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin:16px 0\"><button class=\"ix-btn\" onclick=\"ixDrop(7,\'gut\')\"> Gute Komposition<\/button><button class=\"ix-btn\" onclick=\"ixDrop(7,\'schlecht\')\"> Schlechte Komposition<\/button><\/div><div class=\"ix-feedback\" id=\"ixFb\"><\/div>';
+const items=[{n:'Drittelregel anwenden',t:'gut'},{n:'Motiv am Rand abschneiden',t:'schlecht'},{n:'F\u00fchrungslinien nutzen',t:'gut'},{n:'Horizont schr\u00e4g',t:'schlecht'},{n:'Goldener Schnitt',t:'gut'},{n:'Motiv zu klein und zentriert',t:'schlecht'}];
+window._ixData={items,sel:null,done:0,correct:0};
+const g=document.getElementById('ixItems');items.forEach((it,i)=>{const d=document.createElement('div');d.className='ix-item';d.textContent=it.n;d.onclick=()=>{document.querySelectorAll('.ix-item').forEach(x=>x.classList.remove('selected'));d.classList.add('selected');window._ixData.sel=i};g.appendChild(d)});}
+,
+function(){el.innerHTML='<p>Ordne das Designelement der richtigen Kategorie zu!<\/p><div class=\"ix-grid\" id=\"ixItems\"><\/div><div style=\"display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin:16px 0\"><button class=\"ix-btn\" onclick=\"ixDrop(8,\'typo\')\"> Typografie<\/button><button class=\"ix-btn\" onclick=\"ixDrop(8,\'farbe\')\"> Farbe<\/button><button class=\"ix-btn\" onclick=\"ixDrop(8,\'form\')\"> Form<\/button><\/div><div class=\"ix-feedback\" id=\"ixFb\"><\/div>';
+const items=[{n:'Serifen-Schrift',t:'typo'},{n:'Komplement\u00e4rkontrast',t:'farbe'},{n:'Kreis',t:'form'},{n:'Sans-Serif',t:'typo'},{n:'Kalt-Warm-Kontrast',t:'farbe'},{n:'Dreieck',t:'form'}];
+window._ixData={items,sel:null,done:0,correct:0};
+const g=document.getElementById('ixItems');items.forEach((it,i)=>{const d=document.createElement('div');d.className='ix-item';d.textContent=it.n;d.onclick=()=>{document.querySelectorAll('.ix-item').forEach(x=>x.classList.remove('selected'));d.classList.add('selected');window._ixData.sel=i};g.appendChild(d)});}
+,
+function(){el.innerHTML='<p>Geh\u00f6rt das zur Kunst-Theorie oder Kunst-Praxis?<\/p><div class=\"ix-grid\" id=\"ixItems\"><\/div><div style=\"display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin:16px 0\"><button class=\"ix-btn\" onclick=\"ixDrop(9,\'theorie\')\"> Theorie<\/button><button class=\"ix-btn\" onclick=\"ixDrop(9,\'praxis\')\"> Praxis<\/button><\/div><div class=\"ix-feedback\" id=\"ixFb\"><\/div>';
+const items=[{n:'Farbkreis analysieren',t:'theorie'},{n:'Aquarell malen',t:'praxis'},{n:'Komposition verstehen',t:'theorie'},{n:'Ton modellieren',t:'praxis'},{n:'Kunstepochen lernen',t:'theorie'},{n:'Skizze zeichnen',t:'praxis'}];
+window._ixData={items,sel:null,done:0,correct:0};
+const g=document.getElementById('ixItems');items.forEach((it,i)=>{const d=document.createElement('div');d.className='ix-item';d.textContent=it.n;d.onclick=()=>{document.querySelectorAll('.ix-item').forEach(x=>x.classList.remove('selected'));d.classList.add('selected');window._ixData.sel=i};g.appendChild(d)});}
+];
+if(exercises[modId])exercises[modId]();
+}
+
+// Interactive helpers
+window.ixDrop=function(modId,cat){
+const d=window._ixData;if(d.sel===null)return;
+const item=d.items[d.sel];const els=document.querySelectorAll('.ix-item');
+if(item.t===cat){els[d.sel].classList.add('correct');els[d.sel].classList.add('placed');d.correct++}
+else{els[d.sel].classList.add('wrong');setTimeout(()=>els[d.sel].classList.remove('wrong'),800)}
+d.done++;d.sel=null;els.forEach(e=>e.classList.remove('selected'));
+if(d.done>=d.items.length){const fb=document.getElementById('ixFb');fb.className='ix-feedback '+(d.correct>=4?'pass':'fail');fb.textContent=d.correct>=4?'\u2705 '+d.correct+'/'+d.items.length+' richtig!':'\u274C '+d.correct+'/'+d.items.length+' \u2014 Versuch es nochmal!';
+if(d.correct>=4&&!state.interactiveResults[modId]){state.interactiveResults[modId]=true;addXP(20,'Interaktive \u00DCbung gel\u00F6st');saveState()}}
+};
+function startApp(){const name=document.getElementById('nameInput').value.trim();if(!name)return;state.name=name;state.started=true;saveState();document.getElementById('welcomeScreen').style.display='none';renderModule(0);updateStreak()}
+if(loadState()&&state.started){
+document.getElementById('welcomeScreen').style.display='none';
+document.documentElement.setAttribute('data-theme',state.designTheme);
+renderModule(state.currentModule);updateUI();updateStreak();
+}else{
+document.documentElement.setAttribute('data-theme',state.designTheme);
+buildThemePicker();
+}
+renderSidebar();
+document.addEventListener('click',e=>{if(!e.target.closest('.theme-picker-wrap'))document.getElementById('themePickerDD')?.classList.remove('open')});
+</script>
+
+<script>
+(function(){
+var KEY=null;
+var scripts=document.querySelectorAll('script');
+for(var i=0;i<scripts.length;i++){
+var km=scripts[i].textContent.match(/STORAGE_KEY\s*=\s*['"](\w+)['"]/);
+if(km){KEY=km[1];break;}
+}
+if(!location.hash.match(/modules=/)){try{Object.keys(localStorage).filter(function(k){return k.indexOf("_allowed_modules")!==-1}).forEach(function(k){localStorage.removeItem(k)})}catch(e){}}
+var LOCK_KEY=(KEY||'app')+'_allowed_modules';
+var h=location.hash.match(/modules=([0-9,]+)/);
+var allowed=null;
+if(h){
+allowed=h[1].split(",").map(Number);
+try{localStorage.setItem(LOCK_KEY,JSON.stringify(allowed));}catch(e){}
+}else{
+try{var stored=localStorage.getItem(LOCK_KEY);if(stored)allowed=JSON.parse(stored);}catch(e){}
+}
+if(!allowed||!allowed.length)return;
+function filterSidebar(){
+var items=document.querySelectorAll("#sidebarModules > *");
+for(var i=0;i<items.length;i++){
+items[i].style.display=(allowed.indexOf(i)===-1)?"none":"";
+}
+}
+var sb=document.getElementById("sidebarModules");
+if(sb){new MutationObserver(filterSidebar).observe(sb,{childList:true});filterSidebar();}
+document.addEventListener("click",function(e){
+var t=e.target.closest("[onclick]");
+if(!t)return;
+var oc=t.getAttribute("onclick")||"";
+var idx=oc.indexOf("renderModule(");
+if(idx===-1)return;
+var num=parseInt(oc.substring(idx+13));
+if(!isNaN(num)&&allowed.indexOf(num)===-1){e.preventDefault();e.stopImmediatePropagation();}
+},true);
+setTimeout(filterSidebar,500);
+window.addEventListener("hashchange",function(){
+var hh=location.hash.match(/modules=([0-9,]+)/);
+if(hh){
+allowed=hh[1].split(",").map(Number);
+try{localStorage.setItem(LOCK_KEY,JSON.stringify(allowed));}catch(e){}
+filterSidebar();
+}
+});
+})();
+</script>
+
+<div class="zoom-controls" role="toolbar" aria-label="Zoom-Steuerung">
+<button class="zoom-btn" onclick="zoomOut()" title="Verkleinern (Taste -)" aria-label="Verkleinern">&#8722;</button>
+<button class="zoom-btn" onclick="zoomReset()" title="Zoom zurücksetzen" aria-label="Zoom zurücksetzen" style="font-size:10px;position:relative"><span id="zoomLvl">100%</span></button>
+<button class="zoom-btn" onclick="zoomIn()" title="Vergrößern (Taste +)" aria-label="Vergrößern">+</button>
+</div>
+
+<script>
+(function(){
+var zl=100;
+function applyZoom(){document.body.style.zoom=zl/100;var e=document.getElementById('zoomLvl');if(e)e.textContent=zl+'%';}
+window.zoomIn=function(){if(zl<200){zl+=10;applyZoom();}};
+window.zoomOut=function(){if(zl>50){zl-=10;applyZoom();}};
+window.zoomReset=function(){zl=100;applyZoom();};
+document.addEventListener('keydown',function(e){
+if(e.target.tagName==='INPUT'||e.target.tagName==='TEXTAREA'||e.target.isContentEditable)return;
+if((e.key==='+'||e.key==='=')&&!e.ctrlKey&&!e.metaKey){e.preventDefault();zoomIn();}
+else if((e.key==='-'||e.key==='_')&&!e.ctrlKey&&!e.metaKey){e.preventDefault();zoomOut();}
+else if(e.key==='0'&&!e.ctrlKey&&!e.metaKey){e.preventDefault();zoomReset();}
+});
+})();
+</script>
+
+<script>
+/* A11y: Focus trap for modal overlays */
+document.addEventListener('keydown',function(e){if(e.key==='Tab'){var ov=document.querySelector('.cert-overlay.active,.modal-overlay.active,[role="dialog"].active');if(ov){var fc=ov.querySelectorAll('button,a,[tabindex="0"],input,select,textarea');if(fc.length){var f=fc[0],l=fc[fc.length-1];if(e.shiftKey&&document.activeElement===f){e.preventDefault();l.focus()}else if(!e.shiftKey&&document.activeElement===l){e.preventDefault();f.focus()}}}}});
+</script>
+</body>
+</html>

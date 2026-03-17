@@ -1,0 +1,906 @@
+<!DOCTYPE html>
+<html lang="de" data-theme="cyber-dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>PhysikEntdecker — Physik-Entdeckungen Klasse 1-3</title>
+<meta name="description" content="Interaktive Lern-App für Physik-Entdeckungen, Klasse 1-3. 10 Module mit Quiz, Boss-Challenges und Gamification.">
+<style>
+@font-face{font-family:'Sora';src:url('../../../Klasse_7-10/Informatik/fonts/sora-latin-400-normal.woff2') format('woff2');font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:'Sora';src:url('../../../Klasse_7-10/Informatik/fonts/sora-latin-600-normal.woff2') format('woff2');font-weight:600;font-style:normal;font-display:swap}
+@font-face{font-family:'Sora';src:url('../../../Klasse_7-10/Informatik/fonts/sora-latin-700-normal.woff2') format('woff2');font-weight:700;font-style:normal;font-display:swap}
+@font-face{font-family:'JetBrains Mono';src:url('../../../Klasse_7-10/Informatik/fonts/jetbrains-mono-latin-400-normal.woff2') format('woff2');font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:'Playfair Display';src:url('../../../Klasse_7-10/Informatik/fonts/playfair-display-latin-700-normal.woff2') format('woff2');font-weight:700;font-style:normal;font-display:swap}
+@font-face{font-family:'Inter';src:url('../../../Klasse_7-10/Informatik/fonts/inter-latin-400-normal.woff2') format('woff2');font-weight:400;font-style:normal;font-display:swap}
+
+:root{--neon:#3b82f6;--neon-dim:rgba(59,130,246,.15);--neon-glow:rgba(59,130,246,.3);--bg:#0a0e14;--bg2:#111827;--bg3:#1f2937;--card:#161e2e;--card-hover:#1e293b;--border:#2a3444;--border-light:#374151;--text:#d4dce8;--text-dim:#8899aa;--text-bright:#f1f5f9;--heading:#ffffff;--link:#60a5fa;--success:#22c55e;--warning:#f59e0b;--danger:#ef4444;--xp-purple:#a855f7;--badge-cyan:#06b6d4;--streak-red:#ef4444;--radius:12px;--radius-sm:8px;--radius-lg:16px;--shadow:0 4px 24px rgba(0,0,0,.4);--shadow-lg:0 8px 40px rgba(0,0,0,.5);--font:'Sora','Segoe UI',system-ui,sans-serif;--mono:'JetBrains Mono','Cascadia Code',monospace;--serif:'Playfair Display','Georgia',serif;--sidebar-w:280px;--header-h:60px;--card-border-w:1px;--card-border-style:solid;--glow:1}
+[data-theme="cyber-dark"]{--neon:#3b82f6;--neon-dim:rgba(59,130,246,.15);--neon-glow:rgba(59,130,246,.3);--bg:#0a0e14;--bg2:#111827;--bg3:#1f2937;--card:#161e2e;--card-hover:#1e293b;--border:#2a3444;--border-light:#374151;--text:#d4dce8;--text-dim:#8899aa;--text-bright:#f1f5f9;--heading:#ffffff;--link:#60a5fa;--success:#22c55e;--warning:#f59e0b;--danger:#ef4444;--xp-purple:#a855f7;--badge-cyan:#06b6d4;--streak-red:#ef4444;--radius:12px;--radius-sm:8px;--radius-lg:16px;--shadow:0 4px 24px rgba(0,0,0,.4);--shadow-lg:0 8px 40px rgba(0,0,0,.5);--font:'Sora','Segoe UI',system-ui,sans-serif;--card-border-w:1px;--card-border-style:solid;--glow:1}
+[data-theme="cyber-light"]{--neon:#1d4ed8;--neon-dim:rgba(29,78,216,.1);--neon-glow:rgba(29,78,216,.2);--bg:#f8f9fb;--bg2:#f0f2f5;--bg3:#e5e7eb;--card:#ffffff;--card-hover:#f5f7fa;--border:#d1d5db;--border-light:#e5e7eb;--text:#374151;--text-dim:#4b5563;--text-bright:#111827;--heading:#111827;--link:#2563eb;--success:#22c55e;--warning:#f59e0b;--danger:#ef4444;--xp-purple:#a855f7;--badge-cyan:#06b6d4;--streak-red:#ef4444;--radius:12px;--radius-sm:8px;--radius-lg:16px;--shadow:0 4px 24px rgba(0,0,0,.08);--shadow-lg:0 8px 40px rgba(0,0,0,.12);--font:'Sora','Segoe UI',system-ui,sans-serif;--card-border-w:1px;--card-border-style:solid;--glow:0}
+[data-theme="retro-dark"]{--neon:#ffd700;--neon-dim:rgba(255,215,0,.12);--neon-glow:rgba(255,215,0,.3);--bg:#0d0208;--bg2:#1a0a1e;--bg3:#2d1233;--card:#1a0a1e;--card-hover:#2d1233;--border:#4a1942;--border-light:#5c2d5c;--text:#e0d0f0;--text-dim:#9080a0;--text-bright:#fff;--heading:#ffd700;--link:#ff6b9d;--success:#00e676;--warning:#ffab00;--danger:#ff1744;--xp-purple:#e040fb;--badge-cyan:#00e5ff;--streak-red:#ff1744;--radius:0px;--radius-sm:0px;--radius-lg:0px;--shadow:4px 4px 0 rgba(0,0,0,.8);--shadow-lg:6px 6px 0 rgba(0,0,0,.9);--font:'Courier New','Consolas',monospace;--card-border-w:3px;--card-border-style:solid;--glow:0}
+[data-theme="retro-light"]{--neon:#b8860b;--neon-dim:rgba(184,134,11,.1);--neon-glow:rgba(184,134,11,.2);--bg:#fff8e1;--bg2:#fff3cd;--bg3:#ffe0b2;--card:#ffffff;--card-hover:#fff9f0;--border:#d4a017;--border-light:#e6c84d;--text:#3e2723;--text-dim:#6d4c41;--text-bright:#1b0000;--heading:#b8860b;--link:#c2185b;--success:#2e7d32;--warning:#ef6c00;--danger:#c62828;--xp-purple:#8e24aa;--badge-cyan:#00838f;--streak-red:#c62828;--radius:0px;--radius-sm:0px;--radius-lg:0px;--shadow:3px 3px 0 rgba(0,0,0,.15);--shadow-lg:5px 5px 0 rgba(0,0,0,.2);--font:'Courier New','Consolas',monospace;--card-border-w:3px;--card-border-style:solid;--glow:0}
+[data-theme="nature-dark"]{--neon:#4ade80;--neon-dim:rgba(74,222,128,.12);--neon-glow:rgba(74,222,128,.25);--bg:#0c1a0f;--bg2:#132617;--bg3:#1e3a24;--card:#15291a;--card-hover:#1e3a24;--border:#2d5a36;--border-light:#3a7044;--text:#c8e6c9;--text-dim:#81a784;--text-bright:#e8f5e9;--heading:#e8f5e9;--link:#81c784;--success:#66bb6a;--warning:#ffa726;--danger:#ef5350;--xp-purple:#ab47bc;--badge-cyan:#26a69a;--streak-red:#ef5350;--radius:20px;--radius-sm:14px;--radius-lg:28px;--shadow:0 4px 20px rgba(0,0,0,.3);--shadow-lg:0 8px 32px rgba(0,0,0,.4);--font:'Segoe UI','Helvetica Neue',system-ui,sans-serif;--card-border-w:1px;--card-border-style:solid;--glow:0}
+[data-theme="nature-light"]{--neon:#2e7d32;--neon-dim:rgba(46,125,50,.08);--neon-glow:rgba(46,125,50,.15);--bg:#f1f8e9;--bg2:#e8f5e9;--bg3:#c8e6c9;--card:#ffffff;--card-hover:#f1faf1;--border:#a5d6a7;--border-light:#c8e6c9;--text:#33691e;--text-dim:#3e6e1c;--text-bright:#1b5e20;--heading:#1b5e20;--link:#2e7d32;--success:#388e3c;--warning:#ef6c00;--danger:#c62828;--xp-purple:#7b1fa2;--badge-cyan:#00695c;--streak-red:#c62828;--radius:20px;--radius-sm:14px;--radius-lg:28px;--shadow:0 4px 16px rgba(0,0,0,.06);--shadow-lg:0 8px 28px rgba(0,0,0,.1);--font:'Segoe UI','Helvetica Neue',system-ui,sans-serif;--card-border-w:1px;--card-border-style:solid;--glow:0}
+[data-theme="space-dark"]{--neon:#c084fc;--neon-dim:rgba(192,132,252,.12);--neon-glow:rgba(192,132,252,.3);--bg:#07020e;--bg2:#0f0720;--bg3:#1a0e35;--card:#110a28;--card-hover:#1a0e35;--border:#2e1a5e;--border-light:#3d2478;--text:#d4c8f0;--text-dim:#9080b8;--text-bright:#f0e8ff;--heading:#f0e8ff;--link:#f0abfc;--success:#34d399;--warning:#fbbf24;--danger:#fb7185;--xp-purple:#f472b6;--badge-cyan:#67e8f9;--streak-red:#fb7185;--radius:4px;--radius-sm:2px;--radius-lg:6px;--shadow:0 4px 24px rgba(100,50,200,.2);--shadow-lg:0 8px 40px rgba(100,50,200,.3);--font:'Segoe UI',system-ui,sans-serif;--card-border-w:1px;--card-border-style:solid;--glow:1}
+[data-theme="space-light"]{--neon:#7c3aed;--neon-dim:rgba(124,58,237,.08);--neon-glow:rgba(124,58,237,.15);--bg:#faf5ff;--bg2:#f3e8ff;--bg3:#e9d5ff;--card:#ffffff;--card-hover:#faf5ff;--border:#c4b5fd;--border-light:#ddd6fe;--text:#4c1d95;--text-dim:#5b21b6;--text-bright:#2e1065;--heading:#2e1065;--link:#7c3aed;--success:#059669;--warning:#d97706;--danger:#dc2626;--xp-purple:#db2777;--badge-cyan:#0891b2;--streak-red:#dc2626;--radius:4px;--radius-sm:2px;--radius-lg:6px;--shadow:0 4px 16px rgba(100,50,200,.06);--shadow-lg:0 8px 28px rgba(100,50,200,.1);--font:'Segoe UI',system-ui,sans-serif;--card-border-w:1px;--card-border-style:solid;--glow:0}
+[data-theme="comic-dark"]{--neon:#ff6b6b;--neon-dim:rgba(255,107,107,.12);--neon-glow:rgba(255,107,107,.3);--bg:#1a1a2e;--bg2:#222244;--bg3:#2e2e55;--card:#262650;--card-hover:#2e2e55;--border:#4a4a7a;--border-light:#5a5a8a;--text:#e8e0ff;--text-dim:#a098c0;--text-bright:#fff;--heading:#fff;--link:#ffa94d;--success:#51cf66;--warning:#fcc419;--danger:#ff6b6b;--xp-purple:#cc5de8;--badge-cyan:#22b8cf;--streak-red:#ff6b6b;--radius:16px;--radius-sm:12px;--radius-lg:24px;--shadow:4px 4px 0 rgba(0,0,0,.5);--shadow-lg:6px 6px 0 rgba(0,0,0,.6);--font:'Comic Sans MS','Chalkboard SE',cursive,system-ui,sans-serif;--card-border-w:3px;--card-border-style:solid;--glow:0}
+[data-theme="comic-light"]{--neon:#e03131;--neon-dim:rgba(224,49,49,.08);--neon-glow:rgba(224,49,49,.15);--bg:#fff9db;--bg2:#fff3bf;--bg3:#ffe066;--card:#ffffff;--card-hover:#fffdf0;--border:#fab005;--border-light:#fcc419;--text:#2b2b2b;--text-dim:#555;--text-bright:#000;--heading:#000;--link:#e8590c;--success:#2f9e44;--warning:#e8590c;--danger:#c92a2a;--xp-purple:#9c36b5;--badge-cyan:#1098ad;--streak-red:#c92a2a;--radius:16px;--radius-sm:12px;--radius-lg:24px;--shadow:3px 3px 0 rgba(0,0,0,.2);--shadow-lg:5px 5px 0 rgba(0,0,0,.25);--font:'Comic Sans MS','Chalkboard SE',cursive,system-ui,sans-serif;--card-border-w:3px;--card-border-style:solid;--glow:0}
+[data-theme="sketchy-dark"]{--neon:#d97706;--neon-dim:rgba(217,119,6,.15);--neon-glow:rgba(217,119,6,.3);--bg:#2a1f0f;--bg2:#3a2a1a;--bg3:#4a3a2a;--card:#362414;--card-hover:#462a1a;--border:#5a4030;--border-light:#6a5040;--text:#d4c4b0;--text-dim:#a09080;--text-bright:#e8d8c8;--heading:#f5ead5;--link:#e8a550;--success:#84cc16;--warning:#d97706;--danger:#e74c3c;--xp-purple:#d946ef;--badge-cyan:#06b6d4;--streak-red:#e74c3c;--radius:24px;--radius-sm:16px;--radius-lg:32px;--shadow:0 6px 20px rgba(0,0,0,.3);--shadow-lg:0 10px 40px rgba(0,0,0,.4);--font:'Playfair Display','Georgia',serif;--card-border-w:2px;--card-border-style:dashed;--glow:0}
+[data-theme="sketchy-light"]{--neon:#b45309;--neon-dim:rgba(180,83,9,.1);--neon-glow:rgba(180,83,9,.2);--bg:#fef3e2;--bg2:#fde8cc;--bg3:#f9d5b8;--card:#ffffff;--card-hover:#fffaf5;--border:#d4a574;--border-light:#e8c4a0;--text:#5c4033;--text-dim:#8b6f47;--text-bright:#3e2723;--heading:#3e2723;--link:#c2600c;--success:#65a30d;--warning:#b45309;--danger:#d25c4d;--xp-purple:#c084fc;--badge-cyan:#0891b2;--streak-red:#d25c4d;--radius:24px;--radius-sm:16px;--radius-lg:32px;--shadow:0 4px 12px rgba(0,0,0,.08);--shadow-lg:0 8px 24px rgba(0,0,0,.12);--font:'Playfair Display','Georgia',serif;--card-border-w:2px;--card-border-style:dashed;--glow:0}
+[data-theme="nature-code-dark"]{--neon:#10b981;--neon-dim:rgba(16,185,129,.15);--neon-glow:rgba(16,185,129,.25);--bg:#0a1f12;--bg2:#0d2818;--bg3:#1a3a2a;--card:#0f281a;--card-hover:#1a3a2a;--border:#2d5a3d;--border-light:#3a7050;--text:#c8e6d0;--text-dim:#7ba890;--text-bright:#e8f5ed;--heading:#e8f5ed;--link:#34d399;--success:#10b981;--warning:#f59e0b;--danger:#f87171;--xp-purple:#a78bfa;--badge-cyan:#22d3ee;--streak-red:#f87171;--radius:20px;--radius-sm:14px;--radius-lg:28px;--shadow:0 4px 20px rgba(0,100,50,.2);--shadow-lg:0 8px 32px rgba(0,100,50,.3);--font:'Segoe UI','Helvetica Neue',system-ui,sans-serif;--card-border-w:1px;--card-border-style:solid;--glow:0}
+[data-theme="nature-code-light"]{--neon:#059669;--neon-dim:rgba(5,150,105,.1);--neon-glow:rgba(5,150,105,.15);--bg:#f0fdf8;--bg2:#e8faf2;--bg3:#d1f2e0;--card:#ffffff;--card-hover:#f5fbf7;--border:#86efac;--border-light:#bbf7d0;--text:#164e3f;--text-dim:#2d6e4f;--text-bright:#052e16;--heading:#052e16;--link:#059669;--success:#10b981;--warning:#d97706;--danger:#dc2626;--xp-purple:#8b5cf6;--badge-cyan:#06b6d4;--streak-red:#dc2626;--radius:20px;--radius-sm:14px;--radius-lg:28px;--shadow:0 4px 16px rgba(0,100,50,.06);--shadow-lg:0 8px 28px rgba(0,100,50,.1);--font:'Segoe UI','Helvetica Neue',system-ui,sans-serif;--card-border-w:1px;--card-border-style:solid;--glow:0}
+[data-theme="glass-dark"]{--neon:#00d9ff;--neon-dim:rgba(0,217,255,.12);--neon-glow:rgba(0,217,255,.25);--bg:#0f0f23;--bg2:#1a1a3e;--bg3:#25254a;--card:rgba(30,30,60,.4);--card-hover:rgba(40,40,80,.5);--border:rgba(100,150,255,.2);--border-light:rgba(100,150,255,.3);--text:#e4e8f0;--text-dim:#8899aa;--text-bright:#f5f7ff;--heading:#ffffff;--link:#00d9ff;--success:#34d399;--warning:#fbbf24;--danger:#ff6b9d;--xp-purple:#b991f7;--badge-cyan:#00d9ff;--streak-red:#ff6b9d;--radius:16px;--radius-sm:12px;--radius-lg:20px;--shadow:0 8px 32px rgba(0,200,255,.1);--shadow-lg:0 16px 64px rgba(0,200,255,.15);--font:'Segoe UI',system-ui,sans-serif;--card-border-w:1px;--card-border-style:solid;--glow:1}
+[data-theme="glass-light"]{--neon:#0891b2;--neon-dim:rgba(8,145,178,.08);--neon-glow:rgba(8,145,178,.15);--bg:#f8fafc;--bg2:#f1f5f9;--bg3:#e2e8f0;--card:rgba(255,255,255,.4);--card-hover:rgba(255,255,255,.6);--border:rgba(100,180,255,.2);--border-light:rgba(100,180,255,.3);--text:#1e293b;--text-dim:#475569;--text-bright:#0f172a;--heading:#0f172a;--link:#0891b2;--success:#059669;--warning:#d97706;--danger:#dc2626;--xp-purple:#7c3aed;--badge-cyan:#0891b2;--streak-red:#dc2626;--radius:16px;--radius-sm:12px;--radius-lg:20px;--shadow:0 8px 32px rgba(100,150,255,.08);--shadow-lg:0 16px 64px rgba(100,150,255,.12);--font:'Segoe UI',system-ui,sans-serif;--card-border-w:1px;--card-border-style:solid;--glow:0}
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}body{font-family:var(--font);background:var(--bg);color:var(--text);line-height:1.6;min-height:100vh;overflow-x:hidden;transition:background .3s,color .3s}h1,h2,h3,h4{color:var(--heading);line-height:1.3}a{color:var(--link);text-decoration:none}a:hover{text-decoration:underline}button{font-family:var(--font);cursor:pointer;border:none;background:none;color:inherit}code,pre{font-family:var(--mono)}:focus-visible{outline:2px solid var(--neon);outline-offset:2px;border-radius:4px}::selection{background:var(--neon);color:#fff}::-webkit-scrollbar{width:8px}::-webkit-scrollbar-track{background:var(--bg2)}::-webkit-scrollbar-thumb{background:var(--border);border-radius:4px}::-webkit-scrollbar-thumb:hover{background:var(--text-dim)}
+.site-header{position:fixed;top:0;left:0;right:0;height:var(--header-h);background:var(--bg2);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 20px;z-index:100;backdrop-filter:blur(12px)}.header-logo{display:flex;align-items:center;gap:12px;font-weight:700;font-size:18px;color:var(--heading)}.header-logo-text{display:flex;flex-direction:column;line-height:1.2}.header-logo-main{font-size:20px;font-weight:800}.header-logo-sub{font-size:11px;font-weight:600;color:var(--neon);letter-spacing:1px;text-transform:uppercase;margin-top:2px}.header-right{margin-left:auto;display:flex;align-items:center;gap:12px}.header-xp{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--xp-purple);font-weight:600}.header-xp-bar{width:80px;height:6px;background:var(--bg3);border-radius:3px;overflow:hidden}.header-xp-fill{height:100%;background:var(--xp-purple);border-radius:3px;transition:width .5s}.header-streak{display:flex;align-items:center;gap:4px;font-size:13px;color:var(--streak-red);font-weight:600}
+.theme-toggle{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:var(--bg3);transition:background .2s}.theme-toggle:hover{background:var(--border)}.theme-picker-wrap{position:relative}.theme-picker-btn{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:var(--bg3);transition:background .2s;font-size:16px}.theme-picker-btn:hover{background:var(--border)}.theme-picker-dd{position:absolute;top:calc(100% + 8px);right:0;background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:12px;box-shadow:var(--shadow-lg);z-index:200;display:none;min-width:240px}.theme-picker-dd.open{display:block}.theme-picker-dd .tp-label{font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--text-dim);margin-bottom:8px}.tp-world{display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:var(--radius-sm);cursor:pointer;transition:background .15s;margin-bottom:2px}.tp-world:hover{background:var(--bg3)}.tp-world.active{background:var(--neon-dim)}.tp-world-color{width:28px;height:28px;border-radius:6px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:14px}.tp-world-info{flex:1;min-width:0}.tp-world-name{font-size:13px;font-weight:600;color:var(--heading)}.tp-world-desc{font-size:10px;color:var(--text-dim)}.tp-divider{height:1px;background:var(--border);margin:8px 0}.tp-mode-row{display:flex;align-items:center;justify-content:space-between;padding:4px 10px}.tp-mode-label{font-size:12px;color:var(--text);font-weight:600}.tp-mode-switch{width:44px;height:24px;border-radius:12px;background:var(--bg3);position:relative;cursor:pointer;transition:background .2s}.tp-mode-switch.light{background:var(--neon)}.tp-mode-switch::after{content:'';position:absolute;top:3px;left:3px;width:18px;height:18px;border-radius:50%;background:#fff;transition:transform .2s;box-shadow:0 1px 3px rgba(0,0,0,.3)}.tp-mode-switch.light::after{transform:translateX(20px)}.menu-btn{display:none;width:36px;height:36px;border-radius:8px;align-items:center;justify-content:center;background:var(--bg3)}
+.sidebar{position:fixed;top:var(--header-h);left:0;width:var(--sidebar-w);height:calc(100vh - var(--header-h));background:var(--bg2);border-right:1px solid var(--border);overflow-y:auto;padding:16px 12px;z-index:90;transition:transform .3s}.sidebar-section{margin-bottom:20px}.sidebar-label{font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--text-dim);padding:0 8px;margin-bottom:8px}.sidebar-level{padding:8px 12px;background:var(--neon-dim);border-radius:var(--radius-sm);margin-bottom:12px;text-align:center}.sidebar-level-title{font-size:14px;font-weight:700;color:var(--neon)}.sidebar-level-sub{font-size:11px;color:var(--text-dim);margin-top:2px}.sidebar-xp-bar{width:100%;height:8px;background:var(--bg3);border-radius:4px;overflow:hidden;margin-top:6px}.sidebar-xp-fill{height:100%;background:linear-gradient(90deg,var(--xp-purple),var(--neon));border-radius:4px;transition:width .6s}.mod-link{display:flex;align-items:center;gap:10px;padding:8px 12px;border-radius:var(--radius-sm);transition:background .15s;color:var(--text);font-size:13px;text-decoration:none;position:relative;cursor:pointer}.mod-link:hover{background:var(--bg3);text-decoration:none}.mod-link.active{background:var(--neon-dim);color:var(--neon);font-weight:600}.mod-link.completed::after{content:'\2713';position:absolute;right:10px;color:var(--success);font-weight:700;font-size:12px}.mod-link .mod-icon{width:28px;height:28px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
+.main{margin-left:var(--sidebar-w);margin-top:var(--header-h);min-height:calc(100vh - var(--header-h));padding:32px;max-width:900px}.module-header{margin-bottom:32px}.module-header .mod-badge{display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--neon);margin-bottom:8px}.module-header h1{font-size:28px;margin-bottom:8px}.module-header .mod-desc{font-size:15px;color:var(--text-dim);max-width:600px}
+.lesson-card{background:var(--card);border:var(--card-border-w) var(--card-border-style) var(--border);border-radius:var(--radius);padding:24px;margin-bottom:20px;transition:border-color .2s}.lesson-card:hover{border-color:var(--neon)}.lesson-card h3{font-size:18px;margin-bottom:12px;display:flex;align-items:center;gap:8px}.lesson-card p,.lesson-card li{font-size:14px;line-height:1.7;color:var(--text)}.lesson-card ul,.lesson-card ol{margin:8px 0 8px 20px}.lesson-card code{background:var(--bg3);padding:2px 6px;border-radius:4px;font-size:13px;color:var(--neon)}.lesson-card .info-box{background:var(--neon-dim);border-left:3px solid var(--neon);padding:12px 16px;border-radius:0 var(--radius-sm) var(--radius-sm) 0;margin:12px 0;font-size:13px}
+.interactive-area{background:var(--card);border:calc(var(--card-border-w) + 1px) dashed var(--border);border-radius:var(--radius);padding:24px;margin:20px 0;min-height:200px}.interactive-area h4{font-size:15px;color:var(--neon);margin-bottom:12px}.ix-grid{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;margin:16px 0}.ix-item{background:var(--bg3);border:2px solid var(--border);border-radius:var(--radius-sm);padding:14px 20px;font-size:16px;cursor:pointer;transition:all .2s;user-select:none;text-align:center;min-width:60px}.ix-item:hover{border-color:var(--neon);background:var(--neon-dim)}.ix-item.selected{border-color:var(--neon);background:var(--neon-dim)}.ix-item.correct{border-color:var(--success);background:rgba(34,197,94,.1)}.ix-item.wrong{border-color:var(--danger);background:rgba(239,68,68,.1)}.ix-item.placed{opacity:.4;pointer-events:none}.ix-btn{background:var(--neon);color:#fff;border:none;padding:10px 24px;border-radius:var(--radius-sm);font-size:14px;font-weight:700;cursor:pointer;font-family:var(--font);margin-top:12px;transition:opacity .2s}.ix-btn:hover{opacity:.85}.ix-feedback{text-align:center;padding:14px;border-radius:var(--radius-sm);font-size:16px;font-weight:700;margin-top:12px;display:none}.ix-feedback.pass{display:block;background:rgba(34,197,94,.12);color:var(--success)}.ix-feedback.fail{display:block;background:rgba(239,68,68,.12);color:var(--danger)}
+.quiz-section{background:var(--card);border:var(--card-border-w) var(--card-border-style) var(--border);border-radius:var(--radius);padding:24px;margin-top:24px}.quiz-section h3{font-size:18px;margin-bottom:16px;color:var(--xp-purple)}.quiz-q{margin-bottom:20px}.quiz-q p{font-size:14px;font-weight:600;margin-bottom:10px}.quiz-q label{display:flex;align-items:flex-start;gap:10px;padding:10px 14px;border-radius:var(--radius-sm);border:1px solid var(--border);cursor:pointer;transition:all .15s;font-size:14px;margin-bottom:6px}.quiz-q label:hover{border-color:var(--neon);background:var(--neon-dim)}.quiz-q input[type="radio"]{margin-top:3px;accent-color:var(--neon)}.quiz-q label.correct{border-color:var(--success);background:rgba(34,197,94,.1)}.quiz-q label.wrong{border-color:var(--danger);background:rgba(239,68,68,.1)}.quiz-submit{padding:10px 24px;font-size:14px;font-weight:700;border-radius:var(--radius-sm);background:var(--xp-purple);color:#fff;transition:opacity .2s;margin-top:8px}.quiz-submit:hover{opacity:.85}.quiz-result{padding:16px;border-radius:var(--radius-sm);margin-top:16px;font-size:14px;font-weight:600;text-align:center}.quiz-result.pass{background:rgba(34,197,94,.12);color:var(--success);border:1px solid rgba(34,197,94,.3)}.quiz-result.fail{background:rgba(239,68,68,.12);color:var(--danger);border:1px solid rgba(239,68,68,.3)}.quiz-explanation{margin-top:6px;padding:8px 14px;border-radius:var(--radius-sm);background:rgba(34,197,94,.08);border-left:3px solid var(--success);font-size:13px;color:var(--success);font-weight:600}
+.boss-section{background:linear-gradient(135deg,rgba(168,85,247,.08),rgba(59,130,246,.08));border:2px solid var(--xp-purple);border-radius:var(--radius);padding:24px;margin-top:24px}.boss-section h3{color:var(--xp-purple);font-size:20px;margin-bottom:4px}.boss-section .boss-sub{font-size:13px;color:var(--text-dim);margin-bottom:16px}
+.badge-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(100px,1fr));gap:12px;margin-top:12px}.badge-item{text-align:center;padding:12px 8px;border-radius:var(--radius-sm);background:var(--bg3);opacity:.4;transition:all .3s}.badge-item.earned{opacity:1;background:var(--neon-dim);border:1px solid var(--neon)}.badge-item .badge-icon{font-size:28px;margin-bottom:4px}.badge-item .badge-name{font-size:10px;font-weight:600;color:var(--text-dim)}.badge-item.earned .badge-name{color:var(--neon)}
+.stats-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px;margin-top:12px}.stat-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius-sm);padding:16px;text-align:center}.stat-card .stat-val{font-size:28px;font-weight:700;color:var(--neon)}.stat-card .stat-label{font-size:12px;color:var(--text-dim);margin-top:4px}
+.notif{position:fixed;top:80px;right:20px;background:var(--card);border:1px solid var(--neon);border-radius:var(--radius);padding:16px 20px;box-shadow:var(--shadow-lg);z-index:200;transform:translateX(120%);transition:transform .4s cubic-bezier(.22,1,.36,1);max-width:320px}.notif.show{transform:translateX(0)}.notif-title{font-size:14px;font-weight:700;color:var(--heading);margin-bottom:2px}.notif-text{font-size:12px;color:var(--text-dim)}.notif.xp{border-color:var(--xp-purple)}.notif.badge{border-color:var(--badge-cyan)}.notif.level{border-color:var(--success)}.notif.streak{border-color:var(--streak-red)}
+.level-up-overlay{position:fixed;inset:0;background:rgba(0,0,0,.7);display:none;align-items:center;justify-content:center;z-index:300}.level-up-overlay.active{display:flex}.level-up-box{text-align:center;padding:40px;animation:lvlPop .5s ease-out}.level-up-box .lvl-icon{font-size:64px;margin-bottom:12px}.level-up-box .lvl-title{font-size:28px;font-weight:900;color:var(--heading)}.level-up-box .lvl-name{font-size:20px;color:var(--xp-purple);font-weight:700;margin-top:4px}@keyframes lvlPop{from{transform:scale(.5);opacity:0}to{transform:scale(1);opacity:1}}
+.welcome-screen{display:flex;align-items:center;justify-content:center;min-height:calc(100vh - var(--header-h));text-align:center;padding:40px 20px}.welcome-box{max-width:480px}.welcome-box h1{font-size:36px;margin-bottom:8px}.welcome-box .ws-sub{color:var(--text-dim);font-size:15px;margin-bottom:32px}.welcome-box input{width:100%;max-width:320px;padding:12px 16px;font-size:16px;border-radius:var(--radius-sm);border:1px solid var(--border);background:var(--bg3);color:var(--heading);font-family:var(--font);text-align:center;margin-bottom:16px}.welcome-box input:focus{border-color:var(--neon);outline:none}.welcome-box .ws-start{padding:14px 40px;font-size:16px;font-weight:700;border-radius:var(--radius-sm);background:var(--neon);color:#fff;transition:opacity .2s}.welcome-box .ws-start:hover{opacity:.85}.welcome-box .ws-start:disabled{opacity:.4;cursor:not-allowed}
+.cert-overlay{position:fixed;inset:0;background:rgba(0,0,0,.88);display:none;align-items:center;justify-content:center;z-index:400;padding:20px;flex-direction:column;backdrop-filter:blur(8px)}.cert-overlay.active{display:flex}.cert-picker{display:flex;gap:12px;justify-content:center;margin-bottom:20px;flex-wrap:wrap}.cert-pick-btn{padding:10px 20px;font-size:13px;font-weight:700;border-radius:12px;border:2px solid rgba(255,255,255,.15);background:rgba(255,255,255,.06);color:rgba(255,255,255,.7);transition:all .3s;backdrop-filter:blur(4px)}.cert-pick-btn:hover{border-color:rgba(255,255,255,.3);color:#fff;transform:translateY(-2px)}.cert-pick-btn.active{border-color:#ffd700;color:#ffd700;background:rgba(255,215,0,.1);box-shadow:0 0 20px rgba(255,215,0,.15)}.cert-frame{width:720px;max-width:100%;aspect-ratio:1.414;position:relative;overflow:hidden}.cert-actions{display:flex;gap:12px;justify-content:center;margin-top:16px}.cert-actions button{padding:12px 28px;font-size:13px;font-weight:700;border-radius:12px;background:linear-gradient(135deg,var(--neon),var(--link));color:#fff;transition:transform .2s,box-shadow .2s}.cert-actions button:hover{transform:translateY(-2px);box-shadow:0 4px 20px rgba(0,0,0,.3)}
+.confetti-container{position:fixed;inset:0;pointer-events:none;z-index:600;overflow:hidden}
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.6);display:none;align-items:center;justify-content:center;z-index:500;padding:20px}.modal-overlay.active{display:flex}.modal{background:var(--card);border:1px solid var(--border);border-radius:var(--radius-lg);max-width:640px;width:100%;max-height:85vh;overflow-y:auto;padding:32px;position:relative}.modal-close{position:absolute;top:12px;right:16px;font-size:24px;color:var(--text-dim);background:none;border:none;cursor:pointer}
+@media(max-width:800px){.menu-btn{display:flex}.sidebar{transform:translateX(-100%)}.sidebar.open{transform:translateX(0)}.main{margin-left:0;padding:16px}}
+@media print{*{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}.site-header,.sidebar,.notif,.level-up-overlay,.confetti-container{display:none!important}.main{margin-left:0!important;padding:20px!important}.lesson-card{break-inside:avoid;page-break-inside:avoid}}
+
+/* Audio/Speech */
+.tts-btn{background:none;border:none;cursor:pointer;font-size:.9em;opacity:.5;transition:all .2s;vertical-align:middle;margin-left:8px;padding:2px 6px;border-radius:4px}
+.tts-btn:hover{opacity:1;background:var(--bg2)}.tts-btn.speaking{opacity:1;color:var(--neon);animation:tts-pulse 1s infinite}
+@keyframes tts-pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.15)}}
+.tts-bar{display:flex;align-items:center;gap:8px;padding:6px 12px;background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);margin:8px 0;font-size:.8rem;flex-wrap:wrap}
+.tts-bar select{background:var(--bg);color:var(--text);border:1px solid var(--border);border-radius:4px;padding:2px 6px;font-size:.78rem}
+.tts-bar button{background:none;border:1px solid var(--border);border-radius:4px;padding:2px 8px;cursor:pointer;color:var(--text);font-size:.8rem}
+.tts-bar button:hover{background:var(--bg)}
+.speech-ex{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:16px;margin:12px 0;text-align:center}
+.speech-ex h4{margin:0 0 8px;font-size:1rem}
+.mic-btn{font-size:1.6em;background:none;border:2px solid var(--neon);border-radius:50%;width:52px;height:52px;cursor:pointer;transition:all .3s;color:var(--text);display:inline-flex;align-items:center;justify-content:center}
+.mic-btn:hover{background:var(--neon);color:var(--bg)}.mic-btn.rec{background:#ef4444;border-color:#ef4444;color:#fff;animation:tts-pulse 1s infinite}
+.sr-res{margin-top:8px;padding:6px 10px;border-radius:4px;font-weight:600;font-size:.85rem;display:inline-block}
+.sr-res.good{background:#22c55e22;color:#22c55e}.sr-res.retry{background:#f59e0b22;color:#f59e0b}
+.sr-na{font-size:.8rem;color:var(--text-dim);margin-top:8px}
+</style>
+</head>
+<body>
+<a href="#mainContent" class="skip-nav" style="position:absolute;top:-50px;left:8px;background:var(--neon);color:#fff;padding:8px 16px;z-index:9999;border-radius:0 0 8px 8px;font-weight:700;text-decoration:none">Zum Inhalt springen</a>
+<header class="site-header">
+  <button class="menu-btn" onclick="toggleSidebar()" aria-label="Menu">&#9776;</button>
+  <div class="header-logo">
+    <svg viewBox="0 0 40 40" width="40" height="40" fill="none" aria-hidden="true"><rect x="4" y="4" width="32" height="32" rx="8" fill="var(--neon-dim)" stroke="var(--neon)" stroke-width="1.5"/><text x="20" y="26" text-anchor="middle" font-size="18" font-weight="900" fill="var(--neon)">P</text></svg>
+    <div class="header-logo-text"><div class="header-logo-main">PhysikEntdecker</div><div class="header-logo-sub">Physik-Entdeckungen Klasse 1-3</div></div>
+  </div>
+  <div class="header-right">
+    <div class="header-xp"><span id="headerLevel">Level 1</span><div class="header-xp-bar"><div class="header-xp-fill" style="width:0%"></div></div><span id="headerXP">0 XP</span></div>
+    <div class="header-streak" id="headerStreak">&#128293; 0</div>
+    <div class="theme-picker-wrap"><button class="theme-picker-btn" onclick="toggleThemePicker()" aria-label="Theme wählen">&#127912;</button><div class="theme-picker-dd" id="themePickerDD"></div></div>
+    <button class="theme-toggle" onclick="toggleMode()" aria-label="Dark/Light umschalten">&#127769;</button>
+  </div>
+</header>
+<nav class="sidebar" id="sidebar" role="navigation" aria-label="Module">
+  <div class="sidebar-section"><div class="sidebar-level"><div class="sidebar-level-title" id="sidebarLevel">Anfänger</div><div class="sidebar-level-sub" id="sidebarXP">0 XP</div><div class="sidebar-xp-bar"><div class="sidebar-xp-fill" id="sidebarXPFill" style="width:0%"></div></div></div></div>
+  <div class="sidebar-section"><div class="sidebar-label">Module</div><div id="sidebarModules"></div></div>
+  <div class="sidebar-section" style="border-top:1px solid var(--border);padding-top:12px;margin-top:12px">
+    <a class="mod-link" onclick="showBadges()"><span class="mod-icon">&#127941;</span>Abzeichen</a>
+    <a class="mod-link" onclick="showStats()"><span class="mod-icon">&#128202;</span>Statistik</a>
+    <a class="mod-link" onclick="showCert()"><span class="mod-icon">&#127891;</span>Urkunde</a>
+  </div>
+  <div class="sidebar-section" style="border-top:1px solid var(--border);padding-top:12px;margin-top:12px">
+    <a class="mod-link" onclick="exportData()"><span class="mod-icon">&#128190;</span>Speichern</a>
+    <a class="mod-link" onclick="exportFortschritt()"><span class="mod-icon">📄</span>Fortschritt (TXT)</a>
+    <label class="mod-link" style="cursor:pointer"><span class="mod-icon">&#128194;</span>Laden<input type="file" accept=".json" onchange="importData(event)" style="display:none"></label>
+    <a class="mod-link" onclick="if(confirm('Wirklich alles zurücksetzen?')){localStorage.removeItem(STORAGE_KEY);location.reload()}" style="color:var(--danger)"><span class="mod-icon">&#128465;</span>Zurücksetzen</a>
+  </div>
+  <div style="padding:16px 8px 8px;border-top:1px solid var(--border);margin-top:12px;font-size:11px;color:var(--text-dim)">
+    <a onclick="showImpressum()" style="cursor:pointer;color:var(--text-dim)">Impressum</a> &middot;
+    <a onclick="showDatenschutz()" style="cursor:pointer;color:var(--text-dim)">Datenschutz</a>
+  </div>
+</nav>
+<main class="main" id="mainContent">
+  <div class="welcome-screen" id="welcomeScreen"><div class="welcome-box"><div style="font-size:64px;margin-bottom:16px">🔬</div><h1>PhysikEntdecker</h1><p class="ws-sub">Entdecke die Welt der Physik! 10 Module mit Licht, Schall, Magneten und mehr.</p><input type="text" id="nameInput" placeholder="Dein Name" maxlength="24" aria-label="Dein Name" oninput="document.getElementById('startBtn').disabled=!this.value.trim()"><br><button class="ws-start" id="startBtn" disabled onclick="startApp()">🌟 Entdecken starten!</button></div></div>
+  <div id="moduleContent" style="display:none"></div>
+  <div id="badgesView" style="display:none"></div>
+  <div id="statsView" style="display:none"></div>
+</main>
+<div class="notif" id="notif"><div class="notif-title" id="notifTitle"></div><div class="notif-text" id="notifText"></div></div>
+<div class="level-up-overlay" id="levelUpOverlay"><div class="level-up-box" id="levelUpBox"></div></div>
+<div class="confetti-container" id="confetti"></div>
+<div class="cert-overlay" id="certOverlay" role="dialog" aria-label="Urkunde" aria-modal="true"><div class="cert-picker" id="certPicker"></div><div class="cert-frame" id="certFrame"></div><div class="cert-actions"><button onclick="printCert()">&#128424; Drucken / PDF</button><button onclick="closeCert()">Schließen</button></div></div>
+<div class="modal-overlay" id="impressumOverlay"><div class="modal"><button class="modal-close" onclick="document.getElementById('impressumOverlay').classList.remove('active')">&times;</button><h2>Impressum</h2><p><strong>© 2026 GZ AI Stacks - Gerd Zimmermann</strong></p><p>Diese Lern-App wurde mit Claude Code (Anthropic) entwickelt.</p></div></div>
+<div class="modal-overlay" id="datenschutzOverlay"><div class="modal"><button class="modal-close" onclick="document.getElementById('datenschutzOverlay').classList.remove('active')">&times;</button><h2>Datenschutzerklärung</h2><p>Diese App speichert Daten <strong>ausschließlich lokal</strong> in Ihrem Browser (LocalStorage). Es werden keine Daten an Server übertragen.</p><ul><li>Keine Cookies</li><li>Kein Tracking oder Analytics</li><li>Keine externen Ressourcen</li><li>Keine Registrierung</li><li>Alle Daten verbleiben auf Ihrem Gerät</li></ul><p>Sie können Ihre gespeicherten Daten jederzeit über die "Zurücksetzen"-Funktion löschen.</p></div></div>
+<script>
+function showImpressum(){document.getElementById('impressumOverlay').classList.add('active')}
+function showDatenschutz(){document.getElementById('datenschutzOverlay').classList.add('active')}
+
+
+// === Audio (TTS) ===
+const _synth=window.speechSynthesis,_LANG='de-DE';let _ttsOn=false,_ttsRate=1,_ttsTimer=null;
+function speakLesson(i){if(_ttsOn){stopTTS();return}const c=document.querySelectorAll('.lesson-card');if(!c[i]||!_synth)return;stopTTS();const u=new SpeechSynthesisUtterance(c[i].innerText);u.lang=_LANG;u.rate=_ttsRate;u.onstart=()=>{_ttsOn=true;updTTSUI();startTTSTimer()};u.onend=()=>{_ttsOn=false;updTTSUI();clearTTSTimer()};u.onerror=()=>{_ttsOn=false;updTTSUI();clearTTSTimer()};_synth.speak(u);showTTSBar()}
+function speakText(t,lang){if(!_synth)return;stopTTS();const u=new SpeechSynthesisUtterance(t);u.lang=lang||_LANG;u.rate=_ttsRate;u.onstart=()=>{_ttsOn=true;updTTSUI();startTTSTimer()};u.onend=()=>{_ttsOn=false;updTTSUI();clearTTSTimer()};u.onerror=()=>{_ttsOn=false;updTTSUI();clearTTSTimer()};_synth.speak(u)}
+function stopTTS(){if(_synth){_synth.cancel()}_ttsOn=false;updTTSUI();clearTTSTimer()}
+function updTTSUI(){document.querySelectorAll('.tts-btn').forEach(b=>b.classList.toggle('speaking',_ttsOn))}
+function setTTSRate(r){_ttsRate=parseFloat(r)}
+function startTTSTimer(){clearTTSTimer();_ttsTimer=setInterval(()=>{if(_synth&&_synth.speaking&&!_synth.paused){_synth.pause();_synth.resume()}},10000)}
+function clearTTSTimer(){if(_ttsTimer){clearInterval(_ttsTimer);_ttsTimer=null}}
+function showTTSBar(){if(document.getElementById('ttsBar'))return;const mc=document.getElementById('moduleContent');if(!mc)return;const b=document.createElement('div');b.className='tts-bar';b.id='ttsBar';b.innerHTML='\u{1F50A} <select onchange="setTTSRate(this.value)"><option value="0.7">Langsam</option><option value="1" selected>Normal</option><option value="1.3">Schnell</option></select> <button onclick="stopTTS()">\u25A0 Stopp</button>';mc.prepend(b)}
+
+
+/* === Fortschritt-Export (TXT) === */
+function exportFortschritt(){
+  var t=document.title.replace(/\s*[\u2014\u2013|].*/,'').trim();
+  var d=new Date();
+  var dd=String(d.getDate()).padStart(2,'0');
+  var mm=String(d.getMonth()+1).padStart(2,'0');
+  var yyyy=d.getFullYear();
+  var datum=dd+'.'+mm+'.'+yyyy;
+  var datumFile=yyyy+'-'+mm+'-'+dd;
+
+  var mc=state.modulesCompleted||[];
+  var total=modules.length;
+  var done=mc.length;
+
+  var lvl=0;
+  for(var i=LEVELS.length-1;i>=0;i--){if(state.xp>=LEVELS[i].xp){lvl=i;break;}}
+  var lvlName=LEVELS[lvl]?LEVELS[lvl].name:'';
+
+  var sep='\u2550'.repeat(42);
+  var sep2='\u2500'.repeat(42);
+  var lines=[];
+  lines.push(sep);
+  lines.push('  LERNFORTSCHRITT \u2014 '+t);
+  lines.push(sep);
+  lines.push('');
+  lines.push('  Sch\u00FCler:   '+(state.name||'(kein Name)'));
+  lines.push('  Datum:     '+datum);
+  lines.push('  Level:     '+(lvl+1)+' \u2014 '+lvlName+' ('+state.xp+' XP)');
+  lines.push('  Streak:    '+(state.streak||0)+' Tage in Folge');
+  lines.push('');
+  lines.push(sep2);
+  lines.push('  MODULE ('+done+'/'+total+' abgeschlossen)');
+  lines.push(sep2);
+  lines.push('');
+
+  for(var m=0;m<modules.length;m++){
+    var mod=modules[m];
+    var isDone=mc.indexOf(m)!==-1;
+    var icon=isDone?'\u2705':'\u2B1C';
+    var line='  '+icon+' Modul '+(m+1)+': '+mod.title;
+    if(isDone){
+      var qs=state.quizResults&&state.quizResults[m]!=null?state.quizResults[m]:'?';
+      var bs=state.bossResults&&state.bossResults[m]!=null?state.bossResults[m]:'?';
+      line+='\n        Quiz: '+qs+'/5 | Boss: '+bs+'/3';
+    }
+    lines.push(line);
+  }
+
+  var earnedBadges=(state.badges||[]);
+  lines.push('');
+  lines.push(sep2);
+  lines.push('  ABZEICHEN ('+earnedBadges.length+'/'+BADGES.length+')');
+  lines.push(sep2);
+  lines.push('');
+  if(earnedBadges.length===0){
+    lines.push('  (noch keine)');
+  }else{
+    for(var b=0;b<BADGES.length;b++){
+      if(earnedBadges.indexOf(BADGES[b].id)!==-1){
+        lines.push('  '+BADGES[b].icon+' '+BADGES[b].name);
+      }
+    }
+  }
+
+  lines.push('');
+  lines.push(sep);
+  lines.push('  (c) 2026 GZ AI Stacks \u2014 Gerd Zimmermann');
+  lines.push(sep);
+
+  var txt=lines.join('\n');
+  var safeName=(state.name||'Schueler').replace(/[^a-zA-Z0-9\u00C0-\u017F]/g,'_');
+  var fileName='Fortschritt_'+t.replace(/[^a-zA-Z0-9\u00C0-\u017F]/g,'_')+'_'+safeName+'_'+datumFile+'.txt';
+  var a=document.createElement('a');
+  a.download=fileName;
+  a.href=URL.createObjectURL(new Blob([txt],{type:'text/plain;charset=utf-8'}));
+  a.click();
+}
+
+const _qk=[0x4A,0x7F,0x2B,0x61,0x5C,0x3E,0x18,0x73];
+function _d(h,i){return h^_qk[i%_qk.length]}
+
+const LEVELS=[{"name":"Neugier-Maus","xp":0},{"name":"Licht-Entdecker","xp":40},{"name":"Schall-Hörer","xp":100},{"name":"Magnet-Finder","xp":180},{"name":"Kraft-Kenner","xp":280},{"name":"Wasser-Forscher","xp":400},{"name":"Wärme-Spürer","xp":540},{"name":"Schatten-Fänger","xp":700},{"name":"Spiegel-Denker","xp":880},{"name":"Luft-Experte","xp":1080},{"name":"Energie-Kenner","xp":1300},{"name":"Bewegungs-Meister","xp":1540},{"name":"Strom-Versteher","xp":1800},{"name":"Natur-Forscher","xp":2080},{"name":"Experiment-Held","xp":2380},{"name":"Physik-Talent","xp":2700},{"name":"Wissenschafts-Star","xp":3040},{"name":"Forscher-Profi","xp":3400},{"name":"Physik-Genie","xp":3780},{"name":"Entdecker-Legende","xp":4200}];
+const BADGES=[{"id":"m0","name":"Licht-Entdecker","icon":"💡","desc":"Modul 1 abgeschlossen"},{"id":"m1","name":"Schall-Experte","icon":"🔊","desc":"Modul 2 abgeschlossen"},{"id":"m2","name":"Magnet-Held","icon":"🧲","desc":"Modul 3 abgeschlossen"},{"id":"m3","name":"Schwerkraft-Kenner","icon":"🍎","desc":"Modul 4 abgeschlossen"},{"id":"m4","name":"Wasser-Entdecker","icon":"💧","desc":"Modul 5 abgeschlossen"},{"id":"m5","name":"Luft-Forscher","icon":"💨","desc":"Modul 6 abgeschlossen"},{"id":"m6","name":"Wärme-Profi","icon":"🌡️","desc":"Modul 7 abgeschlossen"},{"id":"m7","name":"Spiegel-Meister","icon":"🪞","desc":"Modul 8 abgeschlossen"},{"id":"m8","name":"Bewegungs-Star","icon":"🏃","desc":"Modul 9 abgeschlossen"},{"id":"m9","name":"Energie-Champion","icon":"⚡","desc":"Modul 10 abgeschlossen"},{"id":"first_quiz","name":"Quiz-Neuling","icon":"❓","desc":"Erstes Quiz bestanden"},{"id":"perfect_quiz","name":"Perfektionist","icon":"💎","desc":"Quiz mit 5/5 bestanden"},{"id":"first_boss","name":"Boss-Bezwinger","icon":"👑","desc":"Erste Boss-Challenge bestanden"},{"id":"all_bosses","name":"Endgegner","icon":"🏆","desc":"Alle Boss-Challenges bestanden"},{"id":"streak3","name":"Durchstarter","icon":"🔥","desc":"3 Tage in Folge gelernt"},{"id":"streak7","name":"Wochenkrieger","icon":"⚔️","desc":"7 Tage in Folge gelernt"},{"id":"half_done","name":"Halbzeit","icon":"⏳","desc":"5 Module abgeschlossen"},{"id":"speed_quiz","name":"Blitz-Denker","icon":"⚡","desc":"Quiz in unter 60 Sekunden"},{"id":"explorer","name":"Entdecker","icon":"🗺️","desc":"Alle Module angesehen"},{"id":"graduate","name":"Absolvent","icon":"🎓","desc":"Alle 10 Module abgeschlossen"}];
+const THEME_CONFIG={
+  cyber:{name:'Cyber Neon',emoji:'🖥',color:'#3b82f6',desc:'Futuristisch & Digital'},
+  retro:{name:'Retro Arcade',emoji:'🕹',color:'#ffd700',desc:'80er Arcade-Feeling'},
+  nature:{name:'Nature Forest',emoji:'🌳',color:'#4ade80',desc:'Natürlich & Organisch'},
+  space:{name:'Deep Space',emoji:'🚀',color:'#c084fc',desc:'Kosmisch & Geheimnisvoll'},
+  comic:{name:'Comic Pop',emoji:'💥',color:'#ff6b6b',desc:'Bunt & Verspielt'},
+  sketchy:{name:'Sketchy',emoji:'✍️',color:'#d97706',desc:'Handgemacht & Warm'},
+  'nature-code':{name:'Nature x Code',emoji:'🌿',color:'#10b981',desc:'Natur trifft Technik'},
+  glass:{name:'Glasmorphism',emoji:'💠',color:'#00d9ff',desc:'Modern & Transparent'}
+};
+const modules=[{id:0,title:"Licht und Schatten",icon:"💡",
+lessons:[
+{title:"Was ist Licht?",html:'<h3>💡 Licht</h3><p><strong>Licht</strong> kommt von Lichtquellen — zum Beispiel von der <strong>Sonne</strong>, einer <strong>Lampe</strong> oder einer <strong>Kerze</strong>.</p><p>Licht breitet sich immer <strong>geradeaus</strong> aus. Wenn etwas im Weg steht, entsteht ein <strong>Schatten</strong>.</p><div class="info-box">💡 <strong>Wusstest du?</strong> Licht ist das Schnellste, was es gibt! Es braucht nur 8 Minuten von der Sonne bis zur Erde.</div>'},
+{title:"Schatten",html:'<h3>💡 Schatten entstehen</h3><p>Ein <strong>Schatten</strong> entsteht, wenn ein <strong>Gegenstand</strong> das Licht blockiert.</p><ul><li>Der Schatten ist immer auf der <strong>gegenüberliegenden Seite</strong> der Lichtquelle</li><li>Je <strong>näher</strong> der Gegenstand an der Lichtquelle, desto <strong>größer</strong> der Schatten</li><li>Durchsichtige Dinge (wie Glas) werfen <strong>keinen</strong> Schatten</li></ul>'}
+],quiz:[
+{q:"Was ist eine Lichtquelle?",a:["Ein Schatten","Etwas das Licht aussendet","Ein Spiegel","Ein Stein"],_h:0x4B},
+{q:"Wie breitet sich Licht aus?",a:["Im Zickzack","Im Kreis","Geradeaus","Rückwärts"],_h:0x7D},
+{q:"Wann entsteht ein Schatten?",a:["Bei Regen","Wenn etwas das Licht blockiert","Wenn es dunkel ist","Beim Schlafen"],_h:0x29},
+{q:"Was passiert mit dem Schatten wenn man näher zur Lampe geht?",a:["Er wird kleiner","Er verschwindet","Er wird größer","Er wird bunt"],_h:0x63},
+{q:"Was wirft keinen Schatten?",a:["Ein Ball","Ein Buch","Durchsichtiges Glas","Ein Stuhl"],_h:0x5D}
+],boss:[
+{q:"Wie lange braucht Licht von der Sonne zur Erde?",a:["8 Stunden","8 Tage","8 Minuten","8 Sekunden"],_h:0x4B},
+{q:"Auf welcher Seite ist der Schatten?",a:["Auf derselben Seite wie die Lampe","Gegenüber der Lichtquelle","Über dem Gegenstand","Unter dem Gegenstand"],_h:0x7E},
+{q:"Was ist die größte Lichtquelle für uns?",a:["Eine Taschenlampe","Der Mond","Die Sonne","Eine Kerze"],_h:0x29}
+]},{id:1,title:"Schall und Töne",icon:"🔊",
+lessons:[
+{title:"Was ist Schall?",html:'<h3>🔊 Schall</h3><p><strong>Schall</strong> entsteht durch <strong>Schwingungen</strong> — wenn etwas hin und her wackelt. Zum Beispiel eine Gitarrensaite!</p><p>Der Schall breitet sich durch die <strong>Luft</strong> aus und erreicht unsere <strong>Ohren</strong>.</p><div class="info-box">💡 Schall braucht ein <strong>Medium</strong> (Luft, Wasser, Holz). Im Weltraum gibt es keine Luft — dort ist es <strong>lautlos</strong>!</div>'},
+{title:"Laut und leise",html:'<h3>🔊 Lautstärke und Tonhöhe</h3><p><strong>Lautstärke:</strong> Je stärker die Schwingung, desto <strong>lauter</strong> der Ton.</p><p><strong>Tonhöhe:</strong> Je schneller die Schwingung, desto <strong>höher</strong> der Ton.</p><ul><li>🐘 Ein <strong>Elefant</strong> macht tiefe Töne (langsame Schwingung)</li><li>🐭 Eine <strong>Maus</strong> macht hohe Töne (schnelle Schwingung)</li></ul>'}
+],quiz:[
+{q:"Wodurch entsteht Schall?",a:["Durch Licht","Durch Schwingungen","Durch Magnete","Durch Wärme"],_h:0x4B},
+{q:"Wodurch breitet sich Schall aus?",a:["Nur durch Wasser","Durch Luft, Wasser, feste Stoffe","Nur durch Glas","Durch nichts"],_h:0x7E},
+{q:"Warum ist es im Weltraum still?",a:["Weil es kalt ist","Weil es keine Luft gibt","Weil es dunkel ist","Weil es langweilig ist"],_h:0x29},
+{q:"Wann ist ein Ton hoch?",a:["Bei langsamer Schwingung","Bei schneller Schwingung","Wenn es kalt ist","Wenn es hell ist"],_h:0x62},
+{q:"Was macht einen lauten Ton?",a:["Schwache Schwingung","Keine Schwingung","Starke Schwingung","Langsame Schwingung"],_h:0x5D}
+],boss:[
+{q:"Welches Tier macht tiefe Töne?",a:["Maus","Vogel","Elefant","Grille"],_h:0x4B},
+{q:"Kann Schall durch Wasser wandern?",a:["Nein, niemals","Ja, sogar schneller als durch Luft","Nur bei Regen","Nur im Sommer"],_h:0x7E},
+{q:"Was schwingt bei einer Gitarre?",a:["Das Holz","Die Saiten","Die Luft","Die Farbe"],_h:0x29}
+]},{id:2,title:"Magnete",icon:"🧲",
+lessons:[
+{title:"Was sind Magnete?",html:'<h3>🧲 Magnete — unsichtbare Kraft</h3><p>Ein <strong>Magnet</strong> hat eine unsichtbare Kraft. Er kann bestimmte Dinge <strong>anziehen</strong> — vor allem Dinge aus <strong>Eisen</strong>.</p><p>Jeder Magnet hat zwei <strong>Pole</strong>:</p><ul><li><strong>Nordpol</strong> (N) — oft rot markiert</li><li><strong>Südpol</strong> (S) — oft blau markiert</li></ul>'},
+{title:"Anziehen und Abstoßen",html:'<h3>🧲 Wie Magnete wirken</h3><p>Magnete können sich gegenseitig <strong>anziehen</strong> oder <strong>abstoßen</strong>:</p><ul><li>🟥🟦 <strong>Verschiedene Pole</strong> (N+S) → ziehen sich an!</li><li>🟥🟥 <strong>Gleiche Pole</strong> (N+N oder S+S) → stoßen sich ab!</li></ul><div class="info-box">💡 Die Erde ist selbst ein riesiger <strong>Magnet</strong>! Deshalb zeigt eine <strong>Kompassnadel</strong> immer nach Norden.</div>'}
+],quiz:[
+{q:"Was zieht ein Magnet an?",a:["Holz","Papier","Eisen","Gummi"],_h:0x4B},
+{q:"Wie viele Pole hat ein Magnet?",a:["Einen","Zwei","Drei","Vier"],_h:0x7E},
+{q:"Was passiert wenn gleiche Pole aufeinander treffen?",a:["Sie ziehen sich an","Nichts passiert","Sie stoßen sich ab","Sie kleben zusammen"],_h:0x29},
+{q:"Warum zeigt ein Kompass nach Norden?",a:["Weil Norden oben ist","Weil die Erde ein Magnet ist","Weil es dort kalt ist","Weil Kompasse so gebaut sind"],_h:0x62},
+{q:"Was passiert bei Nord und Süd zusammen?",a:["Sie stoßen sich ab","Sie ziehen sich an","Nichts","Sie verschwinden"],_h:0x5D}
+],boss:[
+{q:"Welches Material wird NICHT vom Magneten angezogen?",a:["Eisen","Stahl","Holz","Nickel"],_h:0x4B},
+{q:"Was ist die Erde?",a:["Ein kleiner Magnet","Ein riesiger Magnet","Kein Magnet","Nur ein Stein"],_h:0x7E},
+{q:"Wie merkt man sich die Magnet-Regel?",a:["Gleich zieht an","Verschieden stößt ab","Gleich stößt ab, verschieden zieht an","Alle ziehen an"],_h:0x29}
+]},{id:3,title:"Schwerkraft",icon:"🍎",
+lessons:[
+{title:"Was ist Schwerkraft?",html:'<h3>🍎 Schwerkraft — alles fällt herunter</h3><p>Die <strong>Schwerkraft</strong> zieht alles zum Boden. Wenn du einen Ball loslässt, fällt er <strong>nach unten</strong> — wegen der Schwerkraft!</p><p>Die Schwerkraft der <strong>Erde</strong> hält auch den <strong>Mond</strong> fest und uns auf dem Boden.</p><div class="info-box">💡 <strong>Isaac Newton</strong> soll die Schwerkraft entdeckt haben, als ihm ein <strong>Apfel</strong> auf den Kopf fiel!</div>'},
+{title:"Schwer und leicht",html:'<h3>🍎 Gewicht</h3><p>Die Schwerkraft wirkt auf alle Dinge — aber manche sind <strong>schwerer</strong> als andere:</p><ul><li>🪶 Eine <strong>Feder</strong> ist leicht</li><li>🪨 Ein <strong>Stein</strong> ist schwer</li><li>🐘 Ein <strong>Elefant</strong> ist sehr schwer</li></ul><p>Auf dem <strong>Mond</strong> wärst du viel <strong>leichter</strong>, weil der Mond weniger Schwerkraft hat!</p>'}
+],quiz:[
+{q:"Was macht die Schwerkraft?",a:["Sie macht Dinge bunt","Sie zieht Dinge zum Boden","Sie macht Dinge warm","Sie macht Dinge laut"],_h:0x4B},
+{q:"Wer hat die Schwerkraft entdeckt?",a:["Albert Einstein","Isaac Newton","Galileo Galilei","Marie Curie"],_h:0x7E},
+{q:"Was passiert auf dem Mond mit deinem Gewicht?",a:["Du bist schwerer","Du bist leichter","Gleich schwer","Du schwebst immer"],_h:0x29},
+{q:"Warum fällt ein Ball nach unten?",a:["Weil er rund ist","Wegen der Schwerkraft","Weil er Luft enthält","Weil er bunt ist"],_h:0x62},
+{q:"Was hält den Mond an der Erde fest?",a:["Ein Seil","Magnete","Die Schwerkraft der Erde","Der Wind"],_h:0x5D}
+],boss:[
+{q:"Was fällt schneller: Feder oder Stein?",a:["Die Feder","Beide gleich schnell (im Vakuum)","Der Stein (in der Luft)","Keines von beiden"],_h:0x4B},
+{q:"Warum hat der Mond weniger Schwerkraft?",a:["Weil er kalt ist","Weil er kleiner ist als die Erde","Weil er weit weg ist","Weil er hell ist"],_h:0x7E},
+{q:"Was würde ohne Schwerkraft passieren?",a:["Nichts","Alles würde schweben","Es wäre wärmer","Es wäre dunkler"],_h:0x29}
+]},{id:4,title:"Wasser",icon:"💧",
+lessons:[
+{title:"Wasser — ein besonderer Stoff",html:'<h3>💧 Wasser</h3><p><strong>Wasser</strong> kann drei <strong>Formen</strong> haben:</p><ul><li>💧 <strong>Flüssig</strong> — Wasser aus dem Hahn</li><li>🧊 <strong>Fest</strong> — Eis (unter 0°C)</li><li>💨 <strong>Gasförmig</strong> — Wasserdampf (über 100°C)</li></ul><div class="info-box">💡 Diesen Wechsel zwischen den Formen nennt man <strong>Aggregatzustände</strong>.</div>'},
+{title:"Schwimmen und Sinken",html:'<h3>💧 Was schwimmt, was sinkt?</h3><p>Ob etwas schwimmt oder sinkt, hängt davon ab, ob es <strong>leichter oder schwerer als Wasser</strong> ist:</p><ul><li>🪵 <strong>Holz</strong> — schwimmt (leichter als Wasser)</li><li>🪨 <strong>Stein</strong> — sinkt (schwerer als Wasser)</li><li>🏐 <strong>Ball</strong> — schwimmt (Luft drin)</li></ul><p>Große Schiffe schwimmen, weil sie <strong>innen hohl</strong> sind und viel Luft enthalten!</p>'}
+],quiz:[
+{q:"Wie viele Formen hat Wasser?",a:["Eine","Zwei","Drei","Vier"],_h:0x4B},
+{q:"Was passiert mit Wasser unter 0°C?",a:["Es verdampft","Es wird zu Eis","Es verschwindet","Es wird warm"],_h:0x7E},
+{q:"Warum schwimmt Holz?",a:["Weil es braun ist","Weil es leichter als Wasser ist","Weil es groß ist","Weil es hart ist"],_h:0x29},
+{q:"Was ist Wasserdampf?",a:["Kaltes Wasser","Eis","Gasförmiges Wasser","Schmutziges Wasser"],_h:0x63},
+{q:"Warum schwimmen große Schiffe?",a:["Weil sie schnell sind","Weil sie innen hohl sind und Luft enthalten","Weil sie aus Holz sind","Weil das Meer salzig ist"],_h:0x5D}
+],boss:[
+{q:"Bei welcher Temperatur gefriert Wasser?",a:["10°C","0°C","-10°C","50°C"],_h:0x4B},
+{q:"Was sind Aggregatzustände?",a:["Wasserfarben","Die drei Formen: fest, flüssig, gasförmig","Wassertemperaturen","Wassertiere"],_h:0x7E},
+{q:"Was sinkt im Wasser?",a:["Ein Korken","Eine Plastikente","Ein Stein","Ein Holzbrett"],_h:0x29}
+]},{id:5,title:"Luft und Wind",icon:"💨",
+lessons:[
+{title:"Was ist Luft?",html:'<h3>💨 Luft — unsichtbar aber da</h3><p><strong>Luft</strong> ist überall um uns herum, auch wenn wir sie nicht sehen können. Luft besteht aus winzigen Teilchen (<strong>Molekülen</strong>).</p><p>Luft kann:</p><ul><li><strong>Drücken</strong> — Luftdruck (wie beim Aufblasen eines Ballons)</li><li><strong>Tragen</strong> — Flugzeuge fliegen durch die Luft</li><li><strong>Bewegen</strong> — Wind ist bewegte Luft</li></ul>'},
+{title:"Wind",html:'<h3>💨 Wie entsteht Wind?</h3><p><strong>Wind</strong> entsteht, wenn sich Luft <strong>bewegt</strong>. Das passiert, weil die Sonne die Luft <strong>unterschiedlich erwärmt</strong>:</p><ol><li>Warme Luft steigt <strong>nach oben</strong></li><li>Kalte Luft strömt <strong>nach</strong> (von der Seite)</li><li>Diese Luftbewegung ist <strong>Wind</strong></li></ol><div class="info-box">💡 Je größer der Temperaturunterschied, desto <strong>stärker</strong> der Wind!</div>'}
+],quiz:[
+{q:"Woraus besteht Luft?",a:["Aus nichts","Aus winzigen Teilchen","Aus Wasser","Aus Licht"],_h:0x4B},
+{q:"Was ist Wind?",a:["Kaltes Wasser","Bewegte Luft","Heißer Dampf","Lauter Schall"],_h:0x7E},
+{q:"Warum steigt warme Luft nach oben?",a:["Weil sie leichter ist","Weil sie schwerer ist","Weil sie rot ist","Weil sie nass ist"],_h:0x2A},
+{q:"Was macht Luftdruck?",a:["Luft drückt auf alles um uns","Luft leuchtet","Luft singt","Luft schmeckt"],_h:0x61},
+{q:"Wie entsteht Wind?",a:["Durch Regen","Durch unterschiedlich warme Luft","Durch Magnete","Durch Schall"],_h:0x5D}
+],boss:[
+{q:"Warum können Flugzeuge fliegen?",a:["Weil sie leicht sind","Weil die Luft sie trägt","Weil sie Magnete haben","Weil sie rot sind"],_h:0x4B},
+{q:"Was passiert mit einem Ballon wenn man ihn aufbläst?",a:["Er wird kalt","Luft drückt von innen nach außen","Er wird schwerer","Er wird unsichtbar"],_h:0x7E},
+{q:"Wann ist Wind besonders stark?",a:["Wenn es dunkel ist","Bei großem Temperaturunterschied","Wenn es regnet","Am Wochenende"],_h:0x29}
+]},{id:6,title:"Wärme und Kälte",icon:"🌡️",
+lessons:[
+{title:"Was ist Wärme?",html:'<h3>🌡️ Wärme</h3><p><strong>Wärme</strong> ist eine Form von <strong>Energie</strong>. Wir messen Wärme mit einem <strong>Thermometer</strong> in <strong>Grad Celsius (°C)</strong>.</p><ul><li>🧊 0°C = Wasser gefriert</li><li>🌡️ 37°C = Körpertemperatur</li><li>♨️ 100°C = Wasser kocht</li></ul>'},
+{title:"Wärme wandert",html:'<h3>🌡️ Wärmeleitung</h3><p>Wärme wandert immer von <strong>warm zu kalt</strong>!</p><ul><li>🥄 Ein <strong>Metalllöffel</strong> in heißer Suppe wird warm — Metall leitet Wärme gut</li><li>🧶 Ein <strong>Pullover</strong> hält warm — Wolle leitet Wärme schlecht</li><li>🧤 <strong>Handschuhe</strong> halten deine Körperwärme fest</li></ul><div class="info-box">💡 <strong>Isolierung</strong> bedeutet: Wärme wird am Wandern gehindert. Wie eine Thermoskanne!</div>'}
+],quiz:[
+{q:"Womit misst man Wärme?",a:["Mit einem Lineal","Mit einem Thermometer","Mit einer Waage","Mit einem Kompass"],_h:0x4B},
+{q:"Bei welcher Temperatur kocht Wasser?",a:["50°C","0°C","100°C","37°C"],_h:0x7D},
+{q:"Wohin wandert Wärme?",a:["Von kalt zu warm","Von warm zu kalt","Nach oben","Nach unten"],_h:0x29},
+{q:"Warum hält ein Pullover warm?",a:["Weil er Wärme erzeugt","Weil Wolle Wärme schlecht leitet","Weil er bunt ist","Weil er aus Plastik ist"],_h:0x62},
+{q:"Was ist 37°C?",a:["Wassertemperatur","Körpertemperatur","Zimmertemperatur","Eistemperatur"],_h:0x5D}
+],boss:[
+{q:"Was ist Isolierung?",a:["Wärme wird verstärkt","Wärme wird am Wandern gehindert","Kälte wird erzeugt","Luft wird entfernt"],_h:0x4B},
+{q:"Welches Material leitet Wärme gut?",a:["Holz","Wolle","Metall","Plastik"],_h:0x7D},
+{q:"Was macht eine Thermoskanne?",a:["Wasser kochen","Wärme isolieren","Wasser reinigen","Wärme erzeugen"],_h:0x29}
+]},{id:7,title:"Spiegel und Reflexion",icon:"🪞",
+lessons:[
+{title:"Reflexion",html:'<h3>🪞 Spiegel und Reflexion</h3><p><strong>Reflexion</strong> bedeutet, dass Licht von einer Oberfläche <strong>zurückgeworfen</strong> wird — wie ein Ball, der von einer Wand abprallt.</p><p>Glatte Oberflächen reflektieren gut:</p><ul><li>🪞 <strong>Spiegel</strong> — perfekte Reflexion</li><li>💧 <strong>Wasser</strong> — spiegelt bei Windstille</li><li>🪟 <strong>Glas</strong> — reflektiert teilweise</li></ul>'},
+{title:"Spiegelbilder",html:'<h3>🪞 Das Spiegelbild</h3><p>Ein <strong>Spiegelbild</strong> ist seitenverkehrt: links wird rechts und rechts wird links!</p><div class="info-box">💡 <strong>Experiment:</strong> Schreibe deinen Namen auf ein Blatt und halte es vor den Spiegel — die Buchstaben sind spiegelverkehrt!</div><p>Spiegel werden im Alltag oft genutzt: Badezimmer, Autos (Rückspiegel), Teleskope.</p>'}
+],quiz:[
+{q:"Was bedeutet Reflexion?",a:["Licht verschwindet","Licht wird zurückgeworfen","Licht wird bunt","Licht wird lauter"],_h:0x4B},
+{q:"Welche Oberfläche reflektiert am besten?",a:["Raues Holz","Ein Spiegel","Sand","Stoff"],_h:0x7E},
+{q:"Was passiert mit Buchstaben im Spiegel?",a:["Sie werden größer","Sie werden seitenverkehrt","Sie verschwinden","Sie werden bunt"],_h:0x29},
+{q:"Kann Wasser spiegeln?",a:["Nie","Ja, bei Windstille","Nur im Sommer","Nur wenn es tief ist"],_h:0x62},
+{q:"Wofür braucht man Rückspiegel?",a:["Zum Schminken","Um nach hinten zu sehen","Zum Telefonieren","Zum Navigieren"],_h:0x5D}
+],boss:[
+{q:"Womit kann man Reflexion vergleichen?",a:["Mit einem fallenden Stein","Mit einem Ball der von einer Wand abprallt","Mit einem schwimmenden Schiff","Mit einem fliegenden Vogel"],_h:0x4B},
+{q:"Warum sind Spiegelbilder seitenverkehrt?",a:["Weil Spiegel kaputt sind","Weil Licht links und rechts vertauscht wird","Weil unsere Augen falsch sehen","Weil Spiegel bunt sind"],_h:0x7E},
+{q:"Was reflektiert besser: rau oder glatt?",a:["Raue Oberflächen","Glatte Oberflächen","Beide gleich","Keine von beiden"],_h:0x29}
+]},{id:8,title:"Bewegung und Geschwindigkeit",icon:"🏃",
+lessons:[
+{title:"Dinge in Bewegung",html:'<h3>🏃 Bewegung</h3><p>Ein Gegenstand ist in <strong>Bewegung</strong>, wenn er seinen <strong>Ort verändert</strong>.</p><p><strong>Geschwindigkeit</strong> beschreibt, wie schnell sich etwas bewegt:</p><ul><li>🐌 Schnecke — <strong>langsam</strong></li><li>🚗 Auto — <strong>schnell</strong></li><li>🚀 Rakete — <strong>super schnell</strong></li></ul>'},
+{title:"Reibung bremst",html:'<h3>🏃 Reibung</h3><p><strong>Reibung</strong> entsteht, wenn zwei Dinge aneinander reiben. Reibung <strong>bremst</strong> Bewegungen.</p><ul><li>Auf <strong>Eis</strong> — wenig Reibung → man rutscht</li><li>Auf <strong>Asphalt</strong> — viel Reibung → man bremst gut</li><li><strong>Schmiermittel</strong> (Öl) verringern Reibung</li></ul><div class="info-box">💡 Ohne Reibung könntest du nicht <strong>laufen</strong> — deine Schuhe würden wegrutschen!</div>'}
+],quiz:[
+{q:"Wann ist etwas in Bewegung?",a:["Wenn es bunt ist","Wenn es seinen Ort verändert","Wenn es warm ist","Wenn es laut ist"],_h:0x4B},
+{q:"Was ist schneller: Schnecke oder Rakete?",a:["Schnecke","Beide gleich","Rakete","Keine von beiden"],_h:0x7D},
+{q:"Was macht Reibung?",a:["Sie beschleunigt","Sie bremst Bewegung","Sie macht warm und kalt","Sie erzeugt Licht"],_h:0x29},
+{q:"Wo gibt es wenig Reibung?",a:["Auf Asphalt","Auf Sand","Auf Eis","Auf Gras"],_h:0x63},
+{q:"Warum brauchen wir Reibung zum Laufen?",a:["Damit es warm wird","Damit die Schuhe nicht wegrutschen","Damit es leise ist","Damit wir größer werden"],_h:0x5D}
+],boss:[
+{q:"Was passiert ohne Reibung auf dem Boden?",a:["Man läuft schneller","Man kann nicht stoppen und rutscht","Man springt höher","Nichts Besonderes"],_h:0x4B},
+{q:"Was verringert Reibung?",a:["Sand","Öl oder Schmiermittel","Wasser","Steine"],_h:0x7E},
+{q:"Was beschreibt Geschwindigkeit?",a:["Wie schwer etwas ist","Wie schnell sich etwas bewegt","Wie groß etwas ist","Wie warm etwas ist"],_h:0x29}
+]},{id:9,title:"Energie im Alltag",icon:"⚡",
+lessons:[
+{title:"Was ist Energie?",html:'<h3>⚡ Energie</h3><p><strong>Energie</strong> ist die Fähigkeit, etwas zu <strong>bewirken</strong> — Dinge zu bewegen, zu erwärmen oder zu beleuchten.</p><p>Es gibt verschiedene Energieformen:</p><ul><li>💡 <strong>Lichtenergie</strong> — Sonne, Lampe</li><li>🌡️ <strong>Wärmeenergie</strong> — Heizung, Feuer</li><li>🏃 <strong>Bewegungsenergie</strong> — fahrendes Auto</li><li>⚡ <strong>Elektrische Energie</strong> — Strom</li></ul>'},
+{title:"Energie sparen",html:'<h3>⚡ Energie sparen im Alltag</h3><p>Energie ist <strong>wertvoll</strong>! So sparst du Energie:</p><ul><li>💡 <strong>Licht ausschalten</strong> wenn man den Raum verlässt</li><li>🚿 <strong>Kurz duschen</strong> statt lange baden</li><li>🧥 <strong>Pullover anziehen</strong> statt Heizung aufdrehen</li><li>🚲 <strong>Fahrrad fahren</strong> statt Auto</li></ul><div class="info-box">💡 <strong>Erneuerbare Energien</strong> wie Sonne und Wind gehen nie aus — im Gegensatz zu Öl und Kohle!</div>'}
+],quiz:[
+{q:"Was ist Energie?",a:["Ein Tier","Die Fähigkeit etwas zu bewirken","Eine Farbe","Ein Geräusch"],_h:0x4B},
+{q:"Was ist eine Energieform?",a:["Wärme","Stein","Wasser","Sand"],_h:0x7A},
+{q:"Wie kannst du Energie sparen?",a:["Alle Lampen anlassen","Licht ausschalten beim Verlassen","Heizung auf Maximum","Lange baden"],_h:0x29},
+{q:"Was sind erneuerbare Energien?",a:["Öl und Kohle","Sonne und Wind","Gold und Silber","Plastik und Gummi"],_h:0x62},
+{q:"Welche Energie hat ein fahrendes Auto?",a:["Lichtenergie","Schallenergie","Bewegungsenergie","Keine"],_h:0x5D}
+],boss:[
+{q:"Warum ist Energie sparen wichtig?",a:["Damit es langweiliger wird","Weil Energiequellen begrenzt sind und die Umwelt geschützt wird","Weil Strom schlecht ist","Weil Lampen kaputt gehen"],_h:0x4A},
+{q:"Was ist besser für die Umwelt?",a:["Auto fahren","Fahrrad fahren","Flugzeug fliegen","Motorrad fahren"],_h:0x7E},
+{q:"Welche Energie nutzt eine Taschenlampe?",a:["Bewegungsenergie","Wärmeenergie","Elektrische Energie (Strom zu Licht)","Schallenergie"],_h:0x29}
+]}]
+
+const STORAGE_KEY='physikentdecker_progress';
+let state={name:'',started:false,currentModule:0,xp:0,level:0,streak:0,lastVisit:null,modulesCompleted:[],quizResults:{},bossResults:{},badges:[],quizShuffleMap:{},modulesViewed:[],interactiveResults:{},designTheme:'cyber-dark'};
+
+function saveState(){try{localStorage.setItem(STORAGE_KEY,JSON.stringify(state))}catch(e){}}
+function loadState(){try{const s=localStorage.getItem(STORAGE_KEY);if(s){Object.assign(state,JSON.parse(s));return true}}catch(e){}return false}
+function exportData(){const a=document.createElement('a');a.download='physikentdecker-'+state.name+'.json';a.href=URL.createObjectURL(new Blob([JSON.stringify(state,null,2)],{type:'application/json'}));a.click()}
+function importData(e){const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=ev=>{try{const d=JSON.parse(ev.target.result);Object.assign(state,d);saveState();location.reload()}catch(err){alert('Datei konnte nicht gelesen werden.')}};r.readAsText(f)}
+
+function getLevel(xp){let lv=0;for(let i=LEVELS.length-1;i>=0;i--){if(xp>=LEVELS[i].xp){lv=i;break}}return lv}
+function getLevelProgress(xp){const lv=getLevel(xp);const cur=LEVELS[lv].xp;const next=lv<LEVELS.length-1?LEVELS[lv+1].xp:cur;if(next===cur)return 100;return Math.min(100,Math.round((xp-cur)/(next-cur)*100))}
+function addXP(amount,reason){const old=getLevel(state.xp);state.xp+=amount;const nw=getLevel(state.xp);saveState();updateUI();showNotif('xp','+'+amount+' XP',reason);if(nw>old){state.level=nw;saveState();setTimeout(()=>showLevelUp(nw),800)}}
+
+function updateStreak(){const today=new Date().toDateString();if(state.lastVisit===today)return;const yesterday=new Date(Date.now()-86400000).toDateString();if(state.lastVisit===yesterday){state.streak++;showNotif('streak','\uD83D\uDD25 '+state.streak+' Tage Streak!','Weiter so!');if(state.streak>=3)awardBadge('streak3');if(state.streak>=7)awardBadge('streak7')}else if(state.lastVisit!==today){state.streak=1}state.lastVisit=today;saveState()}
+
+function awardBadge(id){if(state.badges.includes(id))return;state.badges.push(id);saveState();const b=BADGES.find(x=>x.id===id);if(b)showNotif('badge',b.icon+' Badge: '+b.name,b.desc)}
+
+let notifQueue=[],notifActive=false;
+function showNotif(type,title,text){notifQueue.push({type,title,text});if(!notifActive)processNotif()}
+function processNotif(){if(!notifQueue.length){notifActive=false;return}notifActive=true;const{type,title,text}=notifQueue.shift();const el=document.getElementById('notif');el.className='notif '+type;document.getElementById('notifTitle').textContent=title;document.getElementById('notifText').textContent=text;el.classList.add('show');setTimeout(()=>{el.classList.remove('show');setTimeout(processNotif,300)},2500)}
+
+function showLevelUp(lv){const ov=document.getElementById('levelUpOverlay');const box=document.getElementById('levelUpBox');box.innerHTML='<div class="lvl-icon">⬆️</div><div class="lvl-title">Level Up!</div><div class="lvl-name">Level '+(lv+1)+': '+LEVELS[lv].name+'<\/div>';ov.classList.add('active');spawnConfetti();setTimeout(()=>ov.classList.remove('active'),3000)}
+function spawnConfetti(){const c=document.getElementById('confetti');c.innerHTML='';const cols=['#3b82f6','#a855f7','#22c55e','#f59e0b','#ef4444','#06b6d4'];for(let i=0;i<60;i++){const p=document.createElement('div');p.style.cssText='position:absolute;left:'+Math.random()*100+'%;background:'+cols[i%cols.length]+';width:'+(6+Math.random()*8)+'px;height:'+(6+Math.random()*8)+'px;border-radius:'+(Math.random()>.5?'50%':'2px')+';animation:confettiFall '+(1.5+Math.random()*2)+'s ease-out '+Math.random()*.5+'s forwards';c.appendChild(p)}if(!document.getElementById('confettiStyle')){const s=document.createElement('style');s.id='confettiStyle';s.textContent='@keyframes confettiFall{0%{opacity:1;transform:translateY(0) rotate(0deg)}100%{opacity:0;transform:translateY(100vh) rotate(720deg)}}';document.head.appendChild(s)}setTimeout(()=>c.innerHTML='',4000)}
+
+function shuffleQuiz(modId,quiz){const key='m'+modId;if(state.quizShuffleMap[key])return state.quizShuffleMap[key];const idx=[...Array(quiz.length).keys()];for(let i=idx.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[idx[i],idx[j]]=[idx[j],idx[i]]}state.quizShuffleMap[key]=idx;saveState();return idx}
+
+function renderQuiz(modId,quiz,isBoss){
+  const pf=isBoss?'boss':'quiz';const idx=isBoss?[...Array(quiz.length).keys()]:shuffleQuiz(modId,quiz);
+  let h='<div class="'+(isBoss?'boss-section':'quiz-section')+'">';
+  h+=isBoss?'<h3>👑 Boss-Challenge<\/h3><p class="boss-sub">Alle '+quiz.length+' Fragen richtig beantworten!<\/p>':'<h3>📝 Quiz — Teste dein Wissen<\/h3>';
+  idx.forEach((qi,di)=>{const q=quiz[qi];h+='<div class="quiz-q" data-qi="'+qi+'"><p>'+(di+1)+'. '+q.q+'<\/p>';q.a.forEach((a,ai)=>{h+='<label><input type="radio" name="'+pf+'_'+modId+'_'+qi+'" value="'+ai+'"> '+a+'<\/label>'});h+='<\/div>'});
+  h+='<button class="quiz-submit" onclick="checkQuiz('+modId+','+isBoss+')">'+(isBoss?'Boss besiegen!':'Antworten prüfen')+'<\/button>';
+  h+='<div class="quiz-result" id="'+pf+'Result'+modId+'" style="display:none"><\/div><\/div>';return h;
+}
+
+function checkQuiz(modId,isBoss){
+  const pf=isBoss?'boss':'quiz';const quiz=isBoss?modules[modId].boss:modules[modId].quiz;
+  let correct=0;const total=quiz.length;const startTime=window._quizStart||Date.now();
+  quiz.forEach((q,qi)=>{
+    const sel=document.querySelector('input[name="'+pf+'_'+modId+'_'+qi+'"]:checked');
+    const labels=document.querySelectorAll('[data-qi="'+qi+'"] label');
+    const ci=_d(q._h,qi);
+    labels.forEach((l,li)=>{l.classList.remove('correct','wrong');if(li===ci)l.classList.add('correct');else if(sel&&parseInt(sel.value)===li)l.classList.add('wrong')});
+    const qDiv=labels[0]?.closest('.quiz-q');if(qDiv){const old=qDiv.querySelector('.quiz-explanation');if(old)old.remove()}
+    if(!sel||parseInt(sel.value)!==ci){if(qDiv){const exp=document.createElement('div');exp.className='quiz-explanation';exp.textContent='→ Richtige Antwort: '+q.a[ci];qDiv.appendChild(exp)}}
+    if(sel&&parseInt(sel.value)===ci)correct++;
+  });
+  const rEl=document.getElementById(pf+'Result'+modId);rEl.style.display='block';
+  if(isBoss){
+    if(correct===total){rEl.className='quiz-result pass';rEl.textContent='👑 Boss besiegt! '+correct+'/'+total+' — Perfekt!';if(!state.bossResults[modId]){state.bossResults[modId]=true;addXP(100,'Boss-Challenge bestanden!');if(!state.badges.includes('first_boss'))awardBadge('first_boss');if(modules.every((_,i)=>state.bossResults[i]))awardBadge('all_bosses');checkModuleComplete(modId)}}
+    else{rEl.className='quiz-result fail';rEl.textContent='💀 '+correct+'/'+total+' — Alle müssen richtig sein! Versuch es nochmal.';setTimeout(()=>{document.querySelectorAll('input[name^="'+pf+'_'+modId+'"]').forEach(r=>{r.disabled=false;r.checked=false});document.querySelectorAll('[data-qi] label').forEach(l=>l.classList.remove('correct','wrong'));document.querySelectorAll('.quiz-explanation').forEach(e=>e.remove());rEl.style.display='none'},2000);return}
+  }else{
+    const passed=correct>=Math.ceil(total*0.6);rEl.className='quiz-result '+(passed?'pass':'fail');
+    rEl.textContent=passed?'✅ '+correct+'/'+total+' richtig — Bestanden!':'❌ '+correct+'/'+total+' richtig — Mindestens '+Math.ceil(total*0.6)+' nötig.';
+    if(passed&&!state.quizResults[modId]){state.quizResults[modId]=correct;addXP(correct*15+50,'Quiz bestanden ('+correct+'/'+total+')');if(!state.badges.includes('first_quiz'))awardBadge('first_quiz');if(correct===total)awardBadge('perfect_quiz');if(Date.now()-startTime<60000)awardBadge('speed_quiz');checkModuleComplete(modId)}
+  }
+  saveState();document.querySelectorAll('input[name^="'+pf+'_'+modId+'"]').forEach(r=>r.disabled=true);window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function checkModuleComplete(modId){
+  if(state.quizResults[modId]!==undefined&&state.bossResults[modId]&&!state.modulesCompleted.includes(modId)){
+    state.modulesCompleted.push(modId);awardBadge('m'+modId);
+    if(state.modulesCompleted.length>=5)awardBadge('half_done');
+    if(state.modulesCompleted.length>=10){awardBadge('graduate');setTimeout(()=>showCert(),1500)}
+    saveState();renderSidebar();
+  }
+}
+
+function renderModule(modId){
+  state.currentModule=modId;
+  if(!state.modulesViewed.includes(modId)){state.modulesViewed.push(modId);addXP(10,'Neues Modul geöffnet');if(state.modulesViewed.length>=10)awardBadge('explorer')}
+  saveState();closeSidebar();
+  const m=modules[modId];
+  let h='<div class="module-header"><div class="mod-badge">'+m.icon+' Modul '+(modId+1)+'<\/div><h1>'+m.title+'<\/h1><p class="mod-desc">'+m.description+'<\/p><\/div>';
+  m.lessons.forEach((l,i)=>{h+='<div class="lesson-card"><h3><span style="color:var(--neon)">'+String(i+1).padStart(2,'0')+'<\/span> '+l.title+' <button class="tts-btn" onclick="speakLesson('+i+')" title="Vorlesen">&#128266;<\/button><\/h3>'+l.content+'<\/div>'});
+  h+='<div class="interactive-area"><h4>🧪 Interaktive Übung<\/h4><div id="interactiveContent">Lädt...<\/div><\/div>';
+  window._quizStart=Date.now();
+  h+=renderQuiz(modId,m.quiz,false);
+  h+=renderQuiz(modId,m.boss,true);
+  document.getElementById('welcomeScreen').style.display='none';
+  document.getElementById('badgesView').style.display='none';
+  document.getElementById('statsView').style.display='none';
+  const mc=document.getElementById('moduleContent');mc.style.display='block';mc.innerHTML=h;
+  renderSidebar();window.scrollTo({top:0,behavior:'smooth'});
+  setTimeout(()=>initInteractive(modId),100);
+}
+
+function renderSidebar(){
+  const el=document.getElementById('sidebarModules');
+  el.innerHTML=modules.map((m,i)=>{
+    const done=state.modulesCompleted.includes(i);
+    const act=state.currentModule===i&&document.getElementById('moduleContent').style.display==='block';
+    return '<a class="mod-link'+(act?' active':'')+(done?' completed':'')+'" onclick="renderModule('+i+')"><span class="mod-icon">'+m.icon+'<\/span>'+m.title+'<\/a>';
+  }).join('');
+  const lv=getLevel(state.xp);
+  const lvEl=document.querySelector('.sidebar-level-title');
+  if(lvEl)lvEl.textContent=LEVELS[lv].name;
+  const xpFill=document.querySelector('.sidebar-xp-fill');
+  if(xpFill)xpFill.style.width=getLevelProgress(state.xp)+'%';
+}
+function toggleSidebar(){document.getElementById('sidebar').classList.toggle('open')}
+function closeSidebar(){document.getElementById('sidebar').classList.remove('open')}
+
+function showBadges(){
+  document.getElementById('welcomeScreen').style.display='none';document.getElementById('moduleContent').style.display='none';document.getElementById('statsView').style.display='none';
+  const v=document.getElementById('badgesView');v.style.display='block';closeSidebar();
+  let h='<div class="module-header"><h1>🏅 Deine Abzeichen<\/h1><p class="mod-desc">'+state.badges.length+' von '+BADGES.length+' gesammelt<\/p><\/div><div class="badge-grid">';
+  BADGES.forEach(b=>{const earned=state.badges.includes(b.id);h+='<div class="badge-item'+(earned?' earned':' locked')+'"><div class="badge-icon">'+(earned?b.icon:'🔒')+'<\/div><div class="badge-name">'+b.name+'<\/div><\/div>'});
+  h+='<\/div>';v.innerHTML=h;
+}
+
+function showStats(){
+  document.getElementById('welcomeScreen').style.display='none';document.getElementById('moduleContent').style.display='none';document.getElementById('badgesView').style.display='none';
+  const v=document.getElementById('statsView');v.style.display='block';closeSidebar();
+  const lv=getLevel(state.xp);
+  let h='<div class="module-header"><h1>📊 Statistik<\/h1><\/div><div class="stats-grid">';
+  h+='<div class="stat-card"><div class="stat-val">'+state.xp+'<\/div><div class="stat-label">XP gesammelt<\/div><\/div>';
+  h+='<div class="stat-card"><div class="stat-val">'+LEVELS[lv].name+'<\/div><div class="stat-label">Aktueller Rang<\/div><\/div>';
+  h+='<div class="stat-card"><div class="stat-val">'+state.modulesCompleted.length+'/10<\/div><div class="stat-label">Module abgeschlossen<\/div><\/div>';
+  h+='<div class="stat-card"><div class="stat-val">'+Object.keys(state.quizResults).length+'<\/div><div class="stat-label">Quizze bestanden<\/div><\/div>';
+  h+='<div class="stat-card"><div class="stat-val">'+Object.keys(state.bossResults).length+'<\/div><div class="stat-label">Bosse besiegt<\/div><\/div>';
+  h+='<div class="stat-card"><div class="stat-val">'+state.badges.length+'<\/div><div class="stat-label">Abzeichen<\/div><\/div>';
+  h+='<div class="stat-card"><div class="stat-val">🔥 '+state.streak+'<\/div><div class="stat-label">Tage-Streak<\/div><\/div>';
+  h+='<\/div>';v.innerHTML=h;
+}
+
+let certStyle='akademie';
+function showCert(){
+  const ov=document.getElementById('certOverlay');ov.classList.add('active');
+  document.getElementById('certPicker').innerHTML=
+    ['🏛 Akademie','💻 Hacker','🕹 Pixel','🚀 Zukunft'].map((l,i)=>{
+      const s=['akademie','hacker','pixel','zukunft'][i];
+      return '<button class="cert-pick-btn'+(certStyle===s?' active':'')+'" onclick="certStyle=\''+s+'\';showCert()">'+l+'<\/button>';
+    }).join('');
+  renderCert();
+}
+function closeCert(){document.getElementById('certOverlay').classList.remove('active')}
+function generateCertCode(){const n=state.name||'X';const d=new Date();return 'PE-'+d.getFullYear()+'-'+((n.charCodeAt(0)*7+state.xp)%9999).toString(16).toUpperCase().padStart(4,'0')}
+
+function renderCert(){
+  const f=document.getElementById('certFrame');if(!f)return;
+  const n=state.name||'Schüler';const d=new Date().toLocaleDateString('de-DE',{day:'2-digit',month:'long',year:'numeric'});
+  const code=generateCertCode();const pct=Math.round(state.modulesCompleted.length/10*100);
+  const styles={
+    akademie:{bg:'linear-gradient(135deg,#1a1a4e,#2d2d7a)',border:'#c9a84c',title:'#c9a84c',text:'#d4d0ff',accent:'#c9a84c',font:"'Playfair Display',serif"},
+    hacker:{bg:'linear-gradient(135deg,#0a0e14,#1a2332)',border:'#00ff88',title:'#00ff88',text:'#b0f0d0',accent:'#00ff88',font:"'JetBrains Mono',monospace"},
+    pixel:{bg:'linear-gradient(135deg,#1a0a2e,#2d1055)',border:'#ffd700',title:'#ffd700',text:'#e0d0f0',accent:'#ff6b9d',font:"'Courier New',monospace"},
+    zukunft:{bg:'linear-gradient(135deg,#0f0f23,#1a1a3e)',border:'#00d9ff',title:'#00d9ff',text:'#d0e8ff',accent:'#00d9ff',font:"'Sora',sans-serif"}
+  };
+  const s=styles[certStyle]||styles.akademie;
+  f.innerHTML='<div style="width:100%;height:100%;background:'+s.bg+';border:3px solid '+s.border+';border-radius:12px;padding:40px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;font-family:'+s.font+';position:relative;overflow:hidden">'
+    +'<div style="font-size:14px;letter-spacing:4px;text-transform:uppercase;color:'+s.accent+';margin-bottom:8px">Zertifikat</div>'
+    +'<div style="font-size:28px;font-weight:700;color:'+s.title+';margin-bottom:4px">PhysikEntdecker</div>'
+    +'<div style="font-size:13px;color:'+s.text+';margin-bottom:20px">Physik-Entdeckungen Klasse 1-3</div>'
+    +'<div style="font-size:14px;color:'+s.text+'">Hiermit wird bestätigt, dass</div>'
+    +'<div style="font-size:24px;font-weight:700;color:'+s.title+';margin:8px 0;border-bottom:2px solid '+s.accent+';padding-bottom:4px">'+n+'</div>'
+    +'<div style="font-size:14px;color:'+s.text+';max-width:400px;line-height:1.6">den Kurs <strong>PhysikEntdecker</strong> mit <strong>'+pct+'%</strong> Abschluss und <strong>'+state.xp+' XP</strong> erfolgreich absolviert hat.</div>'
+    +'<div style="font-size:12px;color:'+s.accent+';margin-top:16px">'+d+'</div>'
+    +'<div style="font-size:10px;color:'+s.text+';opacity:0.6;margin-top:8px">Code: '+code+' | © 2026 GZ AI Stacks</div>'
+    +'</div>';
+}
+function printCert(){window.print()}
+
+function updateUI(){
+  const lv=getLevel(state.xp);
+  const xpEl=document.querySelector('.header-xp');
+  if(xpEl)xpEl.innerHTML=LEVELS[lv].name+' <span style="margin-left:8px">'+state.xp+' XP<\/span>';
+  const fill=document.querySelector('.header-xp-fill');
+  if(fill)fill.style.width=getLevelProgress(state.xp)+'%';
+  const streakEl=document.querySelector('.header-streak');
+  if(streakEl)streakEl.textContent='🔥 '+state.streak;
+  renderSidebar();
+}
+
+function setDesignTheme(world,mode){
+  state.designTheme=world+'-'+mode;document.documentElement.setAttribute('data-theme',state.designTheme);saveState();buildThemePicker();
+}
+function getCurrentThemeParts(){const p=state.designTheme.split('-');return{world:p.slice(0,-1).join('-'),mode:p[p.length-1]||'dark'}}
+function toggleMode(){const{world,mode}=getCurrentThemeParts();setDesignTheme(world,mode==='dark'?'light':'dark')}
+function buildThemePicker(){
+  const dd=document.getElementById('themePickerDD');if(!dd)return;
+  const{world,mode}=getCurrentThemeParts();
+  let h='<div class="tp-label">Theme wählen<\/div>';
+  Object.keys(THEME_CONFIG).forEach(w=>{
+    const t=THEME_CONFIG[w];
+    h+='<div class="tp-world'+(w===world?' active':'')+'" onclick="setDesignTheme(\''+w+'\',\''+mode+'\')">';
+    h+='<div class="tp-world-color" style="background:'+t.color+'">'+t.emoji+'<\/div>';
+    h+='<div class="tp-world-info"><div class="tp-world-name">'+t.name+'<\/div><div class="tp-world-desc">'+t.desc+'<\/div><\/div><\/div>';
+  });
+  h+='<div class="tp-divider"><\/div>';
+  h+='<div class="tp-mode-row"><span class="tp-mode-label">'+(mode==='dark'?'🌙 Dark':'☀️ Light')+'<\/span>';
+  h+='<div class="tp-mode-switch'+(mode==='light'?' light':'')+'" onclick="toggleMode()"><\/div><\/div>';
+  dd.innerHTML=h;
+}
+function toggleThemePicker(){document.getElementById('themePickerDD').classList.toggle('open')}
+
+
+function initInteractive(modId) {
+    const container = document.getElementById('interactive-content');
+    if (!container) return;
+
+    const exercises = {
+        0: function() {
+            // Licht und Schatten - Lichtquelle oder nicht?
+            var items = [
+                { name: 'Sonne', isSource: true },
+                { name: 'Mond', isSource: false },
+                { name: 'Kerze', isSource: true },
+                { name: 'Spiegel', isSource: false },
+                { name: 'Taschenlampe', isSource: true },
+                { name: 'Buch', isSource: false }
+            ];
+            var html = '<h3>Lichtquelle oder nicht?</h3>';
+            items.forEach(function(it, i) {
+                html += '<div class="pe-item" style="padding:12px;margin:8px 0;background:var(--card-bg);border-radius:8px;display:flex;align-items:center;justify-content:space-between">' +
+                    '<span style="font-weight:bold">' + it.name + '</span>' +
+                    '<div><button onclick="checkLight(' + i + ',true)" class="pe-li' + i + '" style="padding:6px 12px;border-radius:6px;border:1px solid var(--border-color);background:var(--card-bg);color:var(--text-color);cursor:pointer;margin:2px">💡 Ja</button>' +
+                    '<button onclick="checkLight(' + i + ',false)" class="pe-li' + i + '" style="padding:6px 12px;border-radius:6px;border:1px solid var(--border-color);background:var(--card-bg);color:var(--text-color);cursor:pointer;margin:2px">❌ Nein</button></div></div>';
+            });
+            html += '<div id="pe-fb0" style="text-align:center;margin-top:15px"></div>';
+            container.innerHTML = html;
+            window.peLiScore = 0; window.peLiDone = 0;
+            window.checkLight = function(idx, guess) {
+                var btns = document.querySelectorAll('.pe-li' + idx);
+                btns.forEach(function(b) { b.disabled = true; b.style.opacity = '0.5'; });
+                var ok = guess === items[idx].isSource;
+                if (ok) window.peLiScore++;
+                window.peLiDone++;
+                btns[0].closest('.pe-item').style.borderLeft = '4px solid ' + (ok ? '#4CAF50' : '#f44336');
+                if (window.peLiDone === items.length) {
+                    document.getElementById('pe-fb0').innerHTML = '<p style="font-size:1.2em">' + (window.peLiScore >= 5 ? '🎉 Super!' : '🤔 Versuch es nochmal!') + ' ' + window.peLiScore + '/' + items.length + ' richtig!</p>';
+                }
+            };
+        },
+        1: function() {
+            // Schall - Hoch oder tief?
+            var sounds = [
+                { source: 'Vogelgezwitscher', pitch: 'Hoch' },
+                { source: 'Donner', pitch: 'Tief' },
+                { source: 'Babystimme', pitch: 'Hoch' },
+                { source: 'Brummbär', pitch: 'Tief' },
+                { source: 'Flöte', pitch: 'Hoch' },
+                { source: 'Trommel', pitch: 'Tief' }
+            ];
+            var html = '<h3>Hoher oder tiefer Ton?</h3>';
+            sounds.forEach(function(s, i) {
+                html += '<div class="pe-snd" style="padding:12px;margin:8px 0;background:var(--card-bg);border-radius:8px;display:flex;align-items:center;justify-content:space-between">' +
+                    '<span style="font-weight:bold">🎵 ' + s.source + '</span>' +
+                    '<div><button onclick="checkPitch(' + i + ',\'Hoch\')" class="pe-pi' + i + '" style="padding:6px 12px;border-radius:6px;border:1px solid var(--border-color);background:var(--card-bg);color:var(--text-color);cursor:pointer;margin:2px">⬆️ Hoch</button>' +
+                    '<button onclick="checkPitch(' + i + ',\'Tief\')" class="pe-pi' + i + '" style="padding:6px 12px;border-radius:6px;border:1px solid var(--border-color);background:var(--card-bg);color:var(--text-color);cursor:pointer;margin:2px">⬇️ Tief</button></div></div>';
+            });
+            html += '<div id="pe-fb1" style="text-align:center;margin-top:15px"></div>';
+            container.innerHTML = html;
+            window.pePiScore = 0; window.pePiDone = 0;
+            window.checkPitch = function(idx, guess) {
+                var btns = document.querySelectorAll('.pe-pi' + idx);
+                btns.forEach(function(b) { b.disabled = true; b.style.opacity = '0.5'; });
+                var ok = guess === sounds[idx].pitch;
+                if (ok) window.pePiScore++;
+                window.pePiDone++;
+                btns[0].closest('.pe-snd').style.borderLeft = '4px solid ' + (ok ? '#4CAF50' : '#f44336');
+                if (window.pePiDone === sounds.length) {
+                    document.getElementById('pe-fb1').innerHTML = '<p style="font-size:1.2em">' + (window.pePiScore >= 5 ? '🎉 Klasse!' : '🤔 Noch üben!') + ' ' + window.pePiScore + '/' + sounds.length + ' richtig!</p>';
+                }
+            };
+        },
+        2: function() {
+            // Magnete - Wird angezogen oder nicht?
+            var objects = [
+                { obj: 'Eisennagel', magnetic: true },
+                { obj: 'Holzstab', magnetic: false },
+                { obj: 'Büroklammer (Stahl)', magnetic: true },
+                { obj: 'Gummiball', magnetic: false },
+                { obj: 'Münze (Nickel)', magnetic: true },
+                { obj: 'Plastiklöffel', magnetic: false }
+            ];
+            var html = '<h3>Wird es vom Magneten angezogen?</h3>';
+            objects.forEach(function(o, i) {
+                html += '<div class="pe-mag" style="padding:12px;margin:8px 0;background:var(--card-bg);border-radius:8px;display:flex;align-items:center;justify-content:space-between">' +
+                    '<span style="font-weight:bold">🧲 ' + o.obj + '</span>' +
+                    '<div><button onclick="checkMag(' + i + ',true)" class="pe-mg' + i + '" style="padding:6px 12px;border-radius:6px;border:1px solid var(--border-color);background:var(--card-bg);color:var(--text-color);cursor:pointer;margin:2px">✅ Ja</button>' +
+                    '<button onclick="checkMag(' + i + ',false)" class="pe-mg' + i + '" style="padding:6px 12px;border-radius:6px;border:1px solid var(--border-color);background:var(--card-bg);color:var(--text-color);cursor:pointer;margin:2px">❌ Nein</button></div></div>';
+            });
+            html += '<div id="pe-fb2" style="text-align:center;margin-top:15px"></div>';
+            container.innerHTML = html;
+            window.peMgScore = 0; window.peMgDone = 0;
+            window.checkMag = function(idx, guess) {
+                var btns = document.querySelectorAll('.pe-mg' + idx);
+                btns.forEach(function(b) { b.disabled = true; b.style.opacity = '0.5'; });
+                var ok = guess === objects[idx].magnetic;
+                if (ok) window.peMgScore++;
+                window.peMgDone++;
+                btns[0].closest('.pe-mag').style.borderLeft = '4px solid ' + (ok ? '#4CAF50' : '#f44336');
+                if (window.peMgDone === objects.length) {
+                    document.getElementById('pe-fb2').innerHTML = '<p style="font-size:1.2em">' + (window.peMgScore >= 5 ? '🎉 Magnet-Profi!' : '🤔 Noch üben!') + ' ' + window.peMgScore + '/' + objects.length + ' richtig!</p>';
+                }
+            };
+        },
+        3: function() {
+            // Schwerkraft - Schwer oder leicht sortieren
+            var items = [
+                { name: '🪶 Feder', weight: 1 },
+                { name: '📱 Handy', weight: 2 },
+                { name: '🎒 Schulranzen', weight: 3 },
+                { name: '🚗 Auto', weight: 4 }
+            ];
+            var shuffled = items.slice().sort(function() { return Math.random() - 0.5; });
+            var html = '<h3>Sortiere von leicht nach schwer!</h3><p style="color:var(--text-muted)">Klicke in der richtigen Reihenfolge.</p><div id="pe-weights">';
+            shuffled.forEach(function(it) {
+                html += '<div class="pe-wt" data-w="' + it.weight + '" onclick="selectPeWeight(this)" style="padding:14px;margin:8px 0;background:var(--card-bg);border-radius:8px;cursor:pointer;border:2px solid var(--border-color);text-align:center;font-size:1.1em;font-weight:bold;transition:all 0.3s">' + it.name + '</div>';
+            });
+            html += '</div><div id="pe-sorted3" style="margin-top:15px"></div><button onclick="resetPeEx3()" style="margin:10px auto;display:block;padding:8px 20px;border-radius:8px;border:1px solid var(--border-color);background:var(--card-bg);color:var(--text-color);cursor:pointer">Zurücksetzen</button><div id="pe-fb3" style="text-align:center;margin-top:15px"></div>';
+            container.innerHTML = html;
+            window.peWeights = [];
+            window.selectPeWeight = function(el) {
+                if (el.style.opacity === '0.3') return;
+                window.peWeights.push(parseInt(el.dataset.w));
+                el.style.opacity = '0.3'; el.style.pointerEvents = 'none';
+                document.getElementById('pe-sorted3').innerHTML += '<div style="padding:8px;margin:4px 0;background:var(--primary-color);color:white;border-radius:8px">' + window.peWeights.length + '. ' + el.textContent + '</div>';
+                if (window.peWeights.length === 4) {
+                    var ok = window.peWeights.every(function(v, i) { return v === i + 1; });
+                    document.getElementById('pe-fb3').innerHTML = '<p style="font-size:1.2em">' + (ok ? '🎉 Richtig sortiert!' : '🤔 Nicht ganz!') + '</p>';
+                }
+            };
+            window.resetPeEx3 = function() {
+                window.peWeights = [];
+                document.getElementById('pe-sorted3').innerHTML = '';
+                document.getElementById('pe-fb3').innerHTML = '';
+                document.querySelectorAll('.pe-wt').forEach(function(el) { el.style.opacity = '1'; el.style.pointerEvents = 'auto'; });
+            };
+        },
+        4: function() {
+            // Wasser - Schwimmt oder sinkt?
+            var objects = [
+                { obj: '🪵 Holzstück', floats: true },
+                { obj: '🪨 Stein', floats: false },
+                { obj: '🏐 Ball (mit Luft)', floats: true },
+                { obj: '🔑 Schlüssel (Metall)', floats: false },
+                { obj: '🍎 Apfel', floats: true },
+                { obj: '🪙 Münze', floats: false }
+            ];
+            var html = '<h3>Schwimmt oder sinkt es?</h3>';
+            objects.forEach(function(o, i) {
+                html += '<div class="pe-float" style="padding:12px;margin:8px 0;background:var(--card-bg);border-radius:8px;display:flex;align-items:center;justify-content:space-between">' +
+                    '<span style="font-weight:bold">' + o.obj + '</span>' +
+                    '<div><button onclick="checkFloat(' + i + ',true)" class="pe-fl' + i + '" style="padding:6px 12px;border-radius:6px;border:1px solid var(--border-color);background:var(--card-bg);color:var(--text-color);cursor:pointer;margin:2px">🏊 Schwimmt</button>' +
+                    '<button onclick="checkFloat(' + i + ',false)" class="pe-fl' + i + '" style="padding:6px 12px;border-radius:6px;border:1px solid var(--border-color);background:var(--card-bg);color:var(--text-color);cursor:pointer;margin:2px">⬇️ Sinkt</button></div></div>';
+            });
+            html += '<div id="pe-fb4" style="text-align:center;margin-top:15px"></div>';
+            container.innerHTML = html;
+            window.peFlScore = 0; window.peFlDone = 0;
+            window.checkFloat = function(idx, guess) {
+                var btns = document.querySelectorAll('.pe-fl' + idx);
+                btns.forEach(function(b) { b.disabled = true; b.style.opacity = '0.5'; });
+                var ok = guess === objects[idx].floats;
+                if (ok) window.peFlScore++;
+                window.peFlDone++;
+                btns[0].closest('.pe-float').style.borderLeft = '4px solid ' + (ok ? '#4CAF50' : '#f44336');
+                if (window.peFlDone === objects.length) {
+                    document.getElementById('pe-fb4').innerHTML = '<p style="font-size:1.2em">' + (window.peFlScore >= 5 ? '🎉 Wasser-Experte!' : '🤔 Noch üben!') + ' ' + window.peFlScore + '/' + objects.length + ' richtig!</p>';
+                }
+            };
+        },
+        5: function() {
+            // Luft und Wind - Begriffe zuordnen
+            var terms = [
+                { term: 'Luftdruck', def: 'Luft drückt auf alles' },
+                { term: 'Wind', def: 'Bewegte Luft' },
+                { term: 'Warmluft', def: 'Steigt nach oben' },
+                { term: 'Kaltluft', def: 'Strömt nach unten/seitlich' }
+            ];
+            var shuffled = terms.map(function(t) { return t.def; }).sort(function() { return Math.random() - 0.5; });
+            var html = '<h3>Ordne die Begriffe zu!</h3>';
+            terms.forEach(function(t, i) {
+                html += '<div style="display:flex;align-items:center;gap:10px;margin:8px 0;flex-wrap:wrap"><span style="min-width:120px;font-weight:bold;padding:8px;background:var(--card-bg);border-radius:8px;text-align:center">💨 ' + t.term + '</span>' +
+                    '<select class="pe-air" data-idx="' + i + '" style="flex:1;padding:8px;border-radius:8px;border:2px solid var(--border-color);background:var(--card-bg);color:var(--text-color)"><option value="">-- wählen --</option>' +
+                    shuffled.map(function(d) { return '<option value="' + d + '">' + d + '</option>'; }).join('') + '</select></div>';
+            });
+            html += '<button onclick="checkPeEx5()" class="btn-primary" style="margin:10px auto;display:block">Prüfen</button><div id="pe-fb5" style="text-align:center;margin-top:15px"></div>';
+            container.innerHTML = html;
+            window.checkPeEx5 = function() {
+                var correct = 0;
+                document.querySelectorAll('.pe-air').forEach(function(sel) {
+                    var idx = parseInt(sel.dataset.idx);
+                    if (sel.value === terms[idx].def) { correct++; sel.style.borderColor = '#4CAF50'; }
+                    else { sel.style.borderColor = '#f44336'; }
+                });
+                document.getElementById('pe-fb5').innerHTML = '<p style="font-size:1.2em">' + (correct >= 3 ? '🎉 Toll!' : '🤔 Noch üben!') + ' ' + correct + '/4 richtig!</p>';
+            };
+        },
+        6: function() {
+            // Wärme - Temperatur zuordnen
+            var temps = [
+                { situation: 'Wasser gefriert', temp: '0°C' },
+                { situation: 'Körpertemperatur', temp: '37°C' },
+                { situation: 'Wasser kocht', temp: '100°C' },
+                { situation: 'Angenehme Raumtemperatur', temp: '20°C' },
+                { situation: 'Heißer Sommertag', temp: '35°C' }
+            ];
+            var shuffledTemps = temps.map(function(t) { return t.temp; }).sort(function() { return Math.random() - 0.5; });
+            var html = '<h3>Welche Temperatur passt?</h3>';
+            temps.forEach(function(t, i) {
+                html += '<div style="display:flex;align-items:center;gap:10px;margin:8px 0;flex-wrap:wrap"><span style="min-width:200px;padding:8px;background:var(--card-bg);border-radius:8px;font-weight:bold">🌡️ ' + t.situation + '</span>' +
+                    '<select class="pe-temp" data-idx="' + i + '" style="flex:1;padding:8px;border-radius:8px;border:2px solid var(--border-color);background:var(--card-bg);color:var(--text-color)"><option value="">-- wählen --</option>' +
+                    shuffledTemps.map(function(tp) { return '<option value="' + tp + '">' + tp + '</option>'; }).join('') + '</select></div>';
+            });
+            html += '<button onclick="checkPeEx6()" class="btn-primary" style="margin:10px auto;display:block">Prüfen</button><div id="pe-fb6" style="text-align:center;margin-top:15px"></div>';
+            container.innerHTML = html;
+            window.checkPeEx6 = function() {
+                var correct = 0;
+                document.querySelectorAll('.pe-temp').forEach(function(sel) {
+                    var idx = parseInt(sel.dataset.idx);
+                    if (sel.value === temps[idx].temp) { correct++; sel.style.borderColor = '#4CAF50'; }
+                    else { sel.style.borderColor = '#f44336'; }
+                });
+                document.getElementById('pe-fb6').innerHTML = '<p style="font-size:1.2em">' + (correct >= 4 ? '🎉 Temperatur-Profi!' : '🤔 Noch üben!') + ' ' + correct + '/5 richtig!</p>';
+            };
+        },
+        7: function() {
+            // Spiegel - Was reflektiert gut?
+            var surfaces = [
+                { surface: 'Spiegel', good: true },
+                { surface: 'Rauer Stein', good: false },
+                { surface: 'Stilles Wasser', good: true },
+                { surface: 'Teppich', good: false },
+                { surface: 'Poliertes Metall', good: true },
+                { surface: 'Holzbrett', good: false }
+            ];
+            var html = '<h3>Reflektiert gut oder schlecht?</h3>';
+            surfaces.forEach(function(s, i) {
+                html += '<div class="pe-ref" style="padding:12px;margin:8px 0;background:var(--card-bg);border-radius:8px;display:flex;align-items:center;justify-content:space-between">' +
+                    '<span style="font-weight:bold">🪞 ' + s.surface + '</span>' +
+                    '<div><button onclick="checkReflect(' + i + ',true)" class="pe-re' + i + '" style="padding:6px 12px;border-radius:6px;border:1px solid var(--border-color);background:var(--card-bg);color:var(--text-color);cursor:pointer;margin:2px">✨ Gut</button>' +
+                    '<button onclick="checkReflect(' + i + ',false)" class="pe-re' + i + '" style="padding:6px 12px;border-radius:6px;border:1px solid var(--border-color);background:var(--card-bg);color:var(--text-color);cursor:pointer;margin:2px">🚫 Schlecht</button></div></div>';
+            });
+            html += '<div id="pe-fb7" style="text-align:center;margin-top:15px"></div>';
+            container.innerHTML = html;
+            window.peReScore = 0; window.peReDone = 0;
+            window.checkReflect = function(idx, guess) {
+                var btns = document.querySelectorAll('.pe-re' + idx);
+                btns.forEach(function(b) { b.disabled = true; b.style.opacity = '0.5'; });
+                var ok = guess === surfaces[idx].good;
+                if (ok) window.peReScore++;
+                window.peReDone++;
+                btns[0].closest('.pe-ref').style.borderLeft = '4px solid ' + (ok ? '#4CAF50' : '#f44336');
+                if (window.peReDone === surfaces.length) {
+                    document.getElementById('pe-fb7').innerHTML = '<p style="font-size:1.2em">' + (window.peReScore >= 5 ? '🎉 Spiegel-Experte!' : '🤔 Noch üben!') + ' ' + window.peReScore + '/' + surfaces.length + ' richtig!</p>';
+                }
+            };
+        },
+        8: function() {
+            // Bewegung - Schnell oder langsam sortieren
+            var movers = [
+                { name: '🐌 Schnecke', speed: 1 },
+                { name: '🚶 Mensch (zu Fuß)', speed: 2 },
+                { name: '🚲 Fahrrad', speed: 3 },
+                { name: '🚗 Auto', speed: 4 },
+                { name: '✈️ Flugzeug', speed: 5 }
+            ];
+            var shuffled = movers.slice().sort(function() { return Math.random() - 0.5; });
+            var html = '<h3>Sortiere von langsam nach schnell!</h3><p style="color:var(--text-muted)">Klicke in der richtigen Reihenfolge.</p><div id="pe-movers">';
+            shuffled.forEach(function(m) {
+                html += '<div class="pe-mv" data-spd="' + m.speed + '" onclick="selectPeSpeed(this)" style="padding:14px;margin:8px 0;background:var(--card-bg);border-radius:8px;cursor:pointer;border:2px solid var(--border-color);text-align:center;font-size:1.1em;font-weight:bold;transition:all 0.3s">' + m.name + '</div>';
+            });
+            html += '</div><div id="pe-sorted8" style="margin-top:15px"></div><button onclick="resetPeEx8()" style="margin:10px auto;display:block;padding:8px 20px;border-radius:8px;border:1px solid var(--border-color);background:var(--card-bg);color:var(--text-color);cursor:pointer">Zurücksetzen</button><div id="pe-fb8" style="text-align:center;margin-top:15px"></div>';
+            container.innerHTML = html;
+            window.peSpeeds = [];
+            window.selectPeSpeed = function(el) {
+                if (el.style.opacity === '0.3') return;
+                window.peSpeeds.push(parseInt(el.dataset.spd));
+                el.style.opacity = '0.3'; el.style.pointerEvents = 'none';
+                document.getElementById('pe-sorted8').innerHTML += '<div style="padding:8px;margin:4px 0;background:var(--primary-color);color:white;border-radius:8px">' + window.peSpeeds.length + '. ' + el.textContent + '</div>';
+                if (window.peSpeeds.length === 5) {
+                    var ok = window.peSpeeds.every(function(v, i) { return v === i + 1; });
+                    document.getElementById('pe-fb8').innerHTML = '<p style="font-size:1.2em">' + (ok ? '🎉 Speed-Experte!' : '🤔 Nicht ganz!') + '</p>';
+                }
+            };
+            window.resetPeEx8 = function() {
+                window.peSpeeds = [];
+                document.getElementById('pe-sorted8').innerHTML = '';
+                document.getElementById('pe-fb8').innerHTML = '';
+                document.querySelectorAll('.pe-mv').forEach(function(el) { el.style.opacity = '1'; el.style.pointerEvents = 'auto'; });
+            };
+        },
+        9: function() {
+            // Energie - Energieform zuordnen
+            var energies = [
+                { source: 'Brennende Kerze', type: 'Licht + Wärme' },
+                { source: 'Fahrendes Auto', type: 'Bewegungsenergie' },
+                { source: 'Batterie', type: 'Elektrische Energie' },
+                { source: 'Sonne', type: 'Licht + Wärme' },
+                { source: 'Windrad', type: 'Bewegungsenergie → Strom' }
+            ];
+            var types = ['Licht + Wärme', 'Bewegungsenergie', 'Elektrische Energie', 'Bewegungsenergie → Strom'];
+            var html = '<h3>Welche Energieform steckt dahinter?</h3>';
+            energies.forEach(function(e, i) {
+                html += '<div style="display:flex;align-items:center;gap:10px;margin:8px 0;flex-wrap:wrap"><span style="min-width:160px;font-weight:bold;padding:8px;background:var(--card-bg);border-radius:8px">⚡ ' + e.source + '</span>' +
+                    '<select class="pe-eng" data-idx="' + i + '" style="flex:1;padding:8px;border-radius:8px;border:2px solid var(--border-color);background:var(--card-bg);color:var(--text-color)"><option value="">-- wählen --</option>' +
+                    types.map(function(t) { return '<option value="' + t + '">' + t + '</option>'; }).join('') + '</select></div>';
+            });
+            html += '<button onclick="checkPeEx9()" class="btn-primary" style="margin:10px auto;display:block">Prüfen</button><div id="pe-fb9" style="text-align:center;margin-top:15px"></div>';
+            container.innerHTML = html;
+            window.checkPeEx9 = function() {
+                var correct = 0;
+                document.querySelectorAll('.pe-eng').forEach(function(sel) {
+                    var idx = parseInt(sel.dataset.idx);
+                    if (sel.value === energies[idx].type) { correct++; sel.style.borderColor = '#4CAF50'; }
+                    else { sel.style.borderColor = '#f44336'; }
+                });
+                document.getElementById('pe-fb9').innerHTML = '<p style="font-size:1.2em">' + (correct >= 4 ? '🎉 Energie-Profi!' : '🤔 Noch üben!') + ' ' + correct + '/5 richtig!</p>';
+            };
+        }
+    };
+
+    if (exercises[modId]) exercises[modId]();
+}
+
+function startApp(){
+  const name=document.getElementById('nameInput').value.trim();if(!name)return;
+  state.name=name;state.started=true;saveState();
+  document.getElementById('welcomeScreen').style.display='none';
+  renderModule(0);updateStreak();
+}
+
+(function init(){
+  if(loadState()&&state.started){
+    document.getElementById('welcomeScreen').style.display='none';
+    document.documentElement.setAttribute('data-theme',state.designTheme);
+    renderModule(state.currentModule);updateUI();updateStreak();
+  }else{
+    document.documentElement.setAttribute('data-theme',state.designTheme);
+    buildThemePicker();
+  }
+  renderSidebar();
+  document.addEventListener('click',e=>{if(!e.target.closest('.theme-picker-wrap'))document.getElementById('themePickerDD')?.classList.remove('open')});
+})();
+</script>
+</body>
+</html>

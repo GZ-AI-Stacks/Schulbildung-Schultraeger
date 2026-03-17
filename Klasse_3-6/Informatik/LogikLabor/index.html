@@ -1,0 +1,912 @@
+<!DOCTYPE html>
+<html lang="de" data-theme="cyber-dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>LogikLabor — Informatisches Denken Kl. 3-6</title>
+<meta name="description" content="Interaktive Lern-App f\u00FCr informatisches Denken: Algorithmen, Muster, Bedingungen, Schleifen und mehr f\u00FCr Klasse 3-6!">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+[data-theme="cyber-dark"]{--neon:#3b82f6;--neon-dim:rgba(59,130,246,.15);--neon-glow:0 0 20px rgba(59,130,246,.25);--bg:#0a0e14;--bg2:#111827;--bg3:#1f2937;--card:#161e2e;--text:#d4dce8;--text-dim:#8899aa;--heading:#fff;--link:#60a5fa;--border:#2a3444;--success:#22c55e;--warning:#f59e0b;--danger:#ef4444;--xp-purple:#a855f7;--badge-cyan:#06b6d4;--streak-red:#ef4444;--radius:12px;--shadow:0 4px 24px rgba(0,0,0,.4);--font:'Segoe UI',system-ui,sans-serif;--mono:'Courier New',monospace}
+[data-theme="cyber-light"]{--neon:#1d4ed8;--neon-dim:rgba(29,78,216,.1);--neon-glow:0 0 12px rgba(29,78,216,.15);--bg:#f8f9fb;--bg2:#f0f2f5;--bg3:#e5e7eb;--card:#fff;--text:#374151;--text-dim:#4b5563;--heading:#111827;--link:#2563eb;--border:#d1d5db;--success:#22c55e;--warning:#f59e0b;--danger:#ef4444;--xp-purple:#a855f7;--badge-cyan:#06b6d4;--streak-red:#ef4444;--radius:12px;--shadow:0 4px 24px rgba(0,0,0,.08);--font:'Segoe UI',system-ui,sans-serif;--mono:'Courier New',monospace}
+[data-theme="retro-dark"]{--neon:#ffd700;--neon-dim:rgba(255,215,0,.12);--neon-glow:0 0 20px rgba(255,215,0,.25);--bg:#0d0208;--bg2:#1a0a1e;--bg3:#2d1233;--card:#1a0a1e;--text:#e0d0f0;--text-dim:#9080a0;--heading:#ffd700;--link:#ff6b9d;--border:#4a1942;--success:#00e676;--warning:#ffab00;--danger:#ff1744;--xp-purple:#e040fb;--badge-cyan:#00e5ff;--streak-red:#ff1744;--radius:0;--shadow:4px 4px 0 rgba(0,0,0,.8);--font:'Courier New',monospace;--mono:'Courier New',monospace}
+[data-theme="retro-light"]{--neon:#b8860b;--neon-dim:rgba(184,134,11,.1);--neon-glow:0 0 12px rgba(184,134,11,.15);--bg:#fff8e1;--bg2:#fff3cd;--bg3:#ffe0b2;--card:#fff;--text:#3e2723;--text-dim:#6d4c41;--heading:#b8860b;--link:#c2185b;--border:#d4a017;--success:#2e7d32;--warning:#ef6c00;--danger:#c62828;--xp-purple:#8e24aa;--badge-cyan:#00838f;--streak-red:#c62828;--radius:0;--shadow:3px 3px 0 rgba(0,0,0,.15);--font:'Courier New',monospace;--mono:'Courier New',monospace}
+[data-theme="nature-dark"]{--neon:#4ade80;--neon-dim:rgba(74,222,128,.12);--neon-glow:0 0 20px rgba(74,222,128,.25);--bg:#0c1a0f;--bg2:#132617;--bg3:#1e3a24;--card:#15291a;--text:#c8e6c9;--text-dim:#81a784;--heading:#e8f5e9;--link:#81c784;--border:#2d5a36;--success:#66bb6a;--warning:#ffa726;--danger:#ef5350;--xp-purple:#ab47bc;--badge-cyan:#26a69a;--streak-red:#ef5350;--radius:20px;--shadow:0 4px 20px rgba(0,0,0,.3);--font:'Segoe UI',system-ui,sans-serif;--mono:'Courier New',monospace}
+[data-theme="nature-light"]{--neon:#2e7d32;--neon-dim:rgba(46,125,50,.08);--neon-glow:0 0 12px rgba(46,125,50,.15);--bg:#f1f8e9;--bg2:#e8f5e9;--bg3:#c8e6c9;--card:#fff;--text:#33691e;--text-dim:#3e6e1c;--heading:#1b5e20;--link:#2e7d32;--border:#a5d6a7;--success:#388e3c;--warning:#ef6c00;--danger:#c62828;--xp-purple:#7b1fa2;--badge-cyan:#00695c;--streak-red:#c62828;--radius:20px;--shadow:0 4px 16px rgba(0,0,0,.06);--font:'Segoe UI',system-ui,sans-serif;--mono:'Courier New',monospace}
+[data-theme="space-dark"]{--neon:#c084fc;--neon-dim:rgba(192,132,252,.12);--neon-glow:0 0 20px rgba(192,132,252,.25);--bg:#07020e;--bg2:#0f0720;--bg3:#1a0e35;--card:#110a28;--text:#d4c8f0;--text-dim:#9080b8;--heading:#f0e8ff;--link:#f0abfc;--border:#2e1a5e;--success:#34d399;--warning:#fbbf24;--danger:#fb7185;--xp-purple:#f472b6;--badge-cyan:#67e8f9;--streak-red:#fb7185;--radius:4px;--shadow:0 4px 24px rgba(100,50,200,.2);--font:'Segoe UI',system-ui,sans-serif;--mono:'Courier New',monospace}
+[data-theme="space-light"]{--neon:#7c3aed;--neon-dim:rgba(124,58,237,.08);--neon-glow:0 0 12px rgba(124,58,237,.15);--bg:#faf5ff;--bg2:#f3e8ff;--bg3:#e9d5ff;--card:#fff;--text:#4c1d95;--text-dim:#5b21b6;--heading:#2e1065;--link:#7c3aed;--border:#c4b5fd;--success:#059669;--warning:#d97706;--danger:#dc2626;--xp-purple:#db2777;--badge-cyan:#0891b2;--streak-red:#dc2626;--radius:4px;--shadow:0 4px 16px rgba(100,50,200,.06);--font:'Segoe UI',system-ui,sans-serif;--mono:'Courier New',monospace}
+[data-theme="comic-dark"]{--neon:#ff6b6b;--neon-dim:rgba(255,107,107,.12);--neon-glow:0 0 20px rgba(255,107,107,.25);--bg:#1a1a2e;--bg2:#222244;--bg3:#2e2e55;--card:#262650;--text:#e8e0ff;--text-dim:#a098c0;--heading:#fff;--link:#ffa94d;--border:#4a4a7a;--success:#51cf66;--warning:#fcc419;--danger:#ff6b6b;--xp-purple:#cc5de8;--badge-cyan:#22b8cf;--streak-red:#ff6b6b;--radius:16px;--shadow:4px 4px 0 rgba(0,0,0,.5);--font:'Comic Sans MS','Chalkboard SE',cursive,system-ui;--mono:'Courier New',monospace}
+[data-theme="comic-light"]{--neon:#e03131;--neon-dim:rgba(224,49,49,.08);--neon-glow:0 0 12px rgba(224,49,49,.15);--bg:#fff9db;--bg2:#fff3bf;--bg3:#ffe066;--card:#fff;--text:#2b2b2b;--text-dim:#555;--heading:#000;--link:#e8590c;--border:#fab005;--success:#2f9e44;--warning:#e8590c;--danger:#c92a2a;--xp-purple:#9c36b5;--badge-cyan:#1098ad;--streak-red:#c92a2a;--radius:16px;--shadow:3px 3px 0 rgba(0,0,0,.2);--font:'Comic Sans MS','Chalkboard SE',cursive,system-ui;--mono:'Courier New',monospace}
+[data-theme="sketchy-dark"]{--neon:#d97706;--neon-dim:rgba(217,119,6,.15);--neon-glow:0 0 20px rgba(217,119,6,.25);--bg:#2a1f0f;--bg2:#3a2a1a;--bg3:#4a3a2a;--card:#362414;--text:#d4c4b0;--text-dim:#a09080;--heading:#f5ead5;--link:#e8a550;--border:#5a4030;--success:#84cc16;--warning:#d97706;--danger:#e74c3c;--xp-purple:#d946ef;--badge-cyan:#06b6d4;--streak-red:#e74c3c;--radius:24px;--shadow:0 6px 20px rgba(0,0,0,.3);--font:'Georgia',serif;--mono:'Courier New',monospace}
+[data-theme="sketchy-light"]{--neon:#b45309;--neon-dim:rgba(180,83,9,.1);--neon-glow:0 0 12px rgba(180,83,9,.15);--bg:#fef3e2;--bg2:#fde8cc;--bg3:#f9d5b8;--card:#fff;--text:#5c4033;--text-dim:#8b6f47;--heading:#3e2723;--link:#c2600c;--border:#d4a574;--success:#65a30d;--warning:#b45309;--danger:#d25c4d;--xp-purple:#c084fc;--badge-cyan:#0891b2;--streak-red:#d25c4d;--radius:24px;--shadow:0 4px 12px rgba(0,0,0,.08);--font:'Georgia',serif;--mono:'Courier New',monospace}
+[data-theme="nature-code-dark"]{--neon:#10b981;--neon-dim:rgba(16,185,129,.15);--neon-glow:0 0 20px rgba(16,185,129,.25);--bg:#0a1f12;--bg2:#0d2818;--bg3:#1a3a2a;--card:#0f281a;--text:#c8e6d0;--text-dim:#7ba890;--heading:#e8f5ed;--link:#34d399;--border:#2d5a3d;--success:#10b981;--warning:#f59e0b;--danger:#f87171;--xp-purple:#a78bfa;--badge-cyan:#22d3ee;--streak-red:#f87171;--radius:20px;--shadow:0 4px 20px rgba(0,100,50,.2);--font:'Segoe UI',system-ui,sans-serif;--mono:'Courier New',monospace}
+[data-theme="nature-code-light"]{--neon:#059669;--neon-dim:rgba(5,150,105,.1);--neon-glow:0 0 12px rgba(5,150,105,.15);--bg:#f0fdf8;--bg2:#e8faf2;--bg3:#d1f2e0;--card:#fff;--text:#164e3f;--text-dim:#2d6e4f;--heading:#052e16;--link:#059669;--border:#86efac;--success:#10b981;--warning:#d97706;--danger:#dc2626;--xp-purple:#8b5cf6;--badge-cyan:#06b6d4;--streak-red:#dc2626;--radius:20px;--shadow:0 4px 16px rgba(0,100,50,.06);--font:'Segoe UI',system-ui,sans-serif;--mono:'Courier New',monospace}
+[data-theme="glass-dark"]{--neon:#00d9ff;--neon-dim:rgba(0,217,255,.12);--neon-glow:0 0 20px rgba(0,217,255,.25);--bg:#0f0f23;--bg2:#1a1a3e;--bg3:#25254a;--card:rgba(30,30,60,.6);--text:#e4e8f0;--text-dim:#8899aa;--heading:#fff;--link:#00d9ff;--border:rgba(100,150,255,.2);--success:#34d399;--warning:#fbbf24;--danger:#ff6b9d;--xp-purple:#b991f7;--badge-cyan:#00d9ff;--streak-red:#ff6b9d;--radius:16px;--shadow:0 8px 32px rgba(0,200,255,.1);--font:'Segoe UI',system-ui,sans-serif;--mono:'Courier New',monospace}
+[data-theme="glass-light"]{--neon:#0891b2;--neon-dim:rgba(8,145,178,.08);--neon-glow:0 0 12px rgba(8,145,178,.15);--bg:#f8fafc;--bg2:#f1f5f9;--bg3:#e2e8f0;--card:rgba(255,255,255,.7);--text:#1e293b;--text-dim:#475569;--heading:#0f172a;--link:#0891b2;--border:rgba(100,180,255,.2);--success:#059669;--warning:#d97706;--danger:#dc2626;--xp-purple:#7c3aed;--badge-cyan:#0891b2;--streak-red:#dc2626;--radius:16px;--shadow:0 8px 32px rgba(100,150,255,.08);--font:'Segoe UI',system-ui,sans-serif;--mono:'Courier New',monospace}
+body{font-family:var(--font);background:var(--bg);color:var(--text);font-size:16px;line-height:1.7;min-height:100vh;transition:background .3s,color .3s;overflow-x:hidden}
+a{color:var(--link);text-decoration:none}a:hover{text-decoration:underline}
+button{font-family:var(--font);cursor:pointer;border:none;background:none;color:inherit}
+:focus-visible{outline:2px solid var(--neon);outline-offset:2px;border-radius:4px}
+::selection{background:var(--neon);color:#fff}
+::-webkit-scrollbar{width:8px}::-webkit-scrollbar-track{background:var(--bg2)}::-webkit-scrollbar-thumb{background:var(--border);border-radius:4px}
+.skip-nav{position:absolute;top:-50px;left:8px;background:var(--neon);color:#fff;padding:8px 16px;z-index:9999;border-radius:0 0 8px 8px;font-weight:700;text-decoration:none}.skip-nav:focus{top:0}
+.header{position:sticky;top:0;z-index:100;background:var(--bg2);border-bottom:1px solid var(--border);padding:8px 16px;display:flex;align-items:center;gap:8px;backdrop-filter:blur(12px);min-height:54px}
+.header .logo{display:flex;align-items:center;gap:8px;font-weight:700;font-size:clamp(16px,3.5vw,20px);color:var(--heading);white-space:nowrap;min-width:0;flex-shrink:0}
+.header .logo svg{width:32px;height:32px;flex-shrink:0}
+.header .xp-area{display:flex;align-items:center;gap:8px;margin-left:auto;min-width:0;flex-shrink:1}
+.header .xp-bar{flex:1;min-width:80px;max-width:200px}
+.header .xp-label{font-size:11px;color:var(--text-dim);display:flex;justify-content:space-between;font-weight:600}
+.header .xp-track{height:6px;background:var(--bg3);border-radius:3px;overflow:hidden;margin-top:2px}
+.header .xp-fill{height:100%;background:var(--neon);border-radius:3px;transition:width .5s}
+.header .streak-badge{font-size:12px;color:var(--streak-red);font-weight:700;white-space:nowrap}
+.hamburger{display:none;width:40px;height:40px;border-radius:8px;align-items:center;justify-content:center;background:var(--bg3);font-size:20px;flex-shrink:0;-webkit-tap-highlight-color:transparent}
+.theme-toggle{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:var(--bg3);font-size:16px;flex-shrink:0;-webkit-tap-highlight-color:transparent}
+.theme-toggle:hover{background:var(--border)}
+.sidebar{position:fixed;top:54px;left:0;width:260px;height:calc(100vh - 54px);background:var(--bg2);border-right:1px solid var(--border);overflow-y:auto;padding:12px;z-index:90;transition:transform .3s}
+.sidebar h3{font-size:11px;color:var(--text-dim);text-transform:uppercase;letter-spacing:2px;margin-bottom:8px;padding:0 8px}
+.sidebar-item{display:flex;align-items:center;gap:8px;padding:10px 12px;border-radius:var(--radius);cursor:pointer;color:var(--text);font-size:14px;transition:background .2s;margin-bottom:3px;border:1px solid transparent;min-height:44px;-webkit-tap-highlight-color:transparent}
+.sidebar-item:hover{background:var(--neon-dim);border-color:var(--border)}
+.sidebar-item.active{background:var(--neon-dim);border-color:var(--neon);color:var(--neon);font-weight:700}
+.sidebar-item.completed::after{content:'\2713';margin-left:auto;color:var(--success);font-weight:700}
+.sidebar-link{display:flex;align-items:center;gap:8px;padding:10px 12px;border-radius:var(--radius);color:var(--text-dim);font-size:13px;cursor:pointer;transition:background .2s;margin-bottom:2px;min-height:44px;-webkit-tap-highlight-color:transparent}
+.sidebar-link:hover{background:var(--neon-dim);color:var(--text)}
+.main{margin-left:260px;padding:24px;max-width:860px;min-height:calc(100vh - 54px)}
+.welcome{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:60vh;text-align:center;padding:20px}
+.welcome .hero-emoji{font-size:clamp(48px,12vw,80px);margin-bottom:12px;animation:bounce 2s ease-in-out infinite}
+@keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
+.welcome h1{font-size:clamp(28px,6vw,48px);color:var(--heading);margin-bottom:6px}
+.welcome .sub{font-size:clamp(14px,2.5vw,18px);color:var(--text-dim);margin-bottom:24px;max-width:500px}
+.welcome input{font-size:18px;padding:12px 20px;border-radius:var(--radius);border:2px solid var(--border);background:var(--bg2);color:var(--heading);text-align:center;width:min(320px,90%);outline:none;font-family:var(--font);transition:border-color .3s}
+.welcome input:focus{border-color:var(--neon)}
+.welcome .start-btn{margin-top:16px;padding:14px 40px;font-size:18px;font-weight:700;border-radius:var(--radius);background:var(--neon);color:#fff;font-family:var(--font);transition:transform .2s,box-shadow .2s;min-height:48px;-webkit-tap-highlight-color:transparent}
+.welcome .start-btn:hover{transform:scale(1.05);box-shadow:var(--neon-glow)}
+.welcome .start-btn:disabled{opacity:.5;cursor:not-allowed;transform:none}
+.theme-picker{display:flex;gap:8px;margin-top:16px;flex-wrap:wrap;justify-content:center}
+.theme-btn{width:40px;height:40px;border-radius:50%;border:3px solid transparent;cursor:pointer;transition:transform .2s,border-color .2s;-webkit-tap-highlight-color:transparent}
+.theme-btn:hover,.theme-btn.active{border-color:var(--heading);transform:scale(1.15)}
+.mode-toggle-btn{background:var(--bg3);border:2px solid var(--border);color:var(--text);padding:6px 14px;border-radius:20px;cursor:pointer;font-size:16px;transition:all .2s;min-height:40px}
+.mode-toggle-btn:hover{border-color:var(--neon)}
+.module-header{text-align:center;margin-bottom:24px}
+.module-header .mod-badge{display:inline-block;background:var(--neon-dim);border:1px solid var(--border);color:var(--neon);padding:4px 14px;border-radius:20px;font-size:13px;font-weight:600;margin-bottom:8px}
+.module-header h1{color:var(--heading);font-size:clamp(22px,4vw,32px)}
+.module-header .mod-desc{color:var(--text-dim);margin-top:6px;font-size:15px}
+.lesson-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:20px;margin-bottom:16px;box-shadow:var(--shadow)}
+.lesson-card h3{color:var(--heading);font-size:18px;margin-bottom:10px}
+.lesson-card p,.lesson-card li{font-size:15px;line-height:1.8;margin-bottom:6px}
+.lesson-card .info-box{background:var(--neon-dim);border-left:4px solid var(--neon);padding:12px 16px;border-radius:0 var(--radius) var(--radius) 0;margin:12px 0;font-size:15px;line-height:1.7}
+.lesson-card ul,.lesson-card ol{padding-left:20px;margin:8px 0}
+.interactive-area{background:var(--card);border:2px solid var(--neon);border-radius:var(--radius);padding:20px;margin:20px 0;box-shadow:var(--neon-glow)}
+.interactive-area h4{color:var(--neon);font-size:16px;margin-bottom:12px}
+#interactiveContent{min-height:80px}
+.ix-grid{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin:12px 0}
+.ix-item{background:var(--bg3);border:2px solid var(--border);border-radius:var(--radius);padding:12px 18px;font-size:18px;cursor:pointer;transition:all .2s;user-select:none;text-align:center;min-width:54px;min-height:44px;display:flex;align-items:center;justify-content:center;-webkit-tap-highlight-color:transparent}
+.ix-item:hover{border-color:var(--neon);background:var(--neon-dim)}
+.ix-item.selected{border-color:var(--neon);background:var(--neon-dim);box-shadow:var(--neon-glow)}
+.ix-item.correct{border-color:var(--success);background:rgba(34,197,94,.15);color:var(--success)}
+.ix-item.wrong{border-color:var(--danger);background:rgba(239,68,68,.15);color:var(--danger)}
+.ix-item.placed{opacity:.4;pointer-events:none}
+.ix-btn{background:var(--neon);color:#fff;border:none;padding:12px 24px;border-radius:var(--radius);font-size:16px;font-weight:700;cursor:pointer;font-family:var(--font);margin-top:12px;transition:transform .2s;min-height:48px;-webkit-tap-highlight-color:transparent}
+.ix-btn:hover{transform:scale(1.05)}.ix-btn:disabled{opacity:.5;cursor:not-allowed;transform:none}
+.ix-feedback{text-align:center;padding:12px;border-radius:var(--radius);font-size:16px;font-weight:700;margin-top:10px;display:none}
+.ix-feedback.pass{display:block;background:rgba(34,197,94,.12);color:var(--success)}
+.ix-feedback.fail{display:block;background:rgba(239,68,68,.12);color:var(--danger)}
+.quiz-section,.boss-section{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:20px;margin:16px 0}
+.boss-section{border-color:var(--warning);box-shadow:0 0 20px rgba(251,191,36,.1)}
+.quiz-section h3,.boss-section h3{color:var(--heading);margin-bottom:12px;font-size:18px}
+.boss-sub{color:var(--warning);font-size:13px;margin-bottom:12px}
+.quiz-q{margin-bottom:16px}
+.quiz-q p{font-weight:600;font-size:15px;margin-bottom:8px;color:var(--heading)}
+.quiz-q label{display:flex;align-items:center;gap:10px;padding:10px 14px;border-radius:var(--radius);border:1px solid var(--border);margin-bottom:5px;cursor:pointer;transition:all .2s;font-size:15px;min-height:44px;-webkit-tap-highlight-color:transparent}
+.quiz-q label:hover{background:var(--neon-dim)}
+.quiz-q label.correct{background:rgba(34,197,94,.15);border-color:var(--success);color:var(--success)}
+.quiz-q label.wrong{background:rgba(239,68,68,.15);border-color:var(--danger);color:var(--danger)}
+.quiz-q input[type="radio"]{accent-color:var(--neon);width:18px;height:18px;flex-shrink:0}
+.quiz-submit{background:var(--neon);color:#fff;padding:12px 24px;border-radius:var(--radius);font-size:15px;font-weight:700;min-height:48px;-webkit-tap-highlight-color:transparent}
+.quiz-submit:disabled{opacity:.5;cursor:not-allowed}
+.quiz-result{padding:12px;border-radius:var(--radius);font-weight:700;font-size:16px;margin-top:10px;text-align:center}
+.quiz-result.pass{background:rgba(34,197,94,.12);color:var(--success)}
+.quiz-result.fail{background:rgba(239,68,68,.12);color:var(--danger)}
+.quiz-explanation{margin-top:5px;padding:8px 12px;border-radius:var(--radius);background:rgba(34,197,94,.08);border-left:3px solid var(--success);font-size:13px;color:var(--success);font-weight:600}
+.badges-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:10px;margin-top:12px}
+.badge-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:14px 8px;text-align:center}
+.badge-card.earned{border-color:var(--neon);box-shadow:var(--neon-glow)}
+.badge-card .badge-icon{font-size:32px;margin-bottom:4px}
+.badge-card .badge-name{font-weight:700;font-size:12px;color:var(--heading)}
+.badge-card .badge-desc{font-size:11px;color:var(--text-dim);margin-top:2px}
+.badge-card.locked{opacity:.4}
+.stats-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:12px;margin-top:12px}
+.stat-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px;text-align:center}
+.stat-card .stat-val{font-size:28px;font-weight:700;color:var(--neon)}
+.stat-card .stat-label{font-size:12px;color:var(--text-dim);margin-top:2px}
+.notif{position:fixed;top:-80px;right:16px;padding:12px 16px;border-radius:var(--radius);font-size:14px;z-index:999;transition:top .4s ease;box-shadow:var(--shadow);max-width:300px}
+.notif.show{top:62px}
+.notif.xp{background:var(--xp-purple);color:#fff}
+.notif.badge{background:var(--badge-cyan);color:#000}
+.notif.streak{background:var(--streak-red);color:#fff}
+.notif.level{background:var(--neon);color:#fff}
+.notif-title{font-weight:700;font-size:14px}
+.notif-text{font-size:12px;opacity:.85;margin-top:2px}
+.level-up-overlay{position:fixed;inset:0;z-index:500;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,.7)}
+.level-up-overlay.active{display:flex}
+.lvl-box{text-align:center;animation:popIn .5s ease;padding:20px}
+.lvl-icon{font-size:56px}.lvl-title{font-size:32px;font-weight:900;color:var(--neon);margin:6px 0}
+.lvl-name{font-size:18px;color:var(--heading)}
+@keyframes popIn{0%{transform:scale(0) rotate(-10deg);opacity:0}100%{transform:scale(1) rotate(0);opacity:1}}
+#confetti{position:fixed;inset:0;pointer-events:none;z-index:501;overflow:hidden}
+.cert-overlay{display:none;position:fixed;inset:0;z-index:400;background:rgba(0,0,0,.85);align-items:center;justify-content:center;flex-direction:column;padding:16px;overflow-y:auto}
+.cert-overlay.active{display:flex}
+.cert-picker{display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap;justify-content:center}
+.cert-picker button{padding:8px 14px;border-radius:var(--radius);border:2px solid var(--border);background:var(--bg2);color:var(--text);cursor:pointer;font-size:13px;font-family:var(--font);transition:all .2s;min-height:40px}
+.cert-picker button.active{border-color:var(--neon);color:var(--neon);background:var(--neon-dim)}
+.cert-frame{width:min(700px,95vw);min-height:400px;border-radius:12px;overflow:hidden}
+.cert-actions{display:flex;gap:10px;margin-top:12px;flex-wrap:wrap;justify-content:center}
+.cert-actions button{padding:10px 20px;border-radius:var(--radius);border:2px solid var(--border);background:var(--bg2);color:var(--text);cursor:pointer;font-size:13px;font-family:var(--font);min-height:44px}
+.cert-actions button:hover{border-color:var(--neon);color:var(--neon)}
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.6);display:none;align-items:center;justify-content:center;z-index:500;padding:16px}
+.modal-overlay.active{display:flex}
+.modal{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);max-width:600px;width:100%;max-height:85vh;overflow-y:auto;padding:24px;position:relative}
+.modal-close{position:absolute;top:12px;right:12px;font-size:24px;width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:var(--bg3)}
+.site-footer{text-align:center;padding:24px 0;margin-top:32px;border-top:1px solid var(--border);color:var(--text-dim);font-size:12px}
+.zoom-controls{position:fixed;bottom:12px;left:12px;display:flex;gap:4px;z-index:9999}
+.zoom-btn{width:32px;height:32px;border-radius:50%;border:1px solid var(--border);background:var(--bg2);color:var(--text);cursor:pointer;font-size:15px;display:flex;align-items:center;justify-content:center;transition:all .2s}
+.zoom-btn:hover{border-color:var(--neon);color:var(--neon);transform:scale(1.1)}
+.code-block{background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:12px 16px;font-family:var(--mono);font-size:14px;line-height:1.6;overflow-x:auto;margin:10px 0;white-space:pre-wrap}
+.flow-box{display:inline-block;padding:8px 16px;border:2px solid var(--neon);border-radius:8px;margin:4px;font-weight:600;background:var(--neon-dim)}
+.flow-diamond{display:inline-block;padding:8px 16px;border:2px solid var(--warning);transform:rotate(0deg);margin:4px;font-weight:600;background:rgba(245,158,11,.1);border-radius:4px}
+.flow-arrow{color:var(--text-dim);font-size:20px;margin:0 4px}
+@media(max-width:1024px){.sidebar{width:240px}.main{margin-left:240px;padding:20px}}
+@media(max-width:800px){.hamburger{display:flex}.sidebar{transform:translateX(-100%);width:280px}.sidebar.open{transform:translateX(0)}.main{margin-left:0;padding:16px}.header .xp-bar{min-width:60px;max-width:120px}.header .xp-label{font-size:10px}.notif{right:8px;left:8px;max-width:none}.notif.show{top:58px}.badges-grid{grid-template-columns:repeat(auto-fill,minmax(100px,1fr))}.stats-grid{grid-template-columns:repeat(auto-fill,minmax(120px,1fr))}.lesson-card{padding:16px}.quiz-section,.boss-section{padding:16px}.interactive-area{padding:16px}}
+@media(max-width:480px){.header{padding:6px 10px;gap:6px}.header .logo{font-size:15px;gap:6px}.header .logo svg{width:26px;height:26px}.header .xp-bar{display:none}.header .streak-badge{font-size:11px}.welcome h1{font-size:26px}.welcome input{font-size:16px;padding:10px 16px}.module-header h1{font-size:20px}.lesson-card{padding:14px}.lesson-card h3{font-size:16px}.lesson-card p,.lesson-card li{font-size:14px}.quiz-q p{font-size:14px}.quiz-q label{padding:8px 10px;font-size:14px}.ix-item{padding:10px 14px;font-size:16px;min-width:48px}.ix-btn{padding:10px 20px;font-size:15px}.badges-grid{grid-template-columns:repeat(3,1fr);gap:6px}.badge-card{padding:10px 4px}.badge-card .badge-icon{font-size:26px}.badge-card .badge-name{font-size:10px}.stats-grid{grid-template-columns:1fr 1fr;gap:8px}.stat-card .stat-val{font-size:22px}.cert-frame{min-height:300px}.theme-picker{gap:6px}.theme-btn{width:34px;height:34px}}
+@media print{*{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}.header,.sidebar,.notif,.level-up-overlay,#confetti,.zoom-controls{display:none!important}.main{margin-left:0!important;padding:20px!important}.lesson-card{break-inside:avoid;page-break-inside:avoid}}
+.sidebar-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:85}
+.sidebar-overlay.active{display:block}
+
+/* A11y: Print improvements */
+@media print{body{background:#fff!important;color:#000!important}.cert-overlay,.modal-overlay,.level-up-overlay,.theme-overlay,.zoom-controls{display:none!important}.lesson-card,.quiz-section,.boss-section,.interactive-area{break-inside:avoid;page-break-inside:avoid}}
+
+/* Audio/Speech */
+.tts-btn{background:none;border:none;cursor:pointer;font-size:.9em;opacity:.5;transition:all .2s;vertical-align:middle;margin-left:8px;padding:2px 6px;border-radius:4px}
+.tts-btn:hover{opacity:1;background:var(--bg2)}.tts-btn.speaking{opacity:1;color:var(--neon);animation:tts-pulse 1s infinite}
+@keyframes tts-pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.15)}}
+.tts-bar{display:flex;align-items:center;gap:8px;padding:6px 12px;background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);margin:8px 0;font-size:.8rem;flex-wrap:wrap}
+.tts-bar select{background:var(--bg);color:var(--text);border:1px solid var(--border);border-radius:4px;padding:2px 6px;font-size:.78rem}
+.tts-bar button{background:none;border:1px solid var(--border);border-radius:4px;padding:2px 8px;cursor:pointer;color:var(--text);font-size:.8rem}
+.tts-bar button:hover{background:var(--bg)}
+.speech-ex{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:16px;margin:12px 0;text-align:center}
+.speech-ex h4{margin:0 0 8px;font-size:1rem}
+.mic-btn{font-size:1.6em;background:none;border:2px solid var(--neon);border-radius:50%;width:52px;height:52px;cursor:pointer;transition:all .3s;color:var(--text);display:inline-flex;align-items:center;justify-content:center}
+.mic-btn:hover{background:var(--neon);color:var(--bg)}.mic-btn.rec{background:#ef4444;border-color:#ef4444;color:#fff;animation:tts-pulse 1s infinite}
+.sr-res{margin-top:8px;padding:6px 10px;border-radius:4px;font-weight:600;font-size:.85rem;display:inline-block}
+.sr-res.good{background:#22c55e22;color:#22c55e}.sr-res.retry{background:#f59e0b22;color:#f59e0b}
+.sr-na{font-size:.8rem;color:var(--text-dim);margin-top:8px}
+</style>
+</head>
+<body>
+<a href="#mainContent" class="skip-nav">Zum Inhalt springen</a>
+<header class="header" role="banner">
+  <button class="hamburger" onclick="toggleSidebar()" aria-label="Menu">&#9776;</button>
+  <div class="logo">
+    <svg viewBox="0 0 32 32" fill="none" aria-hidden="true"><circle cx="16" cy="16" r="14" fill="var(--neon-dim)" stroke="var(--neon)" stroke-width="1.5"/><text x="16" y="13" text-anchor="middle" font-size="6" font-weight="900" fill="var(--heading)">LOG</text><text x="16" y="23" text-anchor="middle" font-size="7" font-weight="900" fill="var(--neon)">&#9881;</text></svg>
+    <span>LogikLabor</span>
+  </div>
+  <div class="xp-area">
+    <div class="xp-bar"><div class="xp-label"><span id="levelName">Logik-Anf&#228;nger</span><span id="xpText">0 XP</span></div><div class="xp-track"><div class="xp-fill" id="xpFill" style="width:0%"></div></div></div>
+    <div class="streak-badge" id="headerStreak">&#128293; 0</div>
+    <button class="theme-toggle" onclick="toggleMode()" aria-label="Dark/Light umschalten">&#127769;</button>
+  </div>
+</header>
+<div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar()"></div>
+<nav class="sidebar" id="sidebar" role="navigation" aria-label="Module">
+  <h3>Module</h3><div id="sidebarModules"></div>
+  <hr style="border:none;border-top:1px solid var(--border);margin:12px 0">
+  <div class="sidebar-link" onclick="showBadges()">&#127941; Abzeichen</div>
+  <div class="sidebar-link" onclick="showStats()">&#128202; Statistik</div>
+  <div class="sidebar-link" onclick="showCert()">&#127891; Urkunde</div>
+  <hr style="border:none;border-top:1px solid var(--border);margin:12px 0">
+  <div class="sidebar-link" onclick="exportData()">&#128190; Speichern</div>
+  <div class="sidebar-link" onclick="exportFortschritt()">📄 Fortschritt (TXT)</div>
+  <label class="sidebar-link" style="cursor:pointer">&#128194; Laden <input type="file" accept=".json" onchange="importData(event)" style="display:none"></label>
+  <div class="sidebar-link" onclick="if(confirm('Wirklich alles zur\u00fccksetzen?')){localStorage.removeItem(STORAGE_KEY);location.reload()}" style="color:var(--danger)">&#128465; Zur&#252;cksetzen</div>
+  <div style="padding:12px 8px 4px;border-top:1px solid var(--border);margin-top:12px;font-size:11px;color:var(--text-dim)">
+    <a onclick="showImpressum()" style="cursor:pointer;color:var(--text-dim)">Impressum</a> &middot;
+    <a onclick="showDatenschutz()" style="cursor:pointer;color:var(--text-dim)">Datenschutz</a>
+  </div>
+</nav>
+<main class="main" id="mainContent">
+  <div class="welcome" id="welcomeScreen">
+    <div class="hero-emoji" id="heroEmoji">&#129504;</div>
+    <h1 id="welcomeTitle">LogikLabor</h1>
+    <p class="sub" id="welcomeSub">Entdecke informatisches Denken &#8212; mit Logik, Mustern und Algorithmen!</p>
+    <input type="text" id="nameInput" placeholder="Dein Name" maxlength="24" aria-label="Dein Name" oninput="document.getElementById('startBtn').disabled=!this.value.trim()">
+    <button class="start-btn" id="startBtn" disabled onclick="startApp()">Los geht's!</button>
+    <div class="theme-picker" id="themePicker"></div>
+  </div>
+  <div id="moduleContent" style="display:none"></div>
+  <div id="badgesView" style="display:none"></div>
+  <div id="statsView" style="display:none"></div>
+</main>
+<div class="notif" id="notif" role="status" aria-live="polite" aria-atomic="true"><div class="notif-title" id="notifTitle"></div><div class="notif-text" id="notifText"></div></div>
+<div class="level-up-overlay" id="levelUpOverlay"><div class="lvl-box" id="levelUpBox"></div></div>
+<div id="confetti"></div>
+<div class="cert-overlay" id="certOverlay" role="dialog" aria-label="Urkunde" aria-modal="true">
+  <div class="cert-picker" id="certPicker"></div><div class="cert-frame" id="certFrame"></div>
+  <div class="cert-actions"><button onclick="printCert()">&#128424; Drucken / PDF</button><button onclick="closeCert()">Schlie&#223;en</button></div>
+</div>
+<div class="modal-overlay" id="impressumOverlay">
+  <div class="modal">
+    <button class="modal-close" onclick="document.getElementById('impressumOverlay').classList.remove('active')">&times;</button>
+    <h2>Impressum</h2>
+    <p><strong>&copy; 2026 GZ AI Stacks &#8212; Gerd Zimmermann</strong></p>
+    <p>Diese Lern-App wurde mit Claude Code (Anthropic) entwickelt.</p>
+  </div>
+</div>
+<div class="modal-overlay" id="datenschutzOverlay">
+  <div class="modal">
+    <button class="modal-close" onclick="document.getElementById('datenschutzOverlay').classList.remove('active')">&times;</button>
+    <h2>Datenschutzerkl&#228;rung</h2>
+    <p>Diese App speichert Daten <strong>ausschlie&#223;lich lokal</strong> auf Ihrem Ger&#228;t.</p>
+    <ul>
+      <li>Keine Cookies</li>
+      <li>Kein Tracking oder Analytics</li>
+      <li>Keine externen Ressourcen</li>
+      <li>Keine Registrierung</li>
+      <li>Alle Daten verbleiben auf Ihrem Ger&#228;t</li>
+    </ul>
+    <p>Sie k&#246;nnen Ihre gespeicherten Daten jederzeit &#252;ber die &#8222;Zur&#252;cksetzen&#8220;-Funktion l&#246;schen.</p>
+  </div>
+</div>
+<div class="zoom-controls" role="toolbar" aria-label="Zoom-Steuerung">
+<button class="zoom-btn" onclick="zoomOut()" title="Verkleinern" aria-label="Verkleinern">&#8722;</button>
+<button class="zoom-btn" onclick="zoomReset()" title="Zoom zur&#252;cksetzen" aria-label="Zoom zur&#252;cksetzen" style="font-size:10px"><span id="zoomLvl">100%</span></button>
+<button class="zoom-btn" onclick="zoomIn()" title="Vergr&#246;&#223;ern" aria-label="Vergr&#246;&#223;ern">+</button>
+</div>
+<script>
+
+function showImpressum(){document.getElementById('impressumOverlay').classList.add('active')}
+function showDatenschutz(){document.getElementById('datenschutzOverlay').classList.add('active')}
+
+
+// === Audio (TTS) ===
+const _synth=window.speechSynthesis,_LANG='de-DE';let _ttsOn=false,_ttsRate=1,_ttsTimer=null;
+function speakLesson(i){if(_ttsOn){stopTTS();return}const c=document.querySelectorAll('.lesson-card');if(!c[i]||!_synth)return;stopTTS();const u=new SpeechSynthesisUtterance(c[i].innerText);u.lang=_LANG;u.rate=_ttsRate;u.onstart=()=>{_ttsOn=true;updTTSUI();startTTSTimer()};u.onend=()=>{_ttsOn=false;updTTSUI();clearTTSTimer()};u.onerror=()=>{_ttsOn=false;updTTSUI();clearTTSTimer()};_synth.speak(u);showTTSBar()}
+function speakText(t,lang){if(!_synth)return;stopTTS();const u=new SpeechSynthesisUtterance(t);u.lang=lang||_LANG;u.rate=_ttsRate;u.onstart=()=>{_ttsOn=true;updTTSUI();startTTSTimer()};u.onend=()=>{_ttsOn=false;updTTSUI();clearTTSTimer()};u.onerror=()=>{_ttsOn=false;updTTSUI();clearTTSTimer()};_synth.speak(u)}
+function stopTTS(){if(_synth){_synth.cancel()}_ttsOn=false;updTTSUI();clearTTSTimer()}
+function updTTSUI(){document.querySelectorAll('.tts-btn').forEach(b=>b.classList.toggle('speaking',_ttsOn))}
+function setTTSRate(r){_ttsRate=parseFloat(r)}
+function startTTSTimer(){clearTTSTimer();_ttsTimer=setInterval(()=>{if(_synth&&_synth.speaking&&!_synth.paused){_synth.pause();_synth.resume()}},10000)}
+function clearTTSTimer(){if(_ttsTimer){clearInterval(_ttsTimer);_ttsTimer=null}}
+function showTTSBar(){if(document.getElementById('ttsBar'))return;const mc=document.getElementById('moduleContent');if(!mc)return;const b=document.createElement('div');b.className='tts-bar';b.id='ttsBar';b.innerHTML='\u{1F50A} <select onchange="setTTSRate(this.value)"><option value="0.7">Langsam</option><option value="1" selected>Normal</option><option value="1.3">Schnell</option></select> <button onclick="stopTTS()">\u25A0 Stopp</button>';mc.prepend(b)}
+
+
+/* === Fortschritt-Export (TXT) === */
+function exportFortschritt(){
+  var t=document.title.replace(/\s*[\u2014\u2013|].*/,'').trim();
+  var d=new Date();
+  var dd=String(d.getDate()).padStart(2,'0');
+  var mm=String(d.getMonth()+1).padStart(2,'0');
+  var yyyy=d.getFullYear();
+  var datum=dd+'.'+mm+'.'+yyyy;
+  var datumFile=yyyy+'-'+mm+'-'+dd;
+
+  var mc=state.modulesCompleted||[];
+  var total=modules.length;
+  var done=mc.length;
+
+  var lvl=0;
+  for(var i=LEVELS.length-1;i>=0;i--){if(state.xp>=LEVELS[i].xp){lvl=i;break;}}
+  var lvlName=LEVELS[lvl]?LEVELS[lvl].name:'';
+
+  var sep='\u2550'.repeat(42);
+  var sep2='\u2500'.repeat(42);
+  var lines=[];
+  lines.push(sep);
+  lines.push('  LERNFORTSCHRITT \u2014 '+t);
+  lines.push(sep);
+  lines.push('');
+  lines.push('  Sch\u00FCler:   '+(state.name||'(kein Name)'));
+  lines.push('  Datum:     '+datum);
+  lines.push('  Level:     '+(lvl+1)+' \u2014 '+lvlName+' ('+state.xp+' XP)');
+  lines.push('  Streak:    '+(state.streak||0)+' Tage in Folge');
+  lines.push('');
+  lines.push(sep2);
+  lines.push('  MODULE ('+done+'/'+total+' abgeschlossen)');
+  lines.push(sep2);
+  lines.push('');
+
+  for(var m=0;m<modules.length;m++){
+    var mod=modules[m];
+    var isDone=mc.indexOf(m)!==-1;
+    var icon=isDone?'\u2705':'\u2B1C';
+    var line='  '+icon+' Modul '+(m+1)+': '+mod.title;
+    if(isDone){
+      var qs=state.quizResults&&state.quizResults[m]!=null?state.quizResults[m]:'?';
+      var bs=state.bossResults&&state.bossResults[m]!=null?state.bossResults[m]:'?';
+      line+='\n        Quiz: '+qs+'/5 | Boss: '+bs+'/3';
+    }
+    lines.push(line);
+  }
+
+  var earnedBadges=(state.badges||[]);
+  lines.push('');
+  lines.push(sep2);
+  lines.push('  ABZEICHEN ('+earnedBadges.length+'/'+BADGES.length+')');
+  lines.push(sep2);
+  lines.push('');
+  if(earnedBadges.length===0){
+    lines.push('  (noch keine)');
+  }else{
+    for(var b=0;b<BADGES.length;b++){
+      if(earnedBadges.indexOf(BADGES[b].id)!==-1){
+        lines.push('  '+BADGES[b].icon+' '+BADGES[b].name);
+      }
+    }
+  }
+
+  lines.push('');
+  lines.push(sep);
+  lines.push('  (c) 2026 GZ AI Stacks \u2014 Gerd Zimmermann');
+  lines.push(sep);
+
+  var txt=lines.join('\n');
+  var safeName=(state.name||'Schueler').replace(/[^a-zA-Z0-9\u00C0-\u017F]/g,'_');
+  var fileName='Fortschritt_'+t.replace(/[^a-zA-Z0-9\u00C0-\u017F]/g,'_')+'_'+safeName+'_'+datumFile+'.txt';
+  var a=document.createElement('a');
+  a.download=fileName;
+  a.href=URL.createObjectURL(new Blob([txt],{type:'text/plain;charset=utf-8'}));
+  a.click();
+}
+
+const _qk=[0x4A,0x7F,0x2B,0x61,0x5C,0x3E,0x18,0x73];
+function _d(h,i){return h^_qk[i%_qk.length]}
+
+const LEVELS=[
+{name:'Logik-Anf\u00e4nger',xp:0},{name:'Denk-Starter',xp:40},{name:'Muster-Finder',xp:100},
+{name:'Code-Entdecker',xp:180},{name:'Algorithmen-Kenner',xp:280},{name:'Schleifen-Meister',xp:400},
+{name:'Variablen-Jongleur',xp:540},{name:'Debug-Profi',xp:700},{name:'Logik-Experte',xp:880},
+{name:'Denk-Akrobat',xp:1080},{name:'Code-Held',xp:1300},{name:'Algorithmen-Champion',xp:1540},
+{name:'Muster-K\u00fcnstler',xp:1800},{name:'Logik-Virtuose',xp:2080},{name:'Code-Meister',xp:2380},
+{name:'Denk-Zauberer',xp:2700},{name:'Logik-Genie',xp:3040},{name:'Code-Legende',xp:3400},
+{name:'Informatik-K\u00f6nig',xp:3780},{name:'Logik-Superheld',xp:4200}
+];
+
+const BADGES=[
+{id:'m0',name:'Algorithmen-Profi',icon:'\uD83D\uDCCB',desc:'Modul 1 abgeschlossen'},
+{id:'m1',name:'Muster-Profi',icon:'\uD83D\uDD0D',desc:'Modul 2 abgeschlossen'},
+{id:'m2',name:'Bedingungs-Profi',icon:'\u2753',desc:'Modul 3 abgeschlossen'},
+{id:'m3',name:'Schleifen-Profi',icon:'\uD83D\uDD01',desc:'Modul 4 abgeschlossen'},
+{id:'m4',name:'Variablen-Profi',icon:'\uD83D\uDCE6',desc:'Modul 5 abgeschlossen'},
+{id:'m5',name:'Debug-Profi',icon:'\uD83D\uDC1B',desc:'Modul 6 abgeschlossen'},
+{id:'m6',name:'Zerlegungs-Profi',icon:'\uD83E\uDDE9',desc:'Modul 7 abgeschlossen'},
+{id:'m7',name:'Abstraktions-Profi',icon:'\uD83C\uDFA8',desc:'Modul 8 abgeschlossen'},
+{id:'m8',name:'Flussdiagramm-Profi',icon:'\uD83D\uDCC8',desc:'Modul 9 abgeschlossen'},
+{id:'m9',name:'Logik-Meister',icon:'\uD83E\uDDE0',desc:'Modul 10 abgeschlossen'},
+{id:'first_quiz',name:'Quiz-Neuling',icon:'\u2753',desc:'Erstes Quiz bestanden'},
+{id:'perfect_quiz',name:'Perfektionist',icon:'\uD83D\uDC8E',desc:'Quiz mit 5/5 bestanden'},
+{id:'first_boss',name:'Boss-Bezwinger',icon:'\uD83D\uDC51',desc:'Erste Boss-Challenge bestanden'},
+{id:'all_bosses',name:'Endgegner',icon:'\uD83C\uDFC6',desc:'Alle Boss-Challenges bestanden'},
+{id:'streak3',name:'Durchstarter',icon:'\uD83D\uDD25',desc:'3 Tage in Folge gelernt'},
+{id:'streak7',name:'Wochenkrieger',icon:'\u2694\uFE0F',desc:'7 Tage in Folge gelernt'},
+{id:'half_done',name:'Halbzeit',icon:'\u23F3',desc:'5 Module abgeschlossen'},
+{id:'speed_quiz',name:'Blitz-Denker',icon:'\u26A1',desc:'Quiz in unter 60 Sekunden'},
+{id:'explorer',name:'Entdecker',icon:'\uD83D\uDDFA\uFE0F',desc:'Alle Module angesehen'},
+{id:'graduate',name:'Absolvent',icon:'\uD83C\uDF93',desc:'Alle 10 Module abgeschlossen'}
+];
+
+const THEME_CONFIG={
+cyber:{name:'Cyber Neon',emoji:'\uD83D\uDDA5\uFE0F',color:'#3b82f6'},
+retro:{name:'Retro Arcade',emoji:'\uD83D\uDD79\uFE0F',color:'#ffd700'},
+nature:{name:'Nature Forest',emoji:'\uD83C\uDF33',color:'#4ade80'},
+space:{name:'Deep Space',emoji:'\uD83D\uDE80',color:'#c084fc'},
+comic:{name:'Comic Pop',emoji:'\uD83D\uDCA5',color:'#ff6b6b'},
+sketchy:{name:'Sketchy',emoji:'\u270D\uFE0F',color:'#d97706'},
+'nature-code':{name:'Nature Code',emoji:'\uD83C\uDF3F',color:'#10b981'},
+glass:{name:'Glasmorphism',emoji:'\uD83D\uDCA0',color:'#00d9ff'}
+};
+
+const modules=[
+// M0: Algorithmen im Alltag
+{id:0,title:'Algorithmen im Alltag',icon:'\uD83D\uDCCB',duration:'20 Min.',description:'Lerne, was Algorithmen sind und wie du sie t\u00e4glich nutzt!',
+lessons:[
+{title:'Was ist ein Algorithmus?',content:'<p>Ein <strong>Algorithmus</strong> ist eine genaue Schritt-f\u00fcr-Schritt-Anleitung, um ein Problem zu l\u00f6sen.</p><div class="info-box">\uD83D\uDCCB <strong>Beispiel: Z\u00e4hneputzen</strong><br>1. Zahnb\u00fcrste nehmen<br>2. Zahnpasta drauf<br>3. Oben links putzen<br>4. Oben rechts putzen<br>5. Unten putzen<br>6. Ausspulen</div><p>Wichtig: Die <strong>Reihenfolge</strong> der Schritte ist entscheidend!</p>'},
+{title:'Algorithmen \u00fcberall',content:'<p>Du benutzt <strong>jeden Tag</strong> Algorithmen:</p><ul><li>Ein <strong>Rezept</strong> beim Kochen</li><li>Der <strong>Schulweg</strong> (links, rechts, geradeaus...)</li><li>Ein <strong>Brettspiel</strong> nach Regeln spielen</li></ul><div class="info-box">\uD83D\uDCA1 <strong>Merke:</strong> Ein guter Algorithmus ist <strong>eindeutig</strong> (jeder versteht ihn gleich), <strong>vollst\u00e4ndig</strong> (kein Schritt fehlt) und <strong>endlich</strong> (er h\u00f6rt irgendwann auf).</div>'}
+],
+quiz:[
+{q:'Was ist ein Algorithmus?',a:['Ein Computer','Eine Schritt-f\u00fcr-Schritt-Anleitung','Ein Programmierfehler','Eine Webseite'],_h:0x4B},
+{q:'Was muss ein guter Algorithmus sein?',a:['Schnell und bunt','Lang und kompliziert','Eindeutig und vollst\u00e4ndig','Geheim und versteckt'],_h:0x7D},
+{q:'Welches ist ein Algorithmus im Alltag?',a:['Ein Foto','Ein Kochrezept','Ein Buch lesen','Ein Lied h\u00f6ren'],_h:0x2A},
+{q:'Warum ist die Reihenfolge bei Algorithmen wichtig?',a:['Ist sie nicht','Weil es besser aussieht','Weil sonst das Ergebnis falsch sein kann','Weil Computer das so wollen'],_h:0x63},
+{q:'Was bedeutet "endlich" bei Algorithmen?',a:['Er l\u00e4uft unendlich','Er hat nur 3 Schritte','Er h\u00f6rt irgendwann auf','Er ist sehr klein'],_h:0x5E}
+],
+boss:[
+{q:'Du willst ein Butterbrot machen. Was kommt zuerst?',a:['Brot schneiden','Butter draufstreichen','Brot aus der T\u00fcte nehmen','Essen'],_h:0x48},
+{q:'Ein Algorithmus hat 5 Schritte. Schritt 3 fehlt. Was passiert?',a:['Nichts, geht trotzdem','Das Ergebnis kann falsch sein','Der Computer explodiert','Man f\u00e4ngt von vorne an'],_h:0x7E},
+{q:'Welche Eigenschaft hat ein Algorithmus NICHT?',a:['Eindeutig','Endlich','Zuf\u00e4llig','Vollst\u00e4ndig'],_h:0x29}
+]},
+
+// M1: Muster erkennen
+{id:1,title:'Muster erkennen',icon:'\uD83D\uDD0D',duration:'20 Min.',description:'Entdecke Muster in Zahlen, Formen und Farben!',
+lessons:[
+{title:'Muster sind \u00fcberall',content:'<p><strong>Muster</strong> sind Regelm\u00e4\u00dfigkeiten, die sich wiederholen.</p><div class="info-box">\uD83D\uDD0D <strong>Beispiele:</strong><br>Zahlen: 2, 4, 6, 8, ... (immer +2)<br>Farben: rot, blau, rot, blau, ...<br>Formen: \u25CB \u25A1 \u25B3 \u25CB \u25A1 \u25B3 ...</div><p>Wenn du ein Muster erkennst, kannst du <strong>vorhersagen</strong>, was als N\u00e4chstes kommt!</p>'},
+{title:'Muster in der Informatik',content:'<p>Computer nutzen Muster, um <strong>schneller</strong> zu arbeiten:</p><ul><li><strong>Bilderkennung:</strong> Muster in Fotos finden</li><li><strong>Spam-Filter:</strong> Muster in b\u00f6sen E-Mails erkennen</li><li><strong>Wettervorhersage:</strong> Muster im Wetter finden</li></ul><div class="info-box">\uD83D\uDCA1 <strong>Tipp:</strong> Suche immer nach der <strong>Regel</strong> hinter dem Muster. Was \u00e4ndert sich? Was bleibt gleich?</div>'}
+],
+quiz:[
+{q:'Was kommt als N\u00e4chstes? 2, 4, 6, 8, ...',a:['9','12','10','11'],_h:0x48},
+{q:'Welches Muster ist hier? A, B, A, B, A, ...',a:['Immer A','A und B wechseln sich ab','Zufall','Nur B'],_h:0x7E},
+{q:'Was kommt? \u25CB \u25A1 \u25B3 \u25CB \u25A1 ...',a:['\u25CB','\u25A1','\u25B3','\u2606'],_h:0x29},
+{q:'Welches Muster steckt in: 1, 3, 5, 7?',a:['Immer +1','Immer +3','Immer +2','Immer x2'],_h:0x63},
+{q:'Wozu nutzen Computer Muster?',a:['Zum Spielen','Zum Erkennen und Vorhersagen','Zum Kaputtgehen','Zum Laut sein'],_h:0x5D}
+],
+boss:[
+{q:'Was kommt? 1, 4, 7, 10, ...',a:['13','12','11','14'],_h:0x4A},
+{q:'Setze fort: rot, rot, blau, rot, rot, blau, ...',a:['blau','rot','gr\u00fcn','gelb'],_h:0x7E},
+{q:'Was kommt? 2, 4, 8, 16, ...',a:['20','24','32','18'],_h:0x29}
+]},
+
+// M2: Bedingungen (Wenn-Dann)
+{id:2,title:'Bedingungen (Wenn-Dann)',icon:'\u2753',duration:'25 Min.',description:'Triff Entscheidungen mit Wenn-Dann-Regeln!',
+lessons:[
+{title:'Wenn ... Dann ...',content:'<p>Eine <strong>Bedingung</strong> pr\u00fcft etwas und entscheidet, was passiert.</p><div class="info-box">\u2753 <strong>Beispiel:</strong><br>WENN es regnet, DANN nimm einen Regenschirm.<br>SONST nimm eine Sonnenbrille.</div><p>Computer treffen st\u00e4ndig solche Entscheidungen!</p><div class="code-block">WENN Ampel = gr\u00fcn DANN\n  Gehe \u00fcber die Stra\u00dfe\nSONST\n  Warte</div>'},
+{title:'Verschachtelte Bedingungen',content:'<p>Manchmal braucht man <strong>mehrere Bedingungen</strong> nacheinander:</p><div class="code-block">WENN Temperatur > 30 DANN\n  \u201eEs ist hei\u00df!\u201c\nSONST WENN Temperatur > 15 DANN\n  \u201eAngenehm!\u201c\nSONST\n  \u201eEs ist kalt!\u201c</div><div class="info-box">\uD83D\uDCA1 Das ist wie ein <strong>Entscheidungsbaum</strong> \u2014 an jeder Gabelung w\u00e4hlst du einen Weg!</div>'}
+],
+quiz:[
+{q:'WENN es regnet DANN Schirm. Es regnet. Was tust du?',a:['Sonnenbrille','Schirm nehmen','Nichts','Rennen'],_h:0x4B},
+{q:'Was bedeutet SONST in einer Bedingung?',a:['Immer ausf\u00fchren','Wenn die Bedingung NICHT erf\u00fcllt ist','Niemals ausf\u00fchren','Zweimal pr\u00fcfen'],_h:0x7E},
+{q:'WENN Note = 1 DANN "Super!" \u2014 Note ist 3. Was passiert?',a:['"Super!"','Nichts (oder SONST-Teil)','Fehler','Nochmal pr\u00fcfen'],_h:0x2A},
+{q:'Wieviele Wege kann eine einfache Bedingung haben?',a:['1','3','2 (Wenn / Sonst)','Unendlich'],_h:0x63},
+{q:'Wo nutzt du Bedingungen im Alltag?',a:['Beim Schlafen','Bei jeder Entscheidung','Nur am Computer','Nie'],_h:0x5D}
+],
+boss:[
+{q:'WENN Alter >= 6 DANN Schule SONST Kita. Du bist 5. Wohin?',a:['Schule','Kita','Beides','Nirgends'],_h:0x4B},
+{q:'Wie viele SONST-WENN Zweige kann eine Bedingung haben?',a:['Nur einen','Nur zwei','Beliebig viele','Keinen'],_h:0x7D},
+{q:'Was pr\u00fcft eine Bedingung?',a:['Ob etwas wahr oder falsch ist','Wie schnell der Computer ist','Die Uhrzeit','Den Speicher'],_h:0x2B}
+]},
+
+// M3: Schleifen (Wiederholungen)
+{id:3,title:'Schleifen (Wiederholungen)',icon:'\uD83D\uDD01',duration:'25 Min.',description:'Wiederhole Anweisungen automatisch mit Schleifen!',
+lessons:[
+{title:'Was sind Schleifen?',content:'<p>Eine <strong>Schleife</strong> wiederholt Anweisungen, bis eine Bedingung erf\u00fcllt ist.</p><div class="info-box">\uD83D\uDD01 <strong>Beispiel:</strong><br>WIEDERHOLE 5 MAL:<br>&nbsp;&nbsp;Klatsche in die H\u00e4nde<br>ENDE</div><p>Statt 5x dasselbe zu schreiben, nutzen wir eine Schleife!</p><div class="code-block">WIEDERHOLE SOLANGE Teller schmutzig:\n  Sp\u00fcle den Teller\nENDE</div>'},
+{title:'Z\u00e4hlschleifen und Bedingungsschleifen',content:'<p>Es gibt zwei Arten von Schleifen:</p><ul><li><strong>Z\u00e4hlschleife:</strong> WIEDERHOLE 10 MAL \u2014 l\u00e4uft genau 10x</li><li><strong>Bedingungsschleife:</strong> WIEDERHOLE SOLANGE ... \u2014 l\u00e4uft, bis die Bedingung falsch wird</li></ul><div class="info-box">\u26A0\uFE0F <strong>Achtung:</strong> Eine Schleife, die <strong>nie aufh\u00f6rt</strong>, nennt man <strong>Endlosschleife</strong>. Das ist meistens ein Fehler!</div>'}
+],
+quiz:[
+{q:'Was macht eine Schleife?',a:['Sie l\u00f6scht Daten','Sie wiederholt Anweisungen','Sie zeichnet Bilder','Sie speichert Dateien'],_h:0x4B},
+{q:'WIEDERHOLE 3 MAL: Springe. Wie oft springst du?',a:['1 mal','2 mal','3 mal','Unendlich'],_h:0x7D},
+{q:'Was ist eine Endlosschleife?',a:['Eine besonders schnelle Schleife','Eine Schleife die nie aufh\u00f6rt','Eine leere Schleife','Eine kurze Schleife'],_h:0x2A},
+{q:'WIEDERHOLE SOLANGE hungrig: Iss etwas. Wann h\u00f6rt es auf?',a:['Nie','Nach 5 mal','Wenn du satt bist','Sofort'],_h:0x63},
+{q:'Warum sind Schleifen n\u00fctzlich?',a:['Man spart Schreibarbeit','Der Computer wird schneller','Man braucht weniger Strom','Nur f\u00fcr Profis'],_h:0x5C}
+],
+boss:[
+{q:'WIEDERHOLE 4 MAL: Gehe 2 Schritte. Wie viele Schritte insgesamt?',a:['8','6','4','2'],_h:0x4A},
+{q:'Welche Schleife z\u00e4hlt bis zu einer bestimmten Zahl?',a:['Z\u00e4hlschleife','Bedingungsschleife','Endlosschleife','Keine'],_h:0x7F},
+{q:'x = 1. WIEDERHOLE SOLANGE x < 4: x = x + 1. Was ist x am Ende?',a:['3','5','4','1'],_h:0x29}
+]},
+
+// M4: Variablen und Daten
+{id:4,title:'Variablen und Daten',icon:'\uD83D\uDCE6',duration:'25 Min.',description:'Lerne, wie Computer sich Dinge merken!',
+lessons:[
+{title:'Was sind Variablen?',content:'<p>Eine <strong>Variable</strong> ist wie eine beschriftete Schachtel, in der du etwas aufbewahren kannst.</p><div class="info-box">\uD83D\uDCE6 <strong>Beispiel:</strong><br>Name = \u201eLisa\u201c<br>Alter = 9<br>Lieblingsfarbe = \u201eblau\u201c</div><p>Du kannst den <strong>Inhalt</strong> jederzeit \u00e4ndern:</p><div class="code-block">punkte = 0\npunkte = punkte + 10\n// punkte ist jetzt 10</div>'},
+{title:'Datentypen',content:'<p>Variablen k\u00f6nnen verschiedene <strong>Arten von Daten</strong> speichern:</p><ul><li><strong>Zahlen:</strong> 42, 3.14, -7</li><li><strong>Text:</strong> \u201eHallo Welt\u201c</li><li><strong>Wahrheitswerte:</strong> WAHR oder FALSCH</li><li><strong>Listen:</strong> [\u201eApfel\u201c, \u201eBanane\u201c, \u201eKirsche\u201c]</li></ul><div class="info-box">\uD83D\uDCA1 <strong>Tipp:</strong> W\u00e4hle immer einen <strong>guten Namen</strong> f\u00fcr deine Variablen. \u201ealter\u201c ist besser als \u201ex\u201c!</div>'}
+],
+quiz:[
+{q:'Was ist eine Variable?',a:['Ein Programmierfehler','Ein Speicherplatz mit Namen','Eine Schleife','Ein Bildschirm'],_h:0x4B},
+{q:'x = 5. x = x + 3. Was ist x?',a:['5','3','8','53'],_h:0x7D},
+{q:'Welcher Datentyp ist "Hallo"?',a:['Zahl','Wahrheitswert','Text','Liste'],_h:0x29},
+{q:'name = "Max". Was speichert die Variable?',a:['Eine Zahl','Den Text Max','WAHR','Nichts'],_h:0x60},
+{q:'Warum sind gute Variablennamen wichtig?',a:['F\u00fcr die Farbe','Damit man den Code versteht','F\u00fcr die Geschwindigkeit','Sind nicht wichtig'],_h:0x5D}
+],
+boss:[
+{q:'a = 3, b = 4. c = a + b. Was ist c?',a:['7','34','12','1'],_h:0x4A},
+{q:'Was ist KEIN Datentyp?',a:['Zahl','Text','Schleife','Wahrheitswert'],_h:0x7D},
+{q:'x = 10. x = x - 4. x = x * 2. Was ist x?',a:['8','16','12','6'],_h:0x29}
+]},
+
+// M5: Fehler finden (Debugging)
+{id:5,title:'Fehler finden (Debugging)',icon:'\uD83D\uDC1B',duration:'25 Min.',description:'Werde zum Bug-J\u00e4ger und finde Programmfehler!',
+lessons:[
+{title:'Was ist Debugging?',content:'<p><strong>Debugging</strong> bedeutet: Fehler (\u201eBugs\u201c) in einem Programm finden und beheben.</p><div class="info-box">\uD83D\uDC1B <strong>Fun Fact:</strong> 1947 fand Grace Hopper eine echte <strong>Motte</strong> (Bug) in einem Computer. Seitdem hei\u00dfen Programmfehler \u201eBugs\u201c!</div><p>Typische Fehler:</p><ul><li><strong>Reihenfolge falsch:</strong> Schritte vertauscht</li><li><strong>Schritt fehlt:</strong> Etwas vergessen</li><li><strong>Falscher Wert:</strong> Falsche Zahl oder Text</li></ul>'},
+{title:'Wie findet man Bugs?',content:'<p>So gehst du beim Debugging vor:</p><ol><li><strong>Schritt f\u00fcr Schritt durchgehen</strong> \u2014 jeden Schritt einzeln pr\u00fcfen</li><li><strong>Erwartung vs. Ergebnis</strong> \u2014 was sollte passieren? Was passiert wirklich?</li><li><strong>Den Fehler eingrenzen</strong> \u2014 welcher Schritt ist falsch?</li></ol><div class="info-box">\uD83D\uDCA1 <strong>Tipp:</strong> Lies den Code laut vor! Oft finden wir Fehler, wenn wir sie <strong>aussprechen</strong>.</div>'}
+],
+quiz:[
+{q:'Was bedeutet "Debugging"?',a:['K\u00e4fer sammeln','Fehler finden und beheben','Programme l\u00f6schen','Computer reparieren'],_h:0x4B},
+{q:'Warum hei\u00dfen Fehler "Bugs"?',a:['Weil Computer summen','Wegen einer Motte in einem Computer','Weil Programmierer Insekten m\u00f6gen','Zufall'],_h:0x7E},
+{q:'Schritt 1: Milch, Schritt 2: Schokolade, Schritt 3: Tasse nehmen. Was ist falsch?',a:['Alles richtig','Schritt 3 m\u00fcsste zuerst kommen','Zu wenig Schritte','Milch ist falsch'],_h:0x2A},
+{q:'Wie findest du einen Bug am besten?',a:['Alles l\u00f6schen','Schritt f\u00fcr Schritt pr\u00fcfen','Raten','Neu anfangen'],_h:0x60},
+{q:'x = 5. x = x + 1. Ergebnis soll 7 sein. Wo ist der Bug?',a:['x sollte 6 starten','Es m\u00fcsste x + 2 sein','x = 5 ist falsch','Kein Bug'],_h:0x5D}
+],
+boss:[
+{q:'Ein Programm gibt 15 statt 20 aus. punkte = 10, punkte = punkte + 5. Fix?',a:['punkte + 5 zu punkte + 10','punkte = 20','Nichts \u00e4ndern','Programm l\u00f6schen'],_h:0x4A},
+{q:'Was ist der erste Schritt beim Debugging?',a:['L\u00f6schen','Den Fehler beschreiben','Aufgeben','Neues Programm'],_h:0x7E},
+{q:'WIEDERHOLE 3 MAL: punkte = punkte + 1. Start: punkte = 0. Ergebnis?',a:['1','0','3','4'],_h:0x29}
+]},
+
+// M6: Zerlegung (Dekomposition)
+{id:6,title:'Zerlegung (Dekomposition)',icon:'\uD83E\uDDE9',duration:'25 Min.',description:'Lerne, grosse Probleme in kleine Teile zu zerlegen!',
+lessons:[
+{title:'Was ist Dekomposition?',content:'<p><strong>Dekomposition</strong> bedeutet: Ein gro\u00dfes Problem in <strong>kleinere Teilprobleme</strong> zerlegen.</p><div class="info-box">\uD83E\uDDE9 <strong>Beispiel: Kuchen backen</strong><br>1. Zutaten besorgen<br>2. Teig machen<br>3. Backen<br>4. Verzieren<br>Jeder Schritt ist ein eigenes kleines Problem!</div><p>Kleine Probleme sind <strong>einfacher</strong> zu l\u00f6sen als ein gro\u00dfes!</p>'},
+{title:'Dekomposition in der Praxis',content:'<p>Beispiel: <strong>Ein Computerspiel bauen</strong></p><ul><li>Teilproblem 1: Spielfigur zeichnen</li><li>Teilproblem 2: Bewegung programmieren</li><li>Teilproblem 3: Hindernisse bauen</li><li>Teilproblem 4: Punkte z\u00e4hlen</li></ul><div class="info-box">\uD83D\uDCA1 <strong>Merke:</strong> Zuerst das gro\u00dfe Problem verstehen, dann in Teile zerlegen, dann jeden Teil einzeln l\u00f6sen!</div>'}
+],
+quiz:[
+{q:'Was ist Dekomposition?',a:['Etwas kaputt machen','Ein Problem in Teile zerlegen','Etwas zusammenbauen','Etwas l\u00f6schen'],_h:0x4B},
+{q:'Warum zerlegt man Probleme?',a:['Weil es lustig ist','Weil kleine Probleme einfacher sind','Weil Computer das brauchen','Weil es Pflicht ist'],_h:0x7E},
+{q:'Welches ist ein Teilproblem von "Zimmer aufr\u00e4umen"?',a:['Fussball spielen','Bett machen','Hausaufgaben machen','Fernsehen'],_h:0x2A},
+{q:'Was kommt bei Dekomposition zuerst?',a:['Sofort anfangen','Das Problem verstehen','Aufgeben','Hilfe rufen'],_h:0x60},
+{q:'Ein Referat erstellen: Was ist KEIN Teilproblem?',a:['Thema recherchieren','Folien gestalten','Vortragen','Pizza bestellen'],_h:0x5F}
+],
+boss:[
+{q:'Du planst eine Geburtstagsparty. Was ist ein gutes erstes Teilproblem?',a:['G\u00e4ste einladen','Alles gleichzeitig machen','Abwarten','Nichts planen'],_h:0x4A},
+{q:'Wie viele Teile sollte man bei Dekomposition erstellen?',a:['Genau 3','Genau 10','So viele wie sinnvoll','Nur 1'],_h:0x7D},
+{q:'Was ist der Vorteil von Dekomposition?',a:['Es dauert l\u00e4nger','\u00dcbersicht und einfacheres L\u00f6sen','Es wird komplizierter','Kein Vorteil'],_h:0x2A}
+]},
+
+// M7: Abstraktion
+{id:7,title:'Abstraktion',icon:'\uD83C\uDFA8',duration:'25 Min.',description:'Lerne, das Wesentliche zu erkennen und Unwichtiges wegzulassen!',
+lessons:[
+{title:'Was ist Abstraktion?',content:'<p><strong>Abstraktion</strong> bedeutet: Sich auf das <strong>Wichtige</strong> konzentrieren und <strong>unwichtige Details</strong> weglassen.</p><div class="info-box">\uD83C\uDFA8 <strong>Beispiel: Stadtplan</strong><br>Ein Stadtplan zeigt Stra\u00dfen, aber NICHT jeden Baum oder jedes Fenster. Er zeigt nur, was zum <strong>Navigieren</strong> wichtig ist!</div><p>Abstraktion hilft, Dinge <strong>\u00fcbersichtlich</strong> zu machen.</p>'},
+{title:'Abstraktion beim Programmieren',content:'<p>Beim Programmieren abstrahieren wir st\u00e4ndig:</p><ul><li><strong>Funktionen:</strong> Statt jeden Schritt immer neu zu schreiben, geben wir ihm einen Namen</li><li><strong>Kategorien:</strong> \u201eHund\u201c, \u201eKatze\u201c sind \u201eTiere\u201c</li></ul><div class="info-box">\uD83D\uDCA1 <strong>Merke:</strong> Abstraktion = <strong>Gemeinsamkeiten</strong> finden und eine <strong>vereinfachte Darstellung</strong> erstellen.</div>'}
+],
+quiz:[
+{q:'Was ist Abstraktion?',a:['Alles genau beschreiben','Unwichtiges weglassen, Wichtiges behalten','Alles l\u00f6schen','Mehr Details hinzuf\u00fcgen'],_h:0x4B},
+{q:'Ein Stadtplan ist ein Beispiel f\u00fcr...',a:['Dekomposition','Eine Schleife','Abstraktion','Debugging'],_h:0x7D},
+{q:'Was haben Hund, Katze und Vogel gemeinsam (Abstraktion)?',a:['Alle schwimmen','Alle sind Tiere','Alle sind braun','Alle fliegen'],_h:0x2A},
+{q:'Warum ist Abstraktion n\u00fctzlich?',a:['Es wird komplizierter','Es wird \u00fcbersichtlicher','Man vergisst alles','Es ist unn\u00f6tig'],_h:0x60},
+{q:'Was ist KEINE Abstraktion?',a:['Stadtplan statt Foto','Strichm\u00e4nnchen statt Foto','Jedes Detail aufschreiben','Zusammenfassung'],_h:0x5E}
+],
+boss:[
+{q:'Du beschreibst dein Haustier: Was ist eine gute Abstraktion?',a:['Jedes einzelne Haar beschreiben','Art, Farbe, Name','Die DNA aufschreiben','Nichts sagen'],_h:0x4B},
+{q:'Abstraktion und Dekomposition sind...',a:['Das Gleiche','Gegens\u00e4tze','Verschiedene Denkwerkzeuge','Fehler'],_h:0x7D},
+{q:'Was ist die Abstraktion von 3+3, 5+5, 7+7?',a:['Zahlen addieren','Zahl + gleiche Zahl (verdoppeln)','Nur ungerade Zahlen','Nichts gemeinsam'],_h:0x2A}
+]},
+
+// M8: Flussdiagramme
+{id:8,title:'Flussdiagramme',icon:'\uD83D\uDCC8',duration:'25 Min.',description:'Stelle Abl\u00e4ufe visuell als Diagramme dar!',
+lessons:[
+{title:'Was sind Flussdiagramme?',content:'<p>Ein <strong>Flussdiagramm</strong> zeigt einen Ablauf mit Symbolen:</p><div class="info-box">\uD83D\uDCC8 <strong>Symbole:</strong><br><span class="flow-box">Rechteck</span> = Aktion/Anweisung<br><span class="flow-diamond">Raute</span> = Entscheidung (Ja/Nein)<br><span style="display:inline-block;padding:8px 20px;border:2px solid var(--success);border-radius:50%;margin:4px;background:rgba(34,197,94,.1)">Oval</span> = Start/Ende</div><p>Pfeile zeigen die <strong>Richtung</strong> des Ablaufs.</p>'},
+{title:'Beispiel-Flussdiagramm',content:'<p>Beispiel: <strong>Soll ich einen Regenschirm mitnehmen?</strong></p><div style="text-align:center;line-height:2.5"><span style="display:inline-block;padding:6px 20px;border:2px solid var(--success);border-radius:50%;background:rgba(34,197,94,.1)">Start</span><br><span class="flow-arrow">\u2B07</span><br><span class="flow-diamond">Regnet es?</span><br><span class="flow-arrow">Ja \u2B07</span> &nbsp;&nbsp; <span class="flow-arrow">Nein \u27A1</span><br><span class="flow-box">Schirm mitnehmen</span> &nbsp; <span class="flow-box">Ohne Schirm gehen</span><br><span class="flow-arrow">\u2B07</span><br><span style="display:inline-block;padding:6px 20px;border:2px solid var(--success);border-radius:50%;background:rgba(34,197,94,.1)">Ende</span></div><div class="info-box">\uD83D\uDCA1 Flussdiagramme helfen, <strong>komplizierte Abl\u00e4ufe</strong> \u00fcbersichtlich darzustellen!</div>'}
+],
+quiz:[
+{q:'Was zeigt ein Flussdiagramm?',a:['Bilder','Einen Ablauf mit Symbolen','Nur Text','Nur Zahlen'],_h:0x4B},
+{q:'Welches Symbol steht f\u00fcr eine Entscheidung?',a:['Rechteck','Oval','Raute','Kreis'],_h:0x7D},
+{q:'Was steht im Oval?',a:['Aktionen','Entscheidungen','Start oder Ende','Schleifen'],_h:0x29},
+{q:'Was zeigen Pfeile im Flussdiagramm?',a:['Die Farbe','Die Richtung des Ablaufs','Fehler','Nichts'],_h:0x60},
+{q:'Wof\u00fcr sind Flussdiagramme gut?',a:['Zum Malen','Abl\u00e4ufe \u00fcbersichtlich machen','F\u00fcr Mathe','Nur f\u00fcr Computer'],_h:0x5D}
+],
+boss:[
+{q:'Start \u2192 Regnet es? Ja \u2192 Schirm nehmen. Was ist "Regnet es?"?',a:['Eine Entscheidung (Raute)','Eine Aktion','Das Ende','Eine Schleife'],_h:0x4A},
+{q:'Wie viele Ausg\u00e4nge hat eine Entscheidung im Flussdiagramm?',a:['1','2 (Ja/Nein)','3','Beliebig viele'],_h:0x7E},
+{q:'Was fehlt: Start \u2192 Aktion \u2192 ???',a:['Noch eine Aktion','Ende','Nichts','Neustart'],_h:0x2A}
+]},
+
+// M9: Logik-Meister
+{id:9,title:'Logik-Meister',icon:'\uD83E\uDDE0',duration:'30 Min.',description:'Zeige was du kannst: Alles zusammen!',
+lessons:[
+{title:'Alles zusammen!',content:'<p>Du hast <strong>alle Konzepte</strong> des informatischen Denkens gelernt:</p><div class="info-box">\uD83E\uDDE0 <strong>\u00dcbersicht:</strong><br>\u2022 <strong>Algorithmen:</strong> Schritt-f\u00fcr-Schritt-Anleitungen<br>\u2022 <strong>Muster:</strong> Regelm\u00e4\u00dfigkeiten erkennen<br>\u2022 <strong>Bedingungen:</strong> Entscheidungen treffen<br>\u2022 <strong>Schleifen:</strong> Wiederholungen<br>\u2022 <strong>Variablen:</strong> Daten speichern<br>\u2022 <strong>Debugging:</strong> Fehler finden<br>\u2022 <strong>Dekomposition:</strong> Zerlegen<br>\u2022 <strong>Abstraktion:</strong> Vereinfachen<br>\u2022 <strong>Flussdiagramme:</strong> Visualisieren</div>'},
+{title:'Informatisches Denken im Alltag',content:'<p>Diese F\u00e4higkeiten helfen dir <strong>\u00fcberall</strong>:</p><ul><li><strong>In der Schule:</strong> Textaufgaben zerlegen, Muster in Mathe finden</li><li><strong>Zuhause:</strong> Zimmer aufr\u00e4umen planen, Fehler finden</li><li><strong>Sp\u00e4ter:</strong> Programmieren, Probleme aller Art l\u00f6sen</li></ul><div class="info-box">\uD83D\uDCA1 <strong>Informatisches Denken</strong> ist nicht nur f\u00fcr Computer \u2014 es ist eine <strong>Superkraft f\u00fcrs Denken</strong>!</div>'}
+],
+quiz:[
+{q:'Was geh\u00f6rt NICHT zum informatischen Denken?',a:['Abstraktion','Dekomposition','Auswendiglernen','Mustererkennung'],_h:0x48},
+{q:'WENN x > 10 DANN "gro\u00df". x = 7. Ausgabe?',a:['gro\u00df','Keine (oder SONST)','7','Fehler'],_h:0x7E},
+{q:'Was kommt? 5, 10, 15, 20, ...',a:['22','30','25','24'],_h:0x29},
+{q:'a = 2. WIEDERHOLE 3 MAL: a = a * 2. Was ist a?',a:['6','8','12','16'],_h:0x62},
+{q:'Welches Symbol ist im Flussdiagramm eine Entscheidung?',a:['Rechteck','Oval','Pfeil','Raute'],_h:0x5F}
+],
+boss:[
+{q:'Algorithmus + Bedingung + Schleife = ?',a:['Ein fertiges Programm','Nur Theorie','Ein Bug','Ein Flussdiagramm'],_h:0x4A},
+{q:'x = 0. WIEDERHOLE SOLANGE x < 3: x = x + 1. WENN x = 2 DANN "Treffer!". Wann kommt "Treffer!"?',a:['Im 2. Durchlauf','Im 1. Durchlauf','Nie','Im 3. Durchlauf'],_h:0x7F},
+{q:'Was ist die wichtigste F\u00e4higkeit beim informatischen Denken?',a:['Schnell tippen','Logisch und strukturiert denken','Viel auswendig lernen','Einen schnellen Computer haben'],_h:0x2A}
+]}
+];
+
+const STORAGE_KEY='logiklabor_progress';
+let state={name:'',started:false,currentModule:0,xp:0,level:0,streak:0,lastVisit:null,modulesCompleted:[],quizResults:{},bossResults:{},badges:[],quizShuffleMap:{},modulesViewed:[],interactiveResults:{},designTheme:'cyber-dark'};
+
+function saveState(){try{localStorage.setItem(STORAGE_KEY,JSON.stringify(state))}catch(e){}}
+function loadState(){try{const s=localStorage.getItem(STORAGE_KEY);if(s){Object.assign(state,JSON.parse(s));return true}}catch(e){}return false}
+function exportData(){const a=document.createElement('a');a.download='logiklabor-'+state.name+'.json';a.href=URL.createObjectURL(new Blob([JSON.stringify(state,null,2)],{type:'application/json'}));a.click()}
+function importData(e){const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=ev=>{try{const d=JSON.parse(ev.target.result);Object.assign(state,d);saveState();location.reload()}catch(err){alert('Datei konnte nicht gelesen werden.')}};r.readAsText(f)}
+
+function getLevel(xp){let lv=0;for(let i=LEVELS.length-1;i>=0;i--){if(xp>=LEVELS[i].xp){lv=i;break}}return lv}
+function getLevelProgress(xp){const lv=getLevel(xp);const cur=LEVELS[lv].xp;const next=lv<LEVELS.length-1?LEVELS[lv+1].xp:cur;if(next===cur)return 100;return Math.min(100,Math.round((xp-cur)/(next-cur)*100))}
+function addXP(a,r){const o=getLevel(state.xp);state.xp+=a;const n=getLevel(state.xp);saveState();updateUI();showNotif('xp','+'+a+' XP',r);if(n>o){state.level=n;saveState();setTimeout(()=>showLevelUp(n),800)}}
+
+function updateStreak(){const t=new Date().toDateString();if(state.lastVisit===t)return;const y=new Date(Date.now()-864e5).toDateString();if(state.lastVisit===y){state.streak++;showNotif('streak','\uD83D\uDD25 '+state.streak+' Tage!','Weiter so!');if(state.streak>=3)awardBadge('streak3');if(state.streak>=7)awardBadge('streak7')}else{state.streak=1}state.lastVisit=t;saveState()}
+
+function awardBadge(id){if(state.badges.includes(id))return;state.badges.push(id);saveState();const b=BADGES.find(x=>x.id===id);if(b)showNotif('badge',b.icon+' '+b.name,b.desc)}
+
+let notifQueue=[],notifActive=false;
+function showNotif(t,ti,tx){notifQueue.push({type:t,title:ti,text:tx});if(!notifActive)processNotif()}
+function processNotif(){if(!notifQueue.length){notifActive=false;return}notifActive=true;const{type,title,text}=notifQueue.shift();const el=document.getElementById('notif');el.className='notif '+type;document.getElementById('notifTitle').textContent=title;document.getElementById('notifText').textContent=text;el.classList.add('show');setTimeout(()=>{el.classList.remove('show');setTimeout(processNotif,300)},2500)}
+
+function showLevelUp(lv){const ov=document.getElementById('levelUpOverlay');document.getElementById('levelUpBox').innerHTML='<div class="lvl-icon">\u2B06\uFE0F<\/div><div class="lvl-title">Level Up!<\/div><div class="lvl-name">Level '+(lv+1)+': '+LEVELS[lv].name+'<\/div>';ov.classList.add('active');spawnConfetti();setTimeout(()=>ov.classList.remove('active'),3000)}
+function spawnConfetti(){const c=document.getElementById('confetti');c.innerHTML='';const cols=['#3b82f6','#a855f7','#22c55e','#f59e0b','#ef4444','#06b6d4'];for(let i=0;i<60;i++){const p=document.createElement('div');p.style.cssText='position:absolute;left:'+Math.random()*100+'%;background:'+cols[i%cols.length]+';width:'+(6+Math.random()*8)+'px;height:'+(6+Math.random()*8)+'px;border-radius:'+(Math.random()>.5?'50%':'2px')+';animation:confettiFall '+(1.5+Math.random()*2)+'s ease-out '+Math.random()*.5+'s forwards';c.appendChild(p)}if(!document.getElementById('confettiStyle')){const s=document.createElement('style');s.id='confettiStyle';s.textContent='@keyframes confettiFall{0%{opacity:1;transform:translateY(0) rotate(0)}100%{opacity:0;transform:translateY(100vh) rotate(720deg)}}';document.head.appendChild(s)}setTimeout(()=>c.innerHTML='',4000)}
+
+function shuffleQuiz(m,q){const k='m'+m;if(state.quizShuffleMap[k])return state.quizShuffleMap[k];const idx=[...Array(q.length).keys()];for(let i=idx.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[idx[i],idx[j]]=[idx[j],idx[i]]}state.quizShuffleMap[k]=idx;saveState();return idx}
+function renderQuiz(modId,quiz,isBoss){const pf=isBoss?'boss':'quiz';const idx=isBoss?[...Array(quiz.length).keys()]:shuffleQuiz(modId,quiz);let h='<div class="'+(isBoss?'boss-section':'quiz-section')+'">';h+=isBoss?'<h3>\uD83D\uDC51 Boss-Challenge<\/h3><p class="boss-sub">Alle '+quiz.length+' Fragen richtig!<\/p>':'<h3>\uD83D\uDCDD Quiz<\/h3>';idx.forEach((qi,di)=>{const q=quiz[qi];h+='<div class="quiz-q" data-qi="'+qi+'"><p>'+(di+1)+'. '+q.q+'<\/p>';q.a.forEach((a,ai)=>{h+='<label><input type="radio" name="'+pf+'_'+modId+'_'+qi+'" value="'+ai+'"> '+a+'<\/label>'});h+='<\/div>'});h+='<button class="quiz-submit" onclick="checkQuiz('+modId+','+isBoss+')">'+(isBoss?'Boss besiegen!':'Pr\u00fcfen')+'<\/button><div class="quiz-result" id="'+pf+'Result'+modId+'" style="display:none"><\/div><\/div>';return h}
+
+function checkQuiz(modId,isBoss){const pf=isBoss?'boss':'quiz';const quiz=isBoss?modules[modId].boss:modules[modId].quiz;let correct=0;const total=quiz.length;quiz.forEach((q,qi)=>{const sel=document.querySelector('input[name="'+pf+'_'+modId+'_'+qi+'"]:checked');const labels=document.querySelectorAll('[data-qi="'+qi+'"] label');const ci=_d(q._h,qi);labels.forEach((l,li)=>{l.classList.remove('correct','wrong');if(li===ci)l.classList.add('correct');else if(sel&&parseInt(sel.value)===li)l.classList.add('wrong')});const qDiv=labels[0]?.closest('.quiz-q');if(qDiv){const old=qDiv.querySelector('.quiz-explanation');if(old)old.remove()}if(!sel||parseInt(sel.value)!==ci){if(qDiv){const exp=document.createElement('div');exp.className='quiz-explanation';exp.textContent='\u2192 Richtige Antwort: '+q.a[ci];qDiv.appendChild(exp)}}if(sel&&parseInt(sel.value)===ci)correct++});const rEl=document.getElementById(pf+'Result'+modId);rEl.style.display='block';if(isBoss){if(correct===total){rEl.className='quiz-result pass';rEl.textContent='\uD83D\uDC51 Boss besiegt! '+correct+'/'+total;if(!state.bossResults[modId]){state.bossResults[modId]=true;addXP(100,'Boss bestanden!');if(!state.badges.includes('first_boss'))awardBadge('first_boss');if(modules.every((_,i)=>state.bossResults[i]))awardBadge('all_bosses');checkModuleComplete(modId)}}else{rEl.className='quiz-result fail';rEl.textContent='\uD83D\uDC80 '+correct+'/'+total+' \u2014 Alle m\u00fcssen richtig sein!';setTimeout(()=>{document.querySelectorAll('input[name^="'+pf+'_'+modId+'"]').forEach(r=>{r.disabled=false;r.checked=false});document.querySelectorAll('[data-qi] label').forEach(l=>l.classList.remove('correct','wrong'));document.querySelectorAll('.quiz-explanation').forEach(e=>e.remove());rEl.style.display='none'},2000);return}}else{const passed=correct>=Math.ceil(total*.6);rEl.className='quiz-result '+(passed?'pass':'fail');rEl.textContent=passed?'\u2705 '+correct+'/'+total+' \u2014 Bestanden!':'\u274C '+correct+'/'+total+' \u2014 Mindestens '+Math.ceil(total*.6)+' n\u00f6tig.';if(passed&&!state.quizResults[modId]){state.quizResults[modId]=correct;addXP(correct*15+50,'Quiz bestanden');if(!state.badges.includes('first_quiz'))awardBadge('first_quiz');if(correct===total)awardBadge('perfect_quiz');if(Date.now()-(window._quizStart||Date.now())<6e4)awardBadge('speed_quiz');checkModuleComplete(modId)}}saveState();document.querySelectorAll('input[name^="'+pf+'_'+modId+'"]').forEach(r=>r.disabled=true);if(!isBoss){const bossEl=document.querySelector('.boss-section');if(bossEl)bossEl.scrollIntoView({behavior:'smooth',block:'start'})}else{rEl.scrollIntoView({behavior:'smooth',block:'center'})}}
+
+function checkModuleComplete(m){if(state.quizResults[m]!==undefined&&state.bossResults[m]&&!state.modulesCompleted.includes(m)){state.modulesCompleted.push(m);awardBadge('m'+m);if(state.modulesCompleted.length>=5)awardBadge('half_done');if(state.modulesCompleted.length>=10){awardBadge('graduate');setTimeout(()=>showCert(),1500)}saveState();renderSidebar()}}
+
+function renderModule(m){state.currentModule=m;if(!state.modulesViewed.includes(m)){state.modulesViewed.push(m);addXP(10,'Neues Modul');if(state.modulesViewed.length>=10)awardBadge('explorer')}saveState();closeSidebar();const mod=modules[m];let h='<div class="module-header"><div class="mod-badge">'+mod.icon+' Modul '+(m+1)+'<\/div><h1>'+mod.title+'<\/h1><p class="mod-desc">'+mod.description+'<\/p><\/div>';mod.lessons.forEach((l,i)=>{h+='<div class="lesson-card"><h3><span style="color:var(--neon)">'+String(i+1).padStart(2,'0')+'<\/span> '+l.title+' <button class="tts-btn" onclick="speakLesson('+i+')" title="Vorlesen">&#128266;<\/button><\/h3>'+l.content+'<\/div>'});h+='<div class="interactive-area"><h4>\uD83E\uDDEA Interaktive \u00dcbung<\/h4><div id="interactiveContent">L\u00e4dt...<\/div><\/div>';window._quizStart=Date.now();h+=renderQuiz(m,mod.quiz,false);h+=renderQuiz(m,mod.boss,true);h+='<div class="site-footer"><span>\uD83E\uDDE0 LogikLabor<\/span><p>&copy; 2026 GZ AI Stacks &middot; Gerd Zimmermann<\/p><\/div>';document.getElementById('welcomeScreen').style.display='none';document.getElementById('badgesView').style.display='none';document.getElementById('statsView').style.display='none';const mc=document.getElementById('moduleContent');mc.style.display='block';mc.innerHTML=h;renderSidebar();setTimeout(()=>{initInteractive(m);window.scrollTo(0,0)},100)}
+
+function renderSidebar(){document.getElementById('sidebarModules').innerHTML=modules.map((m,i)=>{const done=state.modulesCompleted.includes(i);const act=state.currentModule===i&&document.getElementById('moduleContent').style.display==='block';return '<div class="sidebar-item'+(act?' active':'')+(done?' completed':'')+'" onclick="renderModule('+i+')">'+m.icon+' '+m.title+'<\/div>'}).join('')}
+function toggleSidebar(){const sb=document.getElementById('sidebar');const ov=document.getElementById('sidebarOverlay');sb.classList.toggle('open');ov.classList.toggle('active')}
+function closeSidebar(){document.getElementById('sidebar').classList.remove('open');document.getElementById('sidebarOverlay').classList.remove('active')}
+
+function showBadges(){document.getElementById('welcomeScreen').style.display='none';document.getElementById('moduleContent').style.display='none';document.getElementById('statsView').style.display='none';const v=document.getElementById('badgesView');v.style.display='block';closeSidebar();let h='<div class="module-header"><h1>\uD83C\uDFC5 Abzeichen<\/h1><p class="mod-desc">'+state.badges.length+'/'+BADGES.length+' gesammelt<\/p><\/div><div class="badges-grid">';BADGES.forEach(b=>{const e=state.badges.includes(b.id);h+='<div class="badge-card'+(e?' earned':' locked')+'"><div class="badge-icon">'+(e?b.icon:'\uD83D\uDD12')+'<\/div><div class="badge-name">'+b.name+'<\/div><div class="badge-desc">'+b.desc+'<\/div><\/div>'});h+='<\/div>';v.innerHTML=h}
+
+function showStats(){document.getElementById('welcomeScreen').style.display='none';document.getElementById('moduleContent').style.display='none';document.getElementById('badgesView').style.display='none';const v=document.getElementById('statsView');v.style.display='block';closeSidebar();const lv=getLevel(state.xp);let h='<div class="module-header"><h1>\uD83D\uDCCA Statistik<\/h1><\/div><div class="stats-grid">';h+='<div class="stat-card"><div class="stat-val">'+state.xp+'<\/div><div class="stat-label">XP<\/div><\/div>';h+='<div class="stat-card"><div class="stat-val">'+LEVELS[lv].name+'<\/div><div class="stat-label">Rang<\/div><\/div>';h+='<div class="stat-card"><div class="stat-val">'+state.modulesCompleted.length+'/10<\/div><div class="stat-label">Module<\/div><\/div>';h+='<div class="stat-card"><div class="stat-val">'+Object.keys(state.quizResults).length+'<\/div><div class="stat-label">Quizze<\/div><\/div>';h+='<div class="stat-card"><div class="stat-val">'+Object.keys(state.bossResults).length+'<\/div><div class="stat-label">Bosse<\/div><\/div>';h+='<div class="stat-card"><div class="stat-val">'+state.badges.length+'<\/div><div class="stat-label">Badges<\/div><\/div>';h+='<div class="stat-card"><div class="stat-val">\uD83D\uDD25 '+state.streak+'<\/div><div class="stat-label">Streak<\/div><\/div><\/div>';v.innerHTML=h}
+
+let certStyle='akademie';
+function showCert(){window._lastFocus=document.activeElement;document.getElementById('certOverlay').classList.add('active');document.getElementById('certPicker').innerHTML=['\uD83C\uDFDB Akademie','\uD83D\uDCBB Hacker','\uD83D\uDD79 Pixel','\uD83D\uDE80 Zukunft'].map((l,i)=>{const s=['akademie','hacker','pixel','zukunft'][i];return '<button class="'+(certStyle===s?'active':'')+'" onclick="certStyle=\''+s+'\';showCert()">'+l+'<\/button>'}).join('');renderCert()}
+function closeCert(){document.getElementById('certOverlay').classList.remove('active');if(window._lastFocus){window._lastFocus.focus();window._lastFocus=null}}
+function renderCert(){const f=document.getElementById('certFrame');const lv=getLevel(state.xp);const name=state.name||'Unbekannt';const date=new Date().toLocaleDateString('de-DE',{day:'numeric',month:'long',year:'numeric'});const code='LLB-'+new Date().getFullYear()+'-'+((name.charCodeAt(0)*7+state.xp)%9999).toString(16).toUpperCase().padStart(4,'0');const styles={akademie:{bg:'linear-gradient(135deg,#fdf8ee,#f5edda,#ede3c8)',border:'#c5a54e',text:'#1a1a3e',sub:'#5c5040',accent:'#DAA520',seal:'\uD83D\uDC51'},hacker:{bg:'linear-gradient(135deg,#0a0e14,#111827,#0a0e14)',border:'#3b82f6',text:'#e0e8ff',sub:'#8899aa',accent:'#3b82f6',seal:'\uD83D\uDCBB'},pixel:{bg:'linear-gradient(135deg,#1a1a2e,#222244,#1a1a2e)',border:'#ffd700',text:'#fff',sub:'#a098c0',accent:'#ffd700',seal:'\uD83C\uDFC6'},zukunft:{bg:'linear-gradient(135deg,#0f0f23,#1a1a3e,#0f0f23)',border:'#00d9ff',text:'#e4e8f0',sub:'#8899aa',accent:'#00d9ff',seal:'\uD83D\uDE80'}};const s=styles[certStyle];f.innerHTML='<div style="background:'+s.bg+';padding:clamp(24px,5vw,48px) clamp(16px,4vw,40px);border:4px solid '+s.border+';border-radius:12px;text-align:center;min-height:400px;color:'+s.text+'"><div style="font-size:clamp(10px,2vw,14px);color:'+s.sub+';letter-spacing:4px;text-transform:uppercase">LogikLabor \u00b7 Informatisches Denken<\/div><h1 style="font-size:clamp(28px,6vw,48px);margin:12px 0;font-family:Georgia,serif">Urkunde<\/h1><div style="width:100px;height:2px;background:'+s.border+';margin:0 auto 16px;opacity:.5"><\/div><p style="font-size:clamp(14px,2.5vw,18px);color:'+s.sub+'">verliehen an<\/p><h2 style="font-size:clamp(24px,5vw,42px);color:'+s.accent+';margin:8px 0;font-family:Georgia,serif;font-style:italic;word-break:break-word">'+name+'<\/h2><p style="font-size:clamp(16px,3vw,22px);font-weight:700;margin:12px 0">'+LEVELS[lv].name+'<\/p><p style="font-size:clamp(12px,2vw,15px);color:'+s.sub+'">f\u00fcr die erfolgreiche Absolvierung von \u201eLogikLabor\u201c<\/p><div style="font-size:clamp(12px,2vw,15px);margin:16px 0">Module: '+state.modulesCompleted.length+'/10 \u00b7 XP: '+state.xp+'<\/div><div style="font-size:clamp(32px,7vw,48px);margin:16px 0">'+s.seal+'<\/div><div style="font-size:clamp(11px,1.8vw,14px);color:'+s.sub+';margin-top:16px">'+date+'<\/div><div style="font-size:10px;color:'+s.sub+';opacity:.5;margin-top:4px">'+code+'<\/div><div style="font-size:11px;color:'+s.sub+';opacity:.4;margin-top:12px">GZ AI STACKS<\/div><\/div>'}
+function printCert(){window.print()}
+
+function updateUI(){const lv=getLevel(state.xp);document.getElementById('levelName').textContent=LEVELS[lv].name;document.getElementById('xpText').textContent=state.xp+' XP';document.getElementById('xpFill').style.width=getLevelProgress(state.xp)+'%';document.getElementById('headerStreak').textContent='\uD83D\uDD25 '+state.streak}
+
+function getCurrentThemeParts(){const p=state.designTheme.split('-');if(p.length===3)return{world:p[0]+'-'+p[1],mode:p[2]};return{world:p[0],mode:p[1]||'dark'}}
+function toggleMode(){const{world,mode}=getCurrentThemeParts();setDesignTheme(world,mode==='dark'?'light':'dark')}
+function setDesignTheme(w,m){state.designTheme=w+'-'+m;document.documentElement.setAttribute('data-theme',state.designTheme);saveState();buildThemePicker()}
+function buildThemePicker(){const{world,mode}=getCurrentThemeParts();let h='';Object.keys(THEME_CONFIG).forEach(w=>{const t=THEME_CONFIG[w];h+='<button class="theme-btn'+(w===world?' active':'')+'" style="background:'+t.color+'" onclick="setDesignTheme(\''+w+'\',\''+mode+'\')" title="'+t.name+'">'+t.emoji+'<\/button>'});h+='<button class="mode-toggle-btn" onclick="toggleMode()">'+(mode==='dark'?'\u2600\uFE0F':'\uD83C\uDF19')+'<\/button>';document.getElementById('themePicker').innerHTML=h}
+
+function initInteractive(m){
+const el=document.getElementById('interactiveContent');
+switch(m){
+case 0:initAlgoSort(el);break;
+case 1:initPatternComplete(el);break;
+case 2:initConditionGame(el);break;
+case 3:initLoopCount(el);break;
+case 4:initVarTracker(el);break;
+case 5:initDebugFind(el);break;
+case 6:initDecompGame(el);break;
+case 7:initAbstractGame(el);break;
+case 8:initFlowGame(el);break;
+case 9:initMixedChallenge(el);break;
+}
+}
+
+function initAlgoSort(el){
+const tasks=[
+{steps:['Wasser kochen','Teebeutel rein','Tasse nehmen','3 Min. warten','Teebeutel raus'],correct:[2,0,1,3,4]},
+{steps:['Schuhe anziehen','Jacke anziehen','Rausgehen','Schl\u00fcssel nehmen','T\u00fcr abschlie\u00dfen'],correct:[3,1,0,2,4]}
+];
+const task=tasks[Math.floor(Math.random()*tasks.length)];
+const shuffled=[...task.steps].sort(()=>Math.random()-.5);
+let selected=[];
+function render(){
+el.innerHTML='<p style="text-align:center;color:var(--heading);font-weight:700;margin-bottom:12px">Bringe die Schritte in die richtige Reihenfolge:<\/p>';
+el.innerHTML+='<div style="margin-bottom:12px;min-height:40px"><strong>Deine Reihenfolge:<\/strong> '+(selected.length?selected.map((s,i)=>'<span class="ix-item" style="margin:2px;cursor:pointer;display:inline-flex" onclick="window._algoRemove('+i+')">'+(i+1)+'. '+s+'<\/span>').join(''):'<em style="color:var(--text-dim)">Klicke die Schritte in der richtigen Reihenfolge an<\/em>')+'<\/div>';
+el.innerHTML+='<div class="ix-grid">'+shuffled.filter(s=>!selected.includes(s)).map(s=>'<span class="ix-item" style="cursor:pointer" onclick="window._algoAdd(\''+s.replace(/'/g,"\\'")+'\')">'+s+'<\/span>').join('')+'<\/div>';
+if(selected.length===task.steps.length){
+const isCorrect=task.correct.every((ci,i)=>task.steps[ci]===selected[i]);
+el.innerHTML+='<div class="ix-feedback '+(isCorrect?'pass':'fail')+'" style="display:block">'+(isCorrect?'\u2705 Perfekt! Richtige Reihenfolge!':'\u274C Nicht ganz. Versuche es nochmal!')+'<\/div>';
+if(isCorrect&&!state.interactiveResults[0]){state.interactiveResults[0]=true;addXP(30,'Algorithmus sortiert!');saveState()}
+if(!isCorrect)setTimeout(()=>{selected=[];render()},1500);
+}}
+window._algoAdd=function(s){if(!selected.includes(s)){selected.push(s);render()}};
+window._algoRemove=function(i){selected.splice(i,1);render()};
+render();
+}
+
+function initPatternComplete(el){
+const patterns=[
+{seq:[2,4,6,8],next:10,opts:[9,10,11,12]},
+{seq:[3,6,9,12],next:15,opts:[13,14,15,16]},
+{seq:[1,2,4,8],next:16,opts:[10,12,16,20]},
+{seq:[5,10,15,20],next:25,opts:[22,24,25,30]}
+];
+let score=0,round=0,total=3;
+function render(){
+if(round>=total){el.innerHTML='<div class="ix-feedback pass" style="display:block">\uD83C\uDF89 '+score+'/'+total+' Muster erkannt!<\/div>';if(score>=2&&!state.interactiveResults[1]){state.interactiveResults[1]=true;addXP(30,'Muster erkannt!');saveState()}return}
+const p=patterns[round%patterns.length];
+el.innerHTML='<p style="font-size:24px;text-align:center;color:var(--neon);font-weight:700;margin-bottom:12px">'+p.seq.join(', ')+', ?<\/p><div class="ix-grid">'+p.opts.map(o=>'<span class="ix-item" style="font-size:20px;padding:12px 20px" data-v="'+o+'">'+o+'<\/span>').join('')+'<\/div><p style="text-align:center;color:var(--text-dim);font-size:13px">'+(round+1)+'/'+total+'<\/p>';
+el.querySelectorAll('.ix-item').forEach(btn=>{btn.onclick=function(){const v=parseInt(this.dataset.v);if(v===p.next){this.classList.add('correct');score++}else{this.classList.add('wrong');el.querySelectorAll('.ix-item').forEach(b=>{if(parseInt(b.dataset.v)===p.next)b.classList.add('correct')})}el.querySelectorAll('.ix-item').forEach(b=>b.style.pointerEvents='none');round++;setTimeout(render,700)}})
+}
+render();
+}
+
+function initConditionGame(el){
+const scenarios=[
+{text:'Temperatur = 35. WENN Temperatur > 30 DANN "Hei\u00df!"',answer:'Hei\u00df!',opts:['Hei\u00df!','Kalt!','Angenehm!','Nichts']},
+{text:'Alter = 5. WENN Alter >= 6 DANN "Schule" SONST "Kita"',answer:'Kita',opts:['Schule','Kita','Beides','Fehler']},
+{text:'Note = 1. WENN Note = 1 DANN "Super!" SONST "Weiter \u00fcben!"',answer:'Super!',opts:['Super!','Weiter \u00fcben!','Fehler','Nichts']}
+];
+let score=0,round=0;
+function render(){
+if(round>=scenarios.length){el.innerHTML='<div class="ix-feedback pass" style="display:block">\uD83C\uDF89 '+score+'/'+scenarios.length+' richtig!<\/div>';if(score>=2&&!state.interactiveResults[2]){state.interactiveResults[2]=true;addXP(30,'Bedingungen gemeistert!');saveState()}return}
+const s=scenarios[round];
+el.innerHTML='<div class="code-block" style="font-size:15px;margin-bottom:12px">'+s.text+'<\/div><p style="text-align:center;font-weight:700;margin-bottom:8px">Was ist die Ausgabe?<\/p><div class="ix-grid">'+s.opts.map(o=>'<span class="ix-item" style="padding:10px 18px" data-v="'+o+'">'+o+'<\/span>').join('')+'<\/div>';
+el.querySelectorAll('.ix-item').forEach(btn=>{btn.onclick=function(){if(this.dataset.v===s.answer){this.classList.add('correct');score++}else{this.classList.add('wrong');el.querySelectorAll('.ix-item').forEach(b=>{if(b.dataset.v===s.answer)b.classList.add('correct')})}el.querySelectorAll('.ix-item').forEach(b=>b.style.pointerEvents='none');round++;setTimeout(render,700)}})
+}
+render();
+}
+
+function initLoopCount(el){
+const tasks=[
+{code:'x = 0\nWIEDERHOLE 4 MAL:\n  x = x + 3',answer:12,opts:[3,9,12,15]},
+{code:'x = 1\nWIEDERHOLE 3 MAL:\n  x = x * 2',answer:8,opts:[4,6,8,16]},
+{code:'x = 10\nWIEDERHOLE 5 MAL:\n  x = x - 1',answer:5,opts:[0,5,9,15]}
+];
+let score=0,round=0;
+function render(){
+if(round>=tasks.length){el.innerHTML='<div class="ix-feedback pass" style="display:block">\uD83C\uDF89 '+score+'/'+tasks.length+' Schleifen gel\u00f6st!<\/div>';if(score>=2&&!state.interactiveResults[3]){state.interactiveResults[3]=true;addXP(30,'Schleifen-Meister!');saveState()}return}
+const t=tasks[round];
+el.innerHTML='<div class="code-block">'+t.code+'<\/div><p style="text-align:center;font-weight:700;margin:12px 0">Was ist x am Ende?<\/p><div class="ix-grid">'+t.opts.map(o=>'<span class="ix-item" style="font-size:20px;padding:12px 20px" data-v="'+o+'">'+o+'<\/span>').join('')+'<\/div>';
+el.querySelectorAll('.ix-item').forEach(btn=>{btn.onclick=function(){const v=parseInt(this.dataset.v);if(v===t.answer){this.classList.add('correct');score++}else{this.classList.add('wrong');el.querySelectorAll('.ix-item').forEach(b=>{if(parseInt(b.dataset.v)===t.answer)b.classList.add('correct')})}el.querySelectorAll('.ix-item').forEach(b=>b.style.pointerEvents='none');round++;setTimeout(render,700)}})
+}
+render();
+}
+
+function initVarTracker(el){
+const tasks=[
+{code:'a = 5\nb = 3\nc = a + b',ask:'c',answer:8,opts:[3,5,8,15]},
+{code:'x = 10\nx = x - 4\ny = x * 2',ask:'y',answer:12,opts:[6,8,12,20]},
+{code:'name = "Lisa"\nalter = 9\nalter = alter + 1',ask:'alter',answer:10,opts:[1,9,10,19]}
+];
+let score=0,round=0;
+function render(){
+if(round>=tasks.length){el.innerHTML='<div class="ix-feedback pass" style="display:block">\uD83C\uDF89 '+score+'/'+tasks.length+' Variablen verfolgt!<\/div>';if(score>=2&&!state.interactiveResults[4]){state.interactiveResults[4]=true;addXP(30,'Variablen-Tracker!');saveState()}return}
+const t=tasks[round];
+el.innerHTML='<div class="code-block">'+t.code+'<\/div><p style="text-align:center;font-weight:700;margin:12px 0">Was ist <span style="color:var(--neon)">'+t.ask+'<\/span>?<\/p><div class="ix-grid">'+t.opts.map(o=>'<span class="ix-item" style="font-size:20px;padding:12px 20px" data-v="'+o+'">'+o+'<\/span>').join('')+'<\/div>';
+el.querySelectorAll('.ix-item').forEach(btn=>{btn.onclick=function(){const v=parseInt(this.dataset.v);if(v===t.answer){this.classList.add('correct');score++}else{this.classList.add('wrong');el.querySelectorAll('.ix-item').forEach(b=>{if(parseInt(b.dataset.v)===t.answer)b.classList.add('correct')})}el.querySelectorAll('.ix-item').forEach(b=>b.style.pointerEvents='none');round++;setTimeout(render,700)}})
+}
+render();
+}
+
+function initDebugFind(el){
+const bugs=[
+{code:'1. Tasse nehmen\n2. Wasser eingie\u00dfen\n3. Teebeutel rein\n4. Wasserkocher anschalten',bug:'Wasserkocher muss VOR dem Eingie\u00dfen an',fix:3,opts:['Schritt 1','Schritt 2','Schritt 3','Schritt 4']},
+{code:'punkte = 0\npunkte = punkte + 5\npunkte = punkte - 10\n// Ergebnis: 5',bug:'punkte - 10 ergibt -5, nicht 5',fix:2,opts:['Zeile 1','Zeile 2','Zeile 3','Kein Fehler']},
+{code:'WIEDERHOLE 3 MAL:\n  sage "Hallo"\n// Ergebnis: 2x Hallo',bug:'3 mal ergibt 3x, nicht 2x - falsche Erwartung',fix:3,opts:['Die Schleife','Der Text','Die Zahl 3','Die Erwartung']}
+];
+let score=0,round=0;
+function render(){
+if(round>=bugs.length){el.innerHTML='<div class="ix-feedback pass" style="display:block">\uD83C\uDF89 '+score+'/'+bugs.length+' Bugs gefunden!<\/div>';if(score>=2&&!state.interactiveResults[5]){state.interactiveResults[5]=true;addXP(30,'Bug-J\u00e4ger!');saveState()}return}
+const b=bugs[round];
+el.innerHTML='<p style="font-weight:700;margin-bottom:8px">Wo ist der Bug?<\/p><div class="code-block">'+b.code+'<\/div><div class="ix-grid">'+b.opts.map((o,i)=>'<span class="ix-item" style="padding:10px 18px" data-v="'+i+'">'+o+'<\/span>').join('')+'<\/div>';
+el.querySelectorAll('.ix-item').forEach(btn=>{btn.onclick=function(){const v=parseInt(this.dataset.v);if(v===b.fix){this.classList.add('correct');score++}else{this.classList.add('wrong');el.querySelectorAll('.ix-item').forEach(bb=>{if(parseInt(bb.dataset.v)===b.fix)bb.classList.add('correct')})}el.innerHTML+='<div class="ix-feedback pass" style="display:block;font-size:13px;font-weight:400">\uD83D\uDC1B '+b.bug+'<\/div>';el.querySelectorAll('.ix-item').forEach(bb=>bb.style.pointerEvents='none');round++;setTimeout(render,1500)}})
+}
+render();
+}
+
+function initDecompGame(el){
+const task={problem:'Eine Geburtstagsparty planen',parts:['G\u00e4steliste erstellen','Kuchen backen','Dekoration aufh\u00e4ngen','Spiele vorbereiten'],wrong:['Mathe-Hausaufgaben','Fahrrad reparieren']};
+const all=[...task.parts,...task.wrong].sort(()=>Math.random()-.5);
+let selected=[];
+el.innerHTML='<p style="text-align:center;font-weight:700;margin-bottom:8px">Gro\u00dfes Problem: <span style="color:var(--neon)">'+task.problem+'<\/span><\/p><p style="text-align:center;color:var(--text-dim);margin-bottom:12px">W\u00e4hle die passenden Teilprobleme aus!<\/p><div class="ix-grid" id="decompGrid">'+all.map(a=>'<span class="ix-item" style="padding:10px 16px;cursor:pointer" data-v="'+a+'">'+a+'<\/span>').join('')+'<\/div><button class="ix-btn" id="decompCheck" style="display:block;margin:12px auto">Pr\u00fcfen<\/button><div id="decompResult"><\/div>';
+el.querySelectorAll('.ix-item').forEach(btn=>{btn.onclick=function(){this.classList.toggle('selected');const v=this.dataset.v;if(selected.includes(v))selected=selected.filter(s=>s!==v);else selected.push(v)}});
+document.getElementById('decompCheck').onclick=function(){const correct=selected.length===task.parts.length&&selected.every(s=>task.parts.includes(s));const res=document.getElementById('decompResult');res.innerHTML='<div class="ix-feedback '+(correct?'pass':'fail')+'" style="display:block">'+(correct?'\u2705 Perfekt zerlegt!':'\u274C Nicht ganz. Die richtigen Teile: '+task.parts.join(', '))+'<\/div>';if(correct&&!state.interactiveResults[6]){state.interactiveResults[6]=true;addXP(30,'Dekomposition gemeistert!');saveState()}};
+}
+
+function initAbstractGame(el){
+const tasks=[
+{items:['Hund','Katze','Hamster','Papagei'],abstraction:'Haustiere',opts:['Haustiere','Spielzeug','Essen','Farben']},
+{items:['Fahrrad','Auto','Bus','Zug'],abstraction:'Fahrzeuge',opts:['Fahrzeuge','Spielzeug','Geb\u00e4ude','Tiere']},
+{items:['Addieren','Subtrahieren','Multiplizieren'],abstraction:'Rechenarten',opts:['Rechenarten','Sportarten','Farben','Tiere']}
+];
+let score=0,round=0;
+function render(){
+if(round>=tasks.length){el.innerHTML='<div class="ix-feedback pass" style="display:block">\uD83C\uDF89 '+score+'/'+tasks.length+' abstrahiert!<\/div>';if(score>=2&&!state.interactiveResults[7]){state.interactiveResults[7]=true;addXP(30,'Abstraktion gelernt!');saveState()}return}
+const t=tasks[round];
+el.innerHTML='<p style="text-align:center;font-weight:700;margin-bottom:8px">Was haben diese gemeinsam?<\/p><div class="ix-grid">'+t.items.map(i=>'<span class="ix-item" style="pointer-events:none;border-color:var(--neon)">'+i+'<\/span>').join('')+'<\/div><p style="text-align:center;margin:12px 0;font-weight:700">Der Oberbegriff ist:<\/p><div class="ix-grid">'+t.opts.map(o=>'<span class="ix-item" style="padding:10px 18px;cursor:pointer" data-v="'+o+'">'+o+'<\/span>').join('')+'<\/div>';
+el.querySelectorAll('.ix-item[data-v]').forEach(btn=>{btn.onclick=function(){if(this.dataset.v===t.abstraction){this.classList.add('correct');score++}else{this.classList.add('wrong');el.querySelectorAll('.ix-item[data-v]').forEach(b=>{if(b.dataset.v===t.abstraction)b.classList.add('correct')})}el.querySelectorAll('.ix-item[data-v]').forEach(b=>b.style.pointerEvents='none');round++;setTimeout(render,700)}})
+}
+render();
+}
+
+function initFlowGame(el){
+const tasks=[
+{diagram:'Start \u2192 Ist es kalt? \u2192 Ja \u2192 ???',answer:'Jacke anziehen',opts:['Jacke anziehen','Eis essen','Schwimmen gehen','T-Shirt anziehen']},
+{diagram:'Start \u2192 Hast du Hunger? \u2192 Nein \u2192 ???',answer:'Weiterspielen',opts:['Essen kochen','Weiterspielen','Schlafen','Einkaufen']},
+{diagram:'Start \u2192 Ampel rot? \u2192 Ja \u2192 Warten \u2192 Ampel gr\u00fcn? \u2192 Ja \u2192 ???',answer:'Stra\u00dfe \u00fcberqueren',opts:['Weiter warten','Stra\u00dfe \u00fcberqueren','Umdrehen','Rennen']}
+];
+let score=0,round=0;
+function render(){
+if(round>=tasks.length){el.innerHTML='<div class="ix-feedback pass" style="display:block">\uD83C\uDF89 '+score+'/'+tasks.length+' Flussdiagramme gel\u00f6st!<\/div>';if(score>=2&&!state.interactiveResults[8]){state.interactiveResults[8]=true;addXP(30,'Flussdiagramm-Profi!');saveState()}return}
+const t=tasks[round];
+el.innerHTML='<div style="text-align:center;font-size:16px;padding:12px;background:var(--bg2);border-radius:var(--radius);margin-bottom:12px;font-weight:600">'+t.diagram+'<\/div><p style="text-align:center;font-weight:700;margin-bottom:8px">Was kommt als N\u00e4chstes?<\/p><div class="ix-grid">'+t.opts.map(o=>'<span class="ix-item" style="padding:10px 18px;cursor:pointer" data-v="'+o+'">'+o+'<\/span>').join('')+'<\/div>';
+el.querySelectorAll('.ix-item').forEach(btn=>{btn.onclick=function(){if(this.dataset.v===t.answer){this.classList.add('correct');score++}else{this.classList.add('wrong');el.querySelectorAll('.ix-item').forEach(b=>{if(b.dataset.v===t.answer)b.classList.add('correct')})}el.querySelectorAll('.ix-item').forEach(b=>b.style.pointerEvents='none');round++;setTimeout(render,700)}})
+}
+render();
+}
+
+function initMixedChallenge(el){
+const challenges=[
+{q:'Was kommt? 10, 20, 30, ...',answer:'40',opts:['35','40','45','50'],type:'Muster'},
+{q:'x = 3. WIEDERHOLE 2 MAL: x = x + x. Was ist x?',answer:'12',opts:['6','9','12','18'],type:'Schleife + Variable'},
+{q:'WENN 5 > 3 DANN "Ja" SONST "Nein"',answer:'Ja',opts:['Ja','Nein','5','3'],type:'Bedingung'},
+{q:'Welches Symbol steht im Flussdiagramm f\u00fcr eine Entscheidung?',answer:'Raute',opts:['Kreis','Rechteck','Raute','Pfeil'],type:'Flussdiagramm'}
+];
+let score=0,round=0;
+function render(){
+if(round>=challenges.length){el.innerHTML='<div class="ix-feedback pass" style="display:block">\uD83C\uDF89 '+score+'/'+challenges.length+' \u2014 Logik-Meister!<\/div>';if(score>=3&&!state.interactiveResults[9]){state.interactiveResults[9]=true;addXP(50,'Logik-Meister!');saveState()}return}
+const c=challenges[round];
+el.innerHTML='<p style="font-size:12px;color:var(--text-dim);margin-bottom:4px">Thema: '+c.type+'<\/p><p style="font-size:18px;text-align:center;color:var(--heading);font-weight:700;margin-bottom:12px">'+c.q+'<\/p><div class="ix-grid">'+c.opts.map(o=>'<span class="ix-item" style="padding:10px 18px;cursor:pointer" data-v="'+o+'">'+o+'<\/span>').join('')+'<\/div><p style="text-align:center;color:var(--text-dim);font-size:13px">'+(round+1)+'/'+challenges.length+'<\/p>';
+el.querySelectorAll('.ix-item').forEach(btn=>{btn.onclick=function(){if(this.dataset.v===c.answer){this.classList.add('correct');score++}else{this.classList.add('wrong');el.querySelectorAll('.ix-item').forEach(b=>{if(b.dataset.v===c.answer)b.classList.add('correct')})}el.querySelectorAll('.ix-item').forEach(b=>b.style.pointerEvents='none');round++;setTimeout(render,700)}})
+}
+render();
+}
+
+function startApp(){const n=document.getElementById('nameInput').value.trim();if(!n)return;state.name=n;state.started=true;saveState();document.getElementById('welcomeScreen').style.display='none';renderModule(0);updateStreak()}
+
+(function init(){
+if(loadState()){
+document.documentElement.setAttribute('data-theme',state.designTheme);
+if(state.started){document.getElementById('welcomeScreen').style.display='none';renderModule(state.currentModule);updateStreak()}
+else{document.getElementById('nameInput').value=state.name||'';document.getElementById('startBtn').disabled=!state.name}
+}
+buildThemePicker();updateUI();renderSidebar();
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeCert();document.getElementById('levelUpOverlay').classList.remove('active')}});
+document.addEventListener('click',e=>{if(!e.target.closest('.modal')&&!e.target.closest('[onclick*="show"]')){document.querySelectorAll('.modal-overlay.active').forEach(m=>m.classList.remove('active'))}})
+})();
+
+(function(){
+var zl=100;
+function applyZoom(){document.documentElement.style.fontSize=zl+'%';var e=document.getElementById('zoomLvl');if(e)e.textContent=zl+'%'}
+window.zoomIn=function(){if(zl<200){zl+=10;applyZoom()}};
+window.zoomOut=function(){if(zl>50){zl-=10;applyZoom()}};
+window.zoomReset=function(){zl=100;applyZoom()};
+document.addEventListener('keydown',function(e){
+if(e.target.tagName==='INPUT'||e.target.tagName==='TEXTAREA')return;
+if((e.key==='+'||e.key==='=')&&!e.ctrlKey&&!e.metaKey){e.preventDefault();zoomIn()}
+else if((e.key==='-'||e.key==='_')&&!e.ctrlKey&&!e.metaKey){e.preventDefault();zoomOut()}
+else if(e.key==='0'&&!e.ctrlKey&&!e.metaKey){e.preventDefault();zoomReset()}
+})
+})();
+
+</script>
+<script>
+
+(function(){
+var KEY=null;
+var scripts=document.querySelectorAll('script');
+for(var i=0;i<scripts.length;i++){
+var km=scripts[i].textContent.match(/STORAGE_KEY\s*=\s*['"]([\w]+)['"]/);
+if(km){KEY=km[1];break;}
+}
+if(!location.hash.match(/modules=/)){try{Object.keys(localStorage).filter(function(k){return k.indexOf("_allowed_modules")!==-1}).forEach(function(k){localStorage.removeItem(k)})}catch(e){}}
+var LOCK_KEY=(KEY||'app')+'_allowed_modules';
+var h=location.hash.match(/modules=([0-9,]+)/);
+var allowed=null;
+if(h){
+allowed=h[1].split(",").map(Number);
+try{localStorage.setItem(LOCK_KEY,JSON.stringify(allowed));}catch(e){}
+}else{
+try{var stored=localStorage.getItem(LOCK_KEY);if(stored)allowed=JSON.parse(stored);}catch(e){}
+}
+if(!allowed||!allowed.length)return;
+function filterSidebar(){
+var items=document.querySelectorAll("#sidebarModules > *");
+for(var i=0;i<items.length;i++){
+items[i].style.display=(allowed.indexOf(i)===-1)?"none":"";
+}
+}
+var sb=document.getElementById("sidebarModules");
+if(sb){new MutationObserver(filterSidebar).observe(sb,{childList:true});filterSidebar();}
+document.addEventListener("click",function(e){
+var t=e.target.closest("[onclick]");
+if(!t)return;
+var oc=t.getAttribute("onclick")||"";
+var idx=oc.indexOf("renderModule(");
+if(idx===-1)return;
+var num=parseInt(oc.substring(idx+13));
+if(!isNaN(num)&&allowed.indexOf(num)===-1){e.preventDefault();e.stopImmediatePropagation();}
+},true);
+setTimeout(filterSidebar,500);
+window.addEventListener("hashchange",function(){
+var hh=location.hash.match(/modules=([0-9,]+)/);
+if(hh){
+allowed=hh[1].split(",").map(Number);
+try{localStorage.setItem(LOCK_KEY,JSON.stringify(allowed));}catch(e){}
+filterSidebar();
+}
+});
+})();
+
+</script>
+<script>
+/* A11y: Focus trap for modal overlays */
+document.addEventListener('keydown',function(e){if(e.key==='Tab'){var ov=document.querySelector('.cert-overlay.active,.modal-overlay.active,[role="dialog"].active');if(ov){var fc=ov.querySelectorAll('button,a,[tabindex="0"],input,select,textarea');if(fc.length){var f=fc[0],l=fc[fc.length-1];if(e.shiftKey&&document.activeElement===f){e.preventDefault();l.focus()}else if(!e.shiftKey&&document.activeElement===l){e.preventDefault();f.focus()}}}}});
+</script>
+</body>
+</html>

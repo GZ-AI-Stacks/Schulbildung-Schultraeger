@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="de" data-theme="cyber-dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>NaturFreund — Natur entdecken Klasse 1-3</title>
+<meta name="description" content="Interaktive Lern-App zum Thema Natur, Klasse 1-3. 10 Module mit Quiz, Boss-Challenges und Gamification.">
+<style>
+@font-face{font-family:'Sora';src:url('../../../Klasse_7-10/Informatik/fonts/sora-latin-400-normal.woff2') format('woff2');font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:'Sora';src:url('../../../Klasse_7-10/Informatik/fonts/sora-latin-600-normal.woff2') format('woff2');font-weight:600;font-style:normal;font-display:swap}
+@font-face{font-family:'Sora';src:url('../../../Klasse_7-10/Informatik/fonts/sora-latin-700-normal.woff2') format('woff2');font-weight:700;font-style:normal;font-display:swap}
+@font-face{font-family:'JetBrains Mono';src:url('../../../Klasse_7-10/Informatik/fonts/jetbrains-mono-latin-400-normal.woff2') format('woff2');font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:'Playfair Display';src:url('../../../Klasse_7-10/Informatik/fonts/playfair-display-latin-700-normal.woff2') format('woff2');font-weight:700;font-style:normal;font-display:swap}
+@font-face{font-family:'Inter';src:url('../../../Klasse_7-10/Informatik/fonts/inter-latin-400-normal.woff2') format('woff2');font-weight:400;font-style:normal;font-display:swap}
+
+:root{--neon:#3b82f6;--neon-dim:rgba(59,130,246,.15);--neon-glow:rgba(59,130,246,.3);--bg:#0a0e14;--bg2:#111827;--bg3:#1f2937;--card:#161e2e;--card-hover:#1e293b;--border:#2a3444;--border-light:#374151;--text:#d4dce8;--text-dim:#8899aa;--text-bright:#f1f5f9;--heading:#ffffff;--link:#60a5fa;--success:#22c55e;--warning:#f59e0b;--danger:#ef4444;--xp-purple:#a855f7;--badge-cyan:#06b6d4;--streak-red:#ef4444;--radius:12px;--radius-sm:8px;--radius-lg:16px;--shadow:0 4px 24px rgba(0,0,0,.4);--shadow-lg:0 8px 40px rgba(0,0,0,.5);--font:'Sora','Segoe UI',system-ui,sans-serif;--mono:'JetBrains Mono','Cascadia Code',monospace;--serif:'Playfair Display','Georgia',serif;--sidebar-w:280px;--header-h:60px;--card-border-w:1px;--card-border-style:solid;--glow:1}
+[data-theme="cyber-dark"]{--neon:#3b82f6;--neon-dim:rgba(59,130,246,.15);--neon-glow:rgba(59,130,246,.3);--bg:#0a0e14;--bg2:#111827;--bg3:#1f2937;--card:#161e2e;--card-hover:#1e293b;--border:#2a3444;--border-light:#374151;--text:#d4dce8;--text-dim:#8899aa;--text-bright:#f1f5f9;--heading:#ffffff;--link:#60a5fa;--success:#22c55e;--warning:#f59e0b;--danger:#ef4444;--xp-purple:#a855f7;--badge-cyan:#06b6d4;--streak-red:#ef4444;--radius:12px;--radius-sm:8px;--radius-lg:16px;--shadow:0 4px 24px rgba(0,0,0,.4);--shadow-lg:0 8px 40px rgba(0,0,0,.5);--font:'Sora','Segoe UI',system-ui,sans-serif;--card-border-w:1px;--card-border-style:solid;--glow:1}
+[data-theme="cyber-light"]{--neon:#1d4ed8;--neon-dim:rgba(29,78,216,.1);--neon-glow:rgba(29,78,216,.2);--bg:#f8f9fb;--bg2:#f0f2f5;--bg3:#e5e7eb;--card:#ffffff;--card-hover:#f5f7fa;--border:#d1d5db;--border-light:#e5e7eb;--text:#374151;--text-dim:#4b5563;--text-bright:#111827;--heading:#111827;--link:#2563eb;--success:#22c55e;--warning:#f59e0b;--danger:#ef4444;--xp-purple:#a855f7;--badge-cyan:#06b6d4;--streak-red:#ef4444;--radius:12px;--radius-sm:8px;--radius-lg:16px;--shadow:0 4px 24px rgba(0,0,0,.08);--shadow-lg:0 8px 40px rgba(0,0,0,.12);--font:'Sora','Segoe UI',system-ui,sans-serif;--card-border-w:1px;--card-border-style:solid;--glow:0}
+[data-theme="retro-dark"]{--neon:#ffd700;--neon-dim:rgba(255,215,0,.12);--neon-glow:rgba(255,215,0,.3);--bg:#0d0208;--bg2:#1a0a1e;--bg3:#2d1233;--card:#1a0a1e;--card-hover:#2d1233;--border:#4a1942;--border-light:#5c2d5c;--text:#e0d0f0;--text-dim:#9080a0;--text-bright:#fff;--heading:#ffd700;--link:#ff6b9d;--success:#00e676;--warning:#ffab00;--danger:#ff1744;--xp-purple:#e040fb;--badge-cyan:#00e5ff;--streak-red:#ff1744;--radius:0px;--radius-sm:0px;--radius-lg:0px;--shadow:4px 4px 0 rgba(0,0,0,.8);--shadow-lg:6px 6px 0 rgba(0,0,0,.9);--font:'Courier New','Consolas',monospace;--card-border-w:3px;--card-border-style:solid;--glow:0}
+[data-theme="retro-light"]{--neon:#b8860b;--neon-dim:rgba(184,134,11,.1);--neon-glow:rgba(184,134,11,.2);--bg:#fff8e1;--bg2:#fff3cd;--bg3:#ffe0b2;--card:#ffffff;--card-hover:#fff9f0;--border:#d4a017;--border-light:#e6c84d;--text:#3e2723;--text-dim:#6d4c41;--text-bright:#1b0000;--heading:#b8860b;--link:#c2185b;--success:#2e7d32;--warning:#ef6c00;--danger:#c62828;--xp-purple:#8e24aa;--badge-cyan:#00838f;--streak-red:#c62828;--radius:0px;--radius-sm:0px;--radius-lg:0px;--shadow:3px 3px 0 rgba(0,0,0,.15);--shadow-lg:5px 5px 0 rgba(0,0,0,.2);--font:'Courier New','Consolas',monospace;--card-border-w:3px;--card-border-style:solid;--glow:0}
+[data-theme="nature-dark"]{--neon:#4ade80;--neon-dim:rgba(74,222,128,.12);--neon-glow:rgba(74,222,128,.25);--bg:#0c1a0f;--bg2:#132617;--bg3:#1e3a24;--card:#15291a;--card-hover:#1e3a24;--border:#2d5a36;--border-light:#3a7044;--text:#c8e6c9;--text-dim:#81a784;--text-bright:#e8f5e9;--heading:#e8f5e9;--link:#81c784;--success:#66bb6a;--warning:#ffa726;--danger:#ef5350;--xp-purple:#ab47bc;--badge-cyan:#26a69a;--streak-red:#ef5350;--radius:20px;--radius-sm:14px;--radius-lg:28px;--shadow:0 4px 20px rgba(0,0,0,.3);--shadow-lg:0 8px 32px rgba(0,0,0,.4);--font:'Segoe UI','Helvetica Neue',system-ui,sans-serif;--card-border-w:1px;--card-border-style:solid;--glow:0}
+[data-theme="nature-light"]{--neon:#2e7d32;--neon-dim:rgba(46,125,50,.08);--neon-glow:rgba(46,125,50,.15);--bg:#f1f8e9;--bg2:#e8f5e9;--bg3:#c8e6c9;--card:#ffffff;--card-hover:#f1faf1;--border:#a5d6a7;--border-light:#c8e6c9;--text:#33691e;--text-dim:#3e6e1c;--text-bright:#1b5e20;--heading:#1b5e20;--link:#2e7d32;--success:#388e3c;--warning:#ef6c00;--danger:#c62828;--xp-purple:#7b1fa2;--badge-cyan:#00695c;--streak-red:#c62828;--radius:20px;--radius-sm:14px;--radius-lg:28px;--shadow:0 4px 16px rgba(0,0,0,.06);--shadow-lg:0 8px 28px rgba(0,0,0,.1);--font:'Segoe UI','Helvetica Neue',system-ui,sans-serif;--card-border-w:1px;--card-border-style:solid;--glow:0}
+[data-theme="space-dark"]{--neon:#c084fc;--neon-dim:rgba(192,132,252,.12);--neon-glow:rgba(192,132,252,.3);--bg:#07020e;--bg2:#0f0720;--bg3:#1a0e35;--card:#110a28;--card-hover:#1a0e35;--border:#2e1a5e;--border-light:#3d2478;--text:#d4c8f0;--text-dim:#9080b8;--text-bright:#f0e8ff;--heading:#f0e8ff;--link:#f0abfc;--success:#34d399;--warning:#fbbf24;--danger:#fb7185;--xp-purple:#f472b6;--badge-cyan:#67e8f9;--streak-red:#fb7185;--radius:4px;--radius-sm:2px;--radius-lg:6px;--shadow:0 4px 24px rgba(100,50,200,.2);--shadow-lg:0 8px 40px rgba(100,50,200,.3);--font:'Segoe UI',system-ui,sans-serif;--card-border-w:1px;--card-border-style:solid;--glow:1}
+[data-theme="space-light"]{--neon:#7c3aed;--neon-dim:rgba(124,58,237,.08);--neon-glow:rgba(124,58,237,.15);--bg:#faf5ff;--bg2:#f3e8ff;--bg3:#e9d5ff;--card:#ffffff;--card-hover:#faf5ff;--border:#c4b5fd;--border-light:#ddd6fe;--text:#4c1d95;--text-dim:#5b21b6;--text-bright:#2e1065;--heading:#2e1065;--link:#7c3aed;--success:#059669;--warning:#d97706;--danger:#dc2626;--xp-purple:#db2777;--badge-cyan:#0891b2;--streak-red:#dc2626;--radius:4px;--radius-sm:2px;--radius-lg:6px;--shadow:0 4px 16px rgba(100,50,200,.06);--shadow-lg:0 8px 28px rgba(100,50,200,.1);--font:'Segoe UI',system-ui,sans-serif;--card-border-w:1px;--card-border-style:solid;--glow:0}
+[data-theme="comic-dark"]{--neon:#ff6b6b;--neon-dim:rgba(255,107,107,.12);--neon-glow:rgba(255,107,107,.3);--bg:#1a1a2e;--bg2:#222244;--bg3:#2e2e55;--card:#262650;--card-hover:#2e2e55;--border:#4a4a7a;--border-light:#5a5a8a;--text:#e8e0ff;--text-dim:#a098c0;--text-bright:#fff;--heading:#fff;--link:#ffa94d;--success:#51cf66;--warning:#fcc419;--danger:#ff6b6b;--xp-purple:#cc5de8;--badge-cyan:#22b8cf;--streak-red:#ff6b6b;--radius:16px;--radius-sm:12px;--radius-lg:24px;--shadow:4px 4px 0 rgba(0,0,0,.5);--shadow-lg:6px 6px 0 rgba(0,0,0,.6);--font:'Comic Sans MS','Chalkboard SE',cursive,system-ui,sans-serif;--card-border-w:3px;--card-border-style:solid;--glow:0}
+[data-theme="comic-light"]{--neon:#e03131;--neon-dim:rgba(224,49,49,.08);--neon-glow:rgba(224,49,49,.15);--bg:#fff9db;--bg2:#fff3bf;--bg3:#ffe066;--card:#ffffff;--card-hover:#fffdf0;--border:#fab005;--border-light:#fcc419;--text:#2b2b2b;--text-dim:#555;--text-bright:#000;--heading:#000;--link:#e8590c;--success:#2f9e44;--warning:#e8590c;--danger:#c92a2a;--xp-purple:#9c36b5;--badge-cyan:#1098ad;--streak-red:#c92a2a;--radius:16px;--radius-sm:12px;--radius-lg:24px;--shadow:3px 3px 0 rgba(0,0,0,.2);--shadow-lg:5px 5px 0 rgba(0,0,0,.25);--font:'Comic Sans MS','Chalkboard SE',cursive,system-ui,sans-serif;--card-border-w:3px;--card-border-style:solid;--glow:0}
+[data-theme="sketchy-dark"]{--neon:#d97706;--neon-dim:rgba(217,119,6,.15);--neon-glow:rgba(217,119,6,.3);--bg:#2a1f0f;--bg2:#3a2a1a;--bg3:#4a3a2a;--card:#362414;--card-hover:#462a1a;--border:#5a4030;--border-light:#6a5040;--text:#d4c4b0;--text-dim:#a09080;--text-bright:#e8d8c8;--heading:#f5ead5;--link:#e8a550;--success:#84cc16;--warning:#d97706;--danger:#e74c3c;--xp-purple:#d946ef;--badge-cyan:#06b6d4;--streak-red:#e74c3c;--radius:24px;--radius-sm:16px;--radius-lg:32px;--shadow:0 6px 20px rgba(0,0,0,.3);--shadow-lg:0 10px 40px rgba(0,0,0,.4);--font:'Playfair Display','Georgia',serif;--card-border-w:2px;--card-border-style:dashed;--glow:0}
+[data-theme="sketchy-light"]{--neon:#b45309;--neon-dim:rgba(180,83,9,.1);--neon-glow:rgba(180,83,9,.2);--bg:#fef3e2;--bg2:#fde8cc;--bg3:#f9d5b8;--card:#ffffff;--card-hover:#fffaf5;--border:#d4a574;--border-light:#e8c4a0;--text:#5c4033;--text-dim:#8b6f47;--text-bright:#3e2723;--heading:#3e2723;--link:#c2600c;--success:#65a30d;--warning:#b45309;--danger:#d25c4d;--xp-purple:#c084fc;--badge-cyan:#0891b2;--streak-red:#d25c4d;--radius:24px;--radius-sm:16px;--radius-lg:32px;--shadow:0 4px 12px rgba(0,0,0,.08);--shadow-lg:0 8px 24px rgba(0,0,0,.12);--font:'Playfair Display','Georgia',serif;--card-border-w:2px;--card-border-style:dashed;--glow:0}
+[data-theme="nature-code-dark"]{--neon:#10b981;--neon-dim:rgba(16,185,129,.15);--neon-glow:rgba(16,185,129,.25);--bg:#0a1f12;--bg2:#0d2818;--bg3:#1a3a2a;--card:#0f281a;--card-hover:#1a3a2a;--border:#2d5a3d;--border-light:#3a7050;--text:#c8e6d0;--text-dim:#7ba890;--text-bright:#e8f5ed;--heading:#e8f5ed;--link:#34d399;--success:#10b981;--warning:#f59e0b;--danger:#f87171;--xp-purple:#a78bfa;--badge-cyan:#22d3ee;--streak-red:#f87171;--radius:20px;--radius-sm:14px;--radius-lg:28px;--shadow:0 4px 20px rgba(0,100,50,.2);--shadow-lg:0 8px 32px rgba(0,100,50,.3);--font:'Segoe UI','Helvetica Neue',system-ui,sans-serif;--card-border-w:1px;--card-border-style:solid;--glow:0}
+[data-theme="nature-code-light"]{--neon:#059669;--neon-dim:rgba(5,150,105,.1);--neon-glow:rgba(5,150,105,.15);--bg:#f0fdf8;--bg2:#e8faf2;--bg3:#d1f2e0;--card:#ffffff;--card-hover:#f5fbf7;--border:#86efac;--border-light:#bbf7d0;--text:#164e3f;--text-dim:#2d6e4f;--text-bright:#052e16;--heading:#052e16;--link:#059669;--success:#10b981;--warning:#d97706;--danger:#dc2626;--xp-purple:#8b5cf6;--badge-cyan:#06b6d4;--streak-red:#dc2626;--radius:20px;--radius-sm:14px;--radius-lg:28px;--shadow:0 4px 16px rgba(0,100,50,.06);--shadow-lg:0 8px 28px rgba(0,100,50,.1);--font:'Segoe UI','Helvetica Neue',system-ui,sans-serif;--card-border-w:1px;--card-border-style:solid;--glow:0}
+[data-theme="glass-dark"]{--neon:#00d9ff;--neon-dim:rgba(0,217,255,.12);--neon-glow:rgba(0,217,255,.25);--bg:#0f0f23;--bg2:#1a1a3e;--bg3:#25254a;--card:rgba(30,30,60,.4);--card-hover:rgba(40,40,80,.5);--border:rgba(100,150,255,.2);--border-light:rgba(100,150,255,.3);--text:#e4e8f0;--text-dim:#8899aa;--text-bright:#f5f7ff;--heading:#ffffff;--link:#00d9ff;--success:#34d399;--warning:#fbbf24;--danger:#ff6b9d;--xp-purple:#b991f7;--badge-cyan:#00d9ff;--streak-red:#ff6b9d;--radius:16px;--radius-sm:12px;--radius-lg:20px;--shadow:0 8px 32px rgba(0,200,255,.1);--shadow-lg:0 16px 64px rgba(0,200,255,.15);--font:'Segoe UI',system-ui,sans-serif;--card-border-w:1px;--card-border-style:solid;--glow:1}
+[data-theme="glass-light"]{--neon:#0891b2;--neon-dim:rgba(8,145,178,.08);--neon-glow:rgba(8,145,178,.15);--bg:#f8fafc;--bg2:#f1f5f9;--bg3:#e2e8f0;--card:rgba(255,255,255,.4);--card-hover:rgba(255,255,255,.6);--border:rgba(100,180,255,.2);--border-light:rgba(100,180,255,.3);--text:#1e293b;--text-dim:#475569;--text-bright:#0f172a;--heading:#0f172a;--link:#0891b2;--success:#059669;--warning:#d97706;--danger:#dc2626;--xp-purple:#7c3aed;--badge-cyan:#0891b2;--streak-red:#dc2626;--radius:16px;--radius-sm:12px;--radius-lg:20px;--shadow:0 8px 32px rgba(100,150,255,.08);--shadow-lg:0 16px 64px rgba(100,150,255,.12);--font:'Segoe UI',system-ui,sans-serif;--card-border-w:1px;--card-border-style:solid;--glow:0}
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}body{font-family:var(--font);background:var(--bg);color:var(--text);line-height:1.6;min-height:100vh;overflow-x:hidden;transition:background .3s,color .3s}h1,h2,h3,h4{color:var(--heading);line-height:1.3}a{color:var(--link);text-decoration:none}a:hover{text-decoration:underline}button{font-family:var(--font);cursor:pointer;border:none;background:none;color:inherit}code,pre{font-family:var(--mono)}:focus-visible{outline:2px solid var(--neon);outline-offset:2px;border-radius:4px}::selection{background:var(--neon);color:#fff}::-webkit-scrollbar{width:8px}::-webkit-scrollbar-track{background:var(--bg2)}::-webkit-scrollbar-thumb{background:var(--border);border-radius:4px}::-webkit-scrollbar-thumb:hover{background:var(--text-dim)}
+.site-header{position:fixed;top:0;left:0;right:0;height:var(--header-h);background:var(--bg2);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 20px;z-index:100;backdrop-filter:blur(12px)}.header-logo{display:flex;align-items:center;gap:12px;font-weight:700;font-size:18px;color:var(--heading)}.header-logo-text{display:flex;flex-direction:column;line-height:1.2}.header-logo-main{font-size:20px;font-weight:800}.header-logo-sub{font-size:11px;font-weight:600;color:var(--neon);letter-spacing:1px;text-transform:uppercase;margin-top:2px}.header-right{margin-left:auto;display:flex;align-items:center;gap:12px}.header-xp{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--xp-purple);font-weight:600}.header-xp-bar{width:80px;height:6px;background:var(--bg3);border-radius:3px;overflow:hidden}.header-xp-fill{height:100%;background:var(--xp-purple);border-radius:3px;transition:width .5s}.header-streak{display:flex;align-items:center;gap:4px;font-size:13px;color:var(--streak-red);font-weight:600}
+.theme-toggle{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:var(--bg3);transition:background .2s}.theme-toggle:hover{background:var(--border)}.theme-picker-wrap{position:relative}.theme-picker-btn{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:var(--bg3);transition:background .2s;font-size:16px}.theme-picker-btn:hover{background:var(--border)}.theme-picker-dd{position:absolute;top:calc(100% + 8px);right:0;background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:12px;box-shadow:var(--shadow-lg);z-index:200;display:none;min-width:240px}.theme-picker-dd.open{display:block}.theme-picker-dd .tp-label{font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--text-dim);margin-bottom:8px}.tp-world{display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:var(--radius-sm);cursor:pointer;transition:background .15s;margin-bottom:2px}.tp-world:hover{background:var(--bg3)}.tp-world.active{background:var(--neon-dim)}.tp-world-color{width:28px;height:28px;border-radius:6px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:14px}.tp-world-info{flex:1;min-width:0}.tp-world-name{font-size:13px;font-weight:600;color:var(--heading)}.tp-world-desc{font-size:10px;color:var(--text-dim)}.tp-divider{height:1px;background:var(--border);margin:8px 0}.tp-mode-row{display:flex;align-items:center;justify-content:space-between;padding:4px 10px}.tp-mode-label{font-size:12px;color:var(--text);font-weight:600}.tp-mode-switch{width:44px;height:24px;border-radius:12px;background:var(--bg3);position:relative;cursor:pointer;transition:background .2s}.tp-mode-switch.light{background:var(--neon)}.tp-mode-switch::after{content:'';position:absolute;top:3px;left:3px;width:18px;height:18px;border-radius:50%;background:#fff;transition:transform .2s;box-shadow:0 1px 3px rgba(0,0,0,.3)}.tp-mode-switch.light::after{transform:translateX(20px)}.menu-btn{display:none;width:36px;height:36px;border-radius:8px;align-items:center;justify-content:center;background:var(--bg3)}
+.sidebar{position:fixed;top:var(--header-h);left:0;width:var(--sidebar-w);height:calc(100vh - var(--header-h));background:var(--bg2);border-right:1px solid var(--border);overflow-y:auto;padding:16px 12px;z-index:90;transition:transform .3s}.sidebar-section{margin-bottom:20px}.sidebar-label{font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--text-dim);padding:0 8px;margin-bottom:8px}.sidebar-level{padding:8px 12px;background:var(--neon-dim);border-radius:var(--radius-sm);margin-bottom:12px;text-align:center}.sidebar-level-title{font-size:14px;font-weight:700;color:var(--neon)}.sidebar-level-sub{font-size:11px;color:var(--text-dim);margin-top:2px}.sidebar-xp-bar{width:100%;height:8px;background:var(--bg3);border-radius:4px;overflow:hidden;margin-top:6px}.sidebar-xp-fill{height:100%;background:linear-gradient(90deg,var(--xp-purple),var(--neon));border-radius:4px;transition:width .6s}.mod-link{display:flex;align-items:center;gap:10px;padding:8px 12px;border-radius:var(--radius-sm);transition:background .15s;color:var(--text);font-size:13px;text-decoration:none;position:relative;cursor:pointer}.mod-link:hover{background:var(--bg3);text-decoration:none}.mod-link.active{background:var(--neon-dim);color:var(--neon);font-weight:600}.mod-link.completed::after{content:'\2713';position:absolute;right:10px;color:var(--success);font-weight:700;font-size:12px}.mod-link .mod-icon{width:28px;height:28px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
+.main{margin-left:var(--sidebar-w);margin-top:var(--header-h);min-height:calc(100vh - var(--header-h));padding:32px;max-width:900px}.module-header{margin-bottom:32px}.module-header .mod-badge{display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--neon);margin-bottom:8px}.module-header h1{font-size:28px;margin-bottom:8px}.module-header .mod-desc{font-size:15px;color:var(--text-dim);max-width:600px}
+.lesson-card{background:var(--card);border:var(--card-border-w) var(--card-border-style) var(--border);border-radius:var(--radius);padding:24px;margin-bottom:20px;transition:border-color .2s}.lesson-card:hover{border-color:var(--neon)}.lesson-card h3{font-size:18px;margin-bottom:12px;display:flex;align-items:center;gap:8px}.lesson-card p,.lesson-card li{font-size:14px;line-height:1.7;color:var(--text)}.lesson-card ul,.lesson-card ol{margin:8px 0 8px 20px}.lesson-card code{background:var(--bg3);padding:2px 6px;border-radius:4px;font-size:13px;color:var(--neon)}.lesson-card .info-box{background:var(--neon-dim);border-left:3px solid var(--neon);padding:12px 16px;border-radius:0 var(--radius-sm) var(--radius-sm) 0;margin:12px 0;font-size:13px}
+.interactive-area{background:var(--card);border:calc(var(--card-border-w) + 1px) dashed var(--border);border-radius:var(--radius);padding:24px;margin:20px 0;min-height:200px}.interactive-area h4{font-size:15px;color:var(--neon);margin-bottom:12px}.ix-grid{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;margin:16px 0}.ix-item{background:var(--bg3);border:2px solid var(--border);border-radius:var(--radius-sm);padding:14px 20px;font-size:16px;cursor:pointer;transition:all .2s;user-select:none;text-align:center;min-width:60px}.ix-item:hover{border-color:var(--neon);background:var(--neon-dim)}.ix-item.selected{border-color:var(--neon);background:var(--neon-dim)}.ix-item.correct{border-color:var(--success);background:rgba(34,197,94,.1)}.ix-item.wrong{border-color:var(--danger);background:rgba(239,68,68,.1)}.ix-item.placed{opacity:.4;pointer-events:none}.ix-btn{background:var(--neon);color:#fff;border:none;padding:10px 24px;border-radius:var(--radius-sm);font-size:14px;font-weight:700;cursor:pointer;font-family:var(--font);margin-top:12px;transition:opacity .2s}.ix-btn:hover{opacity:.85}.ix-feedback{text-align:center;padding:14px;border-radius:var(--radius-sm);font-size:16px;font-weight:700;margin-top:12px;display:none}.ix-feedback.pass{display:block;background:rgba(34,197,94,.12);color:var(--success)}.ix-feedback.fail{display:block;background:rgba(239,68,68,.12);color:var(--danger)}
+.quiz-section{background:var(--card);border:var(--card-border-w) var(--card-border-style) var(--border);border-radius:var(--radius);padding:24px;margin-top:24px}.quiz-section h3{font-size:18px;margin-bottom:16px;color:var(--xp-purple)}.quiz-q{margin-bottom:20px}.quiz-q p{font-size:14px;font-weight:600;margin-bottom:10px}.quiz-q label{display:flex;align-items:flex-start;gap:10px;padding:10px 14px;border-radius:var(--radius-sm);border:1px solid var(--border);cursor:pointer;transition:all .15s;font-size:14px;margin-bottom:6px}.quiz-q label:hover{border-color:var(--neon);background:var(--neon-dim)}.quiz-q input[type="radio"]{margin-top:3px;accent-color:var(--neon)}.quiz-q label.correct{border-color:var(--success);background:rgba(34,197,94,.1)}.quiz-q label.wrong{border-color:var(--danger);background:rgba(239,68,68,.1)}.quiz-submit{padding:10px 24px;font-size:14px;font-weight:700;border-radius:var(--radius-sm);background:var(--xp-purple);color:#fff;transition:opacity .2s;margin-top:8px}.quiz-submit:hover{opacity:.85}.quiz-result{padding:16px;border-radius:var(--radius-sm);margin-top:16px;font-size:14px;font-weight:600;text-align:center}.quiz-result.pass{background:rgba(34,197,94,.12);color:var(--success);border:1px solid rgba(34,197,94,.3)}.quiz-result.fail{background:rgba(239,68,68,.12);color:var(--danger);border:1px solid rgba(239,68,68,.3)}.quiz-explanation{margin-top:6px;padding:8px 14px;border-radius:var(--radius-sm);background:rgba(34,197,94,.08);border-left:3px solid var(--success);font-size:13px;color:var(--success);font-weight:600}
+.boss-section{background:linear-gradient(135deg,rgba(168,85,247,.08),rgba(59,130,246,.08));border:2px solid var(--xp-purple);border-radius:var(--radius);padding:24px;margin-top:24px}.boss-section h3{color:var(--xp-purple);font-size:20px;margin-bottom:4px}.boss-section .boss-sub{font-size:13px;color:var(--text-dim);margin-bottom:16px}
+.badge-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(100px,1fr));gap:12px;margin-top:12px}.badge-item{text-align:center;padding:12px 8px;border-radius:var(--radius-sm);background:var(--bg3);opacity:.4;transition:all .3s}.badge-item.earned{opacity:1;background:var(--neon-dim);border:1px solid var(--neon)}.badge-item .badge-icon{font-size:28px;margin-bottom:4px}.badge-item .badge-name{font-size:10px;font-weight:600;color:var(--text-dim)}.badge-item.earned .badge-name{color:var(--neon)}
+.stats-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px;margin-top:12px}.stat-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius-sm);padding:16px;text-align:center}.stat-card .stat-val{font-size:28px;font-weight:700;color:var(--neon)}.stat-card .stat-label{font-size:12px;color:var(--text-dim);margin-top:4px}
+.notif{position:fixed;top:80px;right:20px;background:var(--card);border:1px solid var(--neon);border-radius:var(--radius);padding:16px 20px;box-shadow:var(--shadow-lg);z-index:200;transform:translateX(120%);transition:transform .4s cubic-bezier(.22,1,.36,1);max-width:320px}.notif.show{transform:translateX(0)}.notif-title{font-size:14px;font-weight:700;color:var(--heading);margin-bottom:2px}.notif-text{font-size:12px;color:var(--text-dim)}.notif.xp{border-color:var(--xp-purple)}.notif.badge{border-color:var(--badge-cyan)}.notif.level{border-color:var(--success)}.notif.streak{border-color:var(--streak-red)}
+.level-up-overlay{position:fixed;inset:0;background:rgba(0,0,0,.7);display:none;align-items:center;justify-content:center;z-index:300}.level-up-overlay.active{display:flex}.level-up-box{text-align:center;padding:40px;animation:lvlPop .5s ease-out}.level-up-box .lvl-icon{font-size:64px;margin-bottom:12px}.level-up-box .lvl-title{font-size:28px;font-weight:900;color:var(--heading)}.level-up-box .lvl-name{font-size:20px;color:var(--xp-purple);font-weight:700;margin-top:4px}@keyframes lvlPop{from{transform:scale(.5);opacity:0}to{transform:scale(1);opacity:1}}
+.welcome-screen{display:flex;align-items:center;justify-content:center;min-height:calc(100vh - var(--header-h));text-align:center;padding:40px 20px}.welcome-box{max-width:480px}.welcome-box h1{font-size:36px;margin-bottom:8px}.welcome-box .ws-sub{color:var(--text-dim);font-size:15px;margin-bottom:32px}.welcome-box input{width:100%;max-width:320px;padding:12px 16px;font-size:16px;border-radius:var(--radius-sm);border:1px solid var(--border);background:var(--bg3);color:var(--heading);font-family:var(--font);text-align:center;margin-bottom:16px}.welcome-box input:focus{border-color:var(--neon);outline:none}.welcome-box .ws-start{padding:14px 40px;font-size:16px;font-weight:700;border-radius:var(--radius-sm);background:var(--neon);color:#fff;transition:opacity .2s}.welcome-box .ws-start:hover{opacity:.85}.welcome-box .ws-start:disabled{opacity:.4;cursor:not-allowed}
+.cert-overlay{position:fixed;inset:0;background:rgba(0,0,0,.88);display:none;align-items:center;justify-content:center;z-index:400;padding:20px;flex-direction:column;backdrop-filter:blur(8px)}.cert-overlay.active{display:flex}.cert-picker{display:flex;gap:12px;justify-content:center;margin-bottom:20px;flex-wrap:wrap}.cert-pick-btn{padding:10px 20px;font-size:13px;font-weight:700;border-radius:12px;border:2px solid rgba(255,255,255,.15);background:rgba(255,255,255,.06);color:rgba(255,255,255,.7);transition:all .3s;backdrop-filter:blur(4px)}.cert-pick-btn:hover{border-color:rgba(255,255,255,.3);color:#fff;transform:translateY(-2px)}.cert-pick-btn.active{border-color:#ffd700;color:#ffd700;background:rgba(255,215,0,.1);box-shadow:0 0 20px rgba(255,215,0,.15)}.cert-frame{width:720px;max-width:100%;aspect-ratio:1.414;position:relative;overflow:hidden}.cert-actions{display:flex;gap:12px;justify-content:center;margin-top:16px}.cert-actions button{padding:12px 28px;font-size:13px;font-weight:700;border-radius:12px;background:linear-gradient(135deg,var(--neon),var(--link));color:#fff;transition:transform .2s,box-shadow .2s}.cert-actions button:hover{transform:translateY(-2px);box-shadow:0 4px 20px rgba(0,0,0,.3)}
+.confetti-container{position:fixed;inset:0;pointer-events:none;z-index:600;overflow:hidden}
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.6);display:none;align-items:center;justify-content:center;z-index:500;padding:20px}.modal-overlay.active{display:flex}.modal{background:var(--card);border:1px solid var(--border);border-radius:var(--radius-lg);max-width:640px;width:100%;max-height:85vh;overflow-y:auto;padding:32px;position:relative}.modal-close{position:absolute;top:12px;right:16px;font-size:24px;color:var(--text-dim);background:none;border:none;cursor:pointer}
+@media(max-width:800px){.menu-btn{display:flex}.sidebar{transform:translateX(-100%)}.sidebar.open{transform:translateX(0)}.main{margin-left:0;padding:16px}}
+@media print{*{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}.site-header,.sidebar,.notif,.level-up-overlay,.confetti-container{display:none!important}.main{margin-left:0!important;padding:20px!important}.lesson-card{break-inside:avoid;page-break-inside:avoid}}
+
+/* Audio/Speech */
+.tts-btn{background:none;border:none;cursor:pointer;font-size:.9em;opacity:.5;transition:all .2s;vertical-align:middle;margin-left:8px;padding:2px 6px;border-radius:4px}
+.tts-btn:hover{opacity:1;background:var(--bg2)}.tts-btn.speaking{opacity:1;color:var(--neon);animation:tts-pulse 1s infinite}
+@keyframes tts-pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.15)}}
+.tts-bar{display:flex;align-items:center;gap:8px;padding:6px 12px;background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);margin:8px 0;font-size:.8rem;flex-wrap:wrap}
+.tts-bar select{background:var(--bg);color:var(--text);border:1px solid var(--border);border-radius:4px;padding:2px 6px;font-size:.78rem}
+.tts-bar button{background:none;border:1px solid var(--border);border-radius:4px;padding:2px 8px;cursor:pointer;color:var(--text);font-size:.8rem}
+.tts-bar button:hover{background:var(--bg)}
+.speech-ex{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:16px;margin:12px 0;text-align:center}
+.speech-ex h4{margin:0 0 8px;font-size:1rem}
+.mic-btn{font-size:1.6em;background:none;border:2px solid var(--neon);border-radius:50%;width:52px;height:52px;cursor:pointer;transition:all .3s;color:var(--text);display:inline-flex;align-items:center;justify-content:center}
+.mic-btn:hover{background:var(--neon);color:var(--bg)}.mic-btn.rec{background:#ef4444;border-color:#ef4444;color:#fff;animation:tts-pulse 1s infinite}
+.sr-res{margin-top:8px;padding:6px 10px;border-radius:4px;font-weight:600;font-size:.85rem;display:inline-block}
+.sr-res.good{background:#22c55e22;color:#22c55e}.sr-res.retry{background:#f59e0b22;color:#f59e0b}
+.sr-na{font-size:.8rem;color:var(--text-dim);margin-top:8px}
+</style>
+</head>
+<body>
+<a href="#mainContent" class="skip-nav" style="position:absolute;top:-50px;left:8px;background:var(--neon);color:#fff;padding:8px 16px;z-index:9999;border-radius:0 0 8px 8px;font-weight:700;text-decoration:none">Zum Inhalt springen</a>
+<header class="site-header">
+  <button class="menu-btn" onclick="toggleSidebar()" aria-label="Menu">&#9776;</button>
+  <div class="header-logo">
+    <svg viewBox="0 0 40 40" width="40" height="40" fill="none" aria-hidden="true"><rect x="4" y="4" width="32" height="32" rx="8" fill="var(--neon-dim)" stroke="var(--neon)" stroke-width="1.5"/><text x="20" y="26" text-anchor="middle" font-size="18" font-weight="900" fill="var(--neon)">N</text></svg>
+    <div class="header-logo-text"><div class="header-logo-main">NaturFreund</div><div class="header-logo-sub">Natur entdecken Klasse 1-3</div></div>
+  </div>
+  <div class="header-right">
+    <div class="header-xp"><span id="headerLevel">Level 1</span><div class="header-xp-bar"><div class="header-xp-fill" style="width:0%"></div></div><span id="headerXP">0 XP</span></div>
+    <div class="header-streak" id="headerStreak">&#128293; 0</div>
+    <div class="theme-picker-wrap"><button class="theme-picker-btn" onclick="toggleThemePicker()" aria-label="Theme wählen">&#127912;</button><div class="theme-picker-dd" id="themePickerDD"></div></div>
+    <button class="theme-toggle" onclick="toggleMode()" aria-label="Dark/Light umschalten">&#127769;</button>
+  </div>
+</header>
+<nav class="sidebar" id="sidebar" role="navigation" aria-label="Module">
+  <div class="sidebar-section"><div class="sidebar-level"><div class="sidebar-level-title" id="sidebarLevel">Anfänger</div><div class="sidebar-level-sub" id="sidebarXP">0 XP</div><div class="sidebar-xp-bar"><div class="sidebar-xp-fill" id="sidebarXPFill" style="width:0%"></div></div></div></div>
+  <div class="sidebar-section"><div class="sidebar-label">Module</div><div id="sidebarModules"></div></div>
+  <div class="sidebar-section" style="border-top:1px solid var(--border);padding-top:12px;margin-top:12px">
+    <a class="mod-link" onclick="showBadges()"><span class="mod-icon">&#127941;</span>Abzeichen</a>
+    <a class="mod-link" onclick="showStats()"><span class="mod-icon">&#128202;</span>Statistik</a>
+    <a class="mod-link" onclick="showCert()"><span class="mod-icon">&#127891;</span>Urkunde</a>
+  </div>
+  <div class="sidebar-section" style="border-top:1px solid var(--border);padding-top:12px;margin-top:12px">
+    <a class="mod-link" onclick="exportData()"><span class="mod-icon">&#128190;</span>Speichern</a>
+    <label class="mod-link" style="cursor:pointer"><span class="mod-icon">&#128194;</span>Laden<input type="file" accept=".json" onchange="importData(event)" style="display:none"></label>
+    <a class="mod-link" onclick="if(confirm('Wirklich alles zurücksetzen?')){localStorage.removeItem(STORAGE_KEY);location.reload()}" style="color:var(--danger)"><span class="mod-icon">&#128465;</span>Zurücksetzen</a>
+  </div>
+  <div style="padding:16px 8px 8px;border-top:1px solid var(--border);margin-top:12px;font-size:11px;color:var(--text-dim)">
+    <a onclick="showImpressum()" style="cursor:pointer;color:var(--text-dim)">Impressum</a> &middot;
+    <a onclick="showDatenschutz()" style="cursor:pointer;color:var(--text-dim)">Datenschutz</a>
+  </div>
+</nav>
+<main class="main" id="mainContent">
+  <div class="welcome-screen" id="welcomeScreen"><div class="welcome-box"><div style="font-size:64px;margin-bottom:16px">🌿</div><h1>NaturFreund</h1><p class="ws-sub">Entdecke die wunderbare Welt der Natur! 10 Module mit Quiz, Boss-Challenges und Abenteuern.</p><input type="text" id="nameInput" placeholder="Dein Name" maxlength="24" aria-label="Dein Name" oninput="document.getElementById('startBtn').disabled=!this.value.trim()"><br><button class="ws-start" id="startBtn" disabled onclick="startApp()">🦋 Natur entdecken!</button></div></div>
+  <div id="moduleContent" style="display:none"></div>
+  <div id="badgesView" style="display:none"></div>
+  <div id="statsView" style="display:none"></div>
+</main>
+<div class="notif" id="notif"><div class="notif-title" id="notifTitle"></div><div class="notif-text" id="notifText"></div></div>
+<div class="level-up-overlay" id="levelUpOverlay"><div class="level-up-box" id="levelUpBox"></div></div>
+<div class="confetti-container" id="confetti"></div>
+<div class="cert-overlay" id="certOverlay" role="dialog" aria-label="Urkunde" aria-modal="true"><div class="cert-picker" id="certPicker"></div><div class="cert-frame" id="certFrame"></div><div class="cert-actions"><button onclick="printCert()">&#128424; Drucken / PDF</button><button onclick="closeCert()">Schließen</button></div></div>
+<div class="modal-overlay" id="impressumOverlay"><div class="modal"><button class="modal-close" onclick="document.getElementById('impressumOverlay').classList.remove('active')">&times;</button><h2>Impressum</h2><p><strong>© 2026 GZ AI Stacks - Gerd Zimmermann</strong></p><p>Diese Lern-App wurde mit Claude Code (Anthropic) entwickelt.</p></div></div>
+<div class="modal-overlay" id="datenschutzOverlay"><div class="modal"><button class="modal-close" onclick="document.getElementById('datenschutzOverlay').classList.remove('active')">&times;</button><h2>Datenschutzerklärung</h2><p>Diese App speichert Daten <strong>ausschließlich lokal</strong> in Ihrem Browser (LocalStorage). Es werden keine Daten an Server übertragen.</p><ul><li>Keine Cookies</li><li>Kein Tracking oder Analytics</li><li>Keine externen Ressourcen</li><li>Keine Registrierung</li><li>Alle Daten verbleiben auf Ihrem Gerät</li></ul><p>Sie können Ihre gespeicherten Daten jederzeit über die "Zurücksetzen"-Funktion löschen.</p></div></div>
+<script>
+function showImpressum(){document.getElementById('impressumOverlay').classList.add('active')}
+function showDatenschutz(){document.getElementById('datenschutzOverlay').classList.add('active')}
+
+
+// === Audio (TTS) ===
+const _synth=window.speechSynthesis,_LANG='de-DE';let _ttsOn=false,_ttsRate=1,_ttsTimer=null;
+function speakLesson(i){if(_ttsOn){stopTTS();return}const c=document.querySelectorAll('.lesson-card');if(!c[i]||!_synth)return;stopTTS();const u=new SpeechSynthesisUtterance(c[i].innerText);u.lang=_LANG;u.rate=_ttsRate;u.onstart=()=>{_ttsOn=true;updTTSUI();startTTSTimer()};u.onend=()=>{_ttsOn=false;updTTSUI();clearTTSTimer()};u.onerror=()=>{_ttsOn=false;updTTSUI();clearTTSTimer()};_synth.speak(u);showTTSBar()}
+function speakText(t,lang){if(!_synth)return;stopTTS();const u=new SpeechSynthesisUtterance(t);u.lang=lang||_LANG;u.rate=_ttsRate;u.onstart=()=>{_ttsOn=true;updTTSUI();startTTSTimer()};u.onend=()=>{_ttsOn=false;updTTSUI();clearTTSTimer()};u.onerror=()=>{_ttsOn=false;updTTSUI();clearTTSTimer()};_synth.speak(u)}
+function stopTTS(){if(_synth){_synth.cancel()}_ttsOn=false;updTTSUI();clearTTSTimer()}
+function updTTSUI(){document.querySelectorAll('.tts-btn').forEach(b=>b.classList.toggle('speaking',_ttsOn))}
+function setTTSRate(r){_ttsRate=parseFloat(r)}
+function startTTSTimer(){clearTTSTimer();_ttsTimer=setInterval(()=>{if(_synth&&_synth.speaking&&!_synth.paused){_synth.pause();_synth.resume()}},10000)}
+function clearTTSTimer(){if(_ttsTimer){clearInterval(_ttsTimer);_ttsTimer=null}}
+function showTTSBar(){if(document.getElementById('ttsBar'))return;const mc=document.getElementById('moduleContent');if(!mc)return;const b=document.createElement('div');b.className='tts-bar';b.id='ttsBar';b.innerHTML='\u{1F50A} <select onchange="setTTSRate(this.value)"><option value="0.7">Langsam</option><option value="1" selected>Normal</option><option value="1.3">Schnell</option></select> <button onclick="stopTTS()">\u25A0 Stopp</button>';mc.prepend(b)}
+
+const _qk=[0x4A,0x7F,0x2B,0x61,0x5C,0x3E,0x18,0x73];
+function _d(h,i){return h^_qk[i%_qk.length]}
+
+const LEVELS=[{"name":"Natur-Anfänger","xp":0},{"name":"Blumen-Kenner","xp":40},{"name":"Tier-Beobachter","xp":100},{"name":"Wald-Entdecker","xp":180},{"name":"Wiesen-Forscher","xp":280},{"name":"Garten-Helfer","xp":400},{"name":"Vogel-Kenner","xp":540},{"name":"Baum-Freund","xp":700},{"name":"Wetter-Beobachter","xp":880},{"name":"Jahreszeiten-Kenner","xp":1080},{"name":"Natur-Detektiv","xp":1300},{"name":"Wald-Ranger","xp":1540},{"name":"Tier-Experte","xp":1800},{"name":"Pflanzen-Profi","xp":2080},{"name":"Natur-Forscher","xp":2380},{"name":"Öko-Held","xp":2700},{"name":"Natur-Talent","xp":3040},{"name":"Bio-Profi","xp":3400},{"name":"Natur-Genie","xp":3780},{"name":"Natur-Champion","xp":4200}];
+const BADGES=[{"id":"m0","name":"Tier-Entdecker","icon":"🐾","desc":"Modul 1 abgeschlossen"},{"id":"m1","name":"Pflanzen-Kenner","icon":"🌱","desc":"Modul 2 abgeschlossen"},{"id":"m2","name":"Jahreszeiten-Profi","icon":"🍂","desc":"Modul 3 abgeschlossen"},{"id":"m3","name":"Sinnes-Held","icon":"👁️","desc":"Modul 4 abgeschlossen"},{"id":"m4","name":"Wasser-Forscher","icon":"💧","desc":"Modul 5 abgeschlossen"},{"id":"m5","name":"Wald-Kenner","icon":"🌲","desc":"Modul 6 abgeschlossen"},{"id":"m6","name":"Wiesen-Experte","icon":"🌻","desc":"Modul 7 abgeschlossen"},{"id":"m7","name":"Vogel-Freund","icon":"🐦","desc":"Modul 8 abgeschlossen"},{"id":"m8","name":"Insekten-Profi","icon":"🐝","desc":"Modul 9 abgeschlossen"},{"id":"m9","name":"Naturschützer","icon":"🌍","desc":"Modul 10 abgeschlossen"},{"id":"first_quiz","name":"Quiz-Neuling","icon":"❓","desc":"Erstes Quiz bestanden"},{"id":"perfect_quiz","name":"Perfektionist","icon":"💎","desc":"Quiz mit 5/5 bestanden"},{"id":"first_boss","name":"Boss-Bezwinger","icon":"👑","desc":"Erste Boss-Challenge bestanden"},{"id":"all_bosses","name":"Endgegner","icon":"🏆","desc":"Alle Boss-Challenges bestanden"},{"id":"streak3","name":"Durchstarter","icon":"🔥","desc":"3 Tage in Folge gelernt"},{"id":"streak7","name":"Wochenkrieger","icon":"⚔️","desc":"7 Tage in Folge gelernt"},{"id":"half_done","name":"Halbzeit","icon":"⏳","desc":"5 Module abgeschlossen"},{"id":"speed_quiz","name":"Blitz-Denker","icon":"⚡","desc":"Quiz in unter 60 Sekunden"},{"id":"explorer","name":"Entdecker","icon":"🗺️","desc":"Alle Module angesehen"},{"id":"graduate","name":"Absolvent","icon":"🎓","desc":"Alle 10 Module abgeschlossen"}];
+const THEME_CONFIG={
+  cyber:{name:'Cyber Neon',emoji:'🖥',color:'#3b82f6',desc:'Futuristisch & Digital'},
+  retro:{name:'Retro Arcade',emoji:'🕹',color:'#ffd700',desc:'80er Arcade-Feeling'},
+  nature:{name:'Nature Forest',emoji:'🌳',color:'#4ade80',desc:'Natürlich & Organisch'},
+  space:{name:'Deep Space',emoji:'🚀',color:'#c084fc',desc:'Kosmisch & Geheimnisvoll'},
+  comic:{name:'Comic Pop',emoji:'💥',color:'#ff6b6b',desc:'Bunt & Verspielt'},
+  sketchy:{name:'Sketchy',emoji:'✍️',color:'#d97706',desc:'Handgemacht & Warm'},
+  'nature-code':{name:'Nature x Code',emoji:'🌿',color:'#10b981',desc:'Natur trifft Technik'},
+  glass:{name:'Glasmorphism',emoji:'💠',color:'#00d9ff',desc:'Modern & Transparent'}
+};
+const modules=[{id:0,title:'Unsere Haustiere',icon:'🐾',duration:'20 Min.',description:'Lerne verschiedene Haustiere kennen und wie man sie pflegt.',lessons:[{title:'Beliebte Haustiere',content:`<p>Viele Familien haben <strong>Haustiere</strong>. Die beliebtesten sind:</p>
+<ul><li>🐱 <strong>Katzen</strong> — sie schnurren, spielen gern und schlafen viel</li><li>🐶 <strong>Hunde</strong> — sie sind treu und brauchen viel Auslauf</li><li>🐹 <strong>Hamster</strong> — sie sind nachtaktiv und sammeln Futter in ihren Backen</li><li>🐰 <strong>Kaninchen</strong> — sie hoppeln gern und brauchen viel Platz</li><li>🐟 <strong>Fische</strong> — sie leben im Aquarium und sind leise</li></ul>
+<div class="info-box">💡 <strong>Merke:</strong> Jedes Haustier braucht <em>Futter, Wasser, Pflege</em> und ganz viel <em>Liebe</em>!</div>`},{title:'Haustiere richtig pflegen',content:`<p>Wer ein Haustier hat, muss sich gut darum kümmern:</p>
+<ul><li>🍽️ Jeden Tag <strong>frisches Futter und Wasser</strong> geben</li><li>🏠 Einen <strong>sauberen Schlafplatz</strong> bereiten</li><li>🏥 Regelmäßig zum <strong>Tierarzt</strong> gehen</li><li>🤗 Viel <strong>Zeit zum Spielen</strong> nehmen</li></ul>
+<div class="info-box">⚠️ <strong>Wichtig:</strong> Ein Haustier ist <em>kein Spielzeug</em>! Es hat Gefühle und braucht Verantwortung.</div>`}],quiz:[{q:'Welches Tier schnurrt, wenn es sich wohlfühlt?',a:["Hund","Katze","Hamster","Fisch"],_h:75},{q:'Was braucht jedes Haustier jeden Tag?',a:["Einen Fernseher","Frisches Futter und Wasser","Neue Spielsachen","Ein Bad"],_h:126},{q:'Welches Haustier ist nachtaktiv?',a:["Hund","Katze","Hamster","Fisch"],_h:41},{q:'Warum muss man mit seinem Haustier zum Tierarzt?',a:["Damit es neue Freunde findet","Damit es gesund bleibt","Damit es lernt zu sprechen","Damit es größer wird"],_h:97},{q:'Was ist bei Haustieren besonders wichtig?',a:["Dass sie teuer sind","Dass sie klein sind","Dass man Verantwortung übernimmt","Dass sie bunt sind"],_h:93}],boss:[{q:'Warum sind Hamster tagsüber oft müde?',a:["Weil sie krank sind","Weil sie nachtaktiv sind und nachts wach","Weil sie zu viel fressen","Weil sie traurig sind"],_h:126},{q:'Was sollte man tun, BEVOR man sich ein Haustier anschafft?',a:["Sofort eines kaufen","Überlegen, ob man genug Zeit und Platz hat","Abwarten, bis es regnet","Die Nachbarn fragen"],_h:126},{q:'Welches Haustier braucht besonders viel Auslauf?',a:["Fisch","Hamster","Hund","Schildkröte"],_h:41}]},{id:1,title:'Pflanzen entdecken',icon:'🌱',duration:'20 Min.',description:'Erfahre wie Pflanzen wachsen und was sie zum Leben brauchen.',lessons:[{title:'Was Pflanzen brauchen',content:`<p>Pflanzen sind <strong>Lebewesen</strong>! Sie brauchen zum Wachsen:</p>
+<ul><li>☀️ <strong>Licht</strong> (am besten Sonnenlicht)</li><li>💧 <strong>Wasser</strong></li><li>🌍 <strong>Erde</strong> (mit Nährstoffen)</li><li>💨 <strong>Luft</strong></li></ul>
+<div class="info-box">💡 <strong>Merke:</strong> Pflanzen stellen mit <em>Sonnenlicht</em>, <em>Wasser</em> und <em>Luft (CO₂)</em> ihre eigene Nahrung her. Das nennt man <strong>Fotosynthese</strong>!</div>`},{title:'Teile einer Pflanze',content:`<p>Jede Pflanze hat wichtige Teile:</p>
+<ul><li>🌸 <strong>Blüte</strong> — macht Samen, lockt Bienen an</li><li>🍃 <strong>Blätter</strong> — fangen Sonnenlicht ein</li><li>🟤 <strong>Stängel</strong> — transportiert Wasser nach oben</li><li>🌱 <strong>Wurzel</strong> — holt Wasser und Nährstoffe aus der Erde</li></ul>
+<div class="info-box">🔍 <strong>Experiment:</strong> Stelle eine weiße Blume in gefärbtes Wasser — nach einigen Stunden färbt sich die Blüte! So siehst du, wie Wasser nach oben transportiert wird.</div>`}],quiz:[{q:'Was brauchen Pflanzen zum Wachsen?',a:["Licht, Wasser, Erde und Luft","Nur Wasser","Nur Erde","Schokolade und Milch"],_h:74},{q:'Welcher Teil der Pflanze holt Wasser aus der Erde?',a:["Blüte","Blatt","Wurzel","Stängel"],_h:41},{q:'Was machen Blätter?',a:["Sie riechen gut","Sie fangen Sonnenlicht ein","Sie halten die Pflanze fest","Sie machen Musik"],_h:42},{q:'Wie heißt es, wenn Pflanzen ihre Nahrung selbst herstellen?',a:["Kochen","Fotosynthese","Verdauung","Kompostierung"],_h:97},{q:'Wozu dient die Blüte?',a:["Zum Trinken","Zum Festhalten","Zum Herstellen von Samen","Zum Atmen"],_h:93}],boss:[{q:'Warum welkt eine Pflanze, wenn sie kein Wasser bekommt?',a:["Weil sie traurig ist","Weil sie ohne Wasser keine Nahrung herstellen kann","Weil die Sonne zu heiß ist","Weil der Topf zu klein ist"],_h:126},{q:'Warum stellt man Zimmerpflanzen ans Fenster?',a:["Damit sie rausgucken können","Weil sie dort am meisten Licht bekommen","Damit sie frische Luft atmen","Weil es dort am kältesten ist"],_h:126},{q:'Was würde passieren, wenn es keine Pflanzen gäbe?',a:["Nichts","Es gäbe weniger Sauerstoff zum Atmen","Die Erde wäre wärmer","Es würde mehr regnen"],_h:126}]},{id:2,title:'Die vier Jahreszeiten',icon:'🍂',duration:'20 Min.',description:'Entdecke was in Frühling, Sommer, Herbst und Winter passiert.',lessons:[{title:'Frühling und Sommer',content:`<p>🌸 <strong>Frühling</strong> (März, April, Mai):</p>
+<ul><li>Pflanzen beginnen zu blühen</li><li>Vögel kommen aus dem Süden zurück</li><li>Tage werden länger und wärmer</li><li>Junge Tiere werden geboren (Lämmer, Küken)</li></ul>
+<p>☀️ <strong>Sommer</strong> (Juni, Juli, August):</p>
+<ul><li>Die Tage sind am längsten</li><li>Obst und Gemüse reifen</li><li>Viele Insekten (Bienen, Schmetterlinge)</li><li>Tiere sind besonders aktiv</li></ul>
+<div class="info-box">💡 <strong>Merke:</strong> Die Jahreszeiten entstehen, weil die Erde <em>schräg</em> zur Sonne steht!</div>`},{title:'Herbst und Winter',content:`<p>🍂 <strong>Herbst</strong> (September, Oktober, November):</p>
+<ul><li>Blätter werden bunt und fallen ab</li><li>Tiere sammeln Vorräte für den Winter</li><li>Erntezeit für Äpfel, Kürbisse, Nüsse</li><li>Zugvögel fliegen in den Süden</li></ul>
+<p>❄️ <strong>Winter</strong> (Dezember, Januar, Februar):</p>
+<ul><li>Die Tage sind am kürzesten</li><li>Manche Tiere halten Winterschlaf (Igel, Bär)</li><li>Bäume ohne Blätter (Laubbäume)</li><li>Es kann schneien und frieren</li></ul>
+<div class="info-box">🔍 <strong>Wusstest du?</strong> Nadelbäume (Tanne, Fichte) behalten ihre Nadeln auch im Winter — sie sind <em>immergrün</em>!</div>`}],quiz:[{q:'In welcher Jahreszeit blühen die meisten Blumen?',a:["Winter","Herbst","Frühling","Keiner"],_h:41},{q:'Was machen Zugvögel im Herbst?',a:["Sie schlafen","Sie fliegen in den Süden","Sie bauen Nester","Sie schwimmen"],_h:126},{q:'Welches Tier hält Winterschlaf?',a:["Hund","Katze","Igel","Kuh"],_h:41},{q:'In welcher Jahreszeit sind die Tage am längsten?',a:["Winter","Frühling","Herbst","Sommer"],_h:98},{q:'Was passiert mit Laubbaum-Blättern im Herbst?',a:["Sie werden größer","Sie werden bunt und fallen ab","Sie werden schwarz","Sie wachsen nach"],_h:93}],boss:[{q:'Warum werfen Laubbäume im Herbst ihre Blätter ab?',a:["Weil sie müde sind","Um im Winter Wasser zu sparen","Weil der Wind zu stark ist","Weil die Blätter alt sind"],_h:126},{q:'Warum bleiben Nadelbäume im Winter grün?',a:["Weil sie im Warmen stehen","Weil ihre Nadeln eine Wachsschicht haben, die sie vor Kälte schützt","Weil sie aus Plastik sind","Weil sie mehr Sonne bekommen"],_h:126},{q:'Warum gibt es Jahreszeiten?',a:["Weil die Sonne mal heller und mal dunkler scheint","Weil die Erde schräg zur Sonne geneigt ist","Weil der Mond die Erde beeinflusst","Weil die Erde mal näher und mal weiter von der Sonne ist"],_h:126}]},{id:3,title:'Unsere fünf Sinne',icon:'👁️',duration:'20 Min.',description:'Lerne deine fünf Sinne kennen und wie sie funktionieren.',lessons:[{title:'Sehen, Hören, Riechen',content:`<p>Wir haben <strong>fünf Sinne</strong>, mit denen wir die Welt wahrnehmen:</p>
+<ul><li>👁️ <strong>Sehen</strong> — mit den Augen nehmen wir Licht, Farben und Formen wahr</li><li>👂 <strong>Hören</strong> — mit den Ohren nehmen wir Geräusche und Töne wahr</li><li>👃 <strong>Riechen</strong> — mit der Nase erkennen wir Gerüche (über 10.000 verschiedene!)</li></ul>
+<div class="info-box">💡 <strong>Merke:</strong> Unsere Sinne schützen uns auch! Wir <em>hören</em> ein Auto kommen, <em>riechen</em> Rauch und <em>sehen</em> Gefahren.</div>`},{title:'Schmecken und Tasten',content:`<p>Die letzten zwei Sinne:</p>
+<ul><li>👅 <strong>Schmecken</strong> — die Zunge erkennt: süß, sauer, salzig, bitter und umami</li><li>✋ <strong>Tasten</strong> — die Haut fühlt: warm, kalt, glatt, rau, weich, hart</li></ul>
+<p>Alle Sinne arbeiten zusammen! Beim Essen schmeckst du nicht nur mit der Zunge — auch der Geruch und das Aussehen sind wichtig.</p>
+<div class="info-box">🔍 <strong>Experiment:</strong> Halte dir die Nase zu und probiere ein Gummibärchen. Du wirst fast keinen Geschmack erkennen — denn Riechen und Schmecken gehören zusammen!</div>`}],quiz:[{q:'Wie viele Sinne haben wir?',a:["Drei","Vier","Fünf","Sechs"],_h:41},{q:'Mit welchem Organ riechen wir?',a:["Augen","Ohren","Nase","Mund"],_h:41},{q:'Welche Geschmacksrichtung gibt es NICHT?',a:["Süß","Sauer","Knusprig","Salzig"],_h:41},{q:'Welcher Sinn warnt uns vor einem heißen Herd?',a:["Sehen","Hören","Riechen","Tasten"],_h:98},{q:'Warum schmeckt Essen mit verstopfter Nase langweilig?',a:["Weil die Augen geschlossen sind","Weil Riechen und Schmecken zusammenarbeiten","Weil der Magen voll ist","Weil das Essen kalt wird"],_h:93}],boss:[{q:'Warum haben blinde Menschen oft einen besonders guten Gehör- und Tastsinn?',a:["Weil sie besondere Ohren haben","Weil das Gehirn die anderen Sinne stärker nutzt","Weil sie mehr essen","Weil sie mehr schlafen"],_h:126},{q:'Warum zieht man die Hand schnell zurück, wenn man etwas Heißes berührt?',a:["Weil man erschrickt","Weil der Tastsinn eine Schutzreaktion auslöst","Weil die Hand magnetisch ist","Weil die Luft kalt ist"],_h:126},{q:'Ein Koch würzt ein Gericht. Welche Sinne benutzt er dabei?',a:["Nur Schmecken","Schmecken, Riechen und Sehen","Nur Riechen","Nur Sehen"],_h:126}]},{id:4,title:'Wasser — unser Lebenselixier',icon:'💧',duration:'20 Min.',description:'Erfahre warum Wasser so wichtig ist und wo es vorkommt.',lessons:[{title:'Wasser ist überall',content:`<p><strong>Wasser</strong> ist das Wichtigste für alles Leben auf der Erde!</p>
+<ul><li>🌊 <strong>70%</strong> der Erdoberfläche ist mit Wasser bedeckt</li><li>💧 Unser Körper besteht zu <strong>60-70%</strong> aus Wasser</li><li>🌧️ Wasser kommt als Regen, Schnee, Tau und Nebel vor</li></ul>
+<div class="info-box">💡 <strong>Merke:</strong> Ohne Wasser kann kein Mensch, kein Tier und keine Pflanze leben!</div>
+<p>Wasser kommt in drei Formen vor:</p>
+<ul><li>💧 <strong>Flüssig</strong> — im Fluss, im See, im Wasserhahn</li><li>❄️ <strong>Fest</strong> — als Eis und Schnee</li><li>☁️ <strong>Gasförmig</strong> — als Wasserdampf und Wolken</li></ul>`},{title:'Der Wasserkreislauf',content:`<p>Wasser bewegt sich in einem <strong>ewigen Kreislauf</strong>:</p>
+<ol><li>☀️ Die Sonne erwärmt Wasser → es <strong>verdunstet</strong> und steigt als Wasserdampf auf</li><li>☁️ Oben kühlt es ab → <strong>Wolken</strong> bilden sich</li><li>🌧️ Die Wolken werden schwer → es <strong>regnet</strong></li><li>🏔️ Das Wasser fließt in Bäche, Flüsse und ins Meer zurück</li></ol>
+<div class="info-box">🔍 <strong>Spannend:</strong> Das Wasser, das du heute trinkst, könnte vor Millionen Jahren schon einmal durch einen Dinosaurier geflossen sein!</div>`}],quiz:[{q:'Wie viel Prozent der Erdoberfläche ist mit Wasser bedeckt?',a:["30%","50%","70%","90%"],_h:41},{q:'In welcher Form kommt Wasser als Schnee vor?',a:["Flüssig","Fest","Gasförmig","Alle drei"],_h:126},{q:'Was passiert bei der Verdunstung?',a:["Wasser wird zu Eis","Wasser wird zu Dampf","Wasser wird bunt","Wasser verschwindet"],_h:42},{q:'Wohin fließt Regenwasser?',a:["In den Weltraum","In Bäche, Flüsse und ins Meer","Unter die Erde und verschwindet","Es bleibt auf dem Boden liegen"],_h:97},{q:'Warum ist Wasser so wichtig für uns?',a:["Weil es gut aussieht","Weil unser Körper zu 60-70% aus Wasser besteht","Weil es billig ist","Weil es bunt ist"],_h:93}],boss:[{q:'Was treibt den Wasserkreislauf an?',a:["Der Wind","Die Sonne","Der Mond","Die Schwerkraft allein"],_h:126},{q:'Warum kann man Meerwasser nicht trinken?',a:["Weil es zu kalt ist","Weil es zu viel Salz enthält","Weil Fische darin schwimmen","Weil es zu tief ist"],_h:126},{q:'Was passiert mit einer Pfütze an einem sonnigen Tag?',a:["Sie wird größer","Das Wasser verdunstet und die Pfütze wird kleiner","Sie gefriert","Sie wird tiefer"],_h:126}]},{id:5,title:'Der Wald',icon:'🌲',duration:'20 Min.',description:'Entdecke den Wald als Lebensraum für viele Tiere und Pflanzen.',lessons:[{title:'Stockwerke des Waldes',content:`<p>Der Wald hat verschiedene <strong>Stockwerke</strong>, wie ein Haus:</p>
+<ul><li>🌳 <strong>Baumschicht</strong> (ganz oben) — hohe Bäume wie Buche, Eiche, Fichte</li><li>🌿 <strong>Strauchschicht</strong> — Büsche und junge Bäume (Holunder, Haselnuss)</li><li>🌱 <strong>Krautschicht</strong> — Farne, Blumen, Gräser</li><li>🍄 <strong>Bodenschicht</strong> — Moos, Pilze, Laub</li><li>🐛 <strong>Wurzelschicht</strong> (unter der Erde) — Wurzeln, Würmer, Käfer</li></ul>
+<div class="info-box">💡 <strong>Merke:</strong> In jedem Stockwerk leben <em>andere Tiere</em>! Vögel oben, Rehe in der Mitte, Käfer unten.</div>`},{title:'Waldtiere',content:`<p>Im Wald leben viele verschiedene Tiere:</p>
+<ul><li>🦌 <strong>Reh</strong> — frisst Gräser und Knospen, sehr scheu</li><li>🐿️ <strong>Eichhörnchen</strong> — sammelt Nüsse, klettert flink</li><li>🦊 <strong>Fuchs</strong> — jagt nachts, sehr schlau</li><li>🦔 <strong>Igel</strong> — frisst Insekten, rollt sich bei Gefahr ein</li><li>🦉 <strong>Eule</strong> — jagt nachts mit besonders gutem Gehör</li><li>🐗 <strong>Wildschwein</strong> — wühlt im Boden nach Futter</li></ul>
+<div class="info-box">🌍 <strong>Wichtig:</strong> Der Wald ist ein wichtiger <em>Lebensraum</em>, der geschützt werden muss!</div>`}],quiz:[{q:'Wie viele Stockwerke hat der Wald?',a:["Drei","Vier","Fünf","Sechs"],_h:41},{q:'In welcher Schicht wachsen Pilze?',a:["Baumschicht","Strauchschicht","Krautschicht","Bodenschicht"],_h:98},{q:'Welches Tier sammelt Nüsse für den Winter?',a:["Reh","Eichhörnchen","Fuchs","Eule"],_h:126},{q:'Was macht der Igel bei Gefahr?',a:["Er rennt weg","Er klettert auf einen Baum","Er rollt sich ein","Er gräbt sich ein"],_h:41},{q:'Welches Tier ist nachtaktiv und jagt mit gutem Gehör?',a:["Reh","Eichhörnchen","Wildschwein","Eule"],_h:98}],boss:[{q:'Warum ist der Wald wichtig für unsere Luft?',a:["Weil er Schatten spendet","Weil Bäume Sauerstoff produzieren","Weil es dort windig ist","Weil Tiere dort atmen"],_h:126},{q:'Warum finden Eichhörnchen im Winter nicht alle versteckten Nüsse wieder?',a:["Weil sie zu faul sind","Weil sie vergessen, wo sie alle versteckt haben","Weil andere Tiere sie stehlen","Weil die Nüsse verschwinden"],_h:126},{q:'Was passiert, wenn eine Waldschicht zerstört wird?',a:["Nichts, die anderen Schichten reichen","Alle Tiere und Pflanzen dieser Schicht verlieren ihren Lebensraum","Der Wald wächst schneller","Es gibt mehr Tiere"],_h:74}]},{id:6,title:'Wiese und Garten',icon:'🌻',duration:'20 Min.',description:'Lerne die Lebewesen auf der Wiese und im Garten kennen.',lessons:[{title:'Die bunte Wiese',content:`<p>Eine <strong>Wiese</strong> ist ein spannender Lebensraum mit vielen Bewohnern:</p>
+<ul><li>🌼 <strong>Blumen:</strong> Gänseblümchen, Löwenzahn, Klee, Margeriten</li><li>🦗 <strong>Insekten:</strong> Grashüpfer, Ameisen, Käfer, Schmetterlinge</li><li>🐝 <strong>Bienen:</strong> Sie sammeln Nektar und bestäuben die Blumen</li><li>🐌 <strong>Schnecken:</strong> Sie fressen Pflanzen und tragen ihr Haus auf dem Rücken</li></ul>
+<div class="info-box">💡 <strong>Merke:</strong> Bienen sind <em>super wichtig</em>! Ohne sie würden viele Pflanzen keine Früchte tragen.</div>`},{title:'Der Garten als Lebensraum',content:`<p>Auch ein <strong>Garten</strong> ist ein kleines Ökosystem:</p>
+<ul><li>🐛 <strong>Regenwürmer</strong> lockern die Erde auf — sie sind Gartenhelden!</li><li>🐞 <strong>Marienkäfer</strong> fressen Blattläuse — natürliche Schädlingsbekämpfer</li><li>🐸 <strong>Frösche</strong> fressen Mücken und Schnecken</li><li>🦔 <strong>Igel</strong> fressen Nacktschnecken</li></ul>
+<div class="info-box">🔍 <strong>Tipp:</strong> Ein naturnaher Garten mit Wildblumen, einem Insektenhotel und einem kleinen Teich hilft vielen Tieren!</div>`}],quiz:[{q:'Welches Insekt bestäubt Blumen?',a:["Ameise","Grashüpfer","Biene","Spinne"],_h:41},{q:'Was machen Regenwürmer im Garten?',a:["Sie fressen Blumen","Sie lockern die Erde auf","Sie graben Tunnel für Mäuse","Sie machen Lärm"],_h:126},{q:'Welches Tier frisst Blattläuse?',a:["Schnecke","Regenwurm","Marienkäfer","Frosch"],_h:41},{q:'Was trägt die Schnecke auf dem Rücken?',a:["Einen Rucksack","Ein Blatt","Ihr Haus (Schneckenhaus)","Erde"],_h:97},{q:'Warum sind Bienen so wichtig?',a:["Weil sie Honig machen","Weil sie Blumen bestäuben und so Früchte entstehen","Weil sie gut aussehen","Weil sie singen"],_h:93}],boss:[{q:'Warum nennt man den Regenwurm einen Gartenhelden?',a:["Weil er so stark ist","Weil er die Erde aufockert und fruchtbar macht","Weil er Unkraut frisst","Weil er den Garten bewacht"],_h:126},{q:'Was passiert, wenn es keine Bienen mehr gäbe?',a:["Nichts","Viele Pflanzen könnten keine Früchte mehr bilden","Es gäbe mehr Blumen","Die Schmetterlinge würden das übernehmen"],_h:126},{q:'Warum ist ein Insektenhotel gut für den Garten?',a:["Weil es schön aussieht","Weil Insekten dort nisten und den Garten als Nützlinge schützen","Weil es Vögel anlockt","Weil es den Garten wärmer macht"],_h:126}]},{id:7,title:'Vögel beobachten',icon:'🐦',duration:'20 Min.',description:'Lerne heimische Vögel kennen und erkenne sie an Aussehen und Gesang.',lessons:[{title:'Heimische Vögel',content:`<p>In Deutschland leben viele verschiedene <strong>Vogelarten</strong>:</p>
+<ul><li>🐦 <strong>Amsel</strong> — schwarzes Gefieder (Männchen), gelber Schnabel, singt wunderschön</li><li>🐤 <strong>Rotkehlchen</strong> — rote Brust, sehr zutraulich</li><li>🐧 <strong>Kohlmeise</strong> — gelber Bauch, schwarzer Kopf, ruft „zi-zi-bäh"</li><li>🐥 <strong>Spatz (Haussperling)</strong> — braun, lebt gern in der Nähe von Menschen</li><li>🦅 <strong>Buntspecht</strong> — klopft an Bäume, roter Fleck am Kopf</li></ul>
+<div class="info-box">💡 <strong>Tipp:</strong> Im Winter kannst du Vögel mit einem <em>Futterhaus</em> beobachten! Sonnenblumenkerne und Haferflocken mögen fast alle Vögel.</div>`},{title:'Vögel im Jahresverlauf',content:`<p>Vögel verhalten sich je nach Jahreszeit unterschiedlich:</p>
+<ul><li>🌸 <strong>Frühling:</strong> Nester bauen, Eier legen, Brüten</li><li>☀️ <strong>Sommer:</strong> Küken füttern und aufziehen</li><li>🍂 <strong>Herbst:</strong> Zugvögel fliegen in den Süden (Schwalben, Störche)</li><li>❄️ <strong>Winter:</strong> Standvögel bleiben hier (Amsel, Meise, Spatz)</li></ul>
+<div class="info-box">🔍 <strong>Wusstest du?</strong> Schwalben fliegen im Herbst bis nach <em>Afrika</em> — das sind über 6.000 km!</div>`}],quiz:[{q:'Welcher Vogel hat einen gelben Schnabel und singt schön?',a:["Spatz","Kohlmeise","Amsel","Buntspecht"],_h:41},{q:'Was macht ein Buntspecht?',a:["Er schwimmt","Er klopft an Bäume","Er jagt Fische","Er gräbt Löcher"],_h:126},{q:'Was sind Zugvögel?',a:["Vögel die in Zügen fahren","Vögel die im Winter in den Süden fliegen","Vögel die nicht fliegen können","Vögel die nur nachts fliegen"],_h:42},{q:'Welcher Vogel ist ein Standvogel?',a:["Schwalbe","Storch","Amsel","Kuckuck"],_h:97},{q:'Womit kann man Vögel im Winter füttern?',a:["Brot und Kuchen","Sonnenblumenkerne und Haferflocken","Schokolade","Nudeln"],_h:93}],boss:[{q:'Warum fliegen Zugvögel im Winter in den Süden?',a:["Weil sie Urlaub machen","Weil sie dort genug Futter finden","Weil sie die Kälte mögen","Weil sie sich verirren"],_h:126},{q:'Warum klopft der Buntspecht an Bäume?',a:["Weil er Musik macht","Um Insekten unter der Rinde zu finden und eine Höhle zu bauen","Weil er wütend ist","Um andere Vögel zu erschrecken"],_h:126},{q:'Warum haben Vögel Federn?',a:["Nur zum Fliegen","Federn halten warm, schützen vor Nässe und ermöglichen das Fliegen","Nur als Schmuck","Nur zum Schutz"],_h:126}]},{id:8,title:'Insekten und kleine Krabbeltiere',icon:'🐝',duration:'20 Min.',description:'Lerne Insekten, Spinnen und andere kleine Tiere kennen.',lessons:[{title:'Was sind Insekten?',content:`<p><strong>Insekten</strong> sind die artenreichste Tiergruppe der Welt! Sie haben:</p>
+<ul><li>📐 <strong>6 Beine</strong> (immer genau sechs!)</li><li>📦 <strong>3 Körperteile:</strong> Kopf, Brust, Hinterleib</li><li>📡 <strong>2 Fühler</strong> (Antennen)</li><li>Oft <strong>Flügel</strong></li></ul>
+<p>Bekannte Insekten: 🐝 Biene, 🐛 Raupe/Schmetterling, 🐜 Ameise, 🪲 Käfer, 🪰 Fliege</p>
+<div class="info-box">💡 <strong>Merke:</strong> Eine <em>Spinne</em> ist KEIN Insekt! Sie hat <strong>8 Beine</strong> und gehört zu den Spinnentieren.</div>`},{title:'Verwandlung — Metamorphose',content:`<p>Viele Insekten machen eine spannende <strong>Verwandlung</strong> durch:</p>
+<ol><li>🥚 <strong>Ei</strong> — die Mutter legt Eier</li><li>🐛 <strong>Larve/Raupe</strong> — frisst und wächst</li><li>🫘 <strong>Puppe</strong> — verwandelt sich (wie in einem Kokon)</li><li>🦋 <strong>Erwachsenes Insekt</strong> — schlüpft und fliegt!</li></ol>
+<div class="info-box">🔍 <strong>Beispiel:</strong> Aus einer unscheinbaren Raupe wird ein wunderschöner <em>Schmetterling</em>! Das dauert etwa 2-4 Wochen.</div>`}],quiz:[{q:'Wie viele Beine haben Insekten?',a:["4","6","8","10"],_h:75},{q:'Was ist KEIN Insekt?',a:["Biene","Ameise","Spinne","Käfer"],_h:41},{q:'Wie viele Körperteile hat ein Insekt?',a:["Zwei","Drei","Vier","Fünf"],_h:42},{q:'Was ist die Metamorphose?',a:["Ein Tanz","Die Verwandlung vom Ei zum erwachsenen Insekt","Ein Winterschlaf","Eine Krankheit"],_h:97},{q:'Woraus schlüpft ein Schmetterling?',a:["Aus einem Ei direkt","Aus einer Puppe","Aus einer Blume","Aus dem Wasser"],_h:93}],boss:[{q:'Warum ist eine Spinne kein Insekt?',a:["Weil sie zu groß ist","Weil sie 8 Beine hat und einen zweiteiligen Körper","Weil sie nicht fliegen kann","Weil sie keine Fühler hat"],_h:126},{q:'Warum fressen Raupen so viel?',a:["Weil sie gierig sind","Weil sie Energie für die Verwandlung zur Puppe brauchen","Weil sie nicht aufhören können","Weil sie Angst haben"],_h:126},{q:'Warum sind Ameisen so stark?',a:["Weil sie Muskelpakete haben","Weil sie im Verhältnis zu ihrer Größe sehr kräftig sind und als Team zusammenarbeiten","Weil sie Zauberkräfte haben","Weil sie sehr alt werden"],_h:126}]},{id:9,title:'Natur schützen',icon:'🌍',duration:'20 Min.',description:'Erfahre warum Naturschutz wichtig ist und was du selbst tun kannst.',lessons:[{title:'Warum Naturschutz?',content:`<p>Die Natur braucht unsere Hilfe! Viele Probleme bedrohen Tiere und Pflanzen:</p>
+<ul><li>🗑️ <strong>Müll</strong> in der Natur schadet Tieren (Plastik im Meer, Gift im Boden)</li><li>🏗️ <strong>Lebensräume</strong> werden zerstört (Wälder abgeholzt, Wiesen bebaut)</li><li>🌡️ <strong>Klimawandel</strong> — es wird wärmer, das verändert die Natur</li><li>🧪 <strong>Verschmutzung</strong> von Wasser und Luft</li></ul>
+<div class="info-box">⚠️ <strong>Alarmierend:</strong> Viele Tierarten sind <em>bedroht</em> oder schon ausgestorben! Der Feldhamster ist in Deutschland fast verschwunden.</div>`},{title:'Was kannst DU tun?',content:`<p>Auch Kinder können die Natur schützen!</p>
+<ul><li>♻️ <strong>Müll trennen</strong> und richtig entsorgen</li><li>🚲 <strong>Fahrrad fahren</strong> statt Auto</li><li>💡 <strong>Strom sparen</strong> — Licht ausschalten</li><li>🌱 <strong>Blumen pflanzen</strong> für Bienen und Schmetterlinge</li><li>🐛 <strong>Insektenhotel</strong> bauen</li><li>🚶 In der Natur auf den <strong>Wegen bleiben</strong></li><li>🗑️ <strong>Müll aufsammeln</strong> bei Spaziergängen</li></ul>
+<div class="info-box">🌟 <strong>Jeder kleine Beitrag zählt!</strong> Wenn viele Menschen ein bisschen helfen, macht das einen großen Unterschied!</div>`}],quiz:[{q:'Was schadet Tieren in der Natur besonders?',a:["Zu viel Sonne","Müll und Plastik","Zu viel Regen","Blumen"],_h:75},{q:'Was passiert, wenn Wälder abgeholzt werden?',a:["Es gibt mehr Platz","Tiere verlieren ihren Lebensraum","Es wird wärmer im Wald","Nichts Schlimmes"],_h:126},{q:'Was kannst du für die Natur tun?',a:["Müll in den Wald werfen","Blumen für Bienen pflanzen","Insekten zertreten","Bäume beschädigen"],_h:42},{q:'Warum ist Mülltrennung wichtig?',a:["Damit es ordentlicher aussieht","Damit Rohstoffe wiederverwertet werden können","Damit der Müllmann weniger arbeiten muss","Damit die Tonnen bunt sind"],_h:97},{q:'Was ist ein Insektenhotel?',a:["Ein Hotel für Menschen","Eine Nistmöglichkeit für Insekten","Ein Insektenmuseum","Ein Insektenkäfig"],_h:93}],boss:[{q:'Warum ist Plastik im Meer so gefährlich?',a:["Weil es hässlich aussieht","Weil Tiere es mit Futter verwechseln und daran sterben können","Weil es das Wasser färbt","Weil es sinkt"],_h:126},{q:'Warum sind Bienen für die Natur so besonders wichtig?',a:["Weil sie Honig machen","Weil sie Blumen bestäuben und so die Fortpflanzung der Pflanzen sichern","Weil sie schön summen","Weil sie Wespen vertreiben"],_h:126},{q:'Was bedeutet es, wenn eine Tierart ausgestorben ist?',a:["Die Tiere sind umgezogen","Es gibt kein einziges Tier dieser Art mehr auf der Welt","Die Tiere schlafen lang","Die Tiere haben sich verwandelt"],_h:126}]}]
+
+const STORAGE_KEY='naturfreund_progress';
+let state={name:'',started:false,currentModule:0,xp:0,level:0,streak:0,lastVisit:null,modulesCompleted:[],quizResults:{},bossResults:{},badges:[],quizShuffleMap:{},modulesViewed:[],interactiveResults:{},designTheme:'cyber-dark'};
+
+function saveState(){try{localStorage.setItem(STORAGE_KEY,JSON.stringify(state))}catch(e){}}
+function loadState(){try{const s=localStorage.getItem(STORAGE_KEY);if(s){Object.assign(state,JSON.parse(s));return true}}catch(e){}return false}
+function exportData(){const a=document.createElement('a');a.download='naturfreund-'+state.name+'.json';a.href=URL.createObjectURL(new Blob([JSON.stringify(state,null,2)],{type:'application/json'}));a.click()}
+function importData(e){const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=ev=>{try{const d=JSON.parse(ev.target.result);Object.assign(state,d);saveState();location.reload()}catch(err){alert('Datei konnte nicht gelesen werden.')}};r.readAsText(f)}
+
+function getLevel(xp){let lv=0;for(let i=LEVELS.length-1;i>=0;i--){if(xp>=LEVELS[i].xp){lv=i;break}}return lv}
+function getLevelProgress(xp){const lv=getLevel(xp);const cur=LEVELS[lv].xp;const next=lv<LEVELS.length-1?LEVELS[lv+1].xp:cur;if(next===cur)return 100;return Math.min(100,Math.round((xp-cur)/(next-cur)*100))}
+function addXP(amount,reason){const old=getLevel(state.xp);state.xp+=amount;const nw=getLevel(state.xp);saveState();updateUI();showNotif('xp','+'+amount+' XP',reason);if(nw>old){state.level=nw;saveState();setTimeout(()=>showLevelUp(nw),800)}}
+
+function updateStreak(){const today=new Date().toDateString();if(state.lastVisit===today)return;const yesterday=new Date(Date.now()-86400000).toDateString();if(state.lastVisit===yesterday){state.streak++;showNotif('streak','\uD83D\uDD25 '+state.streak+' Tage Streak!','Weiter so!');if(state.streak>=3)awardBadge('streak3');if(state.streak>=7)awardBadge('streak7')}else if(state.lastVisit!==today){state.streak=1}state.lastVisit=today;saveState()}
+
+function awardBadge(id){if(state.badges.includes(id))return;state.badges.push(id);saveState();const b=BADGES.find(x=>x.id===id);if(b)showNotif('badge',b.icon+' Badge: '+b.name,b.desc)}
+
+let notifQueue=[],notifActive=false;
+function showNotif(type,title,text){notifQueue.push({type,title,text});if(!notifActive)processNotif()}
+function processNotif(){if(!notifQueue.length){notifActive=false;return}notifActive=true;const{type,title,text}=notifQueue.shift();const el=document.getElementById('notif');el.className='notif '+type;document.getElementById('notifTitle').textContent=title;document.getElementById('notifText').textContent=text;el.classList.add('show');setTimeout(()=>{el.classList.remove('show');setTimeout(processNotif,300)},2500)}
+
+function showLevelUp(lv){const ov=document.getElementById('levelUpOverlay');const box=document.getElementById('levelUpBox');box.innerHTML='<div class="lvl-icon">⬆️</div><div class="lvl-title">Level Up!</div><div class="lvl-name">Level '+(lv+1)+': '+LEVELS[lv].name+'<\/div>';ov.classList.add('active');spawnConfetti();setTimeout(()=>ov.classList.remove('active'),3000)}
+function spawnConfetti(){const c=document.getElementById('confetti');c.innerHTML='';const cols=['#3b82f6','#a855f7','#22c55e','#f59e0b','#ef4444','#06b6d4'];for(let i=0;i<60;i++){const p=document.createElement('div');p.style.cssText='position:absolute;left:'+Math.random()*100+'%;background:'+cols[i%cols.length]+';width:'+(6+Math.random()*8)+'px;height:'+(6+Math.random()*8)+'px;border-radius:'+(Math.random()>.5?'50%':'2px')+';animation:confettiFall '+(1.5+Math.random()*2)+'s ease-out '+Math.random()*.5+'s forwards';c.appendChild(p)}if(!document.getElementById('confettiStyle')){const s=document.createElement('style');s.id='confettiStyle';s.textContent='@keyframes confettiFall{0%{opacity:1;transform:translateY(0) rotate(0deg)}100%{opacity:0;transform:translateY(100vh) rotate(720deg)}}';document.head.appendChild(s)}setTimeout(()=>c.innerHTML='',4000)}
+
+function shuffleQuiz(modId,quiz){const key='m'+modId;if(state.quizShuffleMap[key])return state.quizShuffleMap[key];const idx=[...Array(quiz.length).keys()];for(let i=idx.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[idx[i],idx[j]]=[idx[j],idx[i]]}state.quizShuffleMap[key]=idx;saveState();return idx}
+
+function renderQuiz(modId,quiz,isBoss){
+  const pf=isBoss?'boss':'quiz';const idx=isBoss?[...Array(quiz.length).keys()]:shuffleQuiz(modId,quiz);
+  let h='<div class="'+(isBoss?'boss-section':'quiz-section')+'">';
+  h+=isBoss?'<h3>👑 Boss-Challenge<\/h3><p class="boss-sub">Alle '+quiz.length+' Fragen richtig beantworten!<\/p>':'<h3>📝 Quiz — Teste dein Wissen<\/h3>';
+  idx.forEach((qi,di)=>{const q=quiz[qi];h+='<div class="quiz-q" data-qi="'+qi+'"><p>'+(di+1)+'. '+q.q+'<\/p>';q.a.forEach((a,ai)=>{h+='<label><input type="radio" name="'+pf+'_'+modId+'_'+qi+'" value="'+ai+'"> '+a+'<\/label>'});h+='<\/div>'});
+  h+='<button class="quiz-submit" onclick="checkQuiz('+modId+','+isBoss+')">'+(isBoss?'Boss besiegen!':'Antworten prüfen')+'<\/button>';
+  h+='<div class="quiz-result" id="'+pf+'Result'+modId+'" style="display:none"><\/div><\/div>';return h;
+}
+
+function checkQuiz(modId,isBoss){
+  const pf=isBoss?'boss':'quiz';const quiz=isBoss?modules[modId].boss:modules[modId].quiz;
+  let correct=0;const total=quiz.length;const startTime=window._quizStart||Date.now();
+  quiz.forEach((q,qi)=>{
+    const sel=document.querySelector('input[name="'+pf+'_'+modId+'_'+qi+'"]:checked');
+    const labels=document.querySelectorAll('[data-qi="'+qi+'"] label');
+    const ci=_d(q._h,qi);
+    labels.forEach((l,li)=>{l.classList.remove('correct','wrong');if(li===ci)l.classList.add('correct');else if(sel&&parseInt(sel.value)===li)l.classList.add('wrong')});
+    const qDiv=labels[0]?.closest('.quiz-q');if(qDiv){const old=qDiv.querySelector('.quiz-explanation');if(old)old.remove()}
+    if(!sel||parseInt(sel.value)!==ci){if(qDiv){const exp=document.createElement('div');exp.className='quiz-explanation';exp.textContent='→ Richtige Antwort: '+q.a[ci];qDiv.appendChild(exp)}}
+    if(sel&&parseInt(sel.value)===ci)correct++;
+  });
+  const rEl=document.getElementById(pf+'Result'+modId);rEl.style.display='block';
+  if(isBoss){
+    if(correct===total){rEl.className='quiz-result pass';rEl.textContent='👑 Boss besiegt! '+correct+'/'+total+' — Perfekt!';if(!state.bossResults[modId]){state.bossResults[modId]=true;addXP(100,'Boss-Challenge bestanden!');if(!state.badges.includes('first_boss'))awardBadge('first_boss');if(modules.every((_,i)=>state.bossResults[i]))awardBadge('all_bosses');checkModuleComplete(modId)}}
+    else{rEl.className='quiz-result fail';rEl.textContent='💀 '+correct+'/'+total+' — Alle müssen richtig sein! Versuch es nochmal.';setTimeout(()=>{document.querySelectorAll('input[name^="'+pf+'_'+modId+'"]').forEach(r=>{r.disabled=false;r.checked=false});document.querySelectorAll('[data-qi] label').forEach(l=>l.classList.remove('correct','wrong'));document.querySelectorAll('.quiz-explanation').forEach(e=>e.remove());rEl.style.display='none'},2000);return}
+  }else{
+    const passed=correct>=Math.ceil(total*0.6);rEl.className='quiz-result '+(passed?'pass':'fail');
+    rEl.textContent=passed?'✅ '+correct+'/'+total+' richtig — Bestanden!':'❌ '+correct+'/'+total+' richtig — Mindestens '+Math.ceil(total*0.6)+' nötig.';
+    if(passed&&!state.quizResults[modId]){state.quizResults[modId]=correct;addXP(correct*15+50,'Quiz bestanden ('+correct+'/'+total+')');if(!state.badges.includes('first_quiz'))awardBadge('first_quiz');if(correct===total)awardBadge('perfect_quiz');if(Date.now()-startTime<60000)awardBadge('speed_quiz');checkModuleComplete(modId)}
+  }
+  saveState();document.querySelectorAll('input[name^="'+pf+'_'+modId+'"]').forEach(r=>r.disabled=true);window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function checkModuleComplete(modId){
+  if(state.quizResults[modId]!==undefined&&state.bossResults[modId]&&!state.modulesCompleted.includes(modId)){
+    state.modulesCompleted.push(modId);awardBadge('m'+modId);
+    if(state.modulesCompleted.length>=5)awardBadge('half_done');
+    if(state.modulesCompleted.length>=10){awardBadge('graduate');setTimeout(()=>showCert(),1500)}
+    saveState();renderSidebar();
+  }
+}
+
+function renderModule(modId){
+  state.currentModule=modId;
+  if(!state.modulesViewed.includes(modId)){state.modulesViewed.push(modId);addXP(10,'Neues Modul geöffnet');if(state.modulesViewed.length>=10)awardBadge('explorer')}
+  saveState();closeSidebar();
+  const m=modules[modId];
+  let h='<div class="module-header"><div class="mod-badge">'+m.icon+' Modul '+(modId+1)+'<\/div><h1>'+m.title+'<\/h1><p class="mod-desc">'+m.description+'<\/p><\/div>';
+  m.lessons.forEach((l,i)=>{h+='<div class="lesson-card"><h3><span style="color:var(--neon)">'+String(i+1).padStart(2,'0')+'<\/span> '+l.title+' <button class="tts-btn" onclick="speakLesson('+i+')" title="Vorlesen">&#128266;<\/button><\/h3>'+l.content+'<\/div>'});
+  h+='<div class="interactive-area"><h4>🧪 Interaktive Übung<\/h4><div id="interactiveContent">Lädt...<\/div><\/div>';
+  window._quizStart=Date.now();
+  h+=renderQuiz(modId,m.quiz,false);
+  h+=renderQuiz(modId,m.boss,true);
+  document.getElementById('welcomeScreen').style.display='none';
+  document.getElementById('badgesView').style.display='none';
+  document.getElementById('statsView').style.display='none';
+  const mc=document.getElementById('moduleContent');mc.style.display='block';mc.innerHTML=h;
+  renderSidebar();window.scrollTo({top:0,behavior:'smooth'});
+  setTimeout(()=>initInteractive(modId),100);
+}
+
+function renderSidebar(){
+  const el=document.getElementById('sidebarModules');
+  el.innerHTML=modules.map((m,i)=>{
+    const done=state.modulesCompleted.includes(i);
+    const act=state.currentModule===i&&document.getElementById('moduleContent').style.display==='block';
+    return '<a class="mod-link'+(act?' active':'')+(done?' completed':'')+'" onclick="renderModule('+i+')"><span class="mod-icon">'+m.icon+'<\/span>'+m.title+'<\/a>';
+  }).join('');
+  const lv=getLevel(state.xp);
+  const lvEl=document.querySelector('.sidebar-level-title');
+  if(lvEl)lvEl.textContent=LEVELS[lv].name;
+  const xpFill=document.querySelector('.sidebar-xp-fill');
+  if(xpFill)xpFill.style.width=getLevelProgress(state.xp)+'%';
+}
+function toggleSidebar(){document.getElementById('sidebar').classList.toggle('open')}
+function closeSidebar(){document.getElementById('sidebar').classList.remove('open')}
+
+function showBadges(){
+  document.getElementById('welcomeScreen').style.display='none';document.getElementById('moduleContent').style.display='none';document.getElementById('statsView').style.display='none';
+  const v=document.getElementById('badgesView');v.style.display='block';closeSidebar();
+  let h='<div class="module-header"><h1>🏅 Deine Abzeichen<\/h1><p class="mod-desc">'+state.badges.length+' von '+BADGES.length+' gesammelt<\/p><\/div><div class="badge-grid">';
+  BADGES.forEach(b=>{const earned=state.badges.includes(b.id);h+='<div class="badge-item'+(earned?' earned':' locked')+'"><div class="badge-icon">'+(earned?b.icon:'🔒')+'<\/div><div class="badge-name">'+b.name+'<\/div><\/div>'});
+  h+='<\/div>';v.innerHTML=h;
+}
+
+function showStats(){
+  document.getElementById('welcomeScreen').style.display='none';document.getElementById('moduleContent').style.display='none';document.getElementById('badgesView').style.display='none';
+  const v=document.getElementById('statsView');v.style.display='block';closeSidebar();
+  const lv=getLevel(state.xp);
+  let h='<div class="module-header"><h1>📊 Statistik<\/h1><\/div><div class="stats-grid">';
+  h+='<div class="stat-card"><div class="stat-val">'+state.xp+'<\/div><div class="stat-label">XP gesammelt<\/div><\/div>';
+  h+='<div class="stat-card"><div class="stat-val">'+LEVELS[lv].name+'<\/div><div class="stat-label">Aktueller Rang<\/div><\/div>';
+  h+='<div class="stat-card"><div class="stat-val">'+state.modulesCompleted.length+'/10<\/div><div class="stat-label">Module abgeschlossen<\/div><\/div>';
+  h+='<div class="stat-card"><div class="stat-val">'+Object.keys(state.quizResults).length+'<\/div><div class="stat-label">Quizze bestanden<\/div><\/div>';
+  h+='<div class="stat-card"><div class="stat-val">'+Object.keys(state.bossResults).length+'<\/div><div class="stat-label">Bosse besiegt<\/div><\/div>';
+  h+='<div class="stat-card"><div class="stat-val">'+state.badges.length+'<\/div><div class="stat-label">Abzeichen<\/div><\/div>';
+  h+='<div class="stat-card"><div class="stat-val">🔥 '+state.streak+'<\/div><div class="stat-label">Tage-Streak<\/div><\/div>';
+  h+='<\/div>';v.innerHTML=h;
+}
+
+let certStyle='akademie';
+function showCert(){
+  const ov=document.getElementById('certOverlay');ov.classList.add('active');
+  document.getElementById('certPicker').innerHTML=
+    ['🏛 Akademie','💻 Hacker','🕹 Pixel','🚀 Zukunft'].map((l,i)=>{
+      const s=['akademie','hacker','pixel','zukunft'][i];
+      return '<button class="cert-pick-btn'+(certStyle===s?' active':'')+'" onclick="certStyle=\''+s+'\';showCert()">'+l+'<\/button>';
+    }).join('');
+  renderCert();
+}
+function closeCert(){document.getElementById('certOverlay').classList.remove('active')}
+function generateCertCode(){const n=state.name||'X';const d=new Date();return 'NF-'+d.getFullYear()+'-'+((n.charCodeAt(0)*7+state.xp)%9999).toString(16).toUpperCase().padStart(4,'0')}
+
+function renderCert(){
+  const f=document.getElementById('certFrame');if(!f)return;
+  const n=state.name||'Schüler';const d=new Date().toLocaleDateString('de-DE',{day:'2-digit',month:'long',year:'numeric'});
+  const code=generateCertCode();const pct=Math.round(state.modulesCompleted.length/10*100);
+  const styles={
+    akademie:{bg:'linear-gradient(135deg,#1a1a4e,#2d2d7a)',border:'#c9a84c',title:'#c9a84c',text:'#d4d0ff',accent:'#c9a84c',font:"'Playfair Display',serif"},
+    hacker:{bg:'linear-gradient(135deg,#0a0e14,#1a2332)',border:'#00ff88',title:'#00ff88',text:'#b0f0d0',accent:'#00ff88',font:"'JetBrains Mono',monospace"},
+    pixel:{bg:'linear-gradient(135deg,#1a0a2e,#2d1055)',border:'#ffd700',title:'#ffd700',text:'#e0d0f0',accent:'#ff6b9d',font:"'Courier New',monospace"},
+    zukunft:{bg:'linear-gradient(135deg,#0f0f23,#1a1a3e)',border:'#00d9ff',title:'#00d9ff',text:'#d0e8ff',accent:'#00d9ff',font:"'Sora',sans-serif"}
+  };
+  const s=styles[certStyle]||styles.akademie;
+  f.innerHTML='<div style="width:100%;height:100%;background:'+s.bg+';border:3px solid '+s.border+';border-radius:12px;padding:40px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;font-family:'+s.font+';position:relative;overflow:hidden">'
+    +'<div style="font-size:14px;letter-spacing:4px;text-transform:uppercase;color:'+s.accent+';margin-bottom:8px">Zertifikat</div>'
+    +'<div style="font-size:28px;font-weight:700;color:'+s.title+';margin-bottom:4px">NaturFreund</div>'
+    +'<div style="font-size:13px;color:'+s.text+';margin-bottom:20px">Natur entdecken Klasse 1-3</div>'
+    +'<div style="font-size:14px;color:'+s.text+'">Hiermit wird bestätigt, dass</div>'
+    +'<div style="font-size:24px;font-weight:700;color:'+s.title+';margin:8px 0;border-bottom:2px solid '+s.accent+';padding-bottom:4px">'+n+'</div>'
+    +'<div style="font-size:14px;color:'+s.text+';max-width:400px;line-height:1.6">den Kurs <strong>NaturFreund</strong> mit <strong>'+pct+'%</strong> Abschluss und <strong>'+state.xp+' XP</strong> erfolgreich absolviert hat.</div>'
+    +'<div style="font-size:12px;color:'+s.accent+';margin-top:16px">'+d+'</div>'
+    +'<div style="font-size:10px;color:'+s.text+';opacity:0.6;margin-top:8px">Code: '+code+' | © 2026 GZ AI Stacks</div>'
+    +'</div>';
+}
+function printCert(){window.print()}
+
+function updateUI(){
+  const lv=getLevel(state.xp);
+  const xpEl=document.querySelector('.header-xp');
+  if(xpEl)xpEl.innerHTML=LEVELS[lv].name+' <span style="margin-left:8px">'+state.xp+' XP<\/span>';
+  const fill=document.querySelector('.header-xp-fill');
+  if(fill)fill.style.width=getLevelProgress(state.xp)+'%';
+  const streakEl=document.querySelector('.header-streak');
+  if(streakEl)streakEl.textContent='🔥 '+state.streak;
+  renderSidebar();
+}
+
+function setDesignTheme(world,mode){
+  state.designTheme=world+'-'+mode;document.documentElement.setAttribute('data-theme',state.designTheme);saveState();buildThemePicker();
+}
+function getCurrentThemeParts(){const p=state.designTheme.split('-');return{world:p.slice(0,-1).join('-'),mode:p[p.length-1]||'dark'}}
+function toggleMode(){const{world,mode}=getCurrentThemeParts();setDesignTheme(world,mode==='dark'?'light':'dark')}
+function buildThemePicker(){
+  const dd=document.getElementById('themePickerDD');if(!dd)return;
+  const{world,mode}=getCurrentThemeParts();
+  let h='<div class="tp-label">Theme wählen<\/div>';
+  Object.keys(THEME_CONFIG).forEach(w=>{
+    const t=THEME_CONFIG[w];
+    h+='<div class="tp-world'+(w===world?' active':'')+'" onclick="setDesignTheme(\''+w+'\',\''+mode+'\')">';
+    h+='<div class="tp-world-color" style="background:'+t.color+'">'+t.emoji+'<\/div>';
+    h+='<div class="tp-world-info"><div class="tp-world-name">'+t.name+'<\/div><div class="tp-world-desc">'+t.desc+'<\/div><\/div><\/div>';
+  });
+  h+='<div class="tp-divider"><\/div>';
+  h+='<div class="tp-mode-row"><span class="tp-mode-label">'+(mode==='dark'?'🌙 Dark':'☀️ Light')+'<\/span>';
+  h+='<div class="tp-mode-switch'+(mode==='light'?' light':'')+'" onclick="toggleMode()"><\/div><\/div>';
+  dd.innerHTML=h;
+}
+function toggleThemePicker(){document.getElementById('themePickerDD').classList.toggle('open')}
+
+
+function initInteractive(modId) {
+const exercises = {
+0: function() {
+const area = document.getElementById('interactiveArea');
+const items = [
+{name:'Katze',pflege:'Futter, Katzenklo, Spielen, Tierarzt'},
+{name:'Hund',pflege:'Futter, Gassi gehen, Spielen, Tierarzt'},
+{name:'Hamster',pflege:'Futter, Streu wechseln, Laufrad, Tierarzt'},
+{name:'Fisch',pflege:'Futter, Aquarium sauber halten, Wasser wechseln'},
+{name:'Kaninchen',pflege:'Futter, großer Stall, Auslauf, Tierarzt'}
+];
+let current=0;
+area.innerHTML='<h4>Was brauchen unsere Haustiere?</h4><div id="petContent"></div>';
+function show(){
+if(current>=items.length){document.getElementById('petContent').innerHTML='<div class="info-box">✅ Super! Du weißt, was Haustiere brauchen!</div>';return;}
+document.getElementById('petContent').innerHTML='<p style="font-size:1.3em;margin:18px 0">🐾 <strong>'+items[current].name+'</strong></p><button class="quiz-opt" onclick="window._showPet()">Was braucht dieses Tier?</button><div id="petFb" style="margin-top:12px"></div>';
+}
+window._showPet=function(){
+document.getElementById('petFb').innerHTML='<div class="info-box">✅ '+items[current].name+' braucht: <strong>'+items[current].pflege+'</strong></div><button class="quiz-opt" onclick="window._nextPet()">Weiter →</button>';
+};
+window._nextPet=function(){current++;show();};
+show();
+},
+1: function() {
+const area = document.getElementById('interactiveArea');
+const parts = [
+{name:'Wurzel',aufgabe:'Wasser und Nährstoffe aufnehmen'},
+{name:'Stängel',aufgabe:'Wasser nach oben transportieren'},
+{name:'Blatt',aufgabe:'Sonnenlicht einfangen (Fotosynthese)'},
+{name:'Blüte',aufgabe:'Samen herstellen und Insekten anlocken'}
+];
+const aufgaben=parts.map(function(p){return p.aufgabe;}).sort(function(){return Math.random()-0.5;});
+let current=0;let score=0;
+function show(){
+if(current>=parts.length){area.innerHTML='<div class="info-box">✅ Ergebnis: '+score+'/'+parts.length+' richtig!</div>';return;}
+area.innerHTML='<h4>Welche Aufgabe hat dieser Pflanzenteil? ('+(current+1)+'/'+parts.length+')</h4><p style="font-size:1.3em;margin:18px 0">🌱 <strong>'+parts[current].name+'</strong></p>'+aufgaben.map(function(a){return '<button class="quiz-opt" style="margin:4px" onclick="window._checkPlant(\''+a.replace(/'/g,"\\'")+'\')">'+a+'</button>';}).join('')+'<div id="plantFb" style="margin-top:12px"></div>';
+}
+window._checkPlant=function(ans){
+const correct=ans===parts[current].aufgabe;
+if(correct)score++;
+document.getElementById('plantFb').innerHTML=correct?'<span style="color:var(--success)">✅ Richtig!</span>':'<span style="color:var(--danger)">❌ Falsch! Die Aufgabe ist: '+parts[current].aufgabe+'</span>';
+current++;setTimeout(show,1200);
+};show();
+},
+2: function() {
+const area = document.getElementById('interactiveArea');
+const items = [
+{name:'Blumen blühen',jz:'Frühling'},{name:'Schnee und Eis',jz:'Winter'},
+{name:'Blätter fallen bunt',jz:'Herbst'},{name:'Baden im See',jz:'Sommer'},
+{name:'Zugvögel fliegen weg',jz:'Herbst'},{name:'Küken schlüpfen',jz:'Frühling'},
+{name:'Längster Tag',jz:'Sommer'},{name:'Igel hält Winterschlaf',jz:'Winter'}
+];
+const jzs=['Frühling','Sommer','Herbst','Winter'];
+let current=0;let score=0;
+function show(){
+if(current>=items.length){area.innerHTML='<div class="info-box">✅ Ergebnis: '+score+'/'+items.length+' richtig!</div>';return;}
+area.innerHTML='<h4>Welche Jahreszeit? ('+(current+1)+'/'+items.length+')</h4><p style="font-size:1.1em;margin:18px 0"><strong>'+items[current].name+'</strong></p>'+jzs.map(function(j){return '<button class="quiz-opt" onclick="window._checkJZ(\''+j+'\')">'+j+'</button>';}).join(' ')+'<div id="jzFb" style="margin-top:12px"></div>';
+}
+window._checkJZ=function(ans){
+const correct=ans===items[current].jz;
+if(correct)score++;
+document.getElementById('jzFb').innerHTML=correct?'<span style="color:var(--success)">✅ Richtig!</span>':'<span style="color:var(--danger)">❌ Das gehört zum '+items[current].jz+'!</span>';
+current++;setTimeout(show,1200);
+};show();
+},
+3: function() {
+const area = document.getElementById('interactiveArea');
+const items = [
+{beispiel:'Schokolade schmeckt lecker',sinn:'Schmecken'},
+{beispiel:'Das Feuer knistert',sinn:'Hören'},
+{beispiel:'Die Rose duftet',sinn:'Riechen'},
+{beispiel:'Der Regenbogen leuchtet',sinn:'Sehen'},
+{beispiel:'Der Teddy ist weich',sinn:'Tasten'},
+{beispiel:'Die Zitrone ist sauer',sinn:'Schmecken'},
+{beispiel:'Die Sirene ist laut',sinn:'Hören'},
+{beispiel:'Der Stein ist rau',sinn:'Tasten'}
+];
+const sinne=['Sehen','Hören','Riechen','Schmecken','Tasten'];
+let current=0;let score=0;
+function show(){
+if(current>=items.length){area.innerHTML='<div class="info-box">✅ Ergebnis: '+score+'/'+items.length+' richtig!</div>';return;}
+area.innerHTML='<h4>Welcher Sinn? ('+(current+1)+'/'+items.length+')</h4><p style="font-size:1.1em;margin:18px 0"><strong>'+items[current].beispiel+'</strong></p>'+sinne.map(function(s){return '<button class="quiz-opt" onclick="window._checkS(\''+s+'\')">'+s+'</button>';}).join(' ')+'<div id="sFb" style="margin-top:12px"></div>';
+}
+window._checkS=function(ans){
+const correct=ans===items[current].sinn;
+if(correct)score++;
+document.getElementById('sFb').innerHTML=correct?'<span style="color:var(--success)">✅ Richtig!</span>':'<span style="color:var(--danger)">❌ Das ist der Sinn: '+items[current].sinn+'!</span>';
+current++;setTimeout(show,1200);
+};show();
+},
+4: function() {
+const area = document.getElementById('interactiveArea');
+const steps=['Die Sonne erwärmt das Wasser','Wasser verdunstet und steigt auf','Wasserdampf bildet Wolken','Es regnet oder schneit','Wasser fließt in Bäche und Flüsse','Wasser erreicht das Meer'];
+const shuffled=steps.slice().sort(function(){return Math.random()-0.5;});
+let selected=[];
+area.innerHTML='<h4>Bringe den Wasserkreislauf in die richtige Reihenfolge!</h4><p>Klicke die Schritte in der richtigen Reihenfolge:</p><div id="wcBtns">'+shuffled.map(function(s,i){return '<button class="quiz-opt" style="margin:4px;text-align:left" onclick="window._pickWC('+i+')">'+s+'</button>';}).join('')+'</div><div id="wcOrder" style="margin:12px 0"></div><div id="wcFb"></div>';
+window._pickWC=function(i){
+if(selected.indexOf(i)>=0)return;
+selected.push(i);
+var btns=document.getElementById('wcBtns').children;
+btns[i].style.opacity='0.4';btns[i].disabled=true;
+document.getElementById('wcOrder').innerHTML='<strong>Deine Reihenfolge:</strong><br>'+selected.map(function(idx,n){return (n+1)+'. '+shuffled[idx];}).join('<br>');
+if(selected.length===shuffled.length){
+var correct=true;
+for(var j=0;j<selected.length;j++){if(shuffled[selected[j]]!==steps[j]){correct=false;break;}}
+document.getElementById('wcFb').innerHTML=correct?'<div class="info-box">✅ Perfekt! Der Wasserkreislauf stimmt!</div>':'<div class="info-box">❌ Leider nicht ganz richtig. Die richtige Reihenfolge ist:<br>'+steps.map(function(s,n){return (n+1)+'. '+s;}).join('<br>')+'</div>';
+}};
+},
+5: function() {
+const area = document.getElementById('interactiveArea');
+const tiere = [
+{name:'Eichhörnchen',schicht:'Baumschicht'},
+{name:'Reh',schicht:'Strauchschicht'},
+{name:'Farn',schicht:'Krautschicht'},
+{name:'Pilz',schicht:'Bodenschicht'},
+{name:'Regenwurm',schicht:'Wurzelschicht'},
+{name:'Eule',schicht:'Baumschicht'},
+{name:'Moos',schicht:'Bodenschicht'},
+{name:'Maulwurf',schicht:'Wurzelschicht'}
+];
+const schichten=['Baumschicht','Strauchschicht','Krautschicht','Bodenschicht','Wurzelschicht'];
+let current=0;let score=0;
+function show(){
+if(current>=tiere.length){area.innerHTML='<div class="info-box">✅ Ergebnis: '+score+'/'+tiere.length+' richtig!</div>';return;}
+area.innerHTML='<h4>Welche Waldschicht? ('+(current+1)+'/'+tiere.length+')</h4><p style="font-size:1.3em;margin:18px 0"><strong>'+tiere[current].name+'</strong></p>'+schichten.map(function(s){return '<button class="quiz-opt" style="margin:4px" onclick="window._checkWS(\''+s+'\')">'+s+'</button>';}).join('')+'<div id="wsFb" style="margin-top:12px"></div>';
+}
+window._checkWS=function(ans){
+const correct=ans===tiere[current].schicht;
+if(correct)score++;
+document.getElementById('wsFb').innerHTML=correct?'<span style="color:var(--success)">✅ Richtig!</span>':'<span style="color:var(--danger)">❌ Das gehört zur '+tiere[current].schicht+'!</span>';
+current++;setTimeout(show,1200);
+};show();
+},
+6: function() {
+const area = document.getElementById('interactiveArea');
+const items = [
+{name:'Biene',nuetzling:true},{name:'Blattlaus',nuetzling:false},
+{name:'Marienkäfer',nuetzling:true},{name:'Nacktschnecke',nuetzling:false},
+{name:'Regenwurm',nuetzling:true},{name:'Kartoffelkäfer',nuetzling:false},
+{name:'Ohrwurm',nuetzling:true},{name:'Wühlmaus',nuetzling:false}
+];
+let current=0;let score=0;
+function show(){
+if(current>=items.length){area.innerHTML='<div class="info-box">✅ Ergebnis: '+score+'/'+items.length+' richtig!</div>';return;}
+area.innerHTML='<h4>Nützling oder Schädling im Garten? ('+(current+1)+'/'+items.length+')</h4><p style="font-size:1.3em;margin:18px 0"><strong>'+items[current].name+'</strong></p><button class="quiz-opt" onclick="window._checkNS(true)">🌟 Nützling</button> <button class="quiz-opt" onclick="window._checkNS(false)">🐛 Schädling</button><div id="nsFb" style="margin-top:12px"></div>';
+}
+window._checkNS=function(ans){
+const correct=items[current].nuetzling===ans;
+if(correct)score++;
+document.getElementById('nsFb').innerHTML=correct?'<span style="color:var(--success)">✅ Richtig!</span>':'<span style="color:var(--danger)">❌ '+items[current].name+' ist ein '+(items[current].nuetzling?'Nützling':'Schädling')+'!</span>';
+current++;setTimeout(show,1200);
+};show();
+},
+7: function() {
+const area = document.getElementById('interactiveArea');
+const voegel = [
+{name:'Amsel',merkmal:'Schwarzes Gefieder, gelber Schnabel',typ:'Standvogel'},
+{name:'Schwalbe',merkmal:'Gegabelter Schwanz, schneller Flug',typ:'Zugvogel'},
+{name:'Kohlmeise',merkmal:'Gelber Bauch, schwarzer Kopf',typ:'Standvogel'},
+{name:'Storch',merkmal:'Weiß-schwarzes Gefieder, langer roter Schnabel',typ:'Zugvogel'},
+{name:'Spatz',merkmal:'Klein, braun, gesellig',typ:'Standvogel'},
+{name:'Kuckuck',merkmal:'Ruft seinen Namen, legt Eier in fremde Nester',typ:'Zugvogel'}
+];
+let current=0;let score=0;
+function show(){
+if(current>=voegel.length){area.innerHTML='<div class="info-box">✅ Ergebnis: '+score+'/'+voegel.length+' richtig!</div>';return;}
+area.innerHTML='<h4>Standvogel oder Zugvogel? ('+(current+1)+'/'+voegel.length+')</h4><p style="font-size:1.2em;margin:18px 0">🐦 <strong>'+voegel[current].name+'</strong><br><em>'+voegel[current].merkmal+'</em></p><button class="quiz-opt" onclick="window._checkV(\'Standvogel\')">🏠 Standvogel</button> <button class="quiz-opt" onclick="window._checkV(\'Zugvogel\')">✈️ Zugvogel</button><div id="vFb" style="margin-top:12px"></div>';
+}
+window._checkV=function(ans){
+const correct=ans===voegel[current].typ;
+if(correct)score++;
+document.getElementById('vFb').innerHTML=correct?'<span style="color:var(--success)">✅ Richtig!</span>':'<span style="color:var(--danger)">❌ Die '+voegel[current].name+' ist ein '+voegel[current].typ+'!</span>';
+current++;setTimeout(show,1200);
+};show();
+},
+8: function() {
+const area = document.getElementById('interactiveArea');
+const items = [
+{name:'Biene',beine:6,typ:'Insekt'},{name:'Spinne',beine:8,typ:'Spinnentier'},
+{name:'Ameise',beine:6,typ:'Insekt'},{name:'Zecke',beine:8,typ:'Spinnentier'},
+{name:'Schmetterling',beine:6,typ:'Insekt'},{name:'Skorpion',beine:8,typ:'Spinnentier'},
+{name:'Käfer',beine:6,typ:'Insekt'},{name:'Weberknecht',beine:8,typ:'Spinnentier'}
+];
+let current=0;let score=0;
+function show(){
+if(current>=items.length){area.innerHTML='<div class="info-box">✅ Ergebnis: '+score+'/'+items.length+' richtig!</div>';return;}
+area.innerHTML='<h4>Insekt (6 Beine) oder Spinnentier (8 Beine)? ('+(current+1)+'/'+items.length+')</h4><p style="font-size:1.3em;margin:18px 0"><strong>'+items[current].name+'</strong></p><button class="quiz-opt" onclick="window._checkI(\'Insekt\')">🐜 Insekt (6 Beine)</button> <button class="quiz-opt" onclick="window._checkI(\'Spinnentier\')">🕷️ Spinnentier (8 Beine)</button><div id="iFb" style="margin-top:12px"></div>';
+}
+window._checkI=function(ans){
+const correct=ans===items[current].typ;
+if(correct)score++;
+document.getElementById('iFb').innerHTML=correct?'<span style="color:var(--success)">✅ Richtig!</span>':'<span style="color:var(--danger)">❌ '+items[current].name+' ist ein '+items[current].typ+' ('+items[current].beine+' Beine)!</span>';
+current++;setTimeout(show,1200);
+};show();
+},
+9: function() {
+const area = document.getElementById('interactiveArea');
+const tipps = [
+{aktion:'Müll in den Wald werfen',gut:false},
+{aktion:'Blumen für Bienen pflanzen',gut:true},
+{aktion:'Insektenhotel aufstellen',gut:true},
+{aktion:'Plastiktüten im Park liegen lassen',gut:false},
+{aktion:'Mit dem Fahrrad zur Schule fahren',gut:true},
+{aktion:'Wasser verschwenden',gut:false},
+{aktion:'Licht ausschalten beim Verlassen',gut:true},
+{aktion:'Wildtiere stören',gut:false}
+];
+let current=0;let score=0;
+function show(){
+if(current>=tipps.length){area.innerHTML='<div class="info-box">✅ Ergebnis: '+score+'/'+tipps.length+' richtig! Du bist ein echter Naturschützer!</div>';return;}
+area.innerHTML='<h4>Gut oder schlecht für die Natur? ('+(current+1)+'/'+tipps.length+')</h4><p style="font-size:1.1em;margin:18px 0"><strong>'+tipps[current].aktion+'</strong></p><button class="quiz-opt" onclick="window._checkN(true)">👍 Gut für die Natur</button> <button class="quiz-opt" onclick="window._checkN(false)">👎 Schlecht für die Natur</button><div id="nFb" style="margin-top:12px"></div>';
+}
+window._checkN=function(ans){
+const correct=tipps[current].gut===ans;
+if(correct)score++;
+document.getElementById('nFb').innerHTML=correct?'<span style="color:var(--success)">✅ Richtig!</span>':'<span style="color:var(--danger)">❌ Das ist '+(tipps[current].gut?'gut':'schlecht')+' für die Natur!</span>';
+current++;setTimeout(show,1200);
+};show();
+}
+};
+if (exercises[modId]) exercises[modId]();
+}
+
+function startApp(){
+  const name=document.getElementById('nameInput').value.trim();if(!name)return;
+  state.name=name;state.started=true;saveState();
+  document.getElementById('welcomeScreen').style.display='none';
+  renderModule(0);updateStreak();
+}
+
+(function init(){
+  if(loadState()&&state.started){
+    document.getElementById('welcomeScreen').style.display='none';
+    document.documentElement.setAttribute('data-theme',state.designTheme);
+    renderModule(state.currentModule);updateUI();updateStreak();
+  }else{
+    document.documentElement.setAttribute('data-theme',state.designTheme);
+    buildThemePicker();
+  }
+  renderSidebar();
+  document.addEventListener('click',e=>{if(!e.target.closest('.theme-picker-wrap'))document.getElementById('themePickerDD')?.classList.remove('open')});
+})();
+</script>
+</body>
+</html>

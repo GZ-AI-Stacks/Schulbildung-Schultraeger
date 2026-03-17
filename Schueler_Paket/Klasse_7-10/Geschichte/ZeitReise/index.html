@@ -1,0 +1,1052 @@
+<!DOCTYPE html>
+<html lang="de" data-theme="cyber-dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ZeitReise — Interaktive Geschichte-Lernapp</title>
+<meta name="description" content="Interaktive Geschichte-Lernapp für Klasse 7-10 mit Gamification, Quizzen und Boss-Challenges">
+<style>
+@font-face{font-family:'Sora';src:url('../../Informatik/fonts/sora-latin-400-normal.woff2') format('woff2');font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:'Sora';src:url('../../Informatik/fonts/sora-latin-600-normal.woff2') format('woff2');font-weight:600;font-style:normal;font-display:swap}
+@font-face{font-family:'Sora';src:url('../../Informatik/fonts/sora-latin-700-normal.woff2') format('woff2');font-weight:700;font-style:normal;font-display:swap}
+@font-face{font-family:'JetBrains Mono';src:url('../../Informatik/fonts/jetbrains-mono-latin-400-normal.woff2') format('woff2');font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:'Playfair Display';src:url('../../Informatik/fonts/playfair-display-latin-700-normal.woff2') format('woff2');font-weight:700;font-style:normal;font-display:swap}
+@font-face{font-family:'Inter';src:url('../../Informatik/fonts/inter-latin-400-normal.woff2') format('woff2');font-weight:400;font-style:normal;font-display:swap}
+
+:root{
+--neon:#3b82f6;--neon-dim:rgba(59,130,246,.15);--neon-glow:rgba(59,130,246,.3);
+--bg:#0a0e14;--bg2:#111827;--bg3:#1f2937;--card:#161e2e;--card-hover:#1e293b;
+--border:#2a3444;--border-light:#374151;
+--text:#d4dce8;--text-dim:#8899aa;--text-bright:#f1f5f9;
+--heading:#ffffff;--link:#60a5fa;
+--success:#22c55e;--warning:#f59e0b;--danger:#ef4444;
+--xp-purple:#a855f7;--badge-cyan:#06b6d4;--streak-red:#ef4444;
+--radius:12px;--radius-sm:8px;--radius-lg:16px;
+--shadow:0 4px 24px rgba(0,0,0,.4);--shadow-lg:0 8px 40px rgba(0,0,0,.5);
+--font:'Sora','Segoe UI',system-ui,sans-serif;
+--mono:'JetBrains Mono','Cascadia Code',monospace;
+--serif:'Playfair Display','Georgia',serif;
+--sidebar-w:280px;--header-h:60px;
+--card-border-w:1px;--card-border-style:solid;--glow:1
+}
+[data-theme="cyber-dark"]{--neon:#3b82f6;--neon-dim:rgba(59,130,246,.15);--neon-glow:rgba(59,130,246,.3);--bg:#0a0e14;--bg2:#111827;--bg3:#1f2937;--card:#161e2e;--card-hover:#1e293b;--border:#2a3444;--border-light:#374151;--text:#d4dce8;--text-dim:#8899aa;--text-bright:#f1f5f9;--heading:#ffffff;--link:#60a5fa;--success:#22c55e;--warning:#f59e0b;--danger:#ef4444;--xp-purple:#a855f7;--badge-cyan:#06b6d4;--streak-red:#ef4444;--radius:12px;--radius-sm:8px;--radius-lg:16px;--shadow:0 4px 24px rgba(0,0,0,.4);--shadow-lg:0 8px 40px rgba(0,0,0,.5);--font:'Sora','Segoe UI',system-ui,sans-serif;--card-border-w:1px;--card-border-style:solid;--glow:1}
+[data-theme="cyber-light"]{--neon:#1d4ed8;--neon-dim:rgba(29,78,216,.1);--neon-glow:rgba(29,78,216,.2);--bg:#f8f9fb;--bg2:#f0f2f5;--bg3:#e5e7eb;--card:#ffffff;--card-hover:#f5f7fa;--border:#d1d5db;--border-light:#e5e7eb;--text:#374151;--text-dim:#4b5563;--text-bright:#111827;--heading:#111827;--link:#2563eb;--success:#22c55e;--warning:#f59e0b;--danger:#ef4444;--xp-purple:#a855f7;--badge-cyan:#06b6d4;--streak-red:#ef4444;--radius:12px;--radius-sm:8px;--radius-lg:16px;--shadow:0 4px 24px rgba(0,0,0,.08);--shadow-lg:0 8px 40px rgba(0,0,0,.12);--font:'Sora','Segoe UI',system-ui,sans-serif;--card-border-w:1px;--card-border-style:solid;--glow:0}
+[data-theme="retro-dark"]{--neon:#ffd700;--neon-dim:rgba(255,215,0,.12);--neon-glow:rgba(255,215,0,.3);--bg:#0d0208;--bg2:#1a0a1e;--bg3:#2d1233;--card:#1a0a1e;--card-hover:#2d1233;--border:#4a1942;--border-light:#5c2d5c;--text:#e0d0f0;--text-dim:#9080a0;--text-bright:#fff;--heading:#ffd700;--link:#ff6b9d;--success:#00e676;--warning:#ffab00;--danger:#ff1744;--xp-purple:#e040fb;--badge-cyan:#00e5ff;--streak-red:#ff1744;--radius:0px;--radius-sm:0px;--radius-lg:0px;--shadow:4px 4px 0 rgba(0,0,0,.8);--shadow-lg:6px 6px 0 rgba(0,0,0,.9);--font:'Courier New','Consolas',monospace;--card-border-w:3px;--card-border-style:solid;--glow:0}
+[data-theme="retro-light"]{--neon:#b8860b;--neon-dim:rgba(184,134,11,.1);--neon-glow:rgba(184,134,11,.2);--bg:#fff8e1;--bg2:#fff3cd;--bg3:#ffe0b2;--card:#ffffff;--card-hover:#fff9f0;--border:#d4a017;--border-light:#e6c84d;--text:#3e2723;--text-dim:#6d4c41;--text-bright:#1b0000;--heading:#b8860b;--link:#c2185b;--success:#2e7d32;--warning:#ef6c00;--danger:#c62828;--xp-purple:#8e24aa;--badge-cyan:#00838f;--streak-red:#c62828;--radius:0px;--radius-sm:0px;--radius-lg:0px;--shadow:3px 3px 0 rgba(0,0,0,.15);--shadow-lg:5px 5px 0 rgba(0,0,0,.2);--font:'Courier New','Consolas',monospace;--card-border-w:3px;--card-border-style:solid;--glow:0}
+[data-theme="nature-dark"]{--neon:#4ade80;--neon-dim:rgba(74,222,128,.12);--neon-glow:rgba(74,222,128,.25);--bg:#0c1a0f;--bg2:#132617;--bg3:#1e3a24;--card:#15291a;--card-hover:#1e3a24;--border:#2d5a36;--border-light:#3a7044;--text:#c8e6c9;--text-dim:#81a784;--text-bright:#e8f5e9;--heading:#e8f5e9;--link:#81c784;--success:#66bb6a;--warning:#ffa726;--danger:#ef5350;--xp-purple:#ab47bc;--badge-cyan:#26a69a;--streak-red:#ef5350;--radius:20px;--radius-sm:14px;--radius-lg:28px;--shadow:0 4px 20px rgba(0,0,0,.3);--shadow-lg:0 8px 32px rgba(0,0,0,.4);--font:'Segoe UI','Helvetica Neue',system-ui,sans-serif;--card-border-w:1px;--card-border-style:solid;--glow:0}
+[data-theme="nature-light"]{--neon:#2e7d32;--neon-dim:rgba(46,125,50,.08);--neon-glow:rgba(46,125,50,.15);--bg:#f1f8e9;--bg2:#e8f5e9;--bg3:#c8e6c9;--card:#ffffff;--card-hover:#f1faf1;--border:#a5d6a7;--border-light:#c8e6c9;--text:#33691e;--text-dim:#3e6e1c;--text-bright:#1b5e20;--heading:#1b5e20;--link:#2e7d32;--success:#388e3c;--warning:#ef6c00;--danger:#c62828;--xp-purple:#7b1fa2;--badge-cyan:#00695c;--streak-red:#c62828;--radius:20px;--radius-sm:14px;--radius-lg:28px;--shadow:0 4px 16px rgba(0,0,0,.06);--shadow-lg:0 8px 28px rgba(0,0,0,.1);--font:'Segoe UI','Helvetica Neue',system-ui,sans-serif;--card-border-w:1px;--card-border-style:solid;--glow:0}
+[data-theme="space-dark"]{--neon:#c084fc;--neon-dim:rgba(192,132,252,.12);--neon-glow:rgba(192,132,252,.3);--bg:#07020e;--bg2:#0f0720;--bg3:#1a0e35;--card:#110a28;--card-hover:#1a0e35;--border:#2e1a5e;--border-light:#3d2478;--text:#d4c8f0;--text-dim:#9080b8;--text-bright:#f0e8ff;--heading:#f0e8ff;--link:#f0abfc;--success:#34d399;--warning:#fbbf24;--danger:#fb7185;--xp-purple:#f472b6;--badge-cyan:#67e8f9;--streak-red:#fb7185;--radius:4px;--radius-sm:2px;--radius-lg:6px;--shadow:0 4px 24px rgba(100,50,200,.2);--shadow-lg:0 8px 40px rgba(100,50,200,.3);--font:'Segoe UI',system-ui,sans-serif;--card-border-w:1px;--card-border-style:solid;--glow:1}
+[data-theme="space-light"]{--neon:#7c3aed;--neon-dim:rgba(124,58,237,.08);--neon-glow:rgba(124,58,237,.15);--bg:#faf5ff;--bg2:#f3e8ff;--bg3:#e9d5ff;--card:#ffffff;--card-hover:#faf5ff;--border:#c4b5fd;--border-light:#ddd6fe;--text:#4c1d95;--text-dim:#5b21b6;--text-bright:#2e1065;--heading:#2e1065;--link:#7c3aed;--success:#059669;--warning:#d97706;--danger:#dc2626;--xp-purple:#db2777;--badge-cyan:#0891b2;--streak-red:#dc2626;--radius:4px;--radius-sm:2px;--radius-lg:6px;--shadow:0 4px 16px rgba(100,50,200,.06);--shadow-lg:0 8px 28px rgba(100,50,200,.1);--font:'Segoe UI',system-ui,sans-serif;--card-border-w:1px;--card-border-style:solid;--glow:0}
+[data-theme="comic-dark"]{--neon:#ff6b6b;--neon-dim:rgba(255,107,107,.12);--neon-glow:rgba(255,107,107,.3);--bg:#1a1a2e;--bg2:#222244;--bg3:#2e2e55;--card:#262650;--card-hover:#2e2e55;--border:#4a4a7a;--border-light:#5a5a8a;--text:#e8e0ff;--text-dim:#a098c0;--text-bright:#fff;--heading:#fff;--link:#ffa94d;--success:#51cf66;--warning:#fcc419;--danger:#ff6b6b;--xp-purple:#cc5de8;--badge-cyan:#22b8cf;--streak-red:#ff6b6b;--radius:16px;--radius-sm:12px;--radius-lg:24px;--shadow:4px 4px 0 rgba(0,0,0,.5);--shadow-lg:6px 6px 0 rgba(0,0,0,.6);--font:'Comic Sans MS','Chalkboard SE',cursive,system-ui,sans-serif;--card-border-w:3px;--card-border-style:solid;--glow:0}
+[data-theme="comic-light"]{--neon:#e03131;--neon-dim:rgba(224,49,49,.08);--neon-glow:rgba(224,49,49,.15);--bg:#fff9db;--bg2:#fff3bf;--bg3:#ffe066;--card:#ffffff;--card-hover:#fffdf0;--border:#fab005;--border-light:#fcc419;--text:#2b2b2b;--text-dim:#555;--text-bright:#000;--heading:#000;--link:#e8590c;--success:#2f9e44;--warning:#e8590c;--danger:#c92a2a;--xp-purple:#9c36b5;--badge-cyan:#1098ad;--streak-red:#c92a2a;--radius:16px;--radius-sm:12px;--radius-lg:24px;--shadow:3px 3px 0 rgba(0,0,0,.2);--shadow-lg:5px 5px 0 rgba(0,0,0,.25);--font:'Comic Sans MS','Chalkboard SE',cursive,system-ui,sans-serif;--card-border-w:3px;--card-border-style:solid;--glow:0}
+[data-theme="sketchy-dark"]{--neon:#d97706;--neon-dim:rgba(217,119,6,.15);--neon-glow:rgba(217,119,6,.3);--bg:#2a1f0f;--bg2:#3a2a1a;--bg3:#4a3a2a;--card:#362414;--card-hover:#462a1a;--border:#5a4030;--border-light:#6a5040;--text:#d4c4b0;--text-dim:#a09080;--text-bright:#e8d8c8;--heading:#f5ead5;--link:#e8a550;--success:#84cc16;--warning:#d97706;--danger:#e74c3c;--xp-purple:#d946ef;--badge-cyan:#06b6d4;--streak-red:#e74c3c;--radius:24px;--radius-sm:16px;--radius-lg:32px;--shadow:0 6px 20px rgba(0,0,0,.3);--shadow-lg:0 10px 40px rgba(0,0,0,.4);--font:'Playfair Display','Georgia',serif;--card-border-w:2px;--card-border-style:dashed;--glow:0}
+[data-theme="sketchy-light"]{--neon:#b45309;--neon-dim:rgba(180,83,9,.1);--neon-glow:rgba(180,83,9,.2);--bg:#fef3e2;--bg2:#fde8cc;--bg3:#f9d5b8;--card:#ffffff;--card-hover:#fffaf5;--border:#d4a574;--border-light:#e8c4a0;--text:#5c4033;--text-dim:#8b6f47;--text-bright:#3e2723;--heading:#3e2723;--link:#c2600c;--success:#65a30d;--warning:#b45309;--danger:#d25c4d;--xp-purple:#c084fc;--badge-cyan:#0891b2;--streak-red:#d25c4d;--radius:24px;--radius-sm:16px;--radius-lg:32px;--shadow:0 4px 12px rgba(0,0,0,.08);--shadow-lg:0 8px 24px rgba(0,0,0,.12);--font:'Playfair Display','Georgia',serif;--card-border-w:2px;--card-border-style:dashed;--glow:0}
+[data-theme="nature-code-dark"]{--neon:#10b981;--neon-dim:rgba(16,185,129,.15);--neon-glow:rgba(16,185,129,.25);--bg:#0a1f12;--bg2:#0d2818;--bg3:#1a3a2a;--card:#0f281a;--card-hover:#1a3a2a;--border:#2d5a3d;--border-light:#3a7050;--text:#c8e6d0;--text-dim:#7ba890;--text-bright:#e8f5ed;--heading:#e8f5ed;--link:#34d399;--success:#10b981;--warning:#f59e0b;--danger:#f87171;--xp-purple:#a78bfa;--badge-cyan:#22d3ee;--streak-red:#f87171;--radius:20px;--radius-sm:14px;--radius-lg:28px;--shadow:0 4px 20px rgba(0,100,50,.2);--shadow-lg:0 8px 32px rgba(0,100,50,.3);--font:'Segoe UI','Helvetica Neue',system-ui,sans-serif;--card-border-w:1px;--card-border-style:solid;--glow:0}
+[data-theme="nature-code-light"]{--neon:#059669;--neon-dim:rgba(5,150,105,.1);--neon-glow:rgba(5,150,105,.15);--bg:#f0fdf8;--bg2:#e8faf2;--bg3:#d1f2e0;--card:#ffffff;--card-hover:#f5fbf7;--border:#86efac;--border-light:#bbf7d0;--text:#164e3f;--text-dim:#2d6e4f;--text-bright:#052e16;--heading:#052e16;--link:#059669;--success:#10b981;--warning:#d97706;--danger:#dc2626;--xp-purple:#8b5cf6;--badge-cyan:#06b6d4;--streak-red:#dc2626;--radius:20px;--radius-sm:14px;--radius-lg:28px;--shadow:0 4px 16px rgba(0,100,50,.06);--shadow-lg:0 8px 28px rgba(0,100,50,.1);--font:'Segoe UI','Helvetica Neue',system-ui,sans-serif;--card-border-w:1px;--card-border-style:solid;--glow:0}
+[data-theme="glass-dark"]{--neon:#00d9ff;--neon-dim:rgba(0,217,255,.12);--neon-glow:rgba(0,217,255,.25);--bg:#0f0f23;--bg2:#1a1a3e;--bg3:#25254a;--card:rgba(30,30,60,.4);--card-hover:rgba(40,40,80,.5);--border:rgba(100,150,255,.2);--border-light:rgba(100,150,255,.3);--text:#e4e8f0;--text-dim:#8899aa;--text-bright:#f5f7ff;--heading:#ffffff;--link:#00d9ff;--success:#34d399;--warning:#fbbf24;--danger:#ff6b9d;--xp-purple:#b991f7;--badge-cyan:#00d9ff;--streak-red:#ff6b9d;--radius:16px;--radius-sm:12px;--radius-lg:20px;--shadow:0 8px 32px rgba(0,200,255,.1);--shadow-lg:0 16px 64px rgba(0,200,255,.15);--font:'Segoe UI',system-ui,sans-serif;--card-border-w:1px;--card-border-style:solid;--glow:1}
+[data-theme="glass-light"]{--neon:#0891b2;--neon-dim:rgba(8,145,178,.08);--neon-glow:rgba(8,145,178,.15);--bg:#f8fafc;--bg2:#f1f5f9;--bg3:#e2e8f0;--card:rgba(255,255,255,.4);--card-hover:rgba(255,255,255,.6);--border:rgba(100,180,255,.2);--border-light:rgba(100,180,255,.3);--text:#1e293b;--text-dim:#475569;--text-bright:#0f172a;--heading:#0f172a;--link:#0891b2;--success:#059669;--warning:#d97706;--danger:#dc2626;--xp-purple:#7c3aed;--badge-cyan:#0891b2;--streak-red:#dc2626;--radius:16px;--radius-sm:12px;--radius-lg:20px;--shadow:0 8px 32px rgba(100,150,255,.08);--shadow-lg:0 16px 64px rgba(100,150,255,.12);--font:'Segoe UI',system-ui,sans-serif;--card-border-w:1px;--card-border-style:solid;--glow:0}
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{font-family:var(--font);background:var(--bg);color:var(--text);line-height:1.6;min-height:100vh;overflow-x:hidden;transition:background .3s,color .3s}
+h1,h2,h3,h4{color:var(--heading);line-height:1.3}
+a{color:var(--link);text-decoration:none}
+a:hover{text-decoration:underline}
+button{font-family:var(--font);cursor:pointer;border:none;background:none;color:inherit}
+code,pre{font-family:var(--mono)}
+:focus-visible{outline:2px solid var(--neon);outline-offset:2px;border-radius:4px}
+::selection{background:var(--neon);color:#fff}
+::-webkit-scrollbar{width:8px}
+::-webkit-scrollbar-track{background:var(--bg2)}
+::-webkit-scrollbar-thumb{background:var(--border);border-radius:4px}
+::-webkit-scrollbar-thumb:hover{background:var(--text-dim)}
+.site-header{position:fixed;top:0;left:0;right:0;height:var(--header-h);background:var(--bg2);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 20px;z-index:100;backdrop-filter:blur(12px)}
+.header-logo{display:flex;align-items:center;gap:12px;font-weight:700;font-size:18px;color:var(--heading)}
+.header-logo-text{display:flex;flex-direction:column;line-height:1.2}
+.header-logo-main{font-size:20px;font-weight:800}
+.header-logo-sub{font-size:11px;font-weight:600;color:var(--neon);letter-spacing:1px;text-transform:uppercase;margin-top:2px}
+.header-right{margin-left:auto;display:flex;align-items:center;gap:12px}
+.header-xp{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--xp-purple);font-weight:600}
+.header-xp-bar{width:80px;height:6px;background:var(--bg3);border-radius:3px;overflow:hidden}
+.header-xp-fill{height:100%;background:var(--xp-purple);border-radius:3px;transition:width .5s}
+.header-streak{display:flex;align-items:center;gap:4px;font-size:13px;color:var(--streak-red);font-weight:600}
+.theme-toggle{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:var(--bg3);transition:background .2s}
+.theme-toggle:hover{background:var(--border)}
+.theme-picker-wrap{position:relative}
+.theme-picker-btn{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:var(--bg3);transition:background .2s;font-size:16px}
+.theme-picker-btn:hover{background:var(--border)}
+.theme-picker-dd{position:absolute;top:calc(100% + 8px);right:0;background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:12px;box-shadow:var(--shadow-lg);z-index:200;display:none;min-width:240px}
+.theme-picker-dd.open{display:block}
+.theme-picker-dd .tp-label{font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--text-dim);margin-bottom:8px}
+.tp-world{display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:var(--radius-sm);cursor:pointer;transition:background .15s;margin-bottom:2px}
+.tp-world:hover{background:var(--bg3)}
+.tp-world.active{background:var(--neon-dim)}
+.tp-world-color{width:28px;height:28px;border-radius:6px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:14px}
+.tp-world-info{flex:1;min-width:0}
+.tp-world-name{font-size:13px;font-weight:600;color:var(--heading)}
+.tp-world-desc{font-size:10px;color:var(--text-dim)}
+.tp-divider{height:1px;background:var(--border);margin:8px 0}
+.tp-mode-row{display:flex;align-items:center;justify-content:space-between;padding:4px 10px}
+.tp-mode-label{font-size:12px;color:var(--text);font-weight:600}
+.tp-mode-switch{width:44px;height:24px;border-radius:12px;background:var(--bg3);position:relative;cursor:pointer;transition:background .2s}
+.tp-mode-switch.light{background:var(--neon)}
+.tp-mode-switch::after{content:'';position:absolute;top:3px;left:3px;width:18px;height:18px;border-radius:50%;background:#fff;transition:transform .2s;box-shadow:0 1px 3px rgba(0,0,0,.3)}
+.tp-mode-switch.light::after{transform:translateX(20px)}
+.menu-btn{display:none;width:36px;height:36px;border-radius:8px;align-items:center;justify-content:center;background:var(--bg3)}
+.sidebar{position:fixed;top:var(--header-h);left:0;width:var(--sidebar-w);height:calc(100vh - var(--header-h));background:var(--bg2);border-right:1px solid var(--border);overflow-y:auto;padding:16px 12px;z-index:90;transition:transform .3s}
+.sidebar-section{margin-bottom:20px}
+.sidebar-label{font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--text-dim);padding:0 8px;margin-bottom:8px}
+.sidebar-level{padding:8px 12px;background:var(--neon-dim);border-radius:var(--radius-sm);margin-bottom:12px;text-align:center}
+.sidebar-level-title{font-size:14px;font-weight:700;color:var(--neon)}
+.sidebar-level-sub{font-size:11px;color:var(--text-dim);margin-top:2px}
+.sidebar-xp-bar{width:100%;height:8px;background:var(--bg3);border-radius:4px;overflow:hidden;margin-top:6px}
+.sidebar-xp-fill{height:100%;background:linear-gradient(90deg,var(--xp-purple),var(--neon));border-radius:4px;transition:width .6s}
+.mod-link{display:flex;align-items:center;gap:10px;padding:8px 12px;border-radius:var(--radius-sm);transition:background .15s;color:var(--text);font-size:13px;text-decoration:none;position:relative;cursor:pointer}
+.mod-link:hover{background:var(--bg3);text-decoration:none}
+.mod-link.active{background:var(--neon-dim);color:var(--neon);font-weight:600}
+.mod-link.completed::after{content:'\2713';position:absolute;right:10px;color:var(--success);font-weight:700;font-size:12px}
+.mod-link .mod-icon{width:28px;height:28px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
+.main{margin-left:var(--sidebar-w);margin-top:var(--header-h);min-height:calc(100vh - var(--header-h));padding:32px;max-width:900px}
+.module-header{margin-bottom:32px}
+.module-header .mod-badge{display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--neon);margin-bottom:8px}
+.module-header h1{font-size:28px;margin-bottom:8px}
+.module-header .mod-desc{font-size:15px;color:var(--text-dim);max-width:600px}
+.lesson-card{background:var(--card);border:var(--card-border-w) var(--card-border-style) var(--border);border-radius:var(--radius);padding:24px;margin-bottom:20px;transition:border-color .2s}
+.lesson-card:hover{border-color:var(--neon)}
+.lesson-card h3{font-size:18px;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.lesson-card p,.lesson-card li{font-size:14px;line-height:1.7;color:var(--text)}
+.lesson-card ul,.lesson-card ol{margin:8px 0 8px 20px}
+.lesson-card code{background:var(--bg3);padding:2px 6px;border-radius:4px;font-size:13px;color:var(--neon)}
+.lesson-card pre{background:var(--bg);border:1px solid var(--border);border-radius:var(--radius-sm);padding:16px;overflow-x:auto;margin:12px 0;font-size:13px;line-height:1.5}
+.lesson-card .info-box{background:var(--neon-dim);border-left:3px solid var(--neon);padding:12px 16px;border-radius:0 var(--radius-sm) var(--radius-sm) 0;margin:12px 0;font-size:13px}
+.interactive-area{background:var(--card);border:calc(var(--card-border-w) + 1px) dashed var(--border);border-radius:var(--radius);padding:24px;margin:20px 0;min-height:200px}
+.interactive-area h4{font-size:15px;color:var(--neon);margin-bottom:12px}
+.ia-toolbar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+.ia-btn{padding:6px 14px;font-size:12px;font-weight:600;border-radius:var(--radius-sm);background:var(--neon-dim);color:var(--neon);border:1px solid transparent;transition:all .15s}
+.ia-btn:hover{background:var(--neon);color:#fff}
+.ia-btn.active{background:var(--neon);color:#fff}
+.ix-grid{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;margin:16px 0}
+.ix-item{background:var(--bg3);border:2px solid var(--border);border-radius:var(--radius-sm);padding:14px 20px;font-size:20px;cursor:pointer;transition:all .2s;user-select:none;text-align:center;min-width:60px}
+.ix-item:hover{border-color:var(--neon);background:var(--neon-dim)}
+.ix-item.selected{border-color:var(--neon);background:var(--neon-dim)}
+.ix-item.correct{border-color:var(--success);background:rgba(34,197,94,.1)}
+.ix-item.wrong{border-color:var(--danger);background:rgba(239,68,68,.1)}
+.ix-item.placed{opacity:.4;pointer-events:none}
+.ix-btn{background:var(--neon);color:#fff;border:none;padding:10px 24px;border-radius:var(--radius-sm);font-size:14px;font-weight:700;cursor:pointer;font-family:var(--font);margin-top:12px;transition:opacity .2s}
+.ix-btn:hover{opacity:.85}
+.ix-btn:disabled{opacity:.4;cursor:not-allowed}
+.ix-feedback{text-align:center;padding:14px;border-radius:var(--radius-sm);font-size:16px;font-weight:700;margin-top:12px;display:none}
+.ix-feedback.pass{display:block;background:rgba(34,197,94,.12);color:var(--success)}
+.ix-feedback.fail{display:block;background:rgba(239,68,68,.12);color:var(--danger)}
+.quiz-section{background:var(--card);border:var(--card-border-w) var(--card-border-style) var(--border);border-radius:var(--radius);padding:24px;margin-top:24px}
+.quiz-section h3{font-size:18px;margin-bottom:16px;color:var(--xp-purple)}
+.quiz-q{margin-bottom:20px}
+.quiz-q p{font-size:14px;font-weight:600;margin-bottom:10px}
+.quiz-q label{display:flex;align-items:flex-start;gap:10px;padding:10px 14px;border-radius:var(--radius-sm);border:1px solid var(--border);cursor:pointer;transition:all .15s;font-size:14px;margin-bottom:6px}
+.quiz-q label:hover{border-color:var(--neon);background:var(--neon-dim)}
+.quiz-q input[type="radio"]{margin-top:3px;accent-color:var(--neon)}
+.quiz-q label.correct{border-color:var(--success);background:rgba(34,197,94,.1)}
+.quiz-q label.wrong{border-color:var(--danger);background:rgba(239,68,68,.1)}
+.quiz-submit{padding:10px 24px;font-size:14px;font-weight:700;border-radius:var(--radius-sm);background:var(--xp-purple);color:#fff;transition:opacity .2s;margin-top:8px}
+.quiz-submit:hover{opacity:.85}
+.quiz-result{padding:16px;border-radius:var(--radius-sm);margin-top:16px;font-size:14px;font-weight:600;text-align:center}
+.quiz-result.pass{background:rgba(34,197,94,.12);color:var(--success);border:1px solid rgba(34,197,94,.3)}
+.quiz-result.fail{background:rgba(239,68,68,.12);color:var(--danger);border:1px solid rgba(239,68,68,.3)}
+.quiz-explanation{margin-top:6px;padding:8px 14px;border-radius:var(--radius-sm);background:rgba(34,197,94,.08);border-left:3px solid var(--success);font-size:13px;color:var(--success);font-weight:600}
+.boss-section{background:linear-gradient(135deg,rgba(168,85,247,.08),rgba(59,130,246,.08));border:2px solid var(--xp-purple);border-radius:var(--radius);padding:24px;margin-top:24px}
+.boss-section h3{color:var(--xp-purple);font-size:20px;margin-bottom:4px}
+.boss-section .boss-sub{font-size:13px;color:var(--text-dim);margin-bottom:16px}
+.badge-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(100px,1fr));gap:12px;margin-top:12px}
+.badge-item{text-align:center;padding:12px 8px;border-radius:var(--radius-sm);background:var(--bg3);opacity:.4;transition:all .3s}
+.badge-item.earned{opacity:1;background:var(--neon-dim);border:1px solid var(--neon)}
+.badge-item .badge-icon{font-size:28px;margin-bottom:4px}
+.badge-item .badge-name{font-size:10px;font-weight:600;color:var(--text-dim)}
+.badge-item.earned .badge-name{color:var(--neon)}
+.stats-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px;margin-top:12px}
+.stat-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius-sm);padding:16px;text-align:center}
+.stat-card .stat-val{font-size:28px;font-weight:700;color:var(--neon)}
+.stat-card .stat-label{font-size:12px;color:var(--text-dim);margin-top:4px}
+.notif{position:fixed;top:80px;right:20px;background:var(--card);border:1px solid var(--neon);border-radius:var(--radius);padding:16px 20px;box-shadow:var(--shadow-lg);z-index:200;transform:translateX(120%);transition:transform .4s cubic-bezier(.22,1,.36,1);max-width:320px}
+.notif.show{transform:translateX(0)}
+.notif-title{font-size:14px;font-weight:700;color:var(--heading);margin-bottom:2px}
+.notif-text{font-size:12px;color:var(--text-dim)}
+.notif.xp{border-color:var(--xp-purple)}
+.notif.badge{border-color:var(--badge-cyan)}
+.notif.level{border-color:var(--success)}
+.notif.streak{border-color:var(--streak-red)}
+.level-up-overlay{position:fixed;inset:0;background:rgba(0,0,0,.7);display:none;align-items:center;justify-content:center;z-index:300}
+.level-up-overlay.active{display:flex}
+.level-up-box{text-align:center;padding:40px;animation:lvlPop .5s ease-out}
+.level-up-box .lvl-icon{font-size:64px;margin-bottom:12px}
+.level-up-box .lvl-title{font-size:28px;font-weight:900;color:var(--heading)}
+.level-up-box .lvl-name{font-size:20px;color:var(--xp-purple);font-weight:700;margin-top:4px}
+@keyframes lvlPop{from{transform:scale(.5);opacity:0}to{transform:scale(1);opacity:1}}
+.welcome-screen{display:flex;align-items:center;justify-content:center;min-height:calc(100vh - var(--header-h));text-align:center;padding:40px 20px}
+.welcome-box{max-width:480px}
+.welcome-box h1{font-size:36px;margin-bottom:8px}
+.welcome-box .ws-sub{color:var(--text-dim);font-size:15px;margin-bottom:32px}
+.welcome-box input{width:100%;max-width:320px;padding:12px 16px;font-size:16px;border-radius:var(--radius-sm);border:1px solid var(--border);background:var(--bg3);color:var(--heading);font-family:var(--font);text-align:center;margin-bottom:16px}
+.welcome-box input:focus{border-color:var(--neon);outline:2px solid var(--neon);outline-offset:2px}
+.welcome-box .ws-start{padding:14px 40px;font-size:16px;font-weight:700;border-radius:var(--radius-sm);background:var(--neon);color:#fff;transition:opacity .2s}
+.welcome-box .ws-start:hover{opacity:.85}
+.welcome-box .ws-start:disabled{opacity:.4;cursor:not-allowed}
+.cert-overlay{position:fixed;inset:0;background:rgba(0,0,0,.88);display:none;align-items:center;justify-content:center;z-index:400;padding:20px;flex-direction:column;backdrop-filter:blur(8px)}
+.cert-overlay.active{display:flex}
+.cert-picker{display:flex;gap:12px;justify-content:center;margin-bottom:20px;flex-wrap:wrap}
+.cert-pick-btn{padding:10px 20px;font-size:13px;font-weight:700;border-radius:12px;border:2px solid rgba(255,255,255,.15);background:rgba(255,255,255,.06);color:rgba(255,255,255,.7);transition:all .3s;backdrop-filter:blur(4px)}
+.cert-pick-btn:hover{border-color:rgba(255,255,255,.3);color:#fff;transform:translateY(-2px)}
+.cert-pick-btn.active{border-color:#ffd700;color:#ffd700;background:rgba(255,215,0,.1);box-shadow:0 0 20px rgba(255,215,0,.15)}
+.cert-frame{width:720px;max-width:100%;aspect-ratio:1.414;position:relative;overflow:hidden;animation:certEntrance .6s cubic-bezier(.34,1.56,.64,1) both}
+.cert-actions{display:flex;gap:12px;justify-content:center;margin-top:16px}
+.cert-actions button{padding:12px 28px;font-size:13px;font-weight:700;border-radius:12px;background:linear-gradient(135deg,var(--neon),var(--link));color:#fff;transition:transform .2s,box-shadow .2s}
+.cert-actions button:hover{transform:translateY(-2px);box-shadow:0 4px 20px rgba(0,0,0,.3)}
+@keyframes certEntrance{0%{opacity:0;transform:scale(.8) translateY(30px)}100%{opacity:1;transform:scale(1) translateY(0)}}
+@keyframes shimmer{0%{background-position:-200% 0}100%{background-position:200% 0}}
+@keyframes blink{50%{opacity:0}}
+@keyframes glitch{0%,93%{text-shadow:0 0 20px rgba(0,212,255,.5)}94%{text-shadow:-3px 0 #ff0040,3px 0 #00d4ff;transform:skewX(-2deg)}95%{text-shadow:3px 0 #ff0040,-3px 0 #00d4ff;transform:skewX(2deg)}96%{text-shadow:-1px 2px #ff0040,1px -2px #00d4ff}97%,100%{text-shadow:0 0 20px rgba(0,212,255,.5);transform:skewX(0)}}
+@keyframes pixelBlink{50%{opacity:0}}
+@keyframes holoSpin{to{transform:rotate(360deg)}}
+@keyframes aurora{0%{background-position:0% 50%}25%{background-position:50% 100%}50%{background-position:100% 50%}75%{background-position:50% 0%}100%{background-position:0% 50%}}
+@keyframes goldShimmer{0%{background-position:-100% 0}100%{background-position:200% 0}}
+@keyframes neonPulse{0%,100%{box-shadow:0 0 5px #00ff41,0 0 10px #00ff41,0 0 20px rgba(0,255,65,.3)}50%{box-shadow:0 0 10px #00ff41,0 0 25px #00ff41,0 0 50px rgba(0,255,65,.4)}}
+@keyframes matrixFall{0%{transform:translateY(-100%);opacity:1}100%{transform:translateY(100vh);opacity:0}}
+.cert-common-stats{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin:10px 0}
+.cert-stat{padding:4px 10px;border-radius:20px;font-size:11px;font-weight:700;display:inline-flex;align-items:center;gap:4px}
+.cert-badge-row{display:flex;gap:6px;justify-content:center;flex-wrap:wrap;margin:8px 0}
+.cert-badge-item{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px}
+.cert-verification{font-size:10px;letter-spacing:2px;margin-top:8px;opacity:.5;font-family:var(--mono)}
+.cert-logo-footer{display:flex;align-items:center;justify-content:center;gap:6px;margin-top:10px;opacity:.4;font-size:10px}
+.cert-logo-footer svg{width:16px;height:16px}
+.cert-akademie{background:linear-gradient(145deg,#faf6e8,#f0e8d0,#e8dfc0);border:none;padding:0;text-align:center;font-family:var(--serif);color:#1a1a3e;position:relative;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;overflow:hidden}
+.cert-akademie::before{content:'';position:absolute;inset:0;background:url("data:image/svg+xml,%3Csvg width='60' height='60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 5 L35 20 L30 15 L25 20Z' fill='%23c5a54e' opacity='.04'/%3E%3C/svg%3E");pointer-events:none}
+.cert-akademie::after{content:'';position:absolute;inset:8px;border:2px solid rgba(197,165,78,.35);border-radius:2px;pointer-events:none}
+.cert-akademie .cert-inner{position:relative;z-index:1;padding:36px 32px;width:100%}
+.cert-akademie .cert-corner{position:absolute;width:60px;height:60px;z-index:2}
+.cert-akademie .cert-corner svg{width:100%;height:100%}
+.cert-akademie .cert-corner-tl{top:14px;left:14px}
+.cert-akademie .cert-corner-tr{top:14px;right:14px;transform:scaleX(-1)}
+.cert-akademie .cert-corner-bl{bottom:14px;left:14px;transform:scaleY(-1)}
+.cert-akademie .cert-corner-br{bottom:14px;right:14px;transform:scale(-1)}
+.cert-akademie .cert-title{font-size:36px;font-weight:700;color:#1a1a3e;margin-bottom:2px;letter-spacing:3px}
+.cert-akademie .cert-sub{font-size:11px;color:#8a7d5e;letter-spacing:5px;text-transform:uppercase;margin-bottom:16px}
+.cert-akademie .cert-hr{width:200px;height:2px;background:linear-gradient(90deg,transparent,#c5a54e,transparent);margin:10px auto}
+.cert-akademie .cert-body{font-size:14px;line-height:1.7;color:#3d3422;margin-bottom:8px}
+.cert-akademie .cert-name{font-size:32px;font-weight:700;background:linear-gradient(135deg,#c5a54e,#e8c84e,#c5a54e);background-size:200% auto;animation:goldShimmer 3s linear infinite;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin:12px 0;font-style:italic}
+.cert-akademie .cert-seal-wrap{margin:12px auto;position:relative;width:90px;height:90px}
+.cert-akademie .cert-seal-ring{position:absolute;inset:0;border:3px solid #c5a54e;border-radius:50%;opacity:.3}
+.cert-akademie .cert-seal{width:76px;height:76px;margin:7px;background:radial-gradient(circle at 35% 35%,#e8c84e,#c5a54e,#8a6914);border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 16px rgba(160,134,54,.5),inset 0 2px 4px rgba(255,255,255,.3)}
+.cert-akademie .cert-stat{background:rgba(197,165,78,.12);color:#8a6914;border:1px solid rgba(197,165,78,.25)}
+.cert-akademie .cert-badge-item{background:rgba(197,165,78,.15);border:1px solid rgba(197,165,78,.3)}
+.cert-akademie .cert-date{font-size:11px;color:#8a7d5e;margin-top:8px;font-style:italic}
+.cert-hacker{background:#050505;border:2px solid #00ff41;padding:0;font-family:var(--mono);color:#00ff41;position:relative;overflow:hidden;height:100%;display:flex;flex-direction:column;justify-content:center;box-shadow:0 0 30px rgba(0,255,65,.15),inset 0 0 60px rgba(0,255,65,.03);animation:neonPulse 4s ease-in-out infinite}
+.cert-hacker::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(transparent,transparent 2px,rgba(0,255,65,.025) 2px,rgba(0,255,65,.025) 4px);pointer-events:none;z-index:1}
+.cert-hacker::after{content:'> > > CERTIFIED > > > CERTIFIED > > > CERTIFIED > > >';position:absolute;bottom:0;left:0;right:0;font-size:9px;color:rgba(0,255,65,.08);letter-spacing:3px;padding:4px;white-space:nowrap;overflow:hidden;z-index:1}
+.cert-hacker .cert-inner{position:relative;z-index:2;padding:30px 32px}
+.cert-hacker .cert-matrix-col{position:absolute;top:-100%;font-size:11px;color:#00ff41;opacity:.08;z-index:0;font-family:var(--mono);line-height:1.1;animation:matrixFall linear infinite;white-space:pre}
+.cert-hacker .cert-title{font-size:22px;font-weight:700;text-shadow:0 0 15px rgba(0,255,65,.6);margin-bottom:4px}
+.cert-hacker .cert-access{font-size:32px;font-weight:700;color:#00d4ff;text-shadow:0 0 30px rgba(0,212,255,.6),0 0 60px rgba(0,212,255,.2);margin:14px 0;animation:glitch 4s infinite;letter-spacing:4px}
+.cert-hacker .cert-body{font-size:12px;line-height:2;color:#33cc55}
+.cert-hacker .cert-name{font-size:24px;color:#00d4ff;margin:12px 0;text-shadow:0 0 10px rgba(0,212,255,.4)}
+.cert-hacker .cert-prompt{color:#444;font-size:11px}
+.cert-hacker .cert-prompt span{color:#00ff41}
+.cert-hacker .cursor-blink{animation:blink 1s step-end infinite}
+.cert-hacker .cert-hex-seal{width:70px;height:70px;margin:12px auto;border:2px solid #00ff41;border-radius:50%;display:flex;align-items:center;justify-content:center;position:relative;box-shadow:0 0 15px rgba(0,255,65,.2)}
+.cert-hacker .cert-stat{background:rgba(0,255,65,.08);color:#00ff41;border:1px solid rgba(0,255,65,.2)}
+.cert-hacker .cert-badge-item{background:rgba(0,255,65,.08);border:1px solid rgba(0,255,65,.2)}
+.cert-pixel{background:linear-gradient(180deg,#0f0f2e,#1a1a3e,#0f0f2e);border:6px solid #ffd700;padding:0;text-align:center;color:#fff;font-family:var(--font);position:relative;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;overflow:hidden;box-shadow:inset 0 0 80px rgba(255,215,0,.05)}
+.cert-pixel .cert-inner{position:relative;z-index:1;padding:28px 24px;width:100%}
+.cert-pixel .cert-complete{font-size:20px;color:#00e676;margin:6px 0;animation:pixelBlink 1.2s step-end infinite;text-shadow:0 0 10px rgba(0,230,118,.4);letter-spacing:3px;font-weight:900}
+.cert-pixel .cert-title{font-size:32px;font-weight:900;color:#ffd700;text-transform:uppercase;letter-spacing:5px;text-shadow:4px 4px 0 #e4002b}
+.cert-pixel .cert-name{font-size:26px;font-weight:900;color:#fff;margin:14px 0;text-shadow:2px 2px 0 rgba(0,0,0,.5)}
+.cert-pixel .cert-stars{font-size:28px;margin:8px 0;letter-spacing:6px;color:#ffd700;text-shadow:0 0 10px rgba(255,215,0,.4)}
+.cert-pixel .cert-body{font-size:12px;color:#aaa;line-height:1.7}
+.cert-pixel .cert-score{font-size:18px;color:#ff4757;font-weight:900;margin-top:6px;text-shadow:2px 2px 0 rgba(0,0,0,.5);letter-spacing:2px}
+.cert-pixel .cert-xp-bar{width:200px;height:14px;background:#111;border:2px solid #ffd700;margin:8px auto;position:relative;overflow:hidden}
+.cert-pixel .cert-xp-fill{height:100%;background:repeating-linear-gradient(90deg,#ffd700 0px,#ffd700 8px,#ffaa00 8px,#ffaa00 16px);box-shadow:0 0 8px rgba(255,215,0,.4)}
+.cert-pixel .cert-xp-label{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:900;color:#fff;text-shadow:1px 1px 0 #000;z-index:1}
+.cert-pixel .cert-stat{background:rgba(255,215,0,.1);color:#ffd700;border:2px solid rgba(255,215,0,.3)}
+.cert-pixel .cert-badge-item{background:rgba(255,215,0,.1);border:2px solid rgba(255,215,0,.25)}
+.cert-zukunft{background:linear-gradient(135deg,#0a0a2e,#1a0a3e,#0a1a3e);border:1px solid rgba(255,255,255,.1);border-radius:20px;padding:0;text-align:center;color:#fff;font-family:var(--font);position:relative;overflow:hidden;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.cert-zukunft::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(99,102,241,.15),rgba(236,72,153,.15),rgba(245,158,11,.15),rgba(34,197,94,.15),rgba(99,102,241,.15));background-size:400% 400%;animation:aurora 8s ease infinite;pointer-events:none}
+.cert-zukunft .cert-inner{position:relative;z-index:1;padding:30px 28px;width:100%}
+.cert-zukunft .cert-particle{position:absolute;width:3px;height:3px;border-radius:50%;z-index:0}
+.cert-zukunft .cert-title{font-size:30px;font-weight:900;background:linear-gradient(135deg,#6366f1,#ec4899,#f59e0b,#22c55e);background-size:200% auto;animation:shimmer 4s linear infinite;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.cert-zukunft .cert-sub{font-size:11px;color:rgba(255,255,255,.5);letter-spacing:4px;text-transform:uppercase;margin-bottom:14px}
+.cert-zukunft .cert-name{font-size:28px;font-weight:700;margin:12px 0;background:linear-gradient(90deg,#a78bfa,#f472b6,#fbbf24);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.cert-zukunft .cert-body{font-size:13px;color:rgba(255,255,255,.65);line-height:1.7}
+.cert-zukunft .cert-seal-holo{width:80px;height:80px;margin:12px auto;border-radius:50%;background:conic-gradient(#6366f1,#ec4899,#f59e0b,#22c55e,#06b6d4,#6366f1);display:flex;align-items:center;justify-content:center;animation:holoSpin 6s linear infinite;box-shadow:0 0 30px rgba(99,102,241,.3)}
+.cert-zukunft .cert-seal-mid{width:68px;height:68px;border-radius:50%;border:2px solid rgba(255,255,255,.15);background:transparent;display:flex;align-items:center;justify-content:center;animation:holoSpin 10s linear infinite reverse}
+.cert-zukunft .cert-seal-inner{width:52px;height:52px;border-radius:50%;background:rgba(10,10,30,.9);display:flex;align-items:center;justify-content:center;backdrop-filter:blur(4px)}
+.cert-zukunft .cert-date{font-size:10px;color:rgba(255,255,255,.35);margin-top:10px;letter-spacing:2px}
+.cert-zukunft .cert-stat{background:rgba(99,102,241,.12);color:#a78bfa;border:1px solid rgba(99,102,241,.25)}
+.cert-zukunft .cert-badge-item{background:rgba(99,102,241,.1);border:1px solid rgba(99,102,241,.2)}
+.confetti-container{position:fixed;inset:0;pointer-events:none;z-index:600;overflow:hidden}
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.6);display:none;align-items:center;justify-content:center;z-index:500;padding:20px}
+.modal-overlay.active{display:flex}
+.modal{background:var(--card);border:1px solid var(--border);border-radius:var(--radius-lg);max-width:640px;width:100%;max-height:85vh;overflow-y:auto;padding:32px;position:relative}
+.modal-close{position:absolute;top:12px;right:12px;font-size:24px;color:var(--text-dim);background:none;border:none;cursor:pointer}
+@media(max-width:800px){
+.menu-btn{display:flex}
+.sidebar{transform:translateX(-100%)}
+.sidebar.open{transform:translateX(0)}
+.main{margin-left:0;padding:16px}
+}
+@media print{
+*{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}
+.site-header,.sidebar,.notif,.level-up-overlay,.confetti-container{display:none!important}
+.main{margin-left:0!important;padding:20px!important}
+.lesson-card{break-inside:avoid;page-break-inside:avoid}
+}
+
+.zoom-controls{position:fixed;bottom:16px;left:16px;display:flex;gap:4px;z-index:9999}
+.zoom-btn{width:32px;height:32px;border-radius:50%;border:1px solid var(--border,#2a3444);background:var(--bg2,#111827);color:var(--text,#d4dce8);cursor:pointer;font-size:15px;display:flex;align-items:center;justify-content:center;transition:all .2s;font-family:inherit;line-height:1}
+.zoom-btn:hover{border-color:var(--neon,#3b82f6);color:var(--neon,#3b82f6);transform:scale(1.1)}
+.zoom-btn:focus-visible{outline:2px solid var(--neon,#3b82f6);outline-offset:2px}
+.zoom-level{font-size:10px;position:absolute;top:-16px;left:50%;transform:translateX(-50%);color:var(--text-dim,#8899aa);white-space:nowrap;pointer-events:none}
+
+/* A11y: Print improvements */
+@media print{body{background:#fff!important;color:#000!important}.cert-overlay,.modal-overlay,.level-up-overlay,.theme-overlay,.zoom-controls{display:none!important}.lesson-card,.quiz-section,.boss-section,.interactive-area{break-inside:avoid;page-break-inside:avoid}}
+
+/* Audio/Speech */
+.tts-btn{background:none;border:none;cursor:pointer;font-size:.9em;opacity:.5;transition:all .2s;vertical-align:middle;margin-left:8px;padding:2px 6px;border-radius:4px}
+.tts-btn:hover{opacity:1;background:var(--bg2)}.tts-btn.speaking{opacity:1;color:var(--neon);animation:tts-pulse 1s infinite}
+@keyframes tts-pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.15)}}
+.tts-bar{display:flex;align-items:center;gap:8px;padding:6px 12px;background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);margin:8px 0;font-size:.8rem;flex-wrap:wrap}
+.tts-bar select{background:var(--bg);color:var(--text);border:1px solid var(--border);border-radius:4px;padding:2px 6px;font-size:.78rem}
+.tts-bar button{background:none;border:1px solid var(--border);border-radius:4px;padding:2px 8px;cursor:pointer;color:var(--text);font-size:.8rem}
+.tts-bar button:hover{background:var(--bg)}
+.speech-ex{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:16px;margin:12px 0;text-align:center}
+.speech-ex h4{margin:0 0 8px;font-size:1rem}
+.mic-btn{font-size:1.6em;background:none;border:2px solid var(--neon);border-radius:50%;width:52px;height:52px;cursor:pointer;transition:all .3s;color:var(--text);display:inline-flex;align-items:center;justify-content:center}
+.mic-btn:hover{background:var(--neon);color:var(--bg)}.mic-btn.rec{background:#ef4444;border-color:#ef4444;color:#fff;animation:tts-pulse 1s infinite}
+.sr-res{margin-top:8px;padding:6px 10px;border-radius:4px;font-weight:600;font-size:.85rem;display:inline-block}
+.sr-res.good{background:#22c55e22;color:#22c55e}.sr-res.retry{background:#f59e0b22;color:#f59e0b}
+.sr-na{font-size:.8rem;color:var(--text-dim);margin-top:8px}
+</style>
+</head>
+<body>
+<a href="#mainContent" class="skip-nav" style="position:absolute;top:-50px;left:8px;background:var(--neon);color:#fff;padding:8px 16px;z-index:9999;border-radius:0 0 8px 8px;font-weight:700;text-decoration:none">Zum Inhalt springen</a>
+<header class="site-header">
+<button class="menu-btn" onclick="toggleSidebar()" aria-label="Menu">&#9776;</button>
+<div class="header-logo">
+<svg viewBox="0 0 40 40" width="40" height="40" fill="none" aria-hidden="true">
+<rect x="4" y="4" width="32" height="32" rx="8" fill="var(--neon-dim)" stroke="var(--neon)" stroke-width="1.5"/>
+<text x="20" y="26" text-anchor="middle" font-size="18" font-weight="900" fill="var(--neon)">Z</text>
+</svg>
+<div class="header-logo-text">
+<div class="header-logo-main">ZeitReise</div>
+<div class="header-logo-sub">Geschichte Klasse 7-10</div>
+</div>
+</div>
+<div class="header-right">
+<div class="header-xp"><span id="headerLevel">Level 1</span><div class="header-xp-bar"><div class="header-xp-fill" style="width:0%"></div></div><span id="headerXP">0 XP</span></div>
+<div class="header-streak" id="headerStreak">&#128293; 0</div>
+<div class="theme-picker-wrap">
+<button class="theme-picker-btn" onclick="toggleThemePicker()" aria-label="Theme wählen">&#127912;</button>
+<div class="theme-picker-dd" id="themePickerDD"></div>
+</div>
+<button class="theme-toggle" onclick="toggleMode()" aria-label="Dark/Light umschalten">&#127769;</button>
+</div>
+</header>
+<nav class="sidebar" id="sidebar" role="navigation" aria-label="Module">
+<div class="sidebar-section">
+<div class="sidebar-level">
+<div class="sidebar-level-title" id="sidebarLevel">Geschichts-Neuling</div>
+<div class="sidebar-level-sub" id="sidebarXP">0 XP</div>
+<div class="sidebar-xp-bar"><div class="sidebar-xp-fill" id="sidebarXPFill" style="width:0%"></div></div>
+</div>
+</div>
+<div class="sidebar-section">
+<div class="sidebar-label">Module</div>
+<div id="sidebarModules"></div>
+</div>
+<div class="sidebar-section" style="border-top:1px solid var(--border);padding-top:12px;margin-top:12px">
+<a class="mod-link" onclick="showBadges()"><span class="mod-icon">&#127941;</span>Abzeichen</a>
+<a class="mod-link" onclick="showStats()"><span class="mod-icon">&#128202;</span>Statistik</a>
+<a class="mod-link" onclick="showCert()"><span class="mod-icon">&#127891;</span>Urkunde</a>
+</div>
+<div class="sidebar-section" style="border-top:1px solid var(--border);padding-top:12px;margin-top:12px">
+<a class="mod-link" onclick="exportData()"><span class="mod-icon">&#128190;</span>Speichern</a>
+<label class="mod-link" style="cursor:pointer"><span class="mod-icon">&#128194;</span>Laden<input type="file" accept=".json" onchange="importData(event)" style="display:none"></label>
+<a class="mod-link" onclick="if(confirm('Wirklich alles zurücksetzen?')){localStorage.removeItem(STORAGE_KEY);location.reload()}" style="color:var(--danger)"><span class="mod-icon">&#128465;</span>Zurücksetzen</a>
+</div>
+<div style="padding:16px 8px 8px;border-top:1px solid var(--border);margin-top:12px;font-size:11px;color:var(--text-dim)">
+<a onclick="showImpressum()" style="cursor:pointer;color:var(--text-dim)">Impressum</a> &middot;
+<a onclick="showDatenschutz()" style="cursor:pointer;color:var(--text-dim)">Datenschutz</a>
+</div>
+</nav>
+<main class="main" id="mainContent">
+<div class="welcome-screen" id="welcomeScreen">
+<div class="welcome-box">
+<div style="font-size:64px;margin-bottom:16px">&#127968;</div>
+<h1>ZeitReise</h1>
+<p class="ws-sub">Reise durch die Geschichte — von der Antike bis zur Gegenwart!</p>
+<input type="text" id="nameInput" placeholder="Dein Name" maxlength="24" aria-label="Dein Name" oninput="document.getElementById('startBtn').disabled=!this.value.trim()">
+<br>
+<button class="ws-start" id="startBtn" disabled onclick="startApp()">Los geht's! &#9203;</button>
+</div>
+</div>
+<div id="moduleContent" style="display:none"></div>
+<div id="badgesView" style="display:none"></div>
+<div id="statsView" style="display:none"></div>
+</main>
+<div class="notif" id="notif" role="status" aria-live="polite" aria-atomic="true"><div class="notif-title" id="notifTitle"></div><div class="notif-text" id="notifText"></div></div>
+<div class="level-up-overlay" id="levelUpOverlay"><div class="level-up-box" id="levelUpBox"></div></div>
+<div class="confetti-container" id="confetti"></div>
+<div class="cert-overlay" id="certOverlay" role="dialog" aria-label="Urkunde" aria-modal="true">
+<div class="cert-picker" id="certPicker"></div>
+<div class="cert-frame" id="certFrame"></div>
+<div class="cert-actions">
+<button onclick="printCert()">&#128424; Drucken / PDF</button>
+<button onclick="closeCert()">Schließen</button>
+</div>
+</div>
+<div class="modal-overlay" id="impressumOverlay">
+<div class="modal">
+<button class="modal-close" onclick="document.getElementById('impressumOverlay').classList.remove('active')">&times;</button>
+<h2>Impressum</h2>
+<p><strong>&copy; 2026 GZ AI Stacks - Gerd Zimmermann</strong></p>
+<p>ZeitReise — Interaktive Geschichte-Lernapp für Klasse 7-10.</p>
+<p>Entwickelt mit Claude Code (Anthropic).</p>
+<p>Kontakt: gz-ai-stacks@example.com</p>
+</div>
+</div>
+<div class="modal-overlay" id="datenschutzOverlay">
+<div class="modal">
+<button class="modal-close" onclick="document.getElementById('datenschutzOverlay').classList.remove('active')">&times;</button>
+<h2>Datenschutzerklärung</h2>
+<p>Diese App speichert Daten <strong>ausschließlich lokal</strong> auf Ihrem Gerät.</p>
+<ul>
+<li>Keine Cookies</li>
+<li>Kein Tracking oder Analytics</li>
+<li>Keine externen Ressourcen</li>
+<li>Keine Registrierung</li>
+<li>Alle Daten verbleiben auf Ihrem Gerät</li>
+</ul>
+<p>Sie können Ihre gespeicherten Daten jederzeit über die "Zurücksetzen"-Funktion löschen.</p>
+</div>
+</div>
+<script>
+function showImpressum(){document.getElementById('impressumOverlay').classList.add('active')}
+function showDatenschutz(){document.getElementById('datenschutzOverlay').classList.add('active')}
+
+// === XOR Quiz Encryption ===
+
+// === Audio (TTS) ===
+const _synth=window.speechSynthesis,_LANG='de-DE';let _ttsOn=false,_ttsRate=1,_ttsTimer=null;
+function speakLesson(i){if(_ttsOn){stopTTS();return}const c=document.querySelectorAll('.lesson-card');if(!c[i]||!_synth)return;stopTTS();const u=new SpeechSynthesisUtterance(c[i].innerText);u.lang=_LANG;u.rate=_ttsRate;u.onstart=()=>{_ttsOn=true;updTTSUI();startTTSTimer()};u.onend=()=>{_ttsOn=false;updTTSUI();clearTTSTimer()};u.onerror=()=>{_ttsOn=false;updTTSUI();clearTTSTimer()};_synth.speak(u);showTTSBar()}
+function speakText(t,lang){if(!_synth)return;stopTTS();const u=new SpeechSynthesisUtterance(t);u.lang=lang||_LANG;u.rate=_ttsRate;u.onstart=()=>{_ttsOn=true;updTTSUI();startTTSTimer()};u.onend=()=>{_ttsOn=false;updTTSUI();clearTTSTimer()};u.onerror=()=>{_ttsOn=false;updTTSUI();clearTTSTimer()};_synth.speak(u)}
+function stopTTS(){if(_synth){_synth.cancel()}_ttsOn=false;updTTSUI();clearTTSTimer()}
+function updTTSUI(){document.querySelectorAll('.tts-btn').forEach(b=>b.classList.toggle('speaking',_ttsOn))}
+function setTTSRate(r){_ttsRate=parseFloat(r)}
+function startTTSTimer(){clearTTSTimer();_ttsTimer=setInterval(()=>{if(_synth&&_synth.speaking&&!_synth.paused){_synth.pause();_synth.resume()}},10000)}
+function clearTTSTimer(){if(_ttsTimer){clearInterval(_ttsTimer);_ttsTimer=null}}
+function showTTSBar(){if(document.getElementById('ttsBar'))return;const mc=document.getElementById('moduleContent');if(!mc)return;const b=document.createElement('div');b.className='tts-bar';b.id='ttsBar';b.innerHTML='\u{1F50A} <select onchange="setTTSRate(this.value)"><option value="0.7">Langsam</option><option value="1" selected>Normal</option><option value="1.3">Schnell</option></select> <button onclick="stopTTS()">\u25A0 Stopp</button>';mc.prepend(b)}
+
+const _qk=[0x4A,0x7F,0x2B,0x61,0x5C,0x3E,0x18,0x73];
+function _d(h,i){return h^_qk[i%_qk.length]}
+
+// === Levels ===
+const LEVELS=[
+{name:'Geschichts-Neuling',xp:0},{name:'Zeitleisten-Leser',xp:40},{name:'Quellen-Entdecker',xp:100},
+{name:'Epochen-Kenner',xp:180},{name:'Fakten-Sammler',xp:280},{name:'Chronik-Forscher',xp:400},
+{name:'Geschichts-Detektiv',xp:540},{name:'Archiv-Experte',xp:700},{name:'Epochen-Navigator',xp:880},
+{name:'Quellenanalyst',xp:1080},{name:'Geschichts-Gelehrter',xp:1300},{name:'Zeitalter-Kenner',xp:1540},
+{name:'Historiker-Talent',xp:1800},{name:'Chronist',xp:2080},{name:'Geschichts-Stratege',xp:2380},
+{name:'Epochen-Meister',xp:2700},{name:'Geschichts-Professor',xp:3040},{name:'Herodot-Scholar',xp:3400},
+{name:'Clio-Meister',xp:3780},{name:'Geschichts-Genie',xp:4200}
+];
+
+// === Badges ===
+const BADGES=[
+{id:'m0',name:'Antike-Experte',icon:'🏛️',desc:'Modul 1 abgeschlossen'},
+{id:'m1',name:'Ritter-Meister',icon:'⚔️',desc:'Modul 2 abgeschlossen'},
+{id:'m2',name:'Renaissance-Kenner',icon:'🎨',desc:'Modul 3 abgeschlossen'},
+{id:'m3',name:'Aufkl\u00E4rungs-Denker',icon:'💡',desc:'Modul 4 abgeschlossen'},
+{id:'m4',name:'Revolutions-Held',icon:'🗽',desc:'Modul 5 abgeschlossen'},
+{id:'m5',name:'Industrie-Pioneer',icon:'🏭',desc:'Modul 6 abgeschlossen'},
+{id:'m6',name:'Weltkriegs-Analytiker',icon:'🌍',desc:'Modul 7 abgeschlossen'},
+{id:'m7',name:'Zeitzeuge',icon:'📜',desc:'Modul 8 abgeschlossen'},
+{id:'m8',name:'Kalter-Krieg-Experte',icon:'🧊',desc:'Modul 9 abgeschlossen'},
+{id:'m9',name:'Globalisierer',icon:'🌐',desc:'Modul 10 abgeschlossen'},
+{id:'first_quiz',name:'Quiz-Neuling',icon:'❓',desc:'Erstes Quiz bestanden'},
+{id:'perfect_quiz',name:'Perfektionist',icon:'💎',desc:'Quiz mit 5/5 bestanden'},
+{id:'first_boss',name:'Boss-Bezwinger',icon:'👑',desc:'Erste Boss-Challenge bestanden'},
+{id:'all_bosses',name:'Endgegner',icon:'🏆',desc:'Alle Boss-Challenges bestanden'},
+{id:'streak3',name:'Durchstarter',icon:'🔥',desc:'3 Tage in Folge gelernt'},
+{id:'streak7',name:'Wochenkrieger',icon:'⚔️',desc:'7 Tage in Folge gelernt'},
+{id:'half_done',name:'Halbzeit',icon:'⏳',desc:'5 Module abgeschlossen'},
+{id:'speed_quiz',name:'Blitz-Denker',icon:'⚡',desc:'Quiz in unter 60 Sekunden'},
+{id:'explorer',name:'Entdecker',icon:'🗺️',desc:'Alle Module angesehen'},
+{id:'graduate',name:'Absolvent',icon:'🎓',desc:'Alle 10 Module abgeschlossen'}
+];
+
+// === Theme Config ===
+const THEME_CONFIG={
+cyber:{name:'Cyber Neon',emoji:'\uD83D\uDDA5',color:'#3b82f6',desc:'Futuristisch & Digital'},
+retro:{name:'Retro Arcade',emoji:'\uD83D\uDD79',color:'#ffd700',desc:'80er Arcade-Feeling'},
+nature:{name:'Nature Forest',emoji:'\uD83C\uDF33',color:'#4ade80',desc:'Natürlich & Organisch'},
+space:{name:'Deep Space',emoji:'\uD83D\uDE80',color:'#c084fc',desc:'Kosmisch & Geheimnisvoll'},
+comic:{name:'Comic Pop',emoji:'\uD83D\uDCA5',color:'#ff6b6b',desc:'Bunt & Verspielt'},
+sketchy:{name:'Sketchy',emoji:'\u270D\uFE0F',color:'#d97706',desc:'Handgemacht & Warm'},
+'nature-code':{name:'Nature x Code',emoji:'\uD83C\uDF3F',color:'#10b981',desc:'Natur trifft Technik'},
+glass:{name:'Glasmorphism',emoji:'\uD83D\uDCA0',color:'#00d9ff',desc:'Modern & Transparent'}
+};
+
+// === Modules ===
+// === Modules ===
+const modules=[
+{id:0,title:'Antike Hochkulturen',icon:'\uD83C\uDFDB',duration:'30 Min.',description:'Entdecke die fruehen Hochkulturen: \u00C4gypten, Griechenland und das R\u00F6mische Reich.',
+lessons:[
+{title:'\u00C4gypten am Nil',content:'<p>Die <strong>\u00E4gyptische Hochkultur</strong> entstand um 3000 v. Chr. am Nil. Der jährliche Nil-Hochwasser brachte fruchtbaren Schlamm und erm\u00F6glichte Ackerbau in der W\u00FCste.</p><p><strong>Wichtige Merkmale:</strong></p><ul><li><strong>Pharao:</strong> Gottähnlicher Herrscher, galt als Sohn des Sonnengottes Ra</li><li><strong>Pyramiden:</strong> Monumentale Grabbauten, die Cheops-Pyramide ist 146 m hoch</li><li><strong>Hieroglyphen:</strong> Bilderschrift mit \u00FCber 700 Zeichen</li><li><strong>Mumifizierung:</strong> Konservierung der Toten f\u00FCr das Jenseits</li></ul><div class="info-box">\uD83D\uDCA1 <strong>Merke:</strong> Der Nil war die <strong>Lebensader</strong> \u00C4gyptens. Ohne den Fluss w\u00E4re keine Hochkultur in der W\u00FCste m\u00F6glich gewesen.</div>'},
+{title:'Das antike Griechenland',content:'<p>Griechenland gilt als <strong>Wiege der Demokratie</strong>. Im 5. Jh. v. Chr. erreichte Athen seine Bluetezeit (\"Goldenes Zeitalter\").</p><p><strong>Griechische Errungenschaften:</strong></p><ul><li><strong>Demokratie:</strong> Volksherrschaft in Athen (nur freie m\u00E4nnliche B\u00FCrger)</li><li><strong>Philosophie:</strong> Sokrates, Platon, Aristoteles</li><li><strong>Olympische Spiele:</strong> Seit 776 v. Chr. alle 4 Jahre</li><li><strong>Theater:</strong> Tragödie und Komödie als Kunstformen</li><li><strong>Wissenschaft:</strong> Mathematik (Pythagoras), Medizin (Hippokrates)</li></ul><div class="info-box">\uD83D\uDCA1 <strong>Merke:</strong> Die athenische Demokratie war <strong>keine</strong> Demokratie im heutigen Sinne — Frauen, Sklaven und Fremde waren ausgeschlossen.</div>'},
+{title:'Das R\u00F6mische Reich',content:'<p>Rom entwickelte sich vom kleinen Stadtstaat zum <strong>gr\u00F6\u00DFten Reich der Antike</strong> (753 v. Chr. – 476 n. Chr.).</p><p><strong>Phasen:</strong></p><ol><li><strong>K\u00F6nigreich</strong> (753–509 v. Chr.): Gr\u00FCndungssage mit Romulus und Remus</li><li><strong>Republik</strong> (509–27 v. Chr.): Senat, Konsuln, Volksversammlungen</li><li><strong>Kaiserreich</strong> (27 v. Chr.–476 n. Chr.): Augustus als erster Kaiser</li></ol><p><strong>R\u00F6mische Errungenschaften:</strong></p><ul><li>Stra\u00DFenbau, Aquaedukte, Beton</li><li>R\u00F6misches Recht (Grundlage heutiger Rechtssysteme)</li><li>Latein als Grundlage romanischer Sprachen</li></ul><div class="info-box">\uD83D\uDCA1 <strong>Merke:</strong> Der Spruch \"Alle Wege f\u00FChren nach Rom\" war wörtlich gemeint — das Stra\u00DFennetz umfasste \u00FCber 80.000 km!</div>'}
+],
+quiz:[
+{q:'Welcher Fluss war die Lebensader \u00C4gyptens?',a:['Euphrat','Nil','Tigris','Ganges'],_h:0x4B},
+{q:'Wer gilt als Begr\u00FCnder der Philosophie in Athen?',a:['Aristoteles','Pythagoras','Sokrates','Homer'],_h:0x7D},
+{q:'In welchem Jahr fanden die ersten Olympischen Spiele statt?',a:['500 v. Chr.','776 v. Chr.','1000 v. Chr.','200 v. Chr.'],_h:0x2A},
+{q:'Was war die Regierungsform der R\u00F6mischen Republik?',a:['Monarchie','Demokratie','Senat mit Konsuln','Diktatur'],_h:0x63},
+{q:'Was sind Hieroglyphen?',a:['Griechische Tempel','\u00C4gyptische Bilderschrift','R\u00F6mische Gesetze','Babylonische Zahlen'],_h:0x5D}
+],
+boss:[
+{q:'Warum war der Nil-Hochwasser entscheidend f\u00FCr die \u00E4gyptische Zivilisation?',a:['Er sch\u00FCtzte vor Feinden','Er brachte fruchtbaren Schlamm f\u00FCr den Ackerbau','Er lieferte Trinkwasser f\u00FCr die Pyramiden','Er erm\u00F6glichte den Fischfang'],_h:0x4B},
+{q:'Welche Einschränkung hatte die athenische Demokratie?',a:['Nur Reiche durften w\u00E4hlen','Nur Männer ab 30','Frauen, Sklaven und Fremde waren ausgeschlossen','Es gab keine Wahlen'],_h:0x7D},
+{q:'Welche r\u00F6mische Errungenschaft beeinflusst unsere heutige Gesellschaft am st\u00E4rksten?',a:['Gladiatorenkämpfe','Das r\u00F6mische Recht','Der Kalender','Die Architektur'],_h:0x2A}
+]},
+{id:1,title:'Das Mittelalter',icon:'\u2694\uFE0F',duration:'30 Min.',description:'Erforsche die Welt der Ritter, Burgen und der Ständegesellschaft.',
+lessons:[
+{title:'Die Ständegesellschaft',content:'<p>Die mittelalterliche Gesellschaft war in drei <strong>Stände</strong> gegliedert:</p><ol><li><strong>Klerus (Geistlichkeit):</strong> Bischöfe, Priester, Mönche — sie beteten</li><li><strong>Adel (Ritter):</strong> K\u00F6nige, Fürsten, Ritter — sie k\u00E4mpften und herrschten</li><li><strong>Bauern und B\u00FCrger:</strong> \u00DCber 90% der Bev\u00F6lkerung — sie arbeiteten</li></ol><p>Dieses System wurde als <strong>gottgegeben</strong> angesehen. Ein Aufstieg war kaum m\u00F6glich.</p><div class="info-box">\uD83D\uDCA1 <strong>Merke:</strong> Das Lehnswesen band alle Stände aneinander: Der K\u00F6nig gab Land an Adlige (Lehen), diese stellten daf\u00FCr Ritter und Soldaten.</div>'},
+{title:'Das Leben auf der Burg',content:'<p>Die <strong>Burg</strong> war Wohnsitz, Verteidigungsanlage und Verwaltungszentrum des Adels.</p><p><strong>Aufbau einer typischen Burg:</strong></p><ul><li><strong>Bergfried:</strong> Hoechster Turm, letzter Zufluchtsort</li><li><strong>Palas:</strong> Wohngebäude des Burgherrn</li><li><strong>Ringmauer:</strong> Schutz vor Angreifern</li><li><strong>Burggraben:</strong> Wassergraben als Hindernis</li></ul><p><strong>Ritterausbildung:</strong></p><ul><li>7 Jahre: Page (Diener am Hof)</li><li>14 Jahre: Knappe (Kampfausbildung)</li><li>21 Jahre: Ritterschlag</li></ul><div class="info-box">\uD83D\uDCA1 <strong>Merke:</strong> Ritter folgten einem <strong>Ehrenkodex</strong>: Tapferkeit, Treue, Schutz der Schwachen und Ehre.</div>'},
+{title:'Die Kreuzz\u00FCge',content:'<p>Zwischen 1096 und 1291 fanden sieben grosse <strong>Kreuzz\u00FCge</strong> statt — militärische Expeditionen christlicher Heere ins Heilige Land.</p><p><strong>Ursachen:</strong></p><ul><li>Papst Urban II. rief 1095 zum Kreuzzug auf</li><li>Befreiung Jerusalems von muslimischer Herrschaft</li><li>Abenteuerlust und Hoffnung auf Reichtum</li></ul><p><strong>Folgen:</strong></p><ul><li>Kultureller Austausch zwischen Orient und Okzident</li><li>Neue Handelswege und Gewürze nach Europa</li><li>Gr\u00FCndung von Ritterorden (Templer, Johanniter)</li><li>Millionen Tote auf allen Seiten</li></ul><div class="info-box">\uD83D\uDCA1 <strong>Merke:</strong> Die Kreuzz\u00FCge brachten trotz aller Gewalt auch <strong>Wissenstransfer</strong>: Arabische Mathematik, Medizin und Astronomie gelangten nach Europa.</div>'}
+],
+quiz:[
+{q:'Wie viele Stände gab es in der mittelalterlichen Gesellschaft?',a:['Zwei','Drei','Vier','F\u00FCnf'],_h:0x4B},
+{q:'Was war das Lehnswesen?',a:['Ein Steuersystem','Land gegen Militärdienst','Eine Handelsform','Ein Gerichtssystem'],_h:0x7E},
+{q:'In welchem Alter wurde man zum Ritter geschlagen?',a:['14 Jahre','18 Jahre','21 Jahre','25 Jahre'],_h:0x29},
+{q:'Wer rief 1095 zum ersten Kreuzzug auf?',a:['Kaiser Friedrich','Papst Urban II.','K\u00F6nig Richard','Sultan Saladin'],_h:0x60},
+{q:'Was brachten die Kreuzz\u00FCge nach Europa?',a:['Demokratie','Neue Handelswege und Wissen','Das Christentum','Die Buchdruckkunst'],_h:0x5D}
+],
+boss:[
+{q:'Warum galt die Ständeordnung als unveränderlich?',a:['Sie war gesetzlich festgelegt','Sie wurde als gottgegeben angesehen','Niemand wollte sie \u00E4ndern','Der Kaiser verbot Veränderungen'],_h:0x4B},
+{q:'Welche Funktion hatte der Bergfried einer Burg?',a:['Wohnung des Burgherrn','Letzter Zufluchtsort bei Belagerung','Kirche der Burg','Gefängnis'],_h:0x7E},
+{q:'Welche positive Folge hatten die Kreuzz\u00FCge f\u00FCr Europa?',a:['Mehr Frieden','Transfer von arabischem Wissen nach Europa','Stärkung des Papsttums','Abschaffung der Leibeigenschaft'],_h:0x2A}
+]},
+{id:2,title:'Renaissance & Reformation',icon:'\uD83C\uDFA8',duration:'30 Min.',description:'Die Wiedergeburt der Antike und Luthers Reformation ver\u00E4ndern Europa.',
+lessons:[
+{title:'Die Renaissance',content:'<p>Die <strong>Renaissance</strong> (frz. \"Wiedergeburt\") begann im 14. Jh. in Italien und brachte eine Rueckbesinnung auf die Antike.</p><p><strong>Kernideen:</strong></p><ul><li><strong>Humanismus:</strong> Der Mensch steht im Mittelpunkt (nicht mehr nur Gott)</li><li><strong>Bildung:</strong> Studium antiker Texte, Foerderung von Kunst und Wissenschaft</li><li><strong>Individualismus:</strong> Der einzelne Mensch und seine Fähigkeiten z\u00E4hlen</li></ul><p><strong>Wichtige K\u00FCnstler:</strong></p><ul><li><strong>Leonardo da Vinci:</strong> Mona Lisa, Erfinder, Universalgenie</li><li><strong>Michelangelo:</strong> Decke der Sixtinischen Kapelle, David-Statue</li><li><strong>Raffael:</strong> Die Schule von Athen</li></ul><div class="info-box">\uD83D\uDCA1 <strong>Merke:</strong> Die Renaissance war keine plotzliche Veränderung, sondern ein <strong>jahrhundertelanger Prozess</strong>, der von Italien aus ganz Europa erfasste.</div>'},
+{title:'Der Buchdruck',content:'<p>Um 1450 erfand <strong>Johannes Gutenberg</strong> in Mainz den Buchdruck mit beweglichen Lettern.</p><p><strong>Auswirkungen:</strong></p><ul><li>B\u00FCcher wurden <strong>schneller und günstiger</strong> hergestellt</li><li>Wissen war nicht mehr nur Klerikern und Adligen zugänglich</li><li>Die Bibel wurde in Volkssprachen \u00FCbersetzt</li><li>Flugbl\u00E4tter erm\u00F6glichten politische Meinungsbildung</li></ul><p><strong>Zahlen:</strong> Vor Gutenberg dauerte das Abschreiben einer Bibel ca. 1 Jahr. Mit dem Buchdruck konnten in der gleichen Zeit Hunderte Exemplare gedruckt werden.</p><div class="info-box">\uD83D\uDCA1 <strong>Merke:</strong> Der Buchdruck war die <strong>Medienrevolution</strong> des Mittelalters — vergleichbar mit dem Internet heute.</div>'},
+{title:'Martin Luther und die Reformation',content:'<p>Am 31. Oktober 1517 veröffentlichte <strong>Martin Luther</strong> seine 95 Thesen gegen den Ablasshandel.</p><p><strong>Luthers Kritik:</strong></p><ul><li>Ablasshandel: Kirche verkaufte \"Sündenvergebung\" f\u00FCr Geld</li><li>Prunksucht des Papstes und der Bischoefe</li><li>Luther: <em>\"Allein der Glaube\"</em> (sola fide) rettet, nicht Geld</li></ul><p><strong>Folgen der Reformation:</strong></p><ul><li>Kirchenspaltung: Katholiken vs. Protestanten</li><li>Luther \u00FCbersetzte die Bibel ins Deutsche (1534)</li><li>Religionskriege in ganz Europa</li><li>Augsburger Religionsfrieden 1555: \"Cuius regio, eius religio\"</li></ul><div class="info-box">\uD83D\uDCA1 <strong>Merke:</strong> Luthers Bibel\u00FCbersetzung pr\u00E4gte die <strong>deutsche Sprache</strong> entscheidend und machte die Bibel erstmals f\u00FCr alle lesbar.</div>'}
+],
+quiz:[
+{q:'Was bedeutet \"Renaissance\"?',a:['Revolution','Wiedergeburt','Reformation','Aufkl\u00E4rung'],_h:0x4B},
+{q:'Wer erfand den Buchdruck mit beweglichen Lettern?',a:['Martin Luther','Leonardo da Vinci','Johannes Gutenberg','Nikolaus Kopernikus'],_h:0x7D},
+{q:'In welchem Jahr veröffentlichte Luther seine 95 Thesen?',a:['1450','1492','1517','1555'],_h:0x29},
+{q:'Was kritisierte Luther an der Kirche?',a:['Die Architektur der Kirchen','Den Ablasshandel','Die lateinische Sprache','Die Mönchsorden'],_h:0x61},
+{q:'Was war die Kernidee des Humanismus?',a:['Gott steht im Mittelpunkt','Der Mensch steht im Mittelpunkt','Die Natur steht im Mittelpunkt','Der Staat steht im Mittelpunkt'],_h:0x5D}
+],
+boss:[
+{q:'Warum war der Buchdruck so revolutionär?',a:['Er machte B\u00FCcher sch\u00F6ner','Er erm\u00F6glichte massenhafte Wissensverbreitung','Er ersetzte die Schrift','Er wurde vom Papst erfunden'],_h:0x4B},
+{q:'Was bedeutet \"Cuius regio, eius religio\"?',a:['Jeder darf glauben was er will','Der Landesherr bestimmt die Religion seiner Untertanen','Religion ist Privatsache','Alle m\u00FCssen katholisch sein'],_h:0x7E},
+{q:'Warum konnte sich Luthers Reformation so schnell verbreiten?',a:['Der Kaiser unterstützte ihn','Dank des Buchdrucks konnten seine Ideen massenhaft verbreitet werden','Er hatte eine Armee','Die Bauern trugen seine Thesen weiter'],_h:0x2A}
+]},
+{id:3,title:'Absolutismus & Aufkl\u00E4rung',icon:'\uD83D\uDC51',duration:'30 Min.',description:'Zwischen k\u00F6niglicher Allmacht und dem Zeitalter der Vernunft.',
+lessons:[
+{title:'Der Absolutismus',content:'<p>Im <strong>Absolutismus</strong> (17.–18. Jh.) vereinte der K\u00F6nig alle Macht in seiner Person.</p><p><strong>Ludwig XIV. von Frankreich</strong> (1643–1715) war das Paradebeispiel:</p><ul><li>Sein Motto: <em>\"L\'Etat, c\'est moi\"</em> (Der Staat bin ich)</li><li>Schloss Versailles als Symbol der Macht</li><li>Stehendes Heer, zentralisierte Verwaltung</li><li>Merkantilismus: Staat kontrolliert die Wirtschaft</li></ul><p><strong>Stützen der Macht:</strong></p><ol><li>Stehendes Heer (statt Söldner)</li><li>Beamtenapparat (statt Adel)</li><li>Staatskirche (Gottesgnadentum)</li><li>Hofkultur (Adel an den Hof binden)</li></ol><div class="info-box">\uD83D\uDCA1 <strong>Merke:</strong> Der Absolutismus stützte sich auf das <strong>Gottesgnadentum</strong>: Der K\u00F6nig herrscht durch Gottes Willen und ist niemandem Rechenschaft schuldig.</div>'},
+{title:'Die Aufkl\u00E4rung',content:'<p>Die <strong>Aufkl\u00E4rung</strong> (18. Jh.) stellte Vernunft und kritisches Denken \u00FCber Tradition und Autorität.</p><p><strong>Kerngedanken:</strong></p><ul><li>Immanuel Kant: <em>\"Habe Mut, dich deines eigenen Verstandes zu bedienen!\"</em></li><li>Menschenrechte: Freiheit, Gleichheit, Eigentum</li><li>Gewaltenteilung statt Alleinherrschaft</li><li>Religionsfreiheit und Toleranz</li></ul><p><strong>Wichtige Denker:</strong></p><ul><li><strong>Montesquieu:</strong> Gewaltenteilung (Legislative, Exekutive, Judikative)</li><li><strong>Voltaire:</strong> Meinungsfreiheit und Toleranz</li><li><strong>Rousseau:</strong> Volkssouveränität, Gesellschaftsvertrag</li><li><strong>Kant:</strong> Vernunft als h\u00F6chstes Prinzip</li></ul><div class="info-box">\uD83D\uDCA1 <strong>Merke:</strong> Montesquieus <strong>Gewaltenteilung</strong> ist heute Grundlage aller modernen Demokratien!</div>'}
+],
+quiz:[
+{q:'Welches Motto wird Ludwig XIV. zugeschrieben?',a:['Freiheit, Gleichheit, Bruederlichkeit','Der Staat bin ich','Wissen ist Macht','Ich denke, also bin ich'],_h:0x4B},
+{q:'Was ist Gewaltenteilung?',a:['Aufteilung der Armee','Trennung von Legislative, Exekutive und Judikative','Teilung des Landes','Verteilung des Reichtums'],_h:0x7E},
+{q:'Welcher Aufklärer forderte Volkssouveränität?',a:['Voltaire','Montesquieu','Rousseau','Kant'],_h:0x29},
+{q:'Was bedeutet Gottesgnadentum?',a:['Der K\u00F6nig ist Gott','Der K\u00F6nig herrscht durch Gottes Willen','Gott würfelt nicht','Die Kirche regiert'],_h:0x60},
+{q:'Welches Bauwerk symbolisiert den franz\u00F6sischen Absolutismus?',a:['Notre-Dame','Schloss Versailles','Der Eiffelturm','Der Louvre'],_h:0x5D}
+],
+boss:[
+{q:'Warum band Ludwig XIV. den Adel an den Hof von Versailles?',a:['Aus Gastfreundschaft','Um sie zu kontrollieren und ihre Macht zu brechen','Weil sie dort arbeiten mussten','F\u00FCr Feste und Unterhaltung'],_h:0x4B},
+{q:'Welches Prinzip der Aufkl\u00E4rung ist heute noch Grundlage moderner Demokratien?',a:['Gottesgnadentum','Merkantilismus','Gewaltenteilung nach Montesquieu','Absolutismus'],_h:0x7D},
+{q:'Was unterscheidet die Aufkl\u00E4rung grundlegend vom Absolutismus?',a:['Die Sprache','Vernunft und kritisches Denken statt blinder Autorität','Die Kleidung','Die Religion'],_h:0x2B}
+]},
+{id:4,title:'Franz\u00F6sische Revolution',icon:'\uD83D\uDDFD',duration:'30 Min.',description:'Freiheit, Gleichheit, Bruederlichkeit — die Revolution, die Europa ver\u00E4nderte.',
+lessons:[
+{title:'Ursachen der Revolution',content:'<p>Die <strong>Franz\u00F6sische Revolution</strong> (1789–1799) hatte tiefgreifende Ursachen:</p><p><strong>Politische Ursachen:</strong></p><ul><li>Absolutistische Herrschaft ohne Mitsprache des Volkes</li><li>Privilegien f\u00FCr Adel und Klerus, Lasten f\u00FCr den Dritten Stand</li></ul><p><strong>Wirtschaftliche Ursachen:</strong></p><ul><li>Staatsbankrott durch Kriege und Verschwendung</li><li>Hungersnöte durch Missernten</li><li>Hohe Steuerlast f\u00FCr Bauern und B\u00FCrger</li></ul><p><strong>Geistige Ursachen:</strong></p><ul><li>Ideen der Aufkl\u00E4rung (Freiheit, Gleichheit, Menschenrechte)</li><li>Vorbild der Amerikanischen Revolution (1776)</li></ul><div class="info-box">\uD83D\uDCA1 <strong>Merke:</strong> Der <strong>Dritte Stand</strong> (98% der Bev\u00F6lkerung) trug alle Steuern, w\u00E4hrend Adel und Klerus davon befreit waren.</div>'},
+{title:'Verlauf der Revolution',content:'<p><strong>Wichtige Ereignisse:</strong></p><ol><li><strong>14. Juli 1789:</strong> Sturm auf die Bastille — Symbol des Absolutismus</li><li><strong>26. August 1789:</strong> Erkl\u00E4rung der Menschen- und B\u00FCrgerrechte</li><li><strong>1791:</strong> Erste Verfassung — konstitutionelle Monarchie</li><li><strong>1792:</strong> Abschaffung der Monarchie, Ausrufung der Republik</li><li><strong>1793:</strong> Hinrichtung K\u00F6nig Ludwigs XVI. per Guillotine</li><li><strong>1793–1794:</strong> Schreckensherrschaft (\"Terreur\") unter Robespierre</li><li><strong>1799:</strong> Napoleon Bonaparte ergreift die Macht</li></ol><div class="info-box">\uD83D\uDCA1 <strong>Merke:</strong> Der 14. Juli ist bis heute <strong>Nationalfeiertag</strong> Frankreichs — er symbolisiert den Beginn der Freiheit.</div>'},
+{title:'Folgen der Revolution',content:'<p>Die Franz\u00F6sische Revolution ver\u00E4nderte Europa grundlegend:</p><ul><li><strong>Ende des Absolutismus</strong> in Frankreich</li><li><strong>Menschenrechte:</strong> Erste formelle Erkl\u00E4rung der Grundrechte</li><li><strong>B\u00FCrgertum:</strong> Aufstieg als politische Kraft</li><li><strong>Nationalismus:</strong> Idee der Nation und des Volkes</li><li><strong>Napoleon:</strong> Verbreitete revolutionäre Ideen in ganz Europa</li></ul><p><strong>Aber auch:</strong></p><ul><li>Tausende Tote w\u00E4hrend der Schreckensherrschaft</li><li>Die Revolution \"frass ihre eigenen Kinder\" (Danton)</li></ul><div class="info-box">\uD83D\uDCA1 <strong>Merke:</strong> Der Wahlspruch <strong>\"Liberte, Egalite, Fraternite\"</strong> (Freiheit, Gleichheit, Bruederlichkeit) ist bis heute das Motto Frankreichs.</div>'}
+],
+quiz:[
+{q:'Wann wurde die Bastille gestürmt?',a:['4. Juli 1776','14. Juli 1789','1. Januar 1800','26. August 1789'],_h:0x4B},
+{q:'Was war der Dritte Stand?',a:['Adel und Klerus','Bauern, B\u00FCrger und Arbeiter','Nur die Bauern','Das Militär'],_h:0x7E},
+{q:'Was geschah w\u00E4hrend der Schreckensherrschaft?',a:['Frankreich wurde Demokratie','Massenhinrichtungen unter Robespierre','Napoleon wurde Kaiser','Die Monarchie kehrte zur\u00FCck'],_h:0x2A},
+{q:'Wer ergriff 1799 die Macht in Frankreich?',a:['Ludwig XVI.','Robespierre','Napoleon Bonaparte','Voltaire'],_h:0x63},
+{q:'Was erkl\u00E4rte die Revolution am 26. August 1789?',a:['Die Unabhängigkeit','Die Menschen- und B\u00FCrgerrechte','Den Krieg gegen England','Die Abschaffung des Adels'],_h:0x5D}
+],
+boss:[
+{q:'Warum wird gesagt, die Revolution habe \"ihre eigenen Kinder gefressen\"?',a:['Die Kinder mussten arbeiten','Revolutionsführer wie Danton und Robespierre wurden selbst hingerichtet','Es gab eine Hungersnot','Die Schulen wurden geschlossen'],_h:0x4B},
+{q:'Welche Aufkl\u00E4rungsidee war die wichtigste Grundlage der Revolution?',a:['Gottesgnadentum','Merkantilismus','Menschenrechte und Volkssouveränität','Absolutismus'],_h:0x7D},
+{q:'Warum gilt die Franz\u00F6sische Revolution als Wendepunkt der Geschichte?',a:['Wegen der Guillotine','Sie beendete die absolute K\u00F6nigsherrschaft und etablierte Grundrechte','Wegen Napoleon','Wegen des Sturms auf die Bastille'],_h:0x2A}
+]},
+{id:5,title:'Industrielle Revolution',icon:'\uD83C\uDFED',duration:'30 Min.',description:'Dampfmaschine, Fabriken und die soziale Frage ver\u00E4ndern die Welt.',
+lessons:[
+{title:'Von der Handarbeit zur Maschine',content:'<p>Die <strong>Industrielle Revolution</strong> begann um 1760 in England und ver\u00E4nderte Wirtschaft und Gesellschaft grundlegend.</p><p><strong>Wichtige Erfindungen:</strong></p><ul><li><strong>Dampfmaschine</strong> (James Watt, 1769): Antrieb f\u00FCr Fabriken und Eisenbahnen</li><li><strong>Spinnmaschine</strong> (Spinning Jenny, 1764): Mechanisierte Textilproduktion</li><li><strong>Eisenbahn</strong> (Stephenson, 1825): Revolution des Transports</li></ul><p><strong>Voraussetzungen in England:</strong></p><ul><li>Kohle- und Eisenvorkommen</li><li>Kolonien als Rohstofflieferanten und Absatzmärkte</li><li>Freier Handel und Unternehmergeist</li></ul><div class="info-box">\uD83D\uDCA1 <strong>Merke:</strong> Die Dampfmaschine war der <strong>Motor der Industrialisierung</strong>. Sie ersetzte Muskelkraft durch Maschinenkraft.</div>'},
+{title:'Urbanisierung und soziale Frage',content:'<p>Die Industrialisierung f\u00FChrte zu gewaltigen gesellschaftlichen Veränderungen:</p><p><strong>Urbanisierung:</strong></p><ul><li>Massenhafter Zuzug in die St\u00E4dte (Landflucht)</li><li>\u00DCberfuellte Wohnviertel, schlechte Hygiene</li><li>Entstehung von Armenvierteln (Slums)</li></ul><p><strong>Die soziale Frage:</strong></p><ul><li>16-Stunden-Arbeitstage, auch f\u00FCr Kinder</li><li>Niedrige Löhne, keine Sozialversicherung</li><li>Gefährliche Arbeitsbedingungen in Fabriken</li></ul><p><strong>Reaktionen:</strong></p><ul><li><strong>Karl Marx:</strong> \"Das Kapital\", Klassenkampf, Kommunismus</li><li><strong>Gewerkschaften:</strong> Organisierter Kampf f\u00FCr Arbeiterrechte</li><li><strong>Bismarck:</strong> Sozialgesetzgebung (Kranken-, Unfall-, Rentenversicherung)</li></ul><div class="info-box">\uD83D\uDCA1 <strong>Merke:</strong> Bismarcks <strong>Sozialgesetze</strong> (ab 1883) waren weltweit die ersten staatlichen Sozialversicherungen!</div>'}
+],
+quiz:[
+{q:'Wo begann die Industrielle Revolution?',a:['Deutschland','Frankreich','England','USA'],_h:0x48},
+{q:'Wer verbesserte die Dampfmaschine entscheidend?',a:['Thomas Edison','James Watt','Robert Stephenson','Karl Marx'],_h:0x7E},
+{q:'Was versteht man unter der \"sozialen Frage\"?',a:['Wie man Steuern zahlt','Die Probleme der Arbeiter durch die Industrialisierung','Warum St\u00E4dte wachsen','Wie Maschinen funktionieren'],_h:0x29},
+{q:'Wer f\u00FChrte die ersten Sozialgesetze in Deutschland ein?',a:['Karl Marx','Kaiser Wilhelm I.','Otto von Bismarck','Friedrich Engels'],_h:0x63},
+{q:'Was bedeutet Urbanisierung?',a:['Abwanderung aufs Land','Wachstum der St\u00E4dte durch Zuzug','Gr\u00FCndung von Kolonien','Bau von Fabriken'],_h:0x5D}
+],
+boss:[
+{q:'Warum begann die Industrialisierung gerade in England?',a:['Wegen des guten Wetters','Kohlevorkommen, Kolonien und freier Handel begünstigten die Entwicklung','Weil England die meisten Einwohner hatte','Wegen der Monarchie'],_h:0x4B},
+{q:'Was war Karl Marx\' L\u00F6sung f\u00FCr die soziale Frage?',a:['Mehr Fabriken bauen','Revolution der Arbeiterklasse und Abschaffung des Privateigentums','Auswanderung','Zur\u00FCck zur Landwirtschaft'],_h:0x7E},
+{q:'Warum waren Bismarcks Sozialgesetze auch politisch motiviert?',a:['Er mochte Arbeiter','Um die Arbeiterbewegung zu schwächen und Revolutionen zu verhindern','Er war Sozialist','Um Steuern zu senken'],_h:0x29}
+]},
+{id:6,title:'Imperialismus & Erster Weltkrieg',icon:'\uD83C\uDF0D',duration:'25 Min.',description:'Europas Wettlauf um Kolonien und der Weg in die Katastrophe.',
+lessons:[
+{title:'Der Imperialismus',content:'<p>Im <strong>Imperialismus</strong> (ca. 1880–1914) teilten europ\u00E4ische Mächte die Welt unter sich auf.</p><p><strong>Motive:</strong></p><ul><li><strong>Wirtschaftlich:</strong> Rohstoffe und Absatzmärkte</li><li><strong>Politisch:</strong> Grossmachtstatus und Prestige</li><li><strong>Ideologisch:</strong> \"Zivilisierungsmission\" (Rassismus)</li></ul><p><strong>Kolonialisierung Afrikas:</strong></p><ul><li>Berliner Konferenz 1884/85: Afrika wird \"am gr\u00FCnen Tisch\" aufgeteilt</li><li>Afrikanische V\u00F6lker hatten <strong>kein Mitspracherecht</strong></li><li>Ausbeutung, Zwangsarbeit, kulturelle Unterdrueckung</li></ul><div class="info-box">\uD83D\uDCA1 <strong>Merke:</strong> Die Grenzen vieler heutiger afrikanischer Staaten gehen auf die <strong>willkürliche Aufteilung</strong> durch europ\u00E4ische Kolonialmächte zur\u00FCck.</div>'},
+{title:'Der Erste Weltkrieg',content:'<p>Der <strong>Erste Weltkrieg</strong> (1914–1918) war die erste industrielle Massenvernichtung.</p><p><strong>Ursachen:</strong></p><ul><li>Bündnissysteme: Triple Entente (FR, GB, RUS) vs. Mittelmächte (DE, AT, IT)</li><li>Wettruessten und Nationalismus</li><li>Attentat von Sarajevo (28. Juni 1914): Ermordung des österreichischen Thronfolgers</li></ul><p><strong>Verlauf:</strong></p><ul><li>Stellungskrieg: Schützengräben an der Westfront</li><li>Neue Waffen: Giftgas, Panzer, Maschinengewehre, U-Boote</li><li>Millionen Tote: ca. 17 Millionen Opfer</li></ul><p><strong>Ende:</strong> Waffenstillstand am 11. November 1918</p><p><strong>Folgen:</strong> Versailler Vertrag, Ende der Monarchien in Deutschland, \u00D6sterreich und Russland</p><div class="info-box">\uD83D\uDCA1 <strong>Merke:</strong> Der Versailler Vertrag gab Deutschland die <strong>alleinige Kriegsschuld</strong> und forderte hohe Reparationen — dies belastete die junge Demokratie schwer.</div>'}
+],
+quiz:[
+{q:'Was wurde auf der Berliner Konferenz 1884/85 beschlossen?',a:['Die Gr\u00FCndung des Deutschen Reiches','Die Aufteilung Afrikas unter europ\u00E4ischen Mächten','Der Bau des Suezkanals','Die Abschaffung der Sklaverei'],_h:0x4B},
+{q:'Was l\u00F6ste den Ersten Weltkrieg aus?',a:['Der Bau der Bagdadbahn','Das Attentat von Sarajevo','Die russische Revolution','Ein Handelsstreit'],_h:0x7E},
+{q:'Welche Bündnisse standen sich gegen\u00FCber?',a:['NATO vs. Warschauer Pakt','Triple Entente vs. Mittelmächte','Achse vs. Alliierte','Nord vs. Sued'],_h:0x2A},
+{q:'Wie viele Menschen starben im Ersten Weltkrieg?',a:['Ca. 1 Million','Ca. 5 Millionen','Ca. 17 Millionen','Ca. 50 Millionen'],_h:0x63},
+{q:'Was forderte der Versailler Vertrag von Deutschland?',a:['Nichts','Alleinige Kriegsschuld und Reparationen','Nur eine Entschuldigung','Gebietsgewinne'],_h:0x5D}
+],
+boss:[
+{q:'Warum hatten die künstlichen Grenzen in Afrika langfristig negative Folgen?',a:['Sie waren zu gerade','Sie trennten V\u00F6lker und vereinten verfeindete Gruppen willkürlich','Sie waren nicht auf Karten verzeichnet','Sie wurden sp\u00E4ter ge\u00E4ndert'],_h:0x4B},
+{q:'Warum wird der Erste Weltkrieg als \"Urkatastrophe des 20. Jahrhunderts\" bezeichnet?',a:['Wegen der vielen Erfindungen','Er legte den Grundstein f\u00FCr den Zweiten Weltkrieg und pr\u00E4gte das gesamte Jahrhundert','Weil er der erste Krieg war','Wegen des Wetteruestenss'],_h:0x7E},
+{q:'Wie ver\u00E4nderte der Stellungskrieg die Kriegsführung?',a:['Er wurde schneller','Millionen Soldaten starben in Schützengräben ohne nennenswerten Geländegewinn','Er war weniger brutal','Er dauerte nur wenige Wochen'],_h:0x2A}
+]},
+{id:7,title:'Weimarer Republik & NS-Zeit',icon:'\uD83D\uDCDC',duration:'30 Min.',description:'Deutschlands erste Demokratie und ihr Scheitern im Nationalsozialismus.',
+lessons:[
+{title:'Die Weimarer Republik',content:'<p>Die <strong>Weimarer Republik</strong> (1918–1933) war Deutschlands erste parlamentarische Demokratie.</p><p><strong>Gr\u00FCndung:</strong></p><ul><li>9. November 1918: Ausrufung der Republik durch Philipp Scheidemann</li><li>Weimarer Verfassung: Demokratisch, mit Grundrechten</li><li>Aber: Artikel 48 erlaubte dem Präsidenten Notverordnungen</li></ul><p><strong>Probleme:</strong></p><ul><li><strong>\"Dolchstosslegende\":</strong> Rechte behaupteten, die Armee sei \"im Feld unbesiegt\" gewesen</li><li><strong>Inflation 1923:</strong> Ein Brot kostete Milliarden Mark</li><li><strong>Weltwirtschaftskrise 1929:</strong> Massenarbeitslosigkeit</li><li><strong>Politische Instabilität:</strong> Viele Parteien, häufige Regierungswechsel</li></ul><div class="info-box">\uD83D\uDCA1 <strong>Merke:</strong> Die Weimarer Republik war eine <strong>Demokratie ohne Demokraten</strong> — viele wollten zur\u00FCck zur Monarchie oder zum Kommunismus.</div>'},
+{title:'Machtergreifung und NS-Diktatur',content:'<p>Am <strong>30. Januar 1933</strong> wurde Adolf Hitler zum Reichskanzler ernannt.</p><p><strong>Gleichschaltung:</strong></p><ul><li>Reichstagsbrand (Feb. 1933): Grundrechte ausser Kraft gesetzt</li><li>Ermächtigungsgesetz (März 1933): Hitler regiert per Dekret</li><li>Verbot aller Parteien ausser der NSDAP</li><li>Gleichschaltung von Presse, Justiz, Kultur</li></ul><p><strong>Terror und Verfolgung:</strong></p><ul><li>Nürnberger Gesetze (1935): Juden verlieren B\u00FCrgerrechte</li><li>Pogromnacht (9. Nov. 1938): Zerst\u00F6rung jüdischer Gesch\u00E4fte und Synagogen</li><li>Konzentrationslager: Systematische Verfolgung von Juden, Roma, politischen Gegnern</li></ul><div class="info-box">\uD83D\uDCA1 <strong>Merke:</strong> Der <strong>Holocaust</strong> (Shoah) — die systematische Ermordung von ca. 6 Millionen Juden — ist das gr\u00F6\u00DFte Verbrechen der Menschheitsgeschichte.</div>'},
+{title:'Der Zweite Weltkrieg',content:'<p>Der <strong>Zweite Weltkrieg</strong> (1939–1945) begann mit dem deutschen \u00DCberfall auf Polen am 1. September 1939.</p><p><strong>Verlauf:</strong></p><ul><li>1939–1941: Deutsche Siege in Europa (Blitzkrieg)</li><li>1941: \u00DCberfall auf die Sowjetunion, Kriegseintritt der USA</li><li>1942/43: Wende bei Stalingrad und El-Alamein</li><li>6. Juni 1944: D-Day — Alliierte Landung in der Normandie</li><li>8. Mai 1945: Bedingungslose Kapitulation Deutschlands</li></ul><p><strong>Bilanz:</strong> \u00DCber 60 Millionen Tote, Europa in Truemmern</p><div class="info-box">\uD83D\uDCA1 <strong>Merke:</strong> Der 8. Mai 1945 gilt als <strong>Tag der Befreiung</strong> — das Ende der nationalsozialistischen Diktatur und des Krieges in Europa.</div>'}
+],
+quiz:[
+{q:'Wann wurde die Weimarer Republik ausgerufen?',a:['1. Januar 1919','9. November 1918','30. Januar 1933','8. Mai 1945'],_h:0x4B},
+{q:'Was war das Ermächtigungsgesetz?',a:['Ein Wahlgesetz','Es gab Hitler die Macht, ohne Parlament zu regieren','Ein Wirtschaftsgesetz','Ein Friedensvertrag'],_h:0x7E},
+{q:'Was geschah in der Pogromnacht 1938?',a:['Hitler wurde Kanzler','Jüdische Gesch\u00E4fte und Synagogen wurden zerst\u00F6rt','Der Krieg begann','Die Mauer fiel'],_h:0x2A},
+{q:'Wann begann der Zweite Weltkrieg?',a:['1. September 1939','30. Januar 1933','8. Mai 1945','6. Juni 1944'],_h:0x61},
+{q:'Wie viele Juden wurden im Holocaust ermordet?',a:['Ca. 1 Million','Ca. 3 Millionen','Ca. 6 Millionen','Ca. 10 Millionen'],_h:0x5E}
+],
+boss:[
+{q:'Warum konnte Hitler legal an die Macht kommen?',a:['Durch einen Putsch','Durch demokratische Wahlen und die Schwäche der Weimarer Verfassung (Art. 48)','Durch eine Invasion','Durch das Militär'],_h:0x4B},
+{q:'Was bedeutet der Begriff \"Gleichschaltung\"?',a:['Alle bekamen gleich viel Geld','Alle gesellschaftlichen Bereiche wurden der NS-Ideologie unterworfen','Die Uhren wurden umgestellt','Alle Soldaten trugen die gleiche Uniform'],_h:0x7E},
+{q:'Warum ist die Erinnerung an den Holocaust so wichtig?',a:['Weil es Pflicht ist','Damit sich solche Verbrechen gegen die Menschlichkeit nie wiederholen','Aus Tradition','F\u00FCr den Geschichtsunterricht'],_h:0x2A}
+]},
+{id:8,title:'Kalter Krieg & Deutsche Teilung',icon:'\uD83E\uDDCA',duration:'30 Min.',description:'Ost gegen West — Mauerbau, Wettruessten und die Wiedervereinigung.',
+lessons:[
+{title:'Der Kalte Krieg',content:'<p>Nach 1945 teilte sich die Welt in zwei <strong>Machtblöcke</strong>:</p><ul><li><strong>Westen:</strong> USA, NATO (gegr\u00FCndet 1949) — Kapitalismus, Demokratie</li><li><strong>Osten:</strong> Sowjetunion, Warschauer Pakt (1955) — Kommunismus, Planwirtschaft</li></ul><p><strong>Merkmale des Kalten Krieges:</strong></p><ul><li>Kein direkter Krieg zwischen USA und UdSSR</li><li>Stellvertreterkriege (Korea, Vietnam, Afghanistan)</li><li>Atomares Wettruessten: Gleichgewicht des Schreckens</li><li>Weltraumwettlauf: Sputnik (1957), Mondlandung (1969)</li></ul><div class="info-box">\uD83D\uDCA1 <strong>Merke:</strong> Der Kalte Krieg hei\u00DFt \"kalt\", weil die beiden Supermächte nie <strong>direkt</strong> gegeneinander Krieg f\u00FChrten — aber die Welt stand mehrfach am Rand eines Atomkrieges (z.B. Kubakrise 1962).</div>'},
+{title:'Deutsche Teilung und Mauerbau',content:'<p>Deutschland wurde nach 1945 in <strong>vier Besatzungszonen</strong> geteilt.</p><p><strong>Zwei deutsche Staaten:</strong></p><ul><li><strong>BRD</strong> (1949): Bundesrepublik Deutschland — Demokratie, Marktwirtschaft, Westbindung</li><li><strong>DDR</strong> (1949): Deutsche Demokratische Republik — Einparteienstaat (SED), Planwirtschaft</li></ul><p><strong>Der Mauerbau (13. August 1961):</strong></p><ul><li>Die DDR baute eine Mauer quer durch Berlin</li><li>Grund: Massenflucht von DDR-B\u00FCrgern in den Westen (3,5 Mio. seit 1949)</li><li>Todesstreifen, Schiessbefehl, Stacheldraht</li><li>\u00DCber 140 Menschen starben bei Fluchtversuchen</li></ul><div class="info-box">\uD83D\uDCA1 <strong>Merke:</strong> Die Berliner Mauer war das <strong>sichtbarste Symbol</strong> des Kalten Krieges und der deutschen Teilung.</div>'},
+{title:'Mauerfall und Wiedervereinigung',content:'<p>Am <strong>9. November 1989</strong> fiel die Berliner Mauer — eines der bedeutendsten Ereignisse des 20. Jahrhunderts.</p><p><strong>Ursachen des Mauerfalls:</strong></p><ul><li>Reformpolitik von Gorbatschow (Glasnost und Perestroika)</li><li>Massenproteste in der DDR (\"Wir sind das Volk!\")</li><li>Massenflucht \u00FCber Ungarn und die Prager Botschaft</li><li>Pressekonferenz von Guenter Schabowski: \"Sofort, unverzüglich\"</li></ul><p><strong>Wiedervereinigung (3. Oktober 1990):</strong></p><ul><li>Die DDR trat der BRD bei</li><li>Zwei-plus-Vier-Vertrag: Zustimmung der Siegemächte</li><li>Helmut Kohl als \"Kanzler der Einheit\"</li></ul><div class="info-box">\uD83D\uDCA1 <strong>Merke:</strong> Der <strong>3. Oktober</strong> ist der deutsche Nationalfeiertag — der Tag der Deutschen Einheit.</div>'}
+],
+quiz:[
+{q:'Was war der Kalte Krieg?',a:['Ein Krieg in der Arktis','Ein Konflikt zwischen USA und UdSSR ohne direkte Kampfhandlungen','Ein B\u00FCrgerkrieg','Ein kurzer Krieg'],_h:0x4B},
+{q:'Wann wurde die Berliner Mauer gebaut?',a:['1949','1955','1961','1989'],_h:0x7D},
+{q:'Was riefen die Demonstranten in der DDR 1989?',a:['\"Freiheit!\"','\"Wir sind das Volk!\"','\"Nieder mit dem Kapitalismus!\"','\"Einigkeit und Recht!\"'],_h:0x2A},
+{q:'Wann ist der Tag der Deutschen Einheit?',a:['9. November','3. Oktober','7. Oktober','1. Januar'],_h:0x60},
+{q:'Welche Reformpolitik erm\u00F6glichte den Mauerfall?',a:['New Deal','Glasnost und Perestroika','Marshall-Plan','Truman-Doktrin'],_h:0x5D}
+],
+boss:[
+{q:'Warum baute die DDR die Mauer?',a:['Zum Schutz vor dem Westen','Um die Massenflucht ihrer B\u00FCrger in den Westen zu stoppen','Als Denkmal','Aus architektonischen Gr\u00FCnden'],_h:0x4B},
+{q:'Was bedeutete \"Gleichgewicht des Schreckens\"?',a:['Beide Seiten hatten Angst','Beide Seiten hatten genug Atomwaffen, um die andere zu vernichten, was einen Krieg verhinderte','Es gab gleich viele Soldaten','Die Waffen waren gleich teuer'],_h:0x7E},
+{q:'Warum war der Mauerfall nicht geplant?',a:['Er wurde absichtlich inszeniert','Schabowskis fehlerhafte Pressekonferenz l\u00F6ste eine spontane Oeffnung aus','Die Mauer brach von selbst zusammen','Die USA erzwangen ihn'],_h:0x2A}
+]},
+{id:9,title:'Globalisierung & Zeitgeschichte',icon:'\uD83C\uDF10',duration:'30 Min.',description:'Die vernetzte Welt — von der EU \u00FCber die UNO bis zur Digitalisierung.',
+lessons:[
+{title:'Die Europ\u00E4ische Union',content:'<p>Die <strong>EU</strong> ist ein einzigartiges Friedensprojekt, das nach dem Zweiten Weltkrieg entstand.</p><p><strong>Meilensteine:</strong></p><ul><li><strong>1951:</strong> Europ\u00E4ische Gemeinschaft f\u00FCr Kohle und Stahl (EGKS)</li><li><strong>1957:</strong> R\u00F6mische Verträge — EWG gegr\u00FCndet</li><li><strong>1993:</strong> Vertrag von Maastricht — EU offiziell gegr\u00FCndet</li><li><strong>2002:</strong> Einf\u00FChrung des Euro als Bargeld</li><li><strong>Heute:</strong> 27 Mitgliedstaaten</li></ul><p><strong>Prinzipien:</strong></p><ul><li>Freier Waren-, Personen-, Dienstleistungs- und Kapitalverkehr</li><li>Gemeinsame Werte: Demokratie, Menschenrechte, Rechtsstaatlichkeit</li></ul><div class="info-box">\uD83D\uDCA1 <strong>Merke:</strong> Die EU entstand aus der Idee: <strong>Wer miteinander handelt, f\u00FChrt keinen Krieg gegeneinander.</strong></div>'},
+{title:'UNO und internationale Organisationen',content:'<p>Die <strong>Vereinten Nationen (UNO)</strong> wurden 1945 gegr\u00FCndet, um künftige Kriege zu verhindern.</p><p><strong>Aufgaben der UNO:</strong></p><ul><li>Friedenssicherung (Blauhelme)</li><li>Menschenrechtsschutz (Allgemeine Erkl\u00E4rung der Menschenrechte 1948)</li><li>Entwicklungshilfe (UNICEF, WHO)</li></ul><p><strong>Weitere wichtige Organisationen:</strong></p><ul><li><strong>NATO</strong> (1949): Militärbündnis des Westens</li><li><strong>WHO:</strong> Weltgesundheitsorganisation</li><li><strong>WTO:</strong> Welthandelsorganisation</li></ul><div class="info-box">\uD83D\uDCA1 <strong>Merke:</strong> Die UNO hat 193 Mitgliedstaaten — fast alle L\u00E4nder der Welt. Ihr Hauptsitz ist in <strong>New York</strong>.</div>'},
+{title:'Digitalisierung und aktuelle Herausforderungen',content:'<p>Das 21. Jahrhundert bringt neue <strong>globale Herausforderungen</strong>:</p><p><strong>Digitalisierung:</strong></p><ul><li>Internet und soziale Medien ver\u00E4ndern Kommunikation</li><li>Künstliche Intelligenz und Automatisierung</li><li>Fake News und Desinformation als Gefahr f\u00FCr Demokratien</li></ul><p><strong>Weitere Herausforderungen:</strong></p><ul><li><strong>Klimawandel:</strong> Pariser Abkommen (2015), Fridays for Future</li><li><strong>Migration:</strong> Fluchtursachen wie Krieg, Armut, Klimawandel</li><li><strong>Terrorismus:</strong> 11. September 2001 als Wendepunkt</li><li><strong>Pandemien:</strong> COVID-19 zeigte globale Verletzlichkeit</li></ul><div class="info-box">\uD83D\uDCA1 <strong>Merke:</strong> Globale Probleme erfordern <strong>globale L\u00F6sungen</strong> — kein Land kann Klimawandel, Pandemien oder Terrorismus allein bek\u00E4mpfen.</div>'}
+],
+quiz:[
+{q:'Wann wurde die EU offiziell gegr\u00FCndet?',a:['1951','1957','1993','2002'],_h:0x48},
+{q:'Was ist die Hauptaufgabe der UNO?',a:['Handel foerdern','Friedenssicherung und Menschenrechtsschutz','Grenzen kontrollieren','Währungen regulieren'],_h:0x7E},
+{q:'Was geschah am 11. September 2001?',a:['Gr\u00FCndung der EU','Mauerfall','Terroranschläge in den USA','Einf\u00FChrung des Euro'],_h:0x29},
+{q:'Was regelt das Pariser Abkommen von 2015?',a:['Welthandel','Klimaschutz und CO2-Reduktion','Militärbündnisse','Menschenrechte'],_h:0x60},
+{q:'Wie viele Mitgliedstaaten hat die EU aktuell?',a:['15','22','27','30'],_h:0x5E}
+],
+boss:[
+{q:'Warum ist die EU als Friedensprojekt so bedeutsam?',a:['Wegen des Euro','Weil L\u00E4nder, die wirtschaftlich verbunden sind, seltener Krieg f\u00FChren','Wegen der offenen Grenzen','Weil alle die gleiche Sprache sprechen'],_h:0x4B},
+{q:'Warum sind Fake News eine Gefahr f\u00FCr Demokratien?',a:['Sie sind langweilig','Sie untergraben das Vertrauen in Fakten und manipulieren die öffentliche Meinung','Sie kosten Geld','Sie sind illegal'],_h:0x7E},
+{q:'Warum k\u00F6nnen globale Probleme nur gemeinsam gel\u00F6st werden?',a:['Weil es billiger ist','Weil Klimawandel, Pandemien und Terror keine Grenzen kennen','Weil die UNO es vorschreibt','Weil ein Land allein nicht genug Geld hat'],_h:0x2A}
+]}
+];
+// === State Management ===
+const STORAGE_KEY='zeitreise_progress';
+let state={name:'',started:false,currentModule:0,xp:0,level:0,streak:0,lastVisit:null,modulesCompleted:[],quizResults:{},bossResults:{},badges:[],quizShuffleMap:{},modulesViewed:[],interactiveResults:{},designTheme:'cyber-dark'};
+function saveState(){try{localStorage.setItem(STORAGE_KEY,JSON.stringify(state))}catch(e){}}
+function loadState(){try{const s=localStorage.getItem(STORAGE_KEY);if(s){Object.assign(state,JSON.parse(s));return true}}catch(e){}return false}
+function exportData(){const a=document.createElement('a');a.download='zeitreise-'+state.name+'.json';a.href=URL.createObjectURL(new Blob([JSON.stringify(state,null,2)],{type:'application/json'}));a.click()}
+function importData(e){const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=ev=>{try{const d=JSON.parse(ev.target.result);Object.assign(state,d);saveState();location.reload()}catch(err){alert('Datei konnte nicht gelesen werden.')}};r.readAsText(f)}
+
+// === XP & Level ===
+function getLevel(xp){let lv=0;for(let i=LEVELS.length-1;i>=0;i--){if(xp>=LEVELS[i].xp){lv=i;break}}return lv}
+function getLevelProgress(xp){const lv=getLevel(xp);const cur=LEVELS[lv].xp;const next=lv<LEVELS.length-1?LEVELS[lv+1].xp:cur;if(next===cur)return 100;return Math.min(100,Math.round((xp-cur)/(next-cur)*100))}
+function addXP(amount,reason){const old=getLevel(state.xp);state.xp+=amount;const nw=getLevel(state.xp);saveState();updateUI();showNotif('xp','+'+amount+' XP',reason);if(nw>old){state.level=nw;saveState();setTimeout(()=>showLevelUp(nw),800)}}
+
+// === Streak ===
+function updateStreak(){const today=new Date().toDateString();if(state.lastVisit===today)return;const yesterday=new Date(Date.now()-86400000).toDateString();if(state.lastVisit===yesterday){state.streak++;showNotif('streak','\uD83D\uDD25 '+state.streak+' Tage Streak!','Weiter so!');if(state.streak>=3)awardBadge('streak3');if(state.streak>=7)awardBadge('streak7')}else if(state.lastVisit!==today){state.streak=1}state.lastVisit=today;saveState()}
+
+// === Badges ===
+function awardBadge(id){if(state.badges.includes(id))return;state.badges.push(id);saveState();const b=BADGES.find(x=>x.id===id);if(b)showNotif('badge',b.icon+' Badge: '+b.name,b.desc)}
+
+// === Notifications ===
+let notifQueue=[],notifActive=false;
+function showNotif(type,title,text){notifQueue.push({type,title,text});if(!notifActive)processNotif()}
+function processNotif(){if(!notifQueue.length){notifActive=false;return}notifActive=true;const{type,title,text}=notifQueue.shift();const el=document.getElementById('notif');el.className='notif '+type;document.getElementById('notifTitle').textContent=title;document.getElementById('notifText').textContent=text;el.classList.add('show');setTimeout(()=>{el.classList.remove('show');setTimeout(processNotif,300)},2500)}
+
+// === Level Up + Confetti ===
+function showLevelUp(lv){const ov=document.getElementById('levelUpOverlay');const box=document.getElementById('levelUpBox');box.innerHTML='<div class="lvl-icon">\u2B06\uFE0F</div><div class="lvl-title">Level Up!</div><div class="lvl-name">Level '+(lv+1)+': '+LEVELS[lv].name+'</div>';ov.classList.add('active');spawnConfetti();setTimeout(()=>ov.classList.remove('active'),3000)}
+function spawnConfetti(){const c=document.getElementById('confetti');c.innerHTML='';const cols=['#3b82f6','#a855f7','#22c55e','#f59e0b','#ef4444','#06b6d4'];for(let i=0;i<60;i++){const p=document.createElement('div');p.style.cssText='position:absolute;left:'+Math.random()*100+'%;background:'+cols[i%cols.length]+';width:'+(6+Math.random()*8)+'px;height:'+(6+Math.random()*8)+'px;border-radius:'+(Math.random()>.5?'50%':'2px')+';animation:confettiFall '+(1.5+Math.random()*2)+'s ease-out '+Math.random()*.5+'s forwards';c.appendChild(p)}if(!document.getElementById('confettiStyle')){const s=document.createElement('style');s.id='confettiStyle';s.textContent='@keyframes confettiFall{0%{opacity:1;transform:translateY(0) rotate(0deg)}100%{opacity:0;transform:translateY(100vh) rotate(720deg)}}';document.head.appendChild(s)}setTimeout(()=>c.innerHTML='',4000)}
+
+// === Quiz Engine ===
+function shuffleQuiz(modId,quiz){const key='m'+modId;if(state.quizShuffleMap[key])return state.quizShuffleMap[key];const idx=[...Array(quiz.length).keys()];for(let i=idx.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[idx[i],idx[j]]=[idx[j],idx[i]]}state.quizShuffleMap[key]=idx;saveState();return idx}
+function renderQuiz(modId,quiz,isBoss){
+const pf=isBoss?'boss':'quiz';const idx=isBoss?[...Array(quiz.length).keys()]:shuffleQuiz(modId,quiz);
+let h='<div class="'+(isBoss?'boss-section':'quiz-section')+'">';
+h+=isBoss?'<h3>\uD83D\uDC51 Boss-Challenge</h3><p class="boss-sub">Alle '+quiz.length+' Fragen richtig beantworten!</p>':'<h3>\uD83D\uDCDD Quiz \u2014 Teste dein Wissen</h3>';
+idx.forEach((qi,di)=>{const q=quiz[qi];h+='<div class="quiz-q" data-qi="'+qi+'"><p>'+(di+1)+'. '+q.q+'</p>';q.a.forEach((a,ai)=>{h+='<label><input type="radio" name="'+pf+'_'+modId+'_'+qi+'" value="'+ai+'"> '+a+'<\/label>'});h+='<\/div>'});
+h+='<button class="quiz-submit" onclick="checkQuiz('+modId+','+isBoss+')">'+(isBoss?'Boss besiegen!':'Antworten prüfen')+'<\/button>';
+h+='<div class="quiz-result" id="'+pf+'Result'+modId+'" style="display:none"><\/div><\/div>';return h;
+}
+function checkQuiz(modId,isBoss){
+const pf=isBoss?'boss':'quiz';const quiz=isBoss?modules[modId].boss:modules[modId].quiz;
+let correct=0;const total=quiz.length;const startTime=window._quizStart||Date.now();
+quiz.forEach((q,qi)=>{
+const sel=document.querySelector('input[name="'+pf+'_'+modId+'_'+qi+'"]:checked');
+const labels=document.querySelectorAll('[data-qi="'+qi+'"] label');
+const ci=_d(q._h,qi);
+labels.forEach((l,li)=>{l.classList.remove('correct','wrong');if(li===ci)l.classList.add('correct');else if(sel&&parseInt(sel.value)===li)l.classList.add('wrong')});
+const qDiv=labels[0]?.closest('.quiz-q');if(qDiv){const old=qDiv.querySelector('.quiz-explanation');if(old)old.remove()}
+if(!sel||parseInt(sel.value)!==ci){if(qDiv){const exp=document.createElement('div');exp.className='quiz-explanation';exp.textContent='\u2192 Richtige Antwort: '+q.a[ci];qDiv.appendChild(exp)}}
+if(sel&&parseInt(sel.value)===ci)correct++;
+});
+const rEl=document.getElementById(pf+'Result'+modId);rEl.style.display='block';
+if(isBoss){
+if(correct===total){
+rEl.className='quiz-result pass';rEl.textContent='\uD83D\uDC51 Boss besiegt! '+correct+'/'+total+' \u2014 Perfekt!';
+if(!state.bossResults[modId]){state.bossResults[modId]=true;addXP(100,'Boss-Challenge bestanden!');if(!state.badges.includes('first_boss'))awardBadge('first_boss');if(modules.every((_,i)=>state.bossResults[i]))awardBadge('all_bosses');checkModuleComplete(modId)}
+}else{rEl.className='quiz-result fail';rEl.textContent='\uD83D\uDC80 '+correct+'/'+total+' \u2014 Alle müssen richtig sein! Versuch es nochmal.';setTimeout(()=>{document.querySelectorAll('input[name^="'+pf+'_'+modId+'"]').forEach(r=>{r.disabled=false;r.checked=false});document.querySelectorAll('[data-qi] label').forEach(l=>l.classList.remove('correct','wrong'));document.querySelectorAll('.quiz-explanation').forEach(e=>e.remove());rEl.style.display='none'},2000);return}
+}else{
+const passed=correct>=Math.ceil(total*0.6);rEl.className='quiz-result '+(passed?'pass':'fail');
+rEl.textContent=passed?'\u2705 '+correct+'/'+total+' richtig \u2014 Bestanden!':'\u274C '+correct+'/'+total+' richtig \u2014 Mindestens '+Math.ceil(total*0.6)+' nötig.';
+if(passed&&!state.quizResults[modId]){state.quizResults[modId]=correct;addXP(correct*15+50,'Quiz bestanden ('+correct+'/'+total+')');if(!state.badges.includes('first_quiz'))awardBadge('first_quiz');if(correct===total)awardBadge('perfect_quiz');if(Date.now()-startTime<60000)awardBadge('speed_quiz');checkModuleComplete(modId)}
+}
+saveState();document.querySelectorAll('input[name^="'+pf+'_'+modId+'"]').forEach(r=>r.disabled=true);
+window.scrollTo({top:0,behavior:'smooth'});
+}
+function checkModuleComplete(modId){
+if(state.quizResults[modId]!==undefined&&state.bossResults[modId]&&!state.modulesCompleted.includes(modId)){
+state.modulesCompleted.push(modId);awardBadge('m'+modId);
+if(state.modulesCompleted.length>=5)awardBadge('half_done');
+if(state.modulesCompleted.length>=10){awardBadge('graduate');setTimeout(()=>showCert(),1500)}
+saveState();renderSidebar();
+}
+}
+
+// === Render Module ===
+function renderModule(modId){
+state.currentModule=modId;
+if(!state.modulesViewed.includes(modId)){state.modulesViewed.push(modId);addXP(10,'Neues Modul geöffnet');if(state.modulesViewed.length>=10)awardBadge('explorer')}
+saveState();closeSidebar();
+const m=modules[modId];
+let h='<div class="module-header"><div class="mod-badge">'+m.icon+' Modul '+(modId+1)+'<\/div><h1>'+m.title+'<\/h1><p class="mod-desc">'+m.description+'<\/p><\/div>';
+m.lessons.forEach((l,i)=>{h+='<div class="lesson-card"><h3><span style="color:var(--neon)">'+String(i+1).padStart(2,'0')+'<\/span> '+l.title+' <button class="tts-btn" onclick="speakLesson('+i+')" title="Vorlesen">&#128266;<\/button><\/h3>'+l.content+'<\/div>'});
+h+='<div class="interactive-area"><h4>\uD83D\uDCDD Interaktive Übung<\/h4><div id="interactiveContent">Lädt...<\/div><\/div>';
+window._quizStart=Date.now();
+h+=renderQuiz(modId,m.quiz,false);
+h+=renderQuiz(modId,m.boss,true);
+document.getElementById('welcomeScreen').style.display='none';
+document.getElementById('badgesView').style.display='none';
+document.getElementById('statsView').style.display='none';
+const mc=document.getElementById('moduleContent');mc.style.display='block';mc.innerHTML=h;
+renderSidebar();setTimeout(()=>{initInteractive(modId);window.scrollTo(0,0)},100);
+}
+
+// === Sidebar ===
+function renderSidebar(){
+const el=document.getElementById('sidebarModules');
+el.innerHTML=modules.map((m,i)=>{
+const done=state.modulesCompleted.includes(i);
+const act=state.currentModule===i&&document.getElementById('moduleContent').style.display==='block';
+return '<a class="mod-link'+(act?' active':'')+(done?' completed':'')+'" onclick="renderModule('+i+')"><span class="mod-icon">'+m.icon+'<\/span>'+m.title+'<\/a>';
+}).join('');
+const lv=getLevel(state.xp);
+const lvEl=document.getElementById('sidebarLevel');if(lvEl)lvEl.textContent=LEVELS[lv].name;
+const xpEl=document.getElementById('sidebarXP');if(xpEl)xpEl.textContent=state.xp+' XP';
+const xpFill=document.getElementById('sidebarXPFill');if(xpFill)xpFill.style.width=getLevelProgress(state.xp)+'%';
+}
+function toggleSidebar(){document.getElementById('sidebar').classList.toggle('open')}
+function closeSidebar(){document.getElementById('sidebar').classList.remove('open')}
+
+// === Badges & Stats ===
+function showBadges(){
+document.getElementById('welcomeScreen').style.display='none';
+document.getElementById('moduleContent').style.display='none';
+document.getElementById('statsView').style.display='none';
+const v=document.getElementById('badgesView');v.style.display='block';closeSidebar();
+let h='<div class="module-header"><h1>\uD83C\uDFC5 Deine Abzeichen<\/h1><p class="mod-desc">'+state.badges.length+' von '+BADGES.length+' gesammelt<\/p><\/div><div class="badge-grid">';
+BADGES.forEach(b=>{const earned=state.badges.includes(b.id);h+='<div class="badge-item'+(earned?' earned':' locked')+'"><div class="badge-icon">'+(earned?b.icon:'\uD83D\uDD12')+'<\/div><div class="badge-name">'+b.name+'<\/div><\/div>'});
+h+='<\/div>';v.innerHTML=h;
+}
+function showStats(){
+document.getElementById('welcomeScreen').style.display='none';
+document.getElementById('moduleContent').style.display='none';
+document.getElementById('badgesView').style.display='none';
+const v=document.getElementById('statsView');v.style.display='block';closeSidebar();
+const lv=getLevel(state.xp);
+let h='<div class="module-header"><h1>\uD83D\uDCCA Statistik<\/h1><\/div><div class="stats-grid">';
+h+='<div class="stat-card"><div class="stat-val">'+state.xp+'<\/div><div class="stat-label">XP gesammelt<\/div><\/div>';
+h+='<div class="stat-card"><div class="stat-val">'+LEVELS[lv].name+'<\/div><div class="stat-label">Aktueller Rang<\/div><\/div>';
+h+='<div class="stat-card"><div class="stat-val">'+state.modulesCompleted.length+'/10<\/div><div class="stat-label">Module abgeschlossen<\/div><\/div>';
+h+='<div class="stat-card"><div class="stat-val">'+Object.keys(state.quizResults).length+'<\/div><div class="stat-label">Quizze bestanden<\/div><\/div>';
+h+='<div class="stat-card"><div class="stat-val">'+Object.keys(state.bossResults).length+'<\/div><div class="stat-label">Bosse besiegt<\/div><\/div>';
+h+='<div class="stat-card"><div class="stat-val">'+state.badges.length+'<\/div><div class="stat-label">Abzeichen<\/div><\/div>';
+h+='<div class="stat-card"><div class="stat-val">\uD83D\uDD25 '+state.streak+'<\/div><div class="stat-label">Tage-Streak<\/div><\/div>';
+h+='<\/div>';v.innerHTML=h;
+}
+
+// === Certificate ===
+let certStyle='akademie';
+function showCert(){window._lastFocus=document.activeElement;
+const ov=document.getElementById('certOverlay');
+const styles=['akademie','hacker','pixel','zukunft'];
+const labels=['\uD83C\uDFDB Akademie','\uD83D\uDCBB Hacker','\uD83D\uDD79 Pixel','\u2728 Zukunft'];
+document.getElementById('certPicker').innerHTML=styles.map((s,i)=>'<button class="cert-pick-btn '+(s===certStyle?'active':'')+'" onclick="certStyle=\''+s+'\';renderCert()">'+labels[i]+'<\/button>').join('');
+renderCert();ov.classList.add('active');
+}
+function closeCert(){document.getElementById('certOverlay').classList.remove('active');if(window._lastFocus){window._lastFocus.focus();window._lastFocus=null}}
+function generateCertCode(){const n=state.name||'X';const d=new Date();return 'TP-'+d.getFullYear()+'-'+((n.charCodeAt(0)*7+state.xp)%9999).toString(16).toUpperCase().padStart(4,'0')}
+function printCert(){window.print()}
+function certBadgeRow(){
+const earned=state.badges||[];if(earned.length===0)return'';
+return'<div class="cert-badge-row">'+earned.slice(0,8).map(bid=>{const b=BADGES.find(x=>x.id===bid);return b?'<div class="cert-badge-item" title="'+b.name+'">'+b.icon+'<\/div>':''}).join('')+(earned.length>8?'<div class="cert-badge-item" title="'+(earned.length-8)+' weitere">+'+(earned.length-8)+'<\/div>':'')+'<\/div>';
+}
+function certStatsRow(){
+const mods=state.modulesCompleted.length;const quizDone=Object.keys(state.quizResults).length;const bossDone=Object.keys(state.bossResults).length;
+return'<div class="cert-common-stats"><div class="cert-stat">\uD83D\uDCDA '+mods+'/10<\/div><div class="cert-stat">\uD83D\uDCDD '+quizDone+' Quizze<\/div><div class="cert-stat">\uD83D\uDC51 '+bossDone+' Bosse<\/div><div class="cert-stat">\uD83D\uDD25 '+state.streak+'d Streak<\/div><\/div>';
+}
+function certLogoFooter(dark){
+const fill=dark?'rgba(255,255,255,.4)':'rgba(0,0,0,.35)';
+return'<div class="cert-logo-footer"><svg viewBox="0 0 32 32" fill="none"><g transform="translate(16,16)"><circle cx="-10" cy="-9" r="1.2" fill="'+fill+'" opacity=".6"/><circle cx="10" cy="-9" r="1.2" fill="'+fill+'" opacity=".6"/><rect x="-7" y="-5.5" width="14" height="11" rx="3.5" fill="none" stroke="'+fill+'" stroke-width="1"/><text x="0" y="0" text-anchor="middle" dominant-baseline="central" font-family="system-ui" font-size="7.5" font-weight="900" fill="'+fill+'" letter-spacing="1">AI<\/text><\/g><\/svg><span style="color:'+fill+'">GZ AI Stacks<\/span><\/div>';
+}
+function svgCorner(){return'<svg viewBox="0 0 60 60" fill="none"><path d="M5 55 L5 15 Q5 5 15 5 L55 5" stroke="#c5a54e" stroke-width="1.5" fill="none" opacity=".4"/><circle cx="8" cy="8" r="3" fill="#c5a54e" opacity=".2"/><\/svg>';}
+function svgLaurelSeal(){return'<svg viewBox="0 0 90 90" fill="none"><circle cx="45" cy="45" r="32" fill="url(#cg)"/><defs><radialGradient id="cg"><stop offset="0%" stop-color="#e8c84e"/><stop offset="100%" stop-color="#8a6914"/><\/radialGradient><\/defs><text x="45" y="47" text-anchor="middle" dominant-baseline="central" font-family="serif" font-size="22" font-weight="900" fill="#fff">\u2605<\/text><\/svg>';}
+function svgHexSeal(){return'<svg viewBox="0 0 70 70" fill="none"><circle cx="35" cy="35" r="22" stroke="#00d4ff" stroke-width="1.5" opacity=".5"/><circle cx="35" cy="35" r="16" fill="rgba(0,255,65,.08)"/><text x="35" y="33" text-anchor="middle" dominant-baseline="central" font-family="monospace" font-size="8" font-weight="700" fill="#00ff41" opacity=".7">VERIFIED<\/text><text x="35" y="42" text-anchor="middle" font-family="monospace" font-size="7" fill="#00d4ff">\u2713<\/text><\/svg>';}
+function matrixCols(){const chars='01\u30A2\u30A4\u30A6\u30A8\u30AA{}[]<>';let h='';for(let i=0;i<10;i++){const x=5+i*9;const d=3+Math.random()*6;let col='';for(let j=0;j<25;j++)col+=chars[Math.floor(Math.random()*chars.length)]+'\n';h+='<div class="cert-matrix-col" style="left:'+x+'%;animation-duration:'+d+'s;animation-delay:'+Math.random()*4+'s">'+col+'<\/div>';}return h;}
+function renderCert(){
+const f=document.getElementById('certFrame');
+const name=state.name||'Unbekannt';const date=new Date().toLocaleDateString('de-DE',{day:'numeric',month:'long',year:'numeric'});
+const xp=state.xp;const mods=state.modulesCompleted.length;const rank=LEVELS[getLevel(xp)].name;const code=generateCertCode();const badges=certBadgeRow();
+document.querySelectorAll('.cert-pick-btn').forEach(b=>b.classList.toggle('active',b.textContent.toLowerCase().includes(certStyle)));
+if(certStyle==='akademie'){
+const corner=svgCorner();
+f.innerHTML='<div class="cert-akademie"><div class="cert-corner cert-corner-tl">'+corner+'<\/div><div class="cert-corner cert-corner-tr">'+corner+'<\/div><div class="cert-corner cert-corner-bl">'+corner+'<\/div><div class="cert-corner cert-corner-br">'+corner+'<\/div><div class="cert-inner"><div class="cert-sub">ZeitReise \u00B7 Geschichts-Akademie<\/div><div class="cert-title">Diplom<\/div><div class="cert-hr"><\/div><div class="cert-body">Die Geschichts-Akademie verleiht hiermit<\/div><div class="cert-name">'+name+'<\/div><div class="cert-body">die Anerkennung als<br><strong style="font-size:18px;color:#1a1a3e">Geschichts-'+rank+'<\/strong><br>für die erfolgreiche Absolvierung von<br>\u201EZeitReise \u2014 Geschichte Klasse 7-10\u201C<\/div>'+certStatsRow()+badges+'<div class="cert-seal-wrap"><div class="cert-seal-ring"><\/div><div class="cert-seal">'+svgLaurelSeal()+'<\/div><\/div><div class="cert-date">'+date+'<\/div><div class="cert-verification">'+code+'<\/div>'+certLogoFooter(false)+'<\/div><\/div>';
+}else if(certStyle==='hacker'){
+f.innerHTML='<div class="cert-hacker">'+matrixCols()+'<div class="cert-inner"><div class="cert-prompt">root@zeitreise:~$ <span>verify --user "'+name+'" --deep-scan<\/span><\/div><div class="cert-title">&gt;&gt; SYSTEM CERTIFICATION &lt;&lt;<\/div><div class="cert-access">ACCESS GRANTED<span class="cursor-blink">_<\/span><\/div><div class="cert-body">&gt; User..........: <strong style="color:#00d4ff">'+name+'<\/strong><br>&gt; Rank..........: '+rank+'<br>&gt; Modules.......: [<span style="color:#00ff41">'+ '\u2588'.repeat(mods)+'\u2591'.repeat(10-mods)+'<\/span>] '+mods+'/10<br>&gt; XP............: '+xp+' pts<br>&gt; Status........: <span style="color:#00ff41">VERIFIED<\/span> \u2713<\/div>'+certStatsRow()+badges+'<div class="cert-hex-seal">'+svgHexSeal()+'<\/div><div class="cert-body" style="font-size:11px">&gt; Certificate ID: '+code+'<br>&gt; Issued: '+date+'<br>&gt; Authority: ZeitReise Akademie<\/div><div class="cert-prompt">root@zeitreise:~$ <span class="cursor-blink">_<\/span><\/div>'+certLogoFooter(true)+'<\/div><\/div>';
+}else if(certStyle==='pixel'){
+const stars='\u2605'.repeat(Math.min(5,Math.ceil(mods/2)))+'\u2606'.repeat(Math.max(0,5-Math.ceil(mods/2)));
+const pct=Math.min(100,Math.round(xp/42));
+f.innerHTML='<div class="cert-pixel"><div class="cert-inner"><div class="cert-complete">\u25C6 LEVEL COMPLETE! \u25C6<\/div><div class="cert-title">CHAMPION<\/div><div class="cert-name">'+name+'<\/div><div class="cert-stars">'+stars+'<\/div><div class="cert-xp-bar"><div class="cert-xp-fill" style="width:'+pct+'%"><\/div><div class="cert-xp-label">'+xp+' XP<\/div><\/div><div class="cert-body">RANK: <strong style="color:#ffd700">'+rank.toUpperCase()+'<\/strong><\/div>'+certStatsRow()+badges+'<div class="cert-score">HIGH SCORE: '+xp+' PTS<\/div><div style="margin-top:8px;font-size:10px;color:#555">'+date+' \u00B7 '+code+'<\/div>'+certLogoFooter(true)+'<\/div><\/div>';
+}else{
+const particles=Array.from({length:15},(_,i)=>{const colors=['#6366f1','#ec4899','#f59e0b','#22c55e','#06b6d4'];return'<div class="cert-particle" style="position:absolute;left:'+Math.random()*100+'%;top:'+Math.random()*100+'%;width:'+(2+Math.random()*3)+'px;height:'+(2+Math.random()*3)+'px;background:'+colors[i%5]+';opacity:'+(0.1+Math.random()*0.2)+';box-shadow:0 0 '+(6+Math.random()*9)+'px '+colors[i%5]+';border-radius:50%"><\/div>';}).join('');
+f.innerHTML='<div class="cert-zukunft">'+particles+'<div class="cert-inner"><div class="cert-sub">Zukunfts-Akademie \u00B7 '+new Date().getFullYear()+'<\/div><div class="cert-title">Zertifikat der Zukunft<\/div><div class="cert-body">Hiermit best\u00E4tigen wir, dass<\/div><div class="cert-name">'+name+'<\/div><div class="cert-body">den interaktiven Geschichte-Kurs<br>\u201EZeitReise \u2014 Geschichte Klasse 7-10\u201C<br>erfolgreich absolviert hat.<\/div><div class="cert-body" style="margin:6px 0"><strong style="color:#a78bfa;font-size:16px">'+rank+'<\/strong><\/div>'+certStatsRow()+badges+'<div class="cert-seal-holo"><div class="cert-seal-mid"><div class="cert-seal-inner"><svg viewBox="0 0 40 40" fill="none"><text x="20" y="18" text-anchor="middle" font-size="14" fill="#a78bfa">\u2726<\/text><text x="20" y="28" text-anchor="middle" font-size="6" font-weight="700" fill="rgba(255,255,255,.6)" font-family="system-ui">GES<\/text><\/svg><\/div><\/div><\/div><div class="cert-date">'+date+' \u00B7 '+code+'<\/div>'+certLogoFooter(true)+'<\/div><\/div>';
+}
+f.style.animation='none';f.offsetHeight;f.style.animation='certEntrance .6s cubic-bezier(.34,1.56,.64,1) both';
+}
+
+// === UI Update ===
+function updateUI(){
+const lv=getLevel(state.xp);
+const hdr=document.getElementById('headerLevel');if(hdr)hdr.textContent=LEVELS[lv].name;
+const hxp=document.getElementById('headerXP');if(hxp)hxp.textContent=state.xp+' XP';
+const fill=document.querySelector('.header-xp-fill');if(fill)fill.style.width=getLevelProgress(state.xp)+'%';
+const streakEl=document.getElementById('headerStreak');if(streakEl)streakEl.textContent='\uD83D\uDD25 '+state.streak;
+renderSidebar();
+}
+
+// === Theme System ===
+function setDesignTheme(world,mode){state.designTheme=world+'-'+mode;document.documentElement.setAttribute('data-theme',state.designTheme);saveState();buildThemePicker()}
+function getCurrentThemeParts(){const p=state.designTheme.split('-');return{world:p.slice(0,-1).join('-'),mode:p[p.length-1]||'dark'}}
+function toggleMode(){const{world,mode}=getCurrentThemeParts();setDesignTheme(world,mode==='dark'?'light':'dark')}
+function buildThemePicker(){
+const dd=document.getElementById('themePickerDD');if(!dd)return;
+const{world,mode}=getCurrentThemeParts();
+let h='<div class="tp-label">Theme wählen<\/div>';
+Object.keys(THEME_CONFIG).forEach(w=>{const t=THEME_CONFIG[w];h+='<div class="tp-world'+(w===world?' active':'')+'" onclick="setDesignTheme(\''+w+'\',\''+mode+'\')\"><div class="tp-world-color" style="background:'+t.color+'">'+t.emoji+'<\/div><div class="tp-world-info"><div class="tp-world-name">'+t.name+'<\/div><div class="tp-world-desc">'+t.desc+'<\/div><\/div><\/div>';});
+h+='<div class="tp-divider"><\/div><div class="tp-mode-row"><span class="tp-mode-label">'+(mode==='dark'?'\uD83C\uDF19 Dark':'\u2600\uFE0F Light')+'<\/span><div class="tp-mode-switch'+(mode==='light'?' light':'')+'" onclick="toggleMode()"><\/div><\/div>';
+dd.innerHTML=h;
+}
+function toggleThemePicker(){document.getElementById('themePickerDD').classList.toggle('open')}
+
+// === Interactive Exercises ===
+// === Interactive Exercises ===
+function initInteractive(modId){
+const el=document.getElementById('interactiveContent');if(!el)return;
+const exercises=[
+// Mod 0: Antike — Hochkulturen zuordnen
+function(){el.innerHTML='<p>Ordne die Errungenschaften der richtigen Hochkultur zu.</p><div class="ix-grid" id="ixItems"><\/div><div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin:16px 0"><button class="ix-btn" onclick="ixDrop(0,\'\u00E4gypten\')">\u00C4gypten</button><button class="ix-btn" onclick="ixDrop(0,\'griechenland\')">Griechenland</button><button class="ix-btn" onclick="ixDrop(0,\'rom\')">Rom</button></div><div class="ix-feedback" id="ixFb"><\/div>';
+const items=[{n:'Pyramiden von Gizeh',t:'\u00E4gypten'},{n:'Olympische Spiele',t:'griechenland'},{n:'Stra\u00DFennetze und Aquaedukte',t:'rom'},{n:'Hieroglyphen',t:'\u00E4gypten'},{n:'Demokratie in Athen',t:'griechenland'},{n:'R\u00F6misches Recht',t:'rom'}];
+window._ixData={items,sel:null,done:0,correct:0};
+const g=document.getElementById('ixItems');items.forEach((it,i)=>{const d=document.createElement('div');d.className='ix-item';d.textContent=it.n;d.onclick=()=>{document.querySelectorAll('.ix-item').forEach(x=>x.classList.remove('selected'));d.classList.add('selected');window._ixData.sel=i};g.appendChild(d)});},
+// Mod 1: Mittelalter — Ständepyramide
+function(){el.innerHTML='<p>Ordne die Gruppen dem richtigen Stand zu.</p><div class="ix-grid" id="ixItems"><\/div><div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin:16px 0"><button class="ix-btn" onclick="ixDrop(1,\'klerus\')">Klerus</button><button class="ix-btn" onclick="ixDrop(1,\'adel\')">Adel</button><button class="ix-btn" onclick="ixDrop(1,\'volk\')">Bauern/B\u00FCrger</button></div><div class="ix-feedback" id="ixFb"><\/div>';
+const items=[{n:'Bischöfe und Mönche',t:'klerus'},{n:'Ritter und Fürsten',t:'adel'},{n:'Handwerker und Händler',t:'volk'},{n:'Priester und Äbte',t:'klerus'},{n:'K\u00F6nig und Herzöge',t:'adel'},{n:'Leibeigene Bauern',t:'volk'}];
+window._ixData={items,sel:null,done:0,correct:0};
+const g=document.getElementById('ixItems');items.forEach((it,i)=>{const d=document.createElement('div');d.className='ix-item';d.textContent=it.n;d.onclick=()=>{document.querySelectorAll('.ix-item').forEach(x=>x.classList.remove('selected'));d.classList.add('selected');window._ixData.sel=i};g.appendChild(d)});},
+// Mod 2: Renaissance — Persönlichkeiten zuordnen
+function(){el.innerHTML='<p>Ordne die Leistung der richtigen Person zu.</p><div class="ix-grid" id="ixItems"><\/div><div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin:16px 0"><button class="ix-btn" onclick="ixDrop(2,\'gutenberg\')">Gutenberg</button><button class="ix-btn" onclick="ixDrop(2,\'luther\')">Luther</button><button class="ix-btn" onclick="ixDrop(2,\'davinci\')">Da Vinci</button></div><div class="ix-feedback" id="ixFb"><\/div>';
+const items=[{n:'Buchdruck mit beweglichen Lettern',t:'gutenberg'},{n:'95 Thesen gegen den Ablasshandel',t:'luther'},{n:'Mona Lisa und anatomische Studien',t:'davinci'},{n:'Bibel\u00FCbersetzung ins Deutsche',t:'luther'},{n:'Flugmaschinen-Entwürfe',t:'davinci'},{n:'Revolution der Wissensverbreitung',t:'gutenberg'}];
+window._ixData={items,sel:null,done:0,correct:0};
+const g=document.getElementById('ixItems');items.forEach((it,i)=>{const d=document.createElement('div');d.className='ix-item';d.textContent=it.n;d.onclick=()=>{document.querySelectorAll('.ix-item').forEach(x=>x.classList.remove('selected'));d.classList.add('selected');window._ixData.sel=i};g.appendChild(d)});},
+// Mod 3: Aufkl\u00E4rung — Denker ihren Ideen zuordnen
+function(){el.innerHTML='<p>Ordne die Idee dem richtigen Aufklärer zu.</p><div class="ix-grid" id="ixItems"><\/div><div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin:16px 0"><button class="ix-btn" onclick="ixDrop(3,\'montesquieu\')">Montesquieu</button><button class="ix-btn" onclick="ixDrop(3,\'voltaire\')">Voltaire</button><button class="ix-btn" onclick="ixDrop(3,\'rousseau\')">Rousseau</button><button class="ix-btn" onclick="ixDrop(3,\'kant\')">Kant</button></div><div class="ix-feedback" id="ixFb"><\/div>';
+const items=[{n:'Gewaltenteilung',t:'montesquieu'},{n:'Meinungsfreiheit und Toleranz',t:'voltaire'},{n:'Volkssouveränität',t:'rousseau'},{n:'Sapere aude — Habe Mut!',t:'kant'},{n:'Legislative, Exekutive, Judikative',t:'montesquieu'},{n:'Gesellschaftsvertrag',t:'rousseau'}];
+window._ixData={items,sel:null,done:0,correct:0};
+const g=document.getElementById('ixItems');items.forEach((it,i)=>{const d=document.createElement('div');d.className='ix-item';d.textContent=it.n;d.onclick=()=>{document.querySelectorAll('.ix-item').forEach(x=>x.classList.remove('selected'));d.classList.add('selected');window._ixData.sel=i};g.appendChild(d)});},
+// Mod 4: Revolution — Ereignisse chronologisch
+function(){el.innerHTML='<p>Bringe die Ereignisse der Franz\u00F6sischen Revolution in die richtige Reihenfolge! Klicke sie nacheinander an.</p><div class="ix-grid" id="ixItems"><\/div><div class="ix-feedback" id="ixFb"><\/div>';
+const items=[{n:'Sturm auf die Bastille (1789)',o:0},{n:'Erkl\u00E4rung der Menschenrechte (1789)',o:1},{n:'Hinrichtung Ludwigs XVI. (1793)',o:2},{n:'Schreckensherrschaft (1793-94)',o:3},{n:'Napoleon ergreift die Macht (1799)',o:4}];
+const shuffled=[...items].sort(()=>Math.random()-.5);window._ixOrder={items:shuffled,picked:[],step:0};
+const g=document.getElementById('ixItems');shuffled.forEach((it,i)=>{const d=document.createElement('div');d.className='ix-item';d.textContent=it.n;d.onclick=()=>{const od=window._ixOrder;if(d.classList.contains('placed'))return;if(it.o===od.step){d.classList.add('correct','placed');od.step++;od.picked.push(i);if(od.step>=items.length){const fb=document.getElementById('ixFb');fb.className='ix-feedback pass';fb.textContent='\u2705 Perfekt! Richtige Reihenfolge!';if(!state.interactiveResults[4]){state.interactiveResults[4]=true;addXP(20,'Interaktive Übung gelöst');saveState()}}}else{d.classList.add('wrong');setTimeout(()=>d.classList.remove('wrong'),800)}};g.appendChild(d)});},
+// Mod 5: Industrielle Revolution — Erfindungen zuordnen
+function(){el.innerHTML='<p>Wer erfand was? Ordne richtig zu.</p><div class="ix-grid" id="ixItems"><\/div><div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin:16px 0"><button class="ix-btn" onclick="ixDrop(5,\'watt\')">James Watt</button><button class="ix-btn" onclick="ixDrop(5,\'stephenson\')">Stephenson</button><button class="ix-btn" onclick="ixDrop(5,\'marx\')">Karl Marx</button></div><div class="ix-feedback" id="ixFb"><\/div>';
+const items=[{n:'Verbesserte Dampfmaschine',t:'watt'},{n:'Erste Eisenbahn (1825)',t:'stephenson'},{n:'\"Das Kapital\"',t:'marx'},{n:'Dampfkraft f\u00FCr Fabriken',t:'watt'},{n:'Kommunistisches Manifest',t:'marx'},{n:'Lokomotive \"Rocket\"',t:'stephenson'}];
+window._ixData={items,sel:null,done:0,correct:0};
+const g=document.getElementById('ixItems');items.forEach((it,i)=>{const d=document.createElement('div');d.className='ix-item';d.textContent=it.n;d.onclick=()=>{document.querySelectorAll('.ix-item').forEach(x=>x.classList.remove('selected'));d.classList.add('selected');window._ixData.sel=i};g.appendChild(d)});},
+// Mod 6: Imperialismus/WW1 — Bündnisse zuordnen
+function(){el.innerHTML='<p>Ordne die L\u00E4nder dem richtigen Bündnis im Ersten Weltkrieg zu.</p><div class="ix-grid" id="ixItems"><\/div><div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin:16px 0"><button class="ix-btn" onclick="ixDrop(6,\'entente\')">Triple Entente</button><button class="ix-btn" onclick="ixDrop(6,\'mittel\')">Mittelmächte</button></div><div class="ix-feedback" id="ixFb"><\/div>';
+const items=[{n:'Frankreich',t:'entente'},{n:'Deutsches Reich',t:'mittel'},{n:'Grossbritannien',t:'entente'},{n:'\u00D6sterreich-Ungarn',t:'mittel'},{n:'Russland',t:'entente'},{n:'Osmanisches Reich',t:'mittel'}];
+window._ixData={items,sel:null,done:0,correct:0};
+const g=document.getElementById('ixItems');items.forEach((it,i)=>{const d=document.createElement('div');d.className='ix-item';d.textContent=it.n;d.onclick=()=>{document.querySelectorAll('.ix-item').forEach(x=>x.classList.remove('selected'));d.classList.add('selected');window._ixData.sel=i};g.appendChild(d)});},
+// Mod 7: NS-Zeit — Ereignisse chronologisch
+function(){el.innerHTML='<p>Bringe die Ereignisse in die richtige Reihenfolge!</p><div class="ix-grid" id="ixItems"><\/div><div class="ix-feedback" id="ixFb"><\/div>';
+const items=[{n:'Hitler wird Reichskanzler (1933)',o:0},{n:'Nürnberger Gesetze (1935)',o:1},{n:'Pogromnacht (1938)',o:2},{n:'Beginn des Zweiten Weltkriegs (1939)',o:3},{n:'Kapitulation Deutschlands (1945)',o:4}];
+const shuffled=[...items].sort(()=>Math.random()-.5);window._ixOrder={items:shuffled,picked:[],step:0};
+const g=document.getElementById('ixItems');shuffled.forEach((it,i)=>{const d=document.createElement('div');d.className='ix-item';d.textContent=it.n;d.onclick=()=>{const od=window._ixOrder;if(d.classList.contains('placed'))return;if(it.o===od.step){d.classList.add('correct','placed');od.step++;od.picked.push(i);if(od.step>=items.length){const fb=document.getElementById('ixFb');fb.className='ix-feedback pass';fb.textContent='\u2705 Perfekt! Richtige Reihenfolge!';if(!state.interactiveResults[7]){state.interactiveResults[7]=true;addXP(20,'Interaktive Übung gelöst');saveState()}}}else{d.classList.add('wrong');setTimeout(()=>d.classList.remove('wrong'),800)}};g.appendChild(d)});},
+// Mod 8: Kalter Krieg — BRD/DDR zuordnen
+function(){el.innerHTML='<p>Ordne die Merkmale dem richtigen deutschen Staat zu.</p><div class="ix-grid" id="ixItems"><\/div><div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin:16px 0"><button class="ix-btn" onclick="ixDrop(8,\'brd\')">BRD (West)</button><button class="ix-btn" onclick="ixDrop(8,\'ddr\')">DDR (Ost)</button></div><div class="ix-feedback" id="ixFb"><\/div>';
+const items=[{n:'Marktwirtschaft',t:'brd'},{n:'Planwirtschaft',t:'ddr'},{n:'NATO-Mitglied',t:'brd'},{n:'Warschauer Pakt',t:'ddr'},{n:'Mehrparteiensystem',t:'brd'},{n:'SED als Einheitspartei',t:'ddr'}];
+window._ixData={items,sel:null,done:0,correct:0};
+const g=document.getElementById('ixItems');items.forEach((it,i)=>{const d=document.createElement('div');d.className='ix-item';d.textContent=it.n;d.onclick=()=>{document.querySelectorAll('.ix-item').forEach(x=>x.classList.remove('selected'));d.classList.add('selected');window._ixData.sel=i};g.appendChild(d)});},
+// Mod 9: Globalisierung — Organisationen zuordnen
+function(){el.innerHTML='<p>Ordne die Aufgabe der richtigen Organisation zu.</p><div class="ix-grid" id="ixItems"><\/div><div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin:16px 0"><button class="ix-btn" onclick="ixDrop(9,\'eu\')">EU</button><button class="ix-btn" onclick="ixDrop(9,\'uno\')">UNO</button><button class="ix-btn" onclick="ixDrop(9,\'nato\')">NATO</button></div><div class="ix-feedback" id="ixFb"><\/div>';
+const items=[{n:'Freier Warenverkehr in Europa',t:'eu'},{n:'Friedenssicherung weltweit (Blauhelme)',t:'uno'},{n:'Militärische Verteidigung des Westens',t:'nato'},{n:'Euro als gemeinsame Währung',t:'eu'},{n:'Allgemeine Erkl\u00E4rung der Menschenrechte',t:'uno'},{n:'Bündnisfall nach Artikel 5',t:'nato'}];
+window._ixData={items,sel:null,done:0,correct:0};
+const g=document.getElementById('ixItems');items.forEach((it,i)=>{const d=document.createElement('div');d.className='ix-item';d.textContent=it.n;d.onclick=()=>{document.querySelectorAll('.ix-item').forEach(x=>x.classList.remove('selected'));d.classList.add('selected');window._ixData.sel=i};g.appendChild(d)});}
+];
+if(exercises[modId])exercises[modId]();
+}
+// Interactive helpers
+window.ixDrop=function(modId,cat){
+const d=window._ixData;if(d.sel===null)return;
+const item=d.items[d.sel];const els=document.querySelectorAll('.ix-item');
+if(item.t===cat){els[d.sel].classList.add('correct');els[d.sel].classList.add('placed');d.correct++}
+else{els[d.sel].classList.add('wrong');setTimeout(()=>els[d.sel].classList.remove('wrong'),800)}
+d.done++;d.sel=null;els.forEach(e=>e.classList.remove('selected'));
+if(d.done>=d.items.length){const fb=document.getElementById('ixFb');fb.className='ix-feedback '+(d.correct>=4?'pass':'fail');fb.textContent=d.correct>=4?'\u2705 '+d.correct+'/'+d.items.length+' richtig!':'\u274C '+d.correct+'/'+d.items.length+' \u2014 Versuch es nochmal!';
+if(d.correct>=4&&!state.interactiveResults[modId]){state.interactiveResults[modId]=true;addXP(20,'Interaktive Übung gelöst');saveState()}}
+};
+
+// === Start App ===
+function startApp(){
+const name=document.getElementById('nameInput').value.trim();if(!name)return;
+state.name=name;state.started=true;saveState();
+document.getElementById('welcomeScreen').style.display='none';
+renderModule(0);updateStreak();
+}
+
+// === Init ===
+(function init(){
+if(loadState()&&state.started){
+document.getElementById('welcomeScreen').style.display='none';
+document.documentElement.setAttribute('data-theme',state.designTheme);
+renderModule(state.currentModule);updateUI();updateStreak();
+}else{
+document.documentElement.setAttribute('data-theme',state.designTheme);
+buildThemePicker();
+}
+renderSidebar();
+document.addEventListener('click',e=>{if(!e.target.closest('.theme-picker-wrap'))document.getElementById('themePickerDD')?.classList.remove('open')});
+})();
+</script>
+
+<script>
+(function(){
+var KEY=null;
+var scripts=document.querySelectorAll('script');
+for(var i=0;i<scripts.length;i++){
+var km=scripts[i].textContent.match(/STORAGE_KEY\s*=\s*['"](\w+)['"]/);
+if(km){KEY=km[1];break;}
+}
+if(!location.hash.match(/modules=/)){try{Object.keys(localStorage).filter(function(k){return k.indexOf("_allowed_modules")!==-1}).forEach(function(k){localStorage.removeItem(k)})}catch(e){}}
+var LOCK_KEY=(KEY||'app')+'_allowed_modules';
+var h=location.hash.match(/modules=([0-9,]+)/);
+var allowed=null;
+if(h){
+allowed=h[1].split(",").map(Number);
+try{localStorage.setItem(LOCK_KEY,JSON.stringify(allowed));}catch(e){}
+}else{
+try{var stored=localStorage.getItem(LOCK_KEY);if(stored)allowed=JSON.parse(stored);}catch(e){}
+}
+if(!allowed||!allowed.length)return;
+function filterSidebar(){
+var items=document.querySelectorAll("#sidebarModules > *");
+for(var i=0;i<items.length;i++){
+items[i].style.display=(allowed.indexOf(i)===-1)?"none":"";
+}
+}
+var sb=document.getElementById("sidebarModules");
+if(sb){new MutationObserver(filterSidebar).observe(sb,{childList:true});filterSidebar();}
+document.addEventListener("click",function(e){
+var t=e.target.closest("[onclick]");
+if(!t)return;
+var oc=t.getAttribute("onclick")||"";
+var idx=oc.indexOf("renderModule(");
+if(idx===-1)return;
+var num=parseInt(oc.substring(idx+13));
+if(!isNaN(num)&&allowed.indexOf(num)===-1){e.preventDefault();e.stopImmediatePropagation();}
+},true);
+setTimeout(filterSidebar,500);
+window.addEventListener("hashchange",function(){
+var hh=location.hash.match(/modules=([0-9,]+)/);
+if(hh){
+allowed=hh[1].split(",").map(Number);
+try{localStorage.setItem(LOCK_KEY,JSON.stringify(allowed));}catch(e){}
+filterSidebar();
+}
+});
+})();
+</script>
+
+<div class="zoom-controls" role="toolbar" aria-label="Zoom-Steuerung">
+<button class="zoom-btn" onclick="zoomOut()" title="Verkleinern (Taste -)" aria-label="Verkleinern">&#8722;</button>
+<button class="zoom-btn" onclick="zoomReset()" title="Zoom zurücksetzen" aria-label="Zoom zurücksetzen" style="font-size:10px;position:relative"><span id="zoomLvl">100%</span></button>
+<button class="zoom-btn" onclick="zoomIn()" title="Vergrößern (Taste +)" aria-label="Vergrößern">+</button>
+</div>
+
+<script>
+(function(){
+var zl=100;
+function applyZoom(){document.body.style.zoom=zl/100;var e=document.getElementById('zoomLvl');if(e)e.textContent=zl+'%';}
+window.zoomIn=function(){if(zl<200){zl+=10;applyZoom();}};
+window.zoomOut=function(){if(zl>50){zl-=10;applyZoom();}};
+window.zoomReset=function(){zl=100;applyZoom();};
+document.addEventListener('keydown',function(e){
+if(e.target.tagName==='INPUT'||e.target.tagName==='TEXTAREA'||e.target.isContentEditable)return;
+if((e.key==='+'||e.key==='=')&&!e.ctrlKey&&!e.metaKey){e.preventDefault();zoomIn();}
+else if((e.key==='-'||e.key==='_')&&!e.ctrlKey&&!e.metaKey){e.preventDefault();zoomOut();}
+else if(e.key==='0'&&!e.ctrlKey&&!e.metaKey){e.preventDefault();zoomReset();}
+});
+})();
+</script>
+
+<script>
+/* A11y: Focus trap for modal overlays */
+document.addEventListener('keydown',function(e){if(e.key==='Tab'){var ov=document.querySelector('.cert-overlay.active,.modal-overlay.active,[role="dialog"].active');if(ov){var fc=ov.querySelectorAll('button,a,[tabindex="0"],input,select,textarea');if(fc.length){var f=fc[0],l=fc[fc.length-1];if(e.shiftKey&&document.activeElement===f){e.preventDefault();l.focus()}else if(!e.shiftKey&&document.activeElement===l){e.preventDefault();f.focus()}}}}});
+</script>
+</body>
+</html>

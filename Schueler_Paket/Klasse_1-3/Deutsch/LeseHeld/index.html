@@ -1,0 +1,1147 @@
+<!DOCTYPE html>
+<html lang="de" data-theme="ozean-dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>LeseHeld — Lese-Abenteuer für Klasse 2-3</title>
+<meta name="description" content="Interaktive Lern-App für Klasse 2-3: Leseverständnis, Textarbeit und Satzverständnis — offline und mit Spaß!">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+[data-theme="wald-dark"]{--bg:#0c1a0f;--bg2:#132818;--bg3:#1a3520;--card:#15291a;--text:#d4e8d4;--text-dim:#8aab8a;--heading:#e8f5e9;--neon:#4ade80;--neon-dim:rgba(74,222,128,.12);--neon-glow:0 0 20px rgba(74,222,128,.25);--link:#66bb6a;--border:rgba(74,222,128,.15);--success:#4ade80;--warning:#fbbf24;--danger:#f87171;--xp-purple:#a78bfa;--badge-cyan:#22d3ee;--streak-red:#f87171;--radius:20px;--shadow:0 4px 24px rgba(0,0,0,.3);--font:'Segoe UI',system-ui,sans-serif;--mono:'Courier New',monospace;--serif:Georgia,serif}
+[data-theme="wald-light"]{--bg:#f1f8e9;--bg2:#e8f5e9;--bg3:#c8e6c9;--card:#fff;--text:#2e4a2e;--text-dim:#5a7a5a;--heading:#1b5e20;--neon:#2e7d32;--neon-dim:rgba(46,125,50,.08);--neon-glow:0 0 12px rgba(46,125,50,.15);--link:#388e3c;--border:rgba(46,125,50,.15);--success:#2e7d32;--warning:#f59e0b;--danger:#dc2626;--xp-purple:#7c3aed;--badge-cyan:#0891b2;--streak-red:#dc2626;--radius:20px;--shadow:0 4px 24px rgba(0,0,0,.08);--font:'Segoe UI',system-ui,sans-serif;--mono:'Courier New',monospace;--serif:Georgia,serif}
+[data-theme="ozean-dark"]{--bg:#0a1628;--bg2:#0f1e38;--bg3:#132848;--card:#132040;--text:#c8e0f8;--text-dim:#6a9cc8;--heading:#e0f2fe;--neon:#38bdf8;--neon-dim:rgba(56,189,248,.12);--neon-glow:0 0 20px rgba(56,189,248,.25);--link:#0ea5e9;--border:rgba(56,189,248,.15);--success:#22d3ee;--warning:#fbbf24;--danger:#f87171;--xp-purple:#a78bfa;--badge-cyan:#22d3ee;--streak-red:#f87171;--radius:16px;--shadow:0 4px 24px rgba(0,0,0,.35);--font:'Segoe UI',system-ui,sans-serif;--mono:'Courier New',monospace;--serif:Georgia,serif}
+[data-theme="ozean-light"]{--bg:#f0f9ff;--bg2:#e0f2fe;--bg3:#bae6fd;--card:#fff;--text:#0c4a6e;--text-dim:#4a8ab0;--heading:#0c4a6e;--neon:#0284c7;--neon-dim:rgba(2,132,199,.08);--neon-glow:0 0 12px rgba(2,132,199,.15);--link:#0369a1;--border:rgba(2,132,199,.15);--success:#0891b2;--warning:#f59e0b;--danger:#dc2626;--xp-purple:#7c3aed;--badge-cyan:#0891b2;--streak-red:#dc2626;--radius:16px;--shadow:0 4px 24px rgba(0,0,0,.06);--font:'Segoe UI',system-ui,sans-serif;--mono:'Courier New',monospace;--serif:Georgia,serif}
+[data-theme="space-dark"]{--bg:#07020e;--bg2:#0e0620;--bg3:#150a30;--card:#110a28;--text:#d8d0f0;--text-dim:#8a7cb8;--heading:#f0e8ff;--neon:#c084fc;--neon-dim:rgba(192,132,252,.12);--neon-glow:0 0 20px rgba(192,132,252,.25);--link:#a855f7;--border:rgba(192,132,252,.15);--success:#a78bfa;--warning:#fbbf24;--danger:#f87171;--xp-purple:#c084fc;--badge-cyan:#22d3ee;--streak-red:#f87171;--radius:12px;--shadow:0 4px 24px rgba(0,0,0,.4);--font:'Segoe UI',system-ui,sans-serif;--mono:'Courier New',monospace;--serif:Georgia,serif}
+[data-theme="space-light"]{--bg:#faf5ff;--bg2:#f3e8ff;--bg3:#e9d5ff;--card:#fff;--text:#2e1065;--text-dim:#7c5aad;--heading:#2e1065;--neon:#7c3aed;--neon-dim:rgba(124,58,237,.08);--neon-glow:0 0 12px rgba(124,58,237,.15);--link:#6d28d9;--border:rgba(124,58,237,.15);--success:#7c3aed;--warning:#f59e0b;--danger:#dc2626;--xp-purple:#7c3aed;--badge-cyan:#0891b2;--streak-red:#dc2626;--radius:12px;--shadow:0 4px 24px rgba(0,0,0,.06);--font:'Segoe UI',system-ui,sans-serif;--mono:'Courier New',monospace;--serif:Georgia,serif}
+[data-theme="candy-dark"]{--bg:#1a1a2e;--bg2:#222244;--bg3:#2a2a55;--card:#262650;--text:#f0dde8;--text-dim:#b088a0;--heading:#fff;--neon:#ff6b9d;--neon-dim:rgba(255,107,157,.12);--neon-glow:0 0 20px rgba(255,107,157,.25);--link:#f472b6;--border:rgba(255,107,157,.15);--success:#f472b6;--warning:#fbbf24;--danger:#f87171;--xp-purple:#c084fc;--badge-cyan:#22d3ee;--streak-red:#f87171;--radius:24px;--shadow:0 4px 24px rgba(0,0,0,.3);--font:'Comic Sans MS','Chalkboard SE',cursive,system-ui;--mono:'Courier New',monospace;--serif:Georgia,serif}
+[data-theme="candy-light"]{--bg:#fff0f6;--bg2:#fce7f3;--bg3:#fbcfe8;--card:#fff;--text:#831843;--text-dim:#a0547a;--heading:#831843;--neon:#ec4899;--neon-dim:rgba(236,72,153,.08);--neon-glow:0 0 12px rgba(236,72,153,.15);--link:#db2777;--border:rgba(236,72,153,.15);--success:#ec4899;--warning:#f59e0b;--danger:#dc2626;--xp-purple:#7c3aed;--badge-cyan:#0891b2;--streak-red:#dc2626;--radius:24px;--shadow:0 4px 24px rgba(0,0,0,.06);--font:'Comic Sans MS','Chalkboard SE',cursive,system-ui;--mono:'Courier New',monospace;--serif:Georgia,serif}
+html{scroll-behavior:smooth}
+body{font-family:var(--font);background:var(--bg);color:var(--text);font-size:17px;line-height:1.7;min-height:100vh;transition:background .3s,color .3s}
+a{color:var(--link);text-decoration:none}a:hover{text-decoration:underline}
+.skip-nav{position:absolute;top:-50px;left:8px;background:var(--neon);color:var(--bg);padding:8px 16px;z-index:9999;border-radius:0 0 8px 8px;font-weight:700}.skip-nav:focus{top:0}
+.header{position:sticky;top:0;z-index:100;background:var(--bg2);border-bottom:1px solid var(--border);padding:10px 20px;display:flex;align-items:center;gap:12px;backdrop-filter:blur(12px)}
+.header .logo{display:flex;align-items:center;gap:10px;font-weight:700;font-size:20px;color:var(--heading)}.header .logo svg{width:32px;height:32px}
+.header .xp-bar{flex:1;max-width:260px;margin-left:auto}.header .xp-label{font-size:12px;color:var(--text-dim);display:flex;justify-content:space-between;font-weight:600}.header .xp-track{height:8px;background:var(--bg3);border-radius:4px;overflow:hidden;margin-top:2px}.header .xp-fill{height:100%;background:var(--neon);border-radius:4px;transition:width .5s}
+.hamburger{display:none;background:none;border:2px solid var(--border);color:var(--text);font-size:22px;padding:4px 10px;border-radius:var(--radius);cursor:pointer}@media(max-width:800px){.hamburger{display:block}}
+.sidebar{position:fixed;top:54px;left:0;width:280px;height:calc(100vh - 54px);background:var(--bg2);border-right:1px solid var(--border);overflow-y:auto;padding:16px;z-index:90;transition:transform .3s}
+.sidebar h3{font-size:14px;color:var(--text-dim);text-transform:uppercase;letter-spacing:2px;margin-bottom:12px}
+.sidebar-item{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:var(--radius);cursor:pointer;color:var(--text);font-size:15px;transition:background .2s;margin-bottom:4px;border:1px solid transparent}.sidebar-item:hover{background:var(--neon-dim);border-color:var(--border)}.sidebar-item.active{background:var(--neon-dim);border-color:var(--neon);color:var(--neon);font-weight:700}.sidebar-item.completed::after{content:'✓';margin-left:auto;color:var(--success);font-weight:700}
+.sidebar-link{display:block;padding:10px 12px;border-radius:var(--radius);color:var(--text-dim);font-size:14px;cursor:pointer;transition:background .2s;margin-bottom:2px}.sidebar-link:hover{background:var(--neon-dim);color:var(--text)}
+@media(max-width:800px){.sidebar{transform:translateX(-100%)}.sidebar.open{transform:translateX(0)}}
+.main{margin-left:280px;padding:32px;max-width:860px}@media(max-width:800px){.main{margin-left:0;padding:16px}}
+.welcome{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:70vh;text-align:center;padding:40px 20px}
+.welcome .hero-emoji{font-size:80px;margin-bottom:16px;animation:bounce 2s ease-in-out infinite}@keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-16px)}}
+.welcome h1{font-size:clamp(32px,6vw,52px);color:var(--heading);margin-bottom:8px}.welcome .sub{font-size:clamp(16px,3vw,20px);color:var(--text-dim);margin-bottom:32px;max-width:500px}
+.welcome input{font-size:20px;padding:14px 24px;border-radius:var(--radius);border:2px solid var(--border);background:var(--bg2);color:var(--text);text-align:center;width:min(340px,90%);outline:none;font-family:var(--font);transition:border-color .3s}.welcome input:focus{border-color:var(--neon)}
+.welcome .start-btn{margin-top:20px;padding:16px 48px;font-size:20px;font-weight:700;border-radius:var(--radius);border:none;background:var(--neon);color:var(--bg);cursor:pointer;font-family:var(--font);transition:transform .2s,box-shadow .2s}.welcome .start-btn:hover{transform:scale(1.05);box-shadow:var(--neon-glow)}.welcome .start-btn:disabled{opacity:.5;cursor:not-allowed;transform:none}
+.theme-picker{display:flex;gap:8px;margin-top:20px;flex-wrap:wrap;justify-content:center}.theme-btn{width:44px;height:44px;border-radius:50%;border:3px solid transparent;cursor:pointer;transition:transform .2s,border-color .2s}.theme-btn:hover{transform:scale(1.15)}.theme-btn.active{border-color:var(--heading);transform:scale(1.15)}.mode-toggle{background:var(--bg3);border:2px solid var(--border);color:var(--text);padding:6px 14px;border-radius:20px;cursor:pointer;font-size:18px;transition:all .2s;margin-left:8px}.mode-toggle:hover{border-color:var(--neon)}
+.module-header{text-align:center;margin-bottom:32px}.module-header .mod-badge{display:inline-block;background:var(--neon-dim);border:1px solid var(--border);color:var(--neon);padding:6px 16px;border-radius:20px;font-size:14px;font-weight:600;margin-bottom:12px}.module-header h1{color:var(--heading);font-size:clamp(24px,4vw,36px)}.module-header .mod-desc{color:var(--text-dim);margin-top:8px;font-size:16px}
+.lesson-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:24px 28px;margin-bottom:20px;box-shadow:var(--shadow)}.lesson-card h3{color:var(--heading);font-size:20px;margin-bottom:12px}.lesson-card p,.lesson-card li{font-size:17px;line-height:1.8;margin-bottom:8px}.lesson-card .info-box{background:var(--neon-dim);border-left:4px solid var(--neon);padding:14px 18px;border-radius:0 var(--radius) var(--radius) 0;margin:16px 0;font-size:16px}.lesson-card ul,.lesson-card ol{padding-left:24px;margin:12px 0}
+.interactive-area{background:var(--card);border:2px solid var(--neon);border-radius:var(--radius);padding:24px;margin:24px 0;box-shadow:var(--neon-glow)}.interactive-area h4{color:var(--neon);font-size:18px;margin-bottom:16px}#interactiveContent{min-height:100px}
+.ix-grid{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;margin:16px 0}.ix-item{background:var(--bg3);border:2px solid var(--border);border-radius:var(--radius);padding:14px 20px;font-size:20px;cursor:pointer;transition:all .2s;user-select:none;text-align:center;min-width:60px}.ix-item:hover{border-color:var(--neon);background:var(--neon-dim)}.ix-item.selected{border-color:var(--neon);background:var(--neon-dim);box-shadow:var(--neon-glow)}.ix-item.correct{border-color:var(--success);background:rgba(74,222,128,.15);color:var(--success)}.ix-item.wrong{border-color:var(--danger);background:rgba(248,113,113,.15);color:var(--danger)}.ix-item.placed{opacity:.4;pointer-events:none}
+.ix-btn{background:var(--neon);color:var(--bg);border:none;padding:12px 28px;border-radius:var(--radius);font-size:17px;font-weight:700;cursor:pointer;font-family:var(--font);margin-top:16px;transition:transform .2s}.ix-btn:hover{transform:scale(1.05)}.ix-btn:disabled{opacity:.5;cursor:not-allowed;transform:none}
+.ix-feedback{text-align:center;padding:14px;border-radius:var(--radius);font-size:18px;font-weight:700;margin-top:12px;display:none}.ix-feedback.pass{display:block;background:rgba(74,222,128,.12);color:var(--success)}.ix-feedback.fail{display:block;background:rgba(248,113,113,.12);color:var(--danger)}
+.ix-blank{display:inline-block;min-width:80px;border-bottom:2px dashed var(--neon);padding:2px 8px;margin:0 4px;cursor:pointer;transition:all .2s;text-align:center;font-weight:700;color:var(--neon)}.ix-blank.filled{border-bottom-style:solid;background:var(--neon-dim);border-radius:6px}.ix-blank.correct-b{border-color:var(--success);color:var(--success)}.ix-blank.wrong-b{border-color:var(--danger);color:var(--danger)}
+.ix-wordbank{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:16px 0}.ix-wb-btn{background:var(--bg3);border:2px solid var(--border);border-radius:var(--radius);padding:8px 16px;font-size:16px;cursor:pointer;transition:all .2s;font-family:var(--font)}.ix-wb-btn:hover{border-color:var(--neon);background:var(--neon-dim)}.ix-wb-btn.used{opacity:.3;pointer-events:none}
+.ix-rf-stmt{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:14px 18px;margin-bottom:10px;display:flex;align-items:center;gap:12px}.ix-rf-text{flex:1;font-size:16px}.ix-rf-btns{display:flex;gap:6px}.ix-rf-btn{padding:6px 14px;border-radius:var(--radius);border:2px solid var(--border);background:var(--bg3);cursor:pointer;font-size:14px;font-weight:700;transition:all .2s}.ix-rf-btn:hover{border-color:var(--neon)}.ix-rf-btn.sel{border-color:var(--neon);background:var(--neon-dim);color:var(--neon)}.ix-rf-btn.correct-b{border-color:var(--success);background:rgba(74,222,128,.15);color:var(--success)}.ix-rf-btn.wrong-b{border-color:var(--danger);background:rgba(248,113,113,.15);color:var(--danger)}
+.reading-passage{background:var(--neon-dim);padding:20px 24px;border-radius:var(--radius);font-size:18px;line-height:2;margin-bottom:20px;border-left:4px solid var(--neon)}
+.quiz-section,.boss-section{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:24px;margin:20px 0}.boss-section{border-color:var(--warning);box-shadow:0 0 20px rgba(251,191,36,.1)}.quiz-section h3,.boss-section h3{color:var(--heading);margin-bottom:16px;font-size:20px}.boss-sub{color:var(--warning);font-size:14px;margin-bottom:16px}
+.quiz-q{margin-bottom:20px}.quiz-q p{font-weight:600;font-size:17px;margin-bottom:10px;color:var(--heading)}.quiz-q label{display:block;padding:10px 16px;border-radius:var(--radius);border:1px solid var(--border);margin-bottom:6px;cursor:pointer;transition:all .2s;font-size:16px}.quiz-q label:hover{background:var(--neon-dim)}.quiz-q label.correct{background:rgba(74,222,128,.15);border-color:var(--success);color:var(--success)}.quiz-q label.wrong{background:rgba(248,113,113,.15);border-color:var(--danger);color:var(--danger)}
+.quiz-submit{background:var(--neon);color:var(--bg);border:none;padding:12px 28px;border-radius:var(--radius);font-size:16px;font-weight:700;cursor:pointer;font-family:var(--font)}.quiz-submit:disabled{opacity:.5;cursor:not-allowed}
+.quiz-result{padding:14px;border-radius:var(--radius);font-weight:700;font-size:17px;margin-top:12px;text-align:center}.quiz-result.pass{background:rgba(74,222,128,.12);color:var(--success)}.quiz-result.fail{background:rgba(248,113,113,.12);color:var(--danger)}
+.quiz-explanation{margin-top:6px;padding:8px 14px;border-radius:var(--radius);background:rgba(74,222,128,.08);border-left:3px solid var(--success);font-size:14px;color:var(--success);font-weight:600}
+.badges-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:12px;margin-top:16px}.badge-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px;text-align:center}.badge-card.earned{border-color:var(--neon);box-shadow:var(--neon-glow)}.badge-card .badge-icon{font-size:36px;margin-bottom:6px}.badge-card .badge-name{font-weight:700;font-size:14px;color:var(--heading)}.badge-card .badge-desc{font-size:12px;color:var(--text-dim);margin-top:4px}.badge-card.locked{opacity:.4}
+.stats-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:16px;margin-top:16px}.stat-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:20px;text-align:center}.stat-card .stat-val{font-size:36px;font-weight:700;color:var(--neon)}.stat-card .stat-label{font-size:14px;color:var(--text-dim);margin-top:4px}
+.notif{position:fixed;top:-80px;right:20px;padding:14px 20px;border-radius:var(--radius);font-size:15px;z-index:999;transition:top .4s ease;box-shadow:var(--shadow);max-width:340px}.notif.show{top:70px}.notif.xp{background:var(--xp-purple);color:#fff}.notif.badge{background:var(--badge-cyan);color:#000}.notif.streak{background:var(--streak-red);color:#fff}.notif.level{background:var(--neon);color:var(--bg)}.notif-title{font-weight:700;font-size:16px}.notif-text{font-size:13px;opacity:.85;margin-top:2px}
+.level-up-overlay{position:fixed;inset:0;z-index:500;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,.7)}.level-up-overlay.active{display:flex}.lvl-box{text-align:center;animation:popIn .5s ease}.lvl-icon{font-size:64px}.lvl-title{font-size:36px;font-weight:900;color:var(--neon);margin:8px 0}.lvl-name{font-size:20px;color:var(--heading)}@keyframes popIn{0%{transform:scale(0) rotate(-10deg);opacity:0}100%{transform:scale(1) rotate(0);opacity:1}}#confetti{position:fixed;inset:0;pointer-events:none;z-index:501;overflow:hidden}
+.cert-overlay{display:none;position:fixed;inset:0;z-index:400;background:rgba(0,0,0,.85);align-items:center;justify-content:center;flex-direction:column;padding:20px;overflow-y:auto}.cert-overlay.active{display:flex}.cert-picker{display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap;justify-content:center}.cert-picker button{padding:8px 16px;border-radius:var(--radius);border:2px solid var(--border);background:var(--bg2);color:var(--text);cursor:pointer;font-size:14px;font-family:var(--font);transition:all .2s}.cert-picker button.active{border-color:var(--neon);color:var(--neon);background:var(--neon-dim)}.cert-frame{width:min(700px,95vw);min-height:500px;border-radius:12px;overflow:hidden}.cert-actions{display:flex;gap:12px;margin-top:16px;flex-wrap:wrap;justify-content:center}.cert-actions button{padding:10px 20px;border-radius:var(--radius);border:2px solid var(--border);background:var(--bg2);color:var(--text);cursor:pointer;font-size:14px;font-family:var(--font);transition:all .2s}.cert-actions button:hover{border-color:var(--neon);color:var(--neon)}
+@media print{*{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important;color-adjust:exact!important}.header,.sidebar,.notif,.level-up-overlay,#confetti{display:none!important}.main{margin-left:0!important;padding:20px!important}.lesson-card{break-inside:avoid;page-break-inside:avoid;margin-bottom:24px}}
+.site-footer{text-align:center;padding:32px 0;margin-top:40px;border-top:1px solid var(--border);color:var(--text-dim);font-size:13px}.footer-logo{display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:8px;font-weight:700;color:var(--text)}
+
+.zoom-controls{position:fixed;bottom:16px;left:16px;display:flex;gap:4px;z-index:9999}
+.zoom-btn{width:32px;height:32px;border-radius:50%;border:1px solid var(--border,#2a3444);background:var(--bg2,#111827);color:var(--text,#d4dce8);cursor:pointer;font-size:15px;display:flex;align-items:center;justify-content:center;transition:all .2s;font-family:inherit;line-height:1}
+.zoom-btn:hover{border-color:var(--neon,#3b82f6);color:var(--neon,#3b82f6);transform:scale(1.1)}
+.zoom-btn:focus-visible{outline:2px solid var(--neon,#3b82f6);outline-offset:2px}
+.zoom-level{font-size:10px;position:absolute;top:-16px;left:50%;transform:translateX(-50%);color:var(--text-dim,#8899aa);white-space:nowrap;pointer-events:none}
+
+/* A11y: Print improvements */
+@media print{body{background:#fff!important;color:#000!important}.cert-overlay,.modal-overlay,.level-up-overlay,.theme-overlay,.zoom-controls{display:none!important}.lesson-card,.quiz-section,.boss-section,.interactive-area{break-inside:avoid;page-break-inside:avoid}}
+
+/* Audio/Speech */
+.tts-btn{background:none;border:none;cursor:pointer;font-size:.9em;opacity:.5;transition:all .2s;vertical-align:middle;margin-left:8px;padding:2px 6px;border-radius:4px}
+.tts-btn:hover{opacity:1;background:var(--bg2)}.tts-btn.speaking{opacity:1;color:var(--neon);animation:tts-pulse 1s infinite}
+@keyframes tts-pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.15)}}
+.tts-bar{display:flex;align-items:center;gap:8px;padding:6px 12px;background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);margin:8px 0;font-size:.8rem;flex-wrap:wrap}
+.tts-bar select{background:var(--bg);color:var(--text);border:1px solid var(--border);border-radius:4px;padding:2px 6px;font-size:.78rem}
+.tts-bar button{background:none;border:1px solid var(--border);border-radius:4px;padding:2px 8px;cursor:pointer;color:var(--text);font-size:.8rem}
+.tts-bar button:hover{background:var(--bg)}
+.speech-ex{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:16px;margin:12px 0;text-align:center}
+.speech-ex h4{margin:0 0 8px;font-size:1rem}
+.mic-btn{font-size:1.6em;background:none;border:2px solid var(--neon);border-radius:50%;width:52px;height:52px;cursor:pointer;transition:all .3s;color:var(--text);display:inline-flex;align-items:center;justify-content:center}
+.mic-btn:hover{background:var(--neon);color:var(--bg)}.mic-btn.rec{background:#ef4444;border-color:#ef4444;color:#fff;animation:tts-pulse 1s infinite}
+.sr-res{margin-top:8px;padding:6px 10px;border-radius:4px;font-weight:600;font-size:.85rem;display:inline-block}
+.sr-res.good{background:#22c55e22;color:#22c55e}.sr-res.retry{background:#f59e0b22;color:#f59e0b}
+.sr-na{font-size:.8rem;color:var(--text-dim);margin-top:8px}
+</style>
+</head>
+<body>
+<a href="#mainContent" class="skip-nav">Zum Inhalt springen</a>
+<header class="header" role="banner">
+  <button class="hamburger" onclick="toggleSidebar()" aria-label="Menü">☰</button>
+  <div class="logo">
+    <svg viewBox="0 0 32 32" fill="none" aria-hidden="true"><rect x="4" y="6" width="24" height="20" rx="3" fill="var(--neon-dim)" stroke="var(--neon)" stroke-width="1"/><line x1="9" y1="12" x2="23" y2="12" stroke="var(--neon)" stroke-width="1.5" opacity=".5"/><line x1="9" y1="16" x2="20" y2="16" stroke="var(--neon)" stroke-width="1.5" opacity=".5"/><line x1="9" y1="20" x2="17" y2="20" stroke="var(--neon)" stroke-width="1.5" opacity=".5"/><circle cx="22" cy="20" r="4" fill="var(--neon)" opacity=".8"/><text x="22" y="22" text-anchor="middle" font-size="5" font-weight="900" fill="var(--bg)">✓</text></svg>
+    <span>LeseHeld</span>
+  </div>
+  <div class="xp-bar"><div class="xp-label"><span id="levelName">ABC-Entdecker</span><span id="xpText">0 XP</span></div><div class="xp-track"><div class="xp-fill" id="xpFill" style="width:0%"></div></div></div>
+</header>
+<nav class="sidebar" id="sidebar" role="navigation" aria-label="Module">
+  <h3>Module</h3><div id="sidebarModules"></div>
+  <hr style="border:none;border-top:1px solid var(--border);margin:16px 0">
+  <div class="sidebar-link" onclick="showBadges()">🏅 Abzeichen</div>
+  <div class="sidebar-link" onclick="showStats()">📊 Statistik</div>
+  <div class="sidebar-link" onclick="showCert()">🎓 Urkunde</div>
+  <hr style="border:none;border-top:1px solid var(--border);margin:16px 0">
+  <div class="sidebar-link" onclick="exportData()">💾 Speichern</div>
+  <label class="sidebar-link" style="cursor:pointer">📂 Laden <input type="file" accept=".json" onchange="importData(event)" style="display:none"></label>
+  <div class="sidebar-link" onclick="if(confirm('Wirklich alles zurücksetzen?')){localStorage.removeItem(STORAGE_KEY);location.reload()}" style="color:var(--danger)">🗑️ Zurücksetzen</div>
+</nav>
+<main class="main" id="mainContent">
+  <div class="welcome" id="welcomeScreen">
+    <div class="hero-emoji" id="heroEmoji">🐠</div>
+    <h1 id="welcomeTitle">LeseHeld</h1>
+    <p class="sub" id="welcomeSub">Werde zum Lese-Helden — verstehe Texte und Geschichten!</p>
+    <input type="text" id="nameInput" placeholder="Dein Name" maxlength="24" aria-label="Dein Name" oninput="document.getElementById('startBtn').disabled=!this.value.trim()">
+    <button class="start-btn" id="startBtn" disabled onclick="startApp()">Abtauchen</button>
+    <div class="theme-picker" id="themePicker"></div>
+  </div>
+  <div id="moduleContent" style="display:none"></div>
+  <div id="badgesView" style="display:none"></div>
+  <div id="statsView" style="display:none"></div>
+</main>
+<div class="notif" id="notif" role="status" aria-live="polite" aria-atomic="true"><div class="notif-title" id="notifTitle"></div><div class="notif-text" id="notifText"></div></div>
+<div class="level-up-overlay" id="levelUpOverlay"><div class="lvl-box" id="levelUpBox"></div></div>
+<div id="confetti"></div>
+<div class="cert-overlay" id="certOverlay" role="dialog" aria-label="Urkunde" aria-modal="true">
+  <div class="cert-picker" id="certPicker"></div>
+  <div class="cert-frame" id="certFrame"></div>
+  <div class="cert-actions"><button onclick="printCert()">🖨️ Drucken / PDF</button><button onclick="closeCert()">Schließen</button></div>
+</div>
+<script>
+// ═══════════════════════════════════════════════
+// Quiz-Verschlüsselung
+// ═══════════════════════════════════════════════
+
+// === Audio (TTS) ===
+const _synth=window.speechSynthesis,_LANG='de-DE';let _ttsOn=false,_ttsRate=1,_ttsTimer=null;
+function speakLesson(i){if(_ttsOn){stopTTS();return}const c=document.querySelectorAll('.lesson-card');if(!c[i]||!_synth)return;stopTTS();const u=new SpeechSynthesisUtterance(c[i].innerText);u.lang=_LANG;u.rate=_ttsRate;u.onstart=()=>{_ttsOn=true;updTTSUI();startTTSTimer()};u.onend=()=>{_ttsOn=false;updTTSUI();clearTTSTimer()};u.onerror=()=>{_ttsOn=false;updTTSUI();clearTTSTimer()};_synth.speak(u);showTTSBar()}
+function speakText(t,lang){if(!_synth)return;stopTTS();const u=new SpeechSynthesisUtterance(t);u.lang=lang||_LANG;u.rate=_ttsRate;u.onstart=()=>{_ttsOn=true;updTTSUI();startTTSTimer()};u.onend=()=>{_ttsOn=false;updTTSUI();clearTTSTimer()};u.onerror=()=>{_ttsOn=false;updTTSUI();clearTTSTimer()};_synth.speak(u)}
+function stopTTS(){if(_synth){_synth.cancel()}_ttsOn=false;updTTSUI();clearTTSTimer()}
+function updTTSUI(){document.querySelectorAll('.tts-btn').forEach(b=>b.classList.toggle('speaking',_ttsOn))}
+function setTTSRate(r){_ttsRate=parseFloat(r)}
+function startTTSTimer(){clearTTSTimer();_ttsTimer=setInterval(()=>{if(_synth&&_synth.speaking&&!_synth.paused){_synth.pause();_synth.resume()}},10000)}
+function clearTTSTimer(){if(_ttsTimer){clearInterval(_ttsTimer);_ttsTimer=null}}
+function showTTSBar(){if(document.getElementById('ttsBar'))return;const mc=document.getElementById('moduleContent');if(!mc)return;const b=document.createElement('div');b.className='tts-bar';b.id='ttsBar';b.innerHTML='\u{1F50A} <select onchange="setTTSRate(this.value)"><option value="0.7">Langsam</option><option value="1" selected>Normal</option><option value="1.3">Schnell</option></select> <button onclick="stopTTS()">\u25A0 Stopp</button>';mc.prepend(b)}
+
+// === Audio (STT) ===
+const _SR=window.SpeechRecognition||window.webkitSpeechRecognition;let _rec=null,_recCB=null;
+function initSR(){if(!_SR)return false;_rec=new _SR();_rec.lang=_LANG;_rec.continuous=false;_rec.interimResults=false;_rec.onresult=e=>{const t=e.results[0][0].transcript.toLowerCase().trim();if(_recCB)_recCB(t,e.results[0][0].confidence)};_rec.onerror=()=>{document.querySelectorAll('.mic-btn').forEach(b=>b.classList.remove('rec'))};_rec.onend=()=>{document.querySelectorAll('.mic-btn').forEach(b=>b.classList.remove('rec'))};return true}
+function startSR(cb){if(!_rec&&!initSR()){cb(null,0);return}_recCB=cb;document.querySelectorAll('.mic-btn').forEach(b=>b.classList.add('rec'));try{_rec.start()}catch(e){cb(null,0)}}
+let _spIdx=0,_spSen=[];
+function initSpEx(m){const mod=modules[m];const d=document.createElement('div');d.innerHTML=mod.lessons.map(l=>l.content).join(' ');_spSen=d.textContent.split(/[.!?]+/).map(s=>s.trim()).filter(s=>s.length>15&&s.length<100).slice(0,5);_spIdx=0;renderSpEx()}
+function renderSpEx(){const el=document.getElementById('speechExArea');if(!el)return;if(!_spSen.length){el.innerHTML='<p class="sr-na">Keine S\u00E4tze f\u00FCr Sprach\u00FCbung verf\u00FCgbar.</p>';return}const s=_spSen[_spIdx].replace(/"/g,'&quot;').replace(/'/g,'&#39;');el.innerHTML='<p style="font-size:1.05em;color:var(--neon);margin:10px 0;font-style:italic">&bdquo;'+_spSen[_spIdx]+'&ldquo;</p><div style="display:flex;justify-content:center;gap:16px;margin:12px 0"><button class="tts-btn" onclick="speakText(this.closest(\'.speech-ex\').querySelector(\'p\').textContent)" style="font-size:1.5em;opacity:1" title="Vorlesen">&#128266;</button>'+(_SR?'<button class="mic-btn" onclick="doSpCheck()" title="Nachsprechen">&#127908;</button>':'<p class="sr-na">Spracherkennung nicht verf\u00FCgbar.</p>')+'</div><div id="srRes"></div><div style="font-size:.78rem;color:var(--text-dim);margin-top:8px">Satz '+(_spIdx+1)+' von '+_spSen.length+'</div>'}
+function doSpCheck(){const expected=_spSen[_spIdx].toLowerCase().replace(/[^a-z\u00e4\u00f6\u00fc\u00df\u00e9\u00e8\u00ea\u00e0 0-9]/g,'');startSR((spoken,conf)=>{const el=document.getElementById('srRes');if(!el)return;if(!spoken){el.innerHTML='<span class="sr-res retry">Nicht erkannt \u2014 nochmal versuchen</span>';return}const sim=calcSim(spoken.replace(/[^a-z\u00e4\u00f6\u00fc\u00df\u00e9\u00e8\u00ea\u00e0 0-9]/g,''),expected);if(sim>.45){el.innerHTML='<span class="sr-res good">\u2714 Gut! ('+Math.round(sim*100)+'%)</span>';_spIdx++;setTimeout(()=>{if(_spIdx<_spSen.length)renderSpEx();else{el.innerHTML='<span class="sr-res good">\u2714 Alle S\u00E4tze geschafft!</span>';if(typeof addXP==='function'&&typeof state!=='undefined'&&!state.interactiveResults['sp_'+state.currentModule]){state.interactiveResults['sp_'+state.currentModule]=true;addXP(30,'Sprach\u00FCbung');saveState()}}},1200)}else{el.innerHTML='<span class="sr-res retry">\u21BB Nochmal: &quot;'+spoken+'&quot;</span>'}})}
+function calcSim(a,b){const wa=a.split(/\s+/).filter(Boolean),wb=b.split(/\s+/).filter(Boolean);if(!wa.length||!wb.length)return 0;let c=0;wa.forEach(w=>{if(wb.some(x=>x.includes(w)||w.includes(x)))c++});return c/Math.max(wa.length,wb.length)}
+
+const _qk=[0x4A,0x7F,0x2B,0x61,0x5C,0x3E,0x18,0x73];
+function _d(h,i){return h^_qk[i%_qk.length]}
+
+// ═══════════════════════════════════════════════
+// Levels (20 Ränge)
+// ═══════════════════════════════════════════════
+const LEVELS=[
+  {name:'ABC-Entdecker',xp:0},{name:'Buchstaben-Freund',xp:40},{name:'Silben-Klatscher',xp:100},
+  {name:'Wörter-Sammler',xp:180},{name:'Lese-Anfänger',xp:280},{name:'Geschichten-Hörer',xp:400},
+  {name:'Satz-Baumeister',xp:540},{name:'Lese-Fuchs',xp:700},{name:'Bücherwurm',xp:880},
+  {name:'Schreib-Künstler',xp:1080},{name:'Wörter-Zauberer',xp:1300},{name:'Text-Detektiv',xp:1540},
+  {name:'Geschichten-Held',xp:1800},{name:'Lese-Drache',xp:2080},{name:'Grammatik-Ritter',xp:2380},
+  {name:'Rechtschreib-Profi',xp:2700},{name:'Autoren-Star',xp:3040},{name:'Sprach-Magier',xp:3400},
+  {name:'Lese-Legende',xp:3780},{name:'Meister der Wörter',xp:4180}
+];
+
+// ═══════════════════════════════════════════════
+// Badges (20)
+// ═══════════════════════════════════════════════
+const BADGES=[
+  {id:'m0',name:'Wort-Kenner',icon:'🔍',desc:'Modul 1 abgeschlossen'},
+  {id:'m1',name:'Satzzeichen-Held',icon:'❗',desc:'Modul 2 abgeschlossen'},
+  {id:'m2',name:'Geschichten-Checker',icon:'✅',desc:'Modul 3 abgeschlossen'},
+  {id:'m3',name:'Steckbrief-Profi',icon:'📋',desc:'Modul 4 abgeschlossen'},
+  {id:'m4',name:'Lücken-Füller',icon:'✏️',desc:'Modul 5 abgeschlossen'},
+  {id:'m5',name:'Geschichten-Baumeister',icon:'🧩',desc:'Modul 6 abgeschlossen'},
+  {id:'m6',name:'Gefühls-Experte',icon:'💖',desc:'Modul 7 abgeschlossen'},
+  {id:'m7',name:'Info-Jäger',icon:'🎯',desc:'Modul 8 abgeschlossen'},
+  {id:'m8',name:'Tabellen-Leser',icon:'📊',desc:'Modul 9 abgeschlossen'},
+  {id:'m9',name:'Lese-Meister',icon:'🏆',desc:'Modul 10 abgeschlossen'},
+  {id:'first_quiz',name:'Quiz-Neuling',icon:'❓',desc:'Erstes Quiz bestanden'},
+  {id:'perfect_quiz',name:'Perfektionist',icon:'💎',desc:'Quiz mit 5/5 bestanden'},
+  {id:'first_boss',name:'Boss-Bezwinger',icon:'👑',desc:'Erste Boss-Challenge bestanden'},
+  {id:'all_bosses',name:'Endgegner',icon:'🏆',desc:'Alle Boss-Challenges bestanden'},
+  {id:'streak3',name:'Durchstarter',icon:'🔥',desc:'3 Tage in Folge gelernt'},
+  {id:'streak7',name:'Wochenkrieger',icon:'⚔️',desc:'7 Tage in Folge gelernt'},
+  {id:'half_done',name:'Halbzeit',icon:'⏳',desc:'5 Module abgeschlossen'},
+  {id:'speed_quiz',name:'Blitz-Denker',icon:'⚡',desc:'Quiz in unter 60 Sekunden'},
+  {id:'explorer',name:'Entdecker',icon:'🗺️',desc:'Alle Module angesehen'},
+  {id:'graduate',name:'Absolvent',icon:'🎓',desc:'Alle 10 Module abgeschlossen'}
+];
+
+// ═══════════════════════════════════════════════
+// Theme Config
+// ═══════════════════════════════════════════════
+const THEME_CONFIG={
+  wald:{name:'Zauberwald',emoji:'🌳',color:'#4ade80',desc:'Magischer Wald mit Feen und Tieren',welcomeEmoji:'🌳',welcomeTitle:'LeseHeld',welcomeSub:'Werde zum Lese-Helden im magischen Wald!',welcomeBtn:'Wald betreten'},
+  ozean:{name:'Ozean-Abenteuer',emoji:'🌊',color:'#38bdf8',desc:'Bunte Unterwasserwelt',welcomeEmoji:'🐠',welcomeTitle:'LeseHeld',welcomeSub:'Werde zum Lese-Helden — verstehe Texte und Geschichten!',welcomeBtn:'Abtauchen'},
+  space:{name:'Weltraum-Mission',emoji:'🚀',color:'#c084fc',desc:'Rakete durch die Galaxie',welcomeEmoji:'🚀',welcomeTitle:'LeseHeld',welcomeSub:'Deine Lese-Mission startet — flieg durch die Galaxie der Geschichten!',welcomeBtn:'Abheben'},
+  candy:{name:'Süßigkeiten-Land',emoji:'🍬',color:'#ff6b9d',desc:'Schokolade & Gummibärchen',welcomeEmoji:'🍬',welcomeTitle:'LeseHeld',welcomeSub:'Im Süßigkeiten-Land warten leckere Geschichten auf dich!',welcomeBtn:'Naschen'}
+};
+
+// ═══════════════════════════════════════════════
+// Module (10) — Lektionen + Quiz + Boss
+// ═══════════════════════════════════════════════
+const modules=[
+// ── Modul 0: Wörter verstehen ──
+{id:0,title:'Wörter verstehen',icon:'🔍',duration:'20 Min.',
+description:'Lerne, welche Wörter zusammenpassen und welche nicht.',
+interactive:'wortDetektiv',
+lessons:[
+{title:'Wörter-Gruppen',content:`<p>Manche Wörter gehören zusammen, weil sie etwas Ähnliches beschreiben:</p>
+<div class="info-box">🔍 <strong>Oberbegriffe</strong> fassen Wörter zusammen:<br>
+🍎 Apfel, 🍌 Banane, 🍊 Orange → alles <strong>Obst</strong></div>
+<ul><li>🐕 Hund, 🐱 Katze, 🐰 Hase → <strong>Tiere</strong></li>
+<li>🪑 Stuhl, 🛋️ Sofa, 🗄️ Schrank → <strong>Möbel</strong></li>
+<li>🔴 Rot, 🔵 Blau, 🟢 Grün → <strong>Farben</strong></li></ul>`},
+{title:'Welches Wort passt nicht?',content:`<p>Manchmal schleicht sich ein Wort in eine Gruppe, das <strong>nicht dazugehört</strong>:</p>
+<ul><li>Apfel, Birne, <strong>Tisch</strong>, Banane → <strong>Tisch</strong> ist kein Obst!</li>
+<li>Hund, Katze, <strong>Auto</strong>, Maus → <strong>Auto</strong> ist kein Tier!</li></ul>
+<div class="info-box">💡 <strong>Tipp:</strong> Frage dich immer: „Was haben die anderen Wörter gemeinsam?" Das Wort, das anders ist, passt nicht.</div>`}
+],
+quiz:[
+{q:'Welches Wort passt nicht? Apfel, Birne, Tisch, Banane',a:['Apfel','Birne','Tisch','Banane'],_h:0x48},
+{q:'Was ist der Oberbegriff für Hund, Katze, Maus?',a:['Möbel','Farben','Tiere','Essen'],_h:0x7D},
+{q:'Welches Wort passt nicht? Rot, Blau, Hund, Grün',a:['Rot','Blau','Hund','Grün'],_h:0x29},
+{q:'Was passt zusammen? Stuhl, Tisch, Schrank sind alles…',a:['Tiere','Möbel','Farben','Obst'],_h:0x60},
+{q:'Welches Wort gehört zur Gruppe „Kleidung"?',a:['Banane','Tisch','Jacke','Katze'],_h:0x5E}
+],
+boss:[
+{q:'Welches Wort passt NICHT zu „Fahrzeuge"?',a:['Auto','Fahrrad','Blume','Bus'],_h:0x48},
+{q:'Finde den Oberbegriff: Gitarre, Trompete, Flöte',a:['Tiere','Instrumente','Möbel','Farben'],_h:0x7E},
+{q:'Welche Gruppe ist richtig?',a:['Apfel, Hund, Stuhl','Tisch, Stuhl, Schrank','Rot, Katze, Birne','Auto, Blau, Maus'],_h:0x2A}
+]},
+
+// ── Modul 1: Sätze richtig lesen ──
+{id:1,title:'Sätze richtig lesen',icon:'❗',duration:'20 Min.',
+description:'Lerne Satzzeichen kennen und setze sie richtig ein.',
+interactive:'satzzeichenSetzer',
+lessons:[
+{title:'Die drei wichtigsten Satzzeichen',content:`<p>Am Ende eines Satzes steht immer ein <strong>Satzzeichen</strong>. Es zeigt dir, wie der Satz gemeint ist:</p>
+<div class="info-box">📌 Die drei wichtigsten Satzzeichen:<br>
+<strong>.</strong> Punkt — normaler Satz (Aussage)<br>
+<strong>?</strong> Fragezeichen — eine Frage<br>
+<strong>!</strong> Ausrufezeichen — ein Ausruf oder Befehl</div>
+<ul><li>Die Sonne scheint<strong>.</strong> (Ich erzähle etwas)</li>
+<li>Scheint die Sonne<strong>?</strong> (Ich frage etwas)</li>
+<li>Die Sonne scheint<strong>!</strong> (Ich bin begeistert)</li></ul>`},
+{title:'Satzzeichen richtig verwenden',content:`<p>So erkennst du, welches Satzzeichen passt:</p>
+<ul><li>🗣️ Erzählst du etwas? → <strong>Punkt (.)</strong></li>
+<li>❓ Fragst du etwas? → <strong>Fragezeichen (?)</strong></li>
+<li>😲 Rufst du etwas? → <strong>Ausrufezeichen (!)</strong></li></ul>
+<div class="info-box">💡 <strong>Merke:</strong> Fragen beginnen oft mit Fragewörtern: <strong>Wer? Was? Wo? Wann? Wie? Warum?</strong></div>
+<p>Auch Befehle bekommen ein Ausrufezeichen: <strong>Komm her! Sei leise! Pass auf!</strong></p>`}
+],
+quiz:[
+{q:'Welches Satzzeichen steht am Ende einer Frage?',a:['. (Punkt)','? (Fragezeichen)','! (Ausrufezeichen)',', (Komma)'],_h:0x4B},
+{q:'„Die Katze schläft" — Welches Satzzeichen passt?',a:['?','!','.',','],_h:0x7D},
+{q:'Welches Wort zeigt oft eine Frage an?',a:['Und','Aber','Warum','Dann'],_h:0x29},
+{q:'„Pass auf" — Welches Satzzeichen passt?',a:['.','?','!',','],_h:0x63},
+{q:'Was stimmt über den Punkt?',a:['Er steht bei Fragen','Er steht bei Ausrufen','Er steht bei Aussagen','Er steht überall'],_h:0x5E}
+],
+boss:[
+{q:'Wie viele Satzzeichen für das Satzende gibt es?',a:['1','2','3','4'],_h:0x48},
+{q:'„Wo ist mein Buch" — Was fehlt?',a:['.','!','?',','],_h:0x7D},
+{q:'Welcher Satz ist ein Ausruf?',a:['Der Hund schläft.','Wo ist er?','Hilfe!','Sie geht.'],_h:0x29}
+]},
+
+// ── Modul 2: Was passiert in der Geschichte? ──
+{id:2,title:'Was passiert in der Geschichte?',icon:'✅',duration:'25 Min.',
+description:'Lies kurze Geschichten und entscheide: Richtig oder Falsch?',
+interactive:'richtigFalsch',
+lessons:[
+{title:'Genau lesen',content:`<p>Beim Lesen ist es wichtig, <strong>genau hinzuschauen</strong>. Manchmal verwechselt man Dinge:</p>
+<div class="info-box">📖 <strong>Geschichte:</strong><br>
+Lena hat ein rotes Fahrrad. Sie fährt damit jeden Tag zur Schule. Heute regnet es, deshalb nimmt Lena den Bus.</div>
+<p>Jetzt prüfen wir:</p>
+<ul><li>✅ „Lena hat ein Fahrrad." — <strong>Richtig!</strong></li>
+<li>❌ „Lenas Fahrrad ist blau." — <strong>Falsch!</strong> Es ist rot.</li>
+<li>✅ „Heute fährt Lena mit dem Bus." — <strong>Richtig!</strong></li></ul>`},
+{title:'Richtig oder Falsch entscheiden',content:`<p>So gehst du vor:</p>
+<ol><li>📖 Lies die Geschichte <strong>aufmerksam</strong> durch</li>
+<li>🤔 Lies die Aussage genau</li>
+<li>🔍 Suche die Stelle in der Geschichte</li>
+<li>✅ oder ❌ Entscheide: Stimmt das?</li></ol>
+<div class="info-box">💡 <strong>Tipp:</strong> Achte auf kleine Wörter wie „nicht", „alle", „immer" — sie verändern die Bedeutung!</div>`}
+],
+quiz:[
+{q:'Was bedeutet „Richtig oder Falsch"?',a:['Man rät einfach','Man prüft, ob eine Aussage stimmt','Man schreibt ab','Man liest laut vor'],_h:0x4B},
+{q:'„Tim hat eine Katze." Die Geschichte sagt: Tim hat einen Hund. — Stimmt die Aussage?',a:['Richtig','Falsch','Weiß nicht','Vielleicht'],_h:0x7E},
+{q:'Worauf muss man bei „Richtig oder Falsch" besonders achten?',a:['Auf die Bilder','Auf genaue Details im Text','Auf die Seitenzahl','Auf die Überschrift'],_h:0x2A},
+{q:'Welches kleine Wort verändert die Bedeutung? „Er geht NICHT zur Schule"',a:['Er','geht','nicht','Schule'],_h:0x63},
+{q:'Was ist der erste Schritt bei Richtig-oder-Falsch?',a:['Sofort antworten','Die Geschichte aufmerksam lesen','Die Antwort raten','Nur die Frage lesen'],_h:0x5D}
+],
+boss:[
+{q:'„Sara isst gerne Eis." — Ist das eine Aussage, die Richtig oder Falsch sein kann?',a:['Nein, das ist eine Frage','Ja, man kann prüfen ob es stimmt','Nein, das ist ein Befehl','Das kann man nicht wissen'],_h:0x4B},
+{q:'Was macht ein guter Leser bei Richtig-oder-Falsch?',a:['Schnell raten','Die Stelle im Text suchen','Immer „Richtig" sagen','Den Text überspringen'],_h:0x7E},
+{q:'Welches Wort kann eine Aussage falsch machen?',a:['Und','Auch','Nie','Dann'],_h:0x29}
+]},
+
+// ── Modul 3: Wer, Wo, Wann? ──
+{id:3,title:'Wer, Wo, Wann?',icon:'📋',duration:'25 Min.',
+description:'Finde wichtige Informationen in Geschichten: Personen, Orte und Zeit.',
+interactive:'steckbrief',
+lessons:[
+{title:'Die W-Fragen',content:`<p>Mit den <strong>W-Fragen</strong> findest du die wichtigsten Informationen in jeder Geschichte:</p>
+<div class="info-box">📋 <strong>Die wichtigsten W-Fragen:</strong><br>
+<strong>Wer?</strong> → Welche Personen kommen vor?<br>
+<strong>Wo?</strong> → Wo spielt die Geschichte?<br>
+<strong>Wann?</strong> → Wann passiert es?<br>
+<strong>Was?</strong> → Was passiert?</div>
+<p>Beispiel: „<em>Am Montag geht Tom in den Zoo.</em>"</p>
+<ul><li>👤 Wer? <strong>Tom</strong></li>
+<li>📍 Wo? <strong>Im Zoo</strong></li>
+<li>🕐 Wann? <strong>Am Montag</strong></li>
+<li>❓ Was? <strong>Er geht in den Zoo</strong></li></ul>`},
+{title:'Steckbrief ausfüllen',content:`<p>Ein <strong>Steckbrief</strong> sammelt alle wichtigen Infos aus einer Geschichte übersichtlich:</p>
+<div class="info-box">📋 <strong>Steckbrief-Beispiel:</strong><br>
+Geschichte: „Lena spielt am Nachmittag im Garten mit ihrem Hund Max."<br><br>
+👤 Person: Lena<br>
+📍 Ort: Garten<br>
+🕐 Zeit: Am Nachmittag<br>
+🐕 Haustier: Hund Max<br>
+❓ Was passiert: Sie spielen zusammen</div>
+<p>Steckbriefe helfen dir, eine Geschichte besser zu <strong>verstehen</strong> und zu <strong>merken</strong>.</p>`}
+],
+quiz:[
+{q:'Was beantwortet die Frage „Wo?"',a:['Eine Person','Einen Ort','Eine Zeit','Eine Handlung'],_h:0x4B},
+{q:'„Am Dienstag besucht Oma den Arzt." — Wann passiert es?',a:['Am Montag','Am Mittwoch','Am Dienstag','Am Freitag'],_h:0x7D},
+{q:'Was ist ein Steckbrief?',a:['Ein langer Text','Eine Sammlung wichtiger Infos','Ein Bild','Ein Lied'],_h:0x2A},
+{q:'Welche Frage fragt nach einer Person?',a:['Wo?','Wann?','Was?','Wer?'],_h:0x62},
+{q:'„Tom liest im Bett ein Buch." — Wo liest Tom?',a:['Im Garten','In der Schule','Im Bett','Im Auto'],_h:0x5E}
+],
+boss:[
+{q:'Wie viele W-Fragen wurden in der Lektion vorgestellt?',a:['2','3','4','5'],_h:0x48},
+{q:'„Am Freitag backt Oma in der Küche Kuchen." — Wer backt?',a:['Mama','Papa','Tom','Oma'],_h:0x7C},
+{q:'Welche W-Frage passt zu „im Park"?',a:['Wer?','Was?','Wo?','Wann?'],_h:0x29}
+]},
+
+// ── Modul 4: Lückentexte meistern ──
+{id:4,title:'Lückentexte meistern',icon:'✏️',duration:'20 Min.',
+description:'Setze fehlende Wörter in Texte ein — mit einer Wortbank als Hilfe.',
+interactive:'l\u00FCckentext',
+lessons:[
+{title:'Was ist ein Lückentext?',content:`<p>In einem <strong>Lückentext</strong> fehlen einige Wörter. Deine Aufgabe ist es, die richtigen Wörter einzusetzen.</p>
+<div class="info-box">✏️ <strong>Beispiel:</strong><br>
+„Die ___ scheint am Himmel."<br>
+Wortbank: <em>Sonne, Katze, Tisch</em><br>
+→ „Die <strong>Sonne</strong> scheint am Himmel." ☀️</div>
+<p>So gehst du vor:</p>
+<ol><li>Lies den ganzen Satz zuerst durch</li>
+<li>Überlege, welches Wort Sinn ergibt</li>
+<li>Setze das Wort ein und lies nochmal</li></ol>`},
+{title:'Tipps für Lückentexte',content:`<p>Manchmal ist die Lücke schwieriger. Dann helfen dir diese <strong>Tricks</strong>:</p>
+<ul><li>🔍 Lies den Satz <strong>mit</strong> dem eingesetzten Wort laut vor — klingt er richtig?</li>
+<li>🗑️ Streiche Wörter durch, die du schon verwendet hast</li>
+<li>🧩 Manchmal hilft es, mit den <strong>einfachsten</strong> Lücken anzufangen</li></ul>
+<div class="info-box">💡 <strong>Merke:</strong> Jedes Wort aus der Wortbank wird nur <strong>einmal</strong> verwendet!</div>`}
+],
+quiz:[
+{q:'Was ist ein Lückentext?',a:['Ein leerer Text','Ein Text mit fehlenden Wörtern','Ein sehr kurzer Text','Ein Text ohne Bilder'],_h:0x4B},
+{q:'„Der ___ bellt laut." Was passt? (Wortbank: Hund, Stuhl, Blume)',a:['Stuhl','Blume','Hund','Regen'],_h:0x7D},
+{q:'Was hilft beim Lösen von Lückentexten?',a:['Schnell raten','Den Satz laut vorlesen','Die Augen schließen','Gar nicht lesen'],_h:0x2A},
+{q:'Wie oft wird ein Wort aus der Wortbank normalerweise benutzt?',a:['Zweimal','Dreimal','Einmal','Gar nicht'],_h:0x63},
+{q:'Womit sollte man bei schwierigen Lückentexten anfangen?',a:['Mit der schwierigsten Lücke','Mit der einfachsten Lücke','Mit dem letzten Wort','Einfach raten'],_h:0x5D}
+],
+boss:[
+{q:'„Im ___ schwimmen viele Fische." Was passt?',a:['Himmel','See','Wald','Berg'],_h:0x4B},
+{q:'Was machst du, wenn ein Wort aus der Wortbank schon eingesetzt wurde?',a:['Nochmal verwenden','Durchstreichen','Vergessen','Neu erfinden'],_h:0x7E},
+{q:'„Die Vögel ___ am Morgen." Was passt?',a:['schlafen','singen','kochen','lesen'],_h:0x2A}
+]},
+
+// ── Modul 5: Geschichten-Werkstatt ──
+{id:5,title:'Geschichten-Werkstatt',icon:'🧩',duration:'25 Min.',
+description:'Bringe durcheinander geratene Absätze in die richtige Reihenfolge.',
+interactive:'geschichteOrdnen',
+lessons:[
+{title:'Der Aufbau einer Geschichte',content:`<p>Jede Geschichte hat einen <strong>Aufbau</strong> — wie ein Haus mit verschiedenen Stockwerken:</p>
+<div class="info-box">🧩 <strong>Aufbau einer Geschichte:</strong><br>
+1️⃣ <strong>Anfang:</strong> Wer? Wo? Wann? (Einleitung)<br>
+2️⃣ <strong>Mitte:</strong> Was passiert? (Hauptteil)<br>
+3️⃣ <strong>Ende:</strong> Wie geht es aus? (Schluss)</div>
+<p>Beispiel:</p>
+<ul><li>1️⃣ <em>Tom geht in den Wald.</em> (Anfang)</li>
+<li>2️⃣ <em>Er findet einen kleinen Igel.</em> (Mitte)</li>
+<li>3️⃣ <em>Tom bringt den Igel nach Hause.</em> (Ende)</li></ul>`},
+{title:'Absätze ordnen',content:`<p>Manchmal sind die Teile einer Geschichte <strong>durcheinander</strong>. Du musst sie in die richtige Reihenfolge bringen!</p>
+<ul><li>🔍 Suche zuerst den <strong>Anfang</strong> — er stellt Personen und Ort vor</li>
+<li>🔍 Dann kommt die <strong>Mitte</strong> — hier passiert die Handlung</li>
+<li>🔍 Zum Schluss das <strong>Ende</strong> — die Geschichte wird aufgelöst</li></ul>
+<div class="info-box">💡 <strong>Tipp:</strong> Achte auf Signalwörter wie „zuerst", „dann", „danach", „am Ende", „schließlich"!</div>`}
+],
+quiz:[
+{q:'Wie viele Teile hat eine Geschichte?',a:['1','2','3','4'],_h:0x48},
+{q:'Was steht am Anfang einer Geschichte?',a:['Das Ende','Die Handlung','Die Einleitung','Der Höhepunkt'],_h:0x7D},
+{q:'Welches Signalwort zeigt das Ende an?',a:['Zuerst','Dann','Plötzlich','Schließlich'],_h:0x28},
+{q:'Was passiert im Hauptteil?',a:['Die Personen werden vorgestellt','Die Handlung spielt sich ab','Die Geschichte endet','Nichts'],_h:0x60},
+{q:'Welches Signalwort zeigt den Anfang an?',a:['Am Ende','Schließlich','Zuerst','Danach'],_h:0x5E}
+],
+boss:[
+{q:'Was kommt zuerst: Einleitung, Hauptteil oder Schluss?',a:['Hauptteil','Schluss','Einleitung','Alle gleichzeitig'],_h:0x48},
+{q:'Welches Signalwort passt in die Mitte einer Geschichte?',a:['Es war einmal','Schließlich','Dann','Am Ende'],_h:0x7D},
+{q:'Was macht der Schluss einer Geschichte?',a:['Neue Personen vorstellen','Die Geschichte auflösen','Ein neues Problem starten','Nichts'],_h:0x2A}
+]},
+
+// ── Modul 6: Gefühle & Stimmungen ──
+{id:6,title:'Gefühle & Stimmungen',icon:'💖',duration:'20 Min.',
+description:'Erkenne Gefühle von Personen in Geschichten.',
+interactive:'gefuehlsBarometer',
+lessons:[
+{title:'Gefühle erkennen',content:`<p>In Geschichten haben die Personen <strong>Gefühle</strong>. Du kannst sie an bestimmten Wörtern erkennen:</p>
+<div class="info-box">💖 <strong>Gefühle-Wörter:</strong><br>
+😊 froh, glücklich, begeistert → <strong>Freude</strong><br>
+😢 traurig, weinen, einsam → <strong>Trauer</strong><br>
+😠 wütend, sauer, schimpfen → <strong>Wut</strong><br>
+😨 ängstlich, zittern, Angst → <strong>Angst</strong></div>
+<p>Beispiel: „<em>Lena springt vor Freude in die Luft!</em>" → Lena ist <strong>glücklich</strong> 😊</p>`},
+{title:'Gefühle im Text finden',content:`<p>Nicht immer steht das Gefühl direkt im Text. Manchmal musst du es aus der <strong>Handlung</strong> ableiten:</p>
+<ul><li>„Tom weint." → Tom ist <strong>traurig</strong> 😢</li>
+<li>„Lena lacht laut." → Lena ist <strong>fröhlich</strong> 😊</li>
+<li>„Max stampft mit dem Fuß auf." → Max ist <strong>wütend</strong> 😠</li>
+<li>„Sara versteckt sich hinter dem Sofa." → Sara hat <strong>Angst</strong> 😨</li></ul>
+<div class="info-box">💡 <strong>Tipp:</strong> Frage dich: „Wie würde ICH mich in dieser Situation fühlen?"</div>`}
+],
+quiz:[
+{q:'Welches Gefühl zeigt „weinen"?',a:['Freude','Wut','Trauer','Angst'],_h:0x48},
+{q:'„Tom springt vor Freude." Wie fühlt sich Tom?',a:['Traurig','Wütend','Ängstlich','Glücklich'],_h:0x7C},
+{q:'Welches Wort zeigt Wut?',a:['Lachen','Schimpfen','Weinen','Zittern'],_h:0x2A},
+{q:'„Sara versteckt sich." Welches Gefühl hat Sara wahrscheinlich?',a:['Freude','Wut','Angst','Langeweile'],_h:0x63},
+{q:'Wie kann man Gefühle im Text erkennen?',a:['An der Schriftgröße','An Handlungen und Wörtern','An der Seitenzahl','Am Titel'],_h:0x5D}
+],
+boss:[
+{q:'„Der Junge ballt die Fäuste und wird rot im Gesicht." Welches Gefühl?',a:['Freude','Trauer','Wut','Angst'],_h:0x48},
+{q:'Welcher Tipp hilft beim Erkennen von Gefühlen?',a:['Schnell lesen','Sich in die Person hineinversetzen','Nur die Überschrift lesen','Raten'],_h:0x7E},
+{q:'Welches Emoji passt zu „traurig"?',a:['😊','😠','😢','😂'],_h:0x29}
+]},
+
+// ── Modul 7: Sachtexte verstehen ──
+{id:7,title:'Sachtexte verstehen',icon:'🎯',duration:'25 Min.',
+description:'Lerne, wichtige Informationen aus Sachtexten herauszufiltern.',
+interactive:'infoJ\u00E4ger',
+lessons:[
+{title:'Was ist ein Sachtext?',content:`<p>Ein <strong>Sachtext</strong> ist anders als eine Geschichte. Er erzählt keine erfundene Handlung, sondern gibt <strong>echte Informationen</strong>:</p>
+<div class="info-box">🎯 <strong>Beispiele für Sachtexte:</strong><br>
+📰 Zeitungsartikel<br>
+📚 Lexikon-Einträge<br>
+🧪 Anleitungen<br>
+📋 Steckbriefe über Tiere</div>
+<p>Beispiel-Sachtext:</p>
+<div class="info-box">🐝 <strong>Die Honigbiene</strong><br>
+Honigbienen leben in einem Bienenvolk. Ein Volk hat bis zu 60.000 Bienen. Die Königin legt Eier. Die Arbeiterinnen sammeln Nektar und machen daraus Honig.</div>`},
+{title:'Informationen finden',content:`<p>In einem Sachtext musst du <strong>gezielt</strong> nach Informationen suchen:</p>
+<ol><li>📖 Lies die Frage <strong>zuerst</strong></li>
+<li>🔍 Suche dann die Antwort <strong>im Text</strong></li>
+<li>📝 Die Antwort steht <strong>wörtlich</strong> oder <strong>sinngemäß</strong> im Text</li></ol>
+<div class="info-box">💡 <strong>Schlüsselwörter</strong> helfen dir beim Suchen! Wenn die Frage nach „Wie viele Bienen?" fragt, suche im Text nach Zahlen.</div>`}
+],
+quiz:[
+{q:'Was ist ein Sachtext?',a:['Eine erfundene Geschichte','Ein Text mit echten Informationen','Ein Gedicht','Ein Lied'],_h:0x4B},
+{q:'Was ist KEIN Beispiel für einen Sachtext?',a:['Lexikon-Eintrag','Zeitungsartikel','Märchen','Anleitung'],_h:0x7D},
+{q:'Was sollte man beim Sachtext zuerst lesen?',a:['Den ganzen Text','Die letzte Zeile','Die Frage','Die Überschrift'],_h:0x29},
+{q:'Was sind Schlüsselwörter?',a:['Wörter mit Schlüssel','Wichtige Wörter zum Suchen','Geheime Wörter','Lange Wörter'],_h:0x60},
+{q:'Wie viele Bienen hat ein Volk laut dem Beispieltext?',a:['600','6.000','60.000','600.000'],_h:0x5E}
+],
+boss:[
+{q:'Was unterscheidet einen Sachtext von einer Geschichte?',a:['Er ist kürzer','Er enthält echte Infos statt Erfundenes','Er hat Bilder','Er ist langweilig'],_h:0x4B},
+{q:'Was hilft beim gezielten Suchen im Sachtext?',a:['Den ganzen Text auswendig lernen','Nach Schlüsselwörtern suchen','Schnell lesen und raten','Nur die Überschrift lesen'],_h:0x7E},
+{q:'Wer legt in einem Bienenvolk die Eier?',a:['Die Arbeiterinnen','Die Drohnen','Die Königin','Alle Bienen'],_h:0x29}
+]},
+
+// ── Modul 8: Tabellen & Listen ──
+{id:8,title:'Tabellen & Listen',icon:'📊',duration:'20 Min.',
+description:'Lerne, Informationen aus Tabellen und Listen abzulesen.',
+interactive:'tabellenLeser',
+lessons:[
+{title:'Was ist eine Tabelle?',content:`<p>Eine <strong>Tabelle</strong> ordnet Informationen in <strong>Zeilen</strong> und <strong>Spalten</strong>:</p>
+<div class="info-box">📊 <strong>Beispiel-Tabelle: Haustiere der Klasse 2a</strong><br><br>
+<table style="width:100%;border-collapse:collapse;text-align:left">
+<tr style="border-bottom:2px solid var(--border)"><th style="padding:6px">Name</th><th style="padding:6px">Tier</th><th style="padding:6px">Alter</th></tr>
+<tr style="border-bottom:1px solid var(--border)"><td style="padding:6px">Tom</td><td style="padding:6px">Hund</td><td style="padding:6px">3 Jahre</td></tr>
+<tr style="border-bottom:1px solid var(--border)"><td style="padding:6px">Lena</td><td style="padding:6px">Katze</td><td style="padding:6px">5 Jahre</td></tr>
+<tr><td style="padding:6px">Max</td><td style="padding:6px">Hamster</td><td style="padding:6px">1 Jahr</td></tr>
+</table></div>
+<p><strong>Zeilen</strong> gehen waagerecht (→), <strong>Spalten</strong> gehen senkrecht (↓).</p>`},
+{title:'Tabellen und Listen lesen',content:`<p>So findest du Informationen in einer Tabelle:</p>
+<ol><li>📖 Lies die <strong>Überschrift</strong> — sie sagt, worum es geht</li>
+<li>👆 Schau auf die <strong>Spaltenüberschriften</strong> (erste Zeile)</li>
+<li>🔍 Suche in der richtigen <strong>Zeile</strong> und <strong>Spalte</strong></li></ol>
+<div class="info-box">💡 <strong>Beispiel:</strong> „Welches Tier hat Lena?"<br>
+→ Suche „Lena" in der Name-Spalte → gehe nach rechts zur Tier-Spalte → <strong>Katze</strong>!</div>
+<p>Auch <strong>Listen</strong> ordnen Informationen — aber untereinander statt in Spalten.</p>`}
+],
+quiz:[
+{q:'Was ordnet eine Tabelle?',a:['Bilder','Informationen in Zeilen und Spalten','Buchstaben','Nur Zahlen'],_h:0x4B},
+{q:'Welches Tier hat Tom laut der Tabelle?',a:['Katze','Hamster','Hund','Vogel'],_h:0x7D},
+{q:'Was sind Spalten in einer Tabelle?',a:['Waagerechte Reihen','Senkrechte Reihen','Die Überschrift','Die Zahlen'],_h:0x2A},
+{q:'Wie alt ist Lenas Katze laut der Tabelle?',a:['1 Jahr','3 Jahre','5 Jahre','7 Jahre'],_h:0x63},
+{q:'Wo findest du die Spaltenüberschriften?',a:['In der letzten Zeile','In der Mitte','In der ersten Zeile','Gar nicht'],_h:0x5E}
+],
+boss:[
+{q:'Wie viele Kinder haben laut der Tabelle ein Haustier?',a:['1','2','3','4'],_h:0x48},
+{q:'Wer hat das jüngste Tier?',a:['Tom','Lena','Max','Alle gleich'],_h:0x7D},
+{q:'Was ist der Unterschied zwischen einer Tabelle und einer Liste?',a:['Eine Tabelle hat Zeilen UND Spalten','Eine Liste hat immer Zahlen','Eine Tabelle hat nur Text','Es gibt keinen Unterschied'],_h:0x2B}
+]},
+
+// ── Modul 9: Lese-Meisterschaft ──
+{id:9,title:'Lese-Meisterschaft',icon:'🏆',duration:'30 Min.',
+description:'Dein großes Lese-Abenteuer — lies eine längere Geschichte und beantworte Fragen.',
+interactive:'abschlussStory',
+lessons:[
+{title:'Die große Geschichte',content:`<p>Jetzt kommt dein <strong>Meisterstück</strong>! Lies diese Geschichte ganz aufmerksam:</p>
+<div class="info-box" style="font-size:18px;line-height:2">
+📖 <strong>Das Geheimnis im Baumhaus</strong><br><br>
+Emma und ihr Bruder Leon haben ein Baumhaus im Garten. Jeden Freitag nach der Schule klettern sie hinauf und lesen Bücher.<br><br>
+Eines Freitags finden sie einen Brief auf dem Tisch im Baumhaus. Auf dem Brief steht: „Sucht den Schatz unter dem großen Stein!"<br><br>
+Emma und Leon suchen im Garten. Neben dem Apfelbaum liegt ein großer Stein. Sie heben ihn hoch und finden eine kleine Holzkiste.<br><br>
+In der Kiste liegen bunte Murmeln und ein Zettel: „Von Oma, mit Liebe." Emma und Leon lachen und freuen sich. Das war die beste Schatzsuche der Welt!
+</div>`},
+{title:'Die Geschichte verstehen',content:`<p>Lass uns die Geschichte zusammen durchgehen:</p>
+<ul><li>👤 <strong>Wer?</strong> Emma und Leon (Geschwister)</li>
+<li>📍 <strong>Wo?</strong> Im Baumhaus und im Garten</li>
+<li>🕐 <strong>Wann?</strong> An einem Freitag nach der Schule</li>
+<li>❓ <strong>Was passiert?</strong> Sie finden einen Brief, suchen einen Schatz und finden eine Kiste von Oma</li>
+<li>💖 <strong>Gefühle?</strong> Sie lachen und freuen sich → Freude!</li></ul>
+<div class="info-box">🏆 <strong>Gratulation!</strong> Du hast alle Lese-Techniken gelernt: Wörter verstehen, Satzzeichen, Richtig-oder-Falsch, W-Fragen, Lückentexte, Geschichten ordnen, Gefühle erkennen, Sachtexte und Tabellen lesen. Du bist ein echter <strong>LeseHeld</strong>!</div>`}
+],
+quiz:[
+{q:'Wie heißen die beiden Kinder?',a:['Tom und Lena','Emma und Leon','Max und Sara','Anna und Ben'],_h:0x4B},
+{q:'Wo steht das Baumhaus?',a:['Im Wald','Im Park','Im Garten','Auf dem Dach'],_h:0x7D},
+{q:'An welchem Tag gehen sie ins Baumhaus?',a:['Montag','Mittwoch','Freitag','Sonntag'],_h:0x29},
+{q:'Was finden sie unter dem Stein?',a:['Einen Hund','Einen Schlüssel','Eine Holzkiste','Ein Buch'],_h:0x63},
+{q:'Von wem ist der Schatz?',a:['Von Papa','Von Oma','Von der Lehrerin','Von einem Freund'],_h:0x5D}
+],
+boss:[
+{q:'Was steht auf dem Brief?',a:['Kommt zum Essen','Sucht den Schatz unter dem großen Stein','Geht ins Bett','Räumt euer Zimmer auf'],_h:0x4B},
+{q:'Was liegt in der Holzkiste?',a:['Goldmünzen','Schokolade','Bunte Murmeln','Ein Buch'],_h:0x7D},
+{q:'Wie fühlen sich Emma und Leon am Ende?',a:['Traurig','Wütend','Ängstlich','Fröhlich'],_h:0x28}
+]}
+];
+
+// ═══════════════════════════════════════════════
+// State Management
+// ═══════════════════════════════════════════════
+const STORAGE_KEY='leseheld_progress';
+let state={name:'',started:false,currentModule:0,xp:0,level:0,streak:0,lastVisit:null,modulesCompleted:[],quizResults:{},bossResults:{},badges:[],quizShuffleMap:{},modulesViewed:[],interactiveResults:{},designTheme:'ozean-dark'};
+function saveState(){try{localStorage.setItem(STORAGE_KEY,JSON.stringify(state))}catch(e){}}
+function loadState(){try{const s=localStorage.getItem(STORAGE_KEY);if(s){Object.assign(state,JSON.parse(s));return true}}catch(e){}return false}
+function exportData(){const a=document.createElement('a');a.download='leseheld-'+state.name+'.json';a.href=URL.createObjectURL(new Blob([JSON.stringify(state,null,2)],{type:'application/json'}));a.click()}
+function importData(e){const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=ev=>{try{const d=JSON.parse(ev.target.result);Object.assign(state,d);saveState();location.reload()}catch(err){alert('Datei konnte nicht gelesen werden.')}};r.readAsText(f)}
+
+// ═══════════════════════════════════════════════
+// XP & Level Engine
+// ═══════════════════════════════════════════════
+function getLevel(xp){let lv=0;for(let i=LEVELS.length-1;i>=0;i--){if(xp>=LEVELS[i].xp){lv=i;break}}return lv}
+function getLevelProgress(xp){const lv=getLevel(xp);const cur=LEVELS[lv].xp;const next=lv<LEVELS.length-1?LEVELS[lv+1].xp:cur;if(next===cur)return 100;return Math.min(100,Math.round((xp-cur)/(next-cur)*100))}
+function addXP(amount,reason){const old=getLevel(state.xp);state.xp+=amount;const nw=getLevel(state.xp);saveState();updateUI();showNotif('xp','+'+amount+' XP',reason);if(nw>old){state.level=nw;saveState();setTimeout(()=>showLevelUp(nw),800)}}
+
+// ═══════════════════════════════════════════════
+// Streak
+// ═══════════════════════════════════════════════
+function updateStreak(){const today=new Date().toDateString();if(state.lastVisit===today)return;const yesterday=new Date(Date.now()-86400000).toDateString();if(state.lastVisit===yesterday){state.streak++;showNotif('streak','🔥 '+state.streak+' Tage Streak!','Weiter so!');if(state.streak>=3)awardBadge('streak3');if(state.streak>=7)awardBadge('streak7')}else if(state.lastVisit!==today){state.streak=1}state.lastVisit=today;saveState()}
+
+// ═══════════════════════════════════════════════
+// Badges
+// ═══════════════════════════════════════════════
+function awardBadge(id){if(state.badges.includes(id))return;state.badges.push(id);saveState();const b=BADGES.find(x=>x.id===id);if(b)showNotif('badge',b.icon+' Badge: '+b.name,b.desc)}
+
+// ═══════════════════════════════════════════════
+// Notifications
+// ═══════════════════════════════════════════════
+let notifQueue=[];let notifActive=false;
+function showNotif(type,title,text){notifQueue.push({type,title,text});if(!notifActive)processNotif()}
+function processNotif(){if(!notifQueue.length){notifActive=false;return}notifActive=true;const{type,title,text}=notifQueue.shift();const el=document.getElementById('notif');el.className='notif '+type;document.getElementById('notifTitle').textContent=title;document.getElementById('notifText').textContent=text;el.classList.add('show');setTimeout(()=>{el.classList.remove('show');setTimeout(processNotif,300)},2500)}
+
+// ═══════════════════════════════════════════════
+// Level Up + Confetti
+// ═══════════════════════════════════════════════
+function showLevelUp(lv){const ov=document.getElementById('levelUpOverlay');const box=document.getElementById('levelUpBox');box.innerHTML='<div class="lvl-icon">⬆️</div><div class="lvl-title">Level Up!</div><div class="lvl-name">Level '+(lv+1)+': '+LEVELS[lv].name+'</div>';ov.classList.add('active');spawnConfetti();setTimeout(()=>ov.classList.remove('active'),3000)}
+function spawnConfetti(){const c=document.getElementById('confetti');c.innerHTML='';const cols=['#4ade80','#38bdf8','#c084fc','#ff6b9d','#fbbf24','#22d3ee'];for(let i=0;i<60;i++){const p=document.createElement('div');p.style.cssText='position:absolute;left:'+Math.random()*100+'%;background:'+cols[i%cols.length]+';width:'+(6+Math.random()*8)+'px;height:'+(6+Math.random()*8)+'px;border-radius:'+(Math.random()>.5?'50%':'2px')+';animation:confettiFall '+(1.5+Math.random()*2)+'s ease-out '+Math.random()*.5+'s forwards';c.appendChild(p)}if(!document.getElementById('confettiStyle')){const s=document.createElement('style');s.id='confettiStyle';s.textContent='@keyframes confettiFall{0%{opacity:1;transform:translateY(0) rotate(0deg)}100%{opacity:0;transform:translateY(100vh) rotate(720deg)}}';document.head.appendChild(s)}setTimeout(()=>c.innerHTML='',4000)}
+
+// ═══════════════════════════════════════════════
+// Quiz Engine
+// ═══════════════════════════════════════════════
+function shuffleQuiz(modId,quiz){const key='m'+modId;if(state.quizShuffleMap[key])return state.quizShuffleMap[key];const idx=[...Array(quiz.length).keys()];for(let i=idx.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[idx[i],idx[j]]=[idx[j],idx[i]]}state.quizShuffleMap[key]=idx;saveState();return idx}
+function renderQuiz(modId,quiz,isBoss){
+  const pf=isBoss?'boss':'quiz';const idx=isBoss?[...Array(quiz.length).keys()]:shuffleQuiz(modId,quiz);
+  let h='<div class="'+(isBoss?'boss-section':'quiz-section')+'">';
+  h+=isBoss?'<h3>👑 Boss-Challenge</h3><p class="boss-sub">Alle '+quiz.length+' Fragen richtig beantworten!</p>':'<h3>📝 Quiz — Teste dein Wissen</h3>';
+  idx.forEach((qi,di)=>{const q=quiz[qi];h+='<div class="quiz-q" data-qi="'+qi+'"><p>'+(di+1)+'. '+q.q+'</p>';q.a.forEach((a,ai)=>{h+='<label><input type="radio" name="'+pf+'_'+modId+'_'+qi+'" value="'+ai+'"> '+a+'</label>'});h+='</div>'});
+  h+='<button class="quiz-submit" onclick="checkQuiz('+modId+','+isBoss+')">'+(isBoss?'Boss besiegen!':'Antworten prüfen')+'</button>';
+  h+='<div class="quiz-result" id="'+pf+'Result'+modId+'" style="display:none"></div></div>';return h;
+}
+function checkQuiz(modId,isBoss){
+  const pf=isBoss?'boss':'quiz';const quiz=isBoss?modules[modId].boss:modules[modId].quiz;
+  let correct=0;const total=quiz.length;const startTime=window._quizStart||Date.now();
+  quiz.forEach((q,qi)=>{
+    const sel=document.querySelector('input[name="'+pf+'_'+modId+'_'+qi+'"]:checked');
+    const labels=document.querySelectorAll('[data-qi="'+qi+'"] label');
+    const ci=_d(q._h,qi);
+    labels.forEach((l,li)=>{l.classList.remove('correct','wrong');if(li===ci)l.classList.add('correct');else if(sel&&parseInt(sel.value)===li)l.classList.add('wrong')});
+    const qDiv=labels[0]?.closest('.quiz-q');if(qDiv){const old=qDiv.querySelector('.quiz-explanation');if(old)old.remove()}
+    if(!sel||parseInt(sel.value)!==ci){if(qDiv){const exp=document.createElement('div');exp.className='quiz-explanation';exp.textContent='\u2192 Richtige Antwort: '+q.a[ci];qDiv.appendChild(exp)}}
+    if(sel&&parseInt(sel.value)===ci)correct++;
+  });
+  const rEl=document.getElementById(pf+'Result'+modId);rEl.style.display='block';
+  if(isBoss){
+    if(correct===total){
+      rEl.className='quiz-result pass';rEl.textContent='👑 Boss besiegt! '+correct+'/'+total+' — Perfekt!';
+      if(!state.bossResults[modId]){state.bossResults[modId]=true;addXP(100,'Boss-Challenge bestanden!');if(!state.badges.includes('first_boss'))awardBadge('first_boss');if(modules.every((_,i)=>state.bossResults[i]))awardBadge('all_bosses');checkModuleComplete(modId)}
+    }else{rEl.className='quiz-result fail';rEl.textContent='💀 '+correct+'/'+total+' — Alle müssen richtig sein! Versuch es nochmal.';setTimeout(()=>{document.querySelectorAll('input[name^="'+pf+'_'+modId+'"]').forEach(r=>{r.disabled=false;r.checked=false});document.querySelectorAll('[data-qi] label').forEach(l=>l.classList.remove('correct','wrong'));document.querySelectorAll('.quiz-explanation').forEach(e=>e.remove());rEl.style.display='none'},2000);return}
+  }else{
+    const passed=correct>=Math.ceil(total*0.6);rEl.className='quiz-result '+(passed?'pass':'fail');
+    rEl.textContent=passed?'✅ '+correct+'/'+total+' richtig — Bestanden!':'❌ '+correct+'/'+total+' richtig — Mindestens '+Math.ceil(total*0.6)+' nötig.';
+    if(passed&&!state.quizResults[modId]){state.quizResults[modId]=correct;addXP(correct*15+50,'Quiz bestanden ('+correct+'/'+total+')');if(!state.badges.includes('first_quiz'))awardBadge('first_quiz');if(correct===total)awardBadge('perfect_quiz');if(Date.now()-startTime<60000)awardBadge('speed_quiz');checkModuleComplete(modId)}
+  }
+  saveState();document.querySelectorAll('input[name^="'+pf+'_'+modId+'"]').forEach(r=>r.disabled=true);
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function checkModuleComplete(modId){
+  if(state.quizResults[modId]!==undefined&&state.bossResults[modId]&&!state.modulesCompleted.includes(modId)){
+    state.modulesCompleted.push(modId);awardBadge('m'+modId);
+    if(state.modulesCompleted.length>=5)awardBadge('half_done');
+    if(state.modulesCompleted.length>=10){awardBadge('graduate');setTimeout(()=>showCert(),1500)}
+    saveState();renderSidebar();
+  }
+}
+
+// ═══════════════════════════════════════════════
+// Render Module
+// ═══════════════════════════════════════════════
+function renderModule(modId){
+  state.currentModule=modId;
+  if(!state.modulesViewed.includes(modId)){state.modulesViewed.push(modId);addXP(10,'Neues Modul geöffnet');if(state.modulesViewed.length>=10)awardBadge('explorer')}
+  saveState();closeSidebar();
+  const m=modules[modId];
+  let h='<div class="module-header"><div class="mod-badge">'+m.icon+' Modul '+(modId+1)+'</div><h1>'+m.title+'</h1><p class="mod-desc">'+m.description+'</p></div>';
+  m.lessons.forEach((l,i)=>{h+='<div class="lesson-card"><h3><span style="color:var(--neon)">'+String(i+1).padStart(2,'0')+'</span> '+l.title+' <button class="tts-btn" onclick="speakLesson('+i+')" title="Vorlesen">&#128266;</button></h3>'+l.content+'</div>'});
+  h+='<div class="interactive-area" id="interactiveArea"><h4>🧪 Interaktive Übung</h4><div id="interactiveContent">Lädt...</div></div>';
+  window._quizStart=Date.now();
+  h+='<div class="speech-ex"><h4>Sprach\u00FCbung \u{1F3A4}</h4><div id="speechExArea"></div></div>';
+h+=renderQuiz(modId,m.quiz,false);
+  h+=renderQuiz(modId,m.boss,true);
+  h+='<div class="site-footer"><div class="footer-logo"><span>📖 LeseHeld</span></div><p>&copy; 2026 GZ AI Stacks · Gerd Zimmermann</p></div>';
+  document.getElementById('welcomeScreen').style.display='none';
+  document.getElementById('badgesView').style.display='none';
+  document.getElementById('statsView').style.display='none';
+  const mc=document.getElementById('moduleContent');mc.style.display='block';mc.innerHTML=h;
+  renderSidebar();setTimeout(()=>{initInteractive(modId);window.scrollTo(0,0)},100);
+}
+
+// ═══════════════════════════════════════════════
+// Sidebar
+// ═══════════════════════════════════════════════
+function renderSidebar(){
+  const el=document.getElementById('sidebarModules');
+  el.innerHTML=modules.map((m,i)=>{
+    const done=state.modulesCompleted.includes(i);const act=state.currentModule===i&&document.getElementById('moduleContent').style.display==='block';
+    return '<div class="sidebar-item'+(act?' active':'')+(done?' completed':'')+'" onclick="renderModule('+i+')">'+m.icon+' '+m.title+'</div>';
+  }).join('');
+}
+function toggleSidebar(){document.getElementById('sidebar').classList.toggle('open')}
+function closeSidebar(){document.getElementById('sidebar').classList.remove('open')}
+
+// ═══════════════════════════════════════════════
+// Badges & Stats Views
+// ═══════════════════════════════════════════════
+function showBadges(){
+  document.getElementById('welcomeScreen').style.display='none';document.getElementById('moduleContent').style.display='none';document.getElementById('statsView').style.display='none';
+  const v=document.getElementById('badgesView');v.style.display='block';closeSidebar();
+  let h='<div class="module-header"><h1>🏅 Deine Abzeichen</h1><p class="mod-desc">'+state.badges.length+' von '+BADGES.length+' gesammelt</p></div><div class="badges-grid">';
+  BADGES.forEach(b=>{const earned=state.badges.includes(b.id);h+='<div class="badge-card'+(earned?' earned':' locked')+'"><div class="badge-icon">'+(earned?b.icon:'🔒')+'</div><div class="badge-name">'+b.name+'</div><div class="badge-desc">'+b.desc+'</div></div>'});
+  h+='</div>';v.innerHTML=h;
+}
+function showStats(){
+  document.getElementById('welcomeScreen').style.display='none';document.getElementById('moduleContent').style.display='none';document.getElementById('badgesView').style.display='none';
+  const v=document.getElementById('statsView');v.style.display='block';closeSidebar();
+  const lv=getLevel(state.xp);
+  let h='<div class="module-header"><h1>📊 Statistik</h1></div><div class="stats-grid">';
+  h+='<div class="stat-card"><div class="stat-val">'+state.xp+'</div><div class="stat-label">XP gesammelt</div></div>';
+  h+='<div class="stat-card"><div class="stat-val">'+LEVELS[lv].name+'</div><div class="stat-label">Aktueller Rang</div></div>';
+  h+='<div class="stat-card"><div class="stat-val">'+state.modulesCompleted.length+'/10</div><div class="stat-label">Module abgeschlossen</div></div>';
+  h+='<div class="stat-card"><div class="stat-val">'+Object.keys(state.quizResults).length+'</div><div class="stat-label">Quizze bestanden</div></div>';
+  h+='<div class="stat-card"><div class="stat-val">'+Object.keys(state.bossResults).length+'</div><div class="stat-label">Bosse besiegt</div></div>';
+  h+='<div class="stat-card"><div class="stat-val">'+state.badges.length+'</div><div class="stat-label">Abzeichen</div></div>';
+  h+='<div class="stat-card"><div class="stat-val">🔥 '+state.streak+'</div><div class="stat-label">Tage-Streak</div></div>';
+  h+='</div>';v.innerHTML=h;
+}
+
+// ═══════════════════════════════════════════════
+// Certificate
+// ═══════════════════════════════════════════════
+let certStyle='m\u00E4rchen';
+function showCert(){window._lastFocus=document.activeElement;
+  const ov=document.getElementById('certOverlay');ov.classList.add('active');
+  document.getElementById('certPicker').innerHTML=['🏰 Märchen','🌴 Dschungel','🚀 Weltraum','🐠 Unterwasser'].map((l,i)=>{const s=['m\u00E4rchen','dschungel','weltraum','unterwasser'][i];return '<button class="'+(certStyle===s?'active':'')+'" onclick="certStyle=\''+s+'\';showCert()">'+l+'</button>'}).join('');
+  renderCert();
+}
+function closeCert(){document.getElementById('certOverlay').classList.remove('active');if(window._lastFocus){window._lastFocus.focus();window._lastFocus=null}}
+function generateCertCode(){const n=state.name||'X';const d=new Date();return 'LH-'+d.getFullYear()+'-'+((n.charCodeAt(0)*7+state.xp)%9999).toString(16).toUpperCase().padStart(4,'0')}
+function renderCert(){
+  const f=document.getElementById('certFrame');
+  const lv=getLevel(state.xp);const name=state.name||'Unbekannt';
+  const date=new Date().toLocaleDateString('de-DE',{day:'numeric',month:'long',year:'numeric'});
+  const code=generateCertCode();const rank=LEVELS[lv].name;
+  const badges=state.badges.slice(0,6).map(id=>{const b=BADGES.find(x=>x.id===id);return b?b.icon:''}).filter(Boolean).join(' ');
+  const styles={
+    m\u00E4rchen:{bg:'linear-gradient(135deg,#fdf8ee,#f5edda,#ede3c8)',border:'#c5a54e',text:'#1a1a3e',sub:'#5c5040',accent:'#DAA520',sealEmoji:'👑'},
+    dschungel:{bg:'linear-gradient(135deg,#e8f5e9,#c8e6c9,#a5d6a7)',border:'#4caf50',text:'#1b5e20',sub:'#2e7d32',accent:'#388e3c',sealEmoji:'🌿'},
+    weltraum:{bg:'linear-gradient(135deg,#1a1a3e,#0d0d2b,#1a1a3e)',border:'#7c4dff',text:'#e0e0ff',sub:'#a78bfa',accent:'#651fff',sealEmoji:'🚀'},
+    unterwasser:{bg:'linear-gradient(135deg,#e3f2fd,#bbdefb,#90caf9)',border:'#03a9f4',text:'#0d47a1',sub:'#1565c0',accent:'#0288d1',sealEmoji:'🐚'}
+  };
+  const s=styles[certStyle];
+  f.innerHTML='<div style="background:'+s.bg+';padding:48px 40px;border:4px solid '+s.border+';border-radius:12px;text-align:center;min-height:500px;color:'+s.text+'">'
+  +'<div style="font-size:14px;color:'+s.sub+';letter-spacing:4px;text-transform:uppercase">LeseHeld · Lese-Abenteuer</div>'
+  +'<h1 style="font-size:48px;margin:16px 0;font-family:Georgia,serif">Urkunde</h1>'
+  +'<div style="width:120px;height:2px;background:'+s.border+';margin:0 auto 24px;opacity:.5"></div>'
+  +'<p style="font-size:18px;color:'+s.sub+'">verliehen an</p>'
+  +'<h2 style="font-size:42px;color:'+s.accent+';margin:12px 0;font-family:Georgia,serif;font-style:italic">'+name+'</h2>'
+  +'<p style="font-size:22px;font-weight:700;margin:16px 0">'+rank+'</p>'
+  +'<p style="font-size:15px;color:'+s.sub+'">für die erfolgreiche Absolvierung von „LeseHeld"</p>'
+  +'<div style="font-size:15px;margin:24px 0">Module: '+state.modulesCompleted.length+'/10 · XP: '+state.xp+' · Quizze: '+Object.keys(state.quizResults).length+'</div>'
+  +'<div style="font-size:48px;margin:20px 0">'+s.sealEmoji+'</div>'
+  +(badges?'<div style="font-size:28px;margin:12px 0">'+badges+'</div>':'')
+  +'<div style="font-size:14px;color:'+s.sub+';margin-top:24px">'+date+'</div>'
+  +'<div style="font-size:11px;color:'+s.sub+';opacity:.5;margin-top:4px">'+code+'</div>'
+  +'<div style="font-size:12px;color:'+s.sub+';opacity:.4;margin-top:16px">GZ AI STACKS · LeseHeld</div>'
+  +'</div>';
+}
+function printCert(){window.print()}
+
+// ═══════════════════════════════════════════════
+// UI Update
+// ═══════════════════════════════════════════════
+function updateUI(){
+  const lv=getLevel(state.xp);
+  document.getElementById('levelName').textContent=LEVELS[lv].name;
+  document.getElementById('xpText').textContent=state.xp+' XP';
+  document.getElementById('xpFill').style.width=getLevelProgress(state.xp)+'%';
+}
+
+// ═══════════════════════════════════════════════
+// Theme Picker
+// ═══════════════════════════════════════════════
+function setDesignTheme(world,mode){
+  state.designTheme=world+'-'+mode;document.documentElement.setAttribute('data-theme',state.designTheme);saveState();
+  const tc=THEME_CONFIG[world];if(tc){document.getElementById('heroEmoji').textContent=tc.welcomeEmoji;document.getElementById('welcomeTitle').textContent=tc.welcomeTitle;document.getElementById('welcomeSub').textContent=tc.welcomeSub;document.getElementById('startBtn').textContent=tc.welcomeBtn}
+  buildThemePicker();
+}
+function getCurrentThemeParts(){const p=state.designTheme.split('-');return{world:p[0],mode:p[1]||'dark'}}
+function buildThemePicker(){
+  const{world,mode}=getCurrentThemeParts();
+  let h='';Object.keys(THEME_CONFIG).forEach(w=>{const t=THEME_CONFIG[w];h+='<button class="theme-btn'+(w===world?' active':'')+'" style="background:'+t.color+'" onclick="setDesignTheme(\''+w+'\',\''+mode+'\')" title="'+t.name+'">'+t.emoji+'</button>'});
+  h+='<button class="mode-toggle" onclick="setDesignTheme(\''+world+'\',\''+(mode==='dark'?'light':'dark')+'\')">'+(mode==='dark'?'☀️':'🌙')+'</button>';
+  document.getElementById('themePicker').innerHTML=h;
+}
+
+// ═══════════════════════════════════════════════
+// Interactive Exercises (10)
+// ═══════════════════════════════════════════════
+function initInteractive(modId){
+  const fns=[initWortDetektiv,initSatzzeichenSetzer,initRichtigFalsch,initSteckbrief,initL\u00FCckentext,initGeschichteOrdnen,initGef\u00FChlsBarometer,initInfoJ\u00E4ger,initTabellenLeser,initAbschlussStory];
+  if(fns[modId])fns[modId]();else document.getElementById('interactiveContent').innerHTML='<p>Übung kommt bald!</p>';
+}
+
+// Modul 0: Wort-Detektiv — Welches Wort passt nicht?
+function initWortDetektiv(){
+  const rounds=[
+    {words:['Apfel','Birne','Tisch','Banane'],wrong:'Tisch',group:'Obst'},
+    {words:['Hund','Katze','Auto','Maus'],wrong:'Auto',group:'Tiere'},
+    {words:['Rot','Blau','Stuhl','Grün'],wrong:'Stuhl',group:'Farben'},
+    {words:['Jacke','Hose','Schuh','Telefon'],wrong:'Telefon',group:'Kleidung'},
+    {words:['Gitarre','Flöte','Trommel','Pizza'],wrong:'Pizza',group:'Instrumente'}
+  ];
+  let idx=0,score=0;const el=document.getElementById('interactiveContent');
+  function renderRound(){
+    if(idx>=rounds.length){el.innerHTML='<div class="ix-feedback pass" style="display:block">🎉 '+score+'/'+rounds.length+' richtig! Super Wort-Detektiv!</div>';if(!state.interactiveResults[0]){state.interactiveResults[0]=true;addXP(30,'Wort-Detektiv geschafft!');saveState()}return}
+    const r=rounds[idx];const shuffled=[...r.words].sort(()=>Math.random()-.5);
+    el.innerHTML='<p style="font-size:18px;margin-bottom:16px">Welches Wort <strong>passt nicht</strong> zu den anderen?</p><div class="ix-grid" id="ixGrid"></div><div class="ix-feedback" id="ixFeedback"></div><p style="text-align:center;color:var(--text-dim);margin-top:8px">'+(idx+1)+'/'+rounds.length+'</p>';
+    shuffled.forEach(w=>{const b=document.createElement('span');b.className='ix-item';b.textContent=w;b.style.fontSize='20px';b.onclick=()=>{
+      document.querySelectorAll('#ixGrid .ix-item').forEach(x=>{x.textContent===r.wrong?x.classList.add('correct'):x.classList.remove('wrong')});
+      if(w===r.wrong){b.classList.add('correct');score++;document.getElementById('ixFeedback').className='ix-feedback pass';document.getElementById('ixFeedback').textContent='✅ Richtig! Die anderen sind alles '+r.group+'.';}
+      else{b.classList.add('wrong');document.getElementById('ixFeedback').className='ix-feedback fail';document.getElementById('ixFeedback').textContent='❌ Nein — '+r.wrong+' passt nicht, die anderen sind '+r.group+'.';}
+      idx++;setTimeout(renderRound,1500);
+    };document.getElementById('ixGrid').appendChild(b)});
+  }
+  renderRound();
+}
+
+// Modul 1: Satzzeichen-Setzer
+function initSatzzeichenSetzer(){
+  const sentences=[
+    {text:'Die Sonne scheint',answer:'.',type:'Aussage'},
+    {text:'Wo ist mein Buch',answer:'?',type:'Frage'},
+    {text:'Pass auf',answer:'!',type:'Ausruf'},
+    {text:'Heute gehen wir schwimmen',answer:'.',type:'Aussage'},
+    {text:'Wie heißt du',answer:'?',type:'Frage'},
+    {text:'Hilfe',answer:'!',type:'Ausruf'}
+  ];
+  let idx=0,score=0;const el=document.getElementById('interactiveContent');
+  function renderSentence(){
+    if(idx>=sentences.length){el.innerHTML='<div class="ix-feedback pass" style="display:block">🎉 '+score+'/'+sentences.length+' richtig! Satzzeichen-Profi!</div>';if(!state.interactiveResults[1]){state.interactiveResults[1]=true;addXP(30,'Satzzeichen-Setzer geschafft!');saveState()}return}
+    const s=sentences[idx];
+    el.innerHTML='<p style="font-size:22px;text-align:center;margin-bottom:20px">„'+s.text+' <strong style="font-size:32px;color:var(--neon)">___</strong>"</p><p style="text-align:center;margin-bottom:12px">Welches Satzzeichen passt?</p><div class="ix-grid">'+['.','?','!'].map(sz=>'<span class="ix-item" style="font-size:32px;padding:12px 28px;font-weight:900" id="sz_'+sz.charCodeAt(0)+'">'+sz+'</span>').join('')+'</div><div class="ix-feedback" id="ixFeedback"></div><p style="text-align:center;color:var(--text-dim);margin-top:8px">'+(idx+1)+'/'+sentences.length+'</p>';
+    ['.','?','!'].forEach(sz=>{document.getElementById('sz_'+sz.charCodeAt(0)).onclick=()=>{
+      const fb=document.getElementById('ixFeedback');
+      if(sz===s.answer){score++;fb.className='ix-feedback pass';fb.textContent='✅ Richtig! Das ist eine '+s.type+'.';}
+      else{fb.className='ix-feedback fail';fb.textContent='❌ Nicht ganz — es ist eine '+s.type+', also '+s.answer;}
+      document.getElementById('sz_'+s.answer.charCodeAt(0)).classList.add('correct');
+      if(sz!==s.answer)document.getElementById('sz_'+sz.charCodeAt(0)).classList.add('wrong');
+      idx++;setTimeout(renderSentence,1500);
+    }});
+  }
+  renderSentence();
+}
+
+// Modul 2: Richtig oder Falsch
+function initRichtigFalsch(){
+  const story='Lena hat einen kleinen Bruder. Er heißt Felix und ist fünf Jahre alt. Felix mag Dinosaurier und hat viele Spielzeug-Dinos. Jeden Abend liest Lena Felix eine Geschichte vor.';
+  const stmts=[
+    {text:'Lena hat einen kleinen Bruder.',correct:true},
+    {text:'Der Bruder heißt Max.',correct:false},
+    {text:'Felix ist fünf Jahre alt.',correct:true},
+    {text:'Felix mag Autos am liebsten.',correct:false},
+    {text:'Lena liest Felix Geschichten vor.',correct:true}
+  ];
+  const el=document.getElementById('interactiveContent');
+  let answered=0,score=0;
+  el.innerHTML='<div class="reading-passage">📖 '+story+'</div><p style="margin-bottom:12px"><strong>Richtig oder Falsch? Klicke für jede Aussage!</strong></p><div id="ixStmts"></div><div class="ix-feedback" id="ixFeedback"></div>';
+  const container=document.getElementById('ixStmts');
+  stmts.forEach((s,i)=>{
+    const div=document.createElement('div');div.className='ix-rf-stmt';
+    div.innerHTML='<div class="ix-rf-text">'+(i+1)+'. '+s.text+'</div><div class="ix-rf-btns"><span class="ix-rf-btn" data-v="true">✅ Richtig</span><span class="ix-rf-btn" data-v="false">❌ Falsch</span></div>';
+    div.querySelectorAll('.ix-rf-btn').forEach(btn=>{btn.onclick=()=>{
+      if(div.dataset.done)return;div.dataset.done='1';
+      const pick=btn.dataset.v==='true';
+      if(pick===s.correct){btn.classList.add('correct-b');score++}else{btn.classList.add('wrong-b');div.querySelector('[data-v="'+(s.correct)+'"]').classList.add('correct-b')}
+      answered++;
+      if(answered===stmts.length){const fb=document.getElementById('ixFeedback');fb.className='ix-feedback pass';fb.textContent='🎉 '+score+'/'+stmts.length+' richtig!';if(!state.interactiveResults[2]){state.interactiveResults[2]=true;addXP(30,'Richtig-Falsch geschafft!');saveState()}}
+    }});
+    container.appendChild(div);
+  });
+}
+
+// Modul 3: Steckbrief ausfüllen
+function initSteckbrief(){
+  const story='Am Samstag geht Anna mit ihrem Vater zum See. Sie nehmen ein Picknick mit. Annas Hund Bruno rennt am Ufer entlang. Am Nachmittag fahren sie glücklich nach Hause.';
+  const fields=[
+    {label:'👤 Person',answer:'Anna',options:['Anna','Bruno','Lena']},
+    {label:'👨 Begleiter',answer:'Vater',options:['Mutter','Vater','Oma']},
+    {label:'📍 Ort',answer:'See',options:['Wald','See','Park']},
+    {label:'🕐 Wann',answer:'Samstag',options:['Montag','Samstag','Sonntag']},
+    {label:'🐕 Haustier',answer:'Bruno',options:['Max','Felix','Bruno']}
+  ];
+  const el=document.getElementById('interactiveContent');
+  let score=0,answered=0;
+  el.innerHTML='<div class="reading-passage">📖 '+story+'</div><p style="margin-bottom:12px"><strong>Fülle den Steckbrief aus!</strong></p><div id="ixFields"></div><div class="ix-feedback" id="ixFeedback"></div>';
+  const container=document.getElementById('ixFields');
+  fields.forEach((f,i)=>{
+    const div=document.createElement('div');div.className='ix-rf-stmt';
+    const shuffled=[...f.options].sort(()=>Math.random()-.5);
+    div.innerHTML='<div class="ix-rf-text"><strong>'+f.label+':</strong></div><div class="ix-rf-btns">'+shuffled.map(o=>'<span class="ix-rf-btn" data-v="'+o+'">'+o+'</span>').join('')+'</div>';
+    div.querySelectorAll('.ix-rf-btn').forEach(btn=>{btn.onclick=()=>{
+      if(div.dataset.done)return;div.dataset.done='1';
+      if(btn.dataset.v===f.answer){btn.classList.add('correct-b');score++}else{btn.classList.add('wrong-b');div.querySelector('[data-v="'+f.answer+'"]').classList.add('correct-b')}
+      answered++;
+      if(answered===fields.length){const fb=document.getElementById('ixFeedback');fb.className='ix-feedback pass';fb.textContent='🎉 Steckbrief: '+score+'/'+fields.length+' richtig!';if(!state.interactiveResults[3]){state.interactiveResults[3]=true;addXP(30,'Steckbrief geschafft!');saveState()}}
+    }});
+    container.appendChild(div);
+  });
+}
+
+// Modul 4: Lückentext mit Wortbank
+function initL\u00FCckentext(){
+  const blanks=['Sonne','Vögel','Blumen','Kinder','Park'];
+  const text='Die ___ scheint warm vom Himmel. Die ___ singen in den Bäumen. Bunte ___ blühen auf der Wiese. Fröhliche ___ spielen im ___. Was für ein schöner Tag!';
+  const el=document.getElementById('interactiveContent');
+  let parts=text.split('___');let filled=[];let currentBlank=0;
+  const shuffledBank=[...blanks].sort(()=>Math.random()-.5);
+
+  let h='<p style="margin-bottom:12px"><strong>Setze die Wörter aus der Wortbank in die Lücken ein!</strong></p>';
+  h+='<div class="reading-passage" id="ixText">';
+  parts.forEach((p,i)=>{h+=p;if(i<parts.length-1)h+='<span class="ix-blank" data-idx="'+i+'">'+(i+1)+'</span>'});
+  h+='</div>';
+  h+='<div class="ix-wordbank" id="ixBank"></div><div class="ix-feedback" id="ixFeedback"></div>';
+  el.innerHTML=h;
+
+  shuffledBank.forEach(w=>{const b=document.createElement('span');b.className='ix-wb-btn';b.textContent=w;b.onclick=()=>{
+    if(b.classList.contains('used'))return;
+    const blank=document.querySelector('.ix-blank:not(.filled)');
+    if(!blank)return;
+    blank.textContent=w;blank.classList.add('filled');blank.dataset.word=w;b.classList.add('used');
+    filled.push({idx:parseInt(blank.dataset.idx),word:w});
+    if(filled.length===blanks.length){
+      let ok=0;document.querySelectorAll('.ix-blank').forEach(bl=>{
+        const i=parseInt(bl.dataset.idx);if(bl.dataset.word===blanks[i]){bl.classList.add('correct-b');ok++}else{bl.classList.add('wrong-b')}
+      });
+      const fb=document.getElementById('ixFeedback');
+      if(ok>=4){fb.className='ix-feedback pass';fb.textContent='🎉 '+ok+'/'+blanks.length+' richtig! Toll!';if(!state.interactiveResults[4]){state.interactiveResults[4]=true;addXP(30,'Lückentext geschafft!');saveState()}}
+      else{fb.className='ix-feedback fail';fb.textContent='Hmm, '+ok+'/'+blanks.length+' — versuch es nochmal!';setTimeout(()=>{filled=[];document.querySelectorAll('.ix-blank').forEach((bl,i)=>{bl.textContent=(i+1);bl.classList.remove('filled','correct-b','wrong-b');delete bl.dataset.word});document.querySelectorAll('.ix-wb-btn').forEach(b=>b.classList.remove('used'));fb.style.display='none'},2000)}
+    }
+  };document.getElementById('ixBank').appendChild(b)});
+}
+
+// Modul 5: Geschichte ordnen (Absätze)
+function initGeschichteOrdnen(){
+  const parts=[
+    {text:'Es war einmal ein kleiner Vogel, der nicht fliegen konnte.',order:0},
+    {text:'Jeden Tag übte er auf einem Ast, mit den Flügeln zu schlagen.',order:1},
+    {text:'Eines Tages sprang er mutig vom Ast — und flog!',order:2},
+    {text:'Von da an flog der kleine Vogel jeden Tag durch die Lüfte.',order:3}
+  ];
+  const shuffled=[...parts].sort(()=>Math.random()-.5);
+  let selected=[];const el=document.getElementById('interactiveContent');
+
+  el.innerHTML='<p style="margin-bottom:12px"><strong>Bringe die Absätze in die richtige Reihenfolge! Klicke sie der Reihe nach an.</strong></p><div id="ixParts"></div><div style="margin:16px 0"><strong>Deine Reihenfolge:</strong></div><div id="ixOrder" style="min-height:40px"></div><button class="ix-btn" onclick="resetGeschichte()">↩️ Nochmal</button><div class="ix-feedback" id="ixFeedback"></div>';
+
+  function render(){
+    document.getElementById('ixParts').innerHTML=shuffled.map((p,i)=>'<div class="ix-item'+(selected.includes(i)?' placed':'')+'" style="display:block;text-align:left;font-size:17px;padding:12px 16px;margin-bottom:8px;cursor:pointer" data-si="'+i+'" onclick="pickPart('+i+')">'+p.text+'</div>').join('');
+    document.getElementById('ixOrder').innerHTML=selected.map((si,i)=>'<div style="padding:8px 16px;background:var(--neon-dim);border-radius:var(--radius);margin-bottom:4px;font-size:16px"><strong>'+(i+1)+'.</strong> '+shuffled[si].text+'</div>').join('');
+  }
+  render();
+
+  window.pickPart=(si)=>{
+    if(selected.includes(si))return;selected.push(si);render();
+    if(selected.length===parts.length){
+      const ok=selected.every((si,i)=>shuffled[si].order===i);
+      const fb=document.getElementById('ixFeedback');
+      if(ok){fb.className='ix-feedback pass';fb.textContent='🎉 Perfekt! Die Geschichte ist in der richtigen Reihenfolge!';if(!state.interactiveResults[5]){state.interactiveResults[5]=true;addXP(30,'Geschichte ordnen geschafft!');saveState()}}
+      else{fb.className='ix-feedback fail';fb.textContent='❌ Nicht ganz richtig. Versuch es nochmal!';setTimeout(()=>{selected=[];render();fb.style.display='none'},2000)}
+    }
+  };
+  window.resetGeschichte=()=>{selected=[];render();document.getElementById('ixFeedback').className='ix-feedback'};
+}
+
+// Modul 6: Gefühls-Barometer
+function initGef\u00FChlsBarometer(){
+  const scenes=[
+    {text:'Tom bekommt ein neues Fahrrad zum Geburtstag.',feeling:'😊',name:'Freude'},
+    {text:'Lenas bester Freund zieht in eine andere Stadt.',feeling:'😢',name:'Trauer'},
+    {text:'Max findet seine Hausaufgaben nicht mehr.',feeling:'😠',name:'Wut/Ärger'},
+    {text:'Sara hört nachts ein komisches Geräusch.',feeling:'😨',name:'Angst'},
+    {text:'Emma gewinnt beim Sportfest eine Medaille.',feeling:'😊',name:'Freude'},
+    {text:'Felix wird von einem größeren Kind geärgert.',feeling:'😢',name:'Trauer'}
+  ];
+  let idx=0,score=0;const el=document.getElementById('interactiveContent');
+  const emojis=[{e:'😊',n:'Freude'},{e:'😢',n:'Trauer'},{e:'😠',n:'Wut'},{e:'😨',n:'Angst'}];
+  function renderScene(){
+    if(idx>=scenes.length){el.innerHTML='<div class="ix-feedback pass" style="display:block">🎉 '+score+'/'+scenes.length+' richtig! Du erkennst Gefühle super!</div>';if(!state.interactiveResults[6]){state.interactiveResults[6]=true;addXP(30,'Gefühls-Barometer geschafft!');saveState()}return}
+    const s=scenes[idx];
+    el.innerHTML='<div class="reading-passage" style="font-size:20px;text-align:center">'+s.text+'</div><p style="text-align:center;margin-bottom:12px">Welches Gefühl hat die Person?</p><div class="ix-grid">'+emojis.map(em=>'<span class="ix-item" style="font-size:40px;padding:16px 24px" data-e="'+em.e+'">'+em.e+'<br><span style="font-size:14px">'+em.n+'</span></span>').join('')+'</div><div class="ix-feedback" id="ixFeedback"></div><p style="text-align:center;color:var(--text-dim);margin-top:8px">'+(idx+1)+'/'+scenes.length+'</p>';
+    document.querySelectorAll('#interactiveContent .ix-item').forEach(btn=>{btn.onclick=()=>{
+      const fb=document.getElementById('ixFeedback');
+      if(btn.dataset.e===s.feeling){btn.classList.add('correct');score++;fb.className='ix-feedback pass';fb.textContent='✅ Richtig! Das ist '+s.name+'.';}
+      else{btn.classList.add('wrong');document.querySelector('[data-e="'+s.feeling+'"]').classList.add('correct');fb.className='ix-feedback fail';fb.textContent='❌ Nicht ganz — die Person fühlt '+s.name+'.';}
+      idx++;setTimeout(renderScene,1500);
+    }});
+  }
+  renderScene();
+}
+
+// Modul 7: Info-Jäger (Sachtext)
+function initInfoJ\u00E4ger(){
+  const text='Der Igel ist ein kleines Säugetier. Er wird etwa 25 cm lang und wiegt bis zu 1,5 kg. Igel fressen Insekten, Schnecken und Würmer. Im Winter halten sie Winterschlaf. Ein Igel hat etwa 8.000 Stacheln.';
+  const questions=[
+    {q:'Wie lang wird ein Igel?',options:['10 cm','25 cm','50 cm'],correct:1},
+    {q:'Was frisst ein Igel?',options:['Obst','Gras','Insekten'],correct:2},
+    {q:'Was macht der Igel im Winter?',options:['Winterschlaf','Schwimmen','Fliegen'],correct:0},
+    {q:'Wie viele Stacheln hat ein Igel?',options:['800','5.000','8.000'],correct:2}
+  ];
+  let idx=0,score=0;const el=document.getElementById('interactiveContent');
+  el.innerHTML='<div class="reading-passage">🦔 '+text+'</div><div id="ixQ"></div><div class="ix-feedback" id="ixFeedback"></div>';
+  function renderQ(){
+    if(idx>=questions.length){const fb=document.getElementById('ixFeedback');fb.className='ix-feedback pass';fb.textContent='🎉 '+score+'/'+questions.length+' richtig! Super Info-Jäger!';if(!state.interactiveResults[7]){state.interactiveResults[7]=true;addXP(30,'Info-Jäger geschafft!');saveState()}return}
+    const q=questions[idx];
+    document.getElementById('ixQ').innerHTML='<p style="font-size:18px;font-weight:700;margin-bottom:12px">'+(idx+1)+'. '+q.q+'</p><div class="ix-grid">'+q.options.map((o,i)=>'<span class="ix-item" style="font-size:17px;padding:10px 20px" data-oi="'+i+'">'+o+'</span>').join('')+'</div>';
+    document.querySelectorAll('#ixQ .ix-item').forEach(btn=>{btn.onclick=()=>{
+      const pick=parseInt(btn.dataset.oi);
+      document.querySelector('#ixQ [data-oi="'+q.correct+'"]').classList.add('correct');
+      if(pick===q.correct)score++;else btn.classList.add('wrong');
+      idx++;setTimeout(renderQ,800);
+    }});
+  }
+  renderQ();
+}
+
+// Modul 8: Tabellen-Leser
+function initTabellenLeser(){
+  const tableHTML='<table style="width:100%;border-collapse:collapse;text-align:left;background:var(--bg2);border-radius:8px;overflow:hidden"><tr style="background:var(--neon-dim)"><th style="padding:10px;border:1px solid var(--border)">Name</th><th style="padding:10px;border:1px solid var(--border)">Lieblingsfach</th><th style="padding:10px;border:1px solid var(--border)">Hobby</th></tr><tr><td style="padding:8px;border:1px solid var(--border)">Tom</td><td style="padding:8px;border:1px solid var(--border)">Mathe</td><td style="padding:8px;border:1px solid var(--border)">Fußball</td></tr><tr><td style="padding:8px;border:1px solid var(--border)">Lena</td><td style="padding:8px;border:1px solid var(--border)">Deutsch</td><td style="padding:8px;border:1px solid var(--border)">Malen</td></tr><tr><td style="padding:8px;border:1px solid var(--border)">Max</td><td style="padding:8px;border:1px solid var(--border)">Sport</td><td style="padding:8px;border:1px solid var(--border)">Schwimmen</td></tr></table>';
+  const questions=[
+    {q:'Was ist Toms Lieblingsfach?',options:['Deutsch','Sport','Mathe'],correct:2},
+    {q:'Wer malt gerne?',options:['Tom','Lena','Max'],correct:1},
+    {q:'Was ist Max\' Hobby?',options:['Fußball','Schwimmen','Malen'],correct:1},
+    {q:'Wer mag Sport am liebsten?',options:['Tom','Lena','Max'],correct:2}
+  ];
+  let idx=0,score=0;const el=document.getElementById('interactiveContent');
+  el.innerHTML='<p style="margin-bottom:12px"><strong>Lies die Tabelle und beantworte die Fragen!</strong></p>'+tableHTML+'<div id="ixQ" style="margin-top:16px"></div><div class="ix-feedback" id="ixFeedback"></div>';
+  function renderQ(){
+    if(idx>=questions.length){const fb=document.getElementById('ixFeedback');fb.className='ix-feedback pass';fb.textContent='🎉 '+score+'/'+questions.length+' richtig! Tabellen-Profi!';if(!state.interactiveResults[8]){state.interactiveResults[8]=true;addXP(30,'Tabellen-Leser geschafft!');saveState()}return}
+    const q=questions[idx];
+    document.getElementById('ixQ').innerHTML='<p style="font-size:18px;font-weight:700;margin-bottom:12px">'+(idx+1)+'. '+q.q+'</p><div class="ix-grid">'+q.options.map((o,i)=>'<span class="ix-item" style="font-size:17px;padding:10px 20px" data-oi="'+i+'">'+o+'</span>').join('')+'</div>';
+    document.querySelectorAll('#ixQ .ix-item').forEach(btn=>{btn.onclick=()=>{
+      const pick=parseInt(btn.dataset.oi);
+      document.querySelector('#ixQ [data-oi="'+q.correct+'"]').classList.add('correct');
+      if(pick===q.correct)score++;else btn.classList.add('wrong');
+      idx++;setTimeout(renderQ,800);
+    }});
+  }
+  renderQ();
+}
+
+// Modul 9: Abschluss-Story mit Fragen
+function initAbschlussStory(){
+  const story='Emma und Leon finden einen Brief im Baumhaus. Auf dem Brief steht: „Sucht den Schatz unter dem großen Stein!" Sie suchen im Garten und finden neben dem Apfelbaum einen großen Stein. Darunter liegt eine kleine Holzkiste mit bunten Murmeln. Auf einem Zettel steht: „Von Oma, mit Liebe."';
+  const questions=[
+    {q:'Wo finden sie den Brief?',options:['Im Garten','Im Baumhaus','In der Schule'],correct:1},
+    {q:'Was steht auf dem Brief?',options:['Kommt essen','Sucht den Schatz','Geht schlafen'],correct:1},
+    {q:'Wo liegt der Stein?',options:['Im Wald','Neben dem Apfelbaum','Auf dem Dach'],correct:1},
+    {q:'Was ist in der Kiste?',options:['Gold','Bücher','Bunte Murmeln'],correct:2},
+    {q:'Von wem ist der Schatz?',options:['Von Papa','Von der Lehrerin','Von Oma'],correct:2}
+  ];
+  let idx=0,score=0;const el=document.getElementById('interactiveContent');
+  el.innerHTML='<div class="reading-passage">📖 '+story+'</div><div id="ixQ"></div><div class="ix-feedback" id="ixFeedback"></div>';
+  function renderQ(){
+    if(idx>=questions.length){const fb=document.getElementById('ixFeedback');fb.className='ix-feedback pass';fb.textContent='🎉 '+score+'/'+questions.length+' richtig! Du bist ein echter LeseHeld!';if(!state.interactiveResults[9]){state.interactiveResults[9]=true;addXP(30,'Abschluss-Story geschafft!');saveState()}return}
+    const q=questions[idx];
+    document.getElementById('ixQ').innerHTML='<p style="font-size:18px;font-weight:700;margin-bottom:12px">'+(idx+1)+'. '+q.q+'</p><div class="ix-grid">'+q.options.map((o,i)=>'<span class="ix-item" style="font-size:17px;padding:10px 20px" data-oi="'+i+'">'+o+'</span>').join('')+'</div>';
+    document.querySelectorAll('#ixQ .ix-item').forEach(btn=>{btn.onclick=()=>{
+      const pick=parseInt(btn.dataset.oi);
+      document.querySelector('#ixQ [data-oi="'+q.correct+'"]').classList.add('correct');
+      if(pick===q.correct)score++;else btn.classList.add('wrong');
+      idx++;setTimeout(renderQ,800);
+    }});
+  }
+  renderQ();
+}
+
+// ═══════════════════════════════════════════════
+// Start App
+// ═══════════════════════════════════════════════
+function startApp(){
+  const name=document.getElementById('nameInput').value.trim();if(!name)return;
+  state.name=name;state.started=true;saveState();
+  document.getElementById('welcomeScreen').style.display='none';
+  renderModule(0);updateStreak();
+}
+
+// ═══════════════════════════════════════════════
+// Init
+// ═══════════════════════════════════════════════
+(function init(){
+  if(loadState()){
+    document.documentElement.setAttribute('data-theme',state.designTheme);
+    if(state.started){
+      document.getElementById('welcomeScreen').style.display='none';
+      renderModule(state.currentModule);updateStreak();
+    }else{
+      document.getElementById('nameInput').value=state.name||'';
+      document.getElementById('startBtn').disabled=!state.name;
+    }
+  }
+  buildThemePicker();updateUI();renderSidebar();
+  const{world}=getCurrentThemeParts();const tc=THEME_CONFIG[world];
+  if(tc){document.getElementById('heroEmoji').textContent=tc.welcomeEmoji;document.getElementById('welcomeTitle').textContent=tc.welcomeTitle;document.getElementById('welcomeSub').textContent=tc.welcomeSub;document.getElementById('startBtn').textContent=tc.welcomeBtn}
+  document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeCert();document.getElementById('levelUpOverlay').classList.remove('active')}});
+})()
+</script>
+
+<script>
+(function(){
+var KEY=null;
+var scripts=document.querySelectorAll('script');
+for(var i=0;i<scripts.length;i++){
+var km=scripts[i].textContent.match(/STORAGE_KEY\s*=\s*['"](\w+)['"]/);
+if(km){KEY=km[1];break;}
+}
+if(!location.hash.match(/modules=/)){try{Object.keys(localStorage).filter(function(k){return k.indexOf("_allowed_modules")!==-1}).forEach(function(k){localStorage.removeItem(k)})}catch(e){}}
+var LOCK_KEY=(KEY||'app')+'_allowed_modules';
+var h=location.hash.match(/modules=([0-9,]+)/);
+var allowed=null;
+if(h){
+allowed=h[1].split(",").map(Number);
+try{localStorage.setItem(LOCK_KEY,JSON.stringify(allowed));}catch(e){}
+}else{
+try{var stored=localStorage.getItem(LOCK_KEY);if(stored)allowed=JSON.parse(stored);}catch(e){}
+}
+if(!allowed||!allowed.length)return;
+function filterSidebar(){
+var items=document.querySelectorAll("#sidebarModules > *");
+for(var i=0;i<items.length;i++){
+items[i].style.display=(allowed.indexOf(i)===-1)?"none":"";
+}
+}
+var sb=document.getElementById("sidebarModules");
+if(sb){new MutationObserver(filterSidebar).observe(sb,{childList:true});filterSidebar();}
+document.addEventListener("click",function(e){
+var t=e.target.closest("[onclick]");
+if(!t)return;
+var oc=t.getAttribute("onclick")||"";
+var idx=oc.indexOf("renderModule(");
+if(idx===-1)return;
+var num=parseInt(oc.substring(idx+13));
+if(!isNaN(num)&&allowed.indexOf(num)===-1){e.preventDefault();e.stopImmediatePropagation();}
+},true);
+setTimeout(filterSidebar,500);
+window.addEventListener("hashchange",function(){
+var hh=location.hash.match(/modules=([0-9,]+)/);
+if(hh){
+allowed=hh[1].split(",").map(Number);
+try{localStorage.setItem(LOCK_KEY,JSON.stringify(allowed));}catch(e){}
+filterSidebar();
+}
+});
+})();
+</script>
+
+<div class="zoom-controls" role="toolbar" aria-label="Zoom-Steuerung">
+<button class="zoom-btn" onclick="zoomOut()" title="Verkleinern (Taste -)" aria-label="Verkleinern">&#8722;</button>
+<button class="zoom-btn" onclick="zoomReset()" title="Zoom zurücksetzen" aria-label="Zoom zurücksetzen" style="font-size:10px;position:relative"><span id="zoomLvl">100%</span></button>
+<button class="zoom-btn" onclick="zoomIn()" title="Vergrößern (Taste +)" aria-label="Vergrößern">+</button>
+</div>
+
+<script>
+(function(){
+var zl=100;
+function applyZoom(){document.documentElement.style.fontSize=zl+'%';var e=document.getElementById('zoomLvl');if(e)e.textContent=zl+'%';}
+window.zoomIn=function(){if(zl<200){zl+=10;applyZoom();}};
+window.zoomOut=function(){if(zl>50){zl-=10;applyZoom();}};
+window.zoomReset=function(){zl=100;applyZoom();};
+document.addEventListener('keydown',function(e){
+if(e.target.tagName==='INPUT'||e.target.tagName==='TEXTAREA'||e.target.isContentEditable)return;
+if((e.key==='+'||e.key==='=')&&!e.ctrlKey&&!e.metaKey){e.preventDefault();zoomIn();}
+else if((e.key==='-'||e.key==='_')&&!e.ctrlKey&&!e.metaKey){e.preventDefault();zoomOut();}
+else if(e.key==='0'&&!e.ctrlKey&&!e.metaKey){e.preventDefault();zoomReset();}
+});
+})();
+</script>
+
+<script>
+/* A11y: Focus trap for modal overlays */
+document.addEventListener('keydown',function(e){if(e.key==='Tab'){var ov=document.querySelector('.cert-overlay.active,.modal-overlay.active,[role="dialog"].active');if(ov){var fc=ov.querySelectorAll('button,a,[tabindex="0"],input,select,textarea');if(fc.length){var f=fc[0],l=fc[fc.length-1];if(e.shiftKey&&document.activeElement===f){e.preventDefault();l.focus()}else if(!e.shiftKey&&document.activeElement===l){e.preventDefault();f.focus()}}}}});
+</script>
+</body>
+</html>

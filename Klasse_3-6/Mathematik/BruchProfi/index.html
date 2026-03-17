@@ -1,0 +1,860 @@
+<!DOCTYPE html>
+<html lang="de" data-theme="wald-dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>BruchProfi — Bruchrechnung meistern</title>
+<meta name="description" content="Interaktive Lern-App für Klasse 4-6: Brüche, Dezimalzahlen und Textaufgaben — offline und mit Spaß!">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+[data-theme="wald-dark"]{--bg:#0c1a0f;--bg2:#132818;--bg3:#1a3520;--card:#15291a;--text:#d4e8d4;--text-dim:#8aab8a;--heading:#e8f5e9;--neon:#4ade80;--neon-dim:rgba(74,222,128,.12);--neon-glow:0 0 20px rgba(74,222,128,.25);--link:#66bb6a;--border:rgba(74,222,128,.15);--success:#4ade80;--warning:#fbbf24;--danger:#f87171;--xp-purple:#a78bfa;--badge-cyan:#22d3ee;--streak-red:#f87171;--radius:20px;--shadow:0 4px 24px rgba(0,0,0,.3);--font:'Segoe UI',system-ui,sans-serif;--mono:'Courier New',monospace;--serif:Georgia,serif}
+[data-theme="wald-light"]{--bg:#f1f8e9;--bg2:#e8f5e9;--bg3:#c8e6c9;--card:#fff;--text:#2e4a2e;--text-dim:#5a7a5a;--heading:#1b5e20;--neon:#2e7d32;--neon-dim:rgba(46,125,50,.08);--neon-glow:0 0 12px rgba(46,125,50,.15);--link:#388e3c;--border:rgba(46,125,50,.15);--success:#2e7d32;--warning:#f59e0b;--danger:#dc2626;--xp-purple:#7c3aed;--badge-cyan:#0891b2;--streak-red:#dc2626;--radius:20px;--shadow:0 4px 24px rgba(0,0,0,.08);--font:'Segoe UI',system-ui,sans-serif;--mono:'Courier New',monospace;--serif:Georgia,serif}
+[data-theme="ozean-dark"]{--bg:#0a1628;--bg2:#0f1e38;--bg3:#132848;--card:#132040;--text:#c8e0f8;--text-dim:#6a9cc8;--heading:#e0f2fe;--neon:#38bdf8;--neon-dim:rgba(56,189,248,.12);--neon-glow:0 0 20px rgba(56,189,248,.25);--link:#0ea5e9;--border:rgba(56,189,248,.15);--success:#22d3ee;--warning:#fbbf24;--danger:#f87171;--xp-purple:#a78bfa;--badge-cyan:#22d3ee;--streak-red:#f87171;--radius:16px;--shadow:0 4px 24px rgba(0,0,0,.35);--font:'Segoe UI',system-ui,sans-serif;--mono:'Courier New',monospace;--serif:Georgia,serif}
+[data-theme="ozean-light"]{--bg:#f0f9ff;--bg2:#e0f2fe;--bg3:#bae6fd;--card:#fff;--text:#0c4a6e;--text-dim:#4a8ab0;--heading:#0c4a6e;--neon:#0284c7;--neon-dim:rgba(2,132,199,.08);--neon-glow:0 0 12px rgba(2,132,199,.15);--link:#0369a1;--border:rgba(2,132,199,.15);--success:#0891b2;--warning:#f59e0b;--danger:#dc2626;--xp-purple:#7c3aed;--badge-cyan:#0891b2;--streak-red:#dc2626;--radius:16px;--shadow:0 4px 24px rgba(0,0,0,.06);--font:'Segoe UI',system-ui,sans-serif;--mono:'Courier New',monospace;--serif:Georgia,serif}
+[data-theme="space-dark"]{--bg:#07020e;--bg2:#0e0620;--bg3:#150a30;--card:#110a28;--text:#d8d0f0;--text-dim:#8a7cb8;--heading:#f0e8ff;--neon:#c084fc;--neon-dim:rgba(192,132,252,.12);--neon-glow:0 0 20px rgba(192,132,252,.25);--link:#a855f7;--border:rgba(192,132,252,.15);--success:#a78bfa;--warning:#fbbf24;--danger:#f87171;--xp-purple:#c084fc;--badge-cyan:#22d3ee;--streak-red:#f87171;--radius:12px;--shadow:0 4px 24px rgba(0,0,0,.4);--font:'Segoe UI',system-ui,sans-serif;--mono:'Courier New',monospace;--serif:Georgia,serif}
+[data-theme="space-light"]{--bg:#faf5ff;--bg2:#f3e8ff;--bg3:#e9d5ff;--card:#fff;--text:#2e1065;--text-dim:#7c5aad;--heading:#2e1065;--neon:#7c3aed;--neon-dim:rgba(124,58,237,.08);--neon-glow:0 0 12px rgba(124,58,237,.15);--link:#6d28d9;--border:rgba(124,58,237,.15);--success:#7c3aed;--warning:#f59e0b;--danger:#dc2626;--xp-purple:#7c3aed;--badge-cyan:#0891b2;--streak-red:#dc2626;--radius:12px;--shadow:0 4px 24px rgba(0,0,0,.06);--font:'Segoe UI',system-ui,sans-serif;--mono:'Courier New',monospace;--serif:Georgia,serif}
+[data-theme="candy-dark"]{--bg:#1a1a2e;--bg2:#222244;--bg3:#2a2a55;--card:#262650;--text:#f0dde8;--text-dim:#b088a0;--heading:#fff;--neon:#ff6b9d;--neon-dim:rgba(255,107,157,.12);--neon-glow:0 0 20px rgba(255,107,157,.25);--link:#f472b6;--border:rgba(255,107,157,.15);--success:#f472b6;--warning:#fbbf24;--danger:#f87171;--xp-purple:#c084fc;--badge-cyan:#22d3ee;--streak-red:#f87171;--radius:24px;--shadow:0 4px 24px rgba(0,0,0,.3);--font:'Comic Sans MS','Chalkboard SE',cursive,system-ui;--mono:'Courier New',monospace;--serif:Georgia,serif}
+[data-theme="candy-light"]{--bg:#fff0f6;--bg2:#fce7f3;--bg3:#fbcfe8;--card:#fff;--text:#831843;--text-dim:#a0547a;--heading:#831843;--neon:#ec4899;--neon-dim:rgba(236,72,153,.08);--neon-glow:0 0 12px rgba(236,72,153,.15);--link:#db2777;--border:rgba(236,72,153,.15);--success:#ec4899;--warning:#f59e0b;--danger:#dc2626;--xp-purple:#7c3aed;--badge-cyan:#0891b2;--streak-red:#dc2626;--radius:24px;--shadow:0 4px 24px rgba(0,0,0,.06);--font:'Comic Sans MS','Chalkboard SE',cursive,system-ui;--mono:'Courier New',monospace;--serif:Georgia,serif}
+html{scroll-behavior:smooth}
+body{font-family:var(--font);background:var(--bg);color:var(--text);font-size:17px;line-height:1.7;min-height:100vh;transition:background .3s,color .3s}
+a{color:var(--link);text-decoration:none}a:hover{text-decoration:underline}
+.skip-nav{position:absolute;top:-50px;left:8px;background:var(--neon);color:var(--bg);padding:8px 16px;z-index:9999;border-radius:0 0 8px 8px;font-weight:700}.skip-nav:focus{top:0}
+.header{position:sticky;top:0;z-index:100;background:var(--bg2);border-bottom:1px solid var(--border);padding:10px 20px;display:flex;align-items:center;gap:12px;backdrop-filter:blur(12px)}
+.header .logo{display:flex;align-items:center;gap:10px;font-weight:700;font-size:20px;color:var(--heading)}.header .logo svg{width:32px;height:32px}
+.header .xp-bar{flex:1;max-width:260px;margin-left:auto}.header .xp-label{font-size:12px;color:var(--text-dim);display:flex;justify-content:space-between;font-weight:600}.header .xp-track{height:8px;background:var(--bg3);border-radius:4px;overflow:hidden;margin-top:2px}.header .xp-fill{height:100%;background:var(--neon);border-radius:4px;transition:width .5s}
+.hamburger{display:none;background:none;border:2px solid var(--border);color:var(--text);font-size:22px;padding:4px 10px;border-radius:var(--radius);cursor:pointer}@media(max-width:800px){.hamburger{display:block}}
+.sidebar{position:fixed;top:54px;left:0;width:280px;height:calc(100vh - 54px);background:var(--bg2);border-right:1px solid var(--border);overflow-y:auto;padding:16px;z-index:90;transition:transform .3s}
+.sidebar h3{font-size:14px;color:var(--text-dim);text-transform:uppercase;letter-spacing:2px;margin-bottom:12px}
+.sidebar-item{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:var(--radius);cursor:pointer;color:var(--text);font-size:15px;transition:background .2s;margin-bottom:4px;border:1px solid transparent}
+.sidebar-item:hover{background:var(--neon-dim);border-color:var(--border)}.sidebar-item.active{background:var(--neon-dim);border-color:var(--neon);color:var(--neon);font-weight:700}.sidebar-item.completed::after{content:'\2713';margin-left:auto;color:var(--success);font-weight:700}
+.sidebar-link{display:block;padding:10px 12px;border-radius:var(--radius);color:var(--text-dim);font-size:14px;cursor:pointer;transition:background .2s;margin-bottom:2px}.sidebar-link:hover{background:var(--neon-dim);color:var(--text)}
+@media(max-width:800px){.sidebar{transform:translateX(-100%)}.sidebar.open{transform:translateX(0)}}
+.main{margin-left:280px;padding:32px;max-width:860px}@media(max-width:800px){.main{margin-left:0;padding:16px}}
+.welcome{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:70vh;text-align:center;padding:40px 20px}
+.welcome .hero-emoji{font-size:80px;margin-bottom:16px;animation:bounce 2s ease-in-out infinite}@keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-16px)}}
+.welcome h1{font-size:clamp(32px,6vw,52px);color:var(--heading);margin-bottom:8px}.welcome .sub{font-size:clamp(16px,3vw,20px);color:var(--text-dim);margin-bottom:32px;max-width:500px}
+.welcome input{font-size:20px;padding:14px 24px;border-radius:var(--radius);border:2px solid var(--border);background:var(--bg2);color:var(--text);text-align:center;width:min(340px,90%);outline:none;font-family:var(--font);transition:border-color .3s}.welcome input:focus{border-color:var(--neon)}
+.welcome .start-btn{margin-top:20px;padding:16px 48px;font-size:20px;font-weight:700;border-radius:var(--radius);border:none;background:var(--neon);color:var(--bg);cursor:pointer;font-family:var(--font);transition:transform .2s,box-shadow .2s}.welcome .start-btn:hover{transform:scale(1.05);box-shadow:var(--neon-glow)}.welcome .start-btn:disabled{opacity:.5;cursor:not-allowed;transform:none}
+.theme-picker{display:flex;gap:8px;margin-top:20px;flex-wrap:wrap;justify-content:center}.theme-btn{width:44px;height:44px;border-radius:50%;border:3px solid transparent;cursor:pointer;transition:transform .2s,border-color .2s;position:relative}.theme-btn:hover{transform:scale(1.15)}.theme-btn.active{border-color:var(--heading);transform:scale(1.15)}
+.mode-toggle{background:var(--bg3);border:2px solid var(--border);color:var(--text);padding:6px 14px;border-radius:20px;cursor:pointer;font-size:18px;transition:all .2s;margin-left:8px}.mode-toggle:hover{border-color:var(--neon)}
+.module-header{text-align:center;margin-bottom:32px}.module-header .mod-badge{display:inline-block;background:var(--neon-dim);border:1px solid var(--border);color:var(--neon);padding:6px 16px;border-radius:20px;font-size:14px;font-weight:600;margin-bottom:12px}.module-header h1{color:var(--heading);font-size:clamp(24px,4vw,36px)}.module-header .mod-desc{color:var(--text-dim);margin-top:8px;font-size:16px}
+.lesson-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:24px 28px;margin-bottom:20px;box-shadow:var(--shadow)}.lesson-card h3{color:var(--heading);font-size:20px;margin-bottom:12px}.lesson-card p,.lesson-card li{font-size:17px;line-height:1.8;margin-bottom:8px}.lesson-card .info-box{background:var(--neon-dim);border-left:4px solid var(--neon);padding:14px 18px;border-radius:0 var(--radius) var(--radius) 0;margin:16px 0;font-size:16px}.lesson-card ul,.lesson-card ol{padding-left:24px;margin:12px 0}
+.interactive-area{background:var(--card);border:2px solid var(--neon);border-radius:var(--radius);padding:24px;margin:24px 0;box-shadow:var(--neon-glow)}.interactive-area h4{color:var(--neon);font-size:18px;margin-bottom:16px}#interactiveContent{min-height:100px}
+.ix-grid{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;margin:16px 0}.ix-item{background:var(--bg3);border:2px solid var(--border);border-radius:var(--radius);padding:14px 20px;font-size:20px;cursor:pointer;transition:all .2s;user-select:none;text-align:center;min-width:60px}.ix-item:hover{border-color:var(--neon);background:var(--neon-dim)}.ix-item.selected{border-color:var(--neon);background:var(--neon-dim);box-shadow:var(--neon-glow)}.ix-item.correct{border-color:var(--success);background:rgba(74,222,128,.15);color:var(--success)}.ix-item.wrong{border-color:var(--danger);background:rgba(248,113,113,.15);color:var(--danger)}.ix-item.placed{opacity:.4;pointer-events:none}
+.ix-btn{background:var(--neon);color:var(--bg);border:none;padding:12px 28px;border-radius:var(--radius);font-size:17px;font-weight:700;cursor:pointer;font-family:var(--font);margin-top:16px;transition:transform .2s}.ix-btn:hover{transform:scale(1.05)}.ix-btn:disabled{opacity:.5;cursor:not-allowed;transform:none}
+.ix-feedback{text-align:center;padding:14px;border-radius:var(--radius);font-size:18px;font-weight:700;margin-top:12px;display:none}.ix-feedback.pass{display:block;background:rgba(74,222,128,.12);color:var(--success)}.ix-feedback.fail{display:block;background:rgba(248,113,113,.12);color:var(--danger)}
+.quiz-section,.boss-section{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:24px;margin:20px 0}.boss-section{border-color:var(--warning);box-shadow:0 0 20px rgba(251,191,36,.1)}.quiz-section h3,.boss-section h3{color:var(--heading);margin-bottom:16px;font-size:20px}.boss-sub{color:var(--warning);font-size:14px;margin-bottom:16px}
+.quiz-q{margin-bottom:20px}.quiz-q p{font-weight:600;font-size:17px;margin-bottom:10px;color:var(--heading)}.quiz-q label{display:block;padding:10px 16px;border-radius:var(--radius);border:1px solid var(--border);margin-bottom:6px;cursor:pointer;transition:all .2s;font-size:16px}.quiz-q label:hover{background:var(--neon-dim)}.quiz-q label.correct{background:rgba(74,222,128,.15);border-color:var(--success);color:var(--success)}.quiz-q label.wrong{background:rgba(248,113,113,.15);border-color:var(--danger);color:var(--danger)}
+.quiz-submit{background:var(--neon);color:var(--bg);border:none;padding:12px 28px;border-radius:var(--radius);font-size:16px;font-weight:700;cursor:pointer;font-family:var(--font)}.quiz-submit:disabled{opacity:.5;cursor:not-allowed}
+.quiz-result{padding:14px;border-radius:var(--radius);font-weight:700;font-size:17px;margin-top:12px;text-align:center}.quiz-result.pass{background:rgba(74,222,128,.12);color:var(--success)}.quiz-result.fail{background:rgba(248,113,113,.12);color:var(--danger)}
+.quiz-explanation{margin-top:6px;padding:8px 14px;border-radius:var(--radius);background:rgba(74,222,128,.08);border-left:3px solid var(--success);font-size:14px;color:var(--success);font-weight:600}
+.badges-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:12px;margin-top:16px}.badge-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px;text-align:center}.badge-card.earned{border-color:var(--neon);box-shadow:var(--neon-glow)}.badge-card .badge-icon{font-size:36px;margin-bottom:6px}.badge-card .badge-name{font-weight:700;font-size:14px;color:var(--heading)}.badge-card .badge-desc{font-size:12px;color:var(--text-dim);margin-top:4px}.badge-card.locked{opacity:.4}
+.stats-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:16px;margin-top:16px}.stat-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:20px;text-align:center}.stat-card .stat-val{font-size:36px;font-weight:700;color:var(--neon)}.stat-card .stat-label{font-size:14px;color:var(--text-dim);margin-top:4px}
+.notif{position:fixed;top:-80px;right:20px;padding:14px 20px;border-radius:var(--radius);font-size:15px;z-index:999;transition:top .4s ease;box-shadow:var(--shadow);max-width:340px}.notif.show{top:70px}.notif.xp{background:var(--xp-purple);color:#fff}.notif.badge{background:var(--badge-cyan);color:#000}.notif.streak{background:var(--streak-red);color:#fff}.notif.level{background:var(--neon);color:var(--bg)}.notif-title{font-weight:700;font-size:16px}.notif-text{font-size:13px;opacity:.85;margin-top:2px}
+.level-up-overlay{position:fixed;inset:0;z-index:500;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,.7)}.level-up-overlay.active{display:flex}.lvl-box{text-align:center;animation:popIn .5s ease}.lvl-icon{font-size:64px}.lvl-title{font-size:36px;font-weight:900;color:var(--neon);margin:8px 0}.lvl-name{font-size:20px;color:var(--heading)}@keyframes popIn{0%{transform:scale(0) rotate(-10deg);opacity:0}100%{transform:scale(1) rotate(0);opacity:1}}#confetti{position:fixed;inset:0;pointer-events:none;z-index:501;overflow:hidden}
+.cert-overlay{display:none;position:fixed;inset:0;z-index:400;background:rgba(0,0,0,.85);align-items:center;justify-content:center;flex-direction:column;padding:20px;overflow-y:auto}.cert-overlay.active{display:flex}.cert-picker{display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap;justify-content:center}.cert-picker button{padding:8px 16px;border-radius:var(--radius);border:2px solid var(--border);background:var(--bg2);color:var(--text);cursor:pointer;font-size:14px;font-family:var(--font);transition:all .2s}.cert-picker button.active{border-color:var(--neon);color:var(--neon);background:var(--neon-dim)}.cert-frame{width:min(700px,95vw);min-height:500px;border-radius:12px;overflow:hidden}.cert-actions{display:flex;gap:12px;margin-top:16px;flex-wrap:wrap;justify-content:center}.cert-actions button{padding:10px 20px;border-radius:var(--radius);border:2px solid var(--border);background:var(--bg2);color:var(--text);cursor:pointer;font-size:14px;font-family:var(--font);transition:all .2s}.cert-actions button:hover{border-color:var(--neon);color:var(--neon)}
+@media print{*{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}.header,.sidebar,.notif,.level-up-overlay,#confetti{display:none!important}.main{margin-left:0!important;padding:20px!important}.lesson-card{break-inside:avoid;page-break-inside:avoid;margin-bottom:24px}}
+.site-footer{text-align:center;padding:32px 0;margin-top:40px;border-top:1px solid var(--border);color:var(--text-dim);font-size:13px}.footer-logo{display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:8px;font-weight:700;color:var(--text)}.footer-logo svg{width:24px;height:24px}
+
+.zoom-controls{position:fixed;bottom:16px;left:16px;display:flex;gap:4px;z-index:9999}
+.zoom-btn{width:32px;height:32px;border-radius:50%;border:1px solid var(--border,#2a3444);background:var(--bg2,#111827);color:var(--text,#d4dce8);cursor:pointer;font-size:15px;display:flex;align-items:center;justify-content:center;transition:all .2s;font-family:inherit;line-height:1}
+.zoom-btn:hover{border-color:var(--neon,#3b82f6);color:var(--neon,#3b82f6);transform:scale(1.1)}
+.zoom-btn:focus-visible{outline:2px solid var(--neon,#3b82f6);outline-offset:2px}
+.zoom-level{font-size:10px;position:absolute;top:-16px;left:50%;transform:translateX(-50%);color:var(--text-dim,#8899aa);white-space:nowrap;pointer-events:none}
+
+/* A11y: Print improvements */
+@media print{body{background:#fff!important;color:#000!important}.cert-overlay,.modal-overlay,.level-up-overlay,.theme-overlay,.zoom-controls{display:none!important}.lesson-card,.quiz-section,.boss-section,.interactive-area{break-inside:avoid;page-break-inside:avoid}}
+
+/* Audio/Speech */
+.tts-btn{background:none;border:none;cursor:pointer;font-size:.9em;opacity:.5;transition:all .2s;vertical-align:middle;margin-left:8px;padding:2px 6px;border-radius:4px}
+.tts-btn:hover{opacity:1;background:var(--bg2)}.tts-btn.speaking{opacity:1;color:var(--neon);animation:tts-pulse 1s infinite}
+@keyframes tts-pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.15)}}
+.tts-bar{display:flex;align-items:center;gap:8px;padding:6px 12px;background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);margin:8px 0;font-size:.8rem;flex-wrap:wrap}
+.tts-bar select{background:var(--bg);color:var(--text);border:1px solid var(--border);border-radius:4px;padding:2px 6px;font-size:.78rem}
+.tts-bar button{background:none;border:1px solid var(--border);border-radius:4px;padding:2px 8px;cursor:pointer;color:var(--text);font-size:.8rem}
+.tts-bar button:hover{background:var(--bg)}
+.speech-ex{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:16px;margin:12px 0;text-align:center}
+.speech-ex h4{margin:0 0 8px;font-size:1rem}
+.mic-btn{font-size:1.6em;background:none;border:2px solid var(--neon);border-radius:50%;width:52px;height:52px;cursor:pointer;transition:all .3s;color:var(--text);display:inline-flex;align-items:center;justify-content:center}
+.mic-btn:hover{background:var(--neon);color:var(--bg)}.mic-btn.rec{background:#ef4444;border-color:#ef4444;color:#fff;animation:tts-pulse 1s infinite}
+.sr-res{margin-top:8px;padding:6px 10px;border-radius:4px;font-weight:600;font-size:.85rem;display:inline-block}
+.sr-res.good{background:#22c55e22;color:#22c55e}.sr-res.retry{background:#f59e0b22;color:#f59e0b}
+.sr-na{font-size:.8rem;color:var(--text-dim);margin-top:8px}
+</style>
+</head>
+<body>
+<a href="#mainContent" class="skip-nav">Zum Inhalt springen</a>
+<header class="header" role="banner">
+  <button class="hamburger" onclick="toggleSidebar()" aria-label="Menu">&#9776;</button>
+  <div class="logo">
+    <svg viewBox="0 0 32 32" fill="none" aria-hidden="true"><rect x="4" y="2" width="24" height="28" rx="4" fill="var(--neon-dim)" stroke="var(--neon)" stroke-width="1.5"/><line x1="8" y1="16" x2="24" y2="16" stroke="var(--neon)" stroke-width="2"/><text x="16" y="13" text-anchor="middle" font-size="9" font-weight="900" fill="var(--heading)">1</text><text x="16" y="26" text-anchor="middle" font-size="9" font-weight="900" fill="var(--heading)">2</text></svg>
+    <span>BruchProfi</span>
+  </div>
+  <div class="xp-bar"><div class="xp-label"><span id="levelName">Bruch-Entdecker</span><span id="xpText">0 XP</span></div><div class="xp-track"><div class="xp-fill" id="xpFill" style="width:0%"></div></div></div>
+</header>
+<nav class="sidebar" id="sidebar" role="navigation" aria-label="Module">
+  <h3>Module</h3><div id="sidebarModules"></div>
+  <hr style="border:none;border-top:1px solid var(--border);margin:16px 0">
+  <div class="sidebar-link" onclick="showBadges()">&#127941; Abzeichen</div>
+  <div class="sidebar-link" onclick="showStats()">&#128202; Statistik</div>
+  <div class="sidebar-link" onclick="showCert()">&#127891; Urkunde</div>
+  <hr style="border:none;border-top:1px solid var(--border);margin:16px 0">
+  <div class="sidebar-link" onclick="exportData()">&#128190; Speichern</div>
+  <div class="sidebar-link" onclick="exportFortschritt()">📄 Fortschritt (TXT)</div>
+  <label class="sidebar-link" style="cursor:pointer">&#128194; Laden <input type="file" accept=".json" onchange="importData(event)" style="display:none"></label>
+  <div class="sidebar-link" onclick="if(confirm('Wirklich alles zur\u00fccksetzen?')){localStorage.removeItem(STORAGE_KEY);location.reload()}" style="color:var(--danger)">&#128465; Zur&uuml;cksetzen</div>
+</nav>
+<main class="main" id="mainContent">
+  <div class="welcome" id="welcomeScreen">
+    <div class="hero-emoji" id="heroEmoji">&#127795;</div>
+    <h1 id="welcomeTitle">BruchProfi</h1>
+    <p class="sub" id="welcomeSub">Entdecke die Welt der Br&uuml;che im Zauberwald!</p>
+    <input type="text" id="nameInput" placeholder="Dein Name" maxlength="24" aria-label="Dein Name" oninput="document.getElementById('startBtn').disabled=!this.value.trim()">
+    <button class="start-btn" id="startBtn" disabled onclick="startApp()">Wald betreten</button>
+    <div class="theme-picker" id="themePicker"></div>
+  </div>
+  <div id="moduleContent" style="display:none"></div>
+  <div id="badgesView" style="display:none"></div>
+  <div id="statsView" style="display:none"></div>
+</main>
+<div class="notif" id="notif" role="status" aria-live="polite" aria-atomic="true"><div class="notif-title" id="notifTitle"></div><div class="notif-text" id="notifText"></div></div>
+<div class="level-up-overlay" id="levelUpOverlay"><div class="lvl-box" id="levelUpBox"></div></div>
+<div id="confetti"></div>
+<div class="cert-overlay" id="certOverlay" role="dialog" aria-label="Urkunde" aria-modal="true">
+  <div class="cert-picker" id="certPicker"></div>
+  <div class="cert-frame" id="certFrame"></div>
+  <div class="cert-actions"><button onclick="printCert()">&#128424; Drucken / PDF</button><button onclick="closeCert()">Schlie&szlig;en</button></div>
+</div>
+<script>
+
+// === Audio (TTS) ===
+const _synth=window.speechSynthesis,_LANG='de-DE';let _ttsOn=false,_ttsRate=1,_ttsTimer=null;
+function speakLesson(i){if(_ttsOn){stopTTS();return}const c=document.querySelectorAll('.lesson-card');if(!c[i]||!_synth)return;stopTTS();const u=new SpeechSynthesisUtterance(c[i].innerText);u.lang=_LANG;u.rate=_ttsRate;u.onstart=()=>{_ttsOn=true;updTTSUI();startTTSTimer()};u.onend=()=>{_ttsOn=false;updTTSUI();clearTTSTimer()};u.onerror=()=>{_ttsOn=false;updTTSUI();clearTTSTimer()};_synth.speak(u);showTTSBar()}
+function speakText(t,lang){if(!_synth)return;stopTTS();const u=new SpeechSynthesisUtterance(t);u.lang=lang||_LANG;u.rate=_ttsRate;u.onstart=()=>{_ttsOn=true;updTTSUI();startTTSTimer()};u.onend=()=>{_ttsOn=false;updTTSUI();clearTTSTimer()};u.onerror=()=>{_ttsOn=false;updTTSUI();clearTTSTimer()};_synth.speak(u)}
+function stopTTS(){if(_synth){_synth.cancel()}_ttsOn=false;updTTSUI();clearTTSTimer()}
+function updTTSUI(){document.querySelectorAll('.tts-btn').forEach(b=>b.classList.toggle('speaking',_ttsOn))}
+function setTTSRate(r){_ttsRate=parseFloat(r)}
+function startTTSTimer(){clearTTSTimer();_ttsTimer=setInterval(()=>{if(_synth&&_synth.speaking&&!_synth.paused){_synth.pause();_synth.resume()}},10000)}
+function clearTTSTimer(){if(_ttsTimer){clearInterval(_ttsTimer);_ttsTimer=null}}
+function showTTSBar(){if(document.getElementById('ttsBar'))return;const mc=document.getElementById('moduleContent');if(!mc)return;const b=document.createElement('div');b.className='tts-bar';b.id='ttsBar';b.innerHTML='\u{1F50A} <select onchange="setTTSRate(this.value)"><option value="0.7">Langsam</option><option value="1" selected>Normal</option><option value="1.3">Schnell</option></select> <button onclick="stopTTS()">\u25A0 Stopp</button>';mc.prepend(b)}
+
+
+/* === Fortschritt-Export (TXT) === */
+function exportFortschritt(){
+  var t=document.title.replace(/\s*[\u2014\u2013|].*/,'').trim();
+  var d=new Date();
+  var dd=String(d.getDate()).padStart(2,'0');
+  var mm=String(d.getMonth()+1).padStart(2,'0');
+  var yyyy=d.getFullYear();
+  var datum=dd+'.'+mm+'.'+yyyy;
+  var datumFile=yyyy+'-'+mm+'-'+dd;
+
+  var mc=state.modulesCompleted||[];
+  var total=modules.length;
+  var done=mc.length;
+
+  var lvl=0;
+  for(var i=LEVELS.length-1;i>=0;i--){if(state.xp>=LEVELS[i].xp){lvl=i;break;}}
+  var lvlName=LEVELS[lvl]?LEVELS[lvl].name:'';
+
+  var sep='\u2550'.repeat(42);
+  var sep2='\u2500'.repeat(42);
+  var lines=[];
+  lines.push(sep);
+  lines.push('  LERNFORTSCHRITT \u2014 '+t);
+  lines.push(sep);
+  lines.push('');
+  lines.push('  Sch\u00FCler:   '+(state.name||'(kein Name)'));
+  lines.push('  Datum:     '+datum);
+  lines.push('  Level:     '+(lvl+1)+' \u2014 '+lvlName+' ('+state.xp+' XP)');
+  lines.push('  Streak:    '+(state.streak||0)+' Tage in Folge');
+  lines.push('');
+  lines.push(sep2);
+  lines.push('  MODULE ('+done+'/'+total+' abgeschlossen)');
+  lines.push(sep2);
+  lines.push('');
+
+  for(var m=0;m<modules.length;m++){
+    var mod=modules[m];
+    var isDone=mc.indexOf(m)!==-1;
+    var icon=isDone?'\u2705':'\u2B1C';
+    var line='  '+icon+' Modul '+(m+1)+': '+mod.title;
+    if(isDone){
+      var qs=state.quizResults&&state.quizResults[m]!=null?state.quizResults[m]:'?';
+      var bs=state.bossResults&&state.bossResults[m]!=null?state.bossResults[m]:'?';
+      line+='\n        Quiz: '+qs+'/5 | Boss: '+bs+'/3';
+    }
+    lines.push(line);
+  }
+
+  var earnedBadges=(state.badges||[]);
+  lines.push('');
+  lines.push(sep2);
+  lines.push('  ABZEICHEN ('+earnedBadges.length+'/'+BADGES.length+')');
+  lines.push(sep2);
+  lines.push('');
+  if(earnedBadges.length===0){
+    lines.push('  (noch keine)');
+  }else{
+    for(var b=0;b<BADGES.length;b++){
+      if(earnedBadges.indexOf(BADGES[b].id)!==-1){
+        lines.push('  '+BADGES[b].icon+' '+BADGES[b].name);
+      }
+    }
+  }
+
+  lines.push('');
+  lines.push(sep);
+  lines.push('  (c) 2026 GZ AI Stacks \u2014 Gerd Zimmermann');
+  lines.push(sep);
+
+  var txt=lines.join('\n');
+  var safeName=(state.name||'Schueler').replace(/[^a-zA-Z0-9\u00C0-\u017F]/g,'_');
+  var fileName='Fortschritt_'+t.replace(/[^a-zA-Z0-9\u00C0-\u017F]/g,'_')+'_'+safeName+'_'+datumFile+'.txt';
+  var a=document.createElement('a');
+  a.download=fileName;
+  a.href=URL.createObjectURL(new Blob([txt],{type:'text/plain;charset=utf-8'}));
+  a.click();
+}
+
+const _qk=[0x4A,0x7F,0x2B,0x61,0x5C,0x3E,0x18,0x73];
+function _d(h,i){return h^_qk[i%_qk.length]}
+
+const LEVELS=[
+{name:'Bruch-Entdecker',xp:0},{name:'Z\u00e4hler-Kenner',xp:40},{name:'Nenner-Freund',xp:100},
+{name:'Bruch-Leser',xp:180},{name:'Teil-Versteher',xp:280},{name:'K\u00fcrz-Anf\u00e4nger',xp:400},
+{name:'Bruch-Rechner',xp:540},{name:'Erweiterer',xp:700},{name:'Dezimal-Kenner',xp:880},
+{name:'Bruch-Zauberer',xp:1080},{name:'K\u00fcrz-K\u00fcnstler',xp:1300},{name:'Bruch-Detektiv',xp:1540},
+{name:'Rechen-Held',xp:1800},{name:'Bruch-Drache',xp:2080},{name:'Formel-Ritter',xp:2380},
+{name:'Bruch-Champion',xp:2700},{name:'Mathe-Genie',xp:3040},{name:'Bruch-Magier',xp:3400},
+{name:'Rechen-Legende',xp:3780},{name:'Bruch-Meister',xp:4180}
+];
+
+const BADGES=[
+{id:'m0',name:'Bruch-Kenner',icon:'\uD83D\uDD22',desc:'Modul 1 abgeschlossen'},
+{id:'m1',name:'Vergleichs-Profi',icon:'\u2696\uFE0F',desc:'Modul 2 abgeschlossen'},
+{id:'m2',name:'K\u00fcrz-Meister',icon:'\u2702\uFE0F',desc:'Modul 3 abgeschlossen'},
+{id:'m3',name:'Additions-Held',icon:'\u2795',desc:'Modul 4 abgeschlossen'},
+{id:'m4',name:'Subtraktions-Star',icon:'\u2796',desc:'Modul 5 abgeschlossen'},
+{id:'m5',name:'Multiplikator',icon:'\u2716\uFE0F',desc:'Modul 6 abgeschlossen'},
+{id:'m6',name:'Divisions-Experte',icon:'\u2797',desc:'Modul 7 abgeschlossen'},
+{id:'m7',name:'Dezimal-Profi',icon:'\uD83D\uDCCF',desc:'Modul 8 abgeschlossen'},
+{id:'m8',name:'Umwandler',icon:'\uD83D\uDD04',desc:'Modul 9 abgeschlossen'},
+{id:'m9',name:'Textaufgaben-L\u00f6ser',icon:'\uD83D\uDCDD',desc:'Modul 10 abgeschlossen'},
+{id:'first_quiz',name:'Quiz-Neuling',icon:'\u2753',desc:'Erstes Quiz bestanden'},
+{id:'perfect_quiz',name:'Perfektionist',icon:'\uD83D\uDC8E',desc:'Quiz mit 5/5 bestanden'},
+{id:'first_boss',name:'Boss-Bezwinger',icon:'\uD83D\uDC51',desc:'Erste Boss-Challenge bestanden'},
+{id:'all_bosses',name:'Endgegner',icon:'\uD83C\uDFC6',desc:'Alle Boss-Challenges bestanden'},
+{id:'streak3',name:'Durchstarter',icon:'\uD83D\uDD25',desc:'3 Tage in Folge gelernt'},
+{id:'streak7',name:'Wochenkrieger',icon:'\u2694\uFE0F',desc:'7 Tage in Folge gelernt'},
+{id:'half_done',name:'Halbzeit',icon:'\u23F3',desc:'5 Module abgeschlossen'},
+{id:'speed_quiz',name:'Blitz-Denker',icon:'\u26A1',desc:'Quiz in unter 60 Sekunden'},
+{id:'explorer',name:'Entdecker',icon:'\uD83D\uDDFA\uFE0F',desc:'Alle Module angesehen'},
+{id:'graduate',name:'Absolvent',icon:'\uD83C\uDF93',desc:'Alle 10 Module abgeschlossen'}
+];
+
+const THEME_CONFIG={
+  wald:{name:'Bruchwald',emoji:'\uD83C\uDF33',color:'#4ade80',desc:'Br\u00fcche im magischen Wald',welcomeEmoji:'\uD83C\uDF33',welcomeTitle:'BruchProfi',welcomeSub:'Entdecke die Welt der Br\u00fcche im Zauberwald!',welcomeBtn:'Wald betreten'},
+  ozean:{name:'Bruch-Ozean',emoji:'\uD83C\uDF0A',color:'#38bdf8',desc:'Br\u00fcche unter Wasser',welcomeEmoji:'\uD83D\uDC20',welcomeTitle:'BruchProfi',welcomeSub:'Tauche ab in den Ozean der Br\u00fcche!',welcomeBtn:'Abtauchen'},
+  space:{name:'Bruch-Galaxie',emoji:'\uD83D\uDE80',color:'#c084fc',desc:'Br\u00fcche im Weltall',welcomeEmoji:'\uD83D\uDE80',welcomeTitle:'BruchProfi',welcomeSub:'Flieg durch die Bruch-Galaxie!',welcomeBtn:'Abheben'},
+  candy:{name:'S\u00fc\u00dfe Br\u00fcche',emoji:'\uD83C\uDF6C',color:'#ff6b9d',desc:'Br\u00fcche im S\u00fc\u00dfigkeiten-Land',welcomeEmoji:'\uD83C\uDF6C',welcomeTitle:'BruchProfi',welcomeSub:'Im S\u00fc\u00dfigkeiten-Land sind die Br\u00fcche besonders lecker!',welcomeBtn:'Naschen'}
+};
+
+// ═══ Modules ═══
+const modules=[
+// M0: Was sind Brüche?
+{id:0,title:'Was sind Br\u00fcche?',icon:'\uD83D\uDD22',duration:'25 Min.',
+description:'Lerne Z\u00e4hler, Nenner und den Bruch als Teil eines Ganzen kennen.',
+lessons:[
+{title:'Der Bruch als Teil',content:'<p>Ein <strong>Bruch</strong> beschreibt einen Teil eines Ganzen. Wenn du eine Pizza in 4 gleiche St\u00fccke teilst und 1 St\u00fcck isst, hast du <strong>\u00bc</strong> gegessen.</p><div class="info-box">\uD83C\uDF55 <strong>\u00bc</strong> bedeutet: 1 von 4 gleichen Teilen</div><p>Jeder Bruch besteht aus zwei Zahlen:</p><ul><li>Oben: <strong>Z\u00e4hler</strong> — wie viele Teile du hast</li><li>Unten: <strong>Nenner</strong> — in wie viele Teile das Ganze geteilt ist</li></ul>'},
+{title:'Br\u00fcche im Alltag',content:'<p>Br\u00fcche begegnen dir \u00fcberall:</p><ul><li>\u00bd Liter Milch</li><li>\u00bc Stunde = 15 Minuten</li><li>\u00be der Klasse sind M\u00e4dchen</li><li>\u00be Stunde = 45 Minuten</li><li>\u2153 einer Pizza = 1 von 3 St\u00fccken</li></ul><div class="info-box">\uD83D\uDCA1 <strong>Merke:</strong> Je gr\u00f6\u00dfer der Nenner, desto kleiner sind die einzelnen Teile! \u00bd > \u00bc > \u215b</div>'}
+],
+quiz:[
+{q:'Was steht beim Bruch \u00be oben?',a:['4','3','7','1'],_h:0x4B},
+{q:'Wie hei\u00dft die Zahl unter dem Bruchstrich?',a:['Z\u00e4hler','Nenner','Divisor','Faktor'],_h:0x7E},
+{q:'Was bedeutet \u00bd?',a:['2 von 1','1 von 3','1 von 2','2 von 2'],_h:0x29},
+{q:'Welcher Bruch ist am gr\u00f6\u00dften?',a:['\u00bc','\u00bd','\u215b','1/10'],_h:0x60},
+{q:'Eine Pizza wird in 8 St\u00fccke geteilt. Du isst 3. Welcher Bruch?',a:['8/3','3/8','\u00be','3/5'],_h:0x5D}
+],
+boss:[
+{q:'Was passiert, wenn Z\u00e4hler = Nenner?',a:['Der Bruch ist 0','Der Bruch ist \u00bd','Der Bruch ist 1','Das geht nicht'],_h:0x48},
+{q:'Welcher Bruch beschreibt \"3 von 5 gleichen Teilen\"?',a:['5/3','3/5','3/8','\u2156'],_h:0x7E},
+{q:'Ordne: \u00bc, \u00bd, \u00be — welcher ist in der Mitte?',a:['\u00bc','\u00be','\u00bd','Alle gleich'],_h:0x29}
+]},
+// M1: Brüche vergleichen
+{id:1,title:'Br\u00fcche vergleichen',icon:'\u2696\uFE0F',duration:'25 Min.',
+description:'Lerne, welcher Bruch gr\u00f6\u00dfer oder kleiner ist.',
+lessons:[
+{title:'Gleichnamige Br\u00fcche',content:'<p>Wenn zwei Br\u00fcche den <strong>gleichen Nenner</strong> haben, vergleichst du einfach die Z\u00e4hler:</p><div class="info-box">\u2696\uFE0F <strong>3/5 > 2/5</strong>, weil 3 > 2 (gleicher Nenner!)</div><p>Beispiele:</p><ul><li>5/8 > 3/8</li><li>1/4 < 3/4</li><li>2/6 = 2/6</li></ul>'},
+{title:'Ungleichnamige Br\u00fcche',content:'<p>Bei <strong>verschiedenen Nennern</strong> musst du erst <strong>gleichnamig machen</strong>:</p><div class="info-box">\uD83D\uDCA1 Finde das <strong>kgV (kleinstes gemeinsames Vielfaches)</strong> der Nenner \u2014 das ist die kleinste Zahl, die von beiden Nennern geteilt werden kann.</div><p>Beispiel: \u00bd vs. \u2153</p><ul><li>kgV von 2 und 3 = 6</li><li>\u00bd = 3/6</li><li>\u2153 = 2/6</li><li>Also: \u00bd > \u2153</li></ul><div class="info-box">\u2696\uFE0F <strong>Schneller Trick:</strong> Kreuzweise multiplizieren! a/b vs. c/d \u2192 vergleiche a\u00d7d mit c\u00d7b. Beispiel: \u2154 vs. \u00be \u2192 2\u00d74=8 vs. 3\u00d73=9 \u2192 8 &lt; 9, also \u2154 &lt; \u00be</div>'}
+],
+quiz:[
+{q:'Welcher Bruch ist gr\u00f6\u00dfer: 3/7 oder 5/7?',a:['3/7','5/7','Gleich','Kann man nicht sagen'],_h:0x4B},
+{q:'Was ist das kgV von 3 und 4?',a:['7','12','3','4'],_h:0x7E},
+{q:'Ist \u00bd gr\u00f6\u00dfer oder kleiner als \u2153?',a:['Kleiner','Gr\u00f6\u00dfer','Gleich','Undefiniert'],_h:0x2A},
+{q:'\u00bc gleichnamig mit \u2153 — welcher Nenner?',a:['7','12','4','3'],_h:0x60},
+{q:'Welcher Bruch ist am kleinsten?',a:['\u00bd','\u2153','\u00bc','\u2155'],_h:0x5F}
+],
+boss:[
+{q:'Ordne aufsteigend: \u00bc, \u00bd, \u2153',a:['\u00bc, \u00bd, \u2153','\u00bc, \u2153, \u00bd','\u2153, \u00bc, \u00bd','\u00bd, \u2153, \u00bc'],_h:0x4B},
+{q:'5/6 __ 7/8. Was passt?',a:['>','<','=','?'],_h:0x7E},
+{q:'Welche zwei Br\u00fcche sind gleich gro\u00df?',a:['1/2 und 2/4','1/3 und 1/4','2/5 und 3/5','1/2 und 1/3'],_h:0x2B}
+]},
+// M2: Erweitern & Kürzen
+{id:2,title:'Erweitern & K\u00fcrzen',icon:'\u2702\uFE0F',duration:'25 Min.',
+description:'Lerne, Br\u00fcche zu erweitern und zu k\u00fcrzen.',
+lessons:[
+{title:'Br\u00fcche erweitern',content:'<p><strong>Erweitern</strong> = Z\u00e4hler und Nenner mit der gleichen Zahl multiplizieren.</p><div class="info-box">\uD83D\uDD22 \u00bd = 2/4 = 3/6 = 4/8 — alles der gleiche Bruch!</div><p>Erweitern ver\u00e4ndert den Wert des Bruchs <strong>nicht</strong>, nur die Darstellung.</p><ul><li>\u2153 \u00d7 2/2 = 2/6</li><li>\u00bc \u00d7 3/3 = 3/12</li></ul>'},
+{title:'Br\u00fcche k\u00fcrzen',content:'<p><strong>K\u00fcrzen</strong> = Z\u00e4hler und Nenner durch die gleiche Zahl teilen.</p><div class="info-box">\u2702\uFE0F 4/8 \u00f7 4/4 = <strong>\u00bd</strong> — so einfach wie m\u00f6glich!</div><p>Du kannst k\u00fcrzen, wenn Z\u00e4hler und Nenner einen <strong>gemeinsamen Teiler</strong> haben.</p><ul><li>6/9 \u00f7 3/3 = \u2154</li><li>10/15 \u00f7 5/5 = \u2154</li></ul><div class="info-box">\uD83D\uDCA1 <strong>ggT (gr\u00f6\u00dfter gemeinsamer Teiler)</strong> = die gr\u00f6\u00dfte Zahl, durch die Z\u00e4hler und Nenner teilbar sind. Beispiel: ggT von 12 und 18 ist 6. K\u00fcrze immer durch den ggT f\u00fcr die einfachste Form!</div><div class="info-box">\u2702\uFE0F <strong>Vollst\u00e4ndig gek\u00fcrzt</strong> (wenn ggT von Z\u00e4hler und Nenner = 1 ist, z.B. \u00be ist vollst\u00e4ndig gek\u00fcrzt, weil ggT(3,4) = 1)</div>'}
+],
+quiz:[
+{q:'\u00bd erweitert mit 3 ergibt?',a:['3/5','3/6','2/6','1/6'],_h:0x4B},
+{q:'6/8 gek\u00fcrzt ergibt?',a:['2/4','\u00be','3/8','6/4'],_h:0x7E},
+{q:'Was ist der ggT von 12 und 18?',a:['3','6','9','2'],_h:0x2A},
+{q:'Welcher Bruch ist bereits vollst\u00e4ndig gek\u00fcrzt?',a:['4/6','2/8','\u2157','3/9'],_h:0x63},
+{q:'\u2154 erweitert mit 4 ergibt?',a:['8/12','6/12','8/16','3/8'],_h:0x5C}
+],
+boss:[
+{q:'10/25 vollst\u00e4ndig gek\u00fcrzt?',a:['2/5','\u00bd','\u2154','5/10'],_h:0x4A},
+{q:'Welche Br\u00fcche sind \u00e4quivalent zu \u00be?',a:['6/8 und 9/12','6/8 und 8/12','4/6 und 6/8','3/8 und 6/16'],_h:0x7F},
+{q:'14/21 gek\u00fcrzt = ?',a:['\u00bd','\u2154','7/11','2/7'],_h:0x2A}
+]},
+// M3: Addition von Brüchen
+{id:3,title:'Addition von Br\u00fcchen',icon:'\u2795',duration:'30 Min.',
+description:'Lerne, Br\u00fcche zu addieren — gleichnamig und ungleichnamig.',
+lessons:[
+{title:'Gleichnamige Br\u00fcche addieren',content:'<p>Bei <strong>gleichem Nenner</strong>: Z\u00e4hler addieren, Nenner bleibt!</p><div class="info-box">\u2795 2/5 + 1/5 = <strong>3/5</strong></div><p>Weitere Beispiele:</p><ul><li>1/8 + 3/8 = 4/8 = \u00bd</li><li>2/6 + 3/6 = 5/6</li></ul><p>Das Ergebnis einer Addition hei\u00dft <strong>Summe</strong>.</p>'},
+{title:'Ungleichnamige Br\u00fcche addieren',content:'<p>Bei <strong>verschiedenen Nennern</strong>: Erst gleichnamig machen!</p><div class="info-box">\uD83D\uDCA1 \u00bd + \u2153 = 3/6 + 2/6 = <strong>5/6</strong></div><p>Schritte:</p><ol><li>kgV der Nenner finden</li><li>Beide Br\u00fcche erweitern</li><li>Z\u00e4hler addieren</li><li>Ergebnis k\u00fcrzen</li></ol><div class="info-box">\uD83D\uDCA1 <strong>Unechter Bruch</strong> (wenn der Z\u00e4hler gr\u00f6\u00dfer als der Nenner ist, z.B. 5/3). Umwandlung in eine gemischte Zahl: 5/3 = 1 Rest 2 = 1\u2154</div>'}
+],
+quiz:[
+{q:'2/7 + 3/7 = ?',a:['5/14','5/7','6/7','1'],_h:0x4B},
+{q:'\u00bd + \u00bc = ?',a:['\u2153','\u00be','2/6','\u2154'],_h:0x7E},
+{q:'1/3 + 1/6 = ?',a:['\u2153','2/9','\u00bd','2/6'],_h:0x29},
+{q:'3/8 + 5/8 = ?',a:['8/8 = 1','8/16','\u00be','5/8'],_h:0x61},
+{q:'\u2154 + \u00bc = ?',a:['3/7','5/12','11/12','7/12'],_h:0x5E}
+],
+boss:[
+{q:'\u00bd + \u2153 + \u2159 = ?',a:['\u00bd','1','5/6','\u2154'],_h:0x4B},
+{q:'Wie lautet der Hauptnenner von \u00bc und \u2153?',a:['7','12','4','3'],_h:0x7E},
+{q:'5/6 + 1/6 = ?',a:['6/12','\u2154','6/6 = 1','1/1 = \u00bd'],_h:0x29}
+]},
+// M4: Subtraktion von Brüchen
+{id:4,title:'Subtraktion von Br\u00fcchen',icon:'\u2796',duration:'25 Min.',
+description:'Lerne, Br\u00fcche voneinander abzuziehen.',
+lessons:[
+{title:'Gleichnamig subtrahieren',content:'<p>Bei gleichem Nenner: <strong>Z\u00e4hler subtrahieren</strong>, Nenner bleibt!</p><div class="info-box">\u2796 5/8 - 3/8 = <strong>2/8 = \u00bc</strong></div><ul><li>4/5 - 1/5 = \u2155</li><li>7/9 - 2/9 = 5/9</li></ul>'},
+{title:'Ungleichnamig subtrahieren',content:'<p>Verschiedene Nenner? Gleiche Schritte wie bei der Addition \u2014 nur mit Minus statt Plus! Erst <strong>gleichnamig machen</strong>!</p><div class="info-box">\uD83D\uDCA1 \u00be - \u00bd = \u00be - 2/4 = <strong>\u00bc</strong></div><p>Schritte:</p><ol><li>kgV finden</li><li>Erweitern</li><li>Z\u00e4hler subtrahieren</li><li>K\u00fcrzen</li></ol>'}
+],
+quiz:[
+{q:'5/6 - 2/6 = ?',a:['\u00bd','3/6 = \u00bd','3/12','7/6'],_h:0x4B},
+{q:'\u00be - \u00bc = ?',a:['\u00bd','2/8','\u00bc','2/4 = \u00bd'],_h:0x7F},
+{q:'\u2154 - \u2153 = ?',a:['\u2153','1/9','0','1/6'],_h:0x2B},
+{q:'7/10 - 3/10 = ?',a:['4/10 = 2/5','4/0','10/10','\u00bd'],_h:0x61},
+{q:'\u00bd - \u2155 = ?',a:['3/10','1/3','\u2153','3/7'],_h:0x5C}
+],
+boss:[
+{q:'1 - \u2154 = ?',a:['\u2153','\u2154','\u00bd','\u00bc'],_h:0x4A},
+{q:'5/6 - \u00bc = ?',a:['4/2','7/12','1/2','11/12'],_h:0x7E},
+{q:'11/12 - 5/12 = ?',a:['\u00bd','6/12 = \u00bd','6/10','6/24'],_h:0x2A}
+]},
+// M5: Multiplikation von Brüchen
+{id:5,title:'Multiplikation von Br\u00fcchen',icon:'\u2716\uFE0F',duration:'25 Min.',
+description:'Lerne, Br\u00fcche miteinander zu multiplizieren.',
+lessons:[
+{title:'Bruch mal Bruch',content:'<p>Br\u00fcche multiplizieren ist einfach: <strong>Z\u00e4hler mal Z\u00e4hler, Nenner mal Nenner!</strong></p><div class="info-box">\u2716\uFE0F \u00bd \u00d7 \u2153 = 1\u00d71 / 2\u00d73 = <strong>1/6</strong></div><ul><li>\u2154 \u00d7 \u00bc = 2/12 = 1/6</li><li>\u00be \u00d7 \u2155 = 3/20</li></ul>'},
+{title:'Bruch mal ganze Zahl',content:'<p>Ganze Zahl = Bruch mit Nenner 1.</p><div class="info-box">\uD83D\uDCA1 3 \u00d7 \u00bc = 3/1 \u00d7 \u00bc = <strong>\u00be</strong></div><p>Tipp: Vor dem Multiplizieren <strong>k\u00fcrzen</strong> (Kreuz-K\u00fcrzen) vereinfacht die Rechnung!</p><ul><li>2/3 \u00d7 6 = 2/3 \u00d7 6/1 = 12/3 = 4</li></ul><div class="info-box">\u2716\uFE0F <strong>Kreuz-K\u00fcrzen:</strong> 2/3 \u00d7 3/4 \u2014 die 3 im Nenner links und Z\u00e4hler rechts k\u00fcrzen \u2192 2/1 \u00d7 1/4 = 2/4 = \u00bd</div>'}
+],
+quiz:[
+{q:'\u00bd \u00d7 \u00bd = ?',a:['\u00bc','1','\u00bd','2/2'],_h:0x4A},
+{q:'\u2154 \u00d7 \u00be = ?',a:['\u00bd','6/12 = \u00bd','5/7','8/6'],_h:0x7F},
+{q:'5 \u00d7 \u2153 = ?',a:['5/3','\u2153','15','5/15'],_h:0x2B},
+{q:'\u00bc \u00d7 2/5 = ?',a:['2/20 = 1/10','6/5','2/9','3/20'],_h:0x61},
+{q:'Vor dem Multiplizieren sollte man ...',a:['erweitern','addieren','k\u00fcrzen','subtrahieren'],_h:0x5E}
+],
+boss:[
+{q:'\u00be \u00d7 \u2154 = ?',a:['6/12 = \u00bd','5/7','9/8','12/6 = 2'],_h:0x4A},
+{q:'4 \u00d7 \u2155 = ?',a:['4/5','\u2155','20','4/20'],_h:0x7F},
+{q:'\u2157 \u00d7 5/8 = ?',a:['\u00bd','\u00bc','15/40 = \u215c','25/40'],_h:0x29}
+]},
+// M6: Division von Brüchen
+{id:6,title:'Division von Br\u00fcchen',icon:'\u2797',duration:'25 Min.',
+description:'Lerne, durch Br\u00fcche zu teilen \u2014 mit dem Kehrwert!',
+lessons:[
+{title:'Der Kehrwert',content:'<p>Den <strong>Kehrwert</strong> bildest du, indem du Z\u00e4hler und Nenner vertauschst:</p><div class="info-box">\uD83D\uDD04 Kehrwert von \u2154 = <strong>3/2</strong> (Z\u00e4hler \u2194 Nenner)</div><ul><li>Kehrwert von \u00bd = 2/1 = 2</li><li>Kehrwert von 5 = \u2155</li></ul><div class="info-box">\u26A0\uFE0F <strong>Division durch 0 ist nicht erlaubt!</strong> Es gibt keine Zahl, die mit 0 multipliziert etwas anderes als 0 ergibt.</div>'},
+{title:'Durch einen Bruch teilen',content:'<p><strong>Durch einen Bruch teilen = Mit dem Kehrwert multiplizieren!</strong></p><div class="info-box">\u2797 \u00be \u00f7 \u00bd = \u00be \u00d7 2/1 = 6/4 = <strong>3/2 = 1\u00bd</strong></div><p>Schritte:</p><ol><li>Zweiten Bruch umdrehen (Kehrwert)</li><li>Statt \u00f7 wird \u00d7</li><li>Normal multiplizieren</li><li>K\u00fcrzen</li></ol>'}
+],
+quiz:[
+{q:'Was ist der Kehrwert von \u2154?',a:['\u2154','3/2','2/2','3/3'],_h:0x4B},
+{q:'\u00bd \u00f7 \u00bc = ?',a:['1','2','\u00be','\u00bd'],_h:0x7E},
+{q:'\u2154 \u00f7 2 = ?',a:['\u2153','4/3','2/6','4/6'],_h:0x2B},
+{q:'Was ist der Kehrwert von 5?',a:['5','-5','\u2155','0'],_h:0x63},
+{q:'\u00be \u00f7 3/8 = ?',a:['9/32','2','1','\u00bd'],_h:0x5D}
+],
+boss:[
+{q:'6 \u00f7 \u2154 = ?',a:['4','9','3/4','12'],_h:0x4B},
+{q:'Durch welche Zahl darf man nie teilen?',a:['1','\u00bd','0','Alle'],_h:0x7D},
+{q:'5/6 \u00f7 5/12 = ?',a:['2','25/72','1','\u00bd'],_h:0x2B}
+]},
+// M7: Dezimalzahlen
+{id:7,title:'Dezimalzahlen',icon:'\uD83D\uDCCF',duration:'25 Min.',
+description:'Kommazahlen verstehen \u2014 Zehntel, Hundertstel und mehr.',
+lessons:[
+{title:'Was sind Dezimalzahlen?',content:'<p><strong>Dezimalzahlen</strong> sind Zahlen mit einem Komma. Nach dem Komma stehen die Bruchteile.</p><div class="info-box">\uD83D\uDCCF 3,5 = 3 Ganze und 5 <strong>Zehntel</strong> = 3 + 5/10</div><p>Stellenwerte nach dem Komma:</p><ul><li>1. Stelle: <strong>Zehntel</strong> (1/10)</li><li>2. Stelle: <strong>Hundertstel</strong> (1/100)</li><li>3. Stelle: <strong>Tausendstel</strong> (1/1000)</li></ul><p>Beispiel: 3,45 = 3 Einer + 4 Zehntel + 5 Hundertstel</p>'},
+{title:'Dezimalzahlen vergleichen',content:'<p>Vergleiche Stelle f\u00fcr Stelle, von links nach rechts:</p><div class="info-box">\uD83D\uDCA1 0,5 > 0,35 (5 Zehntel > 3 Zehntel)</div><p>Trick: Erg\u00e4nze Nullen, damit beide gleich viele Nachkommastellen haben:</p><ul><li>0,5 = 0,50</li><li>0,50 > 0,35 \u2714\uFE0F</li></ul>'}
+],
+quiz:[
+{q:'Was ist 0,25 als Bruch?',a:['\u00bc','2/5','25/10','\u00bd'],_h:0x4A},
+{q:'Welche Dezimalzahl ist gr\u00f6\u00dfer: 0,7 oder 0,65?',a:['0,65','0,7','Gleich','Kann man nicht sagen'],_h:0x7E},
+{q:'Was steht an der zweiten Nachkommastelle von 3,47?',a:['3','4','7','0'],_h:0x29},
+{q:'0,1 + 0,2 = ?',a:['0,12','0,3','0,02','1,2'],_h:0x60},
+{q:'Wie viele Hundertstel hat 0,05?',a:['50','0,5','5','500'],_h:0x5E}
+],
+boss:[
+{q:'Ordne: 0,3  0,33  0,303',a:['0,3 < 0,303 < 0,33','0,303 < 0,3 < 0,33','0,3 < 0,33 < 0,303','0,33 < 0,3 < 0,303'],_h:0x4A},
+{q:'2,5 \u00d7 0,4 = ?',a:['10','1,0','0,1','1'],_h:0x7E},
+{q:'1,75 als gemischte Zahl?',a:['1 \u00be','1 \u00bd','1 \u2155','1 7/50'],_h:0x2B}
+]},
+// M8: Brüche ↔ Dezimalzahlen
+{id:8,title:'Br\u00fcche \u2194 Dezimalzahlen',icon:'\uD83D\uDD04',duration:'25 Min.',
+description:'Wandle zwischen Br\u00fcchen und Dezimalzahlen um.',
+lessons:[
+{title:'Bruch → Dezimalzahl',content:'<p>Teile einfach den <strong>Z\u00e4hler durch den Nenner</strong>:</p><div class="info-box">\uD83D\uDD04 \u00be = 3 \u00f7 4 = <strong>0,75</strong></div><ul><li>\u00bd = 1 \u00f7 2 = 0,5</li><li>\u2155 = 1 \u00f7 5 = 0,2</li><li>\u2153 = 1 \u00f7 3 = 0,333... (periodisch!)</li></ul>'},
+{title:'Dezimalzahl → Bruch',content:'<p>Lies die Nachkommastellen als Bruch:</p><div class="info-box">\uD83D\uDCA1 0,75 = 75/100 = <strong>\u00be</strong> (k\u00fcrzen durch 25)</div><ul><li>0,5 = 5/10 = \u00bd</li><li>0,125 = 125/1000 = \u215b</li></ul><p><strong>Periodische Dezimalzahlen:</strong></p><ul><li>0,333... = \u2153</li><li>0,666... = \u2154</li></ul><div class="info-box">\uD83D\uDCA1 <strong>Warum periodisch?</strong> Periodische Dezimalzahlen entstehen, wenn der Nenner andere Primfaktoren als 2 und 5 hat. z.B. \u2153 = 0,333... (Nenner 3 ist weder 2 noch 5)</div>'}
+],
+quiz:[
+{q:'\u00be als Dezimalzahl?',a:['0,34','0,75','0,43','3,4'],_h:0x4B},
+{q:'0,2 als Bruch?',a:['\u00bd','\u2155','2/100','1/20'],_h:0x7E},
+{q:'Welcher Bruch ist periodisch als Dezimalzahl?',a:['\u00bc','\u2153','\u00bd','\u2155'],_h:0x2A},
+{q:'0,125 gek\u00fcrzt als Bruch?',a:['125/10','\u215b','1/125','12/100'],_h:0x60},
+{q:'\u2156 als Dezimalzahl?',a:['0,6','0,8','0,56','5,6'],_h:0x5D}
+],
+boss:[
+{q:'0,\u0305 3\u0305 (0,333...) = welcher Bruch?',a:['\u00bd','\u2153','3/10','\u2154'],_h:0x4B},
+{q:'Welche Dezimalzahl ist NICHT periodisch?',a:['\u2153','\u2159','\u00bc','1/7'],_h:0x7D},
+{q:'7/8 als Dezimalzahl?',a:['0,78','0,875','0,7','8,75'],_h:0x2A}
+]},
+// M9: Textaufgaben
+{id:9,title:'Textaufgaben mit Br\u00fcchen',icon:'\uD83D\uDCDD',duration:'30 Min.',
+description:'L\u00f6se Sachaufgaben mit Br\u00fcchen und Dezimalzahlen.',
+lessons:[
+{title:'Textaufgaben verstehen',content:'<p>Bei Textaufgaben ist das Wichtigste: <strong>Was ist gefragt?</strong></p><div class="info-box">\uD83D\uDCDD Schritte:<br>1. Lies genau<br>2. Markiere die Zahlen<br>3. \u00dcberlege die Rechenart<br>4. Rechne<br>5. Antwortsatz \u2014 nicht vergessen!</div><div class="info-box">\u270D\uFE0F <strong>Antwortsatz:</strong> Antworte immer in einem ganzen Satz, z.B. \u201eAnna hat noch \u00bd Pizza \u00fcbrig.\u201c</div>'},
+{title:'Typische Aufgaben',content:'<p>H\u00e4ufige Signalw\u00f6rter:</p><ul><li>\"ein Drittel von\" \u2192 \u00d7 \u2153</li><li>\"aufteilen\" \u2192 Division</li><li>\"zusammen\" \u2192 Addition</li><li>\"\u00fcbrig\" / \"Rest\" \u2192 Subtraktion</li></ul><div class="info-box">\uD83D\uDCA1 Beispiel: Lisa isst \u00bc einer Pizza, Tom \u2153. Wie viel essen sie zusammen?<br>\u00bc + \u2153 = 3/12 + 4/12 = <strong>7/12</strong></div>'}
+],
+quiz:[
+{q:'Max hat \u00be Liter Saft. Er trinkt \u00bc. Wie viel bleibt?',a:['\u00bc','\u00bd','1 Liter','\u2153'],_h:0x4B},
+{q:'Ein Kuchen wird in 8 St\u00fccke geteilt. 3 werden gegessen. Welcher Bruch bleibt?',a:['3/8','\u2155','5/8','\u00be'],_h:0x7D},
+{q:'Anna liest \u2153 eines Buches am Montag und \u00bc am Dienstag. Wie viel insgesamt?',a:['2/7','7/12','4/7','\u00bd'],_h:0x2A},
+{q:'\u00bd von 24 \u00c4pfeln sind rot. Wie viele?',a:['6','8','12','24'],_h:0x63},
+{q:'Ein Seil ist 3/5 m lang. Wie lang sind 4 solche Seile?',a:['12/20 m','12/5 m','7/5 m','3/20 m'],_h:0x5D}
+],
+boss:[
+{q:'Lisa hat 2/3 einer Tafel Schokolade. Sie gibt \u00bc davon ab. Wie viel gibt sie ab?',a:['\u2153','\u00bc','1/6','5/12'],_h:0x48},
+{q:'Ein Tank ist zu \u00be voll. 120 Liter werden entnommen, dann ist er noch \u00bd voll. Wie gro\u00df ist der Tank?',a:['240 L','360 L','480 L','600 L'],_h:0x7D},
+{q:'3 Freunde teilen sich \u00be einer Pizza gleichm\u00e4\u00dfig. Wie viel bekommt jeder?',a:['\u00bc','3/12','\u00be','\u2153'],_h:0x2B}
+]}
+];
+
+// ═══ State ═══
+const STORAGE_KEY='bruchprofi_progress';
+let state={name:'',started:false,currentModule:0,xp:0,level:0,streak:0,lastVisit:null,modulesCompleted:[],quizResults:{},bossResults:{},badges:[],quizShuffleMap:{},modulesViewed:[],interactiveResults:{},designTheme:'wald-dark'};
+function saveState(){try{localStorage.setItem(STORAGE_KEY,JSON.stringify(state))}catch(e){}}
+function loadState(){try{const s=localStorage.getItem(STORAGE_KEY);if(s){Object.assign(state,JSON.parse(s));return true}}catch(e){}return false}
+function exportData(){const a=document.createElement('a');a.download='bruchprofi-'+state.name+'.json';a.href=URL.createObjectURL(new Blob([JSON.stringify(state,null,2)],{type:'application/json'}));a.click()}
+function importData(e){const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=ev=>{try{const d=JSON.parse(ev.target.result);Object.assign(state,d);saveState();location.reload()}catch(err){alert('Datei konnte nicht gelesen werden.')}};r.readAsText(f)}
+
+// ═══ XP & Level ═══
+function getLevel(xp){let lv=0;for(let i=LEVELS.length-1;i>=0;i--){if(xp>=LEVELS[i].xp){lv=i;break}}return lv}
+function getLevelProgress(xp){const lv=getLevel(xp);const cur=LEVELS[lv].xp;const next=lv<LEVELS.length-1?LEVELS[lv+1].xp:cur;if(next===cur)return 100;return Math.min(100,Math.round((xp-cur)/(next-cur)*100))}
+function addXP(amount,reason){const old=getLevel(state.xp);state.xp+=amount;const nw=getLevel(state.xp);saveState();updateUI();showNotif('xp','+'+amount+' XP',reason);if(nw>old){state.level=nw;saveState();setTimeout(()=>showLevelUp(nw),800)}}
+
+// ═══ Streak ═══
+function updateStreak(){const today=new Date().toDateString();if(state.lastVisit===today)return;const yesterday=new Date(Date.now()-86400000).toDateString();if(state.lastVisit===yesterday){state.streak++;showNotif('streak','\uD83D\uDD25 '+state.streak+' Tage Streak!','Weiter so!');if(state.streak>=3)awardBadge('streak3');if(state.streak>=7)awardBadge('streak7')}else if(state.lastVisit!==today){state.streak=1}state.lastVisit=today;saveState()}
+
+// ═══ Badges ═══
+function awardBadge(id){if(state.badges.includes(id))return;state.badges.push(id);saveState();const b=BADGES.find(x=>x.id===id);if(b)showNotif('badge',b.icon+' Badge: '+b.name,b.desc)}
+
+// ═══ Notifications ═══
+let notifQueue=[],notifActive=false;
+function showNotif(type,title,text){notifQueue.push({type,title,text});if(!notifActive)processNotif()}
+function processNotif(){if(!notifQueue.length){notifActive=false;return}notifActive=true;const{type,title,text}=notifQueue.shift();const el=document.getElementById('notif');el.className='notif '+type;document.getElementById('notifTitle').textContent=title;document.getElementById('notifText').textContent=text;el.classList.add('show');setTimeout(()=>{el.classList.remove('show');setTimeout(processNotif,300)},2500)}
+
+// ═══ Level Up + Confetti ═══
+function showLevelUp(lv){const ov=document.getElementById('levelUpOverlay');const box=document.getElementById('levelUpBox');box.innerHTML='<div class="lvl-icon">\u2B06\uFE0F</div><div class="lvl-title">Level Up!</div><div class="lvl-name">Level '+(lv+1)+': '+LEVELS[lv].name+'</div>';ov.classList.add('active');spawnConfetti();setTimeout(()=>ov.classList.remove('active'),3000)}
+function spawnConfetti(){const c=document.getElementById('confetti');c.innerHTML='';const cols=['#4ade80','#38bdf8','#c084fc','#ff6b9d','#fbbf24','#22d3ee'];for(let i=0;i<60;i++){const p=document.createElement('div');p.style.cssText='position:absolute;left:'+Math.random()*100+'%;background:'+cols[i%cols.length]+';width:'+(6+Math.random()*8)+'px;height:'+(6+Math.random()*8)+'px;border-radius:'+(Math.random()>.5?'50%':'2px')+';animation:confettiFall '+(1.5+Math.random()*2)+'s ease-out '+Math.random()*.5+'s forwards';c.appendChild(p)}if(!document.getElementById('confettiStyle')){const s=document.createElement('style');s.id='confettiStyle';s.textContent='@keyframes confettiFall{0%{opacity:1;transform:translateY(0) rotate(0deg)}100%{opacity:0;transform:translateY(100vh) rotate(720deg)}}';document.head.appendChild(s)}setTimeout(()=>c.innerHTML='',4000)}
+
+// ═══ Quiz Engine ═══
+function shuffleQuiz(modId,quiz){const key='m'+modId;if(state.quizShuffleMap[key])return state.quizShuffleMap[key];const idx=[...Array(quiz.length).keys()];for(let i=idx.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[idx[i],idx[j]]=[idx[j],idx[i]]}state.quizShuffleMap[key]=idx;saveState();return idx}
+function renderQuiz(modId,quiz,isBoss){
+  const pf=isBoss?'boss':'quiz';const idx=isBoss?[...Array(quiz.length).keys()]:shuffleQuiz(modId,quiz);
+  let h='<div class="'+(isBoss?'boss-section':'quiz-section')+'">';
+  h+=isBoss?'<h3>\uD83D\uDC51 Boss-Challenge</h3><p class="boss-sub">Alle '+quiz.length+' Fragen richtig beantworten!</p>':'<h3>\uD83D\uDCDD Quiz \u2014 Teste dein Wissen</h3>';
+  idx.forEach((qi,di)=>{const q=quiz[qi];h+='<div class="quiz-q" data-qi="'+qi+'"><p>'+(di+1)+'. '+q.q+'</p>';q.a.forEach((a,ai)=>{h+='<label><input type="radio" name="'+pf+'_'+modId+'_'+qi+'" value="'+ai+'"> '+a+'</label>'});h+='</div>'});
+  h+='<button class="quiz-submit" onclick="checkQuiz('+modId+','+isBoss+')">'+(isBoss?'Boss besiegen!':'Antworten pr\u00fcfen')+'</button>';
+  h+='<div class="quiz-result" id="'+pf+'Result'+modId+'" style="display:none"></div></div>';return h;
+}
+function checkQuiz(modId,isBoss){
+  const pf=isBoss?'boss':'quiz';const quiz=isBoss?modules[modId].boss:modules[modId].quiz;
+  let correct=0;const total=quiz.length;const startTime=window._quizStart||Date.now();
+  quiz.forEach((q,qi)=>{
+    const sel=document.querySelector('input[name="'+pf+'_'+modId+'_'+qi+'"]:checked');
+    const labels=document.querySelectorAll('[data-qi="'+qi+'"] label');
+    const ci=_d(q._h,qi);
+    labels.forEach((l,li)=>{l.classList.remove('correct','wrong');if(li===ci)l.classList.add('correct');else if(sel&&parseInt(sel.value)===li)l.classList.add('wrong')});
+    const qDiv=labels[0]?.closest('.quiz-q');if(qDiv){const old=qDiv.querySelector('.quiz-explanation');if(old)old.remove()}
+    if(!sel||parseInt(sel.value)!==ci){if(qDiv){const exp=document.createElement('div');exp.className='quiz-explanation';exp.textContent='\u2192 Richtige Antwort: '+q.a[ci];qDiv.appendChild(exp)}}
+    if(sel&&parseInt(sel.value)===ci)correct++;
+  });
+  const rEl=document.getElementById(pf+'Result'+modId);rEl.style.display='block';
+  if(isBoss){
+    if(correct===total){
+      rEl.className='quiz-result pass';rEl.textContent='\uD83D\uDC51 Boss besiegt! '+correct+'/'+total+' \u2014 Perfekt!';
+      if(!state.bossResults[modId]){state.bossResults[modId]=true;addXP(100,'Boss-Challenge bestanden!');if(!state.badges.includes('first_boss'))awardBadge('first_boss');if(modules.every((_,i)=>state.bossResults[i]))awardBadge('all_bosses');checkModuleComplete(modId)}
+    }else{rEl.className='quiz-result fail';rEl.textContent='\uD83D\uDC80 '+correct+'/'+total+' \u2014 Alle m\u00fcssen richtig sein! Versuch es nochmal.';setTimeout(()=>{document.querySelectorAll('input[name^="'+pf+'_'+modId+'"]').forEach(r=>{r.disabled=false;r.checked=false});document.querySelectorAll('[data-qi] label').forEach(l=>l.classList.remove('correct','wrong'));document.querySelectorAll('.quiz-explanation').forEach(e=>e.remove());rEl.style.display='none'},2000);return}
+  }else{
+    const passed=correct>=Math.ceil(total*0.6);rEl.className='quiz-result '+(passed?'pass':'fail');
+    rEl.textContent=passed?'\u2705 '+correct+'/'+total+' richtig \u2014 Bestanden!':'\u274C '+correct+'/'+total+' richtig \u2014 Mindestens '+Math.ceil(total*0.6)+' n\u00f6tig.';
+    if(passed&&!state.quizResults[modId]){state.quizResults[modId]=correct;addXP(correct*15+50,'Quiz bestanden ('+correct+'/'+total+')');if(!state.badges.includes('first_quiz'))awardBadge('first_quiz');if(correct===total)awardBadge('perfect_quiz');if(Date.now()-startTime<60000)awardBadge('speed_quiz');checkModuleComplete(modId)}
+  }
+  saveState();document.querySelectorAll('input[name^="'+pf+'_'+modId+'"]').forEach(r=>r.disabled=true);
+  if(!isBoss){const bossEl=document.querySelector('.boss-section');if(bossEl)bossEl.scrollIntoView({behavior:'smooth',block:'start'})}else{rEl.scrollIntoView({behavior:'smooth',block:'center'})}
+}
+function checkModuleComplete(modId){
+  if(state.quizResults[modId]!==undefined&&state.bossResults[modId]&&!state.modulesCompleted.includes(modId)){
+    state.modulesCompleted.push(modId);awardBadge('m'+modId);
+    if(state.modulesCompleted.length>=5)awardBadge('half_done');
+    if(state.modulesCompleted.length>=10){awardBadge('graduate');setTimeout(()=>showCert(),1500)}
+    saveState();renderSidebar();
+  }
+}
+
+// ═══ Render Module ═══
+function renderModule(modId){
+  state.currentModule=modId;
+  if(!state.modulesViewed.includes(modId)){state.modulesViewed.push(modId);addXP(10,'Neues Modul ge\u00f6ffnet');if(state.modulesViewed.length>=10)awardBadge('explorer')}
+  saveState();closeSidebar();
+  const m=modules[modId];
+  let h='<div class="module-header"><div class="mod-badge">'+m.icon+' Modul '+(modId+1)+'</div><h1>'+m.title+'</h1><p class="mod-desc">'+m.description+'</p></div>';
+  m.lessons.forEach((l,i)=>{h+='<div class="lesson-card"><h3><span style="color:var(--neon)">'+String(i+1).padStart(2,'0')+'</span> '+l.title+' <button class="tts-btn" onclick="speakLesson('+i+')" title="Vorlesen">&#128266;</button></h3>'+l.content+'</div>'});
+  h+='<div class="interactive-area" id="interactiveArea"><h4>\uD83E\uDDEA Interaktive \u00dcbung</h4><div id="interactiveContent">L\u00e4dt...</div></div>';
+  window._quizStart=Date.now();
+  h+=renderQuiz(modId,m.quiz,false);
+  h+=renderQuiz(modId,m.boss,true);
+  h+='<div class="site-footer"><div class="footer-logo"><span>\u00bd BruchProfi</span></div><p>&copy; 2026 GZ AI Stacks \u00b7 Gerd Zimmermann</p></div>';
+  document.getElementById('welcomeScreen').style.display='none';
+  document.getElementById('badgesView').style.display='none';
+  document.getElementById('statsView').style.display='none';
+  const mc=document.getElementById('moduleContent');mc.style.display='block';mc.innerHTML=h;
+  renderSidebar();setTimeout(()=>{initInteractive(modId);window.scrollTo(0,0)},100);
+}
+
+// ═══ Sidebar ═══
+function renderSidebar(){
+  const el=document.getElementById('sidebarModules');
+  el.innerHTML=modules.map((m,i)=>{
+    const done=state.modulesCompleted.includes(i);const act=state.currentModule===i&&document.getElementById('moduleContent').style.display==='block';
+    return '<div class="sidebar-item'+(act?' active':'')+(done?' completed':'')+'" onclick="renderModule('+i+')">'+m.icon+' '+m.title+'</div>';
+  }).join('');
+}
+function toggleSidebar(){document.getElementById('sidebar').classList.toggle('open')}
+function closeSidebar(){document.getElementById('sidebar').classList.remove('open')}
+
+// ═══ Badges & Stats ═══
+function showBadges(){
+  document.getElementById('welcomeScreen').style.display='none';document.getElementById('moduleContent').style.display='none';document.getElementById('statsView').style.display='none';
+  const v=document.getElementById('badgesView');v.style.display='block';closeSidebar();
+  let h='<div class="module-header"><h1>\uD83C\uDFC5 Deine Abzeichen</h1><p class="mod-desc">'+state.badges.length+' von '+BADGES.length+' gesammelt</p></div><div class="badges-grid">';
+  BADGES.forEach(b=>{const earned=state.badges.includes(b.id);h+='<div class="badge-card'+(earned?' earned':' locked')+'"><div class="badge-icon">'+(earned?b.icon:'\uD83D\uDD12')+'</div><div class="badge-name">'+b.name+'</div><div class="badge-desc">'+b.desc+'</div></div>'});
+  h+='</div>';v.innerHTML=h;
+}
+function showStats(){
+  document.getElementById('welcomeScreen').style.display='none';document.getElementById('moduleContent').style.display='none';document.getElementById('badgesView').style.display='none';
+  const v=document.getElementById('statsView');v.style.display='block';closeSidebar();
+  const lv=getLevel(state.xp);
+  let h='<div class="module-header"><h1>\uD83D\uDCCA Statistik</h1></div><div class="stats-grid">';
+  h+='<div class="stat-card"><div class="stat-val">'+state.xp+'</div><div class="stat-label">XP gesammelt</div></div>';
+  h+='<div class="stat-card"><div class="stat-val">'+LEVELS[lv].name+'</div><div class="stat-label">Aktueller Rang</div></div>';
+  h+='<div class="stat-card"><div class="stat-val">'+state.modulesCompleted.length+'/10</div><div class="stat-label">Module abgeschlossen</div></div>';
+  h+='<div class="stat-card"><div class="stat-val">'+Object.keys(state.quizResults).length+'</div><div class="stat-label">Quizze bestanden</div></div>';
+  h+='<div class="stat-card"><div class="stat-val">'+Object.keys(state.bossResults).length+'</div><div class="stat-label">Bosse besiegt</div></div>';
+  h+='<div class="stat-card"><div class="stat-val">'+state.badges.length+'</div><div class="stat-label">Abzeichen</div></div>';
+  h+='<div class="stat-card"><div class="stat-val">\uD83D\uDD25 '+state.streak+'</div><div class="stat-label">Tage-Streak</div></div>';
+  h+='</div>';v.innerHTML=h;
+}
+
+// ═══ Certificate ═══
+let certStyle='m\u00E4rchen';
+function showCert(){window._lastFocus=document.activeElement;const ov=document.getElementById('certOverlay');ov.classList.add('active');document.getElementById('certPicker').innerHTML=['\uD83C\uDFF0 M\u00e4rchen','\uD83C\uDF34 Dschungel','\uD83D\uDE80 Weltraum','\uD83D\uDC20 Unterwasser'].map((l,i)=>{const s=['m\u00E4rchen','dschungel','weltraum','unterwasser'][i];return '<button class="'+(certStyle===s?'active':'')+'" onclick="certStyle=\''+s+'\';showCert()">'+l+'</button>'}).join('');renderCert()}
+function closeCert(){document.getElementById('certOverlay').classList.remove('active');if(window._lastFocus){window._lastFocus.focus();window._lastFocus=null}}
+function generateCertCode(){const n=state.name||'X';const d=new Date();return 'BP-'+d.getFullYear()+'-'+((n.charCodeAt(0)*7+state.xp)%9999).toString(16).toUpperCase().padStart(4,'0')}
+function renderCert(){
+  const f=document.getElementById('certFrame');const lv=getLevel(state.xp);const name=state.name||'Unbekannt';
+  const date=new Date().toLocaleDateString('de-DE',{day:'numeric',month:'long',year:'numeric'});
+  const code=generateCertCode();const rank=LEVELS[lv].name;
+  const badges=state.badges.slice(0,6).map(id=>{const b=BADGES.find(x=>x.id===id);return b?b.icon:''}).filter(Boolean).join(' ');
+  const styles={
+    m\u00E4rchen:{bg:'linear-gradient(135deg,#fdf8ee,#f5edda,#ede3c8)',border:'#c5a54e',text:'#1a1a3e',sub:'#5c5040',accent:'#DAA520',sealEmoji:'\uD83D\uDC51'},
+    dschungel:{bg:'linear-gradient(135deg,#e8f5e9,#c8e6c9,#a5d6a7)',border:'#4caf50',text:'#1b5e20',sub:'#2e7d32',accent:'#388e3c',sealEmoji:'\uD83C\uDF3F'},
+    weltraum:{bg:'linear-gradient(135deg,#1a1a3e,#0d0d2b,#1a1a3e)',border:'#7c4dff',text:'#e0e0ff',sub:'#a78bfa',accent:'#651fff',sealEmoji:'\uD83D\uDE80'},
+    unterwasser:{bg:'linear-gradient(135deg,#e3f2fd,#bbdefb,#90caf9)',border:'#03a9f4',text:'#0d47a1',sub:'#1565c0',accent:'#0288d1',sealEmoji:'\uD83D\uDC1A'}
+  };
+  const s=styles[certStyle];
+  f.innerHTML='<div style="background:'+s.bg+';padding:48px 40px;border:4px solid '+s.border+';border-radius:12px;text-align:center;min-height:500px;color:'+s.text+'">'
+  +'<div style="font-size:14px;color:'+s.sub+';letter-spacing:4px;text-transform:uppercase">BruchProfi \u00b7 Bruchrechnung</div>'
+  +'<h1 style="font-size:48px;margin:16px 0;font-family:Georgia,serif">Urkunde</h1>'
+  +'<div style="width:120px;height:2px;background:'+s.border+';margin:0 auto 24px;opacity:.5"></div>'
+  +'<p style="font-size:18px;color:'+s.sub+'">verliehen an</p>'
+  +'<h2 style="font-size:42px;color:'+s.accent+';margin:12px 0;font-family:Georgia,serif;font-style:italic">'+name+'</h2>'
+  +'<p style="font-size:22px;font-weight:700;margin:16px 0">'+rank+'</p>'
+  +'<p style="font-size:15px;color:'+s.sub+'">f\u00fcr die erfolgreiche Absolvierung von \u201eBruchProfi\u201c</p>'
+  +'<div style="font-size:15px;margin:24px 0">Module: '+state.modulesCompleted.length+'/10 \u00b7 XP: '+state.xp+' \u00b7 Quizze: '+Object.keys(state.quizResults).length+'</div>'
+  +'<div style="font-size:48px;margin:20px 0">'+s.sealEmoji+'</div>'
+  +(badges?'<div style="font-size:28px;margin:12px 0">'+badges+'</div>':'')
+  +'<div style="font-size:14px;color:'+s.sub+';margin-top:24px">'+date+'</div>'
+  +'<div style="font-size:11px;color:'+s.sub+';opacity:.5;margin-top:4px">'+code+'</div>'
+  +'<div style="font-size:12px;color:'+s.sub+';opacity:.4;margin-top:16px">GZ AI STACKS</div></div>';
+}
+function printCert(){window.print()}
+
+// ═══ UI Update ═══
+function updateUI(){const lv=getLevel(state.xp);document.getElementById('levelName').textContent=LEVELS[lv].name;document.getElementById('xpText').textContent=state.xp+' XP';document.getElementById('xpFill').style.width=getLevelProgress(state.xp)+'%'}
+
+// ═══ Theme Picker ═══
+function setDesignTheme(world,mode){state.designTheme=world+'-'+mode;document.documentElement.setAttribute('data-theme',state.designTheme);saveState();const tc=THEME_CONFIG[world];if(tc){document.getElementById('heroEmoji').textContent=tc.welcomeEmoji;document.getElementById('welcomeTitle').textContent=tc.welcomeTitle;document.getElementById('welcomeSub').textContent=tc.welcomeSub;document.getElementById('startBtn').textContent=tc.welcomeBtn}buildThemePicker()}
+function getCurrentThemeParts(){const p=state.designTheme.split('-');return{world:p[0],mode:p[1]||'dark'}}
+function buildThemePicker(){const{world,mode}=getCurrentThemeParts();let h='';Object.keys(THEME_CONFIG).forEach(w=>{const t=THEME_CONFIG[w];h+='<button class="theme-btn'+(w===world?' active':'')+'" style="background:'+t.color+'" onclick="setDesignTheme(\''+w+'\',\''+mode+'\')" title="'+t.name+'">'+t.emoji+'</button>'});h+='<button class="mode-toggle" onclick="setDesignTheme(\''+world+'\',\''+(mode==='dark'?'light':'dark')+'\')">'+(mode==='dark'?'\u2600\uFE0F':'\uD83C\uDF19')+'</button>';document.getElementById('themePicker').innerHTML=h}
+
+// ═══ Interactive Exercises ═══
+function initInteractive(modId){
+  const fns=[initBruchVis,initBruchWaage,initKuerzen,initAddPuzzle,initSubKette,initMultGitter,initKehrwertMemory,initDezimalUmrechner,initZahlenstrahl,initTextWerkstatt];
+  if(fns[modId])fns[modId]();else document.getElementById('interactiveContent').innerHTML='<p>\u00dcbung kommt bald!</p>';
+}
+
+// M0: Bruch-Visualisierer
+function initBruchVis(){
+  const tasks=[{z:1,n:4},{z:2,n:3},{z:3,n:8},{z:5,n:6}];let idx=0;
+  const el=document.getElementById('interactiveContent');
+  function render(){
+    if(idx>=tasks.length){el.innerHTML='<div class="ix-feedback pass" style="display:block">\uD83C\uDF89 Alle Br\u00fcche richtig dargestellt!</div>';if(!state.interactiveResults[0]){state.interactiveResults[0]=true;addXP(30,'Bruch-Visualisierer geschafft!');saveState()}return}
+    const t=tasks[idx];let clicked=new Set();
+    el.innerHTML='<p style="font-size:20px;margin-bottom:16px">Markiere <strong style="color:var(--neon);font-size:24px">'+t.z+'/'+t.n+'</strong> der Teile!</p><div class="ix-grid" id="ixGrid"></div><button class="ix-btn" onclick="checkBruchVis()">Pr\u00fcfen</button><div class="ix-feedback" id="ixFeedback"></div><p style="text-align:center;color:var(--text-dim);margin-top:8px">'+(idx+1)+'/'+tasks.length+'</p>';
+    const grid=document.getElementById('ixGrid');
+    for(let i=0;i<t.n;i++){const b=document.createElement('span');b.className='ix-item';b.textContent='\u2B1C';b.style.cssText='font-size:32px;min-width:50px;padding:10px';b.dataset.idx=i;b.onclick=()=>{if(b.classList.contains('selected')){b.classList.remove('selected');b.textContent='\u2B1C';clicked.delete(i)}else{b.classList.add('selected');b.textContent='\uD83D\uDFE9';clicked.add(i)}};grid.appendChild(b)}
+    window.checkBruchVis=()=>{if(clicked.size===t.z){document.getElementById('ixFeedback').className='ix-feedback pass';document.getElementById('ixFeedback').textContent='\u2705 Richtig! '+t.z+'/'+t.n;idx++;setTimeout(render,1000)}else{document.getElementById('ixFeedback').className='ix-feedback fail';document.getElementById('ixFeedback').textContent='\u274C Du hast '+clicked.size+' markiert, brauchst aber '+t.z}}
+  }
+  render();
+}
+
+// M1: Bruch-Waage
+function initBruchWaage(){
+  const pairs=[['\u00bd','2/4'],['\u2153','2/6'],['\u00be','6/8'],['\u2155','2/10']];
+  let matched=0;const el=document.getElementById('interactiveContent');let selLeft=null;
+  el.innerHTML='<p style="margin-bottom:12px"><strong>Finde die gleichwertigen Br\u00fcche! Klicke links, dann rechts.</strong></p><div style="display:flex;gap:24px;flex-wrap:wrap;justify-content:center"><div><h4 style="text-align:center;color:var(--neon)">Br\u00fcche</h4><div class="ix-grid" id="ixLeft" style="flex-direction:column"></div></div><div><h4 style="text-align:center;color:var(--link)">=</h4><div class="ix-grid" id="ixRight" style="flex-direction:column"></div></div></div><div class="ix-feedback" id="ixFeedback"></div>';
+  const shuffR=[...pairs].sort(()=>Math.random()-.5);
+  pairs.forEach(([l])=>{const b=document.createElement('span');b.className='ix-item';b.textContent=l;b.style.fontSize='22px';b.onclick=()=>{if(b.classList.contains('placed'))return;document.querySelectorAll('#ixLeft .ix-item').forEach(x=>x.classList.remove('selected'));b.classList.add('selected');selLeft=l};document.getElementById('ixLeft').appendChild(b)});
+  shuffR.forEach(([,r])=>{const b=document.createElement('span');b.className='ix-item';b.textContent=r;b.style.fontSize='22px';b.onclick=()=>{if(!selLeft||b.classList.contains('placed'))return;const pair=pairs.find(p=>p[0]===selLeft&&p[1]===r);if(pair){b.classList.add('correct','placed');document.querySelectorAll('#ixLeft .ix-item').forEach(x=>{if(x.textContent===selLeft)x.classList.add('correct','placed')});selLeft=null;matched++;if(matched===pairs.length){document.getElementById('ixFeedback').className='ix-feedback pass';document.getElementById('ixFeedback').textContent='\uD83C\uDF89 Alle Paare gefunden!';if(!state.interactiveResults[1]){state.interactiveResults[1]=true;addXP(30,'Bruch-Waage geschafft!');saveState()}}}else{b.classList.add('wrong');setTimeout(()=>b.classList.remove('wrong'),500)}};document.getElementById('ixRight').appendChild(b)});
+}
+
+// M2: Kürzen-Maschine
+function initKuerzen(){
+  const tasks=[{bruch:'4/8',ans:'\u00bd'},{bruch:'6/9',ans:'\u2154'},{bruch:'10/15',ans:'\u2154'},{bruch:'8/12',ans:'\u2154'}];
+  let idx=0;const el=document.getElementById('interactiveContent');
+  function render(){
+    if(idx>=tasks.length){el.innerHTML='<div class="ix-feedback pass" style="display:block">\uD83C\uDF89 Alle Br\u00fcche gek\u00fcrzt!</div>';if(!state.interactiveResults[2]){state.interactiveResults[2]=true;addXP(30,'K\u00fcrzen-Maschine geschafft!');saveState()}return}
+    const t=tasks[idx];const opts=[t.ans,'\u00bc','\u2155','3/7'].sort(()=>Math.random()-.5);
+    el.innerHTML='<p style="font-size:20px;margin-bottom:16px">K\u00fcrze: <strong style="color:var(--neon);font-size:28px">'+t.bruch+'</strong></p><div class="ix-grid">'+opts.map(o=>'<span class="ix-item" style="font-size:22px;padding:12px 24px" onclick="pickKuerz(this,\''+o+'\',\''+t.ans+'\')">'+o+'</span>').join('')+'</div><div class="ix-feedback" id="ixFeedback"></div><p style="text-align:center;color:var(--text-dim);margin-top:8px">'+(idx+1)+'/'+tasks.length+'</p>';
+  }
+  window.pickKuerz=(btn,pick,correct)=>{if(pick===correct){btn.classList.add('correct');idx++;setTimeout(render,800)}else{btn.classList.add('wrong');setTimeout(()=>btn.classList.remove('wrong'),600)}};
+  render();
+}
+
+// M3: Additions-Puzzle
+function initAddPuzzle(){
+  const tasks=[{q:'1/4 + 1/4',a:'\u00bd'},{q:'1/3 + 1/3',a:'\u2154'},{q:'1/2 + 1/4',a:'\u00be'},{q:'2/5 + 1/5',a:'\u2155'}];
+  // fix last: 2/5+1/5=3/5
+  tasks[3].a='3/5';
+  let idx=0;const el=document.getElementById('interactiveContent');
+  function render(){
+    if(idx>=tasks.length){el.innerHTML='<div class="ix-feedback pass" style="display:block">\uD83C\uDF89 Additions-Puzzle gel\u00f6st!</div>';if(!state.interactiveResults[3]){state.interactiveResults[3]=true;addXP(30,'Additions-Puzzle geschafft!');saveState()}return}
+    const t=tasks[idx];const opts=[t.a,'\u00bc','5/6','1/7'].sort(()=>Math.random()-.5);
+    el.innerHTML='<p style="font-size:20px;margin-bottom:16px"><strong style="color:var(--neon);font-size:24px">'+t.q+' = ?</strong></p><div class="ix-grid">'+opts.map(o=>'<span class="ix-item" style="font-size:22px;padding:12px 24px" onclick="pickAdd(this,\''+o+'\',\''+t.a+'\')">'+o+'</span>').join('')+'</div><div class="ix-feedback" id="ixFeedback"></div><p style="text-align:center;color:var(--text-dim);margin-top:8px">'+(idx+1)+'/'+tasks.length+'</p>';
+  }
+  window.pickAdd=(btn,pick,correct)=>{if(pick===correct){btn.classList.add('correct');idx++;setTimeout(render,800)}else{btn.classList.add('wrong');setTimeout(()=>btn.classList.remove('wrong'),600)}};
+  render();
+}
+
+// M4: Subtraktions-Kette
+function initSubKette(){
+  const tasks=[{q:'3/4 - 1/4',a:'\u00bd'},{q:'5/6 - 1/6',a:'\u2154'},{q:'7/8 - 3/8',a:'\u00bd'},{q:'2/3 - 1/3',a:'\u2153'}];
+  let idx=0;const el=document.getElementById('interactiveContent');
+  function render(){
+    if(idx>=tasks.length){el.innerHTML='<div class="ix-feedback pass" style="display:block">\uD83C\uDF89 Subtraktions-Kette gel\u00f6st!</div>';if(!state.interactiveResults[4]){state.interactiveResults[4]=true;addXP(30,'Subtraktions-Kette geschafft!');saveState()}return}
+    const t=tasks[idx];const opts=[t.a,'\u00bc','3/7','5/9'].sort(()=>Math.random()-.5);
+    el.innerHTML='<p style="font-size:20px;margin-bottom:16px"><strong style="color:var(--neon);font-size:24px">'+t.q+' = ?</strong></p><div class="ix-grid">'+opts.map(o=>'<span class="ix-item" style="font-size:22px;padding:12px 24px" onclick="pickSub(this,\''+o+'\',\''+t.a+'\')">'+o+'</span>').join('')+'</div><div class="ix-feedback" id="ixFeedback"></div><p style="text-align:center;color:var(--text-dim);margin-top:8px">'+(idx+1)+'/'+tasks.length+'</p>';
+  }
+  window.pickSub=(btn,pick,correct)=>{if(pick===correct){btn.classList.add('correct');idx++;setTimeout(render,800)}else{btn.classList.add('wrong');setTimeout(()=>btn.classList.remove('wrong'),600)}};
+  render();
+}
+
+// M5: Multiplikations-Gitter
+function initMultGitter(){
+  const tasks=[{q:'\u00bd \u00d7 \u00bd',a:'\u00bc'},{q:'\u2153 \u00d7 3',a:'1'},{q:'\u00be \u00d7 \u2154',a:'\u00bd'},{q:'2/5 \u00d7 5',a:'2'}];
+  let idx=0;const el=document.getElementById('interactiveContent');
+  function render(){
+    if(idx>=tasks.length){el.innerHTML='<div class="ix-feedback pass" style="display:block">\uD83C\uDF89 Multiplikations-Gitter gel\u00f6st!</div>';if(!state.interactiveResults[5]){state.interactiveResults[5]=true;addXP(30,'Multiplikations-Gitter geschafft!');saveState()}return}
+    const t=tasks[idx];const opts=[t.a,'\u2153','3/7','5/4'].sort(()=>Math.random()-.5);
+    el.innerHTML='<p style="font-size:20px;margin-bottom:16px"><strong style="color:var(--neon);font-size:24px">'+t.q+' = ?</strong></p><div class="ix-grid">'+opts.map(o=>'<span class="ix-item" style="font-size:22px;padding:12px 24px" onclick="pickMult(this,\''+o+'\',\''+t.a+'\')">'+o+'</span>').join('')+'</div><div class="ix-feedback" id="ixFeedback"></div><p style="text-align:center;color:var(--text-dim);margin-top:8px">'+(idx+1)+'/'+tasks.length+'</p>';
+  }
+  window.pickMult=(btn,pick,correct)=>{if(pick===correct){btn.classList.add('correct');idx++;setTimeout(render,800)}else{btn.classList.add('wrong');setTimeout(()=>btn.classList.remove('wrong'),600)}};
+  render();
+}
+
+// M6: Kehrwert-Memory
+function initKehrwertMemory(){
+  const pairs=[['\u00bd','2'],['\u2153','3'],['\u00bc','4'],['\u2155','5'],['\u2154','3/2']];
+  let selLeft=null,matched=0;const el=document.getElementById('interactiveContent');
+  el.innerHTML='<p style="margin-bottom:12px"><strong>Finde die Kehrwert-Paare!</strong></p><div style="display:flex;gap:24px;flex-wrap:wrap;justify-content:center"><div><h4 style="text-align:center;color:var(--neon)">Bruch</h4><div class="ix-grid" id="ixLeft" style="flex-direction:column"></div></div><div><h4 style="text-align:center;color:var(--link)">Kehrwert</h4><div class="ix-grid" id="ixRight" style="flex-direction:column"></div></div></div><div class="ix-feedback" id="ixFeedback"></div>';
+  const shuffR=[...pairs].sort(()=>Math.random()-.5);
+  pairs.forEach(([l])=>{const b=document.createElement('span');b.className='ix-item';b.textContent=l;b.style.fontSize='22px';b.onclick=()=>{if(b.classList.contains('placed'))return;document.querySelectorAll('#ixLeft .ix-item').forEach(x=>x.classList.remove('selected'));b.classList.add('selected');selLeft=l};document.getElementById('ixLeft').appendChild(b)});
+  shuffR.forEach(([,r])=>{const b=document.createElement('span');b.className='ix-item';b.textContent=r;b.style.fontSize='22px';b.onclick=()=>{if(!selLeft||b.classList.contains('placed'))return;const pair=pairs.find(p=>p[0]===selLeft&&p[1]===r);if(pair){b.classList.add('correct','placed');document.querySelectorAll('#ixLeft .ix-item').forEach(x=>{if(x.textContent===selLeft)x.classList.add('correct','placed')});selLeft=null;matched++;if(matched===pairs.length){document.getElementById('ixFeedback').className='ix-feedback pass';document.getElementById('ixFeedback').textContent='\uD83C\uDF89 Alle Kehrwerte gefunden!';if(!state.interactiveResults[6]){state.interactiveResults[6]=true;addXP(30,'Kehrwert-Memory geschafft!');saveState()}}}else{b.classList.add('wrong');setTimeout(()=>b.classList.remove('wrong'),500)}};document.getElementById('ixRight').appendChild(b)});
+}
+
+// M7: Dezimal-Umrechner
+function initDezimalUmrechner(){
+  const tasks=[{bruch:'\u00bd',dez:'0,5'},{bruch:'\u00bc',dez:'0,25'},{bruch:'\u00be',dez:'0,75'},{bruch:'\u2155',dez:'0,2'},{bruch:'3/8',dez:'0,375'}];
+  let idx=0;const el=document.getElementById('interactiveContent');
+  function render(){
+    if(idx>=tasks.length){el.innerHTML='<div class="ix-feedback pass" style="display:block">\uD83C\uDF89 Alle Umrechnungen richtig!</div>';if(!state.interactiveResults[7]){state.interactiveResults[7]=true;addXP(30,'Dezimal-Umrechner geschafft!');saveState()}return}
+    const t=tasks[idx];
+    el.innerHTML='<div style="text-align:center"><p style="font-size:20px;margin-bottom:16px">Wandle <strong style="color:var(--neon);font-size:28px">'+t.bruch+'</strong> in eine Dezimalzahl um:</p><input type="text" id="ixInput" style="font-size:28px;padding:12px 20px;border-radius:var(--radius);border:2px solid var(--border);background:var(--bg2);color:var(--text);text-align:center;width:160px;font-family:var(--font)" placeholder="0,..." maxlength="10" autocomplete="off"><br><button class="ix-btn" onclick="checkDez()" style="margin-top:12px">Pr\u00fcfen</button><div class="ix-feedback" id="ixFeedback"></div><p style="color:var(--text-dim);margin-top:8px;font-size:14px">'+(idx+1)+'/'+tasks.length+'</p></div>';
+    document.getElementById('ixInput').addEventListener('keydown',e=>{if(e.key==='Enter')checkDez()});
+    document.getElementById('ixInput').focus();
+  }
+  window.checkDez=()=>{const v=document.getElementById('ixInput').value.trim().replace('.',',');const t=tasks[idx];if(v===t.dez){document.getElementById('ixFeedback').className='ix-feedback pass';document.getElementById('ixFeedback').textContent='\u2705 Richtig! '+t.bruch+' = '+t.dez;idx++;setTimeout(render,1000)}else{document.getElementById('ixFeedback').className='ix-feedback fail';document.getElementById('ixFeedback').textContent='\u274C Versuch es nochmal!'}};
+  render();
+}
+
+// M8: Zahlenstrahl
+function initZahlenstrahl(){
+  const tasks=[{val:'\u00bd',pos:50},{val:'\u00bc',pos:25},{val:'\u00be',pos:75},{val:'\u2153',pos:33}];
+  let idx=0;const el=document.getElementById('interactiveContent');
+  function render(){
+    if(idx>=tasks.length){el.innerHTML='<div class="ix-feedback pass" style="display:block">\uD83C\uDF89 Alle Br\u00fcche richtig platziert!</div>';if(!state.interactiveResults[8]){state.interactiveResults[8]=true;addXP(30,'Zahlenstrahl geschafft!');saveState()}return}
+    const t=tasks[idx];
+    el.innerHTML='<p style="font-size:20px;margin-bottom:16px;text-align:center">Platziere <strong style="color:var(--neon);font-size:24px">'+t.val+'</strong> auf dem Zahlenstrahl!</p><div style="position:relative;height:60px;margin:20px 20px"><div style="position:absolute;top:25px;left:0;right:0;height:4px;background:var(--neon);border-radius:2px"></div><div style="position:absolute;top:15px;left:0;font-size:14px;color:var(--text-dim)">0</div><div style="position:absolute;top:15px;right:0;font-size:14px;color:var(--text-dim)">1</div><input type="range" id="ixSlider" min="0" max="100" value="50" style="position:absolute;top:15px;left:0;right:0;width:100%;cursor:pointer;accent-color:var(--neon)"></div><div style="text-align:center;font-size:18px;color:var(--text-dim)" id="ixSliderVal">0,50</div><button class="ix-btn" onclick="checkStrahl()" style="display:block;margin:12px auto">Pr\u00fcfen</button><div class="ix-feedback" id="ixFeedback"></div><p style="text-align:center;color:var(--text-dim);margin-top:8px">'+(idx+1)+'/'+tasks.length+'</p>';
+    document.getElementById('ixSlider').oninput=function(){document.getElementById('ixSliderVal').textContent=(this.value/100).toFixed(2).replace('.',',')};
+    window.checkStrahl=()=>{const v=parseInt(document.getElementById('ixSlider').value);if(Math.abs(v-t.pos)<=5){document.getElementById('ixFeedback').className='ix-feedback pass';document.getElementById('ixFeedback').textContent='\u2705 Richtig!';idx++;setTimeout(render,1000)}else{document.getElementById('ixFeedback').className='ix-feedback fail';document.getElementById('ixFeedback').textContent='\u274C Nicht ganz \u2014 versuch es nochmal!'}};
+  }
+  render();
+}
+
+// M9: Textaufgaben-Werkstatt
+function initTextWerkstatt(){
+  const tasks=[
+    {text:'Lisa hat \u00be einer Pizza. Sie gibt \u00bc ab. Wie viel bleibt?',opts:['\u00bd','\u00bc','\u2153','1'],ans:'\u00bd'},
+    {text:'Tom liest \u2153 eines Buches. Am n\u00e4chsten Tag \u2153 mehr. Wie viel insgesamt?',opts:['\u2154','\u00bd','\u2153','1'],ans:'\u2154'},
+    {text:'3 Kinder teilen sich \u00be einer Torte. Wie viel bekommt jedes Kind?',opts:['\u00bc','3/4','3/12','\u00bd'],ans:'\u00bc'},
+    {text:'\u00bd von 60 Sch\u00fclern spielen Fu\u00dfball. Wie viele sind das?',opts:['20','30','40','15'],ans:'30'}
+  ];
+  let idx=0;const el=document.getElementById('interactiveContent');
+  function render(){
+    if(idx>=tasks.length){el.innerHTML='<div class="ix-feedback pass" style="display:block">\uD83C\uDF89 Alle Textaufgaben gel\u00f6st!</div>';if(!state.interactiveResults[9]){state.interactiveResults[9]=true;addXP(30,'Textaufgaben-Werkstatt geschafft!');saveState()}return}
+    const t=tasks[idx];
+    el.innerHTML='<div style="background:var(--neon-dim);padding:20px 24px;border-radius:var(--radius);font-size:18px;line-height:1.8;margin-bottom:16px">\uD83D\uDCDD '+t.text+'</div><div class="ix-grid">'+t.opts.map(o=>'<span class="ix-item" style="font-size:20px;padding:12px 24px" onclick="pickText(this,\''+o+'\',\''+t.ans+'\')">'+o+'</span>').join('')+'</div><div class="ix-feedback" id="ixFeedback"></div><p style="text-align:center;color:var(--text-dim);margin-top:8px">'+(idx+1)+'/'+tasks.length+'</p>';
+  }
+  window.pickText=(btn,pick,correct)=>{if(pick===correct){btn.classList.add('correct');idx++;setTimeout(render,800)}else{btn.classList.add('wrong');setTimeout(()=>btn.classList.remove('wrong'),600)}};
+  render();
+}
+
+// ═══ Start App ═══
+function startApp(){const name=document.getElementById('nameInput').value.trim();if(!name)return;state.name=name;state.started=true;saveState();document.getElementById('welcomeScreen').style.display='none';renderModule(0);updateStreak()}
+
+// ═══ Init ═══
+(function init(){
+  if(loadState()){
+    document.documentElement.setAttribute('data-theme',state.designTheme);
+    if(state.started){document.getElementById('welcomeScreen').style.display='none';renderModule(state.currentModule);updateStreak()}
+    else{document.getElementById('nameInput').value=state.name||'';document.getElementById('startBtn').disabled=!state.name}
+  }
+  buildThemePicker();updateUI();renderSidebar();
+  const{world}=getCurrentThemeParts();const tc=THEME_CONFIG[world];
+  if(tc){document.getElementById('heroEmoji').textContent=tc.welcomeEmoji;document.getElementById('welcomeTitle').textContent=tc.welcomeTitle;document.getElementById('welcomeSub').textContent=tc.welcomeSub;document.getElementById('startBtn').textContent=tc.welcomeBtn}
+  document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeCert();document.getElementById('levelUpOverlay').classList.remove('active')}});
+})()
+</script>
+
+<script>
+(function(){
+var KEY=null;
+var scripts=document.querySelectorAll('script');
+for(var i=0;i<scripts.length;i++){
+var km=scripts[i].textContent.match(/STORAGE_KEY\s*=\s*['"](\w+)['"]/);
+if(km){KEY=km[1];break;}
+}
+if(!location.hash.match(/modules=/)){try{Object.keys(localStorage).filter(function(k){return k.indexOf("_allowed_modules")!==-1}).forEach(function(k){localStorage.removeItem(k)})}catch(e){}}
+var LOCK_KEY=(KEY||'app')+'_allowed_modules';
+var h=location.hash.match(/modules=([0-9,]+)/);
+var allowed=null;
+if(h){
+allowed=h[1].split(",").map(Number);
+try{localStorage.setItem(LOCK_KEY,JSON.stringify(allowed));}catch(e){}
+}else{
+try{var stored=localStorage.getItem(LOCK_KEY);if(stored)allowed=JSON.parse(stored);}catch(e){}
+}
+if(!allowed||!allowed.length)return;
+function filterSidebar(){
+var items=document.querySelectorAll("#sidebarModules > *");
+for(var i=0;i<items.length;i++){
+items[i].style.display=(allowed.indexOf(i)===-1)?"none":"";
+}
+}
+var sb=document.getElementById("sidebarModules");
+if(sb){new MutationObserver(filterSidebar).observe(sb,{childList:true});filterSidebar();}
+document.addEventListener("click",function(e){
+var t=e.target.closest("[onclick]");
+if(!t)return;
+var oc=t.getAttribute("onclick")||"";
+var idx=oc.indexOf("renderModule(");
+if(idx===-1)return;
+var num=parseInt(oc.substring(idx+13));
+if(!isNaN(num)&&allowed.indexOf(num)===-1){e.preventDefault();e.stopImmediatePropagation();}
+},true);
+setTimeout(filterSidebar,500);
+window.addEventListener("hashchange",function(){
+var hh=location.hash.match(/modules=([0-9,]+)/);
+if(hh){
+allowed=hh[1].split(",").map(Number);
+try{localStorage.setItem(LOCK_KEY,JSON.stringify(allowed));}catch(e){}
+filterSidebar();
+}
+});
+})();
+</script>
+
+<div class="zoom-controls" role="toolbar" aria-label="Zoom-Steuerung">
+<button class="zoom-btn" onclick="zoomOut()" title="Verkleinern (Taste -)" aria-label="Verkleinern">&#8722;</button>
+<button class="zoom-btn" onclick="zoomReset()" title="Zoom zurücksetzen" aria-label="Zoom zurücksetzen" style="font-size:10px;position:relative"><span id="zoomLvl">100%</span></button>
+<button class="zoom-btn" onclick="zoomIn()" title="Vergrößern (Taste +)" aria-label="Vergrößern">+</button>
+</div>
+
+<script>
+(function(){
+var zl=100;
+function applyZoom(){document.documentElement.style.fontSize=zl+'%';var e=document.getElementById('zoomLvl');if(e)e.textContent=zl+'%';}
+window.zoomIn=function(){if(zl<200){zl+=10;applyZoom();}};
+window.zoomOut=function(){if(zl>50){zl-=10;applyZoom();}};
+window.zoomReset=function(){zl=100;applyZoom();};
+document.addEventListener('keydown',function(e){
+if(e.target.tagName==='INPUT'||e.target.tagName==='TEXTAREA'||e.target.isContentEditable)return;
+if((e.key==='+'||e.key==='=')&&!e.ctrlKey&&!e.metaKey){e.preventDefault();zoomIn();}
+else if((e.key==='-'||e.key==='_')&&!e.ctrlKey&&!e.metaKey){e.preventDefault();zoomOut();}
+else if(e.key==='0'&&!e.ctrlKey&&!e.metaKey){e.preventDefault();zoomReset();}
+});
+})();
+</script>
+
+<script>
+/* A11y: Focus trap for modal overlays */
+document.addEventListener('keydown',function(e){if(e.key==='Tab'){var ov=document.querySelector('.cert-overlay.active,.modal-overlay.active,[role="dialog"].active');if(ov){var fc=ov.querySelectorAll('button,a,[tabindex="0"],input,select,textarea');if(fc.length){var f=fc[0],l=fc[fc.length-1];if(e.shiftKey&&document.activeElement===f){e.preventDefault();l.focus()}else if(!e.shiftKey&&document.activeElement===l){e.preventDefault();f.focus()}}}}});
+</script>
+</body>
+</html>

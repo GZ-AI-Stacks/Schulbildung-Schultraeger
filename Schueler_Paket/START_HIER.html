@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="de" data-theme="cyber-dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Meine Lernplattform — Start</title>
+<style>
+@font-face{font-family:'Sora';src:url('Klasse_7-10/Informatik/fonts/sora-latin-400-normal.woff2') format('woff2');font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:'Sora';src:url('Klasse_7-10/Informatik/fonts/sora-latin-600-normal.woff2') format('woff2');font-weight:600;font-style:normal;font-display:swap}
+@font-face{font-family:'Sora';src:url('Klasse_7-10/Informatik/fonts/sora-latin-700-normal.woff2') format('woff2');font-weight:700;font-style:normal;font-display:swap}
+@font-face{font-family:'Inter';src:url('Klasse_7-10/Informatik/fonts/inter-latin-400-normal.woff2') format('woff2');font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:'Inter';src:url('Klasse_7-10/Informatik/fonts/inter-latin-600-normal.woff2') format('woff2');font-weight:600;font-style:normal;font-display:swap}
+
+:root{--neon:#3b82f6;--neon-dim:rgba(59,130,246,.15);--bg:#0a0e14;--bg2:#111827;--bg3:#1f2937;--card:#161e2e;--card-hover:#1e293b;--border:#2a3444;--text:#d4dce8;--text-dim:#8899aa;--text-bright:#f1f5f9;--heading:#fff;--link:#60a5fa;--success:#22c55e;--warning:#f59e0b;--danger:#ef4444;--radius:12px;--radius-sm:8px;--radius-lg:16px;--shadow:0 4px 24px rgba(0,0,0,.4);--font:'Sora','Inter','Segoe UI',system-ui,sans-serif}
+[data-theme="cyber-light"]{--neon:#1d4ed8;--bg:#f8f9fb;--bg2:#f0f2f5;--bg3:#e5e7eb;--card:#fff;--card-hover:#f5f7fa;--border:#d1d5db;--text:#374151;--text-dim:#4b5563;--text-bright:#111827;--heading:#111827;--link:#2563eb}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--font);background:var(--bg);color:var(--text);line-height:1.6;min-height:100vh}
+
+/* Hero */
+.hero{background:linear-gradient(135deg,var(--bg2) 0%,var(--bg3) 100%);border-bottom:2px solid var(--border);padding:2.5rem 1.5rem;text-align:center}
+.hero h1{font-size:2rem;color:var(--heading);margin-bottom:.3rem}
+.hero h1 span{color:var(--neon)}
+.hero p{font-size:1rem;color:var(--text-dim);max-width:600px;margin:.5rem auto 0}
+
+/* Info Box */
+.info-box{max-width:800px;margin:1.5rem auto;background:var(--neon-dim);border:1px solid var(--neon);border-radius:var(--radius);padding:1rem 1.5rem;font-size:.88rem;line-height:1.6}
+.info-box strong{color:var(--neon)}
+
+/* Lernplan Section */
+.lernplan-section{max-width:800px;margin:1.5rem auto;text-align:center}
+.lernplan-section h2{font-size:1.2rem;color:var(--heading);margin-bottom:.8rem}
+.lp-btn{display:inline-flex;align-items:center;gap:.5rem;background:var(--neon);color:#fff;border:none;padding:.7rem 1.5rem;border-radius:var(--radius);font-family:var(--font);font-size:.95rem;font-weight:600;cursor:pointer;text-decoration:none;transition:all .2s}
+.lp-btn:hover{opacity:.85;transform:translateY(-1px)}
+.lp-hint{font-size:.78rem;color:var(--text-dim);margin-top:.5rem}
+
+/* Footer */
+.footer{text-align:center;padding:2.5rem 1rem;font-size:.75rem;color:var(--text-dim);border-top:1px solid var(--border);margin-top:2rem}
+
+/* Theme + Zoom Controls */
+.theme-toggle{position:fixed;bottom:1rem;right:1rem;display:flex;gap:.3rem;z-index:999}
+.tt-btn{width:36px;height:36px;border-radius:50%;border:2px solid var(--border);background:var(--card);cursor:pointer;font-size:1rem;display:flex;align-items:center;justify-content:center;transition:all .15s;color:var(--text)}
+.tt-btn:hover{border-color:var(--neon);transform:scale(1.1)}
+.zoom-controls{position:fixed;bottom:1rem;left:1rem;display:flex;gap:4px;z-index:999}
+.zoom-btn{width:32px;height:32px;border-radius:50%;border:2px solid var(--border);background:var(--card);color:var(--text);cursor:pointer;font-size:15px;display:flex;align-items:center;justify-content:center;transition:all .15s;font-family:inherit;line-height:1}
+.zoom-btn:hover{border-color:var(--neon);color:var(--neon);transform:scale(1.1)}
+
+@media(max-width:600px){
+  .hero h1{font-size:1.4rem}
+}
+@media print{
+  .theme-toggle,.zoom-controls{display:none!important}
+  body{background:#fff;color:#000}
+  .hero{background:#f5f5f5;border:1px solid #ccc}
+}
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <h1>&#127891; Meine <span>Lernplattform</span></h1>
+  <p>Willkommen! &#214;ffne deinen Lernplan, um mit dem Lernen zu starten.</p>
+</div>
+
+<div class="info-box">
+  <strong>&#128161; So funktioniert&#8217;s:</strong><br>
+  1. Klicke auf <strong>&#128194; Lernplan &#246;ffnen</strong> und w&#228;hle die HTML-Datei von deinem Lehrer<br>
+  2. Klicke auf <strong>&#9654; Starten</strong> bei einem Modul, um die Lern-App zu &#246;ffnen<br>
+  3. Dein Fortschritt wird automatisch im Browser gespeichert
+</div>
+
+<div class="lernplan-section">
+  <h2>&#128203; Mein Lernplan</h2>
+  <label class="lp-btn" id="lpOpen">
+    &#128194; Lernplan &#246;ffnen
+    <input type="file" accept=".html" id="lpFile" style="display:none">
+  </label>
+  <p class="lp-hint">W&#228;hle die HTML-Datei, die du von deinem Lehrer erhalten hast</p>
+</div>
+
+<div class="footer">
+  &#169; 2026 GZ AI Stacks &#8212; Gerd Zimmermann<br>
+  Offline verf&#252;gbar &#183; Daten bleiben lokal auf deinem Computer
+</div>
+
+<div class="theme-toggle">
+  <button class="tt-btn" onclick="toggleMode()" title="Dark/Light umschalten" id="modeToggle">&#127769;</button>
+</div>
+<div class="zoom-controls">
+  <button class="zoom-btn" onclick="zoomOut()" title="Verkleinern">&#8722;</button>
+  <button class="zoom-btn" onclick="zoomReset()" title="Zur&#252;cksetzen" style="font-size:10px"><span id="zoomLvl">100%</span></button>
+  <button class="zoom-btn" onclick="zoomIn()" title="Vergr&#246;&#223;ern">+</button>
+</div>
+
+<script>
+/* Theme */
+var mode='dark';
+function toggleMode(){
+  mode=mode==='dark'?'light':'dark';
+  document.documentElement.setAttribute('data-theme','cyber-'+mode);
+  document.getElementById('modeToggle').textContent=mode==='dark'?'\u{1F319}':'\u2600\uFE0F';
+  try{localStorage.setItem('sp_mode',mode)}catch(e){}
+}
+try{var sm=localStorage.getItem('sp_mode');if(sm==='light')toggleMode();}catch(e){}
+
+/* Zoom */
+var zl=100;
+function zoomIn(){if(zl<200){zl+=10;applyZoom()}}
+function zoomOut(){if(zl>50){zl-=10;applyZoom()}}
+function zoomReset(){zl=100;applyZoom()}
+function applyZoom(){document.documentElement.style.fontSize=zl+'%';document.getElementById('zoomLvl').textContent=zl+'%'}
+
+/* Lernplan file opener */
+document.getElementById('lpFile').addEventListener('change',function(e){
+  var f=e.target.files[0];
+  if(!f)return;
+  var reader=new FileReader();
+  reader.onload=function(ev){
+    document.open();
+    document.write(ev.target.result);
+    document.close();
+  };
+  reader.readAsText(f);
+});
+
+/* Keyboard */
+document.addEventListener('keydown',function(e){
+  if(e.target.tagName==='INPUT'||e.target.tagName==='TEXTAREA')return;
+  if(e.key==='+'&&!e.ctrlKey){e.preventDefault();zoomIn()}
+  else if(e.key==='-'&&!e.ctrlKey){e.preventDefault();zoomOut()}
+  else if(e.key==='0'&&!e.ctrlKey){e.preventDefault();zoomReset()}
+  else if(e.key==='d'||e.key==='D'){toggleMode()}
+});
+</script>
+</body>
+</html>

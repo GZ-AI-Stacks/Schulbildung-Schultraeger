@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="de" data-theme="cyber-dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>StoffeForscher — Stoffe entdecken Klasse 1-3</title>
+<meta name="description" content="Interaktive Lern-App zum Thema Chemie und Stoffe, Klasse 1-3. 10 Module mit Quiz, Boss-Challenges und Gamification.">
+<style>
+@font-face{font-family:'Sora';src:url('../../../Klasse_7-10/Informatik/fonts/sora-latin-400-normal.woff2') format('woff2');font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:'Sora';src:url('../../../Klasse_7-10/Informatik/fonts/sora-latin-600-normal.woff2') format('woff2');font-weight:600;font-style:normal;font-display:swap}
+@font-face{font-family:'Sora';src:url('../../../Klasse_7-10/Informatik/fonts/sora-latin-700-normal.woff2') format('woff2');font-weight:700;font-style:normal;font-display:swap}
+@font-face{font-family:'JetBrains Mono';src:url('../../../Klasse_7-10/Informatik/fonts/jetbrains-mono-latin-400-normal.woff2') format('woff2');font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:'Playfair Display';src:url('../../../Klasse_7-10/Informatik/fonts/playfair-display-latin-700-normal.woff2') format('woff2');font-weight:700;font-style:normal;font-display:swap}
+@font-face{font-family:'Inter';src:url('../../../Klasse_7-10/Informatik/fonts/inter-latin-400-normal.woff2') format('woff2');font-weight:400;font-style:normal;font-display:swap}
+
+:root{--neon:#3b82f6;--neon-dim:rgba(59,130,246,.15);--neon-glow:rgba(59,130,246,.3);--bg:#0a0e14;--bg2:#111827;--bg3:#1f2937;--card:#161e2e;--card-hover:#1e293b;--border:#2a3444;--border-light:#374151;--text:#d4dce8;--text-dim:#8899aa;--text-bright:#f1f5f9;--heading:#ffffff;--link:#60a5fa;--success:#22c55e;--warning:#f59e0b;--danger:#ef4444;--xp-purple:#a855f7;--badge-cyan:#06b6d4;--streak-red:#ef4444;--radius:12px;--radius-sm:8px;--radius-lg:16px;--shadow:0 4px 24px rgba(0,0,0,.4);--shadow-lg:0 8px 40px rgba(0,0,0,.5);--font:'Sora','Segoe UI',system-ui,sans-serif;--mono:'JetBrains Mono','Cascadia Code',monospace;--serif:'Playfair Display','Georgia',serif;--sidebar-w:280px;--header-h:60px;--card-border-w:1px;--card-border-style:solid;--glow:1}
+[data-theme="cyber-dark"]{--neon:#3b82f6;--neon-dim:rgba(59,130,246,.15);--neon-glow:rgba(59,130,246,.3);--bg:#0a0e14;--bg2:#111827;--bg3:#1f2937;--card:#161e2e;--card-hover:#1e293b;--border:#2a3444;--border-light:#374151;--text:#d4dce8;--text-dim:#8899aa;--text-bright:#f1f5f9;--heading:#ffffff;--link:#60a5fa;--success:#22c55e;--warning:#f59e0b;--danger:#ef4444;--xp-purple:#a855f7;--badge-cyan:#06b6d4;--streak-red:#ef4444;--radius:12px;--radius-sm:8px;--radius-lg:16px;--shadow:0 4px 24px rgba(0,0,0,.4);--shadow-lg:0 8px 40px rgba(0,0,0,.5);--font:'Sora','Segoe UI',system-ui,sans-serif;--card-border-w:1px;--card-border-style:solid;--glow:1}
+[data-theme="cyber-light"]{--neon:#1d4ed8;--neon-dim:rgba(29,78,216,.1);--neon-glow:rgba(29,78,216,.2);--bg:#f8f9fb;--bg2:#f0f2f5;--bg3:#e5e7eb;--card:#ffffff;--card-hover:#f5f7fa;--border:#d1d5db;--border-light:#e5e7eb;--text:#374151;--text-dim:#4b5563;--text-bright:#111827;--heading:#111827;--link:#2563eb;--success:#22c55e;--warning:#f59e0b;--danger:#ef4444;--xp-purple:#a855f7;--badge-cyan:#06b6d4;--streak-red:#ef4444;--radius:12px;--radius-sm:8px;--radius-lg:16px;--shadow:0 4px 24px rgba(0,0,0,.08);--shadow-lg:0 8px 40px rgba(0,0,0,.12);--font:'Sora','Segoe UI',system-ui,sans-serif;--card-border-w:1px;--card-border-style:solid;--glow:0}
+[data-theme="retro-dark"]{--neon:#ffd700;--neon-dim:rgba(255,215,0,.12);--neon-glow:rgba(255,215,0,.3);--bg:#0d0208;--bg2:#1a0a1e;--bg3:#2d1233;--card:#1a0a1e;--card-hover:#2d1233;--border:#4a1942;--border-light:#5c2d5c;--text:#e0d0f0;--text-dim:#9080a0;--text-bright:#fff;--heading:#ffd700;--link:#ff6b9d;--success:#00e676;--warning:#ffab00;--danger:#ff1744;--xp-purple:#e040fb;--badge-cyan:#00e5ff;--streak-red:#ff1744;--radius:0px;--radius-sm:0px;--radius-lg:0px;--shadow:4px 4px 0 rgba(0,0,0,.8);--shadow-lg:6px 6px 0 rgba(0,0,0,.9);--font:'Courier New','Consolas',monospace;--card-border-w:3px;--card-border-style:solid;--glow:0}
+[data-theme="retro-light"]{--neon:#b8860b;--neon-dim:rgba(184,134,11,.1);--neon-glow:rgba(184,134,11,.2);--bg:#fff8e1;--bg2:#fff3cd;--bg3:#ffe0b2;--card:#ffffff;--card-hover:#fff9f0;--border:#d4a017;--border-light:#e6c84d;--text:#3e2723;--text-dim:#6d4c41;--text-bright:#1b0000;--heading:#b8860b;--link:#c2185b;--success:#2e7d32;--warning:#ef6c00;--danger:#c62828;--xp-purple:#8e24aa;--badge-cyan:#00838f;--streak-red:#c62828;--radius:0px;--radius-sm:0px;--radius-lg:0px;--shadow:3px 3px 0 rgba(0,0,0,.15);--shadow-lg:5px 5px 0 rgba(0,0,0,.2);--font:'Courier New','Consolas',monospace;--card-border-w:3px;--card-border-style:solid;--glow:0}
+[data-theme="nature-dark"]{--neon:#4ade80;--neon-dim:rgba(74,222,128,.12);--neon-glow:rgba(74,222,128,.25);--bg:#0c1a0f;--bg2:#132617;--bg3:#1e3a24;--card:#15291a;--card-hover:#1e3a24;--border:#2d5a36;--border-light:#3a7044;--text:#c8e6c9;--text-dim:#81a784;--text-bright:#e8f5e9;--heading:#e8f5e9;--link:#81c784;--success:#66bb6a;--warning:#ffa726;--danger:#ef5350;--xp-purple:#ab47bc;--badge-cyan:#26a69a;--streak-red:#ef5350;--radius:20px;--radius-sm:14px;--radius-lg:28px;--shadow:0 4px 20px rgba(0,0,0,.3);--shadow-lg:0 8px 32px rgba(0,0,0,.4);--font:'Segoe UI','Helvetica Neue',system-ui,sans-serif;--card-border-w:1px;--card-border-style:solid;--glow:0}
+[data-theme="nature-light"]{--neon:#2e7d32;--neon-dim:rgba(46,125,50,.08);--neon-glow:rgba(46,125,50,.15);--bg:#f1f8e9;--bg2:#e8f5e9;--bg3:#c8e6c9;--card:#ffffff;--card-hover:#f1faf1;--border:#a5d6a7;--border-light:#c8e6c9;--text:#33691e;--text-dim:#3e6e1c;--text-bright:#1b5e20;--heading:#1b5e20;--link:#2e7d32;--success:#388e3c;--warning:#ef6c00;--danger:#c62828;--xp-purple:#7b1fa2;--badge-cyan:#00695c;--streak-red:#c62828;--radius:20px;--radius-sm:14px;--radius-lg:28px;--shadow:0 4px 16px rgba(0,0,0,.06);--shadow-lg:0 8px 28px rgba(0,0,0,.1);--font:'Segoe UI','Helvetica Neue',system-ui,sans-serif;--card-border-w:1px;--card-border-style:solid;--glow:0}
+[data-theme="space-dark"]{--neon:#c084fc;--neon-dim:rgba(192,132,252,.12);--neon-glow:rgba(192,132,252,.3);--bg:#07020e;--bg2:#0f0720;--bg3:#1a0e35;--card:#110a28;--card-hover:#1a0e35;--border:#2e1a5e;--border-light:#3d2478;--text:#d4c8f0;--text-dim:#9080b8;--text-bright:#f0e8ff;--heading:#f0e8ff;--link:#f0abfc;--success:#34d399;--warning:#fbbf24;--danger:#fb7185;--xp-purple:#f472b6;--badge-cyan:#67e8f9;--streak-red:#fb7185;--radius:4px;--radius-sm:2px;--radius-lg:6px;--shadow:0 4px 24px rgba(100,50,200,.2);--shadow-lg:0 8px 40px rgba(100,50,200,.3);--font:'Segoe UI',system-ui,sans-serif;--card-border-w:1px;--card-border-style:solid;--glow:1}
+[data-theme="space-light"]{--neon:#7c3aed;--neon-dim:rgba(124,58,237,.08);--neon-glow:rgba(124,58,237,.15);--bg:#faf5ff;--bg2:#f3e8ff;--bg3:#e9d5ff;--card:#ffffff;--card-hover:#faf5ff;--border:#c4b5fd;--border-light:#ddd6fe;--text:#4c1d95;--text-dim:#5b21b6;--text-bright:#2e1065;--heading:#2e1065;--link:#7c3aed;--success:#059669;--warning:#d97706;--danger:#dc2626;--xp-purple:#db2777;--badge-cyan:#0891b2;--streak-red:#dc2626;--radius:4px;--radius-sm:2px;--radius-lg:6px;--shadow:0 4px 16px rgba(100,50,200,.06);--shadow-lg:0 8px 28px rgba(100,50,200,.1);--font:'Segoe UI',system-ui,sans-serif;--card-border-w:1px;--card-border-style:solid;--glow:0}
+[data-theme="comic-dark"]{--neon:#ff6b6b;--neon-dim:rgba(255,107,107,.12);--neon-glow:rgba(255,107,107,.3);--bg:#1a1a2e;--bg2:#222244;--bg3:#2e2e55;--card:#262650;--card-hover:#2e2e55;--border:#4a4a7a;--border-light:#5a5a8a;--text:#e8e0ff;--text-dim:#a098c0;--text-bright:#fff;--heading:#fff;--link:#ffa94d;--success:#51cf66;--warning:#fcc419;--danger:#ff6b6b;--xp-purple:#cc5de8;--badge-cyan:#22b8cf;--streak-red:#ff6b6b;--radius:16px;--radius-sm:12px;--radius-lg:24px;--shadow:4px 4px 0 rgba(0,0,0,.5);--shadow-lg:6px 6px 0 rgba(0,0,0,.6);--font:'Comic Sans MS','Chalkboard SE',cursive,system-ui,sans-serif;--card-border-w:3px;--card-border-style:solid;--glow:0}
+[data-theme="comic-light"]{--neon:#e03131;--neon-dim:rgba(224,49,49,.08);--neon-glow:rgba(224,49,49,.15);--bg:#fff9db;--bg2:#fff3bf;--bg3:#ffe066;--card:#ffffff;--card-hover:#fffdf0;--border:#fab005;--border-light:#fcc419;--text:#2b2b2b;--text-dim:#555;--text-bright:#000;--heading:#000;--link:#e8590c;--success:#2f9e44;--warning:#e8590c;--danger:#c92a2a;--xp-purple:#9c36b5;--badge-cyan:#1098ad;--streak-red:#c92a2a;--radius:16px;--radius-sm:12px;--radius-lg:24px;--shadow:3px 3px 0 rgba(0,0,0,.2);--shadow-lg:5px 5px 0 rgba(0,0,0,.25);--font:'Comic Sans MS','Chalkboard SE',cursive,system-ui,sans-serif;--card-border-w:3px;--card-border-style:solid;--glow:0}
+[data-theme="sketchy-dark"]{--neon:#d97706;--neon-dim:rgba(217,119,6,.15);--neon-glow:rgba(217,119,6,.3);--bg:#2a1f0f;--bg2:#3a2a1a;--bg3:#4a3a2a;--card:#362414;--card-hover:#462a1a;--border:#5a4030;--border-light:#6a5040;--text:#d4c4b0;--text-dim:#a09080;--text-bright:#e8d8c8;--heading:#f5ead5;--link:#e8a550;--success:#84cc16;--warning:#d97706;--danger:#e74c3c;--xp-purple:#d946ef;--badge-cyan:#06b6d4;--streak-red:#e74c3c;--radius:24px;--radius-sm:16px;--radius-lg:32px;--shadow:0 6px 20px rgba(0,0,0,.3);--shadow-lg:0 10px 40px rgba(0,0,0,.4);--font:'Playfair Display','Georgia',serif;--card-border-w:2px;--card-border-style:dashed;--glow:0}
+[data-theme="sketchy-light"]{--neon:#b45309;--neon-dim:rgba(180,83,9,.1);--neon-glow:rgba(180,83,9,.2);--bg:#fef3e2;--bg2:#fde8cc;--bg3:#f9d5b8;--card:#ffffff;--card-hover:#fffaf5;--border:#d4a574;--border-light:#e8c4a0;--text:#5c4033;--text-dim:#8b6f47;--text-bright:#3e2723;--heading:#3e2723;--link:#c2600c;--success:#65a30d;--warning:#b45309;--danger:#d25c4d;--xp-purple:#c084fc;--badge-cyan:#0891b2;--streak-red:#d25c4d;--radius:24px;--radius-sm:16px;--radius-lg:32px;--shadow:0 4px 12px rgba(0,0,0,.08);--shadow-lg:0 8px 24px rgba(0,0,0,.12);--font:'Playfair Display','Georgia',serif;--card-border-w:2px;--card-border-style:dashed;--glow:0}
+[data-theme="nature-code-dark"]{--neon:#10b981;--neon-dim:rgba(16,185,129,.15);--neon-glow:rgba(16,185,129,.25);--bg:#0a1f12;--bg2:#0d2818;--bg3:#1a3a2a;--card:#0f281a;--card-hover:#1a3a2a;--border:#2d5a3d;--border-light:#3a7050;--text:#c8e6d0;--text-dim:#7ba890;--text-bright:#e8f5ed;--heading:#e8f5ed;--link:#34d399;--success:#10b981;--warning:#f59e0b;--danger:#f87171;--xp-purple:#a78bfa;--badge-cyan:#22d3ee;--streak-red:#f87171;--radius:20px;--radius-sm:14px;--radius-lg:28px;--shadow:0 4px 20px rgba(0,100,50,.2);--shadow-lg:0 8px 32px rgba(0,100,50,.3);--font:'Segoe UI','Helvetica Neue',system-ui,sans-serif;--card-border-w:1px;--card-border-style:solid;--glow:0}
+[data-theme="nature-code-light"]{--neon:#059669;--neon-dim:rgba(5,150,105,.1);--neon-glow:rgba(5,150,105,.15);--bg:#f0fdf8;--bg2:#e8faf2;--bg3:#d1f2e0;--card:#ffffff;--card-hover:#f5fbf7;--border:#86efac;--border-light:#bbf7d0;--text:#164e3f;--text-dim:#2d6e4f;--text-bright:#052e16;--heading:#052e16;--link:#059669;--success:#10b981;--warning:#d97706;--danger:#dc2626;--xp-purple:#8b5cf6;--badge-cyan:#06b6d4;--streak-red:#dc2626;--radius:20px;--radius-sm:14px;--radius-lg:28px;--shadow:0 4px 16px rgba(0,100,50,.06);--shadow-lg:0 8px 28px rgba(0,100,50,.1);--font:'Segoe UI','Helvetica Neue',system-ui,sans-serif;--card-border-w:1px;--card-border-style:solid;--glow:0}
+[data-theme="glass-dark"]{--neon:#00d9ff;--neon-dim:rgba(0,217,255,.12);--neon-glow:rgba(0,217,255,.25);--bg:#0f0f23;--bg2:#1a1a3e;--bg3:#25254a;--card:rgba(30,30,60,.4);--card-hover:rgba(40,40,80,.5);--border:rgba(100,150,255,.2);--border-light:rgba(100,150,255,.3);--text:#e4e8f0;--text-dim:#8899aa;--text-bright:#f5f7ff;--heading:#ffffff;--link:#00d9ff;--success:#34d399;--warning:#fbbf24;--danger:#ff6b9d;--xp-purple:#b991f7;--badge-cyan:#00d9ff;--streak-red:#ff6b9d;--radius:16px;--radius-sm:12px;--radius-lg:20px;--shadow:0 8px 32px rgba(0,200,255,.1);--shadow-lg:0 16px 64px rgba(0,200,255,.15);--font:'Segoe UI',system-ui,sans-serif;--card-border-w:1px;--card-border-style:solid;--glow:1}
+[data-theme="glass-light"]{--neon:#0891b2;--neon-dim:rgba(8,145,178,.08);--neon-glow:rgba(8,145,178,.15);--bg:#f8fafc;--bg2:#f1f5f9;--bg3:#e2e8f0;--card:rgba(255,255,255,.4);--card-hover:rgba(255,255,255,.6);--border:rgba(100,180,255,.2);--border-light:rgba(100,180,255,.3);--text:#1e293b;--text-dim:#475569;--text-bright:#0f172a;--heading:#0f172a;--link:#0891b2;--success:#059669;--warning:#d97706;--danger:#dc2626;--xp-purple:#7c3aed;--badge-cyan:#0891b2;--streak-red:#dc2626;--radius:16px;--radius-sm:12px;--radius-lg:20px;--shadow:0 8px 32px rgba(100,150,255,.08);--shadow-lg:0 16px 64px rgba(100,150,255,.12);--font:'Segoe UI',system-ui,sans-serif;--card-border-w:1px;--card-border-style:solid;--glow:0}
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}body{font-family:var(--font);background:var(--bg);color:var(--text);line-height:1.6;min-height:100vh;overflow-x:hidden;transition:background .3s,color .3s}h1,h2,h3,h4{color:var(--heading);line-height:1.3}a{color:var(--link);text-decoration:none}a:hover{text-decoration:underline}button{font-family:var(--font);cursor:pointer;border:none;background:none;color:inherit}code,pre{font-family:var(--mono)}:focus-visible{outline:2px solid var(--neon);outline-offset:2px;border-radius:4px}::selection{background:var(--neon);color:#fff}::-webkit-scrollbar{width:8px}::-webkit-scrollbar-track{background:var(--bg2)}::-webkit-scrollbar-thumb{background:var(--border);border-radius:4px}::-webkit-scrollbar-thumb:hover{background:var(--text-dim)}
+.site-header{position:fixed;top:0;left:0;right:0;height:var(--header-h);background:var(--bg2);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 20px;z-index:100;backdrop-filter:blur(12px)}.header-logo{display:flex;align-items:center;gap:12px;font-weight:700;font-size:18px;color:var(--heading)}.header-logo-text{display:flex;flex-direction:column;line-height:1.2}.header-logo-main{font-size:20px;font-weight:800}.header-logo-sub{font-size:11px;font-weight:600;color:var(--neon);letter-spacing:1px;text-transform:uppercase;margin-top:2px}.header-right{margin-left:auto;display:flex;align-items:center;gap:12px}.header-xp{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--xp-purple);font-weight:600}.header-xp-bar{width:80px;height:6px;background:var(--bg3);border-radius:3px;overflow:hidden}.header-xp-fill{height:100%;background:var(--xp-purple);border-radius:3px;transition:width .5s}.header-streak{display:flex;align-items:center;gap:4px;font-size:13px;color:var(--streak-red);font-weight:600}
+.theme-toggle{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:var(--bg3);transition:background .2s}.theme-toggle:hover{background:var(--border)}.theme-picker-wrap{position:relative}.theme-picker-btn{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:var(--bg3);transition:background .2s;font-size:16px}.theme-picker-btn:hover{background:var(--border)}.theme-picker-dd{position:absolute;top:calc(100% + 8px);right:0;background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:12px;box-shadow:var(--shadow-lg);z-index:200;display:none;min-width:240px}.theme-picker-dd.open{display:block}.theme-picker-dd .tp-label{font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--text-dim);margin-bottom:8px}.tp-world{display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:var(--radius-sm);cursor:pointer;transition:background .15s;margin-bottom:2px}.tp-world:hover{background:var(--bg3)}.tp-world.active{background:var(--neon-dim)}.tp-world-color{width:28px;height:28px;border-radius:6px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:14px}.tp-world-info{flex:1;min-width:0}.tp-world-name{font-size:13px;font-weight:600;color:var(--heading)}.tp-world-desc{font-size:10px;color:var(--text-dim)}.tp-divider{height:1px;background:var(--border);margin:8px 0}.tp-mode-row{display:flex;align-items:center;justify-content:space-between;padding:4px 10px}.tp-mode-label{font-size:12px;color:var(--text);font-weight:600}.tp-mode-switch{width:44px;height:24px;border-radius:12px;background:var(--bg3);position:relative;cursor:pointer;transition:background .2s}.tp-mode-switch.light{background:var(--neon)}.tp-mode-switch::after{content:'';position:absolute;top:3px;left:3px;width:18px;height:18px;border-radius:50%;background:#fff;transition:transform .2s;box-shadow:0 1px 3px rgba(0,0,0,.3)}.tp-mode-switch.light::after{transform:translateX(20px)}.menu-btn{display:none;width:36px;height:36px;border-radius:8px;align-items:center;justify-content:center;background:var(--bg3)}
+.sidebar{position:fixed;top:var(--header-h);left:0;width:var(--sidebar-w);height:calc(100vh - var(--header-h));background:var(--bg2);border-right:1px solid var(--border);overflow-y:auto;padding:16px 12px;z-index:90;transition:transform .3s}.sidebar-section{margin-bottom:20px}.sidebar-label{font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--text-dim);padding:0 8px;margin-bottom:8px}.sidebar-level{padding:8px 12px;background:var(--neon-dim);border-radius:var(--radius-sm);margin-bottom:12px;text-align:center}.sidebar-level-title{font-size:14px;font-weight:700;color:var(--neon)}.sidebar-level-sub{font-size:11px;color:var(--text-dim);margin-top:2px}.sidebar-xp-bar{width:100%;height:8px;background:var(--bg3);border-radius:4px;overflow:hidden;margin-top:6px}.sidebar-xp-fill{height:100%;background:linear-gradient(90deg,var(--xp-purple),var(--neon));border-radius:4px;transition:width .6s}.mod-link{display:flex;align-items:center;gap:10px;padding:8px 12px;border-radius:var(--radius-sm);transition:background .15s;color:var(--text);font-size:13px;text-decoration:none;position:relative;cursor:pointer}.mod-link:hover{background:var(--bg3);text-decoration:none}.mod-link.active{background:var(--neon-dim);color:var(--neon);font-weight:600}.mod-link.completed::after{content:'\2713';position:absolute;right:10px;color:var(--success);font-weight:700;font-size:12px}.mod-link .mod-icon{width:28px;height:28px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
+.main{margin-left:var(--sidebar-w);margin-top:var(--header-h);min-height:calc(100vh - var(--header-h));padding:32px;max-width:900px}.module-header{margin-bottom:32px}.module-header .mod-badge{display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--neon);margin-bottom:8px}.module-header h1{font-size:28px;margin-bottom:8px}.module-header .mod-desc{font-size:15px;color:var(--text-dim);max-width:600px}
+.lesson-card{background:var(--card);border:var(--card-border-w) var(--card-border-style) var(--border);border-radius:var(--radius);padding:24px;margin-bottom:20px;transition:border-color .2s}.lesson-card:hover{border-color:var(--neon)}.lesson-card h3{font-size:18px;margin-bottom:12px;display:flex;align-items:center;gap:8px}.lesson-card p,.lesson-card li{font-size:14px;line-height:1.7;color:var(--text)}.lesson-card ul,.lesson-card ol{margin:8px 0 8px 20px}.lesson-card code{background:var(--bg3);padding:2px 6px;border-radius:4px;font-size:13px;color:var(--neon)}.lesson-card .info-box{background:var(--neon-dim);border-left:3px solid var(--neon);padding:12px 16px;border-radius:0 var(--radius-sm) var(--radius-sm) 0;margin:12px 0;font-size:13px}
+.interactive-area{background:var(--card);border:calc(var(--card-border-w) + 1px) dashed var(--border);border-radius:var(--radius);padding:24px;margin:20px 0;min-height:200px}.interactive-area h4{font-size:15px;color:var(--neon);margin-bottom:12px}.ix-grid{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;margin:16px 0}.ix-item{background:var(--bg3);border:2px solid var(--border);border-radius:var(--radius-sm);padding:14px 20px;font-size:16px;cursor:pointer;transition:all .2s;user-select:none;text-align:center;min-width:60px}.ix-item:hover{border-color:var(--neon);background:var(--neon-dim)}.ix-item.selected{border-color:var(--neon);background:var(--neon-dim)}.ix-item.correct{border-color:var(--success);background:rgba(34,197,94,.1)}.ix-item.wrong{border-color:var(--danger);background:rgba(239,68,68,.1)}.ix-item.placed{opacity:.4;pointer-events:none}.ix-btn{background:var(--neon);color:#fff;border:none;padding:10px 24px;border-radius:var(--radius-sm);font-size:14px;font-weight:700;cursor:pointer;font-family:var(--font);margin-top:12px;transition:opacity .2s}.ix-btn:hover{opacity:.85}.ix-feedback{text-align:center;padding:14px;border-radius:var(--radius-sm);font-size:16px;font-weight:700;margin-top:12px;display:none}.ix-feedback.pass{display:block;background:rgba(34,197,94,.12);color:var(--success)}.ix-feedback.fail{display:block;background:rgba(239,68,68,.12);color:var(--danger)}
+.quiz-section{background:var(--card);border:var(--card-border-w) var(--card-border-style) var(--border);border-radius:var(--radius);padding:24px;margin-top:24px}.quiz-section h3{font-size:18px;margin-bottom:16px;color:var(--xp-purple)}.quiz-q{margin-bottom:20px}.quiz-q p{font-size:14px;font-weight:600;margin-bottom:10px}.quiz-q label{display:flex;align-items:flex-start;gap:10px;padding:10px 14px;border-radius:var(--radius-sm);border:1px solid var(--border);cursor:pointer;transition:all .15s;font-size:14px;margin-bottom:6px}.quiz-q label:hover{border-color:var(--neon);background:var(--neon-dim)}.quiz-q input[type="radio"]{margin-top:3px;accent-color:var(--neon)}.quiz-q label.correct{border-color:var(--success);background:rgba(34,197,94,.1)}.quiz-q label.wrong{border-color:var(--danger);background:rgba(239,68,68,.1)}.quiz-submit{padding:10px 24px;font-size:14px;font-weight:700;border-radius:var(--radius-sm);background:var(--xp-purple);color:#fff;transition:opacity .2s;margin-top:8px}.quiz-submit:hover{opacity:.85}.quiz-result{padding:16px;border-radius:var(--radius-sm);margin-top:16px;font-size:14px;font-weight:600;text-align:center}.quiz-result.pass{background:rgba(34,197,94,.12);color:var(--success);border:1px solid rgba(34,197,94,.3)}.quiz-result.fail{background:rgba(239,68,68,.12);color:var(--danger);border:1px solid rgba(239,68,68,.3)}.quiz-explanation{margin-top:6px;padding:8px 14px;border-radius:var(--radius-sm);background:rgba(34,197,94,.08);border-left:3px solid var(--success);font-size:13px;color:var(--success);font-weight:600}
+.boss-section{background:linear-gradient(135deg,rgba(168,85,247,.08),rgba(59,130,246,.08));border:2px solid var(--xp-purple);border-radius:var(--radius);padding:24px;margin-top:24px}.boss-section h3{color:var(--xp-purple);font-size:20px;margin-bottom:4px}.boss-section .boss-sub{font-size:13px;color:var(--text-dim);margin-bottom:16px}
+.badge-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(100px,1fr));gap:12px;margin-top:12px}.badge-item{text-align:center;padding:12px 8px;border-radius:var(--radius-sm);background:var(--bg3);opacity:.4;transition:all .3s}.badge-item.earned{opacity:1;background:var(--neon-dim);border:1px solid var(--neon)}.badge-item .badge-icon{font-size:28px;margin-bottom:4px}.badge-item .badge-name{font-size:10px;font-weight:600;color:var(--text-dim)}.badge-item.earned .badge-name{color:var(--neon)}
+.stats-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px;margin-top:12px}.stat-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius-sm);padding:16px;text-align:center}.stat-card .stat-val{font-size:28px;font-weight:700;color:var(--neon)}.stat-card .stat-label{font-size:12px;color:var(--text-dim);margin-top:4px}
+.notif{position:fixed;top:80px;right:20px;background:var(--card);border:1px solid var(--neon);border-radius:var(--radius);padding:16px 20px;box-shadow:var(--shadow-lg);z-index:200;transform:translateX(120%);transition:transform .4s cubic-bezier(.22,1,.36,1);max-width:320px}.notif.show{transform:translateX(0)}.notif-title{font-size:14px;font-weight:700;color:var(--heading);margin-bottom:2px}.notif-text{font-size:12px;color:var(--text-dim)}.notif.xp{border-color:var(--xp-purple)}.notif.badge{border-color:var(--badge-cyan)}.notif.level{border-color:var(--success)}.notif.streak{border-color:var(--streak-red)}
+.level-up-overlay{position:fixed;inset:0;background:rgba(0,0,0,.7);display:none;align-items:center;justify-content:center;z-index:300}.level-up-overlay.active{display:flex}.level-up-box{text-align:center;padding:40px;animation:lvlPop .5s ease-out}.level-up-box .lvl-icon{font-size:64px;margin-bottom:12px}.level-up-box .lvl-title{font-size:28px;font-weight:900;color:var(--heading)}.level-up-box .lvl-name{font-size:20px;color:var(--xp-purple);font-weight:700;margin-top:4px}@keyframes lvlPop{from{transform:scale(.5);opacity:0}to{transform:scale(1);opacity:1}}
+.welcome-screen{display:flex;align-items:center;justify-content:center;min-height:calc(100vh - var(--header-h));text-align:center;padding:40px 20px}.welcome-box{max-width:480px}.welcome-box h1{font-size:36px;margin-bottom:8px}.welcome-box .ws-sub{color:var(--text-dim);font-size:15px;margin-bottom:32px}.welcome-box input{width:100%;max-width:320px;padding:12px 16px;font-size:16px;border-radius:var(--radius-sm);border:1px solid var(--border);background:var(--bg3);color:var(--heading);font-family:var(--font);text-align:center;margin-bottom:16px}.welcome-box input:focus{border-color:var(--neon);outline:none}.welcome-box .ws-start{padding:14px 40px;font-size:16px;font-weight:700;border-radius:var(--radius-sm);background:var(--neon);color:#fff;transition:opacity .2s}.welcome-box .ws-start:hover{opacity:.85}.welcome-box .ws-start:disabled{opacity:.4;cursor:not-allowed}
+.cert-overlay{position:fixed;inset:0;background:rgba(0,0,0,.88);display:none;align-items:center;justify-content:center;z-index:400;padding:20px;flex-direction:column;backdrop-filter:blur(8px)}.cert-overlay.active{display:flex}.cert-picker{display:flex;gap:12px;justify-content:center;margin-bottom:20px;flex-wrap:wrap}.cert-pick-btn{padding:10px 20px;font-size:13px;font-weight:700;border-radius:12px;border:2px solid rgba(255,255,255,.15);background:rgba(255,255,255,.06);color:rgba(255,255,255,.7);transition:all .3s;backdrop-filter:blur(4px)}.cert-pick-btn:hover{border-color:rgba(255,255,255,.3);color:#fff;transform:translateY(-2px)}.cert-pick-btn.active{border-color:#ffd700;color:#ffd700;background:rgba(255,215,0,.1);box-shadow:0 0 20px rgba(255,215,0,.15)}.cert-frame{width:720px;max-width:100%;aspect-ratio:1.414;position:relative;overflow:hidden}.cert-actions{display:flex;gap:12px;justify-content:center;margin-top:16px}.cert-actions button{padding:12px 28px;font-size:13px;font-weight:700;border-radius:12px;background:linear-gradient(135deg,var(--neon),var(--link));color:#fff;transition:transform .2s,box-shadow .2s}.cert-actions button:hover{transform:translateY(-2px);box-shadow:0 4px 20px rgba(0,0,0,.3)}
+.confetti-container{position:fixed;inset:0;pointer-events:none;z-index:600;overflow:hidden}
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.6);display:none;align-items:center;justify-content:center;z-index:500;padding:20px}.modal-overlay.active{display:flex}.modal{background:var(--card);border:1px solid var(--border);border-radius:var(--radius-lg);max-width:640px;width:100%;max-height:85vh;overflow-y:auto;padding:32px;position:relative}.modal-close{position:absolute;top:12px;right:16px;font-size:24px;color:var(--text-dim);background:none;border:none;cursor:pointer}
+@media(max-width:800px){.menu-btn{display:flex}.sidebar{transform:translateX(-100%)}.sidebar.open{transform:translateX(0)}.main{margin-left:0;padding:16px}}
+@media print{*{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}.site-header,.sidebar,.notif,.level-up-overlay,.confetti-container{display:none!important}.main{margin-left:0!important;padding:20px!important}.lesson-card{break-inside:avoid;page-break-inside:avoid}}
+
+/* Audio/Speech */
+.tts-btn{background:none;border:none;cursor:pointer;font-size:.9em;opacity:.5;transition:all .2s;vertical-align:middle;margin-left:8px;padding:2px 6px;border-radius:4px}
+.tts-btn:hover{opacity:1;background:var(--bg2)}.tts-btn.speaking{opacity:1;color:var(--neon);animation:tts-pulse 1s infinite}
+@keyframes tts-pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.15)}}
+.tts-bar{display:flex;align-items:center;gap:8px;padding:6px 12px;background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);margin:8px 0;font-size:.8rem;flex-wrap:wrap}
+.tts-bar select{background:var(--bg);color:var(--text);border:1px solid var(--border);border-radius:4px;padding:2px 6px;font-size:.78rem}
+.tts-bar button{background:none;border:1px solid var(--border);border-radius:4px;padding:2px 8px;cursor:pointer;color:var(--text);font-size:.8rem}
+.tts-bar button:hover{background:var(--bg)}
+.speech-ex{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:16px;margin:12px 0;text-align:center}
+.speech-ex h4{margin:0 0 8px;font-size:1rem}
+.mic-btn{font-size:1.6em;background:none;border:2px solid var(--neon);border-radius:50%;width:52px;height:52px;cursor:pointer;transition:all .3s;color:var(--text);display:inline-flex;align-items:center;justify-content:center}
+.mic-btn:hover{background:var(--neon);color:var(--bg)}.mic-btn.rec{background:#ef4444;border-color:#ef4444;color:#fff;animation:tts-pulse 1s infinite}
+.sr-res{margin-top:8px;padding:6px 10px;border-radius:4px;font-weight:600;font-size:.85rem;display:inline-block}
+.sr-res.good{background:#22c55e22;color:#22c55e}.sr-res.retry{background:#f59e0b22;color:#f59e0b}
+.sr-na{font-size:.8rem;color:var(--text-dim);margin-top:8px}
+</style>
+</head>
+<body>
+<a href="#mainContent" class="skip-nav" style="position:absolute;top:-50px;left:8px;background:var(--neon);color:#fff;padding:8px 16px;z-index:9999;border-radius:0 0 8px 8px;font-weight:700;text-decoration:none">Zum Inhalt springen</a>
+<header class="site-header">
+  <button class="menu-btn" onclick="toggleSidebar()" aria-label="Menu">&#9776;</button>
+  <div class="header-logo">
+    <svg viewBox="0 0 40 40" width="40" height="40" fill="none" aria-hidden="true"><rect x="4" y="4" width="32" height="32" rx="8" fill="var(--neon-dim)" stroke="var(--neon)" stroke-width="1.5"/><text x="20" y="26" text-anchor="middle" font-size="18" font-weight="900" fill="var(--neon)">S</text></svg>
+    <div class="header-logo-text"><div class="header-logo-main">StoffeForscher</div><div class="header-logo-sub">Stoffe entdecken Klasse 1-3</div></div>
+  </div>
+  <div class="header-right">
+    <div class="header-xp"><span id="headerLevel">Level 1</span><div class="header-xp-bar"><div class="header-xp-fill" style="width:0%"></div></div><span id="headerXP">0 XP</span></div>
+    <div class="header-streak" id="headerStreak">&#128293; 0</div>
+    <div class="theme-picker-wrap"><button class="theme-picker-btn" onclick="toggleThemePicker()" aria-label="Theme wählen">&#127912;</button><div class="theme-picker-dd" id="themePickerDD"></div></div>
+    <button class="theme-toggle" onclick="toggleMode()" aria-label="Dark/Light umschalten">&#127769;</button>
+  </div>
+</header>
+<nav class="sidebar" id="sidebar" role="navigation" aria-label="Module">
+  <div class="sidebar-section"><div class="sidebar-level"><div class="sidebar-level-title" id="sidebarLevel">Anfänger</div><div class="sidebar-level-sub" id="sidebarXP">0 XP</div><div class="sidebar-xp-bar"><div class="sidebar-xp-fill" id="sidebarXPFill" style="width:0%"></div></div></div></div>
+  <div class="sidebar-section"><div class="sidebar-label">Module</div><div id="sidebarModules"></div></div>
+  <div class="sidebar-section" style="border-top:1px solid var(--border);padding-top:12px;margin-top:12px">
+    <a class="mod-link" onclick="showBadges()"><span class="mod-icon">&#127941;</span>Abzeichen</a>
+    <a class="mod-link" onclick="showStats()"><span class="mod-icon">&#128202;</span>Statistik</a>
+    <a class="mod-link" onclick="showCert()"><span class="mod-icon">&#127891;</span>Urkunde</a>
+  </div>
+  <div class="sidebar-section" style="border-top:1px solid var(--border);padding-top:12px;margin-top:12px">
+    <a class="mod-link" onclick="exportData()"><span class="mod-icon">&#128190;</span>Speichern</a>
+    <label class="mod-link" style="cursor:pointer"><span class="mod-icon">&#128194;</span>Laden<input type="file" accept=".json" onchange="importData(event)" style="display:none"></label>
+    <a class="mod-link" onclick="if(confirm('Wirklich alles zurücksetzen?')){localStorage.removeItem(STORAGE_KEY);location.reload()}" style="color:var(--danger)"><span class="mod-icon">&#128465;</span>Zurücksetzen</a>
+  </div>
+  <div style="padding:16px 8px 8px;border-top:1px solid var(--border);margin-top:12px;font-size:11px;color:var(--text-dim)">
+    <a onclick="showImpressum()" style="cursor:pointer;color:var(--text-dim)">Impressum</a> &middot;
+    <a onclick="showDatenschutz()" style="cursor:pointer;color:var(--text-dim)">Datenschutz</a>
+  </div>
+</nav>
+<main class="main" id="mainContent">
+  <div class="welcome-screen" id="welcomeScreen"><div class="welcome-box"><div style="font-size:64px;margin-bottom:16px">🧪</div><h1>StoffeForscher</h1><p class="ws-sub">Entdecke die Welt der Stoffe! 10 Module mit Quiz, Boss-Challenges und spannenden Experimenten.</p><input type="text" id="nameInput" placeholder="Dein Name" maxlength="24" aria-label="Dein Name" oninput="document.getElementById('startBtn').disabled=!this.value.trim()"><br><button class="ws-start" id="startBtn" disabled onclick="startApp()">🧪 Stoffe erforschen!</button></div></div>
+  <div id="moduleContent" style="display:none"></div>
+  <div id="badgesView" style="display:none"></div>
+  <div id="statsView" style="display:none"></div>
+</main>
+<div class="notif" id="notif"><div class="notif-title" id="notifTitle"></div><div class="notif-text" id="notifText"></div></div>
+<div class="level-up-overlay" id="levelUpOverlay"><div class="level-up-box" id="levelUpBox"></div></div>
+<div class="confetti-container" id="confetti"></div>
+<div class="cert-overlay" id="certOverlay" role="dialog" aria-label="Urkunde" aria-modal="true"><div class="cert-picker" id="certPicker"></div><div class="cert-frame" id="certFrame"></div><div class="cert-actions"><button onclick="printCert()">&#128424; Drucken / PDF</button><button onclick="closeCert()">Schließen</button></div></div>
+<div class="modal-overlay" id="impressumOverlay"><div class="modal"><button class="modal-close" onclick="document.getElementById('impressumOverlay').classList.remove('active')">&times;</button><h2>Impressum</h2><p><strong>© 2026 GZ AI Stacks - Gerd Zimmermann</strong></p><p>Diese Lern-App wurde mit Claude Code (Anthropic) entwickelt.</p></div></div>
+<div class="modal-overlay" id="datenschutzOverlay"><div class="modal"><button class="modal-close" onclick="document.getElementById('datenschutzOverlay').classList.remove('active')">&times;</button><h2>Datenschutzerklärung</h2><p>Diese App speichert Daten <strong>ausschließlich lokal</strong> in Ihrem Browser (LocalStorage). Es werden keine Daten an Server übertragen.</p><ul><li>Keine Cookies</li><li>Kein Tracking oder Analytics</li><li>Keine externen Ressourcen</li><li>Keine Registrierung</li><li>Alle Daten verbleiben auf Ihrem Gerät</li></ul><p>Sie können Ihre gespeicherten Daten jederzeit über die "Zurücksetzen"-Funktion löschen.</p></div></div>
+<script>
+function showImpressum(){document.getElementById('impressumOverlay').classList.add('active')}
+function showDatenschutz(){document.getElementById('datenschutzOverlay').classList.add('active')}
+
+
+// === Audio (TTS) ===
+const _synth=window.speechSynthesis,_LANG='de-DE';let _ttsOn=false,_ttsRate=1,_ttsTimer=null;
+function speakLesson(i){if(_ttsOn){stopTTS();return}const c=document.querySelectorAll('.lesson-card');if(!c[i]||!_synth)return;stopTTS();const u=new SpeechSynthesisUtterance(c[i].innerText);u.lang=_LANG;u.rate=_ttsRate;u.onstart=()=>{_ttsOn=true;updTTSUI();startTTSTimer()};u.onend=()=>{_ttsOn=false;updTTSUI();clearTTSTimer()};u.onerror=()=>{_ttsOn=false;updTTSUI();clearTTSTimer()};_synth.speak(u);showTTSBar()}
+function speakText(t,lang){if(!_synth)return;stopTTS();const u=new SpeechSynthesisUtterance(t);u.lang=lang||_LANG;u.rate=_ttsRate;u.onstart=()=>{_ttsOn=true;updTTSUI();startTTSTimer()};u.onend=()=>{_ttsOn=false;updTTSUI();clearTTSTimer()};u.onerror=()=>{_ttsOn=false;updTTSUI();clearTTSTimer()};_synth.speak(u)}
+function stopTTS(){if(_synth){_synth.cancel()}_ttsOn=false;updTTSUI();clearTTSTimer()}
+function updTTSUI(){document.querySelectorAll('.tts-btn').forEach(b=>b.classList.toggle('speaking',_ttsOn))}
+function setTTSRate(r){_ttsRate=parseFloat(r)}
+function startTTSTimer(){clearTTSTimer();_ttsTimer=setInterval(()=>{if(_synth&&_synth.speaking&&!_synth.paused){_synth.pause();_synth.resume()}},10000)}
+function clearTTSTimer(){if(_ttsTimer){clearInterval(_ttsTimer);_ttsTimer=null}}
+function showTTSBar(){if(document.getElementById('ttsBar'))return;const mc=document.getElementById('moduleContent');if(!mc)return;const b=document.createElement('div');b.className='tts-bar';b.id='ttsBar';b.innerHTML='\u{1F50A} <select onchange="setTTSRate(this.value)"><option value="0.7">Langsam</option><option value="1" selected>Normal</option><option value="1.3">Schnell</option></select> <button onclick="stopTTS()">\u25A0 Stopp</button>';mc.prepend(b)}
+
+const _qk=[0x4A,0x7F,0x2B,0x61,0x5C,0x3E,0x18,0x73];
+function _d(h,i){return h^_qk[i%_qk.length]}
+
+const LEVELS=[{"name":"Stoffe-Neuling","xp":0},{"name":"Material-Entdecker","xp":40},{"name":"Misch-Meister","xp":100},{"name":"Wasser-Forscher","xp":180},{"name":"Luft-Detektiv","xp":280},{"name":"Feuer-Kenner","xp":400},{"name":"Metall-Experte","xp":540},{"name":"Farben-Mischer","xp":700},{"name":"Kristall-Züchter","xp":880},{"name":"Recycling-Held","xp":1080},{"name":"Labor-Assistent","xp":1300},{"name":"Experiment-Profi","xp":1540},{"name":"Stoffe-Kenner","xp":1800},{"name":"Forscher-Talent","xp":2080},{"name":"Chemie-Detektiv","xp":2380},{"name":"Material-Meister","xp":2700},{"name":"Stoffe-Genie","xp":3040},{"name":"Experiment-Champion","xp":3400},{"name":"Chemie-Legende","xp":3780},{"name":"StoffeForscher-Meister","xp":4200}];
+const BADGES=[{"id":"m0","name":"Stoffe-Kenner","icon":"🔍","desc":"Modul 1 abgeschlossen"},{"id":"m1","name":"Aggregat-Experte","icon":"🧊","desc":"Modul 2 abgeschlossen"},{"id":"m2","name":"Misch-Meister","icon":"🥣","desc":"Modul 3 abgeschlossen"},{"id":"m3","name":"Wasser-Forscher","icon":"💧","desc":"Modul 4 abgeschlossen"},{"id":"m4","name":"Luft-Detektiv","icon":"💨","desc":"Modul 5 abgeschlossen"},{"id":"m5","name":"Feuer-Kenner","icon":"🔥","desc":"Modul 6 abgeschlossen"},{"id":"m6","name":"Metall-Experte","icon":"🔧","desc":"Modul 7 abgeschlossen"},{"id":"m7","name":"Farben-Mischer","icon":"🎨","desc":"Modul 8 abgeschlossen"},{"id":"m8","name":"Kristall-Züchter","icon":"💎","desc":"Modul 9 abgeschlossen"},{"id":"m9","name":"Recycling-Held","icon":"♻️","desc":"Modul 10 abgeschlossen"},{"id":"first_quiz","name":"Quiz-Neuling","icon":"❓","desc":"Erstes Quiz bestanden"},{"id":"perfect_quiz","name":"Perfektionist","icon":"💎","desc":"Quiz mit 5/5 bestanden"},{"id":"first_boss","name":"Boss-Bezwinger","icon":"👑","desc":"Erste Boss-Challenge bestanden"},{"id":"all_bosses","name":"Endgegner","icon":"🏆","desc":"Alle Boss-Challenges bestanden"},{"id":"streak3","name":"Durchstarter","icon":"🔥","desc":"3 Tage in Folge gelernt"},{"id":"streak7","name":"Wochenkrieger","icon":"⚔️","desc":"7 Tage in Folge gelernt"},{"id":"half_done","name":"Halbzeit","icon":"⏳","desc":"5 Module abgeschlossen"},{"id":"speed_quiz","name":"Blitz-Denker","icon":"⚡","desc":"Quiz in unter 60 Sekunden"},{"id":"explorer","name":"Entdecker","icon":"🗺️","desc":"Alle Module angesehen"},{"id":"graduate","name":"Absolvent","icon":"🎓","desc":"Alle 10 Module abgeschlossen"}];
+const THEME_CONFIG={
+  cyber:{name:'Cyber Neon',emoji:'🖥',color:'#3b82f6',desc:'Futuristisch & Digital'},
+  retro:{name:'Retro Arcade',emoji:'🕹',color:'#ffd700',desc:'80er Arcade-Feeling'},
+  nature:{name:'Nature Forest',emoji:'🌳',color:'#4ade80',desc:'Natürlich & Organisch'},
+  space:{name:'Deep Space',emoji:'🚀',color:'#c084fc',desc:'Kosmisch & Geheimnisvoll'},
+  comic:{name:'Comic Pop',emoji:'💥',color:'#ff6b6b',desc:'Bunt & Verspielt'},
+  sketchy:{name:'Sketchy',emoji:'✍️',color:'#d97706',desc:'Handgemacht & Warm'},
+  'nature-code':{name:'Nature x Code',emoji:'🌿',color:'#10b981',desc:'Natur trifft Technik'},
+  glass:{name:'Glasmorphism',emoji:'💠',color:'#00d9ff',desc:'Modern & Transparent'}
+};
+const modules=[{id:0,title:'Stoffe erkennen',icon:'🔍',duration:'20 Min.',description:'Lerne verschiedene Materialien kennen: Holz, Glas, Plastik, Metall, Stoff und Papier.',lessons:[{title:'Materialien um uns herum',content:`<p>Schau dich um — alles besteht aus verschiedenen <strong>Stoffen</strong>! Ein Stoff ist das Material, aus dem etwas gemacht ist.</p>
+<ul><li><strong>Holz</strong> — kommt von Bäumen (Tisch, Stuhl, Bleistift)</li><li><strong>Glas</strong> — durchsichtig und glatt (Fenster, Trinkglas)</li><li><strong>Plastik</strong> — leicht und bunt (Spielzeug, Flasche)</li><li><strong>Metall</strong> — hart und glänzend (Löffel, Schlüssel)</li></ul>
+<div class="info-box">💡 <strong>Merke:</strong> Jeder Stoff hat besondere Eigenschaften. Manche sind hart, weich, durchsichtig oder biegsam!</div>`},{title:'Stoffe fühlen und erkennen',content:`<p>Du kannst Stoffe mit deinen <strong>Sinnen</strong> unterscheiden:</p>
+<ul><li><strong>Sehen</strong> — Welche Farbe hat es? Ist es glänzend oder matt?</li><li><strong>Fühlen</strong> — Ist es glatt, rau, weich oder hart?</li><li><strong>Klopfen</strong> — Klingt es hohl oder fest?</li></ul>
+<p>Auch <strong>Stoff</strong> (Textil) und <strong>Papier</strong> sind wichtige Materialien im Alltag.</p>
+<div class="info-box">🔍 <strong>Tipp:</strong> Nimm verschiedene Dinge in die Hand und überlege: Woraus sind sie gemacht?</div>`}],quiz:[{q:'Woraus ist ein Fenster meistens gemacht?',a:["Holz","Glas","Plastik","Papier"],_h:75},{q:'Welcher Stoff kommt von Bäumen?',a:["Holz","Metall","Glas","Plastik"],_h:127},{q:'Was ist eine Eigenschaft von Metall?',a:["Es ist immer weich","Es ist hart und glänzend","Es ist durchsichtig","Es kommt von Bäumen"],_h:42},{q:'Woraus besteht ein Spielzeugauto oft?',a:["Aus Papier","Aus Glas","Aus Plastik","Aus Stoff"],_h:99},{q:'Wie kannst du herausfinden, woraus etwas gemacht ist?',a:["Nur durch Riechen","Durch Sehen und Fühlen","Nur durch Wiegen","Gar nicht"],_h:93}],boss:[{q:'Was unterscheidet Glas von Plastik?',a:["Glas ist immer bunt","Glas ist schwerer und kann zerbrechen","Plastik ist immer hart","Es gibt keinen Unterschied"],_h:75},{q:'Warum benutzt man für Löffel Metall und nicht Papier?',a:["Weil Metall billiger ist","Weil Metall stabil ist und nicht im Wasser aufweicht","Weil Papier zu schwer ist","Weil Metall leichter ist"],_h:126},{q:'Welcher Stoff ist KEIN natürlicher Stoff?',a:["Holz","Wolle","Plastik","Stein"],_h:41}]},
+{id:1,title:'Fest, flüssig, gasförmig',icon:'🧊',duration:'20 Min.',description:'Entdecke die drei Zustände: fest, flüssig und gasförmig am Beispiel von Wasser.',lessons:[{title:'Drei Zustände',content:`<p>Alle Stoffe können in <strong>drei Zuständen</strong> vorkommen:</p>
+<ul><li><strong>Fest</strong> — hat eine feste Form (z.B. Eis, Stein, Holz)</li><li><strong>Flüssig</strong> — fließt und nimmt die Form des Gefäßes an (z.B. Wasser, Saft)</li><li><strong>Gasförmig</strong> — unsichtbar, fliegt durch die Luft (z.B. Dampf, Luft)</li></ul>
+<div class="info-box">💡 <strong>Merke:</strong> Wasser kann alle drei Zustände haben: Eis (fest), Wasser (flüssig), Dampf (gasförmig)!</div>`},{title:'Eis, Wasser und Dampf',content:`<p>Wenn du Wasser <strong>erhitzt</strong> oder <strong>abkühlst</strong>, ändert es seinen Zustand:</p>
+<ul><li><strong>Eis schmilzt</strong> → wird zu Wasser (bei 0°C)</li><li><strong>Wasser verdampft</strong> → wird zu Dampf (bei 100°C)</li><li><strong>Dampf kühlt ab</strong> → wird wieder zu Wasser</li><li><strong>Wasser gefriert</strong> → wird wieder zu Eis</li></ul>
+<div class="info-box">🧊 <strong>Experiment:</strong> Lege einen Eiswürfel auf einen Teller. Beobachte, wie er langsam schmilzt!</div>`}],quiz:[{q:'Was ist Eis?',a:["Flüssiges Wasser","Gasförmiges Wasser","Festes Wasser","Heißes Wasser"],_h:72},{q:'Was passiert, wenn Eis warm wird?',a:["Es wird noch härter","Es schmilzt zu Wasser","Es wird zu Luft","Nichts passiert"],_h:126},{q:'Welchen Zustand hat Dampf?',a:["Fest","Flüssig","Gasförmig","Halbflüssig"],_h:41},{q:'Was passiert mit Wasser bei 0°C?',a:["Es kocht","Es wird zu Dampf","Es bleibt gleich","Es gefriert zu Eis"],_h:98},{q:'Welcher Stoff ist flüssig?',a:["Stein","Saft","Luft","Holz"],_h:93}],boss:[{q:'Warum siehst du deinen Atem im Winter?',a:["Weil die Luft bunt wird","Weil warme Atemluft abkühlt und winzige Wassertröpfchen sichtbar werden","Weil es schneit","Weil die Lunge leuchtet"],_h:75},{q:'In welcher Reihenfolge ändert sich Wasser beim Erhitzen?',a:["Dampf → Eis → Wasser","Eis → Wasser → Dampf","Wasser → Eis → Dampf","Dampf → Wasser → Eis"],_h:126},{q:'Warum platzen Wasserflaschen manchmal im Gefrierfach?',a:["Weil das Plastik schmilzt","Weil Wasser sich beim Gefrieren ausdehnt","Weil es zu kalt ist","Weil die Flasche alt ist"],_h:42}]},
+{id:2,title:'Mischen und Trennen',icon:'🥣',duration:'20 Min.',description:'Erfahre, was passiert, wenn man Stoffe mischt — und wie man sie wieder trennen kann.',lessons:[{title:'Stoffe mischen',content:`<p>Wenn du zwei Stoffe zusammengibst, entsteht ein <strong>Gemisch</strong>:</p>
+<ul><li><strong>Sand + Wasser</strong> — du siehst beides noch (der Sand sinkt)</li><li><strong>Zucker + Wasser</strong> — der Zucker löst sich auf (du siehst ihn nicht mehr)</li><li><strong>Müsli</strong> — verschiedene Teile gemischt</li></ul>
+<div class="info-box">💡 <strong>Merke:</strong> Wenn sich ein Stoff ganz auflöst (wie Zucker in Wasser), nennt man das eine <strong>Lösung</strong>!</div>`},{title:'Gemische wieder trennen',content:`<p>Man kann Gemische wieder <strong>trennen</strong>:</p>
+<ul><li><strong>Sieben</strong> — große Stücke bleiben im Sieb (z.B. Nudeln vom Wasser trennen)</li><li><strong>Filtern</strong> — ein Filter hält kleine Teilchen zurück (z.B. Kaffeefilter)</li><li><strong>Eindampfen</strong> — Wasser verdampft, der Stoff bleibt (z.B. Salz gewinnen)</li><li><strong>Mit einem Magneten</strong> — zieht Eisen aus einem Gemisch</li></ul>
+<div class="info-box">🥣 <strong>Experiment:</strong> Mische Sand und Büroklammern. Trenne sie mit einem Magneten!</div>`}],quiz:[{q:'Was entsteht, wenn du Zucker in Wasser gibst?',a:["Ein fester Klumpen","Eine Lösung","Sand","Dampf"],_h:75},{q:'Wie kannst du Sand aus Wasser trennen?',a:["Durch Filtern","Durch Schütteln","Durch Erhitzen auf 1000°C","Gar nicht"],_h:127},{q:'Was ist ein Gemisch?',a:["Ein neuer Stoff","Zwei oder mehr Stoffe zusammen","Nur Flüssigkeiten","Nur Gase"],_h:41},{q:'Womit trennst du Eisen von Sand?',a:["Mit einem Sieb","Mit Wasser","Mit einem Magneten","Mit einer Lupe"],_h:99},{q:'Was passiert beim Eindampfen?',a:["Alles verschwindet","Das Wasser verdampft und der feste Stoff bleibt","Der Stoff wird flüssig","Es wird ein neuer Stoff"],_h:93}],boss:[{q:'Warum löst sich Zucker in warmem Wasser schneller als in kaltem?',a:["Weil warmes Wasser süßer ist","Weil sich die Teilchen schneller bewegen","Weil kaltes Wasser zu schwer ist","Zucker löst sich nicht"],_h:75},{q:'Kannst du Salz aus Salzwasser durch Filtern trennen?',a:["Ja, mit einem Kaffeefilter","Nein, weil das Salz aufgelöst ist und durchs Filter geht","Ja, mit einem Sieb","Nein, weil Salzwasser giftig ist"],_h:126},{q:'Was ist der Unterschied zwischen einem Gemisch und einer Lösung?',a:["Es gibt keinen","In einer Lösung sieht man die Teile nicht mehr, im Gemisch schon","Eine Lösung ist immer heiß","Ein Gemisch ist immer fest"],_h:42}]},
+{id:3,title:'Wasser — unser Lebenselixier',icon:'💧',duration:'20 Min.',description:'Entdecke, warum Wasser so wichtig ist und wo es überall vorkommt.',lessons:[{title:'Wasser ist überall',content:`<p>Wasser ist der <strong>wichtigste Stoff</strong> für alle Lebewesen!</p>
+<ul><li><strong>Im Körper</strong> — wir bestehen zu über 60% aus Wasser</li><li><strong>In der Natur</strong> — Flüsse, Seen, Meere, Regen</li><li><strong>Im Alltag</strong> — Trinken, Waschen, Kochen</li></ul>
+<p>Wasser hat besondere <strong>Eigenschaften</strong>: Es ist durchsichtig, hat keinen Geruch und keinen Geschmack.</p>
+<div class="info-box">💧 <strong>Wusstest du?</strong> Ohne Wasser könnten wir nur wenige Tage überleben!</div>`},{title:'Der Wasserkreislauf',content:`<p>Wasser wandert immer im <strong>Kreislauf</strong>:</p>
+<ol><li>Die <strong>Sonne</strong> erwärmt das Wasser in Seen und Meeren</li><li>Wasser <strong>verdunstet</strong> und steigt als Dampf nach oben</li><li>Oben wird es kalt — <strong>Wolken</strong> entstehen</li><li>Aus Wolken fällt <strong>Regen</strong> (oder Schnee)</li><li>Das Wasser fließt zurück in Flüsse und Meere</li></ol>
+<div class="info-box">🌧️ <strong>Merke:</strong> Das Wasser auf der Erde ist immer dasselbe — es wird immer wieder recycelt!</div>`}],quiz:[{q:'Wie viel Prozent deines Körpers besteht aus Wasser?',a:["Etwa 10%","Etwa 30%","Über 60%","Etwa 90%"],_h:72},{q:'Was passiert mit Wasser, wenn die Sonne es erwärmt?',a:["Es wird zu Eis","Es verdunstet","Es wird schwerer","Es verschwindet"],_h:126},{q:'Woraus bilden sich Wolken?',a:["Aus Rauch","Aus winzigen Wassertröpfchen","Aus Staub","Aus Luft"],_h:42},{q:'Was ist der Wasserkreislauf?',a:["Wasser dreht sich im Kreis","Wasser geht verloren","Wasser wandert immer wieder: Meer → Wolke → Regen → Meer","Wasser bleibt immer am selben Ort"],_h:99},{q:'Was ist eine Eigenschaft von reinem Wasser?',a:["Es ist immer blau","Es riecht nach Rosen","Es ist durchsichtig und geruchlos","Es ist süß"],_h:94}],boss:[{q:'Warum ist der Wasserkreislauf wichtig für die Natur?',a:["Weil Wolken schön aussehen","Weil er dafür sorgt, dass immer genug frisches Wasser da ist","Weil es sonst nie regnet","Weil Fische Regen mögen"],_h:75},{q:'Warum sollst du jeden Tag genug Wasser trinken?',a:["Weil es gut schmeckt","Weil dein Körper Wasser für alle Funktionen braucht","Weil die Lehrerin es sagt","Weil Wasser teuer ist"],_h:126},{q:'Was passiert, wenn es sehr kalt wird und Wasser zu Eis gefriert?',a:["Es wird leichter und kleiner","Es dehnt sich aus und braucht mehr Platz","Es wird schwerer","Nichts passiert"],_h:42}]},
+{id:4,title:'Luft ist nicht nichts!',icon:'💨',duration:'20 Min.',description:'Erfahre, dass Luft aus Stoffen besteht und sogar ein Gewicht hat.',lessons:[{title:'Luft ist ein Stoff',content:`<p>Auch wenn du Luft nicht sehen kannst — sie ist <strong>wirklich da</strong>!</p>
+<ul><li>Luft hat ein <strong>Gewicht</strong> — ein aufgeblasener Ballon ist schwerer als ein leerer</li><li>Luft braucht <strong>Platz</strong> — sie füllt jeden Raum aus</li><li>Luft kann <strong>drücken</strong> — denk an Wind!</li></ul>
+<div class="info-box">💨 <strong>Experiment:</strong> Halte ein leeres Glas umgedreht unter Wasser. Das Wasser kommt nicht rein — weil Luft im Glas ist!</div>`},{title:'Woraus besteht Luft?',content:`<p>Luft ist ein <strong>Gemisch</strong> aus verschiedenen Gasen:</p>
+<ul><li><strong>Stickstoff</strong> — das meiste Gas in der Luft (fast 4/5)</li><li><strong>Sauerstoff</strong> — den brauchen wir zum Atmen (etwa 1/5)</li><li><strong>Andere Gase</strong> — nur ganz wenig (z.B. Kohlendioxid)</li></ul>
+<p><strong>Wind</strong> entsteht, wenn sich Luft bewegt. Warme Luft steigt nach oben, kalte Luft sinkt nach unten.</p>
+<div class="info-box">🌬️ <strong>Merke:</strong> Ohne Sauerstoff in der Luft könnten wir nicht atmen und Feuer könnte nicht brennen!</div>`}],quiz:[{q:'Hat Luft ein Gewicht?',a:["Nein, Luft wiegt nichts","Ja, Luft hat ein Gewicht","Nur kalte Luft","Nur warme Luft"],_h:75},{q:'Was brauchen wir aus der Luft zum Atmen?',a:["Stickstoff","Sauerstoff","Kohlendioxid","Helium"],_h:126},{q:'Was passiert, wenn du einen Ballon aufbläst?',a:["Er wird leichter","Er wird schwerer, weil Luft drin ist","Er verändert sich nicht","Er wird kälter"],_h:42},{q:'Woraus besteht Luft hauptsächlich?',a:["Nur Sauerstoff","Nur Kohlendioxid","Einem Gemisch aus Gasen","Nur Wasserdampf"],_h:99},{q:'Warum weht Wind?',a:["Weil Bäume pusten","Weil sich Luftmassen bewegen","Weil die Erde sich dreht","Weil Wolken schieben"],_h:93}],boss:[{q:'Warum steigt ein Heißluftballon nach oben?',a:["Weil er magnetisch ist","Weil warme Luft leichter ist und nach oben steigt","Weil Wind ihn hochbläst","Weil er aus Helium besteht"],_h:75},{q:'Warum kommt kein Wasser in ein umgedrehtes Glas unter Wasser?',a:["Weil das Glas zu schwer ist","Weil die Luft im Glas Platz braucht und das Wasser verdrängt","Weil Glas Wasser abstößt","Weil das Wasser zu kalt ist"],_h:126},{q:'Was würde passieren, wenn es keinen Sauerstoff in der Luft gäbe?',a:["Nichts Besonderes","Wir könnten nicht atmen und kein Feuer würde brennen","Es wäre nur etwas kälter","Die Luft wäre bunt"],_h:42}]},
+{id:5,title:'Feuer und Flamme',icon:'🔥',duration:'20 Min.',description:'Lerne, was Feuer braucht, und warum Brandschutz so wichtig ist.',lessons:[{title:'Was braucht Feuer?',content:`<p>Für ein Feuer braucht man <strong>drei Dinge gleichzeitig</strong> — das Branddreieck:</p>
+<ol><li><strong>Brennstoff</strong> — etwas, das brennen kann (Holz, Papier, Wachs)</li><li><strong>Luft (Sauerstoff)</strong> — ohne Luft geht Feuer aus</li><li><strong>Hitze</strong> — es muss heiß genug sein</li></ol>
+<p>Fehlt <strong>eines</strong> der drei Dinge, gibt es kein Feuer!</p>
+<div class="info-box">🔥 <strong>Merke:</strong> Darum geht eine Kerze aus, wenn du ein Glas darüber stülpst — kein Sauerstoff mehr!</div>`},{title:'Feuer löschen und Sicherheit',content:`<p>Zum <strong>Löschen</strong> nimmst du eine Seite des Branddreiecks weg:</p>
+<ul><li><strong>Sauerstoff wegnehmen</strong> — Decke über die Flamme oder Deckel drauf</li><li><strong>Abkühlen</strong> — Wasser drauf (kühlt die Hitze)</li><li><strong>Brennstoff entfernen</strong> — nichts Brennbares in der Nähe lassen</li></ul>
+<p><strong>Wichtige Regeln:</strong></p>
+<ul><li>Nie alleine mit Feuer spielen!</li><li>Im Notfall: 112 anrufen (Feuerwehr)</li><li>Rauchmelder retten Leben!</li></ul>
+<div class="info-box">🚒 <strong>Wichtig:</strong> Fettbrände NIEMALS mit Wasser löschen! Deckel drauf oder Löschdecke benutzen!</div>`}],quiz:[{q:'Was braucht Feuer zum Brennen?',a:["Nur Holz","Brennstoff, Luft und Hitze","Nur Wasser","Nur Wärme"],_h:75},{q:'Warum geht eine Kerze unter einem Glas aus?',a:["Weil es dunkel wird","Weil der Sauerstoff verbraucht wird","Weil das Glas zu schwer ist","Weil die Kerze müde wird"],_h:126},{q:'Was ist die Nummer der Feuerwehr?',a:["110","112","118","911"],_h:42},{q:'Wie löscht man am besten ein kleines Feuer?',a:["Mit Öl","Mit einer Decke ersticken oder Wasser drauf","Einfach warten","Pusten"],_h:96},{q:'Welches Gerät warnt vor Rauch?',a:["Thermometer","Rauchmelder","Mikrowelle","Wecker"],_h:93}],boss:[{q:'Was sind die drei Seiten des Branddreiecks?',a:["Wasser, Erde, Feuer","Brennstoff, Sauerstoff (Luft) und Hitze","Rot, Gelb, Orange","Holz, Papier, Stoff"],_h:75},{q:'Warum darf man Fettbrände nicht mit Wasser löschen?',a:["Weil Wasser zu teuer ist","Weil das Wasser verdampft und brennendes Fett herumspritzt","Weil Fett kein richtiges Feuer ist","Weil Wasser brennt"],_h:126},{q:'Was passiert, wenn man beim Branddreieck die Hitze wegnimmt?',a:["Das Feuer wird größer","Das Feuer geht aus","Das Feuer wird blau","Nichts passiert"],_h:42}]},
+{id:6,title:'Metalle im Alltag',icon:'🔧',duration:'20 Min.',description:'Entdecke Eisen, Kupfer, Gold und Aluminium und ihre besonderen Eigenschaften.',lessons:[{title:'Was sind Metalle?',content:`<p>Metalle sind besondere Stoffe mit tollen Eigenschaften:</p>
+<ul><li><strong>Sie glänzen</strong> — wenn man sie poliert, sind sie schön glänzend</li><li><strong>Sie leiten Wärme</strong> — ein Metalllöffel wird heiß in der Suppe</li><li><strong>Sie leiten Strom</strong> — deshalb sind Kabel aus Metall</li><li><strong>Man kann sie verbiegen</strong> — ohne dass sie brechen</li></ul>
+<div class="info-box">🔧 <strong>Merke:</strong> Metalle sind hart, glänzend und leiten Wärme und Strom — das macht sie so nützlich!</div>`},{title:'Bekannte Metalle',content:`<p>Es gibt viele verschiedene Metalle:</p>
+<ul><li><strong>Eisen</strong> — sehr stark, wird für Brücken und Autos benutzt. Kann rosten!</li><li><strong>Kupfer</strong> — rötlich, gut für Stromkabel und Wasserrohre</li><li><strong>Gold</strong> — gelb, sehr wertvoll, wird für Schmuck benutzt</li><li><strong>Aluminium</strong> — sehr leicht! Für Alufolie und Getränkedosen</li></ul>
+<p><strong>Rost</strong> entsteht, wenn Eisen nass wird und mit Luft in Berührung kommt.</p>
+<div class="info-box">✨ <strong>Wusstest du?</strong> Gold rostet nicht! Deshalb sieht alter Goldschmuck immer noch schön aus.</div>`}],quiz:[{q:'Welche Eigenschaft haben alle Metalle?',a:["Sie sind alle gelb","Sie glänzen und leiten Wärme","Sie sind alle leicht","Sie schwimmen auf Wasser"],_h:75},{q:'Warum sind Stromkabel aus Kupfer?',a:["Weil Kupfer schön aussieht","Weil Kupfer Strom leitet","Weil Kupfer billig ist","Weil Kupfer weich ist"],_h:126},{q:'Was passiert mit Eisen, wenn es nass wird?',a:["Es wird gold","Es rostet","Es schmilzt","Es wird leichter"],_h:42},{q:'Welches Metall ist besonders leicht?',a:["Eisen","Gold","Aluminium","Kupfer"],_h:99},{q:'Warum wird ein Metalllöffel in heißer Suppe warm?',a:["Weil er die Farbe ändert","Weil Metall Wärme leitet","Weil er schmilzt","Weil er Strom leitet"],_h:93}],boss:[{q:'Warum rosten Gegenstände aus Eisen, aber nicht aus Gold?',a:["Weil Eisen schwerer ist","Weil Eisen mit Sauerstoff und Wasser reagiert, Gold aber nicht","Weil Gold teurer ist","Weil Eisen älter ist"],_h:75},{q:'Warum ist Aluminium gut für Getränkedosen?',a:["Weil es schwer ist","Weil es leicht ist und nicht rostet","Weil es durchsichtig ist","Weil es nach Limonade schmeckt"],_h:126},{q:'Warum sind Pfannen oft aus Metall und nicht aus Holz?',a:["Weil Metall billiger ist","Weil Metall Wärme leitet und nicht verbrennt","Weil Holz zu schwer ist","Weil Metall besser aussieht"],_h:42}]},
+{id:7,title:'Farben mischen',icon:'🎨',duration:'20 Min.',description:'Entdecke Grundfarben, Mischfarben und wie Farben entstehen.',lessons:[{title:'Grundfarben und Mischfarben',content:`<p>Es gibt drei <strong>Grundfarben</strong> (Primärfarben):</p>
+<ul><li><strong>Rot</strong> 🔴</li><li><strong>Blau</strong> 🔵</li><li><strong>Gelb</strong> 🟡</li></ul>
+<p>Wenn du Grundfarben <strong>mischst</strong>, entstehen neue Farben:</p>
+<ul><li><strong>Rot + Blau</strong> = Lila</li><li><strong>Rot + Gelb</strong> = Orange</li><li><strong>Blau + Gelb</strong> = Grün</li></ul>
+<div class="info-box">🎨 <strong>Merke:</strong> Aus nur drei Grundfarben kannst du fast alle Farben mischen!</div>`},{title:'Licht und Farbe',content:`<p>Farben haben mit <strong>Licht</strong> zu tun:</p>
+<ul><li>Weißes Licht (Sonnenlicht) besteht aus <strong>allen Farben</strong> zusammen</li><li>Ein <strong>Regenbogen</strong> zeigt alle Farben des Lichts</li><li>Ein roter Apfel sieht rot aus, weil er <strong>rotes Licht zurückwirft</strong> und andere Farben schluckt</li></ul>
+<p>Wenn du <strong>alle Farben</strong> (Rot + Blau + Gelb) mischst, entsteht ein dunkles <strong>Braun-Schwarz</strong>.</p>
+<div class="info-box">🌈 <strong>Wusstest du?</strong> Ein Regenbogen entsteht, wenn Sonnenlicht durch Regentropfen scheint und in seine Farben aufgeteilt wird!</div>`}],quiz:[{q:'Was sind die drei Grundfarben?',a:["Grün, Lila, Orange","Rot, Blau, Gelb","Schwarz, Weiß, Grau","Rosa, Braun, Türkis"],_h:75},{q:'Welche Farbe entsteht aus Rot + Gelb?',a:["Grün","Lila","Orange","Braun"],_h:125},{q:'Welche Farbe entsteht aus Blau + Gelb?',a:["Orange","Grün","Lila","Rot"],_h:42},{q:'Woraus besteht weißes Sonnenlicht?',a:["Nur aus Weiß","Aus allen Farben zusammen","Nur aus Gelb","Aus keiner Farbe"],_h:96},{q:'Wann sieht man einen Regenbogen?',a:["Nur nachts","Wenn es schneit","Wenn Sonne und Regen zusammenkommen","Nur im Winter"],_h:94}],boss:[{q:'Warum sieht ein roter Apfel rot aus?',a:["Weil er rot angemalt ist","Weil er rotes Licht zurückwirft und andere Farben schluckt","Weil alles rot ist","Weil Äpfel immer rot sind"],_h:75},{q:'Was passiert, wenn du alle drei Grundfarben mischst?',a:["Es wird Weiß","Es wird ein dunkles Braun oder Schwarz","Es wird Gelb","Es passiert nichts"],_h:126},{q:'Warum hat ein Regenbogen mehrere Farben?',a:["Weil Wolken bunt sind","Weil Sonnenlicht aus vielen Farben besteht und Regentropfen es aufspalten","Weil Regen bunt ist","Weil die Luft Farben hat"],_h:42}]},
+{id:8,title:'Kristalle züchten',icon:'💎',duration:'20 Min.',description:'Erfahre, was Kristalle sind und wie du selbst welche züchten kannst.',lessons:[{title:'Was sind Kristalle?',content:`<p>Kristalle sind <strong>feste Stoffe</strong> mit einer ganz besonderen, regelmäßigen Form:</p>
+<ul><li><strong>Salzkristalle</strong> — kleine Würfel, die du unter der Lupe sehen kannst</li><li><strong>Zuckerkristalle</strong> — Kandiszucker besteht aus großen Kristallen</li><li><strong>Schneeflocken</strong> — jede Schneeflocke ist ein winziger Eiskristall mit sechs Seiten</li><li><strong>Edelsteine</strong> — Diamanten und Rubine sind Kristalle aus der Natur</li></ul>
+<div class="info-box">💎 <strong>Merke:</strong> Kristalle haben immer eine regelmäßige, geordnete Form — wie kleine Kunstwerke der Natur!</div>`},{title:'Kristalle selbst züchten',content:`<p>Du kannst zu Hause <strong>eigene Kristalle</strong> züchten:</p>
+<ol><li>Löse viel <strong>Salz</strong> (oder Zucker) in warmem Wasser auf</li><li>Rühre gut um, bis sich nichts mehr löst</li><li>Stelle die Schale an einen <strong>ruhigen Ort</strong></li><li>Warte einige <strong>Tage</strong> — Kristalle wachsen langsam!</li></ol>
+<p>Das Wasser verdunstet langsam, und der Stoff bildet <strong>Kristalle</strong>.</p>
+<div class="info-box">🧂 <strong>Tipp:</strong> Je langsamer das Wasser verdunstet, desto größer und schöner werden deine Kristalle!</div>`}],quiz:[{q:'Was ist ein Kristall?',a:["Ein flüssiger Stoff","Ein fester Stoff mit regelmäßiger Form","Ein Gas","Ein Gemisch"],_h:75},{q:'Welche Form haben Salzkristalle?',a:["Rund","Dreieckig","Würfelförmig","Tropfenförmig"],_h:125},{q:'Wie viele Seiten hat eine Schneeflocke?',a:["Vier","Fünf","Sechs","Acht"],_h:41},{q:'Was brauchst du zum Kristalle züchten?',a:["Nur Wasser","Salz oder Zucker und warmes Wasser","Erde und Sand","Nur Luft"],_h:96},{q:'Was passiert mit dem Wasser beim Kristalle züchten?',a:["Es wird bunt","Es verdunstet langsam","Es gefriert","Es wird zu Kristall"],_h:93}],boss:[{q:'Warum werden Kristalle größer, wenn das Wasser langsam verdunstet?',a:["Weil schnelles Verdunsten besser ist","Weil die Teilchen mehr Zeit haben, sich ordentlich anzulagern","Weil warmes Wasser Kristalle zerstört","Weil Kristalle Wasser trinken"],_h:75},{q:'Was haben Salzkristalle, Schneeflocken und Diamanten gemeinsam?',a:["Sie sind alle weiß","Sie haben alle eine regelmäßige, geordnete Form","Sie sind alle gleich groß","Sie bestehen aus dem gleichen Stoff"],_h:126},{q:'Was ist Kandiszucker?',a:["Bunter Sand","Große Zuckerkristalle, die langsam gewachsen sind","Geschmolzener Zucker","Künstlicher Zucker"],_h:42}]},
+{id:9,title:'Recycling — Müll wird neu',icon:'♻️',duration:'20 Min.',description:'Lerne, warum Mülltrennung wichtig ist und wie Stoffe wiederverwertet werden.',lessons:[{title:'Müll richtig trennen',content:`<p>Damit Stoffe <strong>wiederverwertet</strong> werden können, müssen wir den Müll <strong>trennen</strong>:</p>
+<ul><li><strong>Gelbe Tonne/Sack</strong> — Plastik, Dosen, Tetrapak (Verpackungen)</li><li><strong>Blaue Tonne</strong> — Papier und Pappe</li><li><strong>Braune/Grüne Tonne</strong> — Bioabfall (Essensreste, Gartenabfall)</li><li><strong>Glascontainer</strong> — Glas (nach Farbe sortiert!)</li><li><strong>Restmüll</strong> — alles, was nicht in die anderen Tonnen gehört</li></ul>
+<div class="info-box">♻️ <strong>Merke:</strong> Richtige Mülltrennung ist der erste Schritt zum Recycling!</div>`},{title:'Warum Recycling wichtig ist',content:`<p><strong>Recycling</strong> bedeutet: Aus alten Stoffen werden neue Dinge gemacht!</p>
+<ul><li>Aus altem <strong>Papier</strong> wird neues Papier</li><li>Aus alten <strong>Glasflaschen</strong> werden neue Flaschen</li><li>Aus alten <strong>Plastikflaschen</strong> können T-Shirts werden</li><li>Aus alten <strong>Dosen</strong> werden neue Dosen</li></ul>
+<p>Recycling ist gut für die <strong>Umwelt</strong>, weil:</p>
+<ul><li>Weniger <strong>Müll</strong> auf der Mülldeponie landet</li><li>Weniger <strong>Rohstoffe</strong> (Bäume, Erz) gebraucht werden</li><li>Weniger <strong>Energie</strong> verbraucht wird</li></ul>
+<div class="info-box">🌍 <strong>Wusstest du?</strong> Eine Plastikflasche braucht über 400 Jahre, um in der Natur zu verrotten!</div>`}],quiz:[{q:'In welche Tonne gehört eine leere Plastikflasche?',a:["Restmüll","Blaue Tonne","Gelbe Tonne/Sack","Glascontainer"],_h:72},{q:'Was bedeutet Recycling?',a:["Müll verbrennen","Aus alten Stoffen neue Dinge machen","Müll in den Wald werfen","Müll sammeln"],_h:126},{q:'In welche Tonne gehört altes Papier?',a:["Gelbe Tonne","Blaue Tonne","Restmüll","Biotonne"],_h:42},{q:'Warum ist Recycling gut für die Umwelt?',a:["Weil Müll schön aussieht","Weil weniger Rohstoffe und Energie gebraucht werden","Weil Recycling Spaß macht","Weil Müll schneller verrottet"],_h:96},{q:'Was kann aus alten Plastikflaschen gemacht werden?',a:["Neues Glas","Neue T-Shirts","Neues Holz","Neue Steine"],_h:93}],boss:[{q:'Warum darf man Glas nicht in die gelbe Tonne werfen?',a:["Weil Glas zu schwer ist","Weil jeder Stoff anders recycelt wird und Glas eigene Container braucht","Weil Glas nicht recycelt werden kann","Weil Glas giftig ist"],_h:75},{q:'Wie lange braucht eine Plastikflasche, um in der Natur zu verrotten?',a:["1 Jahr","10 Jahre","Über 400 Jahre","Sie verrottet nie"],_h:125},{q:'Was passiert, wenn man Müll nicht trennt?',a:["Nichts Schlimmes","Die Stoffe können nicht recycelt werden und landen auf der Deponie","Der Müll trennt sich selbst","Es ist egal"],_h:42}]}];
+
+
+const STORAGE_KEY='stoffeforscher_progress';
+let state={name:'',started:false,currentModule:0,xp:0,level:0,streak:0,lastVisit:null,modulesCompleted:[],quizResults:{},bossResults:{},badges:[],quizShuffleMap:{},modulesViewed:[],interactiveResults:{},designTheme:'cyber-dark'};
+
+function saveState(){try{localStorage.setItem(STORAGE_KEY,JSON.stringify(state))}catch(e){}}
+function loadState(){try{const s=localStorage.getItem(STORAGE_KEY);if(s){Object.assign(state,JSON.parse(s));return true}}catch(e){}return false}
+function exportData(){const a=document.createElement('a');a.download='stoffeforscher-'+state.name+'.json';a.href=URL.createObjectURL(new Blob([JSON.stringify(state,null,2)],{type:'application/json'}));a.click()}
+function importData(e){const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=ev=>{try{const d=JSON.parse(ev.target.result);Object.assign(state,d);saveState();location.reload()}catch(err){alert('Datei konnte nicht gelesen werden.')}};r.readAsText(f)}
+
+function getLevel(xp){let lv=0;for(let i=LEVELS.length-1;i>=0;i--){if(xp>=LEVELS[i].xp){lv=i;break}}return lv}
+function getLevelProgress(xp){const lv=getLevel(xp);const cur=LEVELS[lv].xp;const next=lv<LEVELS.length-1?LEVELS[lv+1].xp:cur;if(next===cur)return 100;return Math.min(100,Math.round((xp-cur)/(next-cur)*100))}
+function addXP(amount,reason){const old=getLevel(state.xp);state.xp+=amount;const nw=getLevel(state.xp);saveState();updateUI();showNotif('xp','+'+amount+' XP',reason);if(nw>old){state.level=nw;saveState();setTimeout(()=>showLevelUp(nw),800)}}
+
+function updateStreak(){const today=new Date().toDateString();if(state.lastVisit===today)return;const yesterday=new Date(Date.now()-86400000).toDateString();if(state.lastVisit===yesterday){state.streak++;showNotif('streak','\uD83D\uDD25 '+state.streak+' Tage Streak!','Weiter so!');if(state.streak>=3)awardBadge('streak3');if(state.streak>=7)awardBadge('streak7')}else if(state.lastVisit!==today){state.streak=1}state.lastVisit=today;saveState()}
+
+function awardBadge(id){if(state.badges.includes(id))return;state.badges.push(id);saveState();const b=BADGES.find(x=>x.id===id);if(b)showNotif('badge',b.icon+' Badge: '+b.name,b.desc)}
+
+let notifQueue=[],notifActive=false;
+function showNotif(type,title,text){notifQueue.push({type,title,text});if(!notifActive)processNotif()}
+function processNotif(){if(!notifQueue.length){notifActive=false;return}notifActive=true;const{type,title,text}=notifQueue.shift();const el=document.getElementById('notif');el.className='notif '+type;document.getElementById('notifTitle').textContent=title;document.getElementById('notifText').textContent=text;el.classList.add('show');setTimeout(()=>{el.classList.remove('show');setTimeout(processNotif,300)},2500)}
+
+function showLevelUp(lv){const ov=document.getElementById('levelUpOverlay');const box=document.getElementById('levelUpBox');box.innerHTML='<div class="lvl-icon">⬆️</div><div class="lvl-title">Level Up!</div><div class="lvl-name">Level '+(lv+1)+': '+LEVELS[lv].name+'<\/div>';ov.classList.add('active');spawnConfetti();setTimeout(()=>ov.classList.remove('active'),3000)}
+function spawnConfetti(){const c=document.getElementById('confetti');c.innerHTML='';const cols=['#3b82f6','#a855f7','#22c55e','#f59e0b','#ef4444','#06b6d4'];for(let i=0;i<60;i++){const p=document.createElement('div');p.style.cssText='position:absolute;left:'+Math.random()*100+'%;background:'+cols[i%cols.length]+';width:'+(6+Math.random()*8)+'px;height:'+(6+Math.random()*8)+'px;border-radius:'+(Math.random()>.5?'50%':'2px')+';animation:confettiFall '+(1.5+Math.random()*2)+'s ease-out '+Math.random()*.5+'s forwards';c.appendChild(p)}if(!document.getElementById('confettiStyle')){const s=document.createElement('style');s.id='confettiStyle';s.textContent='@keyframes confettiFall{0%{opacity:1;transform:translateY(0) rotate(0deg)}100%{opacity:0;transform:translateY(100vh) rotate(720deg)}}';document.head.appendChild(s)}setTimeout(()=>c.innerHTML='',4000)}
+
+function shuffleQuiz(modId,quiz){const key='m'+modId;if(state.quizShuffleMap[key])return state.quizShuffleMap[key];const idx=[...Array(quiz.length).keys()];for(let i=idx.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[idx[i],idx[j]]=[idx[j],idx[i]]}state.quizShuffleMap[key]=idx;saveState();return idx}
+
+function renderQuiz(modId,quiz,isBoss){
+  const pf=isBoss?'boss':'quiz';const idx=isBoss?[...Array(quiz.length).keys()]:shuffleQuiz(modId,quiz);
+  let h='<div class="'+(isBoss?'boss-section':'quiz-section')+'">';
+  h+=isBoss?'<h3>👑 Boss-Challenge<\/h3><p class="boss-sub">Alle '+quiz.length+' Fragen richtig beantworten!<\/p>':'<h3>📝 Quiz — Teste dein Wissen<\/h3>';
+  idx.forEach((qi,di)=>{const q=quiz[qi];h+='<div class="quiz-q" data-qi="'+qi+'"><p>'+(di+1)+'. '+q.q+'<\/p>';q.a.forEach((a,ai)=>{h+='<label><input type="radio" name="'+pf+'_'+modId+'_'+qi+'" value="'+ai+'"> '+a+'<\/label>'});h+='<\/div>'});
+  h+='<button class="quiz-submit" onclick="checkQuiz('+modId+','+isBoss+')">'+(isBoss?'Boss besiegen!':'Antworten prüfen')+'<\/button>';
+  h+='<div class="quiz-result" id="'+pf+'Result'+modId+'" style="display:none"><\/div><\/div>';return h;
+}
+
+function checkQuiz(modId,isBoss){
+  const pf=isBoss?'boss':'quiz';const quiz=isBoss?modules[modId].boss:modules[modId].quiz;
+  let correct=0;const total=quiz.length;const startTime=window._quizStart||Date.now();
+  quiz.forEach((q,qi)=>{
+    const sel=document.querySelector('input[name="'+pf+'_'+modId+'_'+qi+'"]:checked');
+    const labels=document.querySelectorAll('[data-qi="'+qi+'"] label');
+    const ci=_d(q._h,qi);
+    labels.forEach((l,li)=>{l.classList.remove('correct','wrong');if(li===ci)l.classList.add('correct');else if(sel&&parseInt(sel.value)===li)l.classList.add('wrong')});
+    const qDiv=labels[0]?.closest('.quiz-q');if(qDiv){const old=qDiv.querySelector('.quiz-explanation');if(old)old.remove()}
+    if(!sel||parseInt(sel.value)!==ci){if(qDiv){const exp=document.createElement('div');exp.className='quiz-explanation';exp.textContent='→ Richtige Antwort: '+q.a[ci];qDiv.appendChild(exp)}}
+    if(sel&&parseInt(sel.value)===ci)correct++;
+  });
+  const rEl=document.getElementById(pf+'Result'+modId);rEl.style.display='block';
+  if(isBoss){
+    if(correct===total){rEl.className='quiz-result pass';rEl.textContent='👑 Boss besiegt! '+correct+'/'+total+' — Perfekt!';if(!state.bossResults[modId]){state.bossResults[modId]=true;addXP(100,'Boss-Challenge bestanden!');if(!state.badges.includes('first_boss'))awardBadge('first_boss');if(modules.every((_,i)=>state.bossResults[i]))awardBadge('all_bosses');checkModuleComplete(modId)}}
+    else{rEl.className='quiz-result fail';rEl.textContent='💀 '+correct+'/'+total+' — Alle müssen richtig sein! Versuch es nochmal.';setTimeout(()=>{document.querySelectorAll('input[name^="'+pf+'_'+modId+'"]').forEach(r=>{r.disabled=false;r.checked=false});document.querySelectorAll('[data-qi] label').forEach(l=>l.classList.remove('correct','wrong'));document.querySelectorAll('.quiz-explanation').forEach(e=>e.remove());rEl.style.display='none'},2000);return}
+  }else{
+    const passed=correct>=Math.ceil(total*0.6);rEl.className='quiz-result '+(passed?'pass':'fail');
+    rEl.textContent=passed?'✅ '+correct+'/'+total+' richtig — Bestanden!':'❌ '+correct+'/'+total+' richtig — Mindestens '+Math.ceil(total*0.6)+' nötig.';
+    if(passed&&!state.quizResults[modId]){state.quizResults[modId]=correct;addXP(correct*15+50,'Quiz bestanden ('+correct+'/'+total+')');if(!state.badges.includes('first_quiz'))awardBadge('first_quiz');if(correct===total)awardBadge('perfect_quiz');if(Date.now()-startTime<60000)awardBadge('speed_quiz');checkModuleComplete(modId)}
+  }
+  saveState();document.querySelectorAll('input[name^="'+pf+'_'+modId+'"]').forEach(r=>r.disabled=true);window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function checkModuleComplete(modId){
+  if(state.quizResults[modId]!==undefined&&state.bossResults[modId]&&!state.modulesCompleted.includes(modId)){
+    state.modulesCompleted.push(modId);awardBadge('m'+modId);
+    if(state.modulesCompleted.length>=5)awardBadge('half_done');
+    if(state.modulesCompleted.length>=10){awardBadge('graduate');setTimeout(()=>showCert(),1500)}
+    saveState();renderSidebar();
+  }
+}
+
+function renderModule(modId){
+  state.currentModule=modId;
+  if(!state.modulesViewed.includes(modId)){state.modulesViewed.push(modId);addXP(10,'Neues Modul geöffnet');if(state.modulesViewed.length>=10)awardBadge('explorer')}
+  saveState();closeSidebar();
+  const m=modules[modId];
+  let h='<div class="module-header"><div class="mod-badge">'+m.icon+' Modul '+(modId+1)+'<\/div><h1>'+m.title+'<\/h1><p class="mod-desc">'+m.description+'<\/p><\/div>';
+  m.lessons.forEach((l,i)=>{h+='<div class="lesson-card"><h3><span style="color:var(--neon)">'+String(i+1).padStart(2,'0')+'<\/span> '+l.title+' <button class="tts-btn" onclick="speakLesson('+i+')" title="Vorlesen">&#128266;<\/button><\/h3>'+l.content+'<\/div>'});
+  h+='<div class="interactive-area"><h4>🧪 Interaktive Übung<\/h4><div id="interactiveContent">Lädt...<\/div><\/div>';
+  window._quizStart=Date.now();
+  h+=renderQuiz(modId,m.quiz,false);
+  h+=renderQuiz(modId,m.boss,true);
+  document.getElementById('welcomeScreen').style.display='none';
+  document.getElementById('badgesView').style.display='none';
+  document.getElementById('statsView').style.display='none';
+  const mc=document.getElementById('moduleContent');mc.style.display='block';mc.innerHTML=h;
+  renderSidebar();window.scrollTo({top:0,behavior:'smooth'});
+  setTimeout(()=>initInteractive(modId),100);
+}
+
+function renderSidebar(){
+  const el=document.getElementById('sidebarModules');
+  el.innerHTML=modules.map((m,i)=>{
+    const done=state.modulesCompleted.includes(i);
+    const act=state.currentModule===i&&document.getElementById('moduleContent').style.display==='block';
+    return '<a class="mod-link'+(act?' active':'')+(done?' completed':'')+'" onclick="renderModule('+i+')"><span class="mod-icon">'+m.icon+'<\/span>'+m.title+'<\/a>';
+  }).join('');
+  const lv=getLevel(state.xp);
+  const lvEl=document.querySelector('.sidebar-level-title');
+  if(lvEl)lvEl.textContent=LEVELS[lv].name;
+  const xpFill=document.querySelector('.sidebar-xp-fill');
+  if(xpFill)xpFill.style.width=getLevelProgress(state.xp)+'%';
+}
+function toggleSidebar(){document.getElementById('sidebar').classList.toggle('open')}
+function closeSidebar(){document.getElementById('sidebar').classList.remove('open')}
+
+function showBadges(){
+  document.getElementById('welcomeScreen').style.display='none';document.getElementById('moduleContent').style.display='none';document.getElementById('statsView').style.display='none';
+  const v=document.getElementById('badgesView');v.style.display='block';closeSidebar();
+  let h='<div class="module-header"><h1>🏅 Deine Abzeichen<\/h1><p class="mod-desc">'+state.badges.length+' von '+BADGES.length+' gesammelt<\/p><\/div><div class="badge-grid">';
+  BADGES.forEach(b=>{const earned=state.badges.includes(b.id);h+='<div class="badge-item'+(earned?' earned':' locked')+'"><div class="badge-icon">'+(earned?b.icon:'🔒')+'<\/div><div class="badge-name">'+b.name+'<\/div><\/div>'});
+  h+='<\/div>';v.innerHTML=h;
+}
+
+function showStats(){
+  document.getElementById('welcomeScreen').style.display='none';document.getElementById('moduleContent').style.display='none';document.getElementById('badgesView').style.display='none';
+  const v=document.getElementById('statsView');v.style.display='block';closeSidebar();
+  const lv=getLevel(state.xp);
+  let h='<div class="module-header"><h1>📊 Statistik<\/h1><\/div><div class="stats-grid">';
+  h+='<div class="stat-card"><div class="stat-val">'+state.xp+'<\/div><div class="stat-label">XP gesammelt<\/div><\/div>';
+  h+='<div class="stat-card"><div class="stat-val">'+LEVELS[lv].name+'<\/div><div class="stat-label">Aktueller Rang<\/div><\/div>';
+  h+='<div class="stat-card"><div class="stat-val">'+state.modulesCompleted.length+'/10<\/div><div class="stat-label">Module abgeschlossen<\/div><\/div>';
+  h+='<div class="stat-card"><div class="stat-val">'+Object.keys(state.quizResults).length+'<\/div><div class="stat-label">Quizze bestanden<\/div><\/div>';
+  h+='<div class="stat-card"><div class="stat-val">'+Object.keys(state.bossResults).length+'<\/div><div class="stat-label">Bosse besiegt<\/div><\/div>';
+  h+='<div class="stat-card"><div class="stat-val">'+state.badges.length+'<\/div><div class="stat-label">Abzeichen<\/div><\/div>';
+  h+='<div class="stat-card"><div class="stat-val">🔥 '+state.streak+'<\/div><div class="stat-label">Tage-Streak<\/div><\/div>';
+  h+='<\/div>';v.innerHTML=h;
+}
+
+let certStyle='akademie';
+function showCert(){
+  const ov=document.getElementById('certOverlay');ov.classList.add('active');
+  document.getElementById('certPicker').innerHTML=
+    ['🏛 Akademie','💻 Hacker','🕹 Pixel','🚀 Zukunft'].map((l,i)=>{
+      const s=['akademie','hacker','pixel','zukunft'][i];
+      return '<button class="cert-pick-btn'+(certStyle===s?' active':'')+'" onclick="certStyle=\''+s+'\';showCert()">'+l+'<\/button>';
+    }).join('');
+  renderCert();
+}
+function closeCert(){document.getElementById('certOverlay').classList.remove('active')}
+function generateCertCode(){const n=state.name||'X';const d=new Date();return 'SF-'+d.getFullYear()+'-'+((n.charCodeAt(0)*7+state.xp)%9999).toString(16).toUpperCase().padStart(4,'0')}
+
+function renderCert(){
+  const f=document.getElementById('certFrame');if(!f)return;
+  const n=state.name||'Schüler';const d=new Date().toLocaleDateString('de-DE',{day:'2-digit',month:'long',year:'numeric'});
+  const code=generateCertCode();const pct=Math.round(state.modulesCompleted.length/10*100);
+  const styles={
+    akademie:{bg:'linear-gradient(135deg,#1a1a4e,#2d2d7a)',border:'#c9a84c',title:'#c9a84c',text:'#d4d0ff',accent:'#c9a84c',font:"'Playfair Display',serif"},
+    hacker:{bg:'linear-gradient(135deg,#0a0e14,#1a2332)',border:'#00ff88',title:'#00ff88',text:'#b0f0d0',accent:'#00ff88',font:"'JetBrains Mono',monospace"},
+    pixel:{bg:'linear-gradient(135deg,#1a0a2e,#2d1055)',border:'#ffd700',title:'#ffd700',text:'#e0d0f0',accent:'#ff6b9d',font:"'Courier New',monospace"},
+    zukunft:{bg:'linear-gradient(135deg,#0f0f23,#1a1a3e)',border:'#00d9ff',title:'#00d9ff',text:'#d0e8ff',accent:'#00d9ff',font:"'Sora',sans-serif"}
+  };
+  const s=styles[certStyle]||styles.akademie;
+  f.innerHTML='<div style="width:100%;height:100%;background:'+s.bg+';border:3px solid '+s.border+';border-radius:12px;padding:40px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;font-family:'+s.font+';position:relative;overflow:hidden">'
+    +'<div style="font-size:14px;letter-spacing:4px;text-transform:uppercase;color:'+s.accent+';margin-bottom:8px">Zertifikat</div>'
+    +'<div style="font-size:28px;font-weight:700;color:'+s.title+';margin-bottom:4px">StoffeForscher</div>'
+    +'<div style="font-size:13px;color:'+s.text+';margin-bottom:20px">Stoffe entdecken Klasse 1-3</div>'
+    +'<div style="font-size:14px;color:'+s.text+'">Hiermit wird bestätigt, dass</div>'
+    +'<div style="font-size:24px;font-weight:700;color:'+s.title+';margin:8px 0;border-bottom:2px solid '+s.accent+';padding-bottom:4px">'+n+'</div>'
+    +'<div style="font-size:14px;color:'+s.text+';max-width:400px;line-height:1.6">den Kurs <strong>StoffeForscher</strong> mit <strong>'+pct+'%</strong> Abschluss und <strong>'+state.xp+' XP</strong> erfolgreich absolviert hat.</div>'
+    +'<div style="font-size:12px;color:'+s.accent+';margin-top:16px">'+d+'</div>'
+    +'<div style="font-size:10px;color:'+s.text+';opacity:0.6;margin-top:8px">Code: '+code+' | © 2026 GZ AI Stacks</div>'
+    +'</div>';
+}
+function printCert(){window.print()}
+
+function updateUI(){
+  const lv=getLevel(state.xp);
+  const xpEl=document.querySelector('.header-xp');
+  if(xpEl)xpEl.innerHTML=LEVELS[lv].name+' <span style="margin-left:8px">'+state.xp+' XP<\/span>';
+  const fill=document.querySelector('.header-xp-fill');
+  if(fill)fill.style.width=getLevelProgress(state.xp)+'%';
+  const streakEl=document.querySelector('.header-streak');
+  if(streakEl)streakEl.textContent='🔥 '+state.streak;
+  renderSidebar();
+}
+
+function setDesignTheme(world,mode){
+  state.designTheme=world+'-'+mode;document.documentElement.setAttribute('data-theme',state.designTheme);saveState();buildThemePicker();
+}
+function getCurrentThemeParts(){const p=state.designTheme.split('-');return{world:p.slice(0,-1).join('-'),mode:p[p.length-1]||'dark'}}
+function toggleMode(){const{world,mode}=getCurrentThemeParts();setDesignTheme(world,mode==='dark'?'light':'dark')}
+function buildThemePicker(){
+  const dd=document.getElementById('themePickerDD');if(!dd)return;
+  const{world,mode}=getCurrentThemeParts();
+  let h='<div class="tp-label">Theme wählen<\/div>';
+  Object.keys(THEME_CONFIG).forEach(w=>{
+    const t=THEME_CONFIG[w];
+    h+='<div class="tp-world'+(w===world?' active':'')+'" onclick="setDesignTheme(\''+w+'\',\''+mode+'\')">';
+    h+='<div class="tp-world-color" style="background:'+t.color+'">'+t.emoji+'<\/div>';
+    h+='<div class="tp-world-info"><div class="tp-world-name">'+t.name+'<\/div><div class="tp-world-desc">'+t.desc+'<\/div><\/div><\/div>';
+  });
+  h+='<div class="tp-divider"><\/div>';
+  h+='<div class="tp-mode-row"><span class="tp-mode-label">'+(mode==='dark'?'🌙 Dark':'☀️ Light')+'<\/span>';
+  h+='<div class="tp-mode-switch'+(mode==='light'?' light':'')+'" onclick="toggleMode()"><\/div><\/div>';
+  dd.innerHTML=h;
+}
+function toggleThemePicker(){document.getElementById('themePickerDD').classList.toggle('open')}
+
+
+function initInteractive(modId) {
+  const el = document.getElementById('interactiveContent');
+  if (!el) return;
+  const exercises = [
+    // M0: Stoffe erkennen — Material zur richtigen Kategorie zuordnen
+    function() {
+      const items = [{n:'Tisch',c:'Holz'},{n:'Fenster',c:'Glas'},{n:'Spielzeugauto',c:'Plastik'},{n:'Löffel',c:'Metall'},{n:'Bleistift',c:'Holz'},{n:'Trinkglas',c:'Glas'},{n:'Flasche',c:'Plastik'},{n:'Schlüssel',c:'Metall'}];
+      const cats = ['Holz','Glas','Plastik','Metall'];
+      let h='<p>Ordne jedes Ding dem richtigen <strong>Material</strong> zu:</p>';
+      items.forEach(function(it,i){h+='<div style="display:flex;align-items:center;gap:12px;margin:8px 0"><span style="min-width:140px">'+it.n+'<\/span><select id="ixs'+i+'" style="padding:8px;border-radius:var(--radius-sm);border:1px solid var(--border);background:var(--bg3);color:var(--text);font-family:var(--font)"><option value="">— wähle —<\/option>';cats.forEach(function(c){h+='<option>'+c+'<\/option>'});h+='<\/select><\/div>'});
+      h+='<button class="ix-btn" onclick="window._checkIx0()">Prüfen<\/button><div class="ix-feedback" id="ixFb"><\/div>';
+      el.innerHTML=h;
+      window._checkIx0=function(){
+        var ok=0;items.forEach(function(it,i){if(document.getElementById('ixs'+i).value===it.c)ok++});
+        var fb=document.getElementById('ixFb');
+        if(ok===8){fb.className='ix-feedback pass';fb.textContent='Alle richtig! Du kennst dich mit Materialien aus!';if(!state.interactiveResults[0]){state.interactiveResults[0]=true;addXP(25,'Interaktive Übung gelöst');saveState()}}
+        else{fb.className='ix-feedback fail';fb.textContent=ok+'/8 richtig. Versuch es nochmal!'}
+      };
+    },
+    // M1: Aggregatzustand zuordnen
+    function() {
+      var items = [{n:'Eis',c:'fest'},{n:'Wasser',c:'flüssig'},{n:'Dampf',c:'gasförmig'},{n:'Stein',c:'fest'},{n:'Saft',c:'flüssig'},{n:'Luft',c:'gasförmig'}];
+      var opts = ['fest','flüssig','gasförmig'];
+      var h='<p>Ordne jeden Stoff dem richtigen <strong>Zustand</strong> zu:</p>';
+      items.forEach(function(it,i){h+='<div style="display:flex;align-items:center;gap:12px;margin:8px 0"><span style="min-width:120px">'+it.n+'<\/span>';opts.forEach(function(o){h+='<label style="cursor:pointer;padding:4px 12px;border:1px solid var(--border);border-radius:var(--radius-sm);margin:0 4px"><input type="radio" name="ag'+i+'" value="'+o+'" style="margin-right:4px">'+o+'<\/label>'});h+='<\/div>'});
+      h+='<button class="ix-btn" onclick="window._checkIx1()">Prüfen<\/button><div class="ix-feedback" id="ixFb"><\/div>';
+      el.innerHTML=h;
+      window._checkIx1=function(){
+        var ok=0;items.forEach(function(it,i){var sel=document.querySelector('input[name=ag'+i+']:checked');if(sel&&sel.value===it.c)ok++});
+        var fb=document.getElementById('ixFb');
+        if(ok===6){fb.className='ix-feedback pass';fb.textContent='Super! Alle Zustände richtig!';if(!state.interactiveResults[1]){state.interactiveResults[1]=true;addXP(25,'Interaktive Übung gelöst');saveState()}}
+        else{fb.className='ix-feedback fail';fb.textContent=ok+'/6 richtig. Versuch es nochmal!'}
+      };
+    },
+    // M2: Mischung oder Lösung?
+    function() {
+      var items = [{n:'Zucker in Wasser',c:'Lösung'},{n:'Sand in Wasser',c:'Gemisch'},{n:'Salz in Wasser',c:'Lösung'},{n:'Müsli',c:'Gemisch'},{n:'Essig in Wasser',c:'Lösung'},{n:'Steine und Sand',c:'Gemisch'}];
+      var opts = ['Gemisch','Lösung'];
+      var h='<p>Ist es ein <strong>Gemisch</strong> (man sieht die Teile) oder eine <strong>Lösung</strong> (aufgelöst)?</p>';
+      items.forEach(function(it,i){h+='<div style="display:flex;align-items:center;gap:12px;margin:8px 0"><span style="min-width:160px">'+it.n+'<\/span>';opts.forEach(function(o){h+='<label style="cursor:pointer;padding:4px 12px;border:1px solid var(--border);border-radius:var(--radius-sm);margin:0 4px"><input type="radio" name="ml'+i+'" value="'+o+'" style="margin-right:4px">'+o+'<\/label>'});h+='<\/div>'});
+      h+='<button class="ix-btn" onclick="window._checkIx2()">Prüfen<\/button><div class="ix-feedback" id="ixFb"><\/div>';
+      el.innerHTML=h;
+      window._checkIx2=function(){
+        var ok=0;items.forEach(function(it,i){var sel=document.querySelector('input[name=ml'+i+']:checked');if(sel&&sel.value===it.c)ok++});
+        var fb=document.getElementById('ixFb');
+        if(ok===6){fb.className='ix-feedback pass';fb.textContent='Prima! Alles richtig zugeordnet!';if(!state.interactiveResults[2]){state.interactiveResults[2]=true;addXP(25,'Interaktive Übung gelöst');saveState()}}
+        else{fb.className='ix-feedback fail';fb.textContent=ok+'/6 richtig. Versuch es nochmal!'}
+      };
+    },
+    // M3: Wo finden wir Wasser? (Sortierung)
+    function() {
+      var items = [{n:'Im Körper',c:true},{n:'Im Fluss',c:true},{n:'In der Sonne',c:false},{n:'In Wolken',c:true},{n:'Im Boden',c:true},{n:'Auf dem Mond',c:false},{n:'Im Obst',c:true},{n:'Im Feuer',c:false}];
+      var h='<p>Klicke auf alle Orte, wo es <strong>Wasser</strong> gibt:</p><div class="ix-grid">';
+      items.forEach(function(it,i){h+='<div class="ix-item" onclick="window._checkIx3Click(this,'+i+')" data-c="'+it.c+'">'+it.n+'<\/div>'});
+      h+='<\/div><div class="ix-feedback" id="ixFb"><\/div>';
+      el.innerHTML=h;
+      window._ix3sel=new Set();
+      window._checkIx3Click=function(e,i){
+        if(e.classList.contains('correct')||e.classList.contains('wrong'))return;
+        var c=e.dataset.c==='true';
+        if(c){e.classList.add('correct');window._ix3sel.add(i)}else{e.classList.add('wrong')}
+        if(window._ix3sel.size===5){var fb=document.getElementById('ixFb');fb.className='ix-feedback pass';fb.textContent='Toll! Alle Wasservorkommen gefunden!';if(!state.interactiveResults[3]){state.interactiveResults[3]=true;addXP(25,'Interaktive Übung gelöst');saveState()}}
+      };
+    },
+    // M4: Luft-Quiz: wahr oder falsch
+    function() {
+      var items = [{n:'Luft hat ein Gewicht',c:'Wahr'},{n:'Luft besteht nur aus Sauerstoff',c:'Falsch'},{n:'Warme Luft steigt nach oben',c:'Wahr'},{n:'Luft braucht keinen Platz',c:'Falsch'},{n:'Wind ist bewegte Luft',c:'Wahr'},{n:'Ohne Luft kann Feuer brennen',c:'Falsch'}];
+      var opts = ['Wahr','Falsch'];
+      var h='<p>Ist die Aussage <strong>wahr</strong> oder <strong>falsch</strong>?</p>';
+      items.forEach(function(it,i){h+='<div style="display:flex;align-items:center;gap:12px;margin:8px 0"><span style="min-width:240px">'+it.n+'<\/span>';opts.forEach(function(o){h+='<label style="cursor:pointer;padding:4px 12px;border:1px solid var(--border);border-radius:var(--radius-sm);margin:0 4px"><input type="radio" name="wf'+i+'" value="'+o+'" style="margin-right:4px">'+o+'<\/label>'});h+='<\/div>'});
+      h+='<button class="ix-btn" onclick="window._checkIx4()">Prüfen<\/button><div class="ix-feedback" id="ixFb"><\/div>';
+      el.innerHTML=h;
+      window._checkIx4=function(){
+        var ok=0;items.forEach(function(it,i){var sel=document.querySelector('input[name=wf'+i+']:checked');if(sel&&sel.value===it.c)ok++});
+        var fb=document.getElementById('ixFb');
+        if(ok===6){fb.className='ix-feedback pass';fb.textContent='Alle richtig! Du bist ein Luft-Experte!';if(!state.interactiveResults[4]){state.interactiveResults[4]=true;addXP(25,'Interaktive Übung gelöst');saveState()}}
+        else{fb.className='ix-feedback fail';fb.textContent=ok+'/6 richtig. Versuch es nochmal!'}
+      };
+    },
+    // M5: Branddreieck — was braucht Feuer?
+    function() {
+      var items = [{n:'Brennstoff (Holz, Papier)',c:true},{n:'Luft (Sauerstoff)',c:true},{n:'Hitze',c:true},{n:'Wasser',c:false},{n:'Sand',c:false},{n:'Stickstoff',c:false}];
+      var h='<p>Wähle die <strong>3 Dinge</strong>, die Feuer zum Brennen braucht (Branddreieck):</p><div class="ix-grid">';
+      items.forEach(function(it,i){h+='<div class="ix-item" onclick="window._toggleFire5(this)" data-c="'+it.c+'">'+it.n+'<\/div>'});
+      h+='<\/div><div class="ix-feedback" id="ixFb"><\/div>';
+      el.innerHTML=h;
+      window._toggleFire5=function(e){
+        e.classList.toggle('selected');
+        var sel=el.querySelectorAll('.ix-item.selected');
+        if(sel.length===3){var ok=0;sel.forEach(function(s){if(s.dataset.c==='true')ok++});
+          var fb=document.getElementById('ixFb');
+          if(ok===3){fb.className='ix-feedback pass';fb.textContent='Richtig! Brennstoff + Luft + Hitze = Feuer!';sel.forEach(function(s){s.classList.add('correct')});if(!state.interactiveResults[5]){state.interactiveResults[5]=true;addXP(25,'Interaktive Übung gelöst');saveState()}}
+          else{fb.className='ix-feedback fail';fb.textContent='Nicht ganz richtig. Denk an das Branddreieck!';setTimeout(function(){sel.forEach(function(s){s.classList.remove('selected')});fb.className='ix-feedback'},1500)}}
+      };
+    },
+    // M6: Metalle erkennen — ist es ein Metall oder nicht?
+    function() {
+      var items = [{n:'Eisen',c:true},{n:'Holz',c:false},{n:'Kupfer',c:true},{n:'Glas',c:false},{n:'Gold',c:true},{n:'Papier',c:false},{n:'Aluminium',c:true},{n:'Plastik',c:false}];
+      var h='<p>Klicke auf alle <strong>Metalle</strong>:</p><div class="ix-grid">';
+      items.forEach(function(it,i){h+='<div class="ix-item" onclick="window._checkIx6(this,'+i+')" data-c="'+it.c+'">'+it.n+'<\/div>'});
+      h+='<\/div><div class="ix-feedback" id="ixFb"><\/div>';
+      el.innerHTML=h;
+      window._ix6sel=new Set();
+      window._checkIx6=function(e,i){
+        if(e.classList.contains('correct')||e.classList.contains('wrong'))return;
+        var c=e.dataset.c==='true';
+        if(c){e.classList.add('correct');window._ix6sel.add(i)}else{e.classList.add('wrong')}
+        if(window._ix6sel.size===4){var fb=document.getElementById('ixFb');fb.className='ix-feedback pass';fb.textContent='Super! Alle Metalle gefunden!';if(!state.interactiveResults[6]){state.interactiveResults[6]=true;addXP(25,'Interaktive Übung gelöst');saveState()}}
+      };
+    },
+    // M7: Farben mischen — welche Farbe entsteht?
+    function() {
+      var pairs = [{q:'Rot + Gelb',a:'Orange'},{q:'Blau + Gelb',a:'Grün'},{q:'Rot + Blau',a:'Lila'},{q:'Rot + Blau + Gelb',a:'Braun'},{q:'Blau + Weiß',a:'Hellblau'},{q:'Rot + Weiß',a:'Rosa'}];
+      var opts = ['Orange','Grün','Lila','Braun','Hellblau','Rosa','Schwarz'];
+      var h='<p>Welche <strong>Farbe</strong> entsteht beim Mischen?</p>';
+      pairs.forEach(function(p,i){h+='<div style="display:flex;align-items:center;gap:12px;margin:8px 0"><span style="min-width:160px"><strong>'+p.q+'<\/strong><\/span><select id="ixs'+i+'" style="padding:8px;border-radius:var(--radius-sm);border:1px solid var(--border);background:var(--bg3);color:var(--text);font-family:var(--font)"><option value="">— wähle —<\/option>';opts.forEach(function(o){h+='<option>'+o+'<\/option>'});h+='<\/select><\/div>'});
+      h+='<button class="ix-btn" onclick="window._checkIx7()">Prüfen<\/button><div class="ix-feedback" id="ixFb"><\/div>';
+      el.innerHTML=h;
+      window._checkIx7=function(){
+        var ok=0;pairs.forEach(function(p,i){if(document.getElementById('ixs'+i).value===p.a)ok++});
+        var fb=document.getElementById('ixFb');
+        if(ok===6){fb.className='ix-feedback pass';fb.textContent='Perfekt! Du bist ein Farben-Profi!';if(!state.interactiveResults[7]){state.interactiveResults[7]=true;addXP(25,'Interaktive Übung gelöst');saveState()}}
+        else{fb.className='ix-feedback fail';fb.textContent=ok+'/6 richtig. Versuch es nochmal!'}
+      };
+    },
+    // M8: Kristallformen zuordnen
+    function() {
+      var pairs = [{n:'Salzkristall',f:'Würfel'},{n:'Schneeflocke',f:'Sechseck (6 Seiten)'},{n:'Diamant',f:'Edelstein aus der Natur'},{n:'Kandiszucker',f:'Großer Zuckerkristall'},{n:'Bergkristall',f:'Durchsichtig und spitz'},{n:'Eiskristall',f:'Gefrorenes Wasser'}];
+      var opts = ['Würfel','Sechseck (6 Seiten)','Edelstein aus der Natur','Großer Zuckerkristall','Durchsichtig und spitz','Gefrorenes Wasser','Runde Kugel'];
+      var h='<p>Ordne jedem <strong>Kristall</strong> die richtige Beschreibung zu:</p>';
+      pairs.forEach(function(p,i){h+='<div style="display:flex;align-items:center;gap:12px;margin:8px 0"><span style="min-width:140px">'+p.n+'<\/span><select id="ixs'+i+'" style="padding:8px;border-radius:var(--radius-sm);border:1px solid var(--border);background:var(--bg3);color:var(--text);font-family:var(--font)"><option value="">— wähle —<\/option>';opts.forEach(function(o){h+='<option>'+o+'<\/option>'});h+='<\/select><\/div>'});
+      h+='<button class="ix-btn" onclick="window._checkIx8()">Prüfen<\/button><div class="ix-feedback" id="ixFb"><\/div>';
+      el.innerHTML=h;
+      window._checkIx8=function(){
+        var ok=0;pairs.forEach(function(p,i){if(document.getElementById('ixs'+i).value===p.f)ok++});
+        var fb=document.getElementById('ixFb');
+        if(ok===6){fb.className='ix-feedback pass';fb.textContent='Toll! Alle Kristalle richtig zugeordnet!';if(!state.interactiveResults[8]){state.interactiveResults[8]=true;addXP(25,'Interaktive Übung gelöst');saveState()}}
+        else{fb.className='ix-feedback fail';fb.textContent=ok+'/6 richtig. Versuch es nochmal!'}
+      };
+    },
+    // M9: Mülltrennung — welche Tonne?
+    function() {
+      var items = [{n:'Plastikflasche',c:'Gelbe Tonne'},{n:'Zeitung',c:'Blaue Tonne'},{n:'Apfelrest',c:'Biotonne'},{n:'Marmeladenglas',c:'Glascontainer'},{n:'Joghurtbecher',c:'Gelbe Tonne'},{n:'Karton',c:'Blaue Tonne'},{n:'Bananenschale',c:'Biotonne'},{n:'Weinflasche',c:'Glascontainer'}];
+      var opts = ['Gelbe Tonne','Blaue Tonne','Biotonne','Glascontainer','Restmüll'];
+      var h='<p>In welche <strong>Tonne</strong> gehört der Müll?</p>';
+      items.forEach(function(it,i){h+='<div style="display:flex;align-items:center;gap:12px;margin:8px 0"><span style="min-width:140px">'+it.n+'<\/span><select id="ixs'+i+'" style="padding:8px;border-radius:var(--radius-sm);border:1px solid var(--border);background:var(--bg3);color:var(--text);font-family:var(--font)"><option value="">— wähle —<\/option>';opts.forEach(function(o){h+='<option>'+o+'<\/option>'});h+='<\/select><\/div>'});
+      h+='<button class="ix-btn" onclick="window._checkIx9()">Prüfen<\/button><div class="ix-feedback" id="ixFb"><\/div>';
+      el.innerHTML=h;
+      window._checkIx9=function(){
+        var ok=0;items.forEach(function(it,i){if(document.getElementById('ixs'+i).value===it.c)ok++});
+        var fb=document.getElementById('ixFb');
+        if(ok===8){fb.className='ix-feedback pass';fb.textContent='Perfekt! Du trennst Müll wie ein Profi!';if(!state.interactiveResults[9]){state.interactiveResults[9]=true;addXP(25,'Interaktive Übung gelöst');saveState()}}
+        else{fb.className='ix-feedback fail';fb.textContent=ok+'/8 richtig. Versuch es nochmal!'}
+      };
+    }
+  ];
+  if (exercises[modId]) exercises[modId]();
+}
+
+function startApp(){
+  const name=document.getElementById('nameInput').value.trim();if(!name)return;
+  state.name=name;state.started=true;saveState();
+  document.getElementById('welcomeScreen').style.display='none';
+  renderModule(0);updateStreak();
+}
+
+(function init(){
+  if(loadState()&&state.started){
+    document.getElementById('welcomeScreen').style.display='none';
+    document.documentElement.setAttribute('data-theme',state.designTheme);
+    renderModule(state.currentModule);updateUI();updateStreak();
+  }else{
+    document.documentElement.setAttribute('data-theme',state.designTheme);
+    buildThemePicker();
+  }
+  renderSidebar();
+  document.addEventListener('click',e=>{if(!e.target.closest('.theme-picker-wrap'))document.getElementById('themePickerDD')?.classList.remove('open')});
+})();
+</script>
+</body>
+</html>

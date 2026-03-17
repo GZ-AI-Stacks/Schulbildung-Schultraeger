@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html lang="de" data-theme="cyber-dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>EnglishStarter — Englisch lernen Kl. 3-6</title>
+<meta name="description" content="Interaktive Englisch-Lern-App f\u00FCr Klasse 3-6: Vokabeln, S\u00E4tze, Grammatik — offline und mit Spass!">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+[data-theme="cyber-dark"]{--neon:#3b82f6;--neon-dim:rgba(59,130,246,.15);--neon-glow:0 0 20px rgba(59,130,246,.25);--bg:#0a0e14;--bg2:#111827;--bg3:#1f2937;--card:#161e2e;--text:#d4dce8;--text-dim:#8899aa;--heading:#fff;--link:#60a5fa;--border:#2a3444;--success:#22c55e;--warning:#f59e0b;--danger:#ef4444;--xp-purple:#a855f7;--badge-cyan:#06b6d4;--streak-red:#ef4444;--radius:12px;--shadow:0 4px 24px rgba(0,0,0,.4);--font:'Segoe UI',system-ui,sans-serif;--mono:'Courier New',monospace}
+[data-theme="cyber-light"]{--neon:#1d4ed8;--neon-dim:rgba(29,78,216,.1);--neon-glow:0 0 12px rgba(29,78,216,.15);--bg:#f8f9fb;--bg2:#f0f2f5;--bg3:#e5e7eb;--card:#fff;--text:#374151;--text-dim:#4b5563;--heading:#111827;--link:#2563eb;--border:#d1d5db;--success:#22c55e;--warning:#f59e0b;--danger:#ef4444;--xp-purple:#a855f7;--badge-cyan:#06b6d4;--streak-red:#ef4444;--radius:12px;--shadow:0 4px 24px rgba(0,0,0,.08);--font:'Segoe UI',system-ui,sans-serif;--mono:'Courier New',monospace}
+[data-theme="retro-dark"]{--neon:#ffd700;--neon-dim:rgba(255,215,0,.12);--neon-glow:0 0 20px rgba(255,215,0,.25);--bg:#0d0208;--bg2:#1a0a1e;--bg3:#2d1233;--card:#1a0a1e;--text:#e0d0f0;--text-dim:#9080a0;--heading:#ffd700;--link:#ff6b9d;--border:#4a1942;--success:#00e676;--warning:#ffab00;--danger:#ff1744;--xp-purple:#e040fb;--badge-cyan:#00e5ff;--streak-red:#ff1744;--radius:0;--shadow:4px 4px 0 rgba(0,0,0,.8);--font:'Courier New',monospace;--mono:'Courier New',monospace}
+[data-theme="retro-light"]{--neon:#b8860b;--neon-dim:rgba(184,134,11,.1);--neon-glow:0 0 12px rgba(184,134,11,.15);--bg:#fff8e1;--bg2:#fff3cd;--bg3:#ffe0b2;--card:#fff;--text:#3e2723;--text-dim:#6d4c41;--heading:#b8860b;--link:#c2185b;--border:#d4a017;--success:#2e7d32;--warning:#ef6c00;--danger:#c62828;--xp-purple:#8e24aa;--badge-cyan:#00838f;--streak-red:#c62828;--radius:0;--shadow:3px 3px 0 rgba(0,0,0,.15);--font:'Courier New',monospace;--mono:'Courier New',monospace}
+[data-theme="nature-dark"]{--neon:#4ade80;--neon-dim:rgba(74,222,128,.12);--neon-glow:0 0 20px rgba(74,222,128,.25);--bg:#0c1a0f;--bg2:#132617;--bg3:#1e3a24;--card:#15291a;--text:#c8e6c9;--text-dim:#81a784;--heading:#e8f5e9;--link:#81c784;--border:#2d5a36;--success:#66bb6a;--warning:#ffa726;--danger:#ef5350;--xp-purple:#ab47bc;--badge-cyan:#26a69a;--streak-red:#ef5350;--radius:20px;--shadow:0 4px 20px rgba(0,0,0,.3);--font:'Segoe UI',system-ui,sans-serif;--mono:'Courier New',monospace}
+[data-theme="nature-light"]{--neon:#2e7d32;--neon-dim:rgba(46,125,50,.08);--neon-glow:0 0 12px rgba(46,125,50,.15);--bg:#f1f8e9;--bg2:#e8f5e9;--bg3:#c8e6c9;--card:#fff;--text:#33691e;--text-dim:#3e6e1c;--heading:#1b5e20;--link:#2e7d32;--border:#a5d6a7;--success:#388e3c;--warning:#ef6c00;--danger:#c62828;--xp-purple:#7b1fa2;--badge-cyan:#00695c;--streak-red:#c62828;--radius:20px;--shadow:0 4px 16px rgba(0,0,0,.06);--font:'Segoe UI',system-ui,sans-serif;--mono:'Courier New',monospace}
+[data-theme="space-dark"]{--neon:#c084fc;--neon-dim:rgba(192,132,252,.12);--neon-glow:0 0 20px rgba(192,132,252,.25);--bg:#07020e;--bg2:#0f0720;--bg3:#1a0e35;--card:#110a28;--text:#d4c8f0;--text-dim:#9080b8;--heading:#f0e8ff;--link:#f0abfc;--border:#2e1a5e;--success:#34d399;--warning:#fbbf24;--danger:#fb7185;--xp-purple:#f472b6;--badge-cyan:#67e8f9;--streak-red:#fb7185;--radius:4px;--shadow:0 4px 24px rgba(100,50,200,.2);--font:'Segoe UI',system-ui,sans-serif;--mono:'Courier New',monospace}
+[data-theme="space-light"]{--neon:#7c3aed;--neon-dim:rgba(124,58,237,.08);--neon-glow:0 0 12px rgba(124,58,237,.15);--bg:#faf5ff;--bg2:#f3e8ff;--bg3:#e9d5ff;--card:#fff;--text:#4c1d95;--text-dim:#5b21b6;--heading:#2e1065;--link:#7c3aed;--border:#c4b5fd;--success:#059669;--warning:#d97706;--danger:#dc2626;--xp-purple:#db2777;--badge-cyan:#0891b2;--streak-red:#dc2626;--radius:4px;--shadow:0 4px 16px rgba(100,50,200,.06);--font:'Segoe UI',system-ui,sans-serif;--mono:'Courier New',monospace}
+[data-theme="comic-dark"]{--neon:#ff6b6b;--neon-dim:rgba(255,107,107,.12);--neon-glow:0 0 20px rgba(255,107,107,.25);--bg:#1a1a2e;--bg2:#222244;--bg3:#2e2e55;--card:#262650;--text:#e8e0ff;--text-dim:#a098c0;--heading:#fff;--link:#ffa94d;--border:#4a4a7a;--success:#51cf66;--warning:#fcc419;--danger:#ff6b6b;--xp-purple:#cc5de8;--badge-cyan:#22b8cf;--streak-red:#ff6b6b;--radius:16px;--shadow:4px 4px 0 rgba(0,0,0,.5);--font:'Comic Sans MS','Chalkboard SE',cursive,system-ui;--mono:'Courier New',monospace}
+[data-theme="comic-light"]{--neon:#e03131;--neon-dim:rgba(224,49,49,.08);--neon-glow:0 0 12px rgba(224,49,49,.15);--bg:#fff9db;--bg2:#fff3bf;--bg3:#ffe066;--card:#fff;--text:#2b2b2b;--text-dim:#555;--heading:#000;--link:#e8590c;--border:#fab005;--success:#2f9e44;--warning:#e8590c;--danger:#c92a2a;--xp-purple:#9c36b5;--badge-cyan:#1098ad;--streak-red:#c92a2a;--radius:16px;--shadow:3px 3px 0 rgba(0,0,0,.2);--font:'Comic Sans MS','Chalkboard SE',cursive,system-ui;--mono:'Courier New',monospace}
+[data-theme="sketchy-dark"]{--neon:#d97706;--neon-dim:rgba(217,119,6,.15);--neon-glow:0 0 20px rgba(217,119,6,.25);--bg:#2a1f0f;--bg2:#3a2a1a;--bg3:#4a3a2a;--card:#362414;--text:#d4c4b0;--text-dim:#a09080;--heading:#f5ead5;--link:#e8a550;--border:#5a4030;--success:#84cc16;--warning:#d97706;--danger:#e74c3c;--xp-purple:#d946ef;--badge-cyan:#06b6d4;--streak-red:#e74c3c;--radius:24px;--shadow:0 6px 20px rgba(0,0,0,.3);--font:'Georgia',serif;--mono:'Courier New',monospace}
+[data-theme="sketchy-light"]{--neon:#b45309;--neon-dim:rgba(180,83,9,.1);--neon-glow:0 0 12px rgba(180,83,9,.15);--bg:#fef3e2;--bg2:#fde8cc;--bg3:#f9d5b8;--card:#fff;--text:#5c4033;--text-dim:#8b6f47;--heading:#3e2723;--link:#c2600c;--border:#d4a574;--success:#65a30d;--warning:#b45309;--danger:#d25c4d;--xp-purple:#c084fc;--badge-cyan:#0891b2;--streak-red:#d25c4d;--radius:24px;--shadow:0 4px 12px rgba(0,0,0,.08);--font:'Georgia',serif;--mono:'Courier New',monospace}
+[data-theme="nature-code-dark"]{--neon:#10b981;--neon-dim:rgba(16,185,129,.15);--neon-glow:0 0 20px rgba(16,185,129,.25);--bg:#0a1f12;--bg2:#0d2818;--bg3:#1a3a2a;--card:#0f281a;--text:#c8e6d0;--text-dim:#7ba890;--heading:#e8f5ed;--link:#34d399;--border:#2d5a3d;--success:#10b981;--warning:#f59e0b;--danger:#f87171;--xp-purple:#a78bfa;--badge-cyan:#22d3ee;--streak-red:#f87171;--radius:20px;--shadow:0 4px 20px rgba(0,100,50,.2);--font:'Segoe UI',system-ui,sans-serif;--mono:'Courier New',monospace}
+[data-theme="nature-code-light"]{--neon:#059669;--neon-dim:rgba(5,150,105,.1);--neon-glow:0 0 12px rgba(5,150,105,.15);--bg:#f0fdf8;--bg2:#e8faf2;--bg3:#d1f2e0;--card:#fff;--text:#164e3f;--text-dim:#2d6e4f;--heading:#052e16;--link:#059669;--border:#86efac;--success:#10b981;--warning:#d97706;--danger:#dc2626;--xp-purple:#8b5cf6;--badge-cyan:#06b6d4;--streak-red:#dc2626;--radius:20px;--shadow:0 4px 16px rgba(0,100,50,.06);--font:'Segoe UI',system-ui,sans-serif;--mono:'Courier New',monospace}
+[data-theme="glass-dark"]{--neon:#00d9ff;--neon-dim:rgba(0,217,255,.12);--neon-glow:0 0 20px rgba(0,217,255,.25);--bg:#0f0f23;--bg2:#1a1a3e;--bg3:#25254a;--card:rgba(30,30,60,.6);--text:#e4e8f0;--text-dim:#8899aa;--heading:#fff;--link:#00d9ff;--border:rgba(100,150,255,.2);--success:#34d399;--warning:#fbbf24;--danger:#ff6b9d;--xp-purple:#b991f7;--badge-cyan:#00d9ff;--streak-red:#ff6b9d;--radius:16px;--shadow:0 8px 32px rgba(0,200,255,.1);--font:'Segoe UI',system-ui,sans-serif;--mono:'Courier New',monospace}
+[data-theme="glass-light"]{--neon:#0891b2;--neon-dim:rgba(8,145,178,.08);--neon-glow:0 0 12px rgba(8,145,178,.15);--bg:#f8fafc;--bg2:#f1f5f9;--bg3:#e2e8f0;--card:rgba(255,255,255,.7);--text:#1e293b;--text-dim:#475569;--heading:#0f172a;--link:#0891b2;--border:rgba(100,180,255,.2);--success:#059669;--warning:#d97706;--danger:#dc2626;--xp-purple:#7c3aed;--badge-cyan:#0891b2;--streak-red:#dc2626;--radius:16px;--shadow:0 8px 32px rgba(100,150,255,.08);--font:'Segoe UI',system-ui,sans-serif;--mono:'Courier New',monospace}
+
+body{font-family:var(--font);background:var(--bg);color:var(--text);font-size:16px;line-height:1.7;min-height:100vh;transition:background .3s,color .3s;overflow-x:hidden}
+a{color:var(--link);text-decoration:none}a:hover{text-decoration:underline}
+button{font-family:var(--font);cursor:pointer;border:none;background:none;color:inherit}
+:focus-visible{outline:2px solid var(--neon);outline-offset:2px;border-radius:4px}
+::selection{background:var(--neon);color:#fff}
+::-webkit-scrollbar{width:8px}::-webkit-scrollbar-track{background:var(--bg2)}::-webkit-scrollbar-thumb{background:var(--border);border-radius:4px}
+.skip-nav{position:absolute;top:-50px;left:8px;background:var(--neon);color:#fff;padding:8px 16px;z-index:9999;border-radius:0 0 8px 8px;font-weight:700;text-decoration:none}.skip-nav:focus{top:0}
+.header{position:sticky;top:0;z-index:100;background:var(--bg2);border-bottom:1px solid var(--border);padding:8px 16px;display:flex;align-items:center;gap:8px;backdrop-filter:blur(12px);min-height:54px}
+.header .logo{display:flex;align-items:center;gap:8px;font-weight:700;font-size:clamp(16px,3.5vw,20px);color:var(--heading);white-space:nowrap;flex-shrink:0}
+.header .logo svg{width:32px;height:32px;flex-shrink:0}
+.header .xp-area{display:flex;align-items:center;gap:8px;margin-left:auto;min-width:0;flex-shrink:1}
+.header .xp-bar{flex:1;min-width:80px;max-width:200px}
+.header .xp-label{font-size:11px;color:var(--text-dim);display:flex;justify-content:space-between;font-weight:600}
+.header .xp-track{height:6px;background:var(--bg3);border-radius:3px;overflow:hidden;margin-top:2px}
+.header .xp-fill{height:100%;background:var(--neon);border-radius:3px;transition:width .5s}
+.header .streak-badge{font-size:12px;color:var(--streak-red);font-weight:700;white-space:nowrap}
+.hamburger{display:none;width:40px;height:40px;border-radius:8px;align-items:center;justify-content:center;background:var(--bg3);font-size:20px;flex-shrink:0;-webkit-tap-highlight-color:transparent}
+.theme-toggle{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:var(--bg3);font-size:16px;flex-shrink:0}
+.theme-toggle:hover{background:var(--border)}
+.sidebar{position:fixed;top:54px;left:0;width:260px;height:calc(100vh - 54px);background:var(--bg2);border-right:1px solid var(--border);overflow-y:auto;padding:12px;z-index:90;transition:transform .3s}
+.sidebar h3{font-size:11px;color:var(--text-dim);text-transform:uppercase;letter-spacing:2px;margin-bottom:8px;padding:0 8px}
+.sidebar-item{display:flex;align-items:center;gap:8px;padding:10px 12px;border-radius:var(--radius);cursor:pointer;color:var(--text);font-size:14px;transition:background .2s;margin-bottom:3px;border:1px solid transparent;min-height:44px;-webkit-tap-highlight-color:transparent}
+.sidebar-item:hover{background:var(--neon-dim);border-color:var(--border)}
+.sidebar-item.active{background:var(--neon-dim);border-color:var(--neon);color:var(--neon);font-weight:700}
+.sidebar-item.completed::after{content:'\2713';margin-left:auto;color:var(--success);font-weight:700}
+.sidebar-link{display:flex;align-items:center;gap:8px;padding:10px 12px;border-radius:var(--radius);color:var(--text-dim);font-size:13px;cursor:pointer;transition:background .2s;margin-bottom:2px;min-height:44px}
+.sidebar-link:hover{background:var(--neon-dim);color:var(--text)}
+.main{margin-left:260px;padding:24px;max-width:860px;min-height:calc(100vh - 54px)}
+.welcome{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:60vh;text-align:center;padding:20px}
+.welcome .hero-emoji{font-size:clamp(48px,12vw,80px);margin-bottom:12px;animation:bounce 2s ease-in-out infinite}
+@keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
+.welcome h1{font-size:clamp(28px,6vw,48px);color:var(--heading);margin-bottom:6px}
+.welcome .sub{font-size:clamp(14px,2.5vw,18px);color:var(--text-dim);margin-bottom:24px;max-width:500px}
+.welcome input{font-size:18px;padding:12px 20px;border-radius:var(--radius);border:2px solid var(--border);background:var(--bg2);color:var(--heading);text-align:center;width:min(320px,90%);outline:none;font-family:var(--font);transition:border-color .3s}
+.welcome input:focus{border-color:var(--neon)}
+.welcome .start-btn{margin-top:16px;padding:14px 40px;font-size:18px;font-weight:700;border-radius:var(--radius);background:var(--neon);color:#fff;font-family:var(--font);transition:transform .2s;min-height:48px}
+.welcome .start-btn:hover{transform:scale(1.05)}
+.welcome .start-btn:disabled{opacity:.5;cursor:not-allowed;transform:none}
+.theme-picker{display:flex;gap:8px;margin-top:16px;flex-wrap:wrap;justify-content:center}
+.theme-btn{width:40px;height:40px;border-radius:50%;border:3px solid transparent;cursor:pointer;transition:transform .2s,border-color .2s}
+.theme-btn:hover,.theme-btn.active{border-color:var(--heading);transform:scale(1.15)}
+.mode-toggle-btn{background:var(--bg3);border:2px solid var(--border);color:var(--text);padding:6px 14px;border-radius:20px;cursor:pointer;font-size:16px;min-height:40px}
+.mode-toggle-btn:hover{border-color:var(--neon)}
+.module-header{text-align:center;margin-bottom:24px}
+.module-header .mod-badge{display:inline-block;background:var(--neon-dim);border:1px solid var(--border);color:var(--neon);padding:4px 14px;border-radius:20px;font-size:13px;font-weight:600;margin-bottom:8px}
+.module-header h1{color:var(--heading);font-size:clamp(22px,4vw,32px)}
+.module-header .mod-desc{color:var(--text-dim);margin-top:6px;font-size:15px}
+.lesson-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:20px;margin-bottom:16px;box-shadow:var(--shadow)}
+.lesson-card h3{color:var(--heading);font-size:18px;margin-bottom:10px}
+.lesson-card p,.lesson-card li{font-size:15px;line-height:1.8;margin-bottom:6px}
+.lesson-card .info-box{background:var(--neon-dim);border-left:4px solid var(--neon);padding:12px 16px;border-radius:0 var(--radius) var(--radius) 0;margin:12px 0;font-size:15px;line-height:1.7}
+.lesson-card ul,.lesson-card ol{padding-left:20px;margin:8px 0}
+.lesson-card .vocab-table{width:100%;border-collapse:collapse;margin:12px 0;font-size:15px}
+.lesson-card .vocab-table th{background:var(--neon-dim);color:var(--neon);padding:8px 12px;text-align:left;font-size:13px;text-transform:uppercase;letter-spacing:1px}
+.lesson-card .vocab-table td{padding:8px 12px;border-bottom:1px solid var(--border)}
+.lesson-card .vocab-table tr:hover{background:var(--neon-dim)}
+.interactive-area{background:var(--card);border:2px solid var(--neon);border-radius:var(--radius);padding:20px;margin:20px 0;box-shadow:var(--neon-glow)}
+.interactive-area h4{color:var(--neon);font-size:16px;margin-bottom:12px}
+#interactiveContent{min-height:80px}
+.ix-grid{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin:12px 0}
+.ix-item{background:var(--bg3);border:2px solid var(--border);border-radius:var(--radius);padding:12px 18px;font-size:18px;cursor:pointer;transition:all .2s;user-select:none;text-align:center;min-width:54px;min-height:44px;display:flex;align-items:center;justify-content:center;-webkit-tap-highlight-color:transparent}
+.ix-item:hover{border-color:var(--neon);background:var(--neon-dim)}
+.ix-item.selected{border-color:var(--neon);background:var(--neon-dim)}
+.ix-item.correct{border-color:var(--success);background:rgba(34,197,94,.15);color:var(--success)}
+.ix-item.wrong{border-color:var(--danger);background:rgba(239,68,68,.15);color:var(--danger)}
+.ix-item.placed{opacity:.4;pointer-events:none}
+.ix-btn{background:var(--neon);color:#fff;border:none;padding:12px 24px;border-radius:var(--radius);font-size:16px;font-weight:700;cursor:pointer;font-family:var(--font);margin-top:12px;transition:transform .2s;min-height:48px}
+.ix-btn:hover{transform:scale(1.05)}.ix-btn:disabled{opacity:.5;cursor:not-allowed;transform:none}
+.ix-feedback{text-align:center;padding:12px;border-radius:var(--radius);font-size:16px;font-weight:700;margin-top:10px;display:none}
+.ix-feedback.pass{display:block;background:rgba(34,197,94,.12);color:var(--success)}
+.ix-feedback.fail{display:block;background:rgba(239,68,68,.12);color:var(--danger)}
+.quiz-section,.boss-section{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:20px;margin:16px 0}
+.boss-section{border-color:var(--warning);box-shadow:0 0 20px rgba(251,191,36,.1)}
+.quiz-section h3,.boss-section h3{color:var(--heading);margin-bottom:12px;font-size:18px}
+.boss-sub{color:var(--warning);font-size:13px;margin-bottom:12px}
+.quiz-q{margin-bottom:16px}
+.quiz-q p{font-weight:600;font-size:15px;margin-bottom:8px;color:var(--heading)}
+.quiz-q label{display:flex;align-items:center;gap:10px;padding:10px 14px;border-radius:var(--radius);border:1px solid var(--border);margin-bottom:5px;cursor:pointer;transition:all .2s;font-size:15px;min-height:44px}
+.quiz-q label:hover{background:var(--neon-dim)}
+.quiz-q label.correct{background:rgba(34,197,94,.15);border-color:var(--success);color:var(--success)}
+.quiz-q label.wrong{background:rgba(239,68,68,.15);border-color:var(--danger);color:var(--danger)}
+.quiz-q input[type="radio"]{accent-color:var(--neon);width:18px;height:18px;flex-shrink:0}
+.quiz-submit{background:var(--neon);color:#fff;padding:12px 24px;border-radius:var(--radius);font-size:15px;font-weight:700;min-height:48px}
+.quiz-submit:disabled{opacity:.5;cursor:not-allowed}
+.quiz-result{padding:12px;border-radius:var(--radius);font-weight:700;font-size:16px;margin-top:10px;text-align:center}
+.quiz-result.pass{background:rgba(34,197,94,.12);color:var(--success)}
+.quiz-result.fail{background:rgba(239,68,68,.12);color:var(--danger)}
+.quiz-explanation{margin-top:5px;padding:8px 12px;border-radius:var(--radius);background:rgba(34,197,94,.08);border-left:3px solid var(--success);font-size:13px;color:var(--success);font-weight:600}
+.badges-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:10px;margin-top:12px}
+.badge-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:14px 8px;text-align:center}
+.badge-card.earned{border-color:var(--neon);box-shadow:var(--neon-glow)}
+.badge-card .badge-icon{font-size:32px;margin-bottom:4px}
+.badge-card .badge-name{font-weight:700;font-size:12px;color:var(--heading)}
+.badge-card .badge-desc{font-size:11px;color:var(--text-dim);margin-top:2px}
+.badge-card.locked{opacity:.4}
+.stats-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:12px;margin-top:12px}
+.stat-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px;text-align:center}
+.stat-card .stat-val{font-size:28px;font-weight:700;color:var(--neon)}
+.stat-card .stat-label{font-size:12px;color:var(--text-dim);margin-top:2px}
+.notif{position:fixed;top:-80px;right:16px;padding:12px 16px;border-radius:var(--radius);font-size:14px;z-index:999;transition:top .4s ease;box-shadow:var(--shadow);max-width:300px}
+.notif.show{top:62px}
+.notif.xp{background:var(--xp-purple);color:#fff}
+.notif.badge{background:var(--badge-cyan);color:#000}
+.notif.streak{background:var(--streak-red);color:#fff}
+.notif.level{background:var(--neon);color:#fff}
+.notif-title{font-weight:700;font-size:14px}
+.notif-text{font-size:12px;opacity:.85;margin-top:2px}
+.level-up-overlay{position:fixed;inset:0;z-index:500;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,.7)}
+.level-up-overlay.active{display:flex}
+.lvl-box{text-align:center;animation:popIn .5s ease;padding:20px}
+.lvl-icon{font-size:56px}.lvl-title{font-size:32px;font-weight:900;color:var(--neon);margin:6px 0}
+.lvl-name{font-size:18px;color:var(--heading)}
+@keyframes popIn{0%{transform:scale(0) rotate(-10deg);opacity:0}100%{transform:scale(1) rotate(0);opacity:1}}
+#confetti{position:fixed;inset:0;pointer-events:none;z-index:501;overflow:hidden}
+.cert-overlay{display:none;position:fixed;inset:0;z-index:400;background:rgba(0,0,0,.85);align-items:center;justify-content:center;flex-direction:column;padding:16px;overflow-y:auto}
+.cert-overlay.active{display:flex}
+.cert-picker{display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap;justify-content:center}
+.cert-picker button{padding:8px 14px;border-radius:var(--radius);border:2px solid var(--border);background:var(--bg2);color:var(--text);cursor:pointer;font-size:13px;font-family:var(--font);min-height:40px}
+.cert-picker button.active{border-color:var(--neon);color:var(--neon);background:var(--neon-dim)}
+.cert-frame{width:min(700px,95vw);min-height:400px;border-radius:12px;overflow:hidden}
+.cert-actions{display:flex;gap:10px;margin-top:12px;flex-wrap:wrap;justify-content:center}
+.cert-actions button{padding:10px 20px;border-radius:var(--radius);border:2px solid var(--border);background:var(--bg2);color:var(--text);cursor:pointer;font-size:13px;font-family:var(--font);min-height:44px}
+.cert-actions button:hover{border-color:var(--neon);color:var(--neon)}
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.6);display:none;align-items:center;justify-content:center;z-index:500;padding:16px}
+.modal-overlay.active{display:flex}
+.modal{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);max-width:600px;width:100%;max-height:85vh;overflow-y:auto;padding:24px;position:relative}
+.modal-close{position:absolute;top:12px;right:12px;font-size:24px;width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:var(--bg3)}
+.site-footer{text-align:center;padding:24px 0;margin-top:32px;border-top:1px solid var(--border);color:var(--text-dim);font-size:12px}
+.zoom-controls{position:fixed;bottom:12px;left:12px;display:flex;gap:4px;z-index:9999}
+.zoom-btn{width:32px;height:32px;border-radius:50%;border:1px solid var(--border);background:var(--bg2);color:var(--text);cursor:pointer;font-size:15px;display:flex;align-items:center;justify-content:center;transition:all .2s}
+.zoom-btn:hover{border-color:var(--neon);color:var(--neon);transform:scale(1.1)}
+@media(max-width:1024px){.sidebar{width:240px}.main{margin-left:240px;padding:20px}}
+@media(max-width:800px){.hamburger{display:flex}.sidebar{transform:translateX(-100%);width:280px}.sidebar.open{transform:translateX(0)}.main{margin-left:0;padding:16px}.header .xp-bar{min-width:60px;max-width:120px}.notif{right:8px;left:8px;max-width:none}.notif.show{top:58px}.badges-grid{grid-template-columns:repeat(auto-fill,minmax(100px,1fr))}.stats-grid{grid-template-columns:repeat(auto-fill,minmax(120px,1fr))}.lesson-card,.quiz-section,.boss-section,.interactive-area{padding:16px}}
+@media(max-width:480px){.header{padding:6px 10px;gap:6px}.header .logo{font-size:15px;gap:6px}.header .logo svg{width:26px;height:26px}.header .xp-bar{display:none}.welcome h1{font-size:26px}.welcome input{font-size:16px;padding:10px 16px}.module-header h1{font-size:20px}.lesson-card{padding:14px}.lesson-card h3{font-size:16px}.lesson-card p,.lesson-card li{font-size:14px}.quiz-q p{font-size:14px}.quiz-q label{padding:8px 10px;font-size:14px}.ix-item{padding:10px 14px;font-size:16px;min-width:48px}.badges-grid{grid-template-columns:repeat(3,1fr);gap:6px}.badge-card{padding:10px 4px}.badge-card .badge-icon{font-size:26px}.badge-card .badge-name{font-size:10px}.stats-grid{grid-template-columns:1fr 1fr;gap:8px}.stat-card .stat-val{font-size:22px}.cert-frame{min-height:300px}.theme-picker{gap:6px}.theme-btn{width:34px;height:34px}}
+@media print{*{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}.header,.sidebar,.notif,.level-up-overlay,#confetti,.zoom-controls{display:none!important}.main{margin-left:0!important;padding:20px!important}.lesson-card{break-inside:avoid;page-break-inside:avoid}}
+.sidebar-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:85}
+.sidebar-overlay.active{display:block}
+
+/* A11y: Print improvements */
+@media print{body{background:#fff!important;color:#000!important}.cert-overlay,.modal-overlay,.level-up-overlay,.theme-overlay,.zoom-controls{display:none!important}.lesson-card,.quiz-section,.boss-section,.interactive-area{break-inside:avoid;page-break-inside:avoid}}
+
+/* Audio/Speech */
+.tts-btn{background:none;border:none;cursor:pointer;font-size:.9em;opacity:.5;transition:all .2s;vertical-align:middle;margin-left:8px;padding:2px 6px;border-radius:4px}
+.tts-btn:hover{opacity:1;background:var(--bg2)}.tts-btn.speaking{opacity:1;color:var(--neon);animation:tts-pulse 1s infinite}
+@keyframes tts-pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.15)}}
+.tts-bar{display:flex;align-items:center;gap:8px;padding:6px 12px;background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);margin:8px 0;font-size:.8rem;flex-wrap:wrap}
+.tts-bar select{background:var(--bg);color:var(--text);border:1px solid var(--border);border-radius:4px;padding:2px 6px;font-size:.78rem}
+.tts-bar button{background:none;border:1px solid var(--border);border-radius:4px;padding:2px 8px;cursor:pointer;color:var(--text);font-size:.8rem}
+.tts-bar button:hover{background:var(--bg)}
+.speech-ex{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:16px;margin:12px 0;text-align:center}
+.speech-ex h4{margin:0 0 8px;font-size:1rem}
+.mic-btn{font-size:1.6em;background:none;border:2px solid var(--neon);border-radius:50%;width:52px;height:52px;cursor:pointer;transition:all .3s;color:var(--text);display:inline-flex;align-items:center;justify-content:center}
+.mic-btn:hover{background:var(--neon);color:var(--bg)}.mic-btn.rec{background:#ef4444;border-color:#ef4444;color:#fff;animation:tts-pulse 1s infinite}
+.sr-res{margin-top:8px;padding:6px 10px;border-radius:4px;font-weight:600;font-size:.85rem;display:inline-block}
+.sr-res.good{background:#22c55e22;color:#22c55e}.sr-res.retry{background:#f59e0b22;color:#f59e0b}
+.sr-na{font-size:.8rem;color:var(--text-dim);margin-top:8px}
+</style>
+</head>
+<body>
+<a href="#mainContent" class="skip-nav">Zum Inhalt springen</a>
+<header class="header" role="banner">
+  <button class="hamburger" onclick="toggleSidebar()" aria-label="Menu">&#9776;</button>
+  <div class="logo">
+    <svg viewBox="0 0 32 32" fill="none" aria-hidden="true"><circle cx="16" cy="16" r="14" fill="var(--neon-dim)" stroke="var(--neon)" stroke-width="1.5"/><text x="16" y="14" text-anchor="middle" font-size="7" font-weight="900" fill="var(--heading)">EN</text><text x="16" y="24" text-anchor="middle" font-size="8" font-weight="900" fill="var(--neon)">ABC</text></svg>
+    <span>EnglishStarter</span>
+  </div>
+  <div class="xp-area">
+    <div class="xp-bar"><div class="xp-label"><span id="levelName">Word Beginner</span><span id="xpText">0 XP</span></div><div class="xp-track"><div class="xp-fill" id="xpFill" style="width:0%"></div></div></div>
+    <div class="streak-badge" id="headerStreak">&#128293; 0</div>
+    <button class="theme-toggle" onclick="toggleMode()" aria-label="Dark/Light umschalten">&#127769;</button>
+  </div>
+</header>
+<div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar()"></div>
+<nav class="sidebar" id="sidebar" role="navigation" aria-label="Module">
+  <h3>Module</h3><div id="sidebarModules"></div>
+  <hr style="border:none;border-top:1px solid var(--border);margin:12px 0">
+  <div class="sidebar-link" onclick="showBadges()">&#127941; Abzeichen</div>
+  <div class="sidebar-link" onclick="showStats()">&#128202; Statistik</div>
+  <div class="sidebar-link" onclick="showCert()">&#127891; Urkunde</div>
+  <hr style="border:none;border-top:1px solid var(--border);margin:12px 0">
+  <div class="sidebar-link" onclick="exportData()">&#128190; Speichern</div>
+  <div class="sidebar-link" onclick="exportFortschritt()">📄 Fortschritt (TXT)</div>
+  <label class="sidebar-link" style="cursor:pointer">&#128194; Laden <input type="file" accept=".json" onchange="importData(event)" style="display:none"></label>
+  <div class="sidebar-link" onclick="if(confirm('Wirklich alles zur\u00fccksetzen?')){localStorage.removeItem(STORAGE_KEY);location.reload()}" style="color:var(--danger)">&#128465; Zur&#252;cksetzen</div>
+  <div style="padding:12px 8px 4px;border-top:1px solid var(--border);margin-top:12px;font-size:11px;color:var(--text-dim)">
+    <a onclick="showImpressum()" style="cursor:pointer;color:var(--text-dim)">Impressum</a> &middot;
+    <a onclick="showDatenschutz()" style="cursor:pointer;color:var(--text-dim)">Datenschutz</a>
+  </div>
+</nav>
+<main class="main" id="mainContent">
+  <div class="welcome" id="welcomeScreen">
+    <div class="hero-emoji">&#127468;&#127463;</div>
+    <h1>EnglishStarter</h1>
+    <p class="sub">Lerne Englisch von Anfang an &#8212; Vokabeln, S&#228;tze und Grammatik!</p>
+    <input type="text" id="nameInput" placeholder="Dein Name / Your name" maxlength="24" aria-label="Dein Name" oninput="document.getElementById('startBtn').disabled=!this.value.trim()">
+    <button class="start-btn" id="startBtn" disabled onclick="startApp()">Let's go!</button>
+    <div class="theme-picker" id="themePicker"></div>
+  </div>
+  <div id="moduleContent" style="display:none"></div>
+  <div id="badgesView" style="display:none"></div>
+  <div id="statsView" style="display:none"></div>
+</main>
+<div class="notif" id="notif" role="status" aria-live="polite" aria-atomic="true"><div class="notif-title" id="notifTitle"></div><div class="notif-text" id="notifText"></div></div>
+<div class="level-up-overlay" id="levelUpOverlay"><div class="lvl-box" id="levelUpBox"></div></div>
+<div id="confetti"></div>
+<div class="cert-overlay" id="certOverlay" role="dialog" aria-label="Urkunde" aria-modal="true">
+  <div class="cert-picker" id="certPicker"></div><div class="cert-frame" id="certFrame"></div>
+  <div class="cert-actions"><button onclick="printCert()">&#128424; Drucken / PDF</button><button onclick="closeCert()">Schlie&#223;en</button></div>
+</div>
+<div class="modal-overlay" id="impressumOverlay">
+  <div class="modal">
+    <button class="modal-close" onclick="document.getElementById('impressumOverlay').classList.remove('active')">&times;</button>
+    <h2>Impressum</h2>
+    <p><strong>&copy; 2026 GZ AI Stacks &#8212; Gerd Zimmermann</strong></p>
+    <p>Diese Lern-App wurde mit Claude Code (Anthropic) entwickelt.</p>
+  </div>
+</div>
+<div class="modal-overlay" id="datenschutzOverlay">
+  <div class="modal">
+    <button class="modal-close" onclick="document.getElementById('datenschutzOverlay').classList.remove('active')">&times;</button>
+    <h2>Datenschutzerkl&#228;rung</h2>
+    <p>Diese App speichert Daten <strong>ausschlie&#223;lich lokal</strong> auf Ihrem Ger&#228;t.</p>
+    <ul><li>Keine Cookies</li><li>Kein Tracking</li><li>Keine externen Ressourcen</li><li>Alle Daten auf Ihrem Ger&#228;t</li></ul>
+  </div>
+</div>
+<div class="zoom-controls" role="toolbar" aria-label="Zoom-Steuerung">
+<button class="zoom-btn" onclick="zoomOut()" aria-label="Verkleinern">&#8722;</button>
+<button class="zoom-btn" onclick="zoomReset()" aria-label="Zoom zur&#252;cksetzen" style="font-size:10px"><span id="zoomLvl">100%</span></button>
+<button class="zoom-btn" onclick="zoomIn()" aria-label="Vergr&#246;&#223;ern">+</button>
+</div>
+<script>
+function showImpressum(){document.getElementById('impressumOverlay').classList.add('active')}
+function showDatenschutz(){document.getElementById('datenschutzOverlay').classList.add('active')}
+
+// === Audio (TTS) ===
+const _synth=window.speechSynthesis,_LANG='en-US';let _ttsOn=false,_ttsRate=1,_ttsTimer=null;
+function speakLesson(i){if(_ttsOn){stopTTS();return}const c=document.querySelectorAll('.lesson-card');if(!c[i]||!_synth)return;stopTTS();const u=new SpeechSynthesisUtterance(c[i].innerText);u.lang=_LANG;u.rate=_ttsRate;u.onstart=()=>{_ttsOn=true;updTTSUI();startTTSTimer()};u.onend=()=>{_ttsOn=false;updTTSUI();clearTTSTimer()};u.onerror=()=>{_ttsOn=false;updTTSUI();clearTTSTimer()};_synth.speak(u);showTTSBar()}
+function speakText(t,lang){if(!_synth)return;stopTTS();const u=new SpeechSynthesisUtterance(t);u.lang=lang||_LANG;u.rate=_ttsRate;u.onstart=()=>{_ttsOn=true;updTTSUI();startTTSTimer()};u.onend=()=>{_ttsOn=false;updTTSUI();clearTTSTimer()};u.onerror=()=>{_ttsOn=false;updTTSUI();clearTTSTimer()};_synth.speak(u)}
+function stopTTS(){if(_synth){_synth.cancel()}_ttsOn=false;updTTSUI();clearTTSTimer()}
+function updTTSUI(){document.querySelectorAll('.tts-btn').forEach(b=>b.classList.toggle('speaking',_ttsOn))}
+function setTTSRate(r){_ttsRate=parseFloat(r)}
+function startTTSTimer(){clearTTSTimer();_ttsTimer=setInterval(()=>{if(_synth&&_synth.speaking&&!_synth.paused){_synth.pause();_synth.resume()}},10000)}
+function clearTTSTimer(){if(_ttsTimer){clearInterval(_ttsTimer);_ttsTimer=null}}
+function showTTSBar(){if(document.getElementById('ttsBar'))return;const mc=document.getElementById('moduleContent');if(!mc)return;const b=document.createElement('div');b.className='tts-bar';b.id='ttsBar';b.innerHTML='\u{1F50A} <select onchange="setTTSRate(this.value)"><option value="0.7">Langsam</option><option value="1" selected>Normal</option><option value="1.3">Schnell</option></select> <button onclick="stopTTS()">\u25A0 Stopp</button>';mc.prepend(b)}
+
+// === Audio (STT) ===
+const _SR=window.SpeechRecognition||window.webkitSpeechRecognition;let _rec=null,_recCB=null;
+function initSR(){if(!_SR)return false;_rec=new _SR();_rec.lang=_LANG;_rec.continuous=false;_rec.interimResults=false;_rec.onresult=e=>{const t=e.results[0][0].transcript.toLowerCase().trim();if(_recCB)_recCB(t,e.results[0][0].confidence)};_rec.onerror=()=>{document.querySelectorAll('.mic-btn').forEach(b=>b.classList.remove('rec'))};_rec.onend=()=>{document.querySelectorAll('.mic-btn').forEach(b=>b.classList.remove('rec'))};return true}
+function startSR(cb){if(!_rec&&!initSR()){cb(null,0);return}_recCB=cb;document.querySelectorAll('.mic-btn').forEach(b=>b.classList.add('rec'));try{_rec.start()}catch(e){cb(null,0)}}
+let _spIdx=0,_spSen=[];
+function initSpEx(m){const mod=modules[m];const d=document.createElement('div');d.innerHTML=mod.lessons.map(l=>l.content).join(' ');_spSen=d.textContent.split(/[.!?]+/).map(s=>s.trim()).filter(s=>s.length>15&&s.length<100).slice(0,5);_spIdx=0;renderSpEx()}
+function renderSpEx(){const el=document.getElementById('speechExArea');if(!el)return;if(!_spSen.length){el.innerHTML='<p class="sr-na">Keine S\u00E4tze f\u00FCr Sprach\u00FCbung verf\u00FCgbar.</p>';return}const s=_spSen[_spIdx].replace(/"/g,'&quot;').replace(/'/g,'&#39;');el.innerHTML='<p style="font-size:1.05em;color:var(--neon);margin:10px 0;font-style:italic">&bdquo;'+_spSen[_spIdx]+'&ldquo;</p><div style="display:flex;justify-content:center;gap:16px;margin:12px 0"><button class="tts-btn" onclick="speakText(this.closest(\'.speech-ex\').querySelector(\'p\').textContent)" style="font-size:1.5em;opacity:1" title="Vorlesen">&#128266;</button>'+(_SR?'<button class="mic-btn" onclick="doSpCheck()" title="Nachsprechen">&#127908;</button>':'<p class="sr-na">Spracherkennung nicht verf\u00FCgbar.</p>')+'</div><div id="srRes"></div><div style="font-size:.78rem;color:var(--text-dim);margin-top:8px">Satz '+(_spIdx+1)+' von '+_spSen.length+'</div>'}
+function doSpCheck(){const expected=_spSen[_spIdx].toLowerCase().replace(/[^a-z\u00e4\u00f6\u00fc\u00df\u00e9\u00e8\u00ea\u00e0 0-9]/g,'');startSR((spoken,conf)=>{const el=document.getElementById('srRes');if(!el)return;if(!spoken){el.innerHTML='<span class="sr-res retry">Nicht erkannt \u2014 nochmal versuchen</span>';return}const sim=calcSim(spoken.replace(/[^a-z\u00e4\u00f6\u00fc\u00df\u00e9\u00e8\u00ea\u00e0 0-9]/g,''),expected);if(sim>.45){el.innerHTML='<span class="sr-res good">\u2714 Gut! ('+Math.round(sim*100)+'%)</span>';_spIdx++;setTimeout(()=>{if(_spIdx<_spSen.length)renderSpEx();else{el.innerHTML='<span class="sr-res good">\u2714 Alle S\u00E4tze geschafft!</span>';if(typeof addXP==='function'&&typeof state!=='undefined'&&!state.interactiveResults['sp_'+state.currentModule]){state.interactiveResults['sp_'+state.currentModule]=true;addXP(30,'Sprach\u00FCbung');saveState()}}},1200)}else{el.innerHTML='<span class="sr-res retry">\u21BB Nochmal: &quot;'+spoken+'&quot;</span>'}})}
+function calcSim(a,b){const wa=a.split(/\s+/).filter(Boolean),wb=b.split(/\s+/).filter(Boolean);if(!wa.length||!wb.length)return 0;let c=0;wa.forEach(w=>{if(wb.some(x=>x.includes(w)||w.includes(x)))c++});return c/Math.max(wa.length,wb.length)}
+
+
+/* === Fortschritt-Export (TXT) === */
+function exportFortschritt(){
+  var t=document.title.replace(/\s*[\u2014\u2013|].*/,'').trim();
+  var d=new Date();
+  var dd=String(d.getDate()).padStart(2,'0');
+  var mm=String(d.getMonth()+1).padStart(2,'0');
+  var yyyy=d.getFullYear();
+  var datum=dd+'.'+mm+'.'+yyyy;
+  var datumFile=yyyy+'-'+mm+'-'+dd;
+
+  var mc=state.modulesCompleted||[];
+  var total=modules.length;
+  var done=mc.length;
+
+  var lvl=0;
+  for(var i=LEVELS.length-1;i>=0;i--){if(state.xp>=LEVELS[i].xp){lvl=i;break;}}
+  var lvlName=LEVELS[lvl]?LEVELS[lvl].name:'';
+
+  var sep='\u2550'.repeat(42);
+  var sep2='\u2500'.repeat(42);
+  var lines=[];
+  lines.push(sep);
+  lines.push('  LERNFORTSCHRITT \u2014 '+t);
+  lines.push(sep);
+  lines.push('');
+  lines.push('  Sch\u00FCler:   '+(state.name||'(kein Name)'));
+  lines.push('  Datum:     '+datum);
+  lines.push('  Level:     '+(lvl+1)+' \u2014 '+lvlName+' ('+state.xp+' XP)');
+  lines.push('  Streak:    '+(state.streak||0)+' Tage in Folge');
+  lines.push('');
+  lines.push(sep2);
+  lines.push('  MODULE ('+done+'/'+total+' abgeschlossen)');
+  lines.push(sep2);
+  lines.push('');
+
+  for(var m=0;m<modules.length;m++){
+    var mod=modules[m];
+    var isDone=mc.indexOf(m)!==-1;
+    var icon=isDone?'\u2705':'\u2B1C';
+    var line='  '+icon+' Modul '+(m+1)+': '+mod.title;
+    if(isDone){
+      var qs=state.quizResults&&state.quizResults[m]!=null?state.quizResults[m]:'?';
+      var bs=state.bossResults&&state.bossResults[m]!=null?state.bossResults[m]:'?';
+      line+='\n        Quiz: '+qs+'/5 | Boss: '+bs+'/3';
+    }
+    lines.push(line);
+  }
+
+  var earnedBadges=(state.badges||[]);
+  lines.push('');
+  lines.push(sep2);
+  lines.push('  ABZEICHEN ('+earnedBadges.length+'/'+BADGES.length+')');
+  lines.push(sep2);
+  lines.push('');
+  if(earnedBadges.length===0){
+    lines.push('  (noch keine)');
+  }else{
+    for(var b=0;b<BADGES.length;b++){
+      if(earnedBadges.indexOf(BADGES[b].id)!==-1){
+        lines.push('  '+BADGES[b].icon+' '+BADGES[b].name);
+      }
+    }
+  }
+
+  lines.push('');
+  lines.push(sep);
+  lines.push('  (c) 2026 GZ AI Stacks \u2014 Gerd Zimmermann');
+  lines.push(sep);
+
+  var txt=lines.join('\n');
+  var safeName=(state.name||'Schueler').replace(/[^a-zA-Z0-9\u00C0-\u017F]/g,'_');
+  var fileName='Fortschritt_'+t.replace(/[^a-zA-Z0-9\u00C0-\u017F]/g,'_')+'_'+safeName+'_'+datumFile+'.txt';
+  var a=document.createElement('a');
+  a.download=fileName;
+  a.href=URL.createObjectURL(new Blob([txt],{type:'text/plain;charset=utf-8'}));
+  a.click();
+}
+
+const _qk=[0x4A,0x7F,0x2B,0x61,0x5C,0x3E,0x18,0x73];
+function _d(h,i){return h^_qk[i%_qk.length]}
+
+const LEVELS=[
+{name:'Word Beginner',xp:0},{name:'Letter Learner',xp:40},{name:'Vocab Starter',xp:100},
+{name:'Phrase Finder',xp:180},{name:'Sentence Builder',xp:280},{name:'Grammar Scout',xp:400},
+{name:'Reading Rookie',xp:540},{name:'Writing Whiz',xp:700},{name:'Conversation Kid',xp:880},
+{name:'Language Explorer',xp:1080},{name:'English Ace',xp:1300},{name:'Story Teller',xp:1540},
+{name:'Vocabulary King',xp:1800},{name:'Grammar Guru',xp:2080},{name:'Fluency Fighter',xp:2380},
+{name:'English Champion',xp:2700},{name:'Language Hero',xp:3040},{name:'Word Wizard',xp:3400},
+{name:'English Expert',xp:3780},{name:'Language Master',xp:4200}
+];
+
+const BADGES=[
+{id:'m0',name:'Colour Pro',icon:'\uD83C\uDF08',desc:'Modul 1 abgeschlossen'},
+{id:'m1',name:'Number Ninja',icon:'\uD83D\uDD22',desc:'Modul 2 abgeschlossen'},
+{id:'m2',name:'Animal Expert',icon:'\uD83D\uDC3E',desc:'Modul 3 abgeschlossen'},
+{id:'m3',name:'Family Star',icon:'\uD83D\uDC68\u200D\uD83D\uDC69\u200D\uD83D\uDC67',desc:'Modul 4 abgeschlossen'},
+{id:'m4',name:'Food Fan',icon:'\uD83C\uDF54',desc:'Modul 5 abgeschlossen'},
+{id:'m5',name:'Body Builder',icon:'\uD83E\uDDB6',desc:'Modul 6 abgeschlossen'},
+{id:'m6',name:'School Star',icon:'\uD83C\uDFEB',desc:'Modul 7 abgeschlossen'},
+{id:'m7',name:'Time Teller',icon:'\u23F0',desc:'Modul 8 abgeschlossen'},
+{id:'m8',name:'Hobby Hero',icon:'\u26BD',desc:'Modul 9 abgeschlossen'},
+{id:'m9',name:'Sentence Master',icon:'\uD83D\uDCAC',desc:'Modul 10 abgeschlossen'},
+{id:'first_quiz',name:'Quiz-Neuling',icon:'\u2753',desc:'Erstes Quiz bestanden'},
+{id:'perfect_quiz',name:'Perfektionist',icon:'\uD83D\uDC8E',desc:'Quiz mit 5/5 bestanden'},
+{id:'first_boss',name:'Boss-Bezwinger',icon:'\uD83D\uDC51',desc:'Erste Boss-Challenge bestanden'},
+{id:'all_bosses',name:'Endgegner',icon:'\uD83C\uDFC6',desc:'Alle Boss-Challenges bestanden'},
+{id:'streak3',name:'Durchstarter',icon:'\uD83D\uDD25',desc:'3 Tage in Folge gelernt'},
+{id:'streak7',name:'Wochenkrieger',icon:'\u2694\uFE0F',desc:'7 Tage in Folge gelernt'},
+{id:'half_done',name:'Halbzeit',icon:'\u23F3',desc:'5 Module abgeschlossen'},
+{id:'speed_quiz',name:'Blitz-Denker',icon:'\u26A1',desc:'Quiz in unter 60 Sekunden'},
+{id:'explorer',name:'Entdecker',icon:'\uD83D\uDDFA\uFE0F',desc:'Alle Module angesehen'},
+{id:'graduate',name:'Absolvent',icon:'\uD83C\uDF93',desc:'Alle 10 Module abgeschlossen'}
+];
+
+const THEME_CONFIG={
+cyber:{name:'Cyber Neon',emoji:'\uD83D\uDDA5\uFE0F',color:'#3b82f6'},
+retro:{name:'Retro Arcade',emoji:'\uD83D\uDD79\uFE0F',color:'#ffd700'},
+nature:{name:'Nature Forest',emoji:'\uD83C\uDF33',color:'#4ade80'},
+space:{name:'Deep Space',emoji:'\uD83D\uDE80',color:'#c084fc'},
+comic:{name:'Comic Pop',emoji:'\uD83D\uDCA5',color:'#ff6b6b'},
+sketchy:{name:'Sketchy',emoji:'\u270D\uFE0F',color:'#d97706'},
+'nature-code':{name:'Nature Code',emoji:'\uD83C\uDF3F',color:'#10b981'},
+glass:{name:'Glasmorphism',emoji:'\uD83D\uDCA0',color:'#00d9ff'}
+};
+
+const modules=[
+// M0: Colours
+{id:0,title:'Colours — Farben',icon:'\uD83C\uDF08',duration:'20 Min.',description:'Lerne die wichtigsten Farben auf Englisch.',
+lessons:[
+{title:'Die Grundfarben',content:'<p>Die wichtigsten <strong>Farben</strong> auf Englisch:</p><table class="vocab-table"><tr><th>English</th><th>Deutsch</th></tr><tr><td><strong>red</strong></td><td>rot</td></tr><tr><td><strong>blue</strong></td><td>blau</td></tr><tr><td><strong>green</strong></td><td>gr\u00fcn</td></tr><tr><td><strong>yellow</strong></td><td>gelb</td></tr><tr><td><strong>orange</strong></td><td>orange</td></tr><tr><td><strong>purple</strong></td><td>lila</td></tr></table>'},
+{title:'Weitere Farben & S\u00e4tze',content:'<table class="vocab-table"><tr><th>English</th><th>Deutsch</th></tr><tr><td><strong>black</strong></td><td>schwarz</td></tr><tr><td><strong>white</strong></td><td>wei\u00df</td></tr><tr><td><strong>brown</strong></td><td>braun</td></tr><tr><td><strong>pink</strong></td><td>rosa</td></tr></table><div class="info-box">\uD83D\uDCA1 <strong>S\u00e4tze:</strong><br>The sky is <strong>blue</strong>. — Der Himmel ist blau.<br>My favourite colour is <strong>green</strong>. — Meine Lieblingsfarbe ist gr\u00fcn.<br><strong>What colour is it?</strong> — Welche Farbe hat es?</div>'}
+],
+quiz:[
+{q:'Was bedeutet "red"?',a:['blau','gr\u00fcn','rot','gelb'],_h:0x48},
+{q:'Wie sagt man "gelb" auf Englisch?',a:['green','yellow','orange','gold'],_h:0x7E},
+{q:'Was bedeutet "blue"?',a:['blau','schwarz','braun','lila'],_h:0x2B},
+{q:'"The sun is ___." (Die Sonne ist gelb.)',a:['red','blue','green','yellow'],_h:0x62},
+{q:'Wie sagt man "schwarz" auf Englisch?',a:['brown','dark','black','grey'],_h:0x5E}
+],
+boss:[
+{q:'"My favourite colour is ___." (gr\u00fcn)',a:['blue','green','red','yellow'],_h:0x4B},
+{q:'Was bedeutet "purple"?',a:['rosa','braun','lila','grau'],_h:0x7D},
+{q:'"What colour is the grass?" — Antwort?',a:['blue','red','green','yellow'],_h:0x29}
+]},
+// M1: Numbers
+{id:1,title:'Numbers — Zahlen',icon:'\uD83D\uDD22',duration:'20 Min.',description:'Lerne die Zahlen von 1 bis 100 auf Englisch.',
+lessons:[
+{title:'Zahlen 1-12',content:'<table class="vocab-table"><tr><th>Number</th><th>English</th><th>Deutsch</th></tr><tr><td>1</td><td><strong>one</strong></td><td>eins</td></tr><tr><td>2</td><td><strong>two</strong></td><td>zwei</td></tr><tr><td>3</td><td><strong>three</strong></td><td>drei</td></tr><tr><td>4</td><td><strong>four</strong></td><td>vier</td></tr><tr><td>5</td><td><strong>five</strong></td><td>f\u00fcnf</td></tr><tr><td>6</td><td><strong>six</strong></td><td>sechs</td></tr><tr><td>7</td><td><strong>seven</strong></td><td>sieben</td></tr><tr><td>8</td><td><strong>eight</strong></td><td>acht</td></tr><tr><td>9</td><td><strong>nine</strong></td><td>neun</td></tr><tr><td>10</td><td><strong>ten</strong></td><td>zehn</td></tr><tr><td>11</td><td><strong>eleven</strong></td><td>elf</td></tr><tr><td>12</td><td><strong>twelve</strong></td><td>zw\u00f6lf</td></tr></table>'},
+{title:'Zehner & gr\u00f6\u00dfere Zahlen',content:'<table class="vocab-table"><tr><th>Number</th><th>English</th></tr><tr><td>13</td><td><strong>thirteen</strong></td></tr><tr><td>20</td><td><strong>twenty</strong></td></tr><tr><td>30</td><td><strong>thirty</strong></td></tr><tr><td>40</td><td><strong>forty</strong></td></tr><tr><td>50</td><td><strong>fifty</strong></td></tr><tr><td>100</td><td><strong>one hundred</strong></td></tr></table><div class="info-box">\uD83D\uDCA1 <strong>Zusammengesetzte Zahlen:</strong><br>21 = twenty-<strong>one</strong><br>35 = thirty-<strong>five</strong><br>99 = ninety-<strong>nine</strong></div>'}
+],
+quiz:[
+{q:'Was ist "five" auf Deutsch?',a:['vier','f\u00fcnf','f\u00fcnfzehn','f\u00fcnfzig'],_h:0x4B},
+{q:'Wie sagt man "zw\u00f6lf" auf Englisch?',a:['two','twenty','twelve','twin'],_h:0x7D},
+{q:'Was bedeutet "eight"?',a:['acht','achtzehn','achtzig','eins'],_h:0x2B},
+{q:'Wie schreibt man 20 auf Englisch?',a:['twelve','twenteen','twenty','twoty'],_h:0x63},
+{q:'Was ist "thirteen"?',a:['30','3','13','31'],_h:0x5E}
+],
+boss:[
+{q:'Wie schreibt man 40 auf Englisch?',a:['fourty','forty','fourten','forthy'],_h:0x4B},
+{q:'"I am ___ years old." (10 Jahre alt)',a:['five','twelve','ten','twenty'],_h:0x7D},
+{q:'Was ist 50 auf Englisch?',a:['fifteen','fifty','fivety','five hundred'],_h:0x2A}
+]},
+// M2: Animals
+{id:2,title:'Animals — Tiere',icon:'\uD83D\uDC3E',duration:'25 Min.',description:'Lerne Tiernamen auf Englisch.',
+lessons:[
+{title:'Haustiere & Bauernhoftiere',content:'<table class="vocab-table"><tr><th>English</th><th>Deutsch</th></tr><tr><td><strong>dog</strong></td><td>Hund</td></tr><tr><td><strong>cat</strong></td><td>Katze</td></tr><tr><td><strong>horse</strong></td><td>Pferd</td></tr><tr><td><strong>cow</strong></td><td>Kuh</td></tr><tr><td><strong>pig</strong></td><td>Schwein</td></tr><tr><td><strong>chicken</strong></td><td>Huhn</td></tr><tr><td><strong>bird</strong></td><td>Vogel</td></tr><tr><td><strong>fish</strong></td><td>Fisch</td></tr></table>'},
+{title:'Wilde Tiere & S\u00e4tze',content:'<table class="vocab-table"><tr><th>English</th><th>Deutsch</th></tr><tr><td><strong>lion</strong></td><td>L\u00f6we</td></tr><tr><td><strong>elephant</strong></td><td>Elefant</td></tr><tr><td><strong>monkey</strong></td><td>Affe</td></tr><tr><td><strong>snake</strong></td><td>Schlange</td></tr><tr><td><strong>bear</strong></td><td>B\u00e4r</td></tr></table><div class="info-box">\uD83D\uDCA1 <strong>S\u00e4tze:</strong><br>I have a <strong>dog</strong>. — Ich habe einen Hund.<br>The <strong>cat</strong> is small. — Die Katze ist klein.<br><strong>My favourite animal is</strong> the lion. — Mein Lieblingstier ist der L\u00f6we.</div>'}
+],
+quiz:[
+{q:'Was bedeutet "dog"?',a:['Katze','Hund','Vogel','Fisch'],_h:0x4B},
+{q:'Wie sagt man "Katze" auf Englisch?',a:['dog','bird','cat','cow'],_h:0x7D},
+{q:'Was bedeutet "elephant"?',a:['Elefant','Affe','B\u00e4r','L\u00f6we'],_h:0x2B},
+{q:'"The ___ is big." (Der Elefant ist gro\u00df.)',a:['cat','fish','dog','elephant'],_h:0x62},
+{q:'Wie sagt man "Pferd" auf Englisch?',a:['cow','pig','horse','chicken'],_h:0x5E}
+],
+boss:[
+{q:'"I have a pet ___." (Ich habe eine Katze.)',a:['dog','bird','cat','cow'],_h:0x48},
+{q:'Was bedeutet "monkey"?',a:['Esel','Affe','L\u00f6we','Schlange'],_h:0x7E},
+{q:'Welches Tier ist "snake"?',a:['B\u00e4r','Vogel','Schlange','Fisch'],_h:0x29}
+]},
+// M3: Family
+{id:3,title:'Family — Familie',icon:'\uD83D\uDC68\u200D\uD83D\uDC69\u200D\uD83D\uDC67',duration:'20 Min.',description:'Lerne Familienmitglieder auf Englisch.',
+lessons:[
+{title:'Die Kernfamilie',content:'<table class="vocab-table"><tr><th>English</th><th>Deutsch</th></tr><tr><td><strong>mother / mum</strong></td><td>Mutter / Mama</td></tr><tr><td><strong>father / dad</strong></td><td>Vater / Papa</td></tr><tr><td><strong>sister</strong></td><td>Schwester</td></tr><tr><td><strong>brother</strong></td><td>Bruder</td></tr><tr><td><strong>baby</strong></td><td>Baby</td></tr></table>'},
+{title:'Erweiterte Familie & S\u00e4tze',content:'<table class="vocab-table"><tr><th>English</th><th>Deutsch</th></tr><tr><td><strong>grandmother / grandma</strong></td><td>Gro\u00dfmutter / Oma</td></tr><tr><td><strong>grandfather / grandpa</strong></td><td>Gro\u00dfvater / Opa</td></tr><tr><td><strong>aunt</strong></td><td>Tante</td></tr><tr><td><strong>uncle</strong></td><td>Onkel</td></tr><tr><td><strong>cousin</strong></td><td>Cousin/e</td></tr></table><div class="info-box">\uD83D\uDCA1 <strong>S\u00e4tze:</strong><br><strong>This is my</strong> mother. — Das ist meine Mutter.<br><strong>I have</strong> one brother. — Ich habe einen Bruder.<br><strong>My family is</strong> big. — Meine Familie ist gro\u00df.</div>'}
+],
+quiz:[
+{q:'Was bedeutet "mother"?',a:['Schwester','Tante','Mutter','Oma'],_h:0x48},
+{q:'Wie sagt man "Bruder" auf Englisch?',a:['sister','brother','father','uncle'],_h:0x7E},
+{q:'Was bedeutet "grandmother"?',a:['Tante','Mutter','Schwester','Gro\u00dfmutter'],_h:0x28},
+{q:'"This is my ___." (Vater)',a:['mother','sister','father','brother'],_h:0x63},
+{q:'Wie sagt man "Onkel" auf Englisch?',a:['aunt','cousin','uncle','grandpa'],_h:0x5E}
+],
+boss:[
+{q:'"I have two ___." (Schwestern)',a:['brothers','sisters','mothers','aunts'],_h:0x4B},
+{q:'Was bedeutet "cousin"?',a:['Bruder','Cousin/e','Neffe','Tante'],_h:0x7E},
+{q:'Wie sagt man "Opa" auf Englisch?',a:['grandmother','uncle','grandpa','father'],_h:0x29}
+]},
+// M4: Food & Drinks
+{id:4,title:'Food & Drinks — Essen',icon:'\uD83C\uDF54',duration:'25 Min.',description:'Lerne Lebensmittel und Getr\u00e4nke auf Englisch.',
+lessons:[
+{title:'Essen',content:'<table class="vocab-table"><tr><th>English</th><th>Deutsch</th></tr><tr><td><strong>bread</strong></td><td>Brot</td></tr><tr><td><strong>cheese</strong></td><td>K\u00e4se</td></tr><tr><td><strong>apple</strong></td><td>Apfel</td></tr><tr><td><strong>banana</strong></td><td>Banane</td></tr><tr><td><strong>pizza</strong></td><td>Pizza</td></tr><tr><td><strong>rice</strong></td><td>Reis</td></tr><tr><td><strong>egg</strong></td><td>Ei</td></tr><tr><td><strong>chicken</strong></td><td>H\u00e4hnchen</td></tr></table>'},
+{title:'Getr\u00e4nke & S\u00e4tze',content:'<table class="vocab-table"><tr><th>English</th><th>Deutsch</th></tr><tr><td><strong>water</strong></td><td>Wasser</td></tr><tr><td><strong>milk</strong></td><td>Milch</td></tr><tr><td><strong>juice</strong></td><td>Saft</td></tr><tr><td><strong>tea</strong></td><td>Tee</td></tr></table><div class="info-box">\uD83D\uDCA1 <strong>S\u00e4tze:</strong><br><strong>I like</strong> pizza. — Ich mag Pizza.<br><strong>I don\'t like</strong> cheese. — Ich mag keinen K\u00e4se.<br><strong>Can I have</strong> some water, please? — Kann ich bitte Wasser haben?<br><strong>I\'m hungry.</strong> — Ich habe Hunger.<br><strong>I\'m thirsty.</strong> — Ich habe Durst.</div>'}
+],
+quiz:[
+{q:'Was bedeutet "bread"?',a:['Kuchen','Brot','Reis','Nudeln'],_h:0x4B},
+{q:'Wie sagt man "Wasser" auf Englisch?',a:['milk','juice','water','tea'],_h:0x7D},
+{q:'Was bedeutet "apple"?',a:['Apfel','Orange','Birne','Banane'],_h:0x2B},
+{q:'"I like ___." (Pizza)',a:['bread','rice','cheese','pizza'],_h:0x62},
+{q:'Wie sagt man "Milch" auf Englisch?',a:['water','juice','milk','tea'],_h:0x5E}
+],
+boss:[
+{q:'"I\'m ___." (Ich habe Hunger.)',a:['thirsty','happy','hungry','tired'],_h:0x48},
+{q:'Was bedeutet "juice"?',a:['Milch','Saft','Tee','Wasser'],_h:0x7E},
+{q:'"Can I have some ___, please?" (Tee)',a:['water','milk','tea','juice'],_h:0x29}
+]},
+// M5: Body
+{id:5,title:'My Body — Mein K\u00f6rper',icon:'\uD83E\uDDB6',duration:'20 Min.',description:'Lerne K\u00f6rperteile auf Englisch.',
+lessons:[
+{title:'K\u00f6rperteile',content:'<table class="vocab-table"><tr><th>English</th><th>Deutsch</th></tr><tr><td><strong>head</strong></td><td>Kopf</td></tr><tr><td><strong>eye</strong> / <strong>eyes</strong></td><td>Auge / Augen</td></tr><tr><td><strong>nose</strong></td><td>Nase</td></tr><tr><td><strong>mouth</strong></td><td>Mund</td></tr><tr><td><strong>ear</strong> / <strong>ears</strong></td><td>Ohr / Ohren</td></tr><tr><td><strong>hand</strong> / <strong>hands</strong></td><td>Hand / H\u00e4nde</td></tr><tr><td><strong>foot</strong> / <strong>feet</strong></td><td>Fu\u00df / F\u00fc\u00dfe</td></tr><tr><td><strong>arm</strong></td><td>Arm</td></tr><tr><td><strong>leg</strong></td><td>Bein</td></tr></table>'},
+{title:'Mehrzahl & S\u00e4tze',content:'<div class="info-box">\uD83D\uDCA1 <strong>Unregel\u00e4\u00dfige Mehrzahl:</strong><br>foot \u2192 <strong>feet</strong> (nicht foots!)<br>tooth \u2192 <strong>teeth</strong> (nicht tooths!)</div><p>S\u00e4tze:</p><ul><li><strong>I have two</strong> eyes. — Ich habe zwei Augen.</li><li><strong>Touch your</strong> nose! — Ber\u00fchre deine Nase!</li><li><strong>Head, shoulders, knees and toes!</strong> — Kopf, Schultern, Knie und Zehen!</li></ul>'}
+],
+quiz:[
+{q:'Was bedeutet "head"?',a:['Hand','Kopf','Herz','Haar'],_h:0x4B},
+{q:'Wie sagt man "Auge" auf Englisch?',a:['ear','nose','eye','mouth'],_h:0x7D},
+{q:'Was ist die Mehrzahl von "foot"?',a:['foots','feets','feet','foot'],_h:0x29},
+{q:'"Touch your ___!" (Nase)',a:['mouth','ear','nose','head'],_h:0x63},
+{q:'Wie sagt man "Hand" auf Englisch?',a:['arm','leg','foot','hand'],_h:0x5F}
+],
+boss:[
+{q:'"I have two ___." (Ohren)',a:['eyes','ears','hands','feet'],_h:0x4B},
+{q:'Was bedeutet "shoulders"?',a:['Schultern','Knie','Zehen','Arme'],_h:0x7F},
+{q:'Was ist die Mehrzahl von "tooth"?',a:['tooths','teeths','teeth','toothes'],_h:0x29}
+]},
+// M6: School
+{id:6,title:'At School — In der Schule',icon:'\uD83C\uDFEB',duration:'25 Min.',description:'Lerne Schulvokabeln auf Englisch.',
+lessons:[
+{title:'Schulsachen',content:'<table class="vocab-table"><tr><th>English</th><th>Deutsch</th></tr><tr><td><strong>book</strong></td><td>Buch</td></tr><tr><td><strong>pen</strong></td><td>Stift / Kugelschreiber</td></tr><tr><td><strong>pencil</strong></td><td>Bleistift</td></tr><tr><td><strong>ruler</strong></td><td>Lineal</td></tr><tr><td><strong>bag</strong></td><td>Tasche</td></tr><tr><td><strong>teacher</strong></td><td>Lehrer/in</td></tr><tr><td><strong>classroom</strong></td><td>Klassenzimmer</td></tr></table>'},
+{title:'Schulf\u00e4cher & Redewendungen',content:'<table class="vocab-table"><tr><th>English</th><th>Deutsch</th></tr><tr><td><strong>maths</strong></td><td>Mathematik</td></tr><tr><td><strong>English</strong></td><td>Englisch</td></tr><tr><td><strong>science</strong></td><td>Naturwissenschaften</td></tr><tr><td><strong>art</strong></td><td>Kunst</td></tr><tr><td><strong>music</strong></td><td>Musik</td></tr><tr><td><strong>sport / PE</strong></td><td>Sport</td></tr></table><div class="info-box">\uD83D\uDCA1 <strong>Redewendungen:</strong><br><strong>Can I go to the toilet, please?</strong><br><strong>I don\'t understand.</strong> — Ich verstehe nicht.<br><strong>Can you repeat that, please?</strong> — K\u00f6nnen Sie das wiederholen?<br><strong>How do you say ... in English?</strong></div>'}
+],
+quiz:[
+{q:'Was bedeutet "book"?',a:['Stift','Tasche','Buch','Heft'],_h:0x48},
+{q:'Wie sagt man "Bleistift" auf Englisch?',a:['pen','pencil','ruler','crayon'],_h:0x7E},
+{q:'Was bedeutet "teacher"?',a:['Sch\u00fcler','Lehrer/in','Direktor','Freund'],_h:0x2A},
+{q:'"My favourite subject is ___." (Kunst)',a:['maths','sport','art','science'],_h:0x63},
+{q:'Wie sagt man "Tasche" auf Englisch?',a:['box','bag','basket','ball'],_h:0x5D}
+],
+boss:[
+{q:'"Can you ___ that, please?" (wiederholen)',a:['say','tell','repeat','speak'],_h:0x48},
+{q:'Was bedeutet "science"?',a:['Kunst','Sport','Musik','Naturwissenschaften'],_h:0x7C},
+{q:'"I don\'t ___." (verstehen)',a:['know','understand','like','want'],_h:0x2A}
+]},
+// M7: Time & Days
+{id:7,title:'Time & Days — Zeit',icon:'\u23F0',duration:'25 Min.',description:'Lerne Uhrzeiten, Wochentage und Monate.',
+lessons:[
+{title:'Wochentage & Monate',content:'<table class="vocab-table"><tr><th>Wochentag</th><th>English</th></tr><tr><td>Montag</td><td><strong>Monday</strong></td></tr><tr><td>Dienstag</td><td><strong>Tuesday</strong></td></tr><tr><td>Mittwoch</td><td><strong>Wednesday</strong></td></tr><tr><td>Donnerstag</td><td><strong>Thursday</strong></td></tr><tr><td>Freitag</td><td><strong>Friday</strong></td></tr><tr><td>Samstag</td><td><strong>Saturday</strong></td></tr><tr><td>Sonntag</td><td><strong>Sunday</strong></td></tr></table><div class="info-box">\uD83D\uDCA1 Wochentage werden im Englischen <strong>gro\u00df</strong> geschrieben!</div>'},
+{title:'Uhrzeiten',content:'<div class="info-box">\u23F0 <strong>Uhrzeiten:</strong><br><strong>It\'s three o\'clock.</strong> — Es ist drei Uhr.<br><strong>It\'s half past four.</strong> — Es ist halb f\u00fcnf (4:30!).<br><strong>It\'s quarter past two.</strong> — Es ist Viertel nach zwei.<br><strong>It\'s quarter to six.</strong> — Es ist Viertel vor sechs.</div><p>Achtung: <strong>half past four</strong> = 4:30 (nicht 3:30 wie im Deutschen!)</p>'}
+],
+quiz:[
+{q:'Wie hei\u00dft "Montag" auf Englisch?',a:['Sunday','Monday','Tuesday','Friday'],_h:0x4B},
+{q:'Was bedeutet "Wednesday"?',a:['Donnerstag','Dienstag','Mittwoch','Freitag'],_h:0x7D},
+{q:'"It\'s half past three" — welche Uhrzeit?',a:['2:30','3:30','3:15','4:30'],_h:0x2A},
+{q:'Werden Wochentage im Englischen gro\u00df geschrieben?',a:['Ja','Nein','Nur Montag','Nur am Satzanfang'],_h:0x61},
+{q:'Wie sagt man "Samstag" auf Englisch?',a:['Sunday','Friday','Saturday','Thursday'],_h:0x5E}
+],
+boss:[
+{q:'"It\'s quarter to five" — welche Uhrzeit?',a:['5:15','4:45','4:15','5:45'],_h:0x4B},
+{q:'Welcher Tag kommt nach Thursday?',a:['Wednesday','Saturday','Friday','Tuesday'],_h:0x7D},
+{q:'"What time is it?" — 8:00 Uhr?',a:['It\'s eight past','It\'s eight o\'clock','It\'s half eight','Eight time'],_h:0x2A}
+]},
+// M8: Hobbies & Sports
+{id:8,title:'Hobbies & Sports',icon:'\u26BD',duration:'20 Min.',description:'Lerne Hobbys und Sportarten auf Englisch.',
+lessons:[
+{title:'Hobbys',content:'<table class="vocab-table"><tr><th>English</th><th>Deutsch</th></tr><tr><td><strong>reading</strong></td><td>Lesen</td></tr><tr><td><strong>swimming</strong></td><td>Schwimmen</td></tr><tr><td><strong>playing football</strong></td><td>Fu\u00dfball spielen</td></tr><tr><td><strong>drawing</strong></td><td>Zeichnen / Malen</td></tr><tr><td><strong>singing</strong></td><td>Singen</td></tr><tr><td><strong>dancing</strong></td><td>Tanzen</td></tr><tr><td><strong>cooking</strong></td><td>Kochen</td></tr><tr><td><strong>playing computer games</strong></td><td>Computerspiele spielen</td></tr></table>'},
+{title:'Dar\u00fcber sprechen',content:'<div class="info-box">\uD83D\uDCA1 <strong>S\u00e4tze mit "like + -ing":</strong><br><strong>I like swimming.</strong> — Ich schwimme gern.<br><strong>I don\'t like cooking.</strong> — Ich koche nicht gern.<br><strong>Do you like reading?</strong> — Liest du gern?<br><strong>My hobby is drawing.</strong> — Mein Hobby ist Zeichnen.</div><p>Im Englischen benutzt man <strong>"like" + Verb mit -ing</strong> um zu sagen, was man gerne macht!</p>'}
+],
+quiz:[
+{q:'Was bedeutet "swimming"?',a:['Laufen','Schwimmen','Springen','Tauchen'],_h:0x4B},
+{q:'Wie sagt man "Lesen" auf Englisch?',a:['writing','reading','speaking','learning'],_h:0x7E},
+{q:'"I like ___." (Fu\u00dfball spielen)',a:['playing tennis','playing football','watching football','football playing'],_h:0x2A},
+{q:'Was bedeutet "drawing"?',a:['Tanzen','Singen','Zeichnen','Schreiben'],_h:0x63},
+{q:'"Do you like ___?" (Kochen)',a:['cook','cooked','cooking','to cook'],_h:0x5E}
+],
+boss:[
+{q:'"I don\'t like ___." (Tanzen)',a:['dance','dancing','danced','to dance'],_h:0x4B},
+{q:'Welche Form ist richtig? "She likes ___."',a:['swim','swimming','swims','to swimming'],_h:0x7E},
+{q:'Was bedeutet "My hobby is singing"?',a:['Mein Hobby ist Tanzen','Mein Hobby ist Singen','Ich singe nicht gern','Ich tanze gern'],_h:0x2A}
+]},
+// M9: Simple Sentences
+{id:9,title:'Simple Sentences — S\u00e4tze',icon:'\uD83D\uDCAC',duration:'30 Min.',description:'Baue einfache englische S\u00e4tze!',
+lessons:[
+{title:'Sich vorstellen',content:'<div class="info-box">\uD83D\uDCAC <strong>Sich vorstellen:</strong><br><strong>Hello! My name is ...</strong> — Hallo! Mein Name ist ...<br><strong>I am ... years old.</strong> — Ich bin ... Jahre alt.<br><strong>I live in ...</strong> — Ich wohne in ...<br><strong>I come from Germany.</strong> — Ich komme aus Deutschland.<br><strong>Nice to meet you!</strong> — Freut mich, dich kennenzulernen!</div>'},
+{title:'Fragen stellen & Antworten',content:'<div class="info-box">\uD83D\uDCA1 <strong>Fragen & Antworten:</strong><br><strong>What is your name?</strong> — My name is ...<br><strong>How old are you?</strong> — I am ... years old.<br><strong>Where do you live?</strong> — I live in ...<br><strong>What do you like?</strong> — I like ...<br><strong>How are you?</strong> — I\'m fine, thank you!</div><p>Im Englischen beginnt eine Frage oft mit <strong>What, Where, How, Who, When</strong>.</p>'}
+],
+quiz:[
+{q:'Wie stellst du dich vor? "___! My name is Tom."',a:['Bye','Sorry','Hello','Thanks'],_h:0x48},
+{q:'"How ___ are you?" (Wie alt bist du?)',a:['many','much','old','big'],_h:0x7D},
+{q:'Was bedeutet "Where do you live?"',a:['Wie hei\u00dft du?','Wo wohnst du?','Wie alt bist du?','Was magst du?'],_h:0x2A},
+{q:'"I ___ from Germany." (Ich komme aus Deutschland.)',a:['am','come','go','live'],_h:0x60},
+{q:'"How are you?" — Antwort?',a:['I\'m ten.','I\'m fine, thank you!','I live here.','My name is Max.'],_h:0x5D}
+],
+boss:[
+{q:'Ordne: "name / is / My / Anna" — Richtiger Satz?',a:['Name my is Anna','My name is Anna','Is my name Anna','Anna is name my'],_h:0x4B},
+{q:'"Nice to ___ you!" (Freut mich!)',a:['see','know','meet','have'],_h:0x7D},
+{q:'Welches Fragewort passt? "___ is your favourite colour?"',a:['Where','Who','How','What'],_h:0x28}
+]}
+];
+
+const STORAGE_KEY='englishstarter_progress';
+let state={name:'',started:false,currentModule:0,xp:0,level:0,streak:0,lastVisit:null,modulesCompleted:[],quizResults:{},bossResults:{},badges:[],quizShuffleMap:{},modulesViewed:[],interactiveResults:{},designTheme:'cyber-dark'};
+function saveState(){try{localStorage.setItem(STORAGE_KEY,JSON.stringify(state))}catch(e){}}
+function loadState(){try{const s=localStorage.getItem(STORAGE_KEY);if(s){Object.assign(state,JSON.parse(s));return true}}catch(e){}return false}
+function exportData(){const a=document.createElement('a');a.download='englishstarter-'+state.name+'.json';a.href=URL.createObjectURL(new Blob([JSON.stringify(state,null,2)],{type:'application/json'}));a.click()}
+function importData(e){const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=ev=>{try{const d=JSON.parse(ev.target.result);Object.assign(state,d);saveState();location.reload()}catch(err){alert('Datei konnte nicht gelesen werden.')}};r.readAsText(f)}
+function getLevel(xp){let lv=0;for(let i=LEVELS.length-1;i>=0;i--){if(xp>=LEVELS[i].xp){lv=i;break}}return lv}
+function getLevelProgress(xp){const lv=getLevel(xp);const cur=LEVELS[lv].xp;const next=lv<LEVELS.length-1?LEVELS[lv+1].xp:cur;if(next===cur)return 100;return Math.min(100,Math.round((xp-cur)/(next-cur)*100))}
+function addXP(a,r){const o=getLevel(state.xp);state.xp+=a;const n=getLevel(state.xp);saveState();updateUI();showNotif('xp','+'+a+' XP',r);if(n>o){state.level=n;saveState();setTimeout(()=>showLevelUp(n),800)}}
+function updateStreak(){const t=new Date().toDateString();if(state.lastVisit===t)return;const y=new Date(Date.now()-864e5).toDateString();if(state.lastVisit===y){state.streak++;showNotif('streak','\uD83D\uDD25 '+state.streak+' Tage!','Keep going!');if(state.streak>=3)awardBadge('streak3');if(state.streak>=7)awardBadge('streak7')}else{state.streak=1}state.lastVisit=t;saveState()}
+function awardBadge(id){if(state.badges.includes(id))return;state.badges.push(id);saveState();const b=BADGES.find(x=>x.id===id);if(b)showNotif('badge',b.icon+' '+b.name,b.desc)}
+let notifQueue=[],notifActive=false;
+function showNotif(t,ti,tx){notifQueue.push({type:t,title:ti,text:tx});if(!notifActive)processNotif()}
+function processNotif(){if(!notifQueue.length){notifActive=false;return}notifActive=true;const{type,title,text}=notifQueue.shift();const el=document.getElementById('notif');el.className='notif '+type;document.getElementById('notifTitle').textContent=title;document.getElementById('notifText').textContent=text;el.classList.add('show');setTimeout(()=>{el.classList.remove('show');setTimeout(processNotif,300)},2500)}
+function showLevelUp(lv){const ov=document.getElementById('levelUpOverlay');document.getElementById('levelUpBox').innerHTML='<div class="lvl-icon">\u2B06\uFE0F</div><div class="lvl-title">Level Up!</div><div class="lvl-name">Level '+(lv+1)+': '+LEVELS[lv].name+'</div>';ov.classList.add('active');spawnConfetti();setTimeout(()=>ov.classList.remove('active'),3000)}
+function spawnConfetti(){const c=document.getElementById('confetti');c.innerHTML='';const cols=['#3b82f6','#a855f7','#22c55e','#f59e0b','#ef4444','#06b6d4'];for(let i=0;i<60;i++){const p=document.createElement('div');p.style.cssText='position:absolute;left:'+Math.random()*100+'%;background:'+cols[i%cols.length]+';width:'+(6+Math.random()*8)+'px;height:'+(6+Math.random()*8)+'px;border-radius:'+(Math.random()>.5?'50%':'2px')+';animation:confettiFall '+(1.5+Math.random()*2)+'s ease-out '+Math.random()*.5+'s forwards';c.appendChild(p)}if(!document.getElementById('confettiStyle')){const s=document.createElement('style');s.id='confettiStyle';s.textContent='@keyframes confettiFall{0%{opacity:1;transform:translateY(0) rotate(0)}100%{opacity:0;transform:translateY(100vh) rotate(720deg)}}';document.head.appendChild(s)}setTimeout(()=>c.innerHTML='',4000)}
+function shuffleQuiz(m,q){const k='m'+m;if(state.quizShuffleMap[k])return state.quizShuffleMap[k];const idx=[...Array(q.length).keys()];for(let i=idx.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[idx[i],idx[j]]=[idx[j],idx[i]]}state.quizShuffleMap[k]=idx;saveState();return idx}
+function renderQuiz(modId,quiz,isBoss){const pf=isBoss?'boss':'quiz';const idx=isBoss?[...Array(quiz.length).keys()]:shuffleQuiz(modId,quiz);let h='<div class="'+(isBoss?'boss-section':'quiz-section')+'">';h+=isBoss?'<h3>\uD83D\uDC51 Boss-Challenge</h3><p class="boss-sub">Alle '+quiz.length+' Fragen richtig!</p>':'<h3>\uD83D\uDCDD Quiz</h3>';idx.forEach((qi,di)=>{const q=quiz[qi];h+='<div class="quiz-q" data-qi="'+qi+'"><p>'+(di+1)+'. '+q.q+'</p>';q.a.forEach((a,ai)=>{h+='<label><input type="radio" name="'+pf+'_'+modId+'_'+qi+'" value="'+ai+'"> '+a+'</label>'});h+='</div>'});h+='<button class="quiz-submit" onclick="checkQuiz('+modId+','+isBoss+')">'+(isBoss?'Boss besiegen!':'Pr\u00fcfen')+'</button><div class="quiz-result" id="'+pf+'Result'+modId+'" style="display:none"></div></div>';return h}
+function checkQuiz(modId,isBoss){const pf=isBoss?'boss':'quiz';const quiz=isBoss?modules[modId].boss:modules[modId].quiz;let correct=0;const total=quiz.length;quiz.forEach((q,qi)=>{const sel=document.querySelector('input[name="'+pf+'_'+modId+'_'+qi+'"]:checked');const labels=document.querySelectorAll('[data-qi="'+qi+'"] label');const ci=_d(q._h,qi);labels.forEach((l,li)=>{l.classList.remove('correct','wrong');if(li===ci)l.classList.add('correct');else if(sel&&parseInt(sel.value)===li)l.classList.add('wrong')});const qDiv=labels[0]?.closest('.quiz-q');if(qDiv){const old=qDiv.querySelector('.quiz-explanation');if(old)old.remove()}if(!sel||parseInt(sel.value)!==ci){if(qDiv){const exp=document.createElement('div');exp.className='quiz-explanation';exp.textContent='\u2192 Richtige Antwort: '+q.a[ci];qDiv.appendChild(exp)}}if(sel&&parseInt(sel.value)===ci)correct++});const rEl=document.getElementById(pf+'Result'+modId);rEl.style.display='block';if(isBoss){if(correct===total){rEl.className='quiz-result pass';rEl.textContent='\uD83D\uDC51 Boss besiegt! '+correct+'/'+total;if(!state.bossResults[modId]){state.bossResults[modId]=true;addXP(100,'Boss bestanden!');if(!state.badges.includes('first_boss'))awardBadge('first_boss');if(modules.every((_,i)=>state.bossResults[i]))awardBadge('all_bosses');checkModuleComplete(modId)}}else{rEl.className='quiz-result fail';rEl.textContent='\uD83D\uDC80 '+correct+'/'+total+' \u2014 Alle m\u00fcssen richtig sein!';setTimeout(()=>{document.querySelectorAll('input[name^="'+pf+'_'+modId+'"]').forEach(r=>{r.disabled=false;r.checked=false});document.querySelectorAll('[data-qi] label').forEach(l=>l.classList.remove('correct','wrong'));document.querySelectorAll('.quiz-explanation').forEach(e=>e.remove());rEl.style.display='none'},2000);return}}else{const passed=correct>=Math.ceil(total*.6);rEl.className='quiz-result '+(passed?'pass':'fail');rEl.textContent=passed?'\u2705 '+correct+'/'+total+' \u2014 Bestanden!':'\u274C '+correct+'/'+total+' \u2014 Mindestens '+Math.ceil(total*.6)+' n\u00f6tig.';if(passed&&!state.quizResults[modId]){state.quizResults[modId]=correct;addXP(correct*15+50,'Quiz bestanden');if(!state.badges.includes('first_quiz'))awardBadge('first_quiz');if(correct===total)awardBadge('perfect_quiz');if(Date.now()-(window._quizStart||Date.now())<6e4)awardBadge('speed_quiz');checkModuleComplete(modId)}}saveState();document.querySelectorAll('input[name^="'+pf+'_'+modId+'"]').forEach(r=>r.disabled=true);if(!isBoss){const bossEl=document.querySelector('.boss-section');if(bossEl)bossEl.scrollIntoView({behavior:'smooth',block:'start'})}else{rEl.scrollIntoView({behavior:'smooth',block:'center'})}}
+function checkModuleComplete(m){if(state.quizResults[m]!==undefined&&state.bossResults[m]&&!state.modulesCompleted.includes(m)){state.modulesCompleted.push(m);awardBadge('m'+m);if(state.modulesCompleted.length>=5)awardBadge('half_done');if(state.modulesCompleted.length>=10){awardBadge('graduate');setTimeout(()=>showCert(),1500)}saveState();renderSidebar()}}
+function renderModule(m){state.currentModule=m;if(!state.modulesViewed.includes(m)){state.modulesViewed.push(m);addXP(10,'Neues Modul');if(state.modulesViewed.length>=10)awardBadge('explorer')}saveState();closeSidebar();const mod=modules[m];let h='<div class="module-header"><div class="mod-badge">'+mod.icon+' Modul '+(m+1)+'</div><h1>'+mod.title+'</h1><p class="mod-desc">'+mod.description+'</p></div>';mod.lessons.forEach((l,i)=>{h+='<div class="lesson-card"><h3><span style="color:var(--neon)">'+String(i+1).padStart(2,'0')+'</span> '+l.title+' <button class="tts-btn" onclick="speakLesson('+i+')" title="Vorlesen">&#128266;</button></h3>'+l.content+'</div>'});h+='<div class="interactive-area"><h4>\uD83E\uDDEA Interaktive \u00dcbung</h4><div id="interactiveContent">L\u00e4dt...</div></div>';window._quizStart=Date.now();h+='<div class="speech-ex"><h4>Sprach\u00FCbung \u{1F3A4}</h4><div id="speechExArea"></div></div>';
+h+=renderQuiz(m,mod.quiz,false);h+=renderQuiz(m,mod.boss,true);h+='<div class="site-footer"><span>\uD83C\uDDEC\uD83C\uDDE7 EnglishStarter</span><p>&copy; 2026 GZ AI Stacks &middot; Gerd Zimmermann</p></div>';document.getElementById('welcomeScreen').style.display='none';document.getElementById('badgesView').style.display='none';document.getElementById('statsView').style.display='none';const mc=document.getElementById('moduleContent');mc.style.display='block';mc.innerHTML=h;renderSidebar();setTimeout(()=>{initInteractive(m);window.scrollTo(0,0)},100)}
+function renderSidebar(){document.getElementById('sidebarModules').innerHTML=modules.map((m,i)=>{const done=state.modulesCompleted.includes(i);const act=state.currentModule===i&&document.getElementById('moduleContent').style.display==='block';return '<div class="sidebar-item'+(act?' active':'')+(done?' completed':'')+'" onclick="renderModule('+i+')">'+m.icon+' '+m.title+'</div>'}).join('')}
+function toggleSidebar(){document.getElementById('sidebar').classList.toggle('open');document.getElementById('sidebarOverlay').classList.toggle('active')}
+function closeSidebar(){document.getElementById('sidebar').classList.remove('open');document.getElementById('sidebarOverlay').classList.remove('active')}
+function showBadges(){document.getElementById('welcomeScreen').style.display='none';document.getElementById('moduleContent').style.display='none';document.getElementById('statsView').style.display='none';const v=document.getElementById('badgesView');v.style.display='block';closeSidebar();let h='<div class="module-header"><h1>\uD83C\uDFC5 Abzeichen</h1><p class="mod-desc">'+state.badges.length+'/'+BADGES.length+' gesammelt</p></div><div class="badges-grid">';BADGES.forEach(b=>{const e=state.badges.includes(b.id);h+='<div class="badge-card'+(e?' earned':' locked')+'"><div class="badge-icon">'+(e?b.icon:'\uD83D\uDD12')+'</div><div class="badge-name">'+b.name+'</div><div class="badge-desc">'+b.desc+'</div></div>'});h+='</div>';v.innerHTML=h}
+function showStats(){document.getElementById('welcomeScreen').style.display='none';document.getElementById('moduleContent').style.display='none';document.getElementById('badgesView').style.display='none';const v=document.getElementById('statsView');v.style.display='block';closeSidebar();const lv=getLevel(state.xp);let h='<div class="module-header"><h1>\uD83D\uDCCA Statistik</h1></div><div class="stats-grid">';h+='<div class="stat-card"><div class="stat-val">'+state.xp+'</div><div class="stat-label">XP</div></div>';h+='<div class="stat-card"><div class="stat-val">'+LEVELS[lv].name+'</div><div class="stat-label">Rang</div></div>';h+='<div class="stat-card"><div class="stat-val">'+state.modulesCompleted.length+'/10</div><div class="stat-label">Module</div></div>';h+='<div class="stat-card"><div class="stat-val">'+Object.keys(state.quizResults).length+'</div><div class="stat-label">Quizze</div></div>';h+='<div class="stat-card"><div class="stat-val">'+Object.keys(state.bossResults).length+'</div><div class="stat-label">Bosse</div></div>';h+='<div class="stat-card"><div class="stat-val">'+state.badges.length+'</div><div class="stat-label">Badges</div></div>';h+='<div class="stat-card"><div class="stat-val">\uD83D\uDD25 '+state.streak+'</div><div class="stat-label">Streak</div></div></div>';v.innerHTML=h}
+let certStyle='akademie';
+function showCert(){window._lastFocus=document.activeElement;document.getElementById('certOverlay').classList.add('active');document.getElementById('certPicker').innerHTML=['\uD83C\uDFDB Akademie','\uD83D\uDCBB Hacker','\uD83D\uDD79 Pixel','\uD83D\uDE80 Zukunft'].map((l,i)=>{const s=['akademie','hacker','pixel','zukunft'][i];return '<button class="'+(certStyle===s?'active':'')+'" onclick="certStyle=\''+s+'\';showCert()">'+l+'<\/button>'}).join('');renderCert()}
+function closeCert(){document.getElementById('certOverlay').classList.remove('active');if(window._lastFocus){window._lastFocus.focus();window._lastFocus=null}}
+function renderCert(){const f=document.getElementById('certFrame');const lv=getLevel(state.xp);const name=state.name||'Unknown';const date=new Date().toLocaleDateString('de-DE',{day:'numeric',month:'long',year:'numeric'});const code='ENG-'+new Date().getFullYear()+'-'+((name.charCodeAt(0)*7+state.xp)%9999).toString(16).toUpperCase().padStart(4,'0');const styles={akademie:{bg:'linear-gradient(135deg,#fdf8ee,#f5edda,#ede3c8)',border:'#c5a54e',text:'#1a1a3e',sub:'#5c5040',accent:'#DAA520',seal:'\uD83C\uDDEC\uD83C\uDDE7'},hacker:{bg:'linear-gradient(135deg,#0a0e14,#111827,#0a0e14)',border:'#3b82f6',text:'#e0e8ff',sub:'#8899aa',accent:'#3b82f6',seal:'\uD83D\uDCBB'},pixel:{bg:'linear-gradient(135deg,#1a1a2e,#222244,#1a1a2e)',border:'#ffd700',text:'#fff',sub:'#a098c0',accent:'#ffd700',seal:'\uD83C\uDFC6'},zukunft:{bg:'linear-gradient(135deg,#0f0f23,#1a1a3e,#0f0f23)',border:'#00d9ff',text:'#e4e8f0',sub:'#8899aa',accent:'#00d9ff',seal:'\uD83D\uDE80'}};const s=styles[certStyle];f.innerHTML='<div style="background:'+s.bg+';padding:clamp(24px,5vw,48px) clamp(16px,4vw,40px);border:4px solid '+s.border+';border-radius:12px;text-align:center;min-height:400px;color:'+s.text+'"><div style="font-size:clamp(10px,2vw,14px);color:'+s.sub+';letter-spacing:4px;text-transform:uppercase">EnglishStarter \u00b7 English Adventure</div><h1 style="font-size:clamp(28px,6vw,48px);margin:12px 0;font-family:Georgia,serif">Certificate</h1><div style="width:100px;height:2px;background:'+s.border+';margin:0 auto 16px;opacity:.5"></div><p style="font-size:clamp(14px,2.5vw,18px);color:'+s.sub+'">awarded to</p><h2 style="font-size:clamp(24px,5vw,42px);color:'+s.accent+';margin:8px 0;font-family:Georgia,serif;font-style:italic;word-break:break-word">'+name+'</h2><p style="font-size:clamp(16px,3vw,22px);font-weight:700;margin:12px 0">'+LEVELS[lv].name+'</p><p style="font-size:clamp(12px,2vw,15px);color:'+s.sub+'">for completing the \u201eEnglishStarter\u201c course</p><div style="font-size:clamp(12px,2vw,15px);margin:16px 0">Modules: '+state.modulesCompleted.length+'/10 \u00b7 XP: '+state.xp+'</div><div style="font-size:clamp(32px,7vw,48px);margin:16px 0">'+s.seal+'</div><div style="font-size:clamp(11px,1.8vw,14px);color:'+s.sub+';margin-top:16px">'+date+'</div><div style="font-size:10px;color:'+s.sub+';opacity:.5;margin-top:4px">'+code+'</div><div style="font-size:11px;color:'+s.sub+';opacity:.4;margin-top:12px">GZ AI STACKS</div></div>'}
+function printCert(){window.print()}
+function updateUI(){const lv=getLevel(state.xp);document.getElementById('levelName').textContent=LEVELS[lv].name;document.getElementById('xpText').textContent=state.xp+' XP';document.getElementById('xpFill').style.width=getLevelProgress(state.xp)+'%';document.getElementById('headerStreak').textContent='\uD83D\uDD25 '+state.streak}
+function getCurrentThemeParts(){const p=state.designTheme.split('-');if(p.length===3)return{world:p[0]+'-'+p[1],mode:p[2]};return{world:p[0],mode:p[1]||'dark'}}
+function toggleMode(){const{world,mode}=getCurrentThemeParts();setDesignTheme(world,mode==='dark'?'light':'dark')}
+function setDesignTheme(w,m){state.designTheme=w+'-'+m;document.documentElement.setAttribute('data-theme',state.designTheme);saveState();buildThemePicker()}
+function buildThemePicker(){const{world,mode}=getCurrentThemeParts();let h='';Object.keys(THEME_CONFIG).forEach(w=>{const t=THEME_CONFIG[w];h+='<button class="theme-btn'+(w===world?' active':'')+'" style="background:'+t.color+'" onclick="setDesignTheme(\''+w+'\',\''+mode+'\')" title="'+t.name+'">'+t.emoji+'<\/button>'});h+='<button class="mode-toggle-btn" onclick="toggleMode()">'+(mode==='dark'?'\u2600\uFE0F':'\uD83C\uDF19')+'<\/button>';document.getElementById('themePicker').innerHTML=h}
+
+// === INTERACTIVE EXERCISES ===
+// Vocab data per module for interactive exercises
+const VOCAB=[
+[{en:'red',de:'rot'},{en:'blue',de:'blau'},{en:'green',de:'gr\u00fcn'},{en:'yellow',de:'gelb'},{en:'orange',de:'orange'},{en:'purple',de:'lila'},{en:'black',de:'schwarz'},{en:'white',de:'wei\u00df'}],
+[{en:'one',de:'eins'},{en:'two',de:'zwei'},{en:'three',de:'drei'},{en:'four',de:'vier'},{en:'five',de:'f\u00fcnf'},{en:'six',de:'sechs'},{en:'seven',de:'sieben'},{en:'eight',de:'acht'},{en:'nine',de:'neun'},{en:'ten',de:'zehn'}],
+[{en:'dog',de:'Hund'},{en:'cat',de:'Katze'},{en:'horse',de:'Pferd'},{en:'cow',de:'Kuh'},{en:'bird',de:'Vogel'},{en:'fish',de:'Fisch'},{en:'lion',de:'L\u00f6we'},{en:'elephant',de:'Elefant'}],
+[{en:'mother',de:'Mutter'},{en:'father',de:'Vater'},{en:'sister',de:'Schwester'},{en:'brother',de:'Bruder'},{en:'grandmother',de:'Oma'},{en:'grandfather',de:'Opa'},{en:'aunt',de:'Tante'},{en:'uncle',de:'Onkel'}],
+[{en:'bread',de:'Brot'},{en:'cheese',de:'K\u00e4se'},{en:'apple',de:'Apfel'},{en:'water',de:'Wasser'},{en:'milk',de:'Milch'},{en:'juice',de:'Saft'},{en:'pizza',de:'Pizza'},{en:'rice',de:'Reis'}],
+[{en:'head',de:'Kopf'},{en:'eye',de:'Auge'},{en:'nose',de:'Nase'},{en:'mouth',de:'Mund'},{en:'ear',de:'Ohr'},{en:'hand',de:'Hand'},{en:'foot',de:'Fu\u00df'},{en:'arm',de:'Arm'}],
+[{en:'book',de:'Buch'},{en:'pen',de:'Stift'},{en:'pencil',de:'Bleistift'},{en:'ruler',de:'Lineal'},{en:'bag',de:'Tasche'},{en:'teacher',de:'Lehrer/in'},{en:'maths',de:'Mathematik'},{en:'art',de:'Kunst'}],
+[{en:'Monday',de:'Montag'},{en:'Tuesday',de:'Dienstag'},{en:'Wednesday',de:'Mittwoch'},{en:'Thursday',de:'Donnerstag'},{en:'Friday',de:'Freitag'},{en:'Saturday',de:'Samstag'},{en:'Sunday',de:'Sonntag'}],
+[{en:'reading',de:'Lesen'},{en:'swimming',de:'Schwimmen'},{en:'drawing',de:'Zeichnen'},{en:'singing',de:'Singen'},{en:'dancing',de:'Tanzen'},{en:'cooking',de:'Kochen'}],
+[{en:'Hello',de:'Hallo'},{en:'Goodbye',de:'Tsch\u00fcss'},{en:'Please',de:'Bitte'},{en:'Thank you',de:'Danke'},{en:'Yes',de:'Ja'},{en:'No',de:'Nein'}]
+];
+
+function initInteractive(m){
+const el=document.getElementById('interactiveContent');
+const vocab=VOCAB[m]||VOCAB[0];
+let score=0,round=0,total=6;
+const pool=[...vocab].sort(()=>Math.random()-.5).slice(0,total);
+function render(){
+if(round>=total){
+el.innerHTML='<div class="ix-feedback pass" style="display:block">\uD83C\uDF89 '+score+'/'+total+' richtig! Well done!</div>';
+if(score>=4&&!state.interactiveResults[m]){state.interactiveResults[m]=true;addXP(30,'Vokabel\u00fcbung geschafft!');saveState()}
+return}
+const item=pool[round];
+const askEn=Math.random()>.5;
+const question=askEn?item.en:item.de;
+const answer=askEn?item.de:item.en;
+const lang=askEn?'Deutsch':'English';
+const others=vocab.filter(v=>v!==item).sort(()=>Math.random()-.5).slice(0,3).map(v=>askEn?v.de:v.en);
+const opts=[answer,...others].sort(()=>Math.random()-.5);
+el.innerHTML='<p style="font-size:clamp(18px,4vw,24px);text-align:center;margin-bottom:4px;color:var(--neon);font-weight:700">'+question+'</p><p style="text-align:center;color:var(--text-dim);font-size:13px;margin-bottom:12px">Was ist das auf '+lang+'?</p><div class="ix-grid">'+opts.map(o=>'<span class="ix-item" style="font-size:clamp(15px,3vw,20px);padding:10px 18px" data-v="'+o.replace(/"/g,'&quot;')+'">'+o+'</span>').join('')+'</div><p style="text-align:center;color:var(--text-dim);font-size:13px;margin-top:8px">'+(round+1)+'/'+total+'</p>';
+el.querySelectorAll('.ix-item').forEach(btn=>{
+btn.onclick=function(){
+const v=this.dataset.v;
+if(v===answer){this.classList.add('correct');score++}else{this.classList.add('wrong');el.querySelectorAll('.ix-item').forEach(b=>{if(b.dataset.v===answer)b.classList.add('correct')})}
+el.querySelectorAll('.ix-item').forEach(b=>b.style.pointerEvents='none');
+round++;setTimeout(render,800)
+}})
+}
+render()
+}
+
+function startApp(){const n=document.getElementById('nameInput').value.trim();if(!n)return;state.name=n;state.started=true;saveState();document.getElementById('welcomeScreen').style.display='none';renderModule(0);updateStreak()}
+(function init(){
+if(loadState()){document.documentElement.setAttribute('data-theme',state.designTheme);if(state.started){document.getElementById('welcomeScreen').style.display='none';renderModule(state.currentModule);updateStreak()}else{document.getElementById('nameInput').value=state.name||'';document.getElementById('startBtn').disabled=!state.name}}
+buildThemePicker();updateUI();renderSidebar();
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeCert();document.getElementById('levelUpOverlay').classList.remove('active')}});
+document.addEventListener('click',e=>{if(!e.target.closest('.modal')&&!e.target.closest('[onclick*="show"]')){document.querySelectorAll('.modal-overlay.active').forEach(m=>m.classList.remove('active'))}})
+})();
+(function(){var zl=100;function applyZoom(){document.body.style.zoom=zl/100;var e=document.getElementById('zoomLvl');if(e)e.textContent=zl+'%'}window.zoomIn=function(){if(zl<200){zl+=10;applyZoom()}};window.zoomOut=function(){if(zl>50){zl-=10;applyZoom()}};window.zoomReset=function(){zl=100;applyZoom()};document.addEventListener('keydown',function(e){if(e.target.tagName==='INPUT'||e.target.tagName==='TEXTAREA')return;if((e.key==='+'||e.key==='=')&&!e.ctrlKey&&!e.metaKey){e.preventDefault();zoomIn()}else if((e.key==='-'||e.key==='_')&&!e.ctrlKey&&!e.metaKey){e.preventDefault();zoomOut()}else if(e.key==='0'&&!e.ctrlKey&&!e.metaKey){e.preventDefault();zoomReset()}})})();
+</script>
+<script>
+(function(){var KEY=null;var scripts=document.querySelectorAll('script');for(var i=0;i<scripts.length;i++){var km=scripts[i].textContent.match(/STORAGE_KEY\s*=\s*['"](\w+)['"]/);if(km){KEY=km[1];break}}if(!location.hash.match(/modules=/)){try{Object.keys(localStorage).filter(function(k){return k.indexOf("_allowed_modules")!==-1}).forEach(function(k){localStorage.removeItem(k)})}catch(e){}}
+var LOCK_KEY=(KEY||'app')+'_allowed_modules';var h=location.hash.match(/modules=([0-9,]+)/);var allowed=null;if(h){allowed=h[1].split(",").map(Number);try{localStorage.setItem(LOCK_KEY,JSON.stringify(allowed))}catch(e){}}else{try{var stored=localStorage.getItem(LOCK_KEY);if(stored)allowed=JSON.parse(stored)}catch(e){}}if(!allowed||!allowed.length)return;function filterSidebar(){var items=document.querySelectorAll("#sidebarModules > *");for(var i=0;i<items.length;i++){items[i].style.display=(allowed.indexOf(i)===-1)?"none":""}}var sb=document.getElementById("sidebarModules");if(sb){new MutationObserver(filterSidebar).observe(sb,{childList:true});filterSidebar()}document.addEventListener("click",function(e){var t=e.target.closest("[onclick]");if(!t)return;var oc=t.getAttribute("onclick")||"";var idx=oc.indexOf("renderModule(");if(idx===-1)return;var num=parseInt(oc.substring(idx+13));if(!isNaN(num)&&allowed.indexOf(num)===-1){e.preventDefault();e.stopImmediatePropagation()}},true);setTimeout(filterSidebar,500);window.addEventListener("hashchange",function(){var hh=location.hash.match(/modules=([0-9,]+)/);if(hh){allowed=hh[1].split(",").map(Number);try{localStorage.setItem(LOCK_KEY,JSON.stringify(allowed))}catch(e){}filterSidebar()}})})();
+</script>
+<script>
+(function(){
+var zl=100;
+function applyZoom(){document.documentElement.style.fontSize=zl+'%';var e=document.getElementById('zoomLvl');if(e)e.textContent=zl+'%';}
+window.zoomIn=function(){if(zl<200){zl+=10;applyZoom();}};
+window.zoomOut=function(){if(zl>50){zl-=10;applyZoom();}};
+window.zoomReset=function(){zl=100;applyZoom();};
+document.addEventListener('keydown',function(e){
+if(e.target.tagName==='INPUT'||e.target.tagName==='TEXTAREA'||e.target.isContentEditable)return;
+if((e.key==='+'||e.key==='=')&&!e.ctrlKey&&!e.metaKey){e.preventDefault();zoomIn();}
+else if((e.key==='-'||e.key==='_')&&!e.ctrlKey&&!e.metaKey){e.preventDefault();zoomOut();}
+else if(e.key==='0'&&!e.ctrlKey&&!e.metaKey){e.preventDefault();zoomReset();}
+});
+})();
+</script>
+<script>
+/* A11y: Focus trap for modal overlays */
+document.addEventListener('keydown',function(e){if(e.key==='Tab'){var ov=document.querySelector('.cert-overlay.active,.modal-overlay.active,[role="dialog"].active');if(ov){var fc=ov.querySelectorAll('button,a,[tabindex="0"],input,select,textarea');if(fc.length){var f=fc[0],l=fc[fc.length-1];if(e.shiftKey&&document.activeElement===f){e.preventDefault();l.focus()}else if(!e.shiftKey&&document.activeElement===l){e.preventDefault();f.focus()}}}}});
+</script>
+</body>
+</html>

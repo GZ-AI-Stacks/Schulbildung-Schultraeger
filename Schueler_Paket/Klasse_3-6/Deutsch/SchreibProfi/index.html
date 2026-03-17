@@ -1,0 +1,892 @@
+<!DOCTYPE html>
+<html lang="de" data-theme="space-dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>SchreibProfi — Rechtschreibung & Grammatik für Klasse 3-4</title>
+<meta name="description" content="Interaktive Lern-App für Klasse 3-4: Rechtschreibung, Grammatik und Textverständnis — offline und mit Spaß!">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+[data-theme="wald-dark"]{--bg:#0c1a0f;--bg2:#132818;--bg3:#1a3520;--card:#15291a;--text:#d4e8d4;--text-dim:#8aab8a;--heading:#e8f5e9;--neon:#4ade80;--neon-dim:rgba(74,222,128,.12);--neon-glow:0 0 20px rgba(74,222,128,.25);--link:#66bb6a;--border:rgba(74,222,128,.15);--success:#4ade80;--warning:#fbbf24;--danger:#f87171;--xp-purple:#a78bfa;--badge-cyan:#22d3ee;--streak-red:#f87171;--radius:20px;--shadow:0 4px 24px rgba(0,0,0,.3);--font:'Segoe UI',system-ui,sans-serif;--mono:'Courier New',monospace;--serif:Georgia,serif}
+[data-theme="wald-light"]{--bg:#f1f8e9;--bg2:#e8f5e9;--bg3:#c8e6c9;--card:#fff;--text:#2e4a2e;--text-dim:#5a7a5a;--heading:#1b5e20;--neon:#2e7d32;--neon-dim:rgba(46,125,50,.08);--neon-glow:0 0 12px rgba(46,125,50,.15);--link:#388e3c;--border:rgba(46,125,50,.15);--success:#2e7d32;--warning:#f59e0b;--danger:#dc2626;--xp-purple:#7c3aed;--badge-cyan:#0891b2;--streak-red:#dc2626;--radius:20px;--shadow:0 4px 24px rgba(0,0,0,.08);--font:'Segoe UI',system-ui,sans-serif;--mono:'Courier New',monospace;--serif:Georgia,serif}
+[data-theme="ozean-dark"]{--bg:#0a1628;--bg2:#0f1e38;--bg3:#132848;--card:#132040;--text:#c8e0f8;--text-dim:#6a9cc8;--heading:#e0f2fe;--neon:#38bdf8;--neon-dim:rgba(56,189,248,.12);--neon-glow:0 0 20px rgba(56,189,248,.25);--link:#0ea5e9;--border:rgba(56,189,248,.15);--success:#22d3ee;--warning:#fbbf24;--danger:#f87171;--xp-purple:#a78bfa;--badge-cyan:#22d3ee;--streak-red:#f87171;--radius:16px;--shadow:0 4px 24px rgba(0,0,0,.35);--font:'Segoe UI',system-ui,sans-serif;--mono:'Courier New',monospace;--serif:Georgia,serif}
+[data-theme="ozean-light"]{--bg:#f0f9ff;--bg2:#e0f2fe;--bg3:#bae6fd;--card:#fff;--text:#0c4a6e;--text-dim:#4a8ab0;--heading:#0c4a6e;--neon:#0284c7;--neon-dim:rgba(2,132,199,.08);--neon-glow:0 0 12px rgba(2,132,199,.15);--link:#0369a1;--border:rgba(2,132,199,.15);--success:#0891b2;--warning:#f59e0b;--danger:#dc2626;--xp-purple:#7c3aed;--badge-cyan:#0891b2;--streak-red:#dc2626;--radius:16px;--shadow:0 4px 24px rgba(0,0,0,.06);--font:'Segoe UI',system-ui,sans-serif;--mono:'Courier New',monospace;--serif:Georgia,serif}
+[data-theme="space-dark"]{--bg:#07020e;--bg2:#0e0620;--bg3:#150a30;--card:#110a28;--text:#d8d0f0;--text-dim:#8a7cb8;--heading:#f0e8ff;--neon:#c084fc;--neon-dim:rgba(192,132,252,.12);--neon-glow:0 0 20px rgba(192,132,252,.25);--link:#a855f7;--border:rgba(192,132,252,.15);--success:#a78bfa;--warning:#fbbf24;--danger:#f87171;--xp-purple:#c084fc;--badge-cyan:#22d3ee;--streak-red:#f87171;--radius:12px;--shadow:0 4px 24px rgba(0,0,0,.4);--font:'Segoe UI',system-ui,sans-serif;--mono:'Courier New',monospace;--serif:Georgia,serif}
+[data-theme="space-light"]{--bg:#faf5ff;--bg2:#f3e8ff;--bg3:#e9d5ff;--card:#fff;--text:#2e1065;--text-dim:#7c5aad;--heading:#2e1065;--neon:#7c3aed;--neon-dim:rgba(124,58,237,.08);--neon-glow:0 0 12px rgba(124,58,237,.15);--link:#6d28d9;--border:rgba(124,58,237,.15);--success:#7c3aed;--warning:#f59e0b;--danger:#dc2626;--xp-purple:#7c3aed;--badge-cyan:#0891b2;--streak-red:#dc2626;--radius:12px;--shadow:0 4px 24px rgba(0,0,0,.06);--font:'Segoe UI',system-ui,sans-serif;--mono:'Courier New',monospace;--serif:Georgia,serif}
+[data-theme="candy-dark"]{--bg:#1a1a2e;--bg2:#222244;--bg3:#2a2a55;--card:#262650;--text:#f0dde8;--text-dim:#b088a0;--heading:#fff;--neon:#ff6b9d;--neon-dim:rgba(255,107,157,.12);--neon-glow:0 0 20px rgba(255,107,157,.25);--link:#f472b6;--border:rgba(255,107,157,.15);--success:#f472b6;--warning:#fbbf24;--danger:#f87171;--xp-purple:#c084fc;--badge-cyan:#22d3ee;--streak-red:#f87171;--radius:24px;--shadow:0 4px 24px rgba(0,0,0,.3);--font:'Comic Sans MS','Chalkboard SE',cursive,system-ui;--mono:'Courier New',monospace;--serif:Georgia,serif}
+[data-theme="candy-light"]{--bg:#fff0f6;--bg2:#fce7f3;--bg3:#fbcfe8;--card:#fff;--text:#831843;--text-dim:#a0547a;--heading:#831843;--neon:#ec4899;--neon-dim:rgba(236,72,153,.08);--neon-glow:0 0 12px rgba(236,72,153,.15);--link:#db2777;--border:rgba(236,72,153,.15);--success:#ec4899;--warning:#f59e0b;--danger:#dc2626;--xp-purple:#7c3aed;--badge-cyan:#0891b2;--streak-red:#dc2626;--radius:24px;--shadow:0 4px 24px rgba(0,0,0,.06);--font:'Comic Sans MS','Chalkboard SE',cursive,system-ui;--mono:'Courier New',monospace;--serif:Georgia,serif}
+html{scroll-behavior:smooth}
+body{font-family:var(--font);background:var(--bg);color:var(--text);font-size:17px;line-height:1.7;min-height:100vh;transition:background .3s,color .3s}
+a{color:var(--link);text-decoration:none}a:hover{text-decoration:underline}
+.skip-nav{position:absolute;top:-50px;left:8px;background:var(--neon);color:var(--bg);padding:8px 16px;z-index:9999;border-radius:0 0 8px 8px;font-weight:700}.skip-nav:focus{top:0}
+.header{position:sticky;top:0;z-index:100;background:var(--bg2);border-bottom:1px solid var(--border);padding:10px 20px;display:flex;align-items:center;gap:12px;backdrop-filter:blur(12px)}
+.header .logo{display:flex;align-items:center;gap:10px;font-weight:700;font-size:20px;color:var(--heading)}.header .logo svg{width:32px;height:32px}
+.header .xp-bar{flex:1;max-width:260px;margin-left:auto}.header .xp-label{font-size:12px;color:var(--text-dim);display:flex;justify-content:space-between;font-weight:600}.header .xp-track{height:8px;background:var(--bg3);border-radius:4px;overflow:hidden;margin-top:2px}.header .xp-fill{height:100%;background:var(--neon);border-radius:4px;transition:width .5s}
+.hamburger{display:none;background:none;border:2px solid var(--border);color:var(--text);font-size:22px;padding:4px 10px;border-radius:var(--radius);cursor:pointer}@media(max-width:800px){.hamburger{display:block}}
+.sidebar{position:fixed;top:54px;left:0;width:280px;height:calc(100vh - 54px);background:var(--bg2);border-right:1px solid var(--border);overflow-y:auto;padding:16px;z-index:90;transition:transform .3s}
+.sidebar h3{font-size:14px;color:var(--text-dim);text-transform:uppercase;letter-spacing:2px;margin-bottom:12px}
+.sidebar-item{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:var(--radius);cursor:pointer;color:var(--text);font-size:15px;transition:background .2s;margin-bottom:4px;border:1px solid transparent}.sidebar-item:hover{background:var(--neon-dim);border-color:var(--border)}.sidebar-item.active{background:var(--neon-dim);border-color:var(--neon);color:var(--neon);font-weight:700}.sidebar-item.completed::after{content:'✓';margin-left:auto;color:var(--success);font-weight:700}
+.sidebar-link{display:block;padding:10px 12px;border-radius:var(--radius);color:var(--text-dim);font-size:14px;cursor:pointer;transition:background .2s;margin-bottom:2px}.sidebar-link:hover{background:var(--neon-dim);color:var(--text)}
+@media(max-width:800px){.sidebar{transform:translateX(-100%)}.sidebar.open{transform:translateX(0)}}
+.main{margin-left:280px;padding:32px;max-width:860px}@media(max-width:800px){.main{margin-left:0;padding:16px}}
+.welcome{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:70vh;text-align:center;padding:40px 20px}
+.welcome .hero-emoji{font-size:80px;margin-bottom:16px;animation:bounce 2s ease-in-out infinite}@keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-16px)}}
+.welcome h1{font-size:clamp(32px,6vw,52px);color:var(--heading);margin-bottom:8px}.welcome .sub{font-size:clamp(16px,3vw,20px);color:var(--text-dim);margin-bottom:32px;max-width:500px}
+.welcome input{font-size:20px;padding:14px 24px;border-radius:var(--radius);border:2px solid var(--border);background:var(--bg2);color:var(--text);text-align:center;width:min(340px,90%);outline:none;font-family:var(--font);transition:border-color .3s}.welcome input:focus{border-color:var(--neon)}
+.welcome .start-btn{margin-top:20px;padding:16px 48px;font-size:20px;font-weight:700;border-radius:var(--radius);border:none;background:var(--neon);color:var(--bg);cursor:pointer;font-family:var(--font);transition:transform .2s,box-shadow .2s}.welcome .start-btn:hover{transform:scale(1.05);box-shadow:var(--neon-glow)}.welcome .start-btn:disabled{opacity:.5;cursor:not-allowed;transform:none}
+.theme-picker{display:flex;gap:8px;margin-top:20px;flex-wrap:wrap;justify-content:center}.theme-btn{width:44px;height:44px;border-radius:50%;border:3px solid transparent;cursor:pointer;transition:transform .2s,border-color .2s}.theme-btn:hover{transform:scale(1.15)}.theme-btn.active{border-color:var(--heading);transform:scale(1.15)}.mode-toggle{background:var(--bg3);border:2px solid var(--border);color:var(--text);padding:6px 14px;border-radius:20px;cursor:pointer;font-size:18px;transition:all .2s;margin-left:8px}.mode-toggle:hover{border-color:var(--neon)}
+.module-header{text-align:center;margin-bottom:32px}.module-header .mod-badge{display:inline-block;background:var(--neon-dim);border:1px solid var(--border);color:var(--neon);padding:6px 16px;border-radius:20px;font-size:14px;font-weight:600;margin-bottom:12px}.module-header h1{color:var(--heading);font-size:clamp(24px,4vw,36px)}.module-header .mod-desc{color:var(--text-dim);margin-top:8px;font-size:16px}
+.lesson-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:24px 28px;margin-bottom:20px;box-shadow:var(--shadow)}.lesson-card h3{color:var(--heading);font-size:20px;margin-bottom:12px}.lesson-card p,.lesson-card li{font-size:17px;line-height:1.8;margin-bottom:8px}.lesson-card .info-box{background:var(--neon-dim);border-left:4px solid var(--neon);padding:14px 18px;border-radius:0 var(--radius) var(--radius) 0;margin:16px 0;font-size:16px}.lesson-card ul,.lesson-card ol{padding-left:24px;margin:12px 0}
+.interactive-area{background:var(--card);border:2px solid var(--neon);border-radius:var(--radius);padding:24px;margin:24px 0;box-shadow:var(--neon-glow)}.interactive-area h4{color:var(--neon);font-size:18px;margin-bottom:16px}#interactiveContent{min-height:100px}
+.ix-grid{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;margin:16px 0}.ix-item{background:var(--bg3);border:2px solid var(--border);border-radius:var(--radius);padding:14px 20px;font-size:20px;cursor:pointer;transition:all .2s;user-select:none;text-align:center;min-width:60px}.ix-item:hover{border-color:var(--neon);background:var(--neon-dim)}.ix-item.selected{border-color:var(--neon);background:var(--neon-dim);box-shadow:var(--neon-glow)}.ix-item.correct{border-color:var(--success);background:rgba(74,222,128,.15);color:var(--success)}.ix-item.wrong{border-color:var(--danger);background:rgba(248,113,113,.15);color:var(--danger)}.ix-item.placed{opacity:.4;pointer-events:none}
+.ix-btn{background:var(--neon);color:var(--bg);border:none;padding:12px 28px;border-radius:var(--radius);font-size:17px;font-weight:700;cursor:pointer;font-family:var(--font);margin-top:16px;transition:transform .2s}.ix-btn:hover{transform:scale(1.05)}.ix-btn:disabled{opacity:.5;cursor:not-allowed;transform:none}
+.ix-feedback{text-align:center;padding:14px;border-radius:var(--radius);font-size:18px;font-weight:700;margin-top:12px;display:none}.ix-feedback.pass{display:block;background:rgba(74,222,128,.12);color:var(--success)}.ix-feedback.fail{display:block;background:rgba(248,113,113,.12);color:var(--danger)}
+.ix-blank{display:inline-block;min-width:80px;border-bottom:2px dashed var(--neon);padding:2px 8px;margin:0 4px;cursor:pointer;transition:all .2s;text-align:center;font-weight:700;color:var(--neon)}.ix-blank.filled{border-bottom-style:solid;background:var(--neon-dim);border-radius:6px}.ix-blank.correct-b{border-color:var(--success);color:var(--success)}.ix-blank.wrong-b{border-color:var(--danger);color:var(--danger)}
+.ix-wordbank{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:16px 0}.ix-wb-btn{background:var(--bg3);border:2px solid var(--border);border-radius:var(--radius);padding:8px 16px;font-size:16px;cursor:pointer;transition:all .2s;font-family:var(--font)}.ix-wb-btn:hover{border-color:var(--neon);background:var(--neon-dim)}.ix-wb-btn.used{opacity:.3;pointer-events:none}
+.ix-mark{display:inline;padding:2px 4px;border-radius:4px;cursor:pointer;transition:all .2s}.ix-mark:hover{background:var(--neon-dim)}.ix-mark.mark-nomen{background:rgba(74,222,128,.2);border-bottom:2px solid var(--success)}.ix-mark.mark-verb{background:rgba(56,189,248,.2);border-bottom:2px solid #38bdf8}.ix-mark.mark-adj{background:rgba(251,191,36,.2);border-bottom:2px solid var(--warning)}
+.ix-zone{border:2px dashed var(--border);border-radius:var(--radius);padding:16px;min-height:60px;text-align:center;transition:all .2s;flex:1;min-width:120px}.ix-zone .zone-label{font-size:14px;color:var(--text-dim);font-weight:600;margin-bottom:8px}
+.quiz-section,.boss-section{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:24px;margin:20px 0}.boss-section{border-color:var(--warning);box-shadow:0 0 20px rgba(251,191,36,.1)}.quiz-section h3,.boss-section h3{color:var(--heading);margin-bottom:16px;font-size:20px}.boss-sub{color:var(--warning);font-size:14px;margin-bottom:16px}
+.quiz-q{margin-bottom:20px}.quiz-q p{font-weight:600;font-size:17px;margin-bottom:10px;color:var(--heading)}.quiz-q label{display:block;padding:10px 16px;border-radius:var(--radius);border:1px solid var(--border);margin-bottom:6px;cursor:pointer;transition:all .2s;font-size:16px}.quiz-q label:hover{background:var(--neon-dim)}.quiz-q label.correct{background:rgba(74,222,128,.15);border-color:var(--success);color:var(--success)}.quiz-q label.wrong{background:rgba(248,113,113,.15);border-color:var(--danger);color:var(--danger)}
+.quiz-submit{background:var(--neon);color:var(--bg);border:none;padding:12px 28px;border-radius:var(--radius);font-size:16px;font-weight:700;cursor:pointer;font-family:var(--font)}.quiz-submit:disabled{opacity:.5;cursor:not-allowed}
+.quiz-result{padding:14px;border-radius:var(--radius);font-weight:700;font-size:17px;margin-top:12px;text-align:center}.quiz-result.pass{background:rgba(74,222,128,.12);color:var(--success)}.quiz-result.fail{background:rgba(248,113,113,.12);color:var(--danger)}
+.quiz-explanation{margin-top:6px;padding:8px 14px;border-radius:var(--radius);background:rgba(74,222,128,.08);border-left:3px solid var(--success);font-size:14px;color:var(--success);font-weight:600}
+.badges-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:12px;margin-top:16px}.badge-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px;text-align:center}.badge-card.earned{border-color:var(--neon);box-shadow:var(--neon-glow)}.badge-card .badge-icon{font-size:36px;margin-bottom:6px}.badge-card .badge-name{font-weight:700;font-size:14px;color:var(--heading)}.badge-card .badge-desc{font-size:12px;color:var(--text-dim);margin-top:4px}.badge-card.locked{opacity:.4}
+.stats-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:16px;margin-top:16px}.stat-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:20px;text-align:center}.stat-card .stat-val{font-size:36px;font-weight:700;color:var(--neon)}.stat-card .stat-label{font-size:14px;color:var(--text-dim);margin-top:4px}
+.notif{position:fixed;top:-80px;right:20px;padding:14px 20px;border-radius:var(--radius);font-size:15px;z-index:999;transition:top .4s ease;box-shadow:var(--shadow);max-width:340px}.notif.show{top:70px}.notif.xp{background:var(--xp-purple);color:#fff}.notif.badge{background:var(--badge-cyan);color:#000}.notif.streak{background:var(--streak-red);color:#fff}.notif.level{background:var(--neon);color:var(--bg)}.notif-title{font-weight:700;font-size:16px}.notif-text{font-size:13px;opacity:.85;margin-top:2px}
+.level-up-overlay{position:fixed;inset:0;z-index:500;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,.7)}.level-up-overlay.active{display:flex}.lvl-box{text-align:center;animation:popIn .5s ease}.lvl-icon{font-size:64px}.lvl-title{font-size:36px;font-weight:900;color:var(--neon);margin:8px 0}.lvl-name{font-size:20px;color:var(--heading)}@keyframes popIn{0%{transform:scale(0) rotate(-10deg);opacity:0}100%{transform:scale(1) rotate(0);opacity:1}}#confetti{position:fixed;inset:0;pointer-events:none;z-index:501;overflow:hidden}
+.cert-overlay{display:none;position:fixed;inset:0;z-index:400;background:rgba(0,0,0,.85);align-items:center;justify-content:center;flex-direction:column;padding:20px;overflow-y:auto}.cert-overlay.active{display:flex}.cert-picker{display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap;justify-content:center}.cert-picker button{padding:8px 16px;border-radius:var(--radius);border:2px solid var(--border);background:var(--bg2);color:var(--text);cursor:pointer;font-size:14px;font-family:var(--font);transition:all .2s}.cert-picker button.active{border-color:var(--neon);color:var(--neon);background:var(--neon-dim)}.cert-frame{width:min(700px,95vw);min-height:500px;border-radius:12px;overflow:hidden}.cert-actions{display:flex;gap:12px;margin-top:16px;flex-wrap:wrap;justify-content:center}.cert-actions button{padding:10px 20px;border-radius:var(--radius);border:2px solid var(--border);background:var(--bg2);color:var(--text);cursor:pointer;font-size:14px;font-family:var(--font);transition:all .2s}.cert-actions button:hover{border-color:var(--neon);color:var(--neon)}
+@media print{*{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important;color-adjust:exact!important}.header,.sidebar,.notif,.level-up-overlay,#confetti{display:none!important}.main{margin-left:0!important;padding:20px!important}.lesson-card{break-inside:avoid;page-break-inside:avoid;margin-bottom:24px}}
+.site-footer{text-align:center;padding:32px 0;margin-top:40px;border-top:1px solid var(--border);color:var(--text-dim);font-size:13px}.footer-logo{display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:8px;font-weight:700;color:var(--text)}
+
+.zoom-controls{position:fixed;bottom:16px;left:16px;display:flex;gap:4px;z-index:9999}
+.zoom-btn{width:32px;height:32px;border-radius:50%;border:1px solid var(--border,#2a3444);background:var(--bg2,#111827);color:var(--text,#d4dce8);cursor:pointer;font-size:15px;display:flex;align-items:center;justify-content:center;transition:all .2s;font-family:inherit;line-height:1}
+.zoom-btn:hover{border-color:var(--neon,#3b82f6);color:var(--neon,#3b82f6);transform:scale(1.1)}
+.zoom-btn:focus-visible{outline:2px solid var(--neon,#3b82f6);outline-offset:2px}
+.zoom-level{font-size:10px;position:absolute;top:-16px;left:50%;transform:translateX(-50%);color:var(--text-dim,#8899aa);white-space:nowrap;pointer-events:none}
+
+/* A11y: Print improvements */
+@media print{body{background:#fff!important;color:#000!important}.cert-overlay,.modal-overlay,.level-up-overlay,.theme-overlay,.zoom-controls{display:none!important}.lesson-card,.quiz-section,.boss-section,.interactive-area{break-inside:avoid;page-break-inside:avoid}}
+
+/* Audio/Speech */
+.tts-btn{background:none;border:none;cursor:pointer;font-size:.9em;opacity:.5;transition:all .2s;vertical-align:middle;margin-left:8px;padding:2px 6px;border-radius:4px}
+.tts-btn:hover{opacity:1;background:var(--bg2)}.tts-btn.speaking{opacity:1;color:var(--neon);animation:tts-pulse 1s infinite}
+@keyframes tts-pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.15)}}
+.tts-bar{display:flex;align-items:center;gap:8px;padding:6px 12px;background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);margin:8px 0;font-size:.8rem;flex-wrap:wrap}
+.tts-bar select{background:var(--bg);color:var(--text);border:1px solid var(--border);border-radius:4px;padding:2px 6px;font-size:.78rem}
+.tts-bar button{background:none;border:1px solid var(--border);border-radius:4px;padding:2px 8px;cursor:pointer;color:var(--text);font-size:.8rem}
+.tts-bar button:hover{background:var(--bg)}
+.speech-ex{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:16px;margin:12px 0;text-align:center}
+.speech-ex h4{margin:0 0 8px;font-size:1rem}
+.mic-btn{font-size:1.6em;background:none;border:2px solid var(--neon);border-radius:50%;width:52px;height:52px;cursor:pointer;transition:all .3s;color:var(--text);display:inline-flex;align-items:center;justify-content:center}
+.mic-btn:hover{background:var(--neon);color:var(--bg)}.mic-btn.rec{background:#ef4444;border-color:#ef4444;color:#fff;animation:tts-pulse 1s infinite}
+.sr-res{margin-top:8px;padding:6px 10px;border-radius:4px;font-weight:600;font-size:.85rem;display:inline-block}
+.sr-res.good{background:#22c55e22;color:#22c55e}.sr-res.retry{background:#f59e0b22;color:#f59e0b}
+.sr-na{font-size:.8rem;color:var(--text-dim);margin-top:8px}
+</style>
+</head>
+<body>
+<a href="#mainContent" class="skip-nav">Zum Inhalt springen</a>
+<header class="header" role="banner">
+  <button class="hamburger" onclick="toggleSidebar()" aria-label="Menü">☰</button>
+  <div class="logo">
+    <svg viewBox="0 0 32 32" fill="none" aria-hidden="true"><rect x="5" y="4" width="22" height="24" rx="2" fill="var(--neon-dim)" stroke="var(--neon)" stroke-width="1"/><path d="M10 10h12M10 15h10M10 20h8" stroke="var(--neon)" stroke-width="1.5" opacity=".5"/><circle cx="24" cy="22" r="5" fill="var(--neon)" opacity=".8"/><text x="24" y="24.5" text-anchor="middle" font-size="7" font-weight="900" fill="var(--bg)">✎</text></svg>
+    <span>SchreibProfi</span>
+  </div>
+  <div class="xp-bar"><div class="xp-label"><span id="levelName">ABC-Entdecker</span><span id="xpText">0 XP</span></div><div class="xp-track"><div class="xp-fill" id="xpFill" style="width:0%"></div></div></div>
+</header>
+<nav class="sidebar" id="sidebar" role="navigation" aria-label="Module">
+  <h3>Module</h3><div id="sidebarModules"></div>
+  <hr style="border:none;border-top:1px solid var(--border);margin:16px 0">
+  <div class="sidebar-link" onclick="showBadges()">🏅 Abzeichen</div>
+  <div class="sidebar-link" onclick="showStats()">📊 Statistik</div>
+  <div class="sidebar-link" onclick="showCert()">🎓 Urkunde</div>
+  <hr style="border:none;border-top:1px solid var(--border);margin:16px 0">
+  <div class="sidebar-link" onclick="exportData()">💾 Speichern</div>
+  <label class="sidebar-link" style="cursor:pointer">📂 Laden <input type="file" accept=".json" onchange="importData(event)" style="display:none"></label>
+  <div class="sidebar-link" onclick="if(confirm('Wirklich alles zurücksetzen?')){localStorage.removeItem(STORAGE_KEY);location.reload()}" style="color:var(--danger)">🗑️ Zurücksetzen</div>
+</nav>
+<main class="main" id="mainContent">
+  <div class="welcome" id="welcomeScreen">
+    <div class="hero-emoji" id="heroEmoji">🚀</div>
+    <h1 id="welcomeTitle">SchreibProfi</h1>
+    <p class="sub" id="welcomeSub">Werde zum Rechtschreib- und Grammatik-Profi!</p>
+    <input type="text" id="nameInput" placeholder="Dein Name" maxlength="24" aria-label="Dein Name" oninput="document.getElementById('startBtn').disabled=!this.value.trim()">
+    <button class="start-btn" id="startBtn" disabled onclick="startApp()">Abheben</button>
+    <div class="theme-picker" id="themePicker"></div>
+  </div>
+  <div id="moduleContent" style="display:none"></div>
+  <div id="badgesView" style="display:none"></div>
+  <div id="statsView" style="display:none"></div>
+</main>
+<div class="notif" id="notif" role="status" aria-live="polite" aria-atomic="true"><div class="notif-title" id="notifTitle"></div><div class="notif-text" id="notifText"></div></div>
+<div class="level-up-overlay" id="levelUpOverlay"><div class="lvl-box" id="levelUpBox"></div></div>
+<div id="confetti"></div>
+<div class="cert-overlay" id="certOverlay" role="dialog" aria-label="Urkunde" aria-modal="true">
+  <div class="cert-picker" id="certPicker"></div>
+  <div class="cert-frame" id="certFrame"></div>
+  <div class="cert-actions"><button onclick="printCert()">🖨️ Drucken / PDF</button><button onclick="closeCert()">Schließen</button></div>
+</div>
+<script>
+// ═══════════════════════════════════════════════
+// Quiz-Verschlüsselung
+// ═══════════════════════════════════════════════
+
+// === Audio (TTS) ===
+const _synth=window.speechSynthesis,_LANG='de-DE';let _ttsOn=false,_ttsRate=1,_ttsTimer=null;
+function speakLesson(i){if(_ttsOn){stopTTS();return}const c=document.querySelectorAll('.lesson-card');if(!c[i]||!_synth)return;stopTTS();const u=new SpeechSynthesisUtterance(c[i].innerText);u.lang=_LANG;u.rate=_ttsRate;u.onstart=()=>{_ttsOn=true;updTTSUI();startTTSTimer()};u.onend=()=>{_ttsOn=false;updTTSUI();clearTTSTimer()};u.onerror=()=>{_ttsOn=false;updTTSUI();clearTTSTimer()};_synth.speak(u);showTTSBar()}
+function speakText(t,lang){if(!_synth)return;stopTTS();const u=new SpeechSynthesisUtterance(t);u.lang=lang||_LANG;u.rate=_ttsRate;u.onstart=()=>{_ttsOn=true;updTTSUI();startTTSTimer()};u.onend=()=>{_ttsOn=false;updTTSUI();clearTTSTimer()};u.onerror=()=>{_ttsOn=false;updTTSUI();clearTTSTimer()};_synth.speak(u)}
+function stopTTS(){if(_synth){_synth.cancel()}_ttsOn=false;updTTSUI();clearTTSTimer()}
+function updTTSUI(){document.querySelectorAll('.tts-btn').forEach(b=>b.classList.toggle('speaking',_ttsOn))}
+function setTTSRate(r){_ttsRate=parseFloat(r)}
+function startTTSTimer(){clearTTSTimer();_ttsTimer=setInterval(()=>{if(_synth&&_synth.speaking&&!_synth.paused){_synth.pause();_synth.resume()}},10000)}
+function clearTTSTimer(){if(_ttsTimer){clearInterval(_ttsTimer);_ttsTimer=null}}
+function showTTSBar(){if(document.getElementById('ttsBar'))return;const mc=document.getElementById('moduleContent');if(!mc)return;const b=document.createElement('div');b.className='tts-bar';b.id='ttsBar';b.innerHTML='\u{1F50A} <select onchange="setTTSRate(this.value)"><option value="0.7">Langsam</option><option value="1" selected>Normal</option><option value="1.3">Schnell</option></select> <button onclick="stopTTS()">\u25A0 Stopp</button>';mc.prepend(b)}
+
+// === Audio (STT) ===
+const _SR=window.SpeechRecognition||window.webkitSpeechRecognition;let _rec=null,_recCB=null;
+function initSR(){if(!_SR)return false;_rec=new _SR();_rec.lang=_LANG;_rec.continuous=false;_rec.interimResults=false;_rec.onresult=e=>{const t=e.results[0][0].transcript.toLowerCase().trim();if(_recCB)_recCB(t,e.results[0][0].confidence)};_rec.onerror=()=>{document.querySelectorAll('.mic-btn').forEach(b=>b.classList.remove('rec'))};_rec.onend=()=>{document.querySelectorAll('.mic-btn').forEach(b=>b.classList.remove('rec'))};return true}
+function startSR(cb){if(!_rec&&!initSR()){cb(null,0);return}_recCB=cb;document.querySelectorAll('.mic-btn').forEach(b=>b.classList.add('rec'));try{_rec.start()}catch(e){cb(null,0)}}
+let _spIdx=0,_spSen=[];
+function initSpEx(m){const mod=modules[m];const d=document.createElement('div');d.innerHTML=mod.lessons.map(l=>l.content).join(' ');_spSen=d.textContent.split(/[.!?]+/).map(s=>s.trim()).filter(s=>s.length>15&&s.length<100).slice(0,5);_spIdx=0;renderSpEx()}
+function renderSpEx(){const el=document.getElementById('speechExArea');if(!el)return;if(!_spSen.length){el.innerHTML='<p class="sr-na">Keine S\u00E4tze f\u00FCr Sprach\u00FCbung verf\u00FCgbar.</p>';return}const s=_spSen[_spIdx].replace(/"/g,'&quot;').replace(/'/g,'&#39;');el.innerHTML='<p style="font-size:1.05em;color:var(--neon);margin:10px 0;font-style:italic">&bdquo;'+_spSen[_spIdx]+'&ldquo;</p><div style="display:flex;justify-content:center;gap:16px;margin:12px 0"><button class="tts-btn" onclick="speakText(this.closest(\'.speech-ex\').querySelector(\'p\').textContent)" style="font-size:1.5em;opacity:1" title="Vorlesen">&#128266;</button>'+(_SR?'<button class="mic-btn" onclick="doSpCheck()" title="Nachsprechen">&#127908;</button>':'<p class="sr-na">Spracherkennung nicht verf\u00FCgbar.</p>')+'</div><div id="srRes"></div><div style="font-size:.78rem;color:var(--text-dim);margin-top:8px">Satz '+(_spIdx+1)+' von '+_spSen.length+'</div>'}
+function doSpCheck(){const expected=_spSen[_spIdx].toLowerCase().replace(/[^a-z\u00e4\u00f6\u00fc\u00df\u00e9\u00e8\u00ea\u00e0 0-9]/g,'');startSR((spoken,conf)=>{const el=document.getElementById('srRes');if(!el)return;if(!spoken){el.innerHTML='<span class="sr-res retry">Nicht erkannt \u2014 nochmal versuchen</span>';return}const sim=calcSim(spoken.replace(/[^a-z\u00e4\u00f6\u00fc\u00df\u00e9\u00e8\u00ea\u00e0 0-9]/g,''),expected);if(sim>.45){el.innerHTML='<span class="sr-res good">\u2714 Gut! ('+Math.round(sim*100)+'%)</span>';_spIdx++;setTimeout(()=>{if(_spIdx<_spSen.length)renderSpEx();else{el.innerHTML='<span class="sr-res good">\u2714 Alle S\u00E4tze geschafft!</span>';if(typeof addXP==='function'&&typeof state!=='undefined'&&!state.interactiveResults['sp_'+state.currentModule]){state.interactiveResults['sp_'+state.currentModule]=true;addXP(30,'Sprach\u00FCbung');saveState()}}},1200)}else{el.innerHTML='<span class="sr-res retry">\u21BB Nochmal: &quot;'+spoken+'&quot;</span>'}})}
+function calcSim(a,b){const wa=a.split(/\s+/).filter(Boolean),wb=b.split(/\s+/).filter(Boolean);if(!wa.length||!wb.length)return 0;let c=0;wa.forEach(w=>{if(wb.some(x=>x.includes(w)||w.includes(x)))c++});return c/Math.max(wa.length,wb.length)}
+
+const _qk=[0x4A,0x7F,0x2B,0x61,0x5C,0x3E,0x18,0x73];
+function _d(h,i){return h^_qk[i%_qk.length]}
+
+// ═══════════════════════════════════════════════
+// Levels (20 Ränge)
+// ═══════════════════════════════════════════════
+const LEVELS=[
+  {name:'ABC-Entdecker',xp:0},{name:'Buchstaben-Freund',xp:40},{name:'Silben-Klatscher',xp:100},
+  {name:'Wörter-Sammler',xp:180},{name:'Lese-Anfänger',xp:280},{name:'Geschichten-Hörer',xp:400},
+  {name:'Satz-Baumeister',xp:540},{name:'Lese-Fuchs',xp:700},{name:'Bücherwurm',xp:880},
+  {name:'Schreib-Künstler',xp:1080},{name:'Wörter-Zauberer',xp:1300},{name:'Text-Detektiv',xp:1540},
+  {name:'Geschichten-Held',xp:1800},{name:'Lese-Drache',xp:2080},{name:'Grammatik-Ritter',xp:2380},
+  {name:'Rechtschreib-Profi',xp:2700},{name:'Autoren-Star',xp:3040},{name:'Sprach-Magier',xp:3400},
+  {name:'Lese-Legende',xp:3780},{name:'Meister der Wörter',xp:4180}
+];
+
+// ═══════════════════════════════════════════════
+// Badges (20)
+// ═══════════════════════════════════════════════
+const BADGES=[
+  {id:'m0',name:'Nomen-Kenner',icon:'🔠',desc:'Modul 1 abgeschlossen'},
+  {id:'m1',name:'Doppel-Detektiv',icon:'🔍',desc:'Modul 2 abgeschlossen'},
+  {id:'m2',name:'Dehnungs-Profi',icon:'📏',desc:'Modul 3 abgeschlossen'},
+  {id:'m3',name:'Wortarten-Sortierer',icon:'🗂️',desc:'Modul 4 abgeschlossen'},
+  {id:'m4',name:'Konjugations-Held',icon:'💪',desc:'Modul 5 abgeschlossen'},
+  {id:'m5',name:'Satzglieder-Meister',icon:'🧩',desc:'Modul 6 abgeschlossen'},
+  {id:'m6',name:'Satzzeichen-König',icon:'❗',desc:'Modul 7 abgeschlossen'},
+  {id:'m7',name:'Wort-Bauer',icon:'🏗️',desc:'Modul 8 abgeschlossen'},
+  {id:'m8',name:'Brief-Schreiber',icon:'✉️',desc:'Modul 9 abgeschlossen'},
+  {id:'m9',name:'Fehler-Jäger',icon:'🏆',desc:'Modul 10 abgeschlossen'},
+  {id:'first_quiz',name:'Quiz-Neuling',icon:'❓',desc:'Erstes Quiz bestanden'},
+  {id:'perfect_quiz',name:'Perfektionist',icon:'💎',desc:'Quiz mit 5/5 bestanden'},
+  {id:'first_boss',name:'Boss-Bezwinger',icon:'👑',desc:'Erste Boss-Challenge bestanden'},
+  {id:'all_bosses',name:'Endgegner',icon:'🏆',desc:'Alle Boss-Challenges bestanden'},
+  {id:'streak3',name:'Durchstarter',icon:'🔥',desc:'3 Tage in Folge gelernt'},
+  {id:'streak7',name:'Wochenkrieger',icon:'⚔️',desc:'7 Tage in Folge gelernt'},
+  {id:'half_done',name:'Halbzeit',icon:'⏳',desc:'5 Module abgeschlossen'},
+  {id:'speed_quiz',name:'Blitz-Denker',icon:'⚡',desc:'Quiz in unter 60 Sekunden'},
+  {id:'explorer',name:'Entdecker',icon:'🗺️',desc:'Alle Module angesehen'},
+  {id:'graduate',name:'Absolvent',icon:'🎓',desc:'Alle 10 Module abgeschlossen'}
+];
+
+// ═══════════════════════════════════════════════
+// Theme Config
+// ═══════════════════════════════════════════════
+const THEME_CONFIG={
+  wald:{name:'Zauberwald',emoji:'🌳',color:'#4ade80',welcomeEmoji:'🌳',welcomeTitle:'SchreibProfi',welcomeSub:'Werde zum Schreib-Profi im magischen Wald!',welcomeBtn:'Wald betreten'},
+  ozean:{name:'Ozean-Abenteuer',emoji:'🌊',color:'#38bdf8',welcomeEmoji:'🐠',welcomeTitle:'SchreibProfi',welcomeSub:'Tauche ein in die Welt der Rechtschreibung und Grammatik!',welcomeBtn:'Abtauchen'},
+  space:{name:'Weltraum-Mission',emoji:'🚀',color:'#c084fc',welcomeEmoji:'🚀',welcomeTitle:'SchreibProfi',welcomeSub:'Werde zum Rechtschreib- und Grammatik-Profi!',welcomeBtn:'Abheben'},
+  candy:{name:'Süßigkeiten-Land',emoji:'🍬',color:'#ff6b9d',welcomeEmoji:'🍬',welcomeTitle:'SchreibProfi',welcomeSub:'Im Süßigkeiten-Land lernst du Schreiben mit Spaß!',welcomeBtn:'Naschen'}
+};
+
+// ═══════════════════════════════════════════════
+// Module (10)
+// ═══════════════════════════════════════════════
+const modules=[
+// ── Modul 0: Groß- und Kleinschreibung ──
+{id:0,title:'Groß- und Kleinschreibung',icon:'🔠',duration:'25 Min.',
+description:'Lerne, wann Wörter großgeschrieben werden — finde die Nomen im Text!',
+interactive:'nomenJ\u00E4ger',
+lessons:[
+{title:'Wann schreibt man groß?',content:`<p>Im Deutschen werden bestimmte Wörter <strong>großgeschrieben</strong>:</p>
+<div class="info-box">🔠 <strong>Großschreibung:</strong><br>
+1. Am <strong>Satzanfang</strong>: „<strong>D</strong>ie Sonne scheint."<br>
+2. <strong>Nomen</strong> (Namenwörter): <strong>H</strong>und, <strong>T</strong>isch, <strong>F</strong>reude<br>
+3. <strong>Namen</strong>: <strong>T</strong>om, <strong>B</strong>erlin, <strong>D</strong>eutschland</div>
+<p>Alle anderen Wörter schreibt man <strong>klein</strong>: Verben (laufen, spielen), Adjektive (groß, schön), Artikel (der, die, das).</p>`},
+{title:'Nomen erkennen',content:`<p>Nomen erkennt man an diesen <strong>Tricks</strong>:</p>
+<ul><li>📝 Man kann einen <strong>Artikel</strong> davorsetzen: <strong>der</strong> Hund, <strong>die</strong> Blume, <strong>das</strong> Haus</li>
+<li>📝 Man kann sie in <strong>Einzahl und Mehrzahl</strong> setzen: Hund → Hunde</li>
+<li>📝 Man kann sie <strong>anfassen oder sehen</strong> (konkrete Nomen) oder <strong>fühlen</strong> (abstrakte Nomen: Freude, Angst)</li></ul>
+<div class="info-box">💡 <strong>Merke:</strong> Auch unsichtbare Dinge können Nomen sein: die <strong>Freude</strong>, der <strong>Mut</strong>, die <strong>Liebe</strong>!</div>`}
+],
+quiz:[
+{q:'Welches Wort ist ein Nomen?',a:['laufen','schön','Tisch','schnell'],_h:0x48},
+{q:'Warum wird „Hund" großgeschrieben?',a:['Weil es am Satzanfang steht','Weil es ein Nomen ist','Weil es ein Verb ist','Weil es kurz ist'],_h:0x7E},
+{q:'Welcher Trick hilft, Nomen zu erkennen?',a:['Rückwärts lesen','Artikel davorsetzen','Laut vorlesen','Buchstaben zählen'],_h:0x2A},
+{q:'Welches Wort ist KEIN Nomen?',a:['Baum','Freude','rennen','Katze'],_h:0x63},
+{q:'Welches abstrakte Nomen gibt es?',a:['Tisch','laufen','Mut','groß'],_h:0x5E}
+],
+boss:[
+{q:'In welchem Satz ist die Großschreibung richtig?',a:['der Hund Bellt laut.','Der Hund bellt laut.','der hund bellt laut.','Der hund Bellt Laut.'],_h:0x4B},
+{q:'Wie viele Nomen hat „Die Katze sitzt auf dem Tisch"?',a:['1','2','3','4'],_h:0x7E},
+{q:'Welches Wort muss großgeschrieben werden? „tom geht in die schule"',a:['geht','in','die','Tom und Schule'],_h:0x28}
+]},
+
+// ── Modul 1: Doppelte Buchstaben ──
+{id:1,title:'Doppelte Buchstaben',icon:'🔍',duration:'20 Min.',
+description:'Lerne, wann Buchstaben verdoppelt werden: ll, mm, nn, ss, tt und mehr.',
+interactive:'doppelDetektiv',
+lessons:[
+{title:'Wann verdoppeln wir Buchstaben?',content:`<p>Nach einem <strong>kurzen Vokal</strong> wird der folgende Konsonant oft <strong>verdoppelt</strong>:</p>
+<div class="info-box">🔍 <strong>Regel:</strong> Kurzer Vokal → doppelter Konsonant<br>
+Ba<strong>ll</strong> (kurzes a) · So<strong>nn</strong>e (kurzes o) · Mu<strong>tt</strong>er (kurzes u)<br>
+Bri<strong>ll</strong>e · Schu<strong>ss</strong> · Wa<strong>ss</strong>er · Ha<strong>mm</strong>er</div>
+<p>Nach einem <strong>langen Vokal</strong> wird NICHT verdoppelt:</p>
+<ul><li>🐕 H<strong>u</strong>nd (langes u) → nur ein n: Hund</li>
+<li>📖 B<strong>u</strong>ch (langes u) → nur ein c: Buch</li></ul>`},
+{title:'Die wichtigsten Doppelungen',content:`<p>Diese Doppelungen kommen am häufigsten vor:</p>
+<ul><li><strong>ll</strong>: Ball, Brille, schnell, Teller</li>
+<li><strong>mm</strong>: Hammer, Sommer, Nummer, schwimmen</li>
+<li><strong>nn</strong>: Sonne, können, Tanne, rennen</li>
+<li><strong>ss</strong>: Wasser, müssen, Schloss, Klasse</li>
+<li><strong>tt</strong>: Mutter, Butter, Blatt, Mitte</li></ul>
+<div class="info-box">💡 <strong>Trick:</strong> Sprich das Wort langsam. Klingt der Vokal <strong>kurz</strong>? Dann wird der Konsonant danach wahrscheinlich verdoppelt!</div>`}
+],
+quiz:[
+{q:'Warum schreibt man „Ball" mit ll?',a:['Weil das a lang ist','Weil das a kurz ist','Weil es ein Name ist','Keine Regel'],_h:0x4B},
+{q:'Welches Wort hat doppelte Buchstaben?',a:['Hund','Sonne','Buch','Stuhl'],_h:0x7E},
+{q:'Welche Doppelung fehlt? „So_e"',a:['n','nn','m','mm'],_h:0x2A},
+{q:'Welches Wort hat KEINE Doppelung?',a:['Butter','Wasser','Hase','Teller'],_h:0x63},
+{q:'Was hilft bei der Entscheidung: doppelt oder einfach?',a:['Den Vokal prüfen: kurz oder lang?','Die Buchstaben zählen','Raten','Das Wort rückwärts lesen'],_h:0x5C}
+],
+boss:[
+{q:'Welches Wort ist richtig geschrieben?',a:['Brile','Brille','Briele','Brile'],_h:0x4B},
+{q:'In welchem Wort ist der Vokal KURZ?',a:['Buch','Hut','Ball','Stuhl'],_h:0x7D},
+{q:'Wie viele Doppelungen hat „Schwimmunterricht"?',a:['0','1','2','3'],_h:0x29}
+]},
+
+// ── Modul 2: Dehnung & Schärfung ──
+{id:2,title:'Dehnung & Schärfung',icon:'📏',duration:'25 Min.',
+description:'ie oder i? ck oder k? tz oder z? Lerne die Regeln der Dehnung und Schärfung.',
+interactive:'dehnungL\u00FCcke',
+lessons:[
+{title:'Dehnung: ie, ah, eh, oh',content:`<p>Lange Vokale werden manchmal besonders geschrieben:</p>
+<div class="info-box">📏 <strong>Dehnungszeichen:</strong><br>
+<strong>ie</strong> = langes i: L<strong>ie</strong>be, sp<strong>ie</strong>len, Br<strong>ie</strong>f<br>
+<strong>ah</strong> = langes a: f<strong>ah</strong>ren, J<strong>ah</strong>r, z<strong>ah</strong>len<br>
+<strong>eh</strong> = langes e: g<strong>eh</strong>en, s<strong>eh</strong>en, L<strong>eh</strong>rer<br>
+<strong>oh</strong> = langes o: w<strong>oh</strong>nen, S<strong>oh</strong>n</div>
+<p><strong>Merke:</strong> „ie" ist die häufigste Dehnung. Fast jedes lange „i" wird als „ie" geschrieben!</p>`},
+{title:'Schärfung: ck und tz',content:`<p>Nach einem <strong>kurzen Vokal</strong> stehen oft besondere Buchstabenkombinationen:</p>
+<div class="info-box">📏 <strong>Schärfungszeichen:</strong><br>
+<strong>ck</strong> statt kk: Ba<strong>ck</strong>en, Brü<strong>ck</strong>e, Zu<strong>ck</strong>er<br>
+<strong>tz</strong> statt zz: Ka<strong>tz</strong>e, Pla<strong>tz</strong>, si<strong>tz</strong>en</div>
+<ul><li>Nach <strong>kurzem Vokal</strong>: ck und tz → Brücke, Katze</li>
+<li>Nach <strong>langem Vokal</strong>: nur k und z → Kuchen, Reiz</li>
+<li>Nach <strong>Konsonant</strong>: nur k und z → Markt, Herz</li></ul>`}
+],
+quiz:[
+{q:'Wie schreibt man das lange i meistens?',a:['i','ie','ih','ieh'],_h:0x4B},
+{q:'Welches Wort hat ein Dehnungs-h?',a:['Hund','fahren','Katze','Ball'],_h:0x7E},
+{q:'Wann schreibt man ck?',a:['Nach langem Vokal','Nach kurzem Vokal','Immer','Nie'],_h:0x2A},
+{q:'Welches Wort ist richtig?',a:['Brüke','Brücke','Brükke','Brüce'],_h:0x60},
+{q:'Wann steht tz?',a:['Nach langem Vokal','Nach Konsonant','Nach kurzem Vokal','Am Satzanfang'],_h:0x5E}
+],
+boss:[
+{q:'Welches Wort ist falsch geschrieben?',a:['spielen','Brief','Libe','Wiese'],_h:0x48},
+{q:'Was stimmt über ck und tz?',a:['Sie stehen nach langem Vokal','Sie ersetzen kk und zz','Sie stehen am Satzanfang','Sie sind Vokale'],_h:0x7E},
+{q:'Wie schreibt man „si_en" (auf einem Stuhl)?',a:['sizen','sitzen','sietzen','siezen'],_h:0x2A}
+]},
+
+// ── Modul 3: Wortarten entdecken ──
+{id:3,title:'Wortarten entdecken',icon:'🗂️',duration:'25 Min.',
+description:'Sortiere Wörter in drei Gruppen: Nomen, Verben und Adjektive.',
+interactive:'wortartenSortierer',
+lessons:[
+{title:'Die drei wichtigsten Wortarten',content:`<p>Im Deutschen gibt es verschiedene <strong>Wortarten</strong>. Die drei wichtigsten sind:</p>
+<div class="info-box">🗂️ <strong>Die drei Hauptwortarten:</strong><br><br>
+🟢 <strong>Nomen</strong> (Namenwörter): Benennen Dinge, Personen, Gefühle<br>
+→ der <em>Hund</em>, die <em>Schule</em>, das <em>Glück</em> (werden großgeschrieben!)<br><br>
+🔵 <strong>Verben</strong> (Tunwörter): Beschreiben, was man tut<br>
+→ <em>laufen</em>, <em>spielen</em>, <em>lesen</em>, <em>schlafen</em><br><br>
+🟡 <strong>Adjektive</strong> (Wiewörter): Beschreiben, wie etwas ist<br>
+→ <em>groß</em>, <em>schön</em>, <em>schnell</em>, <em>lustig</em></div>`},
+{title:'Wortarten erkennen',content:`<p>So erkennst du die Wortarten:</p>
+<ul><li>🟢 <strong>Nomen:</strong> Kann man einen Artikel davorsetzen? → der/die/das ___</li>
+<li>🔵 <strong>Verben:</strong> Kann man „ich" davorsetzen? → ich laufe, ich spiele</li>
+<li>🟡 <strong>Adjektive:</strong> Kann man „sehr" davorsetzen? → sehr groß, sehr schön</li></ul>
+<div class="info-box">💡 <strong>Beispiel:</strong> „Der schnelle Hund läuft."<br>
+🟢 Hund = Nomen · 🔵 läuft = Verb · 🟡 schnelle = Adjektiv</div>`}
+],
+quiz:[
+{q:'Was ist ein Verb?',a:['Ein Namenwort','Ein Tunwort','Ein Wiewort','Ein Artikel'],_h:0x4B},
+{q:'Welches Wort ist ein Adjektiv?',a:['Hund','laufen','schön','Tisch'],_h:0x7D},
+{q:'Wie erkennt man ein Nomen?',a:['Man setzt „sehr" davor','Man setzt „ich" davor','Man setzt einen Artikel davor','Man schreibt es klein'],_h:0x29},
+{q:'Welche Wortart wird großgeschrieben?',a:['Verben','Adjektive','Nomen','Alle'],_h:0x63},
+{q:'In „Die kleine Katze schläft" — was ist „kleine"?',a:['Nomen','Verb','Adjektiv','Artikel'],_h:0x5E}
+],
+boss:[
+{q:'Wie viele Wortarten wurden in der Lektion vorgestellt?',a:['2','3','4','5'],_h:0x4B},
+{q:'Welches Wort ist ein Verb?',a:['Freude','schnell','tanzen','Tisch'],_h:0x7D},
+{q:'In „Tom liest ein spannendes Buch" — welches Wort ist das Adjektiv?',a:['Tom','liest','spannendes','Buch'],_h:0x29}
+]},
+
+// ── Modul 4: Verben beugen ──
+{id:4,title:'Verben beugen',icon:'💪',duration:'25 Min.',
+description:'Lerne, wie Verben sich verändern: ich spiele, du spielst, er spielt…',
+interactive:'konjugation',
+lessons:[
+{title:'Was ist Konjugation?',content:`<p>Verben verändern ihre Form je nach <strong>Person</strong>. Das nennt man <strong>konjugieren</strong>:</p>
+<div class="info-box">💪 <strong>Beispiel: „spielen"</strong><br>
+ich <strong>spiel-e</strong><br>
+du <strong>spiel-st</strong><br>
+er/sie/es <strong>spiel-t</strong><br>
+wir <strong>spiel-en</strong><br>
+ihr <strong>spiel-t</strong><br>
+sie <strong>spiel-en</strong></div>
+<p>Der <strong>Wortstamm</strong> bleibt gleich (spiel-), nur die <strong>Endung</strong> ändert sich!</p>`},
+{title:'Regelmäßige Endungen',content:`<p>Die meisten Verben folgen dem gleichen Muster:</p>
+<div class="info-box">📝 <strong>Endungen:</strong><br>
+ich → <strong>-e</strong> · du → <strong>-st</strong> · er/sie/es → <strong>-t</strong><br>
+wir → <strong>-en</strong> · ihr → <strong>-t</strong> · sie → <strong>-en</strong></div>
+<p>Das funktioniert mit vielen Verben: malen, lernen, hören, kaufen, fragen…</p>
+<ul><li>ich mal<strong>e</strong>, du mal<strong>st</strong>, er mal<strong>t</strong></li>
+<li>ich lern<strong>e</strong>, du lern<strong>st</strong>, er lern<strong>t</strong></li></ul>`}
+],
+quiz:[
+{q:'Was bedeutet „konjugieren"?',a:['Wörter großschreiben','Verben an die Person anpassen','Adjektive steigern','Nomen in Mehrzahl setzen'],_h:0x4B},
+{q:'Wie heißt es richtig? „du ___" (spielen)',a:['spiele','spielst','spielt','spielen'],_h:0x7E},
+{q:'Welche Endung hat „er" bei regelmäßigen Verben?',a:['-e','-st','-t','-en'],_h:0x29},
+{q:'Wie heißt der Wortstamm von „laufen"?',a:['lauf','lau','laufe','laufen'],_h:0x61},
+{q:'„Wir ___" (malen)',a:['male','malst','malt','malen'],_h:0x5F}
+],
+boss:[
+{q:'Wie heißt es richtig? „ihr ___" (lernen)',a:['lerne','lernst','lernt','lernen'],_h:0x48},
+{q:'Was bleibt beim Konjugieren gleich?',a:['Die Endung','Der Wortstamm','Die Person','Alles'],_h:0x7E},
+{q:'Welche Form ist falsch?',a:['ich lache','du lachst','er lachen','wir lachen'],_h:0x29}
+]},
+
+// ── Modul 5: Satzglieder ──
+{id:5,title:'Satzglieder',icon:'🧩',duration:'25 Min.',
+description:'Entdecke die Bausteine eines Satzes: Subjekt, Prädikat und Objekt.',
+interactive:'satzgliederMarker',
+lessons:[
+{title:'Die wichtigsten Satzglieder',content:`<p>Ein Satz besteht aus verschiedenen <strong>Bausteinen</strong> — den Satzgliedern:</p>
+<div class="info-box">🧩 <strong>Die drei wichtigsten Satzglieder:</strong><br><br>
+🟢 <strong>Subjekt</strong> (Wer oder was?): Wer tut etwas?<br>
+→ <strong>Der Hund</strong> bellt. (Wer bellt? → Der Hund)<br><br>
+🔵 <strong>Prädikat</strong> (Was tut?): Was wird getan?<br>
+→ Der Hund <strong>bellt</strong>. (Was tut der Hund? → bellt)<br><br>
+🟡 <strong>Objekt</strong> (Wen oder was?): Wen/was betrifft die Handlung?<br>
+→ Der Hund frisst <strong>einen Knochen</strong>. (Was frisst er? → einen Knochen)</div>`},
+{title:'Satzglieder finden',content:`<p>So findest du die Satzglieder:</p>
+<ul><li>🟢 <strong>Subjekt:</strong> Frage „Wer oder was…?" → „<strong>Wer</strong> bellt?" → Der Hund</li>
+<li>🔵 <strong>Prädikat:</strong> Frage „Was tut…?" → „Was <strong>tut</strong> der Hund?" → bellt</li>
+<li>🟡 <strong>Objekt:</strong> Frage „Wen oder was…?" → „<strong>Was</strong> frisst er?" → einen Knochen</li></ul>
+<div class="info-box">💡 <strong>Beispiel:</strong> „<span style="color:var(--success)">Tom</span> <span style="color:#38bdf8">liest</span> <span style="color:var(--warning)">ein Buch</span>."<br>
+🟢 Tom = Subjekt · 🔵 liest = Prädikat · 🟡 ein Buch = Objekt</div>`}
+],
+quiz:[
+{q:'Mit welcher Frage findet man das Subjekt?',a:['Was tut?','Wen oder was?','Wer oder was?','Wo?'],_h:0x48},
+{q:'Was ist das Prädikat in „Die Katze schläft"?',a:['Die','Katze','schläft','Die Katze'],_h:0x7D},
+{q:'Was ist das Objekt in „Tom liest ein Buch"?',a:['Tom','liest','ein Buch','Tom liest'],_h:0x29},
+{q:'Welches Satzglied ist immer ein Verb?',a:['Subjekt','Prädikat','Objekt','Alle'],_h:0x60},
+{q:'„Lena malt ein Bild" — Was ist das Subjekt?',a:['malt','ein Bild','Lena','ein'],_h:0x5E}
+],
+boss:[
+{q:'Wie viele Satzglieder hat „Der Hund bellt"?',a:['1','2','3','4'],_h:0x4B},
+{q:'Was ist das Objekt in „Mama kauft Blumen"?',a:['Mama','kauft','Blumen','Mama kauft'],_h:0x7D},
+{q:'Welcher Satz hat ein Objekt?',a:['Der Vogel singt.','Die Sonne scheint.','Tom isst Pizza.','Es regnet.'],_h:0x29}
+]},
+
+// ── Modul 6: Satzarten & Satzzeichen ──
+{id:6,title:'Satzarten & Satzzeichen',icon:'❗',duration:'25 Min.',
+description:'Lerne die verschiedenen Satzarten und die wörtliche Rede.',
+interactive:'w\u00F6rtlicheRede',
+lessons:[
+{title:'Satzarten',content:`<p>Es gibt verschiedene <strong>Satzarten</strong>:</p>
+<div class="info-box">❗ <strong>4 Satzarten:</strong><br>
+📝 <strong>Aussagesatz</strong> → endet mit <strong>.</strong> → „Die Sonne scheint."<br>
+❓ <strong>Fragesatz</strong> → endet mit <strong>?</strong> → „Scheint die Sonne?"<br>
+❗ <strong>Ausrufesatz</strong> → endet mit <strong>!</strong> → „Die Sonne scheint!"<br>
+👉 <strong>Aufforderungssatz</strong> → endet mit <strong>!</strong> → „Komm her!"</div>`},
+{title:'Wörtliche Rede',content:`<p>Wenn jemand spricht, schreibt man die Worte in <strong>Anführungszeichen</strong>:</p>
+<div class="info-box">🗣️ <strong>Wörtliche Rede:</strong><br>
+Tom sagt: <strong>„</strong>Ich gehe nach Hause.<strong>"</strong><br><br>
+<strong>Aufbau:</strong> Begleitsatz + Doppelpunkt + „Gesprochenes"<br>
+Mama fragt: „Hast du Hunger?"<br>
+Lena ruft: „Komm schnell!"</div>
+<p><strong>Regeln:</strong></p>
+<ul><li>Vor der wörtlichen Rede steht ein <strong>Doppelpunkt (:)</strong></li>
+<li>Die Rede steht in <strong>Anführungszeichen („ ")</strong></li>
+<li>Das erste Wort in den Anführungszeichen wird <strong>großgeschrieben</strong></li></ul>`}
+],
+quiz:[
+{q:'Welches Satzzeichen steht am Ende eines Aussagesatzes?',a:['?','!','.',','],_h:0x48},
+{q:'Was steht vor der wörtlichen Rede?',a:['Ein Punkt','Ein Komma','Ein Doppelpunkt','Ein Fragezeichen'],_h:0x7D},
+{q:'Welche Satzart ist „Komm sofort her!"?',a:['Aussagesatz','Fragesatz','Aufforderungssatz','Wunschsatz'],_h:0x29},
+{q:'Was steht um die wörtliche Rede herum?',a:['Klammern','Anführungszeichen','Striche','Nichts'],_h:0x60},
+{q:'Wie viele Satzarten gibt es laut der Lektion?',a:['2','3','4','5'],_h:0x5E}
+],
+boss:[
+{q:'Welcher Satz hat die richtige wörtliche Rede?',a:['Tom sagt Ich gehe.','Tom sagt: „Ich gehe."','Tom sagt, Ich gehe.','Tom: sagt „ich gehe"'],_h:0x4B},
+{q:'Was wird in der wörtlichen Rede großgeschrieben?',a:['Alles','Nichts','Das erste Wort nach „','Nur Nomen'],_h:0x7D},
+{q:'Welche Satzart fragt etwas?',a:['Aussagesatz','Fragesatz','Ausrufesatz','Aufforderungssatz'],_h:0x2A}
+]},
+
+// ── Modul 7: Zusammengesetzte Wörter ──
+{id:7,title:'Zusammengesetzte Wörter',icon:'🏗️',duration:'20 Min.',
+description:'Baue aus zwei Wörtern ein neues: Haus + Tür = Haustür!',
+interactive:'wortWerkstatt',
+lessons:[
+{title:'Wörter zusammensetzen',content:`<p>Im Deutschen kann man aus <strong>zwei Wörtern ein neues Wort</strong> bauen:</p>
+<div class="info-box">🏗️ <strong>Zusammengesetzte Wörter:</strong><br>
+🏠 + 🚪 = Haus + Tür = <strong>Haustür</strong><br>
+☀️ + 🌻 = Sonnen + blume = <strong>Sonnenblume</strong><br>
+🎄 + 🌳 = Weihnachts + baum = <strong>Weihnachtsbaum</strong></div>
+<p>Das <strong>letzte Wort</strong> bestimmt die Wortart und den Artikel:<br>
+<em>die</em> Haustür (weil: die Tür) · <em>die</em> Sonnenblume (weil: die Blume)</p>`},
+{title:'Fugenzeichen',content:`<p>Manchmal steht zwischen den Wörtern ein <strong>Fugenzeichen</strong>:</p>
+<ul><li>Sonne<strong>n</strong>blume (Fugen-n)</li>
+<li>Geburt<strong>s</strong>tag (Fugen-s)</li>
+<li>Hund<strong>e</strong>hütte (Fugen-e)</li></ul>
+<div class="info-box">💡 <strong>Tipp:</strong> Sprich das Wort laut. Das Fugenzeichen macht es leichter auszusprechen!<br>
+„Sonneblume" klingt komisch → „Sonne<strong>n</strong>blume" klingt richtig!</div>`}
+],
+quiz:[
+{q:'Was ist ein zusammengesetztes Wort?',a:['Ein langes Wort','Ein Wort aus zwei Wörtern','Ein Wort mit Umlaut','Ein Fremdwort'],_h:0x4B},
+{q:'Haus + Aufgabe = ?',a:['Hausaufgabe','Aufgabehaus','Aufgabenhaus','Hauseaufgabe'],_h:0x7F},
+{q:'Was bestimmt den Artikel eines zusammengesetzten Wortes?',a:['Das erste Wort','Das letzte Wort','Beide Wörter','Kein Wort'],_h:0x2A},
+{q:'Was ist ein Fugenzeichen?',a:['Ein Satzzeichen','Ein Buchstabe zwischen zwei Wortteilen','Ein Umlaut','Ein Doppelpunkt'],_h:0x60},
+{q:'Welches Fugenzeichen hat „Geburtstag"?',a:['n','e','s','keines'],_h:0x5E}
+],
+boss:[
+{q:'Welches zusammengesetzte Wort ist richtig?',a:['Tischlampe','Lampetisch','Tischtlampe','Tischslampe'],_h:0x4A},
+{q:'Welchen Artikel hat „Schulbus" (Schule + Bus)?',a:['die','der','das','ein'],_h:0x7E},
+{q:'Welches Wort ist NICHT zusammengesetzt?',a:['Haustür','Sonnenblume','Schmetterling','Fußball'],_h:0x29}
+]},
+
+// ── Modul 8: Texte schreiben ──
+{id:8,title:'Texte schreiben',icon:'✉️',duration:'25 Min.',
+description:'Lerne den Aufbau eines Briefes und wie man Texte ordnet.',
+interactive:'briefBaukasten',
+lessons:[
+{title:'Einen Brief schreiben',content:`<p>Ein <strong>Brief</strong> hat einen festen Aufbau:</p>
+<div class="info-box">✉️ <strong>Aufbau eines Briefes:</strong><br><br>
+📍 <strong>Ort und Datum</strong> (rechts oben): Berlin, 4. März 2026<br>
+👋 <strong>Anrede</strong>: Liebe Oma, / Lieber Tom,<br>
+📝 <strong>Brieftext</strong>: Was du erzählen möchtest<br>
+👋 <strong>Grußformel</strong>: Viele Grüße / Dein/Deine<br>
+✍️ <strong>Unterschrift</strong>: Dein Name</div>`},
+{title:'Texte gliedern',content:`<p>Auch andere Texte haben eine <strong>Gliederung</strong>:</p>
+<ul><li>📝 <strong>Überschrift:</strong> Sagt, worum es geht</li>
+<li>📝 <strong>Einleitung:</strong> Führt in das Thema ein</li>
+<li>📝 <strong>Hauptteil:</strong> Erzählt die wichtigen Dinge</li>
+<li>📝 <strong>Schluss:</strong> Fasst zusammen oder gibt einen Ausblick</li></ul>
+<div class="info-box">💡 <strong>Tipp:</strong> Schreibe für jeden neuen Gedanken einen <strong>neuen Absatz</strong>. Das macht den Text übersichtlicher!</div>`}
+],
+quiz:[
+{q:'Was steht in einem Brief rechts oben?',a:['Die Anrede','Die Unterschrift','Ort und Datum','Der Brieftext'],_h:0x48},
+{q:'Wie beginnt die Anrede in einem Brief an Oma?',a:['Hallo!','Liebe Oma,','Sehr geehrte Oma','Hey Oma'],_h:0x7E},
+{q:'Was steht am Ende eines Briefes?',a:['Die Anrede','Ort und Datum','Grußformel und Unterschrift','Die Überschrift'],_h:0x29},
+{q:'Wie viele Teile hat ein gegliederter Text?',a:['2','3','4','5'],_h:0x60},
+{q:'Wann macht man einen neuen Absatz?',a:['Nie','Nach jedem Wort','Bei einem neuen Gedanken','Am Satzende'],_h:0x5E}
+],
+boss:[
+{q:'Welche Reihenfolge ist richtig?',a:['Anrede → Datum → Text → Gruß','Datum → Anrede → Text → Gruß','Text → Anrede → Gruß → Datum','Gruß → Text → Anrede → Datum'],_h:0x4B},
+{q:'Welche Grußformel passt zu einem Brief an einen Freund?',a:['Mit freundlichen Grüßen','Hochachtungsvoll','Viele Grüße','Sehr geehrte Damen und Herren'],_h:0x7D},
+{q:'Was gehört NICHT in die Einleitung?',a:['Das Thema vorstellen','Neugierig machen','Das Ergebnis verraten','Worum es geht'],_h:0x29}
+]},
+
+// ── Modul 9: SchreibProfi-Prüfung ──
+{id:9,title:'SchreibProfi-Prüfung',icon:'🏆',duration:'30 Min.',
+description:'Finde alle Fehler im Text — die große Abschlussprüfung!',
+interactive:'fehlerSuche',
+lessons:[
+{title:'Korrekturlesen',content:`<p>Ein <strong>SchreibProfi</strong> kann Fehler in Texten finden und korrigieren. Darauf musst du achten:</p>
+<div class="info-box">🏆 <strong>Fehler-Checkliste:</strong><br>
+🔠 <strong>Großschreibung:</strong> Nomen und Satzanfänge groß?<br>
+🔍 <strong>Doppelte Buchstaben:</strong> ll, mm, nn, ss, tt richtig?<br>
+📏 <strong>ie/i, ck/k, tz/z:</strong> Dehnung und Schärfung korrekt?<br>
+❗ <strong>Satzzeichen:</strong> Punkt, Fragezeichen, Ausrufezeichen?<br>
+🧩 <strong>Wortarten:</strong> Verben klein, Nomen groß?</div>`},
+{title:'Fehler finden und verbessern',content:`<p>So gehst du beim <strong>Korrekturlesen</strong> vor:</p>
+<ol><li>📖 Lies den Text <strong>langsam</strong> und aufmerksam</li>
+<li>🔍 Prüfe jedes Wort: <strong>Groß oder klein?</strong></li>
+<li>📏 Achte auf <strong>doppelte Buchstaben</strong> und Dehnungen</li>
+<li>❗ Stimmen die <strong>Satzzeichen</strong>?</li>
+<li>✏️ <strong>Korrigiere</strong> die Fehler</li></ol>
+<div class="info-box">💡 <strong>Tipp:</strong> Lies den Text <strong>rückwärts</strong>, Wort für Wort. So entdeckst du Rechtschreibfehler leichter, weil du nicht vom Inhalt abgelenkt wirst!</div>
+<p><strong>Beispiel:</strong> „der Hund belt laut" → Fehler: <em>der</em> → <strong>Der</strong>, <em>belt</em> → <strong>bellt</strong></p>`}
+],
+quiz:[
+{q:'Welcher Fehler steckt in „der Hund belt laut"?',a:['Nur Großschreibung','Nur Doppelung','Großschreibung und Doppelung','Gar kein Fehler'],_h:0x48},
+{q:'Was prüft man beim Korrekturlesen zuerst?',a:['Die Seitenzahl','Die Groß-/Kleinschreibung','Die Schriftart','Die Überschrift'],_h:0x7E},
+{q:'Warum soll man rückwärts lesen?',a:['Es ist lustiger','Man findet Fehler leichter','Man liest schneller','Es ist Pflicht'],_h:0x2A},
+{q:'Welches Wort ist falsch geschrieben?',a:['Sonne','Katze','Brile','Tisch'],_h:0x63},
+{q:'Was gehört auf die Fehler-Checkliste?',a:['Nur Satzzeichen','Nur Großschreibung','Großschreibung, Doppelungen, Satzzeichen','Nur die Überschrift'],_h:0x5E}
+],
+boss:[
+{q:'Wie viele Fehler hat „die katze sizt auf dem Tish"?',a:['1','2','3','4'],_h:0x49},
+{q:'Welcher Korrektur-Tipp hilft bei Rechtschreibfehlern?',a:['Schneller lesen','Text rückwärts lesen','Nur die Bilder anschauen','Den Text überspringen'],_h:0x7E},
+{q:'Welcher Satz ist fehlerfrei?',a:['Der Hund bellt laut.','der Hund belt laut.','Der hunt bellt laut.','Der Hund belt Laut.'],_h:0x2B}
+]}
+];
+
+// ═══════════════════════════════════════════════
+// State Management
+// ═══════════════════════════════════════════════
+const STORAGE_KEY='schreibprofi_progress';
+let state={name:'',started:false,currentModule:0,xp:0,level:0,streak:0,lastVisit:null,modulesCompleted:[],quizResults:{},bossResults:{},badges:[],quizShuffleMap:{},modulesViewed:[],interactiveResults:{},designTheme:'space-dark'};
+function saveState(){try{localStorage.setItem(STORAGE_KEY,JSON.stringify(state))}catch(e){}}
+function loadState(){try{const s=localStorage.getItem(STORAGE_KEY);if(s){Object.assign(state,JSON.parse(s));return true}}catch(e){}return false}
+function exportData(){const a=document.createElement('a');a.download='schreibprofi-'+state.name+'.json';a.href=URL.createObjectURL(new Blob([JSON.stringify(state,null,2)],{type:'application/json'}));a.click()}
+function importData(e){const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=ev=>{try{const d=JSON.parse(ev.target.result);Object.assign(state,d);saveState();location.reload()}catch(err){alert('Datei konnte nicht gelesen werden.')}};r.readAsText(f)}
+
+// ═══════════════════════════════════════════════
+// Engine (XP, Level, Streak, Badges, Notif, LevelUp, Confetti)
+// ═══════════════════════════════════════════════
+function getLevel(xp){let lv=0;for(let i=LEVELS.length-1;i>=0;i--){if(xp>=LEVELS[i].xp){lv=i;break}}return lv}
+function getLevelProgress(xp){const lv=getLevel(xp);const cur=LEVELS[lv].xp;const next=lv<LEVELS.length-1?LEVELS[lv+1].xp:cur;if(next===cur)return 100;return Math.min(100,Math.round((xp-cur)/(next-cur)*100))}
+function addXP(amount,reason){const old=getLevel(state.xp);state.xp+=amount;const nw=getLevel(state.xp);saveState();updateUI();showNotif('xp','+'+amount+' XP',reason);if(nw>old){state.level=nw;saveState();setTimeout(()=>showLevelUp(nw),800)}}
+function updateStreak(){const today=new Date().toDateString();if(state.lastVisit===today)return;const yesterday=new Date(Date.now()-86400000).toDateString();if(state.lastVisit===yesterday){state.streak++;showNotif('streak','🔥 '+state.streak+' Tage Streak!','Weiter so!');if(state.streak>=3)awardBadge('streak3');if(state.streak>=7)awardBadge('streak7')}else if(state.lastVisit!==today){state.streak=1}state.lastVisit=today;saveState()}
+function awardBadge(id){if(state.badges.includes(id))return;state.badges.push(id);saveState();const b=BADGES.find(x=>x.id===id);if(b)showNotif('badge',b.icon+' Badge: '+b.name,b.desc)}
+let notifQueue=[];let notifActive=false;
+function showNotif(type,title,text){notifQueue.push({type,title,text});if(!notifActive)processNotif()}
+function processNotif(){if(!notifQueue.length){notifActive=false;return}notifActive=true;const{type,title,text}=notifQueue.shift();const el=document.getElementById('notif');el.className='notif '+type;document.getElementById('notifTitle').textContent=title;document.getElementById('notifText').textContent=text;el.classList.add('show');setTimeout(()=>{el.classList.remove('show');setTimeout(processNotif,300)},2500)}
+function showLevelUp(lv){const ov=document.getElementById('levelUpOverlay');const box=document.getElementById('levelUpBox');box.innerHTML='<div class="lvl-icon">⬆️</div><div class="lvl-title">Level Up!</div><div class="lvl-name">Level '+(lv+1)+': '+LEVELS[lv].name+'</div>';ov.classList.add('active');spawnConfetti();setTimeout(()=>ov.classList.remove('active'),3000)}
+function spawnConfetti(){const c=document.getElementById('confetti');c.innerHTML='';const cols=['#4ade80','#38bdf8','#c084fc','#ff6b9d','#fbbf24','#22d3ee'];for(let i=0;i<60;i++){const p=document.createElement('div');p.style.cssText='position:absolute;left:'+Math.random()*100+'%;background:'+cols[i%cols.length]+';width:'+(6+Math.random()*8)+'px;height:'+(6+Math.random()*8)+'px;border-radius:'+(Math.random()>.5?'50%':'2px')+';animation:confettiFall '+(1.5+Math.random()*2)+'s ease-out '+Math.random()*.5+'s forwards';c.appendChild(p)}if(!document.getElementById('confettiStyle')){const s=document.createElement('style');s.id='confettiStyle';s.textContent='@keyframes confettiFall{0%{opacity:1;transform:translateY(0) rotate(0deg)}100%{opacity:0;transform:translateY(100vh) rotate(720deg)}}';document.head.appendChild(s)}setTimeout(()=>c.innerHTML='',4000)}
+
+// ═══════════════════════════════════════════════
+// Quiz Engine
+// ═══════════════════════════════════════════════
+function shuffleQuiz(modId,quiz){const key='m'+modId;if(state.quizShuffleMap[key])return state.quizShuffleMap[key];const idx=[...Array(quiz.length).keys()];for(let i=idx.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[idx[i],idx[j]]=[idx[j],idx[i]]}state.quizShuffleMap[key]=idx;saveState();return idx}
+function renderQuiz(modId,quiz,isBoss){
+  const pf=isBoss?'boss':'quiz';const idx=isBoss?[...Array(quiz.length).keys()]:shuffleQuiz(modId,quiz);
+  let h='<div class="'+(isBoss?'boss-section':'quiz-section')+'">';
+  h+=isBoss?'<h3>👑 Boss-Challenge</h3><p class="boss-sub">Alle '+quiz.length+' Fragen richtig beantworten!</p>':'<h3>📝 Quiz — Teste dein Wissen</h3>';
+  idx.forEach((qi,di)=>{const q=quiz[qi];h+='<div class="quiz-q" data-qi="'+qi+'"><p>'+(di+1)+'. '+q.q+'</p>';q.a.forEach((a,ai)=>{h+='<label><input type="radio" name="'+pf+'_'+modId+'_'+qi+'" value="'+ai+'"> '+a+'</label>'});h+='</div>'});
+  h+='<button class="quiz-submit" onclick="checkQuiz('+modId+','+isBoss+')">'+(isBoss?'Boss besiegen!':'Antworten prüfen')+'</button>';
+  h+='<div class="quiz-result" id="'+pf+'Result'+modId+'" style="display:none"></div></div>';return h;
+}
+function checkQuiz(modId,isBoss){
+  const pf=isBoss?'boss':'quiz';const quiz=isBoss?modules[modId].boss:modules[modId].quiz;
+  let correct=0;const total=quiz.length;const startTime=window._quizStart||Date.now();
+  quiz.forEach((q,qi)=>{
+    const sel=document.querySelector('input[name="'+pf+'_'+modId+'_'+qi+'"]:checked');
+    const labels=document.querySelectorAll('[data-qi="'+qi+'"] label');
+    const ci=_d(q._h,qi);
+    labels.forEach((l,li)=>{l.classList.remove('correct','wrong');if(li===ci)l.classList.add('correct');else if(sel&&parseInt(sel.value)===li)l.classList.add('wrong')});
+    const qDiv=labels[0]?.closest('.quiz-q');if(qDiv){const old=qDiv.querySelector('.quiz-explanation');if(old)old.remove()}
+    if(!sel||parseInt(sel.value)!==ci){if(qDiv){const exp=document.createElement('div');exp.className='quiz-explanation';exp.textContent='\u2192 Richtige Antwort: '+q.a[ci];qDiv.appendChild(exp)}}
+    if(sel&&parseInt(sel.value)===ci)correct++;
+  });
+  const rEl=document.getElementById(pf+'Result'+modId);rEl.style.display='block';
+  if(isBoss){
+    if(correct===total){rEl.className='quiz-result pass';rEl.textContent='👑 Boss besiegt! '+correct+'/'+total+' — Perfekt!';if(!state.bossResults[modId]){state.bossResults[modId]=true;addXP(100,'Boss-Challenge bestanden!');if(!state.badges.includes('first_boss'))awardBadge('first_boss');if(modules.every((_,i)=>state.bossResults[i]))awardBadge('all_bosses');checkModuleComplete(modId)}}
+    else{rEl.className='quiz-result fail';rEl.textContent='💀 '+correct+'/'+total+' — Alle müssen richtig sein! Versuch es nochmal.';setTimeout(()=>{document.querySelectorAll('input[name^="'+pf+'_'+modId+'"]').forEach(r=>{r.disabled=false;r.checked=false});document.querySelectorAll('[data-qi] label').forEach(l=>l.classList.remove('correct','wrong'));document.querySelectorAll('.quiz-explanation').forEach(e=>e.remove());rEl.style.display='none'},2000);return}
+  }else{
+    const passed=correct>=Math.ceil(total*0.6);rEl.className='quiz-result '+(passed?'pass':'fail');
+    rEl.textContent=passed?'✅ '+correct+'/'+total+' richtig — Bestanden!':'❌ '+correct+'/'+total+' richtig — Mindestens '+Math.ceil(total*0.6)+' nötig.';
+    if(passed&&!state.quizResults[modId]){state.quizResults[modId]=correct;addXP(correct*15+50,'Quiz bestanden ('+correct+'/'+total+')');if(!state.badges.includes('first_quiz'))awardBadge('first_quiz');if(correct===total)awardBadge('perfect_quiz');if(Date.now()-startTime<60000)awardBadge('speed_quiz');checkModuleComplete(modId)}
+  }
+  saveState();document.querySelectorAll('input[name^="'+pf+'_'+modId+'"]').forEach(r=>r.disabled=true);
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function checkModuleComplete(modId){
+  if(state.quizResults[modId]!==undefined&&state.bossResults[modId]&&!state.modulesCompleted.includes(modId)){
+    state.modulesCompleted.push(modId);awardBadge('m'+modId);
+    if(state.modulesCompleted.length>=5)awardBadge('half_done');
+    if(state.modulesCompleted.length>=10){awardBadge('graduate');setTimeout(()=>showCert(),1500)}
+    saveState();renderSidebar();
+  }
+}
+
+// ═══════════════════════════════════════════════
+// Render Module + Sidebar + Badges + Stats
+// ═══════════════════════════════════════════════
+function renderModule(modId){
+  state.currentModule=modId;if(!state.modulesViewed.includes(modId)){state.modulesViewed.push(modId);addXP(10,'Neues Modul geöffnet');if(state.modulesViewed.length>=10)awardBadge('explorer')}
+  saveState();closeSidebar();const m=modules[modId];
+  let h='<div class="module-header"><div class="mod-badge">'+m.icon+' Modul '+(modId+1)+'</div><h1>'+m.title+'</h1><p class="mod-desc">'+m.description+'</p></div>';
+  m.lessons.forEach((l,i)=>{h+='<div class="lesson-card"><h3><span style="color:var(--neon)">'+String(i+1).padStart(2,'0')+'</span> '+l.title+' <button class="tts-btn" onclick="speakLesson('+i+')" title="Vorlesen">&#128266;</button></h3>'+l.content+'</div>'});
+  h+='<div class="interactive-area" id="interactiveArea"><h4>🧪 Interaktive Übung</h4><div id="interactiveContent">Lädt...</div></div>';
+  window._quizStart=Date.now();h+='<div class="speech-ex"><h4>Sprach\u00FCbung \u{1F3A4}</h4><div id="speechExArea"></div></div>';
+h+=renderQuiz(modId,m.quiz,false);h+=renderQuiz(modId,m.boss,true);
+  h+='<div class="site-footer"><div class="footer-logo"><span>✎ SchreibProfi</span></div><p>&copy; 2026 GZ AI Stacks · Gerd Zimmermann</p></div>';
+  document.getElementById('welcomeScreen').style.display='none';document.getElementById('badgesView').style.display='none';document.getElementById('statsView').style.display='none';
+  const mc=document.getElementById('moduleContent');mc.style.display='block';mc.innerHTML=h;renderSidebar();setTimeout(()=>{initInteractive(modId);window.scrollTo(0,0)},100);
+}
+function renderSidebar(){const el=document.getElementById('sidebarModules');el.innerHTML=modules.map((m,i)=>{const done=state.modulesCompleted.includes(i);const act=state.currentModule===i&&document.getElementById('moduleContent').style.display==='block';return '<div class="sidebar-item'+(act?' active':'')+(done?' completed':'')+'" onclick="renderModule('+i+')">'+m.icon+' '+m.title+'</div>'}).join('')}
+function toggleSidebar(){document.getElementById('sidebar').classList.toggle('open')}
+function closeSidebar(){document.getElementById('sidebar').classList.remove('open')}
+function showBadges(){document.getElementById('welcomeScreen').style.display='none';document.getElementById('moduleContent').style.display='none';document.getElementById('statsView').style.display='none';const v=document.getElementById('badgesView');v.style.display='block';closeSidebar();let h='<div class="module-header"><h1>🏅 Deine Abzeichen</h1><p class="mod-desc">'+state.badges.length+' von '+BADGES.length+' gesammelt</p></div><div class="badges-grid">';BADGES.forEach(b=>{const earned=state.badges.includes(b.id);h+='<div class="badge-card'+(earned?' earned':' locked')+'"><div class="badge-icon">'+(earned?b.icon:'🔒')+'</div><div class="badge-name">'+b.name+'</div><div class="badge-desc">'+b.desc+'</div></div>'});h+='</div>';v.innerHTML=h}
+function showStats(){document.getElementById('welcomeScreen').style.display='none';document.getElementById('moduleContent').style.display='none';document.getElementById('badgesView').style.display='none';const v=document.getElementById('statsView');v.style.display='block';closeSidebar();const lv=getLevel(state.xp);let h='<div class="module-header"><h1>📊 Statistik</h1></div><div class="stats-grid">';h+='<div class="stat-card"><div class="stat-val">'+state.xp+'</div><div class="stat-label">XP gesammelt</div></div>';h+='<div class="stat-card"><div class="stat-val">'+LEVELS[lv].name+'</div><div class="stat-label">Aktueller Rang</div></div>';h+='<div class="stat-card"><div class="stat-val">'+state.modulesCompleted.length+'/10</div><div class="stat-label">Module abgeschlossen</div></div>';h+='<div class="stat-card"><div class="stat-val">'+Object.keys(state.quizResults).length+'</div><div class="stat-label">Quizze bestanden</div></div>';h+='<div class="stat-card"><div class="stat-val">'+Object.keys(state.bossResults).length+'</div><div class="stat-label">Bosse besiegt</div></div>';h+='<div class="stat-card"><div class="stat-val">'+state.badges.length+'</div><div class="stat-label">Abzeichen</div></div>';h+='<div class="stat-card"><div class="stat-val">🔥 '+state.streak+'</div><div class="stat-label">Tage-Streak</div></div>';h+='</div>';v.innerHTML=h}
+
+// ═══════════════════════════════════════════════
+// Certificate
+// ═══════════════════════════════════════════════
+let certStyle='m\u00E4rchen';
+function showCert(){window._lastFocus=document.activeElement;const ov=document.getElementById('certOverlay');ov.classList.add('active');document.getElementById('certPicker').innerHTML=['🏰 Märchen','🌴 Dschungel','🚀 Weltraum','🐠 Unterwasser'].map((l,i)=>{const s=['m\u00E4rchen','dschungel','weltraum','unterwasser'][i];return '<button class="'+(certStyle===s?'active':'')+'" onclick="certStyle=\''+s+'\';showCert()">'+l+'</button>'}).join('');renderCert()}
+function closeCert(){document.getElementById('certOverlay').classList.remove('active');if(window._lastFocus){window._lastFocus.focus();window._lastFocus=null}}
+function renderCert(){const f=document.getElementById('certFrame');const lv=getLevel(state.xp);const name=state.name||'Unbekannt';const date=new Date().toLocaleDateString('de-DE',{day:'numeric',month:'long',year:'numeric'});const code='SP-'+new Date().getFullYear()+'-'+((name.charCodeAt(0)*7+state.xp)%9999).toString(16).toUpperCase().padStart(4,'0');const rank=LEVELS[lv].name;const badges=state.badges.slice(0,6).map(id=>{const b=BADGES.find(x=>x.id===id);return b?b.icon:''}).filter(Boolean).join(' ');const styles={m\u00E4rchen:{bg:'linear-gradient(135deg,#fdf8ee,#f5edda,#ede3c8)',border:'#c5a54e',text:'#1a1a3e',sub:'#5c5040',accent:'#DAA520',seal:'👑'},dschungel:{bg:'linear-gradient(135deg,#e8f5e9,#c8e6c9,#a5d6a7)',border:'#4caf50',text:'#1b5e20',sub:'#2e7d32',accent:'#388e3c',seal:'🌿'},weltraum:{bg:'linear-gradient(135deg,#1a1a3e,#0d0d2b,#1a1a3e)',border:'#7c4dff',text:'#e0e0ff',sub:'#a78bfa',accent:'#651fff',seal:'🚀'},unterwasser:{bg:'linear-gradient(135deg,#e3f2fd,#bbdefb,#90caf9)',border:'#03a9f4',text:'#0d47a1',sub:'#1565c0',accent:'#0288d1',seal:'🐚'}};const s=styles[certStyle];f.innerHTML='<div style="background:'+s.bg+';padding:48px 40px;border:4px solid '+s.border+';border-radius:12px;text-align:center;min-height:500px;color:'+s.text+'"><div style="font-size:14px;color:'+s.sub+';letter-spacing:4px;text-transform:uppercase">SchreibProfi · Rechtschreibung & Grammatik</div><h1 style="font-size:48px;margin:16px 0;font-family:Georgia,serif">Urkunde</h1><div style="width:120px;height:2px;background:'+s.border+';margin:0 auto 24px;opacity:.5"></div><p style="font-size:18px;color:'+s.sub+'">verliehen an</p><h2 style="font-size:42px;color:'+s.accent+';margin:12px 0;font-family:Georgia,serif;font-style:italic">'+name+'</h2><p style="font-size:22px;font-weight:700;margin:16px 0">'+rank+'</p><p style="font-size:15px;color:'+s.sub+'">für die erfolgreiche Absolvierung von „SchreibProfi"</p><div style="font-size:15px;margin:24px 0">Module: '+state.modulesCompleted.length+'/10 · XP: '+state.xp+' · Quizze: '+Object.keys(state.quizResults).length+'</div><div style="font-size:48px;margin:20px 0">'+s.seal+'</div>'+(badges?'<div style="font-size:28px;margin:12px 0">'+badges+'</div>':'')+'<div style="font-size:14px;color:'+s.sub+';margin-top:24px">'+date+'</div><div style="font-size:11px;color:'+s.sub+';opacity:.5;margin-top:4px">'+code+'</div><div style="font-size:12px;color:'+s.sub+';opacity:.4;margin-top:16px">GZ AI STACKS · SchreibProfi</div></div>'}
+function printCert(){window.print()}
+
+// ═══════════════════════════════════════════════
+// UI + Theme
+// ═══════════════════════════════════════════════
+function updateUI(){const lv=getLevel(state.xp);document.getElementById('levelName').textContent=LEVELS[lv].name;document.getElementById('xpText').textContent=state.xp+' XP';document.getElementById('xpFill').style.width=getLevelProgress(state.xp)+'%'}
+function setDesignTheme(world,mode){state.designTheme=world+'-'+mode;document.documentElement.setAttribute('data-theme',state.designTheme);saveState();const tc=THEME_CONFIG[world];if(tc){document.getElementById('heroEmoji').textContent=tc.welcomeEmoji;document.getElementById('welcomeTitle').textContent=tc.welcomeTitle;document.getElementById('welcomeSub').textContent=tc.welcomeSub;document.getElementById('startBtn').textContent=tc.welcomeBtn}buildThemePicker()}
+function getCurrentThemeParts(){const p=state.designTheme.split('-');return{world:p[0],mode:p[1]||'dark'}}
+function buildThemePicker(){const{world,mode}=getCurrentThemeParts();let h='';Object.keys(THEME_CONFIG).forEach(w=>{const t=THEME_CONFIG[w];h+='<button class="theme-btn'+(w===world?' active':'')+'" style="background:'+t.color+'" onclick="setDesignTheme(\''+w+'\',\''+mode+'\')" title="'+t.name+'">'+t.emoji+'</button>'});h+='<button class="mode-toggle" onclick="setDesignTheme(\''+world+'\',\''+(mode==='dark'?'light':'dark')+'\')">'+(mode==='dark'?'☀️':'🌙')+'</button>';document.getElementById('themePicker').innerHTML=h}
+
+// ═══════════════════════════════════════════════
+// Interactive Exercises (10)
+// ═══════════════════════════════════════════════
+function initInteractive(modId){
+  const fns=[initNomenJ\u00E4ger,initDoppelDetektiv,initDehnungL\u00FCcke,initWortartenSortierer,initKonjugation,initSatzgliederMarker,initWörtlicheRede,initWortWerkstatt,initBriefBaukasten,initFehlerSuche];
+  if(fns[modId])fns[modId]();else document.getElementById('interactiveContent').innerHTML='<p>Übung kommt bald!</p>';
+}
+
+// Modul 0: Nomen-Jäger — Nomen im Text markieren
+function initNomenJ\u00E4ger(){
+  const words=[{w:'Der',n:false},{w:'kleine',n:false},{w:'Hund',n:true},{w:'läuft',n:false},{w:'durch',n:false},{w:'den',n:false},{w:'Garten',n:true},{w:'und',n:false},{w:'spielt',n:false},{w:'mit',n:false},{w:'einem',n:false},{w:'Ball',n:true},{w:'Die',n:false},{w:'Sonne',n:true},{w:'scheint',n:false},{w:'und',n:false},{w:'die',n:false},{w:'Kinder',n:true},{w:'haben',n:false},{w:'Freude',n:true}];
+  const el=document.getElementById('interactiveContent');
+  el.innerHTML='<p style="margin-bottom:12px"><strong>Klicke auf alle Nomen (Namenwörter) im Text!</strong></p><div id="ixText" style="font-size:20px;line-height:2.2"></div><button class="ix-btn" onclick="checkNomen()">Prüfen</button><div class="ix-feedback" id="ixFeedback"></div>';
+  const container=document.getElementById('ixText');
+  words.forEach((w,i)=>{const sp=document.createElement('span');sp.className='ix-mark';sp.textContent=w.w;sp.dataset.idx=i;sp.onclick=()=>sp.classList.toggle('mark-nomen');container.appendChild(sp);container.appendChild(document.createTextNode(' '))});
+  window.checkNomen=()=>{let ok=0,total=0,wrong=0;document.querySelectorAll('#ixText .ix-mark').forEach(sp=>{const i=parseInt(sp.dataset.idx);const isN=words[i].n;const isSel=sp.classList.contains('mark-nomen');if(isN){total++;if(isSel){ok++;sp.style.background='rgba(74,222,128,.25)'}else sp.style.outline='2px dashed var(--warning)'}else if(isSel){wrong++;sp.style.background='rgba(248,113,113,.2)'}});const fb=document.getElementById('ixFeedback');if(ok>=total-1&&wrong<=1){fb.className='ix-feedback pass';fb.textContent='🎉 '+ok+'/'+total+' Nomen gefunden!';if(!state.interactiveResults[0]){state.interactiveResults[0]=true;addXP(30,'Nomen-Jäger geschafft!');saveState()}}else{fb.className='ix-feedback fail';fb.textContent=ok+'/'+total+' Nomen, '+wrong+' falsch markiert. Versuch es nochmal!'}};
+}
+
+// Modul 1: Doppel-Detektiv
+function initDoppelDetektiv(){
+  const tasks=[{word:'Ba__',answer:'ll',options:['l','ll']},{word:'So__e',answer:'nn',options:['n','nn']},{word:'Mu__er',answer:'tt',options:['t','tt']},{word:'Wa__er',answer:'ss',options:['s','ss']},{word:'Bri__e',answer:'ll',options:['l','ll']},{word:'Ha__er',answer:'mm',options:['m','mm']}];
+  let idx=0,score=0;const el=document.getElementById('interactiveContent');
+  function render(){
+    if(idx>=tasks.length){el.innerHTML='<div class="ix-feedback pass" style="display:block">🎉 '+score+'/'+tasks.length+' richtig! Doppel-Detektiv!</div>';if(!state.interactiveResults[1]){state.interactiveResults[1]=true;addXP(30,'Doppel-Detektiv geschafft!');saveState()}return}
+    const t=tasks[idx];el.innerHTML='<p style="font-size:24px;text-align:center;margin-bottom:16px">'+t.word.replace('__','<strong style="color:var(--neon);font-size:32px">__</strong>')+'</p><p style="text-align:center;margin-bottom:12px">Einfach oder doppelt?</p><div class="ix-grid">'+t.options.map(o=>'<span class="ix-item" style="font-size:24px;padding:14px 28px;font-weight:700" data-v="'+o+'">'+o+'</span>').join('')+'</div><div class="ix-feedback" id="ixFeedback"></div><p style="text-align:center;color:var(--text-dim);margin-top:8px">'+(idx+1)+'/'+tasks.length+'</p>';
+    document.querySelectorAll('.ix-item').forEach(btn=>{btn.onclick=()=>{if(btn.dataset.v===t.answer){btn.classList.add('correct');score++}else{btn.classList.add('wrong');document.querySelector('[data-v="'+t.answer+'"]').classList.add('correct')}idx++;setTimeout(render,1200)}});
+  }
+  render();
+}
+
+// Modul 2: Dehnung & Schärfung Lücken
+function initDehnungL\u00FCcke(){
+  const tasks=[{word:'L__be',answer:'ie',options:['i','ie']},{word:'Br__ke',answer:'ück',options:['ük','ück']},{word:'Ka__e',answer:'tz',options:['z','tz']},{word:'sp__len',answer:'ie',options:['i','ie']},{word:'Ba__en',answer:'ck',options:['k','ck']},{word:'s__en',answer:'itz',options:['iz','itz']}];
+  let idx=0,score=0;const el=document.getElementById('interactiveContent');
+  function render(){
+    if(idx>=tasks.length){el.innerHTML='<div class="ix-feedback pass" style="display:block">🎉 '+score+'/'+tasks.length+' richtig!</div>';if(!state.interactiveResults[2]){state.interactiveResults[2]=true;addXP(30,'Dehnung & Schärfung geschafft!');saveState()}return}
+    const t=tasks[idx];el.innerHTML='<p style="font-size:24px;text-align:center;margin-bottom:16px">'+t.word.replace('__','<strong style="color:var(--neon);font-size:32px">__</strong>')+'</p><div class="ix-grid">'+t.options.map(o=>'<span class="ix-item" style="font-size:22px;padding:12px 24px;font-weight:700" data-v="'+o+'">'+o+'</span>').join('')+'</div><div class="ix-feedback" id="ixFeedback"></div><p style="text-align:center;color:var(--text-dim);margin-top:8px">'+(idx+1)+'/'+tasks.length+'</p>';
+    document.querySelectorAll('.ix-item').forEach(btn=>{btn.onclick=()=>{if(btn.dataset.v===t.answer){btn.classList.add('correct');score++}else{btn.classList.add('wrong');document.querySelector('[data-v="'+t.answer+'"]').classList.add('correct')}idx++;setTimeout(render,1200)}});
+  }
+  render();
+}
+
+// Modul 3: Wortarten-Sortierer
+function initWortartenSortierer(){
+  const items=[{w:'Hund',t:'nomen'},{w:'laufen',t:'verb'},{w:'schön',t:'adj'},{w:'Tisch',t:'nomen'},{w:'spielen',t:'verb'},{w:'groß',t:'adj'},{w:'Freude',t:'nomen'},{w:'lesen',t:'verb'},{w:'schnell',t:'adj'}];
+  const shuffled=[...items].sort(()=>Math.random()-.5);let score=0,answered=0;
+  const el=document.getElementById('interactiveContent');
+  el.innerHTML='<p style="margin-bottom:12px"><strong>Klicke auf ein Wort und ordne es der richtigen Gruppe zu!</strong></p><div class="ix-grid" id="ixWords"></div><div style="display:flex;gap:12px;margin-top:16px;flex-wrap:wrap"><div class="ix-zone" id="zNomen" style="border-color:var(--success)"><div class="zone-label">🟢 Nomen</div><div id="zNomenList"></div></div><div class="ix-zone" id="zVerb" style="border-color:#38bdf8"><div class="zone-label">🔵 Verben</div><div id="zVerbList"></div></div><div class="ix-zone" id="zAdj" style="border-color:var(--warning)"><div class="zone-label">🟡 Adjektive</div><div id="zAdjList"></div></div></div><div class="ix-feedback" id="ixFeedback"></div>';
+  let selWord=null;
+  shuffled.forEach(item=>{const b=document.createElement('span');b.className='ix-item';b.textContent=item.w;b.style.fontSize='18px';b.dataset.t=item.t;b.onclick=()=>{if(b.classList.contains('placed'))return;document.querySelectorAll('#ixWords .ix-item').forEach(x=>x.classList.remove('selected'));b.classList.add('selected');selWord=item};document.getElementById('ixWords').appendChild(b)});
+  ['nomen','verb','adj'].forEach(t=>{const zone=document.getElementById('z'+t.charAt(0).toUpperCase()+t.slice(1));zone.style.cursor='pointer';zone.onclick=()=>{if(!selWord)return;const correct=selWord.t===t;const tag=document.createElement('span');tag.style.cssText='display:inline-block;padding:4px 10px;border-radius:6px;margin:2px;font-size:14px;'+(correct?'background:rgba(74,222,128,.15);color:var(--success)':'background:rgba(248,113,113,.15);color:var(--danger)');tag.textContent=selWord.w;document.getElementById('z'+t.charAt(0).toUpperCase()+t.slice(1)+'List').appendChild(tag);if(correct)score++;document.querySelectorAll('#ixWords .ix-item').forEach(x=>{if(x.textContent===selWord.w)x.classList.add('placed')});selWord=null;answered++;if(answered===items.length){const fb=document.getElementById('ixFeedback');fb.className='ix-feedback pass';fb.textContent='🎉 '+score+'/'+items.length+' richtig sortiert!';if(!state.interactiveResults[3]){state.interactiveResults[3]=true;addXP(30,'Wortarten-Sortierer geschafft!');saveState()}}}});
+}
+
+// Modul 4: Konjugation
+function initKonjugation(){
+  const verbs=[{stem:'spiel',inf:'spielen'},{stem:'mal',inf:'malen'},{stem:'lern',inf:'lernen'}];
+  const persons=['ich','du','er/sie/es','wir','ihr','sie'];
+  const endings=['e','st','t','en','t','en'];
+  let vIdx=0,score=0,total=0;const el=document.getElementById('interactiveContent');
+  function render(){
+    if(vIdx>=verbs.length){el.innerHTML='<div class="ix-feedback pass" style="display:block">🎉 '+score+'/'+total+' richtig! Konjugations-Held!</div>';if(!state.interactiveResults[4]){state.interactiveResults[4]=true;addXP(30,'Konjugation geschafft!');saveState()}return}
+    const v=verbs[vIdx];
+    el.innerHTML='<p style="font-size:20px;text-align:center;margin-bottom:16px">Konjugiere: <strong style="color:var(--neon)">'+v.inf+'</strong></p><div id="ixConj"></div><button class="ix-btn" onclick="checkConj()">Prüfen</button><div class="ix-feedback" id="ixFeedback"></div><p style="text-align:center;color:var(--text-dim);margin-top:8px">'+(vIdx+1)+'/'+verbs.length+'</p>';
+    const container=document.getElementById('ixConj');
+    persons.forEach((p,i)=>{const row=document.createElement('div');row.style.cssText='display:flex;align-items:center;gap:12px;margin:6px auto;max-width:350px';row.innerHTML='<span style="width:80px;text-align:right;color:var(--text-dim)">'+p+'</span><input type="text" data-pi="'+i+'" style="flex:1;padding:8px 12px;border-radius:var(--radius);border:2px solid var(--border);background:var(--bg2);color:var(--text);font-size:16px;font-family:var(--font)" placeholder="'+v.stem+'..." autocomplete="off">';container.appendChild(row)});
+  }
+  window.checkConj=()=>{
+    const v=verbs[vIdx];let ok=0;
+    persons.forEach((p,i)=>{const input=document.querySelector('[data-pi="'+i+'"]');const correct=v.stem+endings[i];total++;if(input.value.trim().toLowerCase()===correct){ok++;score++;input.style.borderColor='var(--success)'}else{input.style.borderColor='var(--danger)';input.value=correct;input.style.color='var(--danger)'}});
+    vIdx++;setTimeout(render,2000);
+  };
+  render();
+}
+
+// Modul 5: Satzglieder markieren
+function initSatzgliederMarker(){
+  const sentences=[
+    {parts:[{w:'Tom',t:'subjekt'},{w:'liest',t:'Pr\u00E4dikat'},{w:'ein Buch',t:'objekt'}]},
+    {parts:[{w:'Die Katze',t:'subjekt'},{w:'fängt',t:'Pr\u00E4dikat'},{w:'eine Maus',t:'objekt'}]},
+    {parts:[{w:'Mama',t:'subjekt'},{w:'kauft',t:'Pr\u00E4dikat'},{w:'Blumen',t:'objekt'}]}
+  ];
+  let sIdx=0,score=0,total=0;const el=document.getElementById('interactiveContent');
+  const colors={subjekt:'mark-nomen',Pr\u00E4dikat:'mark-verb',objekt:'mark-adj'};
+  const labels={subjekt:'🟢 Subjekt',Pr\u00E4dikat:'🔵 Prädikat',objekt:'🟡 Objekt'};
+  let currentLabel=null;
+  function render(){
+    if(sIdx>=sentences.length){el.innerHTML='<div class="ix-feedback pass" style="display:block">🎉 '+score+'/'+total+' richtig! Satzglieder-Meister!</div>';if(!state.interactiveResults[5]){state.interactiveResults[5]=true;addXP(30,'Satzglieder geschafft!');saveState()}return}
+    const s=sentences[sIdx];
+    el.innerHTML='<p style="margin-bottom:12px"><strong>Wähle eine Farbe und klicke dann auf das passende Satzglied!</strong></p><div class="ix-grid" id="ixLabels"></div><div id="ixSentence" style="font-size:22px;text-align:center;margin:20px 0;line-height:2"></div><div class="ix-feedback" id="ixFeedback"></div><p style="text-align:center;color:var(--text-dim);margin-top:8px">'+(sIdx+1)+'/'+sentences.length+'</p>';
+    Object.keys(labels).forEach(t=>{const b=document.createElement('span');b.className='ix-item';b.textContent=labels[t];b.style.fontSize='16px';b.onclick=()=>{document.querySelectorAll('#ixLabels .ix-item').forEach(x=>x.classList.remove('selected'));b.classList.add('selected');currentLabel=t};document.getElementById('ixLabels').appendChild(b)});
+    let answered=0;
+    s.parts.forEach((p,i)=>{const sp=document.createElement('span');sp.className='ix-mark';sp.textContent=p.w;sp.style.cssText='font-size:22px;padding:6px 12px;margin:0 6px';sp.onclick=()=>{if(!currentLabel||sp.dataset.done)return;sp.dataset.done='1';total++;if(currentLabel===p.t){sp.classList.add(colors[p.t]);score++}else{sp.style.outline='2px solid var(--danger)'}answered++;if(answered===s.parts.length){sIdx++;setTimeout(render,1500)}};document.getElementById('ixSentence').appendChild(sp)});
+  }
+  render();
+}
+
+// Modul 6: Wörtliche Rede zusammenbauen
+function initWörtlicheRede(){
+  const tasks=[
+    {begleit:'Tom sagt',rede:'Ich gehe nach Hause.',correct:'Tom sagt: „Ich gehe nach Hause."'},
+    {begleit:'Mama fragt',rede:'Hast du Hunger?',correct:'Mama fragt: „Hast du Hunger?"'},
+    {begleit:'Lena ruft',rede:'Komm schnell!',correct:'Lena ruft: „Komm schnell!"'}
+  ];
+  let idx=0,score=0;const el=document.getElementById('interactiveContent');
+  function render(){
+    if(idx>=tasks.length){el.innerHTML='<div class="ix-feedback pass" style="display:block">🎉 '+score+'/'+tasks.length+' richtig! Wörtliche Rede gemeistert!</div>';if(!state.interactiveResults[6]){state.interactiveResults[6]=true;addXP(30,'Wörtliche Rede geschafft!');saveState()}return}
+    const t=tasks[idx];
+    const parts=[t.begleit+': „'+t.rede+'"',t.begleit+' „'+t.rede+'"',t.begleit+': '+t.rede,t.begleit+' - '+t.rede].sort(()=>Math.random()-.5);
+    el.innerHTML='<p style="margin-bottom:8px">Begleitsatz: <strong>'+t.begleit+'</strong></p><p style="margin-bottom:16px">Gesprochenes: <strong>'+t.rede+'</strong></p><p style="margin-bottom:12px">Welche Schreibweise ist richtig?</p><div class="ix-grid" style="flex-direction:column;align-items:center">'+parts.map(p=>'<span class="ix-item" style="font-size:16px;display:block;width:100%;max-width:500px;text-align:left" data-v="'+p.replace(/"/g,'&quot;')+'">'+p+'</span>').join('')+'</div><div class="ix-feedback" id="ixFeedback"></div><p style="text-align:center;color:var(--text-dim);margin-top:8px">'+(idx+1)+'/'+tasks.length+'</p>';
+    document.querySelectorAll('.ix-item').forEach(btn=>{btn.onclick=()=>{const pick=btn.dataset.v;if(pick===t.correct){btn.classList.add('correct');score++}else{btn.classList.add('wrong');document.querySelectorAll('.ix-item').forEach(b=>{if(b.dataset.v===t.correct)b.classList.add('correct')})}idx++;setTimeout(render,1500)}});
+  }
+  render();
+}
+
+// Modul 7: Wort-Werkstatt — Zusammengesetzte Wörter
+function initWortWerkstatt(){
+  const pairs=[{a:'Haus',b:'Tür',result:'Haustür'},{a:'Sonnen',b:'Blume',result:'Sonnenblume'},{a:'Fuß',b:'Ball',result:'Fußball'},{a:'Schul',b:'Bus',result:'Schulbus'},{a:'Geburts',b:'Tag',result:'Geburtstag'}];
+  const shuffledB=[...pairs.map(p=>p.b)].sort(()=>Math.random()-.5);
+  let selA=null,matched=0;const el=document.getElementById('interactiveContent');
+  el.innerHTML='<p style="margin-bottom:12px"><strong>Verbinde die Wortteile! Klicke links, dann rechts.</strong></p><div style="display:flex;gap:24px;flex-wrap:wrap;justify-content:center"><div><h4 style="text-align:center;color:var(--neon)">Erster Teil</h4><div class="ix-grid" id="ixA" style="flex-direction:column"></div></div><div><h4 style="text-align:center;color:var(--link)">Zweiter Teil</h4><div class="ix-grid" id="ixB" style="flex-direction:column"></div></div></div><div id="ixResults" style="margin-top:16px;text-align:center"></div><div class="ix-feedback" id="ixFeedback"></div>';
+  pairs.forEach(p=>{const b=document.createElement('span');b.className='ix-item';b.textContent=p.a;b.style.fontSize='18px';b.onclick=()=>{if(b.classList.contains('placed'))return;document.querySelectorAll('#ixA .ix-item').forEach(x=>x.classList.remove('selected'));b.classList.add('selected');selA=p};document.getElementById('ixA').appendChild(b)});
+  shuffledB.forEach(bText=>{const b=document.createElement('span');b.className='ix-item';b.textContent=bText;b.style.fontSize='18px';b.onclick=()=>{if(!selA||b.classList.contains('placed'))return;const pair=pairs.find(p=>p.a===selA.a&&p.b===bText);if(pair){b.classList.add('correct','placed');document.querySelectorAll('#ixA .ix-item').forEach(x=>{if(x.textContent===selA.a)x.classList.add('correct','placed')});document.getElementById('ixResults').innerHTML+='<div style="font-size:18px;color:var(--success);margin:4px">'+pair.result+' ✓</div>';selA=null;matched++;if(matched===pairs.length){document.getElementById('ixFeedback').className='ix-feedback pass';document.getElementById('ixFeedback').textContent='🎉 Alle Wörter zusammengesetzt!';if(!state.interactiveResults[7]){state.interactiveResults[7]=true;addXP(30,'Wort-Werkstatt geschafft!');saveState()}}}else{b.classList.add('wrong');setTimeout(()=>b.classList.remove('wrong'),500)}};document.getElementById('ixB').appendChild(b)});
+}
+
+// Modul 8: Brief-Baukasten
+function initBriefBaukasten(){
+  const parts=[
+    {text:'Berlin, 4. März 2026',order:0,label:'Ort & Datum'},
+    {text:'Liebe Oma,',order:1,label:'Anrede'},
+    {text:'heute war ein toller Tag in der Schule. Wir haben ein Experiment gemacht!',order:2,label:'Brieftext'},
+    {text:'Viele Grüße',order:3,label:'Grußformel'},
+    {text:'Deine Lena',order:4,label:'Unterschrift'}
+  ];
+  const shuffled=[...parts].sort(()=>Math.random()-.5);
+  let selected=[];const el=document.getElementById('interactiveContent');
+  el.innerHTML='<p style="margin-bottom:12px"><strong>Bringe die Briefteile in die richtige Reihenfolge!</strong></p><div id="ixParts"></div><div style="margin:16px 0"><strong>Deine Reihenfolge:</strong></div><div id="ixOrder" style="min-height:40px"></div><button class="ix-btn" onclick="resetBrief()">↩️ Nochmal</button><div class="ix-feedback" id="ixFeedback"></div>';
+  function render(){
+    document.getElementById('ixParts').innerHTML=shuffled.map((p,i)=>'<div class="ix-item'+(selected.includes(i)?' placed':'')+'" style="display:block;text-align:left;font-size:16px;padding:10px 16px;margin-bottom:6px" data-si="'+i+'" onclick="pickBrief('+i+')"><strong style="color:var(--text-dim);font-size:12px">'+p.label+':</strong> '+p.text+'</div>').join('');
+    document.getElementById('ixOrder').innerHTML=selected.map((si,i)=>'<div style="padding:6px 14px;background:var(--neon-dim);border-radius:var(--radius);margin-bottom:4px;font-size:15px"><strong>'+(i+1)+'.</strong> '+shuffled[si].text+'</div>').join('');
+  }
+  render();
+  window.pickBrief=(si)=>{if(selected.includes(si))return;selected.push(si);render();if(selected.length===parts.length){const ok=selected.every((si,i)=>shuffled[si].order===i);const fb=document.getElementById('ixFeedback');if(ok){fb.className='ix-feedback pass';fb.textContent='🎉 Brief perfekt aufgebaut!';if(!state.interactiveResults[8]){state.interactiveResults[8]=true;addXP(30,'Brief-Baukasten geschafft!');saveState()}}else{fb.className='ix-feedback fail';fb.textContent='❌ Nicht ganz richtig. Versuch es nochmal!';setTimeout(()=>{selected=[];render();fb.style.display='none'},2000)}}};
+  window.resetBrief=()=>{selected=[];render();document.getElementById('ixFeedback').className='ix-feedback'};
+}
+
+// Modul 9: Fehler-Suche
+function initFehlerSuche(){
+  const words=[{w:'Die',c:'Die'},{w:'katze',c:'Katze'},{w:'sizt',c:'sitzt'},{w:'auf',c:'auf'},{w:'dem',c:'dem'},{w:'Tish',c:'Tisch'},{w:'und',c:'und'},{w:'trinkt',c:'trinkt'},{w:'warme',c:'warme'},{w:'milch',c:'Milch'},{w:'Der',c:'Der'},{w:'hunt',c:'Hund'},{w:'belt',c:'bellt'},{w:'laut',c:'laut'}];
+  const el=document.getElementById('interactiveContent');
+  el.innerHTML='<p style="margin-bottom:12px"><strong>Klicke auf die falsch geschriebenen Wörter!</strong></p><div id="ixText" style="font-size:20px;line-height:2.2"></div><button class="ix-btn" onclick="checkFehler()">Prüfen</button><div class="ix-feedback" id="ixFeedback"></div>';
+  const container=document.getElementById('ixText');
+  words.forEach((w,i)=>{const sp=document.createElement('span');sp.className='ix-mark';sp.textContent=w.w;sp.dataset.idx=i;sp.onclick=()=>sp.classList.toggle('selected');container.appendChild(sp);if(i===5||i===10)container.appendChild(document.createTextNode('. '));else container.appendChild(document.createTextNode(' '))});
+  window.checkFehler=()=>{let ok=0,total=0,wrong=0;document.querySelectorAll('#ixText .ix-mark').forEach(sp=>{const i=parseInt(sp.dataset.idx);const isErr=words[i].w!==words[i].c;const isSel=sp.classList.contains('selected');sp.classList.remove('selected');if(isErr){total++;if(isSel){ok++;sp.textContent=words[i].c;sp.style.background='rgba(74,222,128,.25)';sp.style.fontWeight='700'}else{sp.style.outline='2px dashed var(--warning)';sp.textContent=words[i].c}}else if(isSel){wrong++;sp.style.background='rgba(248,113,113,.2)'}});const fb=document.getElementById('ixFeedback');if(ok>=total-1&&wrong<=1){fb.className='ix-feedback pass';fb.textContent='🎉 '+ok+'/'+total+' Fehler gefunden und korrigiert!';if(!state.interactiveResults[9]){state.interactiveResults[9]=true;addXP(30,'Fehler-Suche geschafft!');saveState()}}else{fb.className='ix-feedback fail';fb.textContent=ok+'/'+total+' Fehler gefunden, '+wrong+' falsch markiert.'}};
+}
+
+// ═══════════════════════════════════════════════
+// Start & Init
+// ═══════════════════════════════════════════════
+function startApp(){const name=document.getElementById('nameInput').value.trim();if(!name)return;state.name=name;state.started=true;saveState();document.getElementById('welcomeScreen').style.display='none';renderModule(0);updateStreak()}
+(function init(){
+  if(loadState()){document.documentElement.setAttribute('data-theme',state.designTheme);if(state.started){document.getElementById('welcomeScreen').style.display='none';renderModule(state.currentModule);updateStreak()}else{document.getElementById('nameInput').value=state.name||'';document.getElementById('startBtn').disabled=!state.name}}
+  buildThemePicker();updateUI();renderSidebar();
+  const{world}=getCurrentThemeParts();const tc=THEME_CONFIG[world];
+  if(tc){document.getElementById('heroEmoji').textContent=tc.welcomeEmoji;document.getElementById('welcomeTitle').textContent=tc.welcomeTitle;document.getElementById('welcomeSub').textContent=tc.welcomeSub;document.getElementById('startBtn').textContent=tc.welcomeBtn}
+  document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeCert();document.getElementById('levelUpOverlay').classList.remove('active')}});
+})()
+</script>
+
+<script>
+(function(){
+var KEY=null;
+var scripts=document.querySelectorAll('script');
+for(var i=0;i<scripts.length;i++){
+var km=scripts[i].textContent.match(/STORAGE_KEY\s*=\s*['"](\w+)['"]/);
+if(km){KEY=km[1];break;}
+}
+if(!location.hash.match(/modules=/)){try{Object.keys(localStorage).filter(function(k){return k.indexOf("_allowed_modules")!==-1}).forEach(function(k){localStorage.removeItem(k)})}catch(e){}}
+var LOCK_KEY=(KEY||'app')+'_allowed_modules';
+var h=location.hash.match(/modules=([0-9,]+)/);
+var allowed=null;
+if(h){
+allowed=h[1].split(",").map(Number);
+try{localStorage.setItem(LOCK_KEY,JSON.stringify(allowed));}catch(e){}
+}else{
+try{var stored=localStorage.getItem(LOCK_KEY);if(stored)allowed=JSON.parse(stored);}catch(e){}
+}
+if(!allowed||!allowed.length)return;
+function filterSidebar(){
+var items=document.querySelectorAll("#sidebarModules > *");
+for(var i=0;i<items.length;i++){
+items[i].style.display=(allowed.indexOf(i)===-1)?"none":"";
+}
+}
+var sb=document.getElementById("sidebarModules");
+if(sb){new MutationObserver(filterSidebar).observe(sb,{childList:true});filterSidebar();}
+document.addEventListener("click",function(e){
+var t=e.target.closest("[onclick]");
+if(!t)return;
+var oc=t.getAttribute("onclick")||"";
+var idx=oc.indexOf("renderModule(");
+if(idx===-1)return;
+var num=parseInt(oc.substring(idx+13));
+if(!isNaN(num)&&allowed.indexOf(num)===-1){e.preventDefault();e.stopImmediatePropagation();}
+},true);
+setTimeout(filterSidebar,500);
+window.addEventListener("hashchange",function(){
+var hh=location.hash.match(/modules=([0-9,]+)/);
+if(hh){
+allowed=hh[1].split(",").map(Number);
+try{localStorage.setItem(LOCK_KEY,JSON.stringify(allowed));}catch(e){}
+filterSidebar();
+}
+});
+})();
+</script>
+
+<div class="zoom-controls" role="toolbar" aria-label="Zoom-Steuerung">
+<button class="zoom-btn" onclick="zoomOut()" title="Verkleinern (Taste -)" aria-label="Verkleinern">&#8722;</button>
+<button class="zoom-btn" onclick="zoomReset()" title="Zoom zurücksetzen" aria-label="Zoom zurücksetzen" style="font-size:10px;position:relative"><span id="zoomLvl">100%</span></button>
+<button class="zoom-btn" onclick="zoomIn()" title="Vergrößern (Taste +)" aria-label="Vergrößern">+</button>
+</div>
+
+<script>
+(function(){
+var zl=100;
+function applyZoom(){document.body.style.zoom=zl/100;var e=document.getElementById('zoomLvl');if(e)e.textContent=zl+'%';}
+window.zoomIn=function(){if(zl<200){zl+=10;applyZoom();}};
+window.zoomOut=function(){if(zl>50){zl-=10;applyZoom();}};
+window.zoomReset=function(){zl=100;applyZoom();};
+document.addEventListener('keydown',function(e){
+if(e.target.tagName==='INPUT'||e.target.tagName==='TEXTAREA'||e.target.isContentEditable)return;
+if((e.key==='+'||e.key==='=')&&!e.ctrlKey&&!e.metaKey){e.preventDefault();zoomIn();}
+else if((e.key==='-'||e.key==='_')&&!e.ctrlKey&&!e.metaKey){e.preventDefault();zoomOut();}
+else if(e.key==='0'&&!e.ctrlKey&&!e.metaKey){e.preventDefault();zoomReset();}
+});
+})();
+</script>
+
+<script>
+/* A11y: Focus trap for modal overlays */
+document.addEventListener('keydown',function(e){if(e.key==='Tab'){var ov=document.querySelector('.cert-overlay.active,.modal-overlay.active,[role="dialog"].active');if(ov){var fc=ov.querySelectorAll('button,a,[tabindex="0"],input,select,textarea');if(fc.length){var f=fc[0],l=fc[fc.length-1];if(e.shiftKey&&document.activeElement===f){e.preventDefault();l.focus()}else if(!e.shiftKey&&document.activeElement===l){e.preventDefault();f.focus()}}}}});
+</script>
+</body>
+</html>

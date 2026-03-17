@@ -1,0 +1,1042 @@
+<!DOCTYPE html>
+<html lang="de" data-theme="cyber-dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>GeoMeister — Interaktive Geographie-Lernapp</title>
+<meta name="description" content="Interaktive Geographie-Lernapp für Klasse 7-10 mit Gamification, Quizzen und Boss-Challenges">
+<style>
+@font-face{font-family:'Sora';src:url('../../Informatik/fonts/sora-latin-400-normal.woff2') format('woff2');font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:'Sora';src:url('../../Informatik/fonts/sora-latin-600-normal.woff2') format('woff2');font-weight:600;font-style:normal;font-display:swap}
+@font-face{font-family:'Sora';src:url('../../Informatik/fonts/sora-latin-700-normal.woff2') format('woff2');font-weight:700;font-style:normal;font-display:swap}
+@font-face{font-family:'JetBrains Mono';src:url('../../Informatik/fonts/jetbrains-mono-latin-400-normal.woff2') format('woff2');font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:'Playfair Display';src:url('../../Informatik/fonts/playfair-display-latin-700-normal.woff2') format('woff2');font-weight:700;font-style:normal;font-display:swap}
+@font-face{font-family:'Inter';src:url('../../Informatik/fonts/inter-latin-400-normal.woff2') format('woff2');font-weight:400;font-style:normal;font-display:swap}
+
+:root{
+--neon:#3b82f6;--neon-dim:rgba(59,130,246,.15);--neon-glow:rgba(59,130,246,.3);
+--bg:#0a0e14;--bg2:#111827;--bg3:#1f2937;--card:#161e2e;--card-hover:#1e293b;
+--border:#2a3444;--border-light:#374151;
+--text:#d4dce8;--text-dim:#8899aa;--text-bright:#f1f5f9;
+--heading:#ffffff;--link:#60a5fa;
+--success:#22c55e;--warning:#f59e0b;--danger:#ef4444;
+--xp-purple:#a855f7;--badge-cyan:#06b6d4;--streak-red:#ef4444;
+--radius:12px;--radius-sm:8px;--radius-lg:16px;
+--shadow:0 4px 24px rgba(0,0,0,.4);--shadow-lg:0 8px 40px rgba(0,0,0,.5);
+--font:'Sora','Segoe UI',system-ui,sans-serif;
+--mono:'JetBrains Mono','Cascadia Code',monospace;
+--serif:'Playfair Display','Georgia',serif;
+--sidebar-w:280px;--header-h:60px;
+--card-border-w:1px;--card-border-style:solid;--glow:1
+}
+[data-theme="cyber-dark"]{--neon:#3b82f6;--neon-dim:rgba(59,130,246,.15);--neon-glow:rgba(59,130,246,.3);--bg:#0a0e14;--bg2:#111827;--bg3:#1f2937;--card:#161e2e;--card-hover:#1e293b;--border:#2a3444;--border-light:#374151;--text:#d4dce8;--text-dim:#8899aa;--text-bright:#f1f5f9;--heading:#ffffff;--link:#60a5fa;--success:#22c55e;--warning:#f59e0b;--danger:#ef4444;--xp-purple:#a855f7;--badge-cyan:#06b6d4;--streak-red:#ef4444;--radius:12px;--radius-sm:8px;--radius-lg:16px;--shadow:0 4px 24px rgba(0,0,0,.4);--shadow-lg:0 8px 40px rgba(0,0,0,.5);--font:'Sora','Segoe UI',system-ui,sans-serif;--card-border-w:1px;--card-border-style:solid;--glow:1}
+[data-theme="cyber-light"]{--neon:#1d4ed8;--neon-dim:rgba(29,78,216,.1);--neon-glow:rgba(29,78,216,.2);--bg:#f8f9fb;--bg2:#f0f2f5;--bg3:#e5e7eb;--card:#ffffff;--card-hover:#f5f7fa;--border:#d1d5db;--border-light:#e5e7eb;--text:#374151;--text-dim:#4b5563;--text-bright:#111827;--heading:#111827;--link:#2563eb;--success:#22c55e;--warning:#f59e0b;--danger:#ef4444;--xp-purple:#a855f7;--badge-cyan:#06b6d4;--streak-red:#ef4444;--radius:12px;--radius-sm:8px;--radius-lg:16px;--shadow:0 4px 24px rgba(0,0,0,.08);--shadow-lg:0 8px 40px rgba(0,0,0,.12);--font:'Sora','Segoe UI',system-ui,sans-serif;--card-border-w:1px;--card-border-style:solid;--glow:0}
+[data-theme="retro-dark"]{--neon:#ffd700;--neon-dim:rgba(255,215,0,.12);--neon-glow:rgba(255,215,0,.3);--bg:#0d0208;--bg2:#1a0a1e;--bg3:#2d1233;--card:#1a0a1e;--card-hover:#2d1233;--border:#4a1942;--border-light:#5c2d5c;--text:#e0d0f0;--text-dim:#9080a0;--text-bright:#fff;--heading:#ffd700;--link:#ff6b9d;--success:#00e676;--warning:#ffab00;--danger:#ff1744;--xp-purple:#e040fb;--badge-cyan:#00e5ff;--streak-red:#ff1744;--radius:0px;--radius-sm:0px;--radius-lg:0px;--shadow:4px 4px 0 rgba(0,0,0,.8);--shadow-lg:6px 6px 0 rgba(0,0,0,.9);--font:'Courier New','Consolas',monospace;--card-border-w:3px;--card-border-style:solid;--glow:0}
+[data-theme="retro-light"]{--neon:#b8860b;--neon-dim:rgba(184,134,11,.1);--neon-glow:rgba(184,134,11,.2);--bg:#fff8e1;--bg2:#fff3cd;--bg3:#ffe0b2;--card:#ffffff;--card-hover:#fff9f0;--border:#d4a017;--border-light:#e6c84d;--text:#3e2723;--text-dim:#6d4c41;--text-bright:#1b0000;--heading:#b8860b;--link:#c2185b;--success:#2e7d32;--warning:#ef6c00;--danger:#c62828;--xp-purple:#8e24aa;--badge-cyan:#00838f;--streak-red:#c62828;--radius:0px;--radius-sm:0px;--radius-lg:0px;--shadow:3px 3px 0 rgba(0,0,0,.15);--shadow-lg:5px 5px 0 rgba(0,0,0,.2);--font:'Courier New','Consolas',monospace;--card-border-w:3px;--card-border-style:solid;--glow:0}
+[data-theme="nature-dark"]{--neon:#4ade80;--neon-dim:rgba(74,222,128,.12);--neon-glow:rgba(74,222,128,.25);--bg:#0c1a0f;--bg2:#132617;--bg3:#1e3a24;--card:#15291a;--card-hover:#1e3a24;--border:#2d5a36;--border-light:#3a7044;--text:#c8e6c9;--text-dim:#81a784;--text-bright:#e8f5e9;--heading:#e8f5e9;--link:#81c784;--success:#66bb6a;--warning:#ffa726;--danger:#ef5350;--xp-purple:#ab47bc;--badge-cyan:#26a69a;--streak-red:#ef5350;--radius:20px;--radius-sm:14px;--radius-lg:28px;--shadow:0 4px 20px rgba(0,0,0,.3);--shadow-lg:0 8px 32px rgba(0,0,0,.4);--font:'Segoe UI','Helvetica Neue',system-ui,sans-serif;--card-border-w:1px;--card-border-style:solid;--glow:0}
+[data-theme="nature-light"]{--neon:#2e7d32;--neon-dim:rgba(46,125,50,.08);--neon-glow:rgba(46,125,50,.15);--bg:#f1f8e9;--bg2:#e8f5e9;--bg3:#c8e6c9;--card:#ffffff;--card-hover:#f1faf1;--border:#a5d6a7;--border-light:#c8e6c9;--text:#33691e;--text-dim:#3e6e1c;--text-bright:#1b5e20;--heading:#1b5e20;--link:#2e7d32;--success:#388e3c;--warning:#ef6c00;--danger:#c62828;--xp-purple:#7b1fa2;--badge-cyan:#00695c;--streak-red:#c62828;--radius:20px;--radius-sm:14px;--radius-lg:28px;--shadow:0 4px 16px rgba(0,0,0,.06);--shadow-lg:0 8px 28px rgba(0,0,0,.1);--font:'Segoe UI','Helvetica Neue',system-ui,sans-serif;--card-border-w:1px;--card-border-style:solid;--glow:0}
+[data-theme="space-dark"]{--neon:#c084fc;--neon-dim:rgba(192,132,252,.12);--neon-glow:rgba(192,132,252,.3);--bg:#07020e;--bg2:#0f0720;--bg3:#1a0e35;--card:#110a28;--card-hover:#1a0e35;--border:#2e1a5e;--border-light:#3d2478;--text:#d4c8f0;--text-dim:#9080b8;--text-bright:#f0e8ff;--heading:#f0e8ff;--link:#f0abfc;--success:#34d399;--warning:#fbbf24;--danger:#fb7185;--xp-purple:#f472b6;--badge-cyan:#67e8f9;--streak-red:#fb7185;--radius:4px;--radius-sm:2px;--radius-lg:6px;--shadow:0 4px 24px rgba(100,50,200,.2);--shadow-lg:0 8px 40px rgba(100,50,200,.3);--font:'Segoe UI',system-ui,sans-serif;--card-border-w:1px;--card-border-style:solid;--glow:1}
+[data-theme="space-light"]{--neon:#7c3aed;--neon-dim:rgba(124,58,237,.08);--neon-glow:rgba(124,58,237,.15);--bg:#faf5ff;--bg2:#f3e8ff;--bg3:#e9d5ff;--card:#ffffff;--card-hover:#faf5ff;--border:#c4b5fd;--border-light:#ddd6fe;--text:#4c1d95;--text-dim:#5b21b6;--text-bright:#2e1065;--heading:#2e1065;--link:#7c3aed;--success:#059669;--warning:#d97706;--danger:#dc2626;--xp-purple:#db2777;--badge-cyan:#0891b2;--streak-red:#dc2626;--radius:4px;--radius-sm:2px;--radius-lg:6px;--shadow:0 4px 16px rgba(100,50,200,.06);--shadow-lg:0 8px 28px rgba(100,50,200,.1);--font:'Segoe UI',system-ui,sans-serif;--card-border-w:1px;--card-border-style:solid;--glow:0}
+[data-theme="comic-dark"]{--neon:#ff6b6b;--neon-dim:rgba(255,107,107,.12);--neon-glow:rgba(255,107,107,.3);--bg:#1a1a2e;--bg2:#222244;--bg3:#2e2e55;--card:#262650;--card-hover:#2e2e55;--border:#4a4a7a;--border-light:#5a5a8a;--text:#e8e0ff;--text-dim:#a098c0;--text-bright:#fff;--heading:#fff;--link:#ffa94d;--success:#51cf66;--warning:#fcc419;--danger:#ff6b6b;--xp-purple:#cc5de8;--badge-cyan:#22b8cf;--streak-red:#ff6b6b;--radius:16px;--radius-sm:12px;--radius-lg:24px;--shadow:4px 4px 0 rgba(0,0,0,.5);--shadow-lg:6px 6px 0 rgba(0,0,0,.6);--font:'Comic Sans MS','Chalkboard SE',cursive,system-ui,sans-serif;--card-border-w:3px;--card-border-style:solid;--glow:0}
+[data-theme="comic-light"]{--neon:#e03131;--neon-dim:rgba(224,49,49,.08);--neon-glow:rgba(224,49,49,.15);--bg:#fff9db;--bg2:#fff3bf;--bg3:#ffe066;--card:#ffffff;--card-hover:#fffdf0;--border:#fab005;--border-light:#fcc419;--text:#2b2b2b;--text-dim:#555;--text-bright:#000;--heading:#000;--link:#e8590c;--success:#2f9e44;--warning:#e8590c;--danger:#c92a2a;--xp-purple:#9c36b5;--badge-cyan:#1098ad;--streak-red:#c92a2a;--radius:16px;--radius-sm:12px;--radius-lg:24px;--shadow:3px 3px 0 rgba(0,0,0,.2);--shadow-lg:5px 5px 0 rgba(0,0,0,.25);--font:'Comic Sans MS','Chalkboard SE',cursive,system-ui,sans-serif;--card-border-w:3px;--card-border-style:solid;--glow:0}
+[data-theme="sketchy-dark"]{--neon:#d97706;--neon-dim:rgba(217,119,6,.15);--neon-glow:rgba(217,119,6,.3);--bg:#2a1f0f;--bg2:#3a2a1a;--bg3:#4a3a2a;--card:#362414;--card-hover:#462a1a;--border:#5a4030;--border-light:#6a5040;--text:#d4c4b0;--text-dim:#a09080;--text-bright:#e8d8c8;--heading:#f5ead5;--link:#e8a550;--success:#84cc16;--warning:#d97706;--danger:#e74c3c;--xp-purple:#d946ef;--badge-cyan:#06b6d4;--streak-red:#e74c3c;--radius:24px;--radius-sm:16px;--radius-lg:32px;--shadow:0 6px 20px rgba(0,0,0,.3);--shadow-lg:0 10px 40px rgba(0,0,0,.4);--font:'Playfair Display','Georgia',serif;--card-border-w:2px;--card-border-style:dashed;--glow:0}
+[data-theme="sketchy-light"]{--neon:#b45309;--neon-dim:rgba(180,83,9,.1);--neon-glow:rgba(180,83,9,.2);--bg:#fef3e2;--bg2:#fde8cc;--bg3:#f9d5b8;--card:#ffffff;--card-hover:#fffaf5;--border:#d4a574;--border-light:#e8c4a0;--text:#5c4033;--text-dim:#8b6f47;--text-bright:#3e2723;--heading:#3e2723;--link:#c2600c;--success:#65a30d;--warning:#b45309;--danger:#d25c4d;--xp-purple:#c084fc;--badge-cyan:#0891b2;--streak-red:#d25c4d;--radius:24px;--radius-sm:16px;--radius-lg:32px;--shadow:0 4px 12px rgba(0,0,0,.08);--shadow-lg:0 8px 24px rgba(0,0,0,.12);--font:'Playfair Display','Georgia',serif;--card-border-w:2px;--card-border-style:dashed;--glow:0}
+[data-theme="nature-code-dark"]{--neon:#10b981;--neon-dim:rgba(16,185,129,.15);--neon-glow:rgba(16,185,129,.25);--bg:#0a1f12;--bg2:#0d2818;--bg3:#1a3a2a;--card:#0f281a;--card-hover:#1a3a2a;--border:#2d5a3d;--border-light:#3a7050;--text:#c8e6d0;--text-dim:#7ba890;--text-bright:#e8f5ed;--heading:#e8f5ed;--link:#34d399;--success:#10b981;--warning:#f59e0b;--danger:#f87171;--xp-purple:#a78bfa;--badge-cyan:#22d3ee;--streak-red:#f87171;--radius:20px;--radius-sm:14px;--radius-lg:28px;--shadow:0 4px 20px rgba(0,100,50,.2);--shadow-lg:0 8px 32px rgba(0,100,50,.3);--font:'Segoe UI','Helvetica Neue',system-ui,sans-serif;--card-border-w:1px;--card-border-style:solid;--glow:0}
+[data-theme="nature-code-light"]{--neon:#059669;--neon-dim:rgba(5,150,105,.1);--neon-glow:rgba(5,150,105,.15);--bg:#f0fdf8;--bg2:#e8faf2;--bg3:#d1f2e0;--card:#ffffff;--card-hover:#f5fbf7;--border:#86efac;--border-light:#bbf7d0;--text:#164e3f;--text-dim:#2d6e4f;--text-bright:#052e16;--heading:#052e16;--link:#059669;--success:#10b981;--warning:#d97706;--danger:#dc2626;--xp-purple:#8b5cf6;--badge-cyan:#06b6d4;--streak-red:#dc2626;--radius:20px;--radius-sm:14px;--radius-lg:28px;--shadow:0 4px 16px rgba(0,100,50,.06);--shadow-lg:0 8px 28px rgba(0,100,50,.1);--font:'Segoe UI','Helvetica Neue',system-ui,sans-serif;--card-border-w:1px;--card-border-style:solid;--glow:0}
+[data-theme="glass-dark"]{--neon:#00d9ff;--neon-dim:rgba(0,217,255,.12);--neon-glow:rgba(0,217,255,.25);--bg:#0f0f23;--bg2:#1a1a3e;--bg3:#25254a;--card:rgba(30,30,60,.4);--card-hover:rgba(40,40,80,.5);--border:rgba(100,150,255,.2);--border-light:rgba(100,150,255,.3);--text:#e4e8f0;--text-dim:#8899aa;--text-bright:#f5f7ff;--heading:#ffffff;--link:#00d9ff;--success:#34d399;--warning:#fbbf24;--danger:#ff6b9d;--xp-purple:#b991f7;--badge-cyan:#00d9ff;--streak-red:#ff6b9d;--radius:16px;--radius-sm:12px;--radius-lg:20px;--shadow:0 8px 32px rgba(0,200,255,.1);--shadow-lg:0 16px 64px rgba(0,200,255,.15);--font:'Segoe UI',system-ui,sans-serif;--card-border-w:1px;--card-border-style:solid;--glow:1}
+[data-theme="glass-light"]{--neon:#0891b2;--neon-dim:rgba(8,145,178,.08);--neon-glow:rgba(8,145,178,.15);--bg:#f8fafc;--bg2:#f1f5f9;--bg3:#e2e8f0;--card:rgba(255,255,255,.4);--card-hover:rgba(255,255,255,.6);--border:rgba(100,180,255,.2);--border-light:rgba(100,180,255,.3);--text:#1e293b;--text-dim:#475569;--text-bright:#0f172a;--heading:#0f172a;--link:#0891b2;--success:#059669;--warning:#d97706;--danger:#dc2626;--xp-purple:#7c3aed;--badge-cyan:#0891b2;--streak-red:#dc2626;--radius:16px;--radius-sm:12px;--radius-lg:20px;--shadow:0 8px 32px rgba(100,150,255,.08);--shadow-lg:0 16px 64px rgba(100,150,255,.12);--font:'Segoe UI',system-ui,sans-serif;--card-border-w:1px;--card-border-style:solid;--glow:0}
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{font-family:var(--font);background:var(--bg);color:var(--text);line-height:1.6;min-height:100vh;overflow-x:hidden;transition:background .3s,color .3s}
+h1,h2,h3,h4{color:var(--heading);line-height:1.3}
+a{color:var(--link);text-decoration:none}
+a:hover{text-decoration:underline}
+button{font-family:var(--font);cursor:pointer;border:none;background:none;color:inherit}
+code,pre{font-family:var(--mono)}
+:focus-visible{outline:2px solid var(--neon);outline-offset:2px;border-radius:4px}
+::selection{background:var(--neon);color:#fff}
+::-webkit-scrollbar{width:8px}
+::-webkit-scrollbar-track{background:var(--bg2)}
+::-webkit-scrollbar-thumb{background:var(--border);border-radius:4px}
+::-webkit-scrollbar-thumb:hover{background:var(--text-dim)}
+.site-header{position:fixed;top:0;left:0;right:0;height:var(--header-h);background:var(--bg2);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 20px;z-index:100;backdrop-filter:blur(12px)}
+.header-logo{display:flex;align-items:center;gap:12px;font-weight:700;font-size:18px;color:var(--heading)}
+.header-logo-text{display:flex;flex-direction:column;line-height:1.2}
+.header-logo-main{font-size:20px;font-weight:800}
+.header-logo-sub{font-size:11px;font-weight:600;color:var(--neon);letter-spacing:1px;text-transform:uppercase;margin-top:2px}
+.header-right{margin-left:auto;display:flex;align-items:center;gap:12px}
+.header-xp{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--xp-purple);font-weight:600}
+.header-xp-bar{width:80px;height:6px;background:var(--bg3);border-radius:3px;overflow:hidden}
+.header-xp-fill{height:100%;background:var(--xp-purple);border-radius:3px;transition:width .5s}
+.header-streak{display:flex;align-items:center;gap:4px;font-size:13px;color:var(--streak-red);font-weight:600}
+.theme-toggle{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:var(--bg3);transition:background .2s}
+.theme-toggle:hover{background:var(--border)}
+.theme-picker-wrap{position:relative}
+.theme-picker-btn{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:var(--bg3);transition:background .2s;font-size:16px}
+.theme-picker-btn:hover{background:var(--border)}
+.theme-picker-dd{position:absolute;top:calc(100% + 8px);right:0;background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:12px;box-shadow:var(--shadow-lg);z-index:200;display:none;min-width:240px}
+.theme-picker-dd.open{display:block}
+.theme-picker-dd .tp-label{font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--text-dim);margin-bottom:8px}
+.tp-world{display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:var(--radius-sm);cursor:pointer;transition:background .15s;margin-bottom:2px}
+.tp-world:hover{background:var(--bg3)}
+.tp-world.active{background:var(--neon-dim)}
+.tp-world-color{width:28px;height:28px;border-radius:6px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:14px}
+.tp-world-info{flex:1;min-width:0}
+.tp-world-name{font-size:13px;font-weight:600;color:var(--heading)}
+.tp-world-desc{font-size:10px;color:var(--text-dim)}
+.tp-divider{height:1px;background:var(--border);margin:8px 0}
+.tp-mode-row{display:flex;align-items:center;justify-content:space-between;padding:4px 10px}
+.tp-mode-label{font-size:12px;color:var(--text);font-weight:600}
+.tp-mode-switch{width:44px;height:24px;border-radius:12px;background:var(--bg3);position:relative;cursor:pointer;transition:background .2s}
+.tp-mode-switch.light{background:var(--neon)}
+.tp-mode-switch::after{content:'';position:absolute;top:3px;left:3px;width:18px;height:18px;border-radius:50%;background:#fff;transition:transform .2s;box-shadow:0 1px 3px rgba(0,0,0,.3)}
+.tp-mode-switch.light::after{transform:translateX(20px)}
+.menu-btn{display:none;width:36px;height:36px;border-radius:8px;align-items:center;justify-content:center;background:var(--bg3)}
+.sidebar{position:fixed;top:var(--header-h);left:0;width:var(--sidebar-w);height:calc(100vh - var(--header-h));background:var(--bg2);border-right:1px solid var(--border);overflow-y:auto;padding:16px 12px;z-index:90;transition:transform .3s}
+.sidebar-section{margin-bottom:20px}
+.sidebar-label{font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--text-dim);padding:0 8px;margin-bottom:8px}
+.sidebar-level{padding:8px 12px;background:var(--neon-dim);border-radius:var(--radius-sm);margin-bottom:12px;text-align:center}
+.sidebar-level-title{font-size:14px;font-weight:700;color:var(--neon)}
+.sidebar-level-sub{font-size:11px;color:var(--text-dim);margin-top:2px}
+.sidebar-xp-bar{width:100%;height:8px;background:var(--bg3);border-radius:4px;overflow:hidden;margin-top:6px}
+.sidebar-xp-fill{height:100%;background:linear-gradient(90deg,var(--xp-purple),var(--neon));border-radius:4px;transition:width .6s}
+.mod-link{display:flex;align-items:center;gap:10px;padding:8px 12px;border-radius:var(--radius-sm);transition:background .15s;color:var(--text);font-size:13px;text-decoration:none;position:relative;cursor:pointer}
+.mod-link:hover{background:var(--bg3);text-decoration:none}
+.mod-link.active{background:var(--neon-dim);color:var(--neon);font-weight:600}
+.mod-link.completed::after{content:'\2713';position:absolute;right:10px;color:var(--success);font-weight:700;font-size:12px}
+.mod-link .mod-icon{width:28px;height:28px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
+.main{margin-left:var(--sidebar-w);margin-top:var(--header-h);min-height:calc(100vh - var(--header-h));padding:32px;max-width:900px}
+.module-header{margin-bottom:32px}
+.module-header .mod-badge{display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--neon);margin-bottom:8px}
+.module-header h1{font-size:28px;margin-bottom:8px}
+.module-header .mod-desc{font-size:15px;color:var(--text-dim);max-width:600px}
+.lesson-card{background:var(--card);border:var(--card-border-w) var(--card-border-style) var(--border);border-radius:var(--radius);padding:24px;margin-bottom:20px;transition:border-color .2s}
+.lesson-card:hover{border-color:var(--neon)}
+.lesson-card h3{font-size:18px;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.lesson-card p,.lesson-card li{font-size:14px;line-height:1.7;color:var(--text)}
+.lesson-card ul,.lesson-card ol{margin:8px 0 8px 20px}
+.lesson-card code{background:var(--bg3);padding:2px 6px;border-radius:4px;font-size:13px;color:var(--neon)}
+.lesson-card pre{background:var(--bg);border:1px solid var(--border);border-radius:var(--radius-sm);padding:16px;overflow-x:auto;margin:12px 0;font-size:13px;line-height:1.5}
+.lesson-card .info-box{background:var(--neon-dim);border-left:3px solid var(--neon);padding:12px 16px;border-radius:0 var(--radius-sm) var(--radius-sm) 0;margin:12px 0;font-size:13px}
+.interactive-area{background:var(--card);border:calc(var(--card-border-w) + 1px) dashed var(--border);border-radius:var(--radius);padding:24px;margin:20px 0;min-height:200px}
+.interactive-area h4{font-size:15px;color:var(--neon);margin-bottom:12px}
+.ia-toolbar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+.ia-btn{padding:6px 14px;font-size:12px;font-weight:600;border-radius:var(--radius-sm);background:var(--neon-dim);color:var(--neon);border:1px solid transparent;transition:all .15s}
+.ia-btn:hover{background:var(--neon);color:#fff}
+.ia-btn.active{background:var(--neon);color:#fff}
+.ix-grid{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;margin:16px 0}
+.ix-item{background:var(--bg3);border:2px solid var(--border);border-radius:var(--radius-sm);padding:14px 20px;font-size:20px;cursor:pointer;transition:all .2s;user-select:none;text-align:center;min-width:60px}
+.ix-item:hover{border-color:var(--neon);background:var(--neon-dim)}
+.ix-item.selected{border-color:var(--neon);background:var(--neon-dim)}
+.ix-item.correct{border-color:var(--success);background:rgba(34,197,94,.1)}
+.ix-item.wrong{border-color:var(--danger);background:rgba(239,68,68,.1)}
+.ix-item.placed{opacity:.4;pointer-events:none}
+.ix-btn{background:var(--neon);color:#fff;border:none;padding:10px 24px;border-radius:var(--radius-sm);font-size:14px;font-weight:700;cursor:pointer;font-family:var(--font);margin-top:12px;transition:opacity .2s}
+.ix-btn:hover{opacity:.85}
+.ix-btn:disabled{opacity:.4;cursor:not-allowed}
+.ix-feedback{text-align:center;padding:14px;border-radius:var(--radius-sm);font-size:16px;font-weight:700;margin-top:12px;display:none}
+.ix-feedback.pass{display:block;background:rgba(34,197,94,.12);color:var(--success)}
+.ix-feedback.fail{display:block;background:rgba(239,68,68,.12);color:var(--danger)}
+.quiz-section{background:var(--card);border:var(--card-border-w) var(--card-border-style) var(--border);border-radius:var(--radius);padding:24px;margin-top:24px}
+.quiz-section h3{font-size:18px;margin-bottom:16px;color:var(--xp-purple)}
+.quiz-q{margin-bottom:20px}
+.quiz-q p{font-size:14px;font-weight:600;margin-bottom:10px}
+.quiz-q label{display:flex;align-items:flex-start;gap:10px;padding:10px 14px;border-radius:var(--radius-sm);border:1px solid var(--border);cursor:pointer;transition:all .15s;font-size:14px;margin-bottom:6px}
+.quiz-q label:hover{border-color:var(--neon);background:var(--neon-dim)}
+.quiz-q input[type="radio"]{margin-top:3px;accent-color:var(--neon)}
+.quiz-q label.correct{border-color:var(--success);background:rgba(34,197,94,.1)}
+.quiz-q label.wrong{border-color:var(--danger);background:rgba(239,68,68,.1)}
+.quiz-submit{padding:10px 24px;font-size:14px;font-weight:700;border-radius:var(--radius-sm);background:var(--xp-purple);color:#fff;transition:opacity .2s;margin-top:8px}
+.quiz-submit:hover{opacity:.85}
+.quiz-result{padding:16px;border-radius:var(--radius-sm);margin-top:16px;font-size:14px;font-weight:600;text-align:center}
+.quiz-result.pass{background:rgba(34,197,94,.12);color:var(--success);border:1px solid rgba(34,197,94,.3)}
+.quiz-result.fail{background:rgba(239,68,68,.12);color:var(--danger);border:1px solid rgba(239,68,68,.3)}
+.quiz-explanation{margin-top:6px;padding:8px 14px;border-radius:var(--radius-sm);background:rgba(34,197,94,.08);border-left:3px solid var(--success);font-size:13px;color:var(--success);font-weight:600}
+.boss-section{background:linear-gradient(135deg,rgba(168,85,247,.08),rgba(59,130,246,.08));border:2px solid var(--xp-purple);border-radius:var(--radius);padding:24px;margin-top:24px}
+.boss-section h3{color:var(--xp-purple);font-size:20px;margin-bottom:4px}
+.boss-section .boss-sub{font-size:13px;color:var(--text-dim);margin-bottom:16px}
+.badge-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(100px,1fr));gap:12px;margin-top:12px}
+.badge-item{text-align:center;padding:12px 8px;border-radius:var(--radius-sm);background:var(--bg3);opacity:.4;transition:all .3s}
+.badge-item.earned{opacity:1;background:var(--neon-dim);border:1px solid var(--neon)}
+.badge-item .badge-icon{font-size:28px;margin-bottom:4px}
+.badge-item .badge-name{font-size:10px;font-weight:600;color:var(--text-dim)}
+.badge-item.earned .badge-name{color:var(--neon)}
+.stats-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px;margin-top:12px}
+.stat-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius-sm);padding:16px;text-align:center}
+.stat-card .stat-val{font-size:28px;font-weight:700;color:var(--neon)}
+.stat-card .stat-label{font-size:12px;color:var(--text-dim);margin-top:4px}
+.notif{position:fixed;top:80px;right:20px;background:var(--card);border:1px solid var(--neon);border-radius:var(--radius);padding:16px 20px;box-shadow:var(--shadow-lg);z-index:200;transform:translateX(120%);transition:transform .4s cubic-bezier(.22,1,.36,1);max-width:320px}
+.notif.show{transform:translateX(0)}
+.notif-title{font-size:14px;font-weight:700;color:var(--heading);margin-bottom:2px}
+.notif-text{font-size:12px;color:var(--text-dim)}
+.notif.xp{border-color:var(--xp-purple)}
+.notif.badge{border-color:var(--badge-cyan)}
+.notif.level{border-color:var(--success)}
+.notif.streak{border-color:var(--streak-red)}
+.level-up-overlay{position:fixed;inset:0;background:rgba(0,0,0,.7);display:none;align-items:center;justify-content:center;z-index:300}
+.level-up-overlay.active{display:flex}
+.level-up-box{text-align:center;padding:40px;animation:lvlPop .5s ease-out}
+.level-up-box .lvl-icon{font-size:64px;margin-bottom:12px}
+.level-up-box .lvl-title{font-size:28px;font-weight:900;color:var(--heading)}
+.level-up-box .lvl-name{font-size:20px;color:var(--xp-purple);font-weight:700;margin-top:4px}
+@keyframes lvlPop{from{transform:scale(.5);opacity:0}to{transform:scale(1);opacity:1}}
+.welcome-screen{display:flex;align-items:center;justify-content:center;min-height:calc(100vh - var(--header-h));text-align:center;padding:40px 20px}
+.welcome-box{max-width:480px}
+.welcome-box h1{font-size:36px;margin-bottom:8px}
+.welcome-box .ws-sub{color:var(--text-dim);font-size:15px;margin-bottom:32px}
+.welcome-box input{width:100%;max-width:320px;padding:12px 16px;font-size:16px;border-radius:var(--radius-sm);border:1px solid var(--border);background:var(--bg3);color:var(--heading);font-family:var(--font);text-align:center;margin-bottom:16px}
+.welcome-box input:focus{border-color:var(--neon);outline:2px solid var(--neon);outline-offset:2px}
+.welcome-box .ws-start{padding:14px 40px;font-size:16px;font-weight:700;border-radius:var(--radius-sm);background:var(--neon);color:#fff;transition:opacity .2s}
+.welcome-box .ws-start:hover{opacity:.85}
+.welcome-box .ws-start:disabled{opacity:.4;cursor:not-allowed}
+.cert-overlay{position:fixed;inset:0;background:rgba(0,0,0,.88);display:none;align-items:center;justify-content:center;z-index:400;padding:20px;flex-direction:column;backdrop-filter:blur(8px)}
+.cert-overlay.active{display:flex}
+.cert-picker{display:flex;gap:12px;justify-content:center;margin-bottom:20px;flex-wrap:wrap}
+.cert-pick-btn{padding:10px 20px;font-size:13px;font-weight:700;border-radius:12px;border:2px solid rgba(255,255,255,.15);background:rgba(255,255,255,.06);color:rgba(255,255,255,.7);transition:all .3s;backdrop-filter:blur(4px)}
+.cert-pick-btn:hover{border-color:rgba(255,255,255,.3);color:#fff;transform:translateY(-2px)}
+.cert-pick-btn.active{border-color:#ffd700;color:#ffd700;background:rgba(255,215,0,.1);box-shadow:0 0 20px rgba(255,215,0,.15)}
+.cert-frame{width:720px;max-width:100%;aspect-ratio:1.414;position:relative;overflow:hidden;animation:certEntrance .6s cubic-bezier(.34,1.56,.64,1) both}
+.cert-actions{display:flex;gap:12px;justify-content:center;margin-top:16px}
+.cert-actions button{padding:12px 28px;font-size:13px;font-weight:700;border-radius:12px;background:linear-gradient(135deg,var(--neon),var(--link));color:#fff;transition:transform .2s,box-shadow .2s}
+.cert-actions button:hover{transform:translateY(-2px);box-shadow:0 4px 20px rgba(0,0,0,.3)}
+@keyframes certEntrance{0%{opacity:0;transform:scale(.8) translateY(30px)}100%{opacity:1;transform:scale(1) translateY(0)}}
+@keyframes shimmer{0%{background-position:-200% 0}100%{background-position:200% 0}}
+@keyframes blink{50%{opacity:0}}
+@keyframes glitch{0%,93%{text-shadow:0 0 20px rgba(0,212,255,.5)}94%{text-shadow:-3px 0 #ff0040,3px 0 #00d4ff;transform:skewX(-2deg)}95%{text-shadow:3px 0 #ff0040,-3px 0 #00d4ff;transform:skewX(2deg)}96%{text-shadow:-1px 2px #ff0040,1px -2px #00d4ff}97%,100%{text-shadow:0 0 20px rgba(0,212,255,.5);transform:skewX(0)}}
+@keyframes pixelBlink{50%{opacity:0}}
+@keyframes holoSpin{to{transform:rotate(360deg)}}
+@keyframes aurora{0%{background-position:0% 50%}25%{background-position:50% 100%}50%{background-position:100% 50%}75%{background-position:50% 0%}100%{background-position:0% 50%}}
+@keyframes goldShimmer{0%{background-position:-100% 0}100%{background-position:200% 0}}
+@keyframes neonPulse{0%,100%{box-shadow:0 0 5px #00ff41,0 0 10px #00ff41,0 0 20px rgba(0,255,65,.3)}50%{box-shadow:0 0 10px #00ff41,0 0 25px #00ff41,0 0 50px rgba(0,255,65,.4)}}
+@keyframes matrixFall{0%{transform:translateY(-100%);opacity:1}100%{transform:translateY(100vh);opacity:0}}
+.cert-common-stats{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin:10px 0}
+.cert-stat{padding:4px 10px;border-radius:20px;font-size:11px;font-weight:700;display:inline-flex;align-items:center;gap:4px}
+.cert-badge-row{display:flex;gap:6px;justify-content:center;flex-wrap:wrap;margin:8px 0}
+.cert-badge-item{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px}
+.cert-verification{font-size:10px;letter-spacing:2px;margin-top:8px;opacity:.5;font-family:var(--mono)}
+.cert-logo-footer{display:flex;align-items:center;justify-content:center;gap:6px;margin-top:10px;opacity:.4;font-size:10px}
+.cert-logo-footer svg{width:16px;height:16px}
+.cert-akademie{background:linear-gradient(145deg,#faf6e8,#f0e8d0,#e8dfc0);border:none;padding:0;text-align:center;font-family:var(--serif);color:#1a1a3e;position:relative;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;overflow:hidden}
+.cert-akademie::before{content:'';position:absolute;inset:0;background:url("data:image/svg+xml,%3Csvg width='60' height='60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 5 L35 20 L30 15 L25 20Z' fill='%23c5a54e' opacity='.04'/%3E%3C/svg%3E");pointer-events:none}
+.cert-akademie::after{content:'';position:absolute;inset:8px;border:2px solid rgba(197,165,78,.35);border-radius:2px;pointer-events:none}
+.cert-akademie .cert-inner{position:relative;z-index:1;padding:36px 32px;width:100%}
+.cert-akademie .cert-corner{position:absolute;width:60px;height:60px;z-index:2}
+.cert-akademie .cert-corner svg{width:100%;height:100%}
+.cert-akademie .cert-corner-tl{top:14px;left:14px}
+.cert-akademie .cert-corner-tr{top:14px;right:14px;transform:scaleX(-1)}
+.cert-akademie .cert-corner-bl{bottom:14px;left:14px;transform:scaleY(-1)}
+.cert-akademie .cert-corner-br{bottom:14px;right:14px;transform:scale(-1)}
+.cert-akademie .cert-title{font-size:36px;font-weight:700;color:#1a1a3e;margin-bottom:2px;letter-spacing:3px}
+.cert-akademie .cert-sub{font-size:11px;color:#8a7d5e;letter-spacing:5px;text-transform:uppercase;margin-bottom:16px}
+.cert-akademie .cert-hr{width:200px;height:2px;background:linear-gradient(90deg,transparent,#c5a54e,transparent);margin:10px auto}
+.cert-akademie .cert-body{font-size:14px;line-height:1.7;color:#3d3422;margin-bottom:8px}
+.cert-akademie .cert-name{font-size:32px;font-weight:700;background:linear-gradient(135deg,#c5a54e,#e8c84e,#c5a54e);background-size:200% auto;animation:goldShimmer 3s linear infinite;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin:12px 0;font-style:italic}
+.cert-akademie .cert-seal-wrap{margin:12px auto;position:relative;width:90px;height:90px}
+.cert-akademie .cert-seal-ring{position:absolute;inset:0;border:3px solid #c5a54e;border-radius:50%;opacity:.3}
+.cert-akademie .cert-seal{width:76px;height:76px;margin:7px;background:radial-gradient(circle at 35% 35%,#e8c84e,#c5a54e,#8a6914);border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 16px rgba(160,134,54,.5),inset 0 2px 4px rgba(255,255,255,.3)}
+.cert-akademie .cert-stat{background:rgba(197,165,78,.12);color:#8a6914;border:1px solid rgba(197,165,78,.25)}
+.cert-akademie .cert-badge-item{background:rgba(197,165,78,.15);border:1px solid rgba(197,165,78,.3)}
+.cert-akademie .cert-date{font-size:11px;color:#8a7d5e;margin-top:8px;font-style:italic}
+.cert-hacker{background:#050505;border:2px solid #00ff41;padding:0;font-family:var(--mono);color:#00ff41;position:relative;overflow:hidden;height:100%;display:flex;flex-direction:column;justify-content:center;box-shadow:0 0 30px rgba(0,255,65,.15),inset 0 0 60px rgba(0,255,65,.03);animation:neonPulse 4s ease-in-out infinite}
+.cert-hacker::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(transparent,transparent 2px,rgba(0,255,65,.025) 2px,rgba(0,255,65,.025) 4px);pointer-events:none;z-index:1}
+.cert-hacker::after{content:'> > > CERTIFIED > > > CERTIFIED > > > CERTIFIED > > >';position:absolute;bottom:0;left:0;right:0;font-size:9px;color:rgba(0,255,65,.08);letter-spacing:3px;padding:4px;white-space:nowrap;overflow:hidden;z-index:1}
+.cert-hacker .cert-inner{position:relative;z-index:2;padding:30px 32px}
+.cert-hacker .cert-matrix-col{position:absolute;top:-100%;font-size:11px;color:#00ff41;opacity:.08;z-index:0;font-family:var(--mono);line-height:1.1;animation:matrixFall linear infinite;white-space:pre}
+.cert-hacker .cert-title{font-size:22px;font-weight:700;text-shadow:0 0 15px rgba(0,255,65,.6);margin-bottom:4px}
+.cert-hacker .cert-access{font-size:32px;font-weight:700;color:#00d4ff;text-shadow:0 0 30px rgba(0,212,255,.6),0 0 60px rgba(0,212,255,.2);margin:14px 0;animation:glitch 4s infinite;letter-spacing:4px}
+.cert-hacker .cert-body{font-size:12px;line-height:2;color:#33cc55}
+.cert-hacker .cert-name{font-size:24px;color:#00d4ff;margin:12px 0;text-shadow:0 0 10px rgba(0,212,255,.4)}
+.cert-hacker .cert-prompt{color:#444;font-size:11px}
+.cert-hacker .cert-prompt span{color:#00ff41}
+.cert-hacker .cursor-blink{animation:blink 1s step-end infinite}
+.cert-hacker .cert-hex-seal{width:70px;height:70px;margin:12px auto;border:2px solid #00ff41;border-radius:50%;display:flex;align-items:center;justify-content:center;position:relative;box-shadow:0 0 15px rgba(0,255,65,.2)}
+.cert-hacker .cert-stat{background:rgba(0,255,65,.08);color:#00ff41;border:1px solid rgba(0,255,65,.2)}
+.cert-hacker .cert-badge-item{background:rgba(0,255,65,.08);border:1px solid rgba(0,255,65,.2)}
+.cert-pixel{background:linear-gradient(180deg,#0f0f2e,#1a1a3e,#0f0f2e);border:6px solid #ffd700;padding:0;text-align:center;color:#fff;font-family:var(--font);position:relative;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;overflow:hidden;box-shadow:inset 0 0 80px rgba(255,215,0,.05)}
+.cert-pixel .cert-inner{position:relative;z-index:1;padding:28px 24px;width:100%}
+.cert-pixel .cert-complete{font-size:20px;color:#00e676;margin:6px 0;animation:pixelBlink 1.2s step-end infinite;text-shadow:0 0 10px rgba(0,230,118,.4);letter-spacing:3px;font-weight:900}
+.cert-pixel .cert-title{font-size:32px;font-weight:900;color:#ffd700;text-transform:uppercase;letter-spacing:5px;text-shadow:4px 4px 0 #e4002b}
+.cert-pixel .cert-name{font-size:26px;font-weight:900;color:#fff;margin:14px 0;text-shadow:2px 2px 0 rgba(0,0,0,.5)}
+.cert-pixel .cert-stars{font-size:28px;margin:8px 0;letter-spacing:6px;color:#ffd700;text-shadow:0 0 10px rgba(255,215,0,.4)}
+.cert-pixel .cert-body{font-size:12px;color:#aaa;line-height:1.7}
+.cert-pixel .cert-score{font-size:18px;color:#ff4757;font-weight:900;margin-top:6px;text-shadow:2px 2px 0 rgba(0,0,0,.5);letter-spacing:2px}
+.cert-pixel .cert-xp-bar{width:200px;height:14px;background:#111;border:2px solid #ffd700;margin:8px auto;position:relative;overflow:hidden}
+.cert-pixel .cert-xp-fill{height:100%;background:repeating-linear-gradient(90deg,#ffd700 0px,#ffd700 8px,#ffaa00 8px,#ffaa00 16px);box-shadow:0 0 8px rgba(255,215,0,.4)}
+.cert-pixel .cert-xp-label{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:900;color:#fff;text-shadow:1px 1px 0 #000;z-index:1}
+.cert-pixel .cert-stat{background:rgba(255,215,0,.1);color:#ffd700;border:2px solid rgba(255,215,0,.3)}
+.cert-pixel .cert-badge-item{background:rgba(255,215,0,.1);border:2px solid rgba(255,215,0,.25)}
+.cert-zukunft{background:linear-gradient(135deg,#0a0a2e,#1a0a3e,#0a1a3e);border:1px solid rgba(255,255,255,.1);border-radius:20px;padding:0;text-align:center;color:#fff;font-family:var(--font);position:relative;overflow:hidden;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.cert-zukunft::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(99,102,241,.15),rgba(236,72,153,.15),rgba(245,158,11,.15),rgba(34,197,94,.15),rgba(99,102,241,.15));background-size:400% 400%;animation:aurora 8s ease infinite;pointer-events:none}
+.cert-zukunft .cert-inner{position:relative;z-index:1;padding:30px 28px;width:100%}
+.cert-zukunft .cert-particle{position:absolute;width:3px;height:3px;border-radius:50%;z-index:0}
+.cert-zukunft .cert-title{font-size:30px;font-weight:900;background:linear-gradient(135deg,#6366f1,#ec4899,#f59e0b,#22c55e);background-size:200% auto;animation:shimmer 4s linear infinite;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.cert-zukunft .cert-sub{font-size:11px;color:rgba(255,255,255,.5);letter-spacing:4px;text-transform:uppercase;margin-bottom:14px}
+.cert-zukunft .cert-name{font-size:28px;font-weight:700;margin:12px 0;background:linear-gradient(90deg,#a78bfa,#f472b6,#fbbf24);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.cert-zukunft .cert-body{font-size:13px;color:rgba(255,255,255,.65);line-height:1.7}
+.cert-zukunft .cert-seal-holo{width:80px;height:80px;margin:12px auto;border-radius:50%;background:conic-gradient(#6366f1,#ec4899,#f59e0b,#22c55e,#06b6d4,#6366f1);display:flex;align-items:center;justify-content:center;animation:holoSpin 6s linear infinite;box-shadow:0 0 30px rgba(99,102,241,.3)}
+.cert-zukunft .cert-seal-mid{width:68px;height:68px;border-radius:50%;border:2px solid rgba(255,255,255,.15);background:transparent;display:flex;align-items:center;justify-content:center;animation:holoSpin 10s linear infinite reverse}
+.cert-zukunft .cert-seal-inner{width:52px;height:52px;border-radius:50%;background:rgba(10,10,30,.9);display:flex;align-items:center;justify-content:center;backdrop-filter:blur(4px)}
+.cert-zukunft .cert-date{font-size:10px;color:rgba(255,255,255,.35);margin-top:10px;letter-spacing:2px}
+.cert-zukunft .cert-stat{background:rgba(99,102,241,.12);color:#a78bfa;border:1px solid rgba(99,102,241,.25)}
+.cert-zukunft .cert-badge-item{background:rgba(99,102,241,.1);border:1px solid rgba(99,102,241,.2)}
+.confetti-container{position:fixed;inset:0;pointer-events:none;z-index:600;overflow:hidden}
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.6);display:none;align-items:center;justify-content:center;z-index:500;padding:20px}
+.modal-overlay.active{display:flex}
+.modal{background:var(--card);border:1px solid var(--border);border-radius:var(--radius-lg);max-width:640px;width:100%;max-height:85vh;overflow-y:auto;padding:32px;position:relative}
+.modal-close{position:absolute;top:12px;right:12px;font-size:24px;color:var(--text-dim);background:none;border:none;cursor:pointer}
+@media(max-width:800px){
+.menu-btn{display:flex}
+.sidebar{transform:translateX(-100%)}
+.sidebar.open{transform:translateX(0)}
+.main{margin-left:0;padding:16px}
+}
+@media print{
+*{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}
+.site-header,.sidebar,.notif,.level-up-overlay,.confetti-container{display:none!important}
+.main{margin-left:0!important;padding:20px!important}
+.lesson-card{break-inside:avoid;page-break-inside:avoid}
+}
+
+.zoom-controls{position:fixed;bottom:16px;left:16px;display:flex;gap:4px;z-index:9999}
+.zoom-btn{width:32px;height:32px;border-radius:50%;border:1px solid var(--border,#2a3444);background:var(--bg2,#111827);color:var(--text,#d4dce8);cursor:pointer;font-size:15px;display:flex;align-items:center;justify-content:center;transition:all .2s;font-family:inherit;line-height:1}
+.zoom-btn:hover{border-color:var(--neon,#3b82f6);color:var(--neon,#3b82f6);transform:scale(1.1)}
+.zoom-btn:focus-visible{outline:2px solid var(--neon,#3b82f6);outline-offset:2px}
+.zoom-level{font-size:10px;position:absolute;top:-16px;left:50%;transform:translateX(-50%);color:var(--text-dim,#8899aa);white-space:nowrap;pointer-events:none}
+
+/* A11y: Print improvements */
+@media print{body{background:#fff!important;color:#000!important}.cert-overlay,.modal-overlay,.level-up-overlay,.theme-overlay,.zoom-controls{display:none!important}.lesson-card,.quiz-section,.boss-section,.interactive-area{break-inside:avoid;page-break-inside:avoid}}
+
+/* Audio/Speech */
+.tts-btn{background:none;border:none;cursor:pointer;font-size:.9em;opacity:.5;transition:all .2s;vertical-align:middle;margin-left:8px;padding:2px 6px;border-radius:4px}
+.tts-btn:hover{opacity:1;background:var(--bg2)}.tts-btn.speaking{opacity:1;color:var(--neon);animation:tts-pulse 1s infinite}
+@keyframes tts-pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.15)}}
+.tts-bar{display:flex;align-items:center;gap:8px;padding:6px 12px;background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);margin:8px 0;font-size:.8rem;flex-wrap:wrap}
+.tts-bar select{background:var(--bg);color:var(--text);border:1px solid var(--border);border-radius:4px;padding:2px 6px;font-size:.78rem}
+.tts-bar button{background:none;border:1px solid var(--border);border-radius:4px;padding:2px 8px;cursor:pointer;color:var(--text);font-size:.8rem}
+.tts-bar button:hover{background:var(--bg)}
+.speech-ex{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:16px;margin:12px 0;text-align:center}
+.speech-ex h4{margin:0 0 8px;font-size:1rem}
+.mic-btn{font-size:1.6em;background:none;border:2px solid var(--neon);border-radius:50%;width:52px;height:52px;cursor:pointer;transition:all .3s;color:var(--text);display:inline-flex;align-items:center;justify-content:center}
+.mic-btn:hover{background:var(--neon);color:var(--bg)}.mic-btn.rec{background:#ef4444;border-color:#ef4444;color:#fff;animation:tts-pulse 1s infinite}
+.sr-res{margin-top:8px;padding:6px 10px;border-radius:4px;font-weight:600;font-size:.85rem;display:inline-block}
+.sr-res.good{background:#22c55e22;color:#22c55e}.sr-res.retry{background:#f59e0b22;color:#f59e0b}
+.sr-na{font-size:.8rem;color:var(--text-dim);margin-top:8px}
+</style>
+</head>
+<body>
+<a href="#mainContent" class="skip-nav" style="position:absolute;top:-50px;left:8px;background:var(--neon);color:#fff;padding:8px 16px;z-index:9999;border-radius:0 0 8px 8px;font-weight:700;text-decoration:none">Zum Inhalt springen</a>
+<header class="site-header">
+<button class="menu-btn" onclick="toggleSidebar()" aria-label="Menu">&#9776;</button>
+<div class="header-logo">
+<svg viewBox="0 0 40 40" width="40" height="40" fill="none" aria-hidden="true">
+<rect x="4" y="4" width="32" height="32" rx="8" fill="var(--neon-dim)" stroke="var(--neon)" stroke-width="1.5"/>
+<text x="20" y="26" text-anchor="middle" font-size="18" font-weight="900" fill="var(--neon)">Z</text>
+</svg>
+<div class="header-logo-text">
+<div class="header-logo-main">GeoMeister</div>
+<div class="header-logo-sub">Geographie Klasse 7-10</div>
+</div>
+</div>
+<div class="header-right">
+<div class="header-xp"><span id="headerLevel">Level 1</span><div class="header-xp-bar"><div class="header-xp-fill" style="width:0%"></div></div><span id="headerXP">0 XP</span></div>
+<div class="header-streak" id="headerStreak">&#128293; 0</div>
+<div class="theme-picker-wrap">
+<button class="theme-picker-btn" onclick="toggleThemePicker()" aria-label="Theme wählen">&#127912;</button>
+<div class="theme-picker-dd" id="themePickerDD"></div>
+</div>
+<button class="theme-toggle" onclick="toggleMode()" aria-label="Dark/Light umschalten">&#127769;</button>
+</div>
+</header>
+<nav class="sidebar" id="sidebar" role="navigation" aria-label="Module">
+<div class="sidebar-section">
+<div class="sidebar-level">
+<div class="sidebar-level-title" id="sidebarLevel">Geo-Neuling</div>
+<div class="sidebar-level-sub" id="sidebarXP">0 XP</div>
+<div class="sidebar-xp-bar"><div class="sidebar-xp-fill" id="sidebarXPFill" style="width:0%"></div></div>
+</div>
+</div>
+<div class="sidebar-section">
+<div class="sidebar-label">Module</div>
+<div id="sidebarModules"></div>
+</div>
+<div class="sidebar-section" style="border-top:1px solid var(--border);padding-top:12px;margin-top:12px">
+<a class="mod-link" onclick="showBadges()"><span class="mod-icon">&#127941;</span>Abzeichen</a>
+<a class="mod-link" onclick="showStats()"><span class="mod-icon">&#128202;</span>Statistik</a>
+<a class="mod-link" onclick="showCert()"><span class="mod-icon">&#127891;</span>Urkunde</a>
+</div>
+<div class="sidebar-section" style="border-top:1px solid var(--border);padding-top:12px;margin-top:12px">
+<a class="mod-link" onclick="exportData()"><span class="mod-icon">&#128190;</span>Speichern</a>
+<label class="mod-link" style="cursor:pointer"><span class="mod-icon">&#128194;</span>Laden<input type="file" accept=".json" onchange="importData(event)" style="display:none"></label>
+<a class="mod-link" onclick="if(confirm('Wirklich alles zurücksetzen?')){localStorage.removeItem(STORAGE_KEY);location.reload()}" style="color:var(--danger)"><span class="mod-icon">&#128465;</span>Zurücksetzen</a>
+</div>
+<div style="padding:16px 8px 8px;border-top:1px solid var(--border);margin-top:12px;font-size:11px;color:var(--text-dim)">
+<a onclick="showImpressum()" style="cursor:pointer;color:var(--text-dim)">Impressum</a> &middot;
+<a onclick="showDatenschutz()" style="cursor:pointer;color:var(--text-dim)">Datenschutz</a>
+</div>
+</nav>
+<main class="main" id="mainContent">
+<div class="welcome-screen" id="welcomeScreen">
+<div class="welcome-box">
+<div style="font-size:64px;margin-bottom:16px">&#127968;</div>
+<h1>GeoMeister</h1>
+<p class="ws-sub">Entdecke die Welt — Klima, Kontinente, St\u00E4dte und Nachhaltigkeit!</p>
+<input type="text" id="nameInput" placeholder="Dein Name" maxlength="24" aria-label="Dein Name" oninput="document.getElementById('startBtn').disabled=!this.value.trim()">
+<br>
+<button class="ws-start" id="startBtn" disabled onclick="startApp()">Los geht's! &#9203;</button>
+</div>
+</div>
+<div id="moduleContent" style="display:none"></div>
+<div id="badgesView" style="display:none"></div>
+<div id="statsView" style="display:none"></div>
+</main>
+<div class="notif" id="notif" role="status" aria-live="polite" aria-atomic="true"><div class="notif-title" id="notifTitle"></div><div class="notif-text" id="notifText"></div></div>
+<div class="level-up-overlay" id="levelUpOverlay"><div class="level-up-box" id="levelUpBox"></div></div>
+<div class="confetti-container" id="confetti"></div>
+<div class="cert-overlay" id="certOverlay" role="dialog" aria-label="Urkunde" aria-modal="true">
+<div class="cert-picker" id="certPicker"></div>
+<div class="cert-frame" id="certFrame"></div>
+<div class="cert-actions">
+<button onclick="printCert()">&#128424; Drucken / PDF</button>
+<button onclick="closeCert()">Schließen</button>
+</div>
+</div>
+<div class="modal-overlay" id="impressumOverlay">
+<div class="modal">
+<button class="modal-close" onclick="document.getElementById('impressumOverlay').classList.remove('active')">&times;</button>
+<h2>Impressum</h2>
+<p><strong>&copy; 2026 GZ AI Stacks - Gerd Zimmermann</strong></p>
+<p>GeoMeister — Interaktive Geographie-Lernapp für Klasse 7-10.</p>
+<p>Entwickelt mit Claude Code (Anthropic).</p>
+<p>Kontakt: gz-ai-stacks@example.com</p>
+</div>
+</div>
+<div class="modal-overlay" id="datenschutzOverlay">
+<div class="modal">
+<button class="modal-close" onclick="document.getElementById('datenschutzOverlay').classList.remove('active')">&times;</button>
+<h2>Datenschutzerklärung</h2>
+<p>Diese App speichert Daten <strong>ausschließlich lokal</strong> auf Ihrem Gerät.</p>
+<ul>
+<li>Keine Cookies</li>
+<li>Kein Tracking oder Analytics</li>
+<li>Keine externen Ressourcen</li>
+<li>Keine Registrierung</li>
+<li>Alle Daten verbleiben auf Ihrem Gerät</li>
+</ul>
+<p>Sie können Ihre gespeicherten Daten jederzeit über die "Zurücksetzen"-Funktion löschen.</p>
+</div>
+</div>
+<script>
+function showImpressum(){document.getElementById('impressumOverlay').classList.add('active')}
+function showDatenschutz(){document.getElementById('datenschutzOverlay').classList.add('active')}
+
+// === XOR Quiz Encryption ===
+
+// === Audio (TTS) ===
+const _synth=window.speechSynthesis,_LANG='de-DE';let _ttsOn=false,_ttsRate=1,_ttsTimer=null;
+function speakLesson(i){if(_ttsOn){stopTTS();return}const c=document.querySelectorAll('.lesson-card');if(!c[i]||!_synth)return;stopTTS();const u=new SpeechSynthesisUtterance(c[i].innerText);u.lang=_LANG;u.rate=_ttsRate;u.onstart=()=>{_ttsOn=true;updTTSUI();startTTSTimer()};u.onend=()=>{_ttsOn=false;updTTSUI();clearTTSTimer()};u.onerror=()=>{_ttsOn=false;updTTSUI();clearTTSTimer()};_synth.speak(u);showTTSBar()}
+function speakText(t,lang){if(!_synth)return;stopTTS();const u=new SpeechSynthesisUtterance(t);u.lang=lang||_LANG;u.rate=_ttsRate;u.onstart=()=>{_ttsOn=true;updTTSUI();startTTSTimer()};u.onend=()=>{_ttsOn=false;updTTSUI();clearTTSTimer()};u.onerror=()=>{_ttsOn=false;updTTSUI();clearTTSTimer()};_synth.speak(u)}
+function stopTTS(){if(_synth){_synth.cancel()}_ttsOn=false;updTTSUI();clearTTSTimer()}
+function updTTSUI(){document.querySelectorAll('.tts-btn').forEach(b=>b.classList.toggle('speaking',_ttsOn))}
+function setTTSRate(r){_ttsRate=parseFloat(r)}
+function startTTSTimer(){clearTTSTimer();_ttsTimer=setInterval(()=>{if(_synth&&_synth.speaking&&!_synth.paused){_synth.pause();_synth.resume()}},10000)}
+function clearTTSTimer(){if(_ttsTimer){clearInterval(_ttsTimer);_ttsTimer=null}}
+function showTTSBar(){if(document.getElementById('ttsBar'))return;const mc=document.getElementById('moduleContent');if(!mc)return;const b=document.createElement('div');b.className='tts-bar';b.id='ttsBar';b.innerHTML='\u{1F50A} <select onchange="setTTSRate(this.value)"><option value="0.7">Langsam</option><option value="1" selected>Normal</option><option value="1.3">Schnell</option></select> <button onclick="stopTTS()">\u25A0 Stopp</button>';mc.prepend(b)}
+
+const _qk=[0x4A,0x7F,0x2B,0x61,0x5C,0x3E,0x18,0x73];
+function _d(h,i){return h^_qk[i%_qk.length]}
+
+// === Levels ===
+const LEVELS=[
+{name:'Geo-Neuling',xp:0},{name:'Zeitleisten-Leser',xp:40},{name:'Quellen-Entdecker',xp:100},
+{name:'Epochen-Kenner',xp:180},{name:'Fakten-Sammler',xp:280},{name:'Chronik-Forscher',xp:400},
+{name:'Geo-Detektiv',xp:540},{name:'Archiv-Experte',xp:700},{name:'Epochen-Navigator',xp:880},
+{name:'Quellenanalyst',xp:1080},{name:'Geo-Gelehrter',xp:1300},{name:'Zeitalter-Kenner',xp:1540},
+{name:'Historiker-Talent',xp:1800},{name:'Chronist',xp:2080},{name:'Geo-Stratege',xp:2380},
+{name:'Epochen-Meister',xp:2700},{name:'Geo-Professor',xp:3040},{name:'Herodot-Scholar',xp:3400},
+{name:'Clio-Meister',xp:3780},{name:'Geo-Genie',xp:4200}
+];
+
+// === Badges ===
+const BADGES=[
+{id:'m0',name:'Antike-Experte',icon:'🏛️',desc:'Modul 1 abgeschlossen'},
+{id:'m1',name:'Ritter-Meister',icon:'⚔️',desc:'Modul 2 abgeschlossen'},
+{id:'m2',name:'Renaissance-Kenner',icon:'🎨',desc:'Modul 3 abgeschlossen'},
+{id:'m3',name:'Aufkl\u00E4rungs-Denker',icon:'💡',desc:'Modul 4 abgeschlossen'},
+{id:'m4',name:'Revolutions-Held',icon:'🗽',desc:'Modul 5 abgeschlossen'},
+{id:'m5',name:'Industrie-Pioneer',icon:'🏭',desc:'Modul 6 abgeschlossen'},
+{id:'m6',name:'Weltkriegs-Analytiker',icon:'🌍',desc:'Modul 7 abgeschlossen'},
+{id:'m7',name:'Zeitzeuge',icon:'📜',desc:'Modul 8 abgeschlossen'},
+{id:'m8',name:'Kalter-Krieg-Experte',icon:'🧊',desc:'Modul 9 abgeschlossen'},
+{id:'m9',name:'Globalisierer',icon:'🌐',desc:'Modul 10 abgeschlossen'},
+{id:'first_quiz',name:'Quiz-Neuling',icon:'❓',desc:'Erstes Quiz bestanden'},
+{id:'perfect_quiz',name:'Perfektionist',icon:'💎',desc:'Quiz mit 5/5 bestanden'},
+{id:'first_boss',name:'Boss-Bezwinger',icon:'👑',desc:'Erste Boss-Challenge bestanden'},
+{id:'all_bosses',name:'Endgegner',icon:'🏆',desc:'Alle Boss-Challenges bestanden'},
+{id:'streak3',name:'Durchstarter',icon:'🔥',desc:'3 Tage in Folge gelernt'},
+{id:'streak7',name:'Wochenkrieger',icon:'⚔️',desc:'7 Tage in Folge gelernt'},
+{id:'half_done',name:'Halbzeit',icon:'⏳',desc:'5 Module abgeschlossen'},
+{id:'speed_quiz',name:'Blitz-Denker',icon:'⚡',desc:'Quiz in unter 60 Sekunden'},
+{id:'explorer',name:'Entdecker',icon:'🗺️',desc:'Alle Module angesehen'},
+{id:'graduate',name:'Absolvent',icon:'🎓',desc:'Alle 10 Module abgeschlossen'}
+];
+
+// === Theme Config ===
+const THEME_CONFIG={
+cyber:{name:'Cyber Neon',emoji:'\uD83D\uDDA5',color:'#3b82f6',desc:'Futuristisch & Digital'},
+retro:{name:'Retro Arcade',emoji:'\uD83D\uDD79',color:'#ffd700',desc:'80er Arcade-Feeling'},
+nature:{name:'Nature Forest',emoji:'\uD83C\uDF33',color:'#4ade80',desc:'Natürlich & Organisch'},
+space:{name:'Deep Space',emoji:'\uD83D\uDE80',color:'#c084fc',desc:'Kosmisch & Geheimnisvoll'},
+comic:{name:'Comic Pop',emoji:'\uD83D\uDCA5',color:'#ff6b6b',desc:'Bunt & Verspielt'},
+sketchy:{name:'Sketchy',emoji:'\u270D\uFE0F',color:'#d97706',desc:'Handgemacht & Warm'},
+'nature-code':{name:'Nature x Code',emoji:'\uD83C\uDF3F',color:'#10b981',desc:'Natur trifft Technik'},
+glass:{name:'Glasmorphism',emoji:'\uD83D\uDCA0',color:'#00d9ff',desc:'Modern & Transparent'}
+};
+
+// === Modules ===
+// === Modules ===
+const modules=[
+{id:0,title:'Erde und Klimazonen',icon:'\uD83C\uDF0D',duration:'25 Min.',description:'Die Erde, ihre Klimazonen und die Faktoren, die unser Klima bestimmen.',
+lessons:[
+{title:'Aufbau der Erde und Klimazonen',content:'<p>Die Erde l\u00E4sst sich in verschiedene <strong>Klimazonen</strong> einteilen, die sich vom \u00C4quator zu den Polen erstrecken.</p><p><strong>Die f\u00FCnf Klimazonen:</strong></p><ul><li><strong>Tropische Zone</strong> (0\u00B0-23,5\u00B0): Ganzjährig warm, hohe Niederschläge, Regenwald</li><li><strong>Subtropische Zone</strong> (23,5\u00B0-40\u00B0): Heiße Sommer, milde Winter, Mittelmeerklima</li><li><strong>Gem\u00E4\u00DFigte Zone</strong> (40\u00B0-60\u00B0): Vier Jahreszeiten, Deutschland liegt hier</li><li><strong>Subpolare Zone</strong> (60\u00B0-66,5\u00B0): Lange kalte Winter, kurze Sommer, Tundra</li><li><strong>Polare Zone</strong> (66,5\u00B0-90\u00B0): Extrem kalt, Eis und Schnee</li></ul><div class="info-box">\uD83D\uDCA1 <strong>Merke:</strong> Die Klimazonen entstehen durch den unterschiedlichen <strong>Einfallswinkel der Sonnenstrahlen</strong> — am \u00C4quator steil, an den Polen flach!</div>'},
+{title:'Klimafaktoren und Wetter',content:'<p>Verschiedene Faktoren beeinflussen das Klima eines Ortes:</p><p><strong>Wichtige Klimafaktoren:</strong></p><ul><li><strong>Breitenlage:</strong> Je n\u00E4her am \u00C4quator, desto w\u00E4rmer</li><li><strong>Höhenlage:</strong> Pro 100m Höhe sinkt die Temperatur um ca. 0,6\u00B0C</li><li><strong>Meernähe:</strong> Meere mildern Temperaturschwankungen (maritimes Klima)</li><li><strong>Meeresströmungen:</strong> Der Golfstrom erw\u00E4rmt Nordwesteuropa</li><li><strong>Windverh\u00E4ltnisse:</strong> Passatwinde, Westwinde, Monsun</li></ul><p><strong>Wetter vs. Klima:</strong></p><ul><li><strong>Wetter</strong> = kurzfristiger Zustand der Atmosph\u00E4re</li><li><strong>Klima</strong> = Durchschnittswetter \u00FCber mindestens 30 Jahre</li></ul><div class="info-box">\uD83D\uDCA1 <strong>Wusstest du?</strong> Ohne den Golfstrom w\u00E4re es in Deutschland etwa <strong>5-10\u00B0C k\u00E4lter</strong>!</div>'}
+],
+quiz:[
+{q:'Welche Klimazone liegt am \u00C4quator?',a:['Gem\u00E4\u00DFigte Zone','Tropische Zone','Subpolare Zone','Polare Zone'],_h:0x4B},
+{q:'In welcher Klimazone liegt Deutschland?',a:['Tropische Zone','Subtropische Zone','Gem\u00E4\u00DFigte Zone','Polare Zone'],_h:0x7D},
+{q:'Was passiert mit der Temperatur pro 100m Höhe?',a:['Sie steigt um 1\u00B0C','Sie sinkt um ca. 0,6\u00B0C','Sie bleibt gleich','Sie steigt um 0,6\u00B0C'],_h:0x2A},
+{q:'Was ist der Unterschied zwischen Wetter und Klima?',a:['Es gibt keinen','Klima ist der Durchschnitt \u00FCber mind. 30 Jahre','Wetter dauert l\u00E4nger','Klima \u00E4ndert sich t\u00E4glich'],_h:0x60},
+{q:'Welche Meeresströmung erw\u00E4rmt Nordwesteuropa?',a:['Humboldtstrom','Golfstrom','Labradorstrom','Kuroshio'],_h:0x5D}
+],
+boss:[
+{q:'Warum ist es am \u00C4quator w\u00E4rmer als an den Polen?',a:['Weil der \u00C4quator h\u00F6her liegt','Weil die Sonnenstrahlen dort steiler auftreffen','Weil es dort mehr Vulkane gibt','Weil die Erde dort dicker ist'],_h:0x4B},
+{q:'Warum hat ein K\u00FCstenort mildere Temperaturschwankungen als ein Binnenort?',a:['Wegen der Fische','Weil Wasser W\u00E4rme speichert und langsam abgibt','Weil es am Meer mehr regnet','Weil der Wind st\u00E4rker ist'],_h:0x7E},
+{q:'Wie beeinflussen Gebirge das Klima?',a:['Sie blockieren Wolken — Luv-Seite feucht, Lee-Seite trocken','Sie haben keinen Einfluss','Sie machen es \u00FCberall w\u00E4rmer','Sie erzeugen mehr Wind'],_h:0x29}
+]},
+{id:1,title:'Plattentektonik und Vulkanismus',icon:'\uD83C\uDF0B',duration:'25 Min.',description:'Wie die Erdplatten sich bewegen und Vulkane, Erdbeben und Gebirge entstehen.',
+lessons:[
+{title:'Die Theorie der Plattentektonik',content:'<p>Die Erdoberfl\u00E4che besteht aus grossen <strong>tektonischen Platten</strong>, die auf dem z\u00E4hfl\u00FCssigen Erdmantel schwimmen.</p><p><strong>Arten von Plattengrenzen:</strong></p><ul><li><strong>Divergente Grenzen:</strong> Platten bewegen sich auseinander \u2192 Mittelozeanische Ruecken, Grabenbrueche</li><li><strong>Konvergente Grenzen:</strong> Platten bewegen sich aufeinander zu \u2192 Gebirgsbildung, Subduktionszonen</li><li><strong>Transformstoerungen:</strong> Platten gleiten aneinander vorbei \u2192 Erdbeben (z.B. San-Andreas-Verwerfung)</li></ul><p><strong>Beweise f\u00FCr die Plattentektonik:</strong></p><ul><li>Passende K\u00FCstenlinien (S\u00FCdamerika/Afrika)</li><li>Gleiche Fossilien auf verschiedenen Kontinenten</li><li>Magnetische Streifenmuster am Ozeanboden</li></ul><div class="info-box">\uD83D\uDCA1 <strong>Merke:</strong> Alfred <strong>Wegener</strong> stellte 1912 die Theorie der <strong>Kontinentalverschiebung</strong> auf — damals wurde er ausgelacht!</div>'},
+{title:'Vulkanismus und Erdbeben',content:'<p><strong>Vulkane</strong> entstehen vor allem an Plattengrenzen und \u00FCber <strong>Hotspots</strong>.</p><p><strong>Vulkantypen:</strong></p><ul><li><strong>Schichtvulkan</strong> (Stratovulkan): Steil, explosiv (z.B. Vesuv, Fuji)</li><li><strong>Schildvulkan:</strong> Flach, dünnfl\u00FCssige Lava (z.B. Hawaii)</li></ul><p><strong>Erdbeben:</strong></p><ul><li>Entstehen durch Spannungen an Plattengrenzen</li><li><strong>Epizentrum:</strong> Punkt an der Oberfl\u00E4che direkt \u00FCber dem Bebenherd</li><li><strong>Richterskala:</strong> Misst die St\u00E4rke (logarithmisch!)</li><li>Der <strong>Pazifische Feuerring</strong> ist die aktivste Erdbebenzone</li></ul><div class="info-box">\uD83D\uDCA1 <strong>Wusstest du?</strong> Der Pazifische Feuerring beherbergt etwa <strong>75% aller aktiven Vulkane</strong> weltweit!</div>'}
+],
+quiz:[
+{q:'Was passiert an divergenten Plattengrenzen?',a:['Platten kollidieren','Platten bewegen sich auseinander','Platten gleiten aneinander','Platten verschwinden'],_h:0x4B},
+{q:'Wer stellte die Theorie der Kontinentalverschiebung auf?',a:['Einstein','Darwin','Alfred Wegener','Newton'],_h:0x7D},
+{q:'Was ist ein Schichtvulkan?',a:['Ein flacher Vulkan','Ein steiler, explosiver Vulkan','Ein erloschener Vulkan','Ein Unterwasservulkan'],_h:0x2A},
+{q:'Was misst die Richterskala?',a:['Windstärke','Erdbeben-St\u00E4rke','Vulkanhöhe','Plattengeschwindigkeit'],_h:0x60},
+{q:'Wo liegt der Pazifische Feuerring?',a:['Im Atlantik','Rund um den Pazifischen Ozean','In Europa','In Afrika'],_h:0x5D}
+],
+boss:[
+{q:'Warum passen die K\u00FCsten S\u00FCdamerikas und Afrikas zusammen?',a:['Zufall','Sie waren einmal ein Kontinent (Pangaea) und drifteten auseinander','Erosion formte sie gleich','Meeresströmungen formten sie'],_h:0x4B},
+{q:'Warum sind Schichtvulkane gef\u00E4hrlicher als Schildvulkane?',a:['Sie sind gr\u00F6\u00DFer','Ihre z\u00E4hfl\u00FCssige Lava f\u00FChrt zu explosiven Ausbr\u00FCchen','Sie liegen n\u00E4her an St\u00E4dten','Sie haben mehr Lava'],_h:0x7E},
+{q:'Warum gibt es am Pazifischen Feuerring besonders viele Vulkane und Erdbeben?',a:['Wegen des Windes','Dort treffen besonders viele tektonische Platten aufeinander','Weil es dort warm ist','Wegen der Meeresströmungen'],_h:0x29}
+]},
+{id:2,title:'Bev\u00F6lkerung und Migration',icon:'\uD83D\uDC65',duration:'25 Min.',description:'Bev\u00F6lkerungsentwicklung, Verteilung und Migrationsbewegungen weltweit.',
+lessons:[
+{title:'Bev\u00F6lkerungsentwicklung und -verteilung',content:'<p>Die Weltbev\u00F6lkerung w\u00E4chst — aber nicht \u00FCberall gleich schnell.</p><p><strong>Wichtige Kennzahlen:</strong></p><ul><li><strong>Geburtenrate:</strong> Geburten pro 1000 Einwohner pro Jahr</li><li><strong>Sterberate:</strong> Todesfälle pro 1000 Einwohner pro Jahr</li><li><strong>Nat\u00FCrliches Bev\u00F6lkerungswachstum</strong> = Geburtenrate \u2212 Sterberate</li><li><strong>Bev\u00F6lkerungsdichte:</strong> Einwohner pro km\u00B2</li></ul><p><strong>Modell des demographischen \u00DCbergangs:</strong></p><ul><li>Phase 1: Hohe Geburten- und Sterberate</li><li>Phase 2: Sterberate sinkt, starkes Wachstum</li><li>Phase 3: Geburtenrate sinkt, Wachstum verlangsamt sich</li><li>Phase 4: Niedrige Geburten- und Sterberate, stabiles Niveau</li></ul><div class="info-box">\uD83D\uDCA1 <strong>Merke:</strong> 2023 lebten ca. <strong>8 Milliarden</strong> Menschen auf der Erde — \u00FCber die H\u00E4lfte davon in Asien!</div>'},
+{title:'Migration und Urbanisierung',content:'<p><strong>Migration</strong> bedeutet die dauerhafte Verlagerung des Lebensmittelpunktes.</p><p><strong>Push- und Pull-Faktoren:</strong></p><ul><li><strong>Push-Faktoren</strong> (vertreiben): Krieg, Armut, Naturkatastrophen, Diskriminierung</li><li><strong>Pull-Faktoren</strong> (anziehen): Arbeit, Bildung, Sicherheit, Freiheit</li></ul><p><strong>Urbanisierung:</strong></p><ul><li>Weltweit leben immer mehr Menschen in <strong>St\u00E4dten</strong></li><li>2050: Voraussichtlich <strong>68%</strong> der Weltbev\u00F6lkerung urban</li><li><strong>Megast\u00E4dte:</strong> St\u00E4dte mit \u00FCber 10 Millionen Einwohnern (Tokio, Delhi, Shanghai)</li><li>Probleme: Slums, Verkehr, Umweltverschmutzung, Wasserknappheit</li></ul><div class="info-box">\uD83D\uDCA1 <strong>Wusstest du?</strong> Tokio ist mit fast <strong>37 Millionen</strong> Einwohnern die gr\u00F6\u00DFte Megastadt der Welt!</div>'}
+],
+quiz:[
+{q:'Was ist die Bev\u00F6lkerungsdichte?',a:['Gesamtzahl der Menschen','Einwohner pro km\u00B2','Geburten pro Jahr','St\u00E4dte pro Land'],_h:0x4B},
+{q:'Was sind Push-Faktoren?',a:['Gr\u00FCnde, warum Menschen an einen Ort ziehen','Gr\u00FCnde, warum Menschen einen Ort verlassen','Wirtschaftliche Vorteile','Kulturelle Angebote'],_h:0x7E},
+{q:'Ab wie vielen Einwohnern gilt eine Stadt als Megastadt?',a:['1 Million','5 Millionen','10 Millionen','50 Millionen'],_h:0x29},
+{q:'In welcher Phase des demographischen \u00DCbergangs sinkt die Sterberate zuerst?',a:['Phase 1','Phase 2','Phase 3','Phase 4'],_h:0x60},
+{q:'Auf welchem Kontinent lebt \u00FCber die H\u00E4lfte der Weltbev\u00F6lkerung?',a:['Afrika','Europa','Asien','Amerika'],_h:0x5E}
+],
+boss:[
+{q:'Warum f\u00FChrt eine sinkende Sterberate bei gleichbleibend hoher Geburtenrate zu Bev\u00F6lkerungsexplosion?',a:['Weil mehr Kinder geboren werden','Weil weniger Menschen sterben, aber gleich viele geboren werden','Weil die Menschen \u00E4lter werden','Weil es mehr Krankenh\u00E4user gibt'],_h:0x4B},
+{q:'Warum ziehen so viele Menschen vom Land in die Stadt?',a:['Weil St\u00E4dte sch\u00F6ner sind','Wegen besserer Arbeit, Bildung und Versorgung (Pull-Faktoren)','Weil es auf dem Land verboten ist','Wegen des Wetters'],_h:0x7E},
+{q:'Was ist der Unterschied zwischen Binnen- und internationaler Migration?',a:['Es gibt keinen','Binnenmigration erfolgt innerhalb eines Landes, internationale \u00FCber Grenzen hinweg','Binnenmigration ist freiwillig','Internationale Migration ist immer Flucht'],_h:0x29}
+]},
+{id:3,title:'Wetter und Klimawandel',icon:'\uD83C\uDF21\uFE0F',duration:'25 Min.',description:'Wie Wetter entsteht, der Treibhauseffekt funktioniert und was Klimawandel bedeutet.',
+lessons:[
+{title:'Wetterentstehung und Atmosph\u00E4re',content:'<p>Das <strong>Wetter</strong> entsteht durch das Zusammenspiel von Sonne, Luft und Wasser in der Atmosph\u00E4re.</p><p><strong>Wichtige Wetterphänomene:</strong></p><ul><li><strong>Hoch- und Tiefdruckgebiete:</strong> Warme Luft steigt auf (Tief), kalte Luft sinkt ab (Hoch)</li><li><strong>Winde:</strong> Luft bewegt sich von Hoch- zu Tiefdruckgebieten</li><li><strong>Wolkenbildung:</strong> Warme, feuchte Luft steigt auf, k\u00FChlt ab, Wasserdampf kondensiert</li><li><strong>Niederschlag:</strong> Regen, Schnee, Hagel — wenn Wolkentr\u00F6pfchen schwer genug werden</li></ul><p><strong>Wetterinstrumente:</strong></p><ul><li>Thermometer (Temperatur), Barometer (Luftdruck), Hygrometer (Luftfeuchtigkeit)</li><li>Anemometer (Windgeschwindigkeit), Regenmesser (Niederschlag)</li></ul><div class="info-box">\uD83D\uDCA1 <strong>Merke:</strong> Ein <strong>Hochdruckgebiet</strong> bringt meist sch\u00F6nes Wetter, ein <strong>Tiefdruckgebiet</strong> meist Regen!</div>'},
+{title:'Treibhauseffekt und Klimawandel',content:'<p>Der <strong>Treibhauseffekt</strong> ist ein nat\u00FCrlicher Vorgang — aber der Mensch verst\u00E4rkt ihn.</p><p><strong>Nat\u00FCrlicher Treibhauseffekt:</strong></p><ul><li>Sonnenstrahlen erw\u00E4rmen die Erdoberfl\u00E4che</li><li>Die Erde strahlt W\u00E4rme als Infrarotstrahlung zur\u00FCck</li><li>Treibhausgase (CO\u2082, Methan, Wasserdampf) halten einen Teil zur\u00FCck</li><li>Ohne diesen Effekt w\u00E4re es <strong>\u221218\u00B0C</strong> statt durchschnittlich +15\u00B0C</li></ul><p><strong>Menschengemachter Klimawandel:</strong></p><ul><li>Verbrennung fossiler Brennstoffe erh\u00F6h den CO\u2082-Gehalt</li><li>Abholzung reduziert CO\u2082-Aufnahme</li><li>Folgen: Eisschmelze, Meeresspiegelanstieg, Extremwetter, Artensterben</li></ul><div class="info-box">\uD83D\uDCA1 <strong>Wusstest du?</strong> Der CO\u2082-Gehalt der Atmosph\u00E4re ist heute h\u00F6her als je zuvor in den letzten <strong>800.000 Jahren</strong>!</div>'}
+],
+quiz:[
+{q:'Was bringt ein Hochdruckgebiet meist?',a:['Regen','Sch\u00F6nes Wetter','Sturm','Schnee'],_h:0x4B},
+{q:'Welches Gas ist hauptverantwortlich f\u00FCr den menschengemachten Treibhauseffekt?',a:['Sauerstoff','Stickstoff','CO\u2082','Helium'],_h:0x7D},
+{q:'Wie kalt w\u00E4re die Erde ohne den nat\u00FCrlichen Treibhauseffekt?',a:['+15\u00B0C','0\u00B0C','ca. \u221218\u00B0C','\u2212100\u00B0C'],_h:0x29},
+{q:'Was misst ein Barometer?',a:['Temperatur','Luftdruck','Windstärke','Luftfeuchtigkeit'],_h:0x60},
+{q:'Was ist eine Folge des Klimawandels?',a:['Mehr Schnee \u00FCberall','Meeresspiegelanstieg','Kein Wind mehr','Die Erde wird k\u00E4lter'],_h:0x5D}
+],
+boss:[
+{q:'Warum ist der Treibhauseffekt eigentlich lebensnotwendig?',a:['Weil er die Pflanzen wärmt','Ohne ihn w\u00E4re die Erde zu kalt f\u00FCr Leben (\u221218\u00B0C statt +15\u00B0C)','Weil er Regen erzeugt','Weil er die Ozonschicht bildet'],_h:0x4B},
+{q:'Warum verst\u00E4rkt die Abholzung von Regenw\u00E4ldern den Klimawandel?',a:['Weil es dann mehr regnet','B\u00E4ume nehmen CO\u2082 auf — weniger B\u00E4ume = mehr CO\u2082 in der Atmosph\u00E4re','Weil der Boden trocknet','Weil Tiere vertrieben werden'],_h:0x7E},
+{q:'Was unterscheidet Wetter von Klima?',a:['Nichts','Wetter ist kurzfristig, Klima ist der Durchschnitt \u00FCber mind. 30 Jahre','Klima \u00E4ndert sich t\u00E4glich','Wetter misst man nicht'],_h:0x29}
+]},
+{id:4,title:'Landwirtschaft und Ern\u00E4hrung',icon:'\uD83C\uDF3E',duration:'25 Min.',description:'Wie die Welt ernährt wird: Landwirtschaftsformen, Böden und Globalisierung.',
+lessons:[
+{title:'Landwirtschaftsformen weltweit',content:'<p>Die <strong>Landwirtschaft</strong> sichert die Ern\u00E4hrung der Menschheit — aber sie ist sehr unterschiedlich organisiert.</p><p><strong>Landwirtschaftsformen:</strong></p><ul><li><strong>Subsistenzwirtschaft:</strong> Anbau f\u00FCr den Eigenbedarf (v.a. Entwicklungsl\u00E4nder)</li><li><strong>Plantagenwirtschaft:</strong> Großflächiger Anbau von Exportprodukten (Kaffee, Kakao, Bananen)</li><li><strong>Intensive Landwirtschaft:</strong> Hoher Ertrag durch Duenger, Maschinen, Pestizide</li><li><strong>Oekologische Landwirtschaft:</strong> Verzicht auf chemische Mittel, naturnahe Methoden</li></ul><p><strong>Wichtige Nutzpflanzen:</strong></p><ul><li><strong>Weizen:</strong> Europa, Nordamerika</li><li><strong>Reis:</strong> Suedostasien (braucht viel Wasser)</li><li><strong>Mais:</strong> Nord- und S\u00FCdamerika</li></ul><div class="info-box">\uD83D\uDCA1 <strong>Merke:</strong> Nur etwa <strong>11%</strong> der Erdoberfl\u00E4che werden landwirtschaftlich genutzt!</div>'},
+{title:'Böden und Ern\u00E4hrungssicherheit',content:'<p>Der <strong>Boden</strong> ist die Grundlage jeder Landwirtschaft — und er ist bedroht.</p><p><strong>Bodengefährdung:</strong></p><ul><li><strong>Erosion:</strong> Wind und Wasser tragen fruchtbaren Boden ab</li><li><strong>Versalzung:</strong> Durch falsche Bewässerung in trockenen Gebieten</li><li><strong>Versiegelung:</strong> Beton und Asphalt bedecken den Boden</li><li><strong>Desertifikation:</strong> Ausbreitung der W\u00FCste durch \u00DCberweidung und Abholzung</li></ul><p><strong>Ern\u00E4hrungssicherheit:</strong></p><ul><li>Ca. <strong>800 Millionen</strong> Menschen hungern weltweit</li><li>Gleichzeitig werden ca. <strong>30%</strong> aller Lebensmittel weggeworfen</li><li>Lösungsans\u00E4tze: Fairer Handel, nachhaltige Landwirtschaft, weniger Verschwendung</li></ul><div class="info-box">\uD83D\uDCA1 <strong>Wusstest du?</strong> 1 cm fruchtbarer Boden braucht <strong>100-300 Jahre</strong> zum Entstehen!</div>'}
+],
+quiz:[
+{q:'Was ist Subsistenzwirtschaft?',a:['Großflächige Exportlandwirtschaft','Anbau f\u00FCr den Eigenbedarf','Bio-Landwirtschaft','Industrie-Landwirtschaft'],_h:0x4A},
+{q:'Was ist Desertifikation?',a:['W\u00FCstenbildung','Aufforstung','\u00DCberflutung','Vereisung'],_h:0x7F},
+{q:'Wie viel Prozent der Erdoberfl\u00E4che wird landwirtschaftlich genutzt?',a:['50%','30%','Ca. 11%','Ca. 80%'],_h:0x29},
+{q:'Was bedroht fruchtbare Böden?',a:['Zu viel Regen','Erosion, Versalzung, Versiegelung','Zu viele Pflanzen','Zu kalte Temperaturen'],_h:0x60},
+{q:'Welche Nutzpflanze braucht besonders viel Wasser?',a:['Weizen','Mais','Reis','Kartoffel'],_h:0x5E}
+],
+boss:[
+{q:'Warum ist Plantagenwirtschaft f\u00FCr Entwicklungsl\u00E4nder oft problematisch?',a:['Weil die Produkte nicht schmecken','Abhängigkeit von Weltmarktpreisen und wenig Nahrung f\u00FCr die eigene Bev\u00F6lkerung','Weil die Böden zu gut sind','Weil es zu viel regnet'],_h:0x4B},
+{q:'Warum f\u00FChrt \u00DCberweidung zur Desertifikation?',a:['Tiere fressen alles kahl, Boden trocknet aus und wird vom Wind abgetragen','Weil die Tiere den Boden duengen','Weil es dann mehr regnet','Weil die Tiere B\u00E4ume pflanzen'],_h:0x7F},
+{q:'Wie k\u00F6nnte man die Ern\u00E4hrungssicherheit weltweit verbessern?',a:['Mehr Pestizide','Weniger Verschwendung, fairer Handel und nachhaltige Methoden','Mehr Monokulturen','Größere Fabriken'],_h:0x29}
+]},
+{id:5,title:'Rohstoffe und Energie',icon:'\u26A1',duration:'25 Min.',description:'Fossile und erneuerbare Energien, Ressourcenkonflikte und Nachhaltigkeit.',
+lessons:[
+{title:'Fossile und erneuerbare Energien',content:'<p>Energie ist die Grundlage unserer modernen Gesellschaft — aber nicht alle Quellen sind nachhaltig.</p><p><strong>Fossile Energieträger:</strong></p><ul><li><strong>Kohle:</strong> Entstand aus abgestorbenen Pflanzen vor Millionen Jahren</li><li><strong>Erdöl:</strong> Wichtigster Rohstoff, v.a. im Nahen Osten, Russland, USA</li><li><strong>Erdgas:</strong> Sauberer als Kohle, aber immer noch fossil</li><li>Problem: <strong>Endlich</strong>, CO\u2082-Ausstoss, Umweltverschmutzung</li></ul><p><strong>Erneuerbare Energien:</strong></p><ul><li><strong>Solarenergie:</strong> Sonnenenergie in Strom umwandeln</li><li><strong>Windkraft:</strong> Windräder erzeugen Strom</li><li><strong>Wasserkraft:</strong> Staudämme und Flusskraftwerke</li><li><strong>Geothermie:</strong> Erdw\u00E4rme nutzen (z.B. Island)</li><li><strong>Biomasse:</strong> Pflanzliche Stoffe als Energiequelle</li></ul><div class="info-box">\uD83D\uDCA1 <strong>Merke:</strong> Erneuerbare Energien heißen so, weil sie sich <strong>nicht erschoepfen</strong> — die Sonne scheint immer weiter!</div>'},
+{title:'Ressourcenkonflikte und Energiewende',content:'<p>Rohstoffe sind ungleich auf der Erde verteilt — das f\u00FChrt zu Konflikten.</p><p><strong>Ressourcenkonflikte:</strong></p><ul><li><strong>Erdöl:</strong> Kriege und Spannungen im Nahen Osten</li><li><strong>Seltene Erden:</strong> China kontrolliert ca. 60% der Foerderung</li><li><strong>Wasser:</strong> Knappheit in vielen Regionen (Nahostkonflikt, Nilnutzung)</li><li><strong>Coltan und Kobalt:</strong> F\u00FCr Handys und E-Autos, oft unter schlechten Bedingungen abgebaut</li></ul><p><strong>Die Energiewende:</strong></p><ul><li>Umstieg von fossilen auf erneuerbare Energien</li><li>Deutschland: Atomausstieg 2023, Kohleausstieg geplant</li><li>Herausforderungen: Speicherung, Netzausbau, Kosten</li></ul><div class="info-box">\uD83D\uDCA1 <strong>Wusstest du?</strong> Ein Smartphone enth\u00E4lt \u00FCber <strong>30 verschiedene Metalle</strong>, darunter Gold, Silber und Seltene Erden!</div>'}
+],
+quiz:[
+{q:'Was sind fossile Energieträger?',a:['Sonne und Wind','Kohle, Erdöl, Erdgas','Wasser und Biomasse','Atomenergie'],_h:0x4B},
+{q:'Welches Land foerdert die meisten Seltenen Erden?',a:['USA','Deutschland','China','Brasilien'],_h:0x7D},
+{q:'Was ist ein Vorteil erneuerbarer Energien?',a:['Sie sind billiger','Sie erschoepfen sich nicht','Sie brauchen keinen Platz','Sie funktionieren nachts besser'],_h:0x2A},
+{q:'Was ist Geothermie?',a:['Sonnenenergie','Windenergie','Nutzung von Erdw\u00E4rme','Atomenergie'],_h:0x61},
+{q:'Warum f\u00FChren Rohstoffe oft zu Konflikten?',a:['Weil sie \u00FCberall gleich verteilt sind','Weil sie ungleich verteilt und sehr wertvoll sind','Weil sie unwichtig sind','Weil es zu viele gibt'],_h:0x5D}
+],
+boss:[
+{q:'Warum kann man nicht einfach sofort alle fossilen Energien abschalten?',a:['Weil sie sauberer sind','Speicherung und Netzausbau f\u00FCr Erneuerbare brauchen Zeit','Weil erneuerbare Energien sch\u00E4dlicher sind','Weil Kohle nie ausgeht'],_h:0x4B},
+{q:'Warum ist die ungleiche Verteilung von Rohstoffen problematisch?',a:['Sie ist nicht problematisch','Abhängigkeiten, Machtungleichgewichte und Konflikte entstehen','Weil alle L\u00E4nder gleich reich sind','Weil der Transport billig ist'],_h:0x7E},
+{q:'Wie hängen Smartphones und Ressourcenkonflikte zusammen?',a:['Gar nicht','Smartphones brauchen seltene Rohstoffe, die oft unter schlechten Bedingungen abgebaut werden','Smartphones verbrauchen zu viel Strom','Smartphones sind aus Plastik'],_h:0x29}
+]},
+{id:6,title:'Globalisierung und Welthandel',icon:'\uD83C\uDF10',duration:'25 Min.',description:'Wie die Welt wirtschaftlich vernetzt ist: Handel, Transportwege und Global Player.',
+lessons:[
+{title:'Was ist Globalisierung?',content:'<p><strong>Globalisierung</strong> bedeutet die zunehmende weltweite Vernetzung in Wirtschaft, Kultur und Politik.</p><p><strong>Dimensionen der Globalisierung:</strong></p><ul><li><strong>Wirtschaftlich:</strong> Welthandel, multinationale Konzerne, globale Lieferketten</li><li><strong>Kulturell:</strong> Verbreitung von Musik, Film, Mode weltweit</li><li><strong>Politisch:</strong> Internationale Organisationen (UNO, WTO, EU)</li><li><strong>Digital:</strong> Internet verbindet Menschen weltweit in Echtzeit</li></ul><p><strong>Global Player:</strong></p><ul><li>Multinationale Konzerne wie Apple, Toyota, Nestle</li><li>Sie produzieren dort, wo es am günstigsten ist</li><li><strong>Outsourcing:</strong> Verlagerung von Produktion in Billiglohnl\u00E4nder</li></ul><div class="info-box">\uD83D\uDCA1 <strong>Merke:</strong> Eine Jeans legt auf ihrem Weg von der Baumwolle zum Laden oft \u00FCber <strong>50.000 km</strong> zur\u00FCck!</div>'},
+{title:'Welthandel und Transportwege',content:'<p>Der <strong>Welthandel</strong> verbindet alle L\u00E4nder — aber nicht alle profitieren gleich.</p><p><strong>Wichtige Handelsrouten:</strong></p><ul><li><strong>Suezkanal:</strong> Verbindet Mittelmeer und Rotes Meer (Europa-Asien)</li><li><strong>Panamakanal:</strong> Verbindet Atlantik und Pazifik</li><li><strong>Stra\u00DFe von Malakka:</strong> Wichtigste Seehandelsroute Asiens</li></ul><p><strong>Transportmittel:</strong></p><ul><li><strong>Containerschiffe:</strong> 90% des Welthandels erfolgt \u00FCber See</li><li><strong>Flugzeuge:</strong> Schnell aber teuer, f\u00FCr hochwertige Güter</li><li><strong>LKW und Bahn:</strong> Landtransport, neue Seidenstra\u00DFe (China-Europa)</li></ul><p><strong>Fair Trade:</strong></p><ul><li>Gerechte Preise f\u00FCr Produzenten in Entwicklungsl\u00E4ndern</li><li>Keine Kinderarbeit, bessere Arbeitsbedingungen</li></ul><div class="info-box">\uD83D\uDCA1 <strong>Wusstest du?</strong> Die gr\u00F6\u00DFten Containerschiffe k\u00F6nnen \u00FCber <strong>24.000 Container</strong> transportieren!</div>'}
+],
+quiz:[
+{q:'Was bedeutet Globalisierung?',a:['Nur Welthandel','Zunehmende weltweite Vernetzung','Nur kultureller Austausch','Nur das Internet'],_h:0x4B},
+{q:'Wie viel Prozent des Welthandels erfolgt \u00FCber See?',a:['50%','70%','Ca. 90%','100%'],_h:0x7D},
+{q:'Was ist Outsourcing?',a:['Produkte exportieren','Produktion in Billiglohnl\u00E4nder verlagern','Importe verbieten','Fabriken schliessen'],_h:0x2A},
+{q:'Welcher Kanal verbindet Mittelmeer und Rotes Meer?',a:['Panamakanal','Suezkanal','Kieler Kanal','Korinthkanal'],_h:0x60},
+{q:'Was ist Fair Trade?',a:['Freihandel ohne Regeln','Gerechte Preise und Bedingungen f\u00FCr Produzenten','Günstiger Einkauf','Nur Bio-Produkte'],_h:0x5D}
+],
+boss:[
+{q:'Warum profitieren nicht alle L\u00E4nder gleich von der Globalisierung?',a:['Alle profitieren gleich','Industriel\u00E4nder haben Vorteile durch Kapital und Technologie, w\u00E4hrend Entwicklungsl\u00E4nder oft nur Rohstoffe liefern','Weil manche L\u00E4nder nicht handeln wollen','Weil der Transport zu teuer ist'],_h:0x4B},
+{q:'Warum ist der Suezkanal strategisch so wichtig?',a:['Weil er der l\u00E4ngste Kanal ist','Er verkürzt den Seeweg zwischen Europa und Asien um tausende Kilometer','Weil nur Militär ihn nutzt','Weil er in Deutschland liegt'],_h:0x7E},
+{q:'Welche Probleme bringt Outsourcing mit sich?',a:['Keine Probleme','Niedrige Löhne, schlechte Arbeitsbedingungen, Jobverlust im Heimatland','Zu hohe Löhne','Zu gute Qualität'],_h:0x29}
+]},
+{id:7,title:'Stadte und Raumplanung',icon:'\uD83C\uDFD9\uFE0F',duration:'25 Min.',description:'Wie St\u00E4dte aufgebaut sind, wachsen und welche Probleme und L\u00F6sungen es gibt.',
+lessons:[
+{title:'Stadtgeographie und Stadtmodelle',content:'<p>St\u00E4dte sind die Zentren menschlicher Zivilisation — und sie wachsen weiter.</p><p><strong>Stadtstrukturen:</strong></p><ul><li><strong>Europ\u00E4ische Stadt:</strong> Historischer Kern, Marktplatz, konzentrische Ringe</li><li><strong>US-amerikanische Stadt:</strong> Schachbrettmuster, CBD (Central Business District), Suburbs</li><li><strong>Entwicklungsl\u00E4nder-Stadt:</strong> Formelle und informelle Siedlungen (Slums) nebeneinander</li></ul><p><strong>Funktionale Gliederung:</strong></p><ul><li><strong>City/Zentrum:</strong> Gesch\u00E4fte, Büros, Verwaltung</li><li><strong>Wohngebiete:</strong> Innenstadtviertel, Vororte</li><li><strong>Industriegebiete:</strong> Am Stadtrand, oft an Verkehrswegen</li><li><strong>Gr\u00FCnfl\u00E4chen:</strong> Parks, Naherholungsgebiete</li></ul><div class="info-box">\uD83D\uDCA1 <strong>Merke:</strong> Der <strong>CBD</strong> (Central Business District) ist das Geschäftszentrum einer US-amerikanischen Stadt — vergleichbar mit der europ\u00E4ischen Innenstadt.</div>'},
+{title:'Stadtprobleme und nachhaltige Stadtentwicklung',content:'<p>Wachsende St\u00E4dte stehen vor grossen Herausforderungen.</p><p><strong>Typische Probleme:</strong></p><ul><li><strong>Verkehr:</strong> Staus, Luftverschmutzung, Lärm</li><li><strong>Fl\u00E4chenverbrauch:</strong> Zersiedelung frisst Landschaft</li><li><strong>Segregation:</strong> Reiche und arme Viertel driften auseinander</li><li><strong>Wohnungsmarkt:</strong> Steigende Mieten, Gentrifizierung</li></ul><p><strong>Nachhaltige L\u00F6sungen:</strong></p><ul><li><strong>OEPNV:</strong> Ausbau von Bus, Bahn, Fahrradwegen</li><li><strong>Gr\u00FCne Architektur:</strong> Dachbegr\u00FCnung, Fassadenpflanzen</li><li><strong>Smart City:</strong> Digitale Technologien f\u00FCr effiziente Stadtsteuerung</li><li><strong>Mischnutzung:</strong> Wohnen, Arbeiten, Einkaufen im selben Viertel</li></ul><div class="info-box">\uD83D\uDCA1 <strong>Wusstest du?</strong> Kopenhagen will bis 2025 die erste <strong>CO\u2082-neutrale Hauptstadt</strong> der Welt werden!</div>'}
+],
+quiz:[
+{q:'Was ist der CBD?',a:['Ein Park','Das Geschäftszentrum einer US-Stadt','Ein Wohngebiet','Ein Industriegebiet'],_h:0x4A},
+{q:'Wie ist eine typische europ\u00E4ische Stadt aufgebaut?',a:['Schachbrettmuster','Historischer Kern mit konzentrischen Ringen','Nur Hochh\u00E4user','Ohne Zentrum'],_h:0x7E},
+{q:'Was bedeutet Gentrifizierung?',a:['Stadtverfall','Aufwertung von Vierteln mit steigenden Mieten','Stadtgr\u00FCndung','Mehr Gr\u00FCnfl\u00E4chen'],_h:0x29},
+{q:'Was ist eine Smart City?',a:['Eine besonders grosse Stadt','Stadt mit digitaler Technologie f\u00FCr effiziente Steuerung','Eine Stadt ohne Autos','Eine Stadt auf dem Land'],_h:0x60},
+{q:'Was hilft gegen Zersiedelung?',a:['Mehr Autobahnen','Verdichtetes Bauen und guter OEPNV','Mehr Einkaufszentren','Weniger Parks'],_h:0x5D}
+],
+boss:[
+{q:'Warum f\u00FChrt Gentrifizierung zu sozialen Problemen?',a:['Weil die Viertel hässlicher werden','Alteingesessene Bewohner k\u00F6nnen sich steigende Mieten nicht leisten und werden verdrängt','Weil es mehr Kriminalität gibt','Weil die H\u00E4user \u00E4lter werden'],_h:0x4B},
+{q:'Warum unterscheiden sich europ\u00E4ische und US-amerikanische St\u00E4dte so stark?',a:['Zufall','Europ\u00E4ische St\u00E4dte sind viel \u00E4lter und gewachsen, US-St\u00E4dte wurden geplant','Weil in Europa weniger Menschen leben','Weil die USA gr\u00F6\u00DFer sind'],_h:0x7E},
+{q:'Wie kann eine Smart City den Verkehr verbessern?',a:['Mehr Stra\u00DFen bauen','Durch Echtzeitdaten Ampeln steuern, Parkplätze anzeigen und OEPNV optimieren','Autos verbieten','Nichts tun'],_h:0x29}
+]},
+{id:8,title:'Ozeane und Meere',icon:'\uD83C\uDF0A',duration:'25 Min.',description:'Die Weltmeere als Klimaregulatoren, Nahrungsquelle und bedrohtes \u00D6kosystem.',
+lessons:[
+{title:'Die Weltmeere und ihre Bedeutung',content:'<p>Die <strong>Ozeane</strong> bedecken etwa 71% der Erdoberfl\u00E4che und sind lebenswichtig f\u00FCr unseren Planeten.</p><p><strong>Die f\u00FCnf Ozeane:</strong></p><ul><li><strong>Pazifischer Ozean:</strong> Gr\u00F6\u00DFter Ozean, gr\u00F6\u00DFer als alle Landfl\u00E4chen zusammen</li><li><strong>Atlantischer Ozean:</strong> Zweitgr\u00F6\u00DFter, trennt Amerika von Europa/Afrika</li><li><strong>Indischer Ozean:</strong> Drittgr\u00F6\u00DFter, meist warmes Wasser</li><li><strong>S\u00FCdlicher Ozean (Antarktischer):</strong> Umgibt die Antarktis</li><li><strong>Arktischer Ozean:</strong> Kleinster, gr\u00F6\u00DFtenteils von Eis bedeckt</li></ul><p><strong>Bedeutung der Ozeane:</strong></p><ul><li><strong>Klimaregulator:</strong> Ozeane speichern W\u00E4rme und regulieren das Weltklima</li><li><strong>Sauerstoffproduzent:</strong> Meeresalgen produzieren ca. 50% des Sauerstoffs</li><li><strong>Nahrungsquelle:</strong> Fischfang ernährt Milliarden Menschen</li><li><strong>Transportweg:</strong> 90% des Welthandels per Schiff</li></ul><div class="info-box">\uD83D\uDCA1 <strong>Merke:</strong> Wir kennen den <strong>Mond</strong> besser als die <strong>Tiefsee</strong> — \u00FCber 80% des Ozeanbodens sind unerforscht!</div>'},
+{title:'Meere in Gefahr',content:'<p>Die Ozeane sind vielfach bedroht — mit Folgen f\u00FCr den ganzen Planeten.</p><p><strong>Bedrohungen:</strong></p><ul><li><strong>\u00DCberfischung:</strong> Viele Fischbestände sind am Limit oder \u00FCberfischt</li><li><strong>Plastikverschmutzung:</strong> Ca. 8 Millionen Tonnen Plastik gelangen jährlich ins Meer</li><li><strong>Versauerung:</strong> CO\u2082 l\u00F6st sich im Wasser und senkt den pH-Wert</li><li><strong>Erwärmung:</strong> Korallenbleiche durch steigende Wassertemperaturen</li><li><strong>Oelverschmutzung:</strong> Tankerunfälle und Lecks</li></ul><p><strong>L\u00F6sungsans\u00E4tze:</strong></p><ul><li>Meeresschutzgebiete einrichten</li><li>Nachhaltige Fischerei (MSC-Siegel)</li><li>Plastikverbrauch reduzieren</li><li>CO\u2082-Ausstoss senken</li></ul><div class="info-box">\uD83D\uDCA1 <strong>Wusstest du?</strong> Im Pazifik gibt es einen <strong>M\u00FCllstrudel</strong> (Great Pacific Garbage Patch), der gr\u00F6\u00DFer ist als Frankreich!</div>'}
+],
+quiz:[
+{q:'Welcher ist der gr\u00F6\u00DFte Ozean?',a:['Atlantik','Indischer Ozean','Pazifik','Arktischer Ozean'],_h:0x4B},
+{q:'Wie viel Prozent des Sauerstoffs produzieren Meeresalgen?',a:['10%','25%','Ca. 50%','90%'],_h:0x7D},
+{q:'Was verursacht Korallenbleiche?',a:['Zu viel Salz','Steigende Wassertemperaturen','Zu viele Fische','Ebbe und Flut'],_h:0x2A},
+{q:'Wie viel Plastik gelangt jährlich ins Meer?',a:['1000 Tonnen','Ca. 8 Millionen Tonnen','100 Millionen Tonnen','1 Tonne'],_h:0x60},
+{q:'Was ist das MSC-Siegel?',a:['Ein Qualitätssiegel f\u00FCr Fleisch','Siegel f\u00FCr nachhaltige Fischerei','Ein Markenname','Ein Umweltpreis'],_h:0x5D}
+],
+boss:[
+{q:'Warum sind die Ozeane so wichtig f\u00FCr das Klima?',a:['Weil sie salzig sind','Sie speichern enorme Mengen W\u00E4rme und CO\u2082 und regulieren so das Weltklima','Weil sie blau sind','Weil Schiffe darauf fahren'],_h:0x4B},
+{q:'Warum ist die Versauerung der Meere gef\u00E4hrlich?',a:['Weil das Wasser schlecht schmeckt','Kalkschalen von Korallen und Muscheln lösen sich auf, ganze \u00D6kosysteme sind bedroht','Weil Fische keinen sauren Geschmack mögen','Weil Schiffe schneller rosten'],_h:0x7E},
+{q:'Was kann jeder Einzelne gegen Plastikverschmutzung der Meere tun?',a:['Nichts','Weniger Einwegplastik verwenden, M\u00FCll trennen und recyceln','Mehr Plastik kaufen','Nur an Fl\u00FCssen wohnen'],_h:0x29}
+]},
+{id:9,title:'Nachhaltigkeit und Zukunft',icon:'\u267B\uFE0F',duration:'25 Min.',description:'Nachhaltige Entwicklung, \u00F6kologischer Fussabdruck und die Zukunft unseres Planeten.',
+lessons:[
+{title:'Was ist Nachhaltigkeit?',content:'<p><strong>Nachhaltigkeit</strong> bedeutet, so zu wirtschaften, dass auch zukünftige Generationen gut leben k\u00F6nnen.</p><p><strong>Die drei Säulen der Nachhaltigkeit:</strong></p><ul><li><strong>\u00D6kologie:</strong> Schutz der Umwelt und nat\u00FCrlicher Ressourcen</li><li><strong>\u00D6konomie:</strong> Wirtschaftliche Leistungsfähigkeit erhalten</li><li><strong>Soziales:</strong> Gerechte Lebensbedingungen f\u00FCr alle</li></ul><p><strong>Oekologischer Fussabdruck:</strong></p><ul><li>Misst, wie viel Fl\u00E4che ein Mensch f\u00FCr seinen Lebensstil braucht</li><li>Wenn alle so lebten wie Deutsche, bräuchten wir <strong>3 Erden</strong></li><li>Wenn alle so lebten wie US-Amerikaner, bräuchten wir <strong>5 Erden</strong></li></ul><p><strong>SDGs — 17 Ziele f\u00FCr nachhaltige Entwicklung:</strong></p><ul><li>Von den Vereinten Nationen 2015 beschlossen</li><li>Ziele bis 2030: Keine Armut, kein Hunger, sauberes Wasser, Klimaschutz u.v.m.</li></ul><div class="info-box">\uD83D\uDCA1 <strong>Merke:</strong> Nachhaltigkeit ist <strong>kein Verzicht</strong>, sondern kluges Wirtschaften f\u00FCr eine lebenswerte Zukunft!</div>'},
+{title:'Zukunft gestalten',content:'<p>Wie k\u00F6nnen wir unseren Planeten f\u00FCr kommende Generationen erhalten?</p><p><strong>Klimaschutz-Strategien:</strong></p><ul><li><strong>Erneuerbare Energien</strong> ausbauen (Solar, Wind, Wasser)</li><li><strong>Energieeffizienz</strong> steigern (Gebäudedämmung, LED, effiziente Ger\u00E4te)</li><li><strong>Verkehrswende:</strong> E-Mobilität, OEPNV, Fahrradst\u00E4dte</li><li><strong>Kreislaufwirtschaft:</strong> Recyceln statt wegwerfen</li></ul><p><strong>Was jeder tun kann:</strong></p><ul><li>Weniger Fleisch essen (Fleischproduktion = hoher CO\u2082-Ausstoss)</li><li>Regional und saisonal einkaufen</li><li>Fahrrad und OEPNV statt Auto</li><li>Strom und Wasser sparen</li><li>Reparieren statt neu kaufen</li></ul><div class="info-box">\uD83D\uDCA1 <strong>Wusstest du?</strong> Die Produktion von 1 kg Rindfleisch verursacht so viel CO\u2082 wie <strong>250 km Autofahren</strong>!</div>'}
+],
+quiz:[
+{q:'Was sind die drei Säulen der Nachhaltigkeit?',a:['Wasser, Luft, Erde','\u00D6kologie, \u00D6konomie, Soziales','Politik, Wirtschaft, Militär','Bildung, Gesundheit, Sport'],_h:0x4B},
+{q:'Wie viele Erden bräuchten wir, wenn alle so lebten wie Deutsche?',a:['1 Erde','2 Erden','Ca. 3 Erden','10 Erden'],_h:0x7D},
+{q:'Was misst der \u00F6kologische Fussabdruck?',a:['Die Schuhgröße','Wie viel Fl\u00E4che ein Mensch f\u00FCr seinen Lebensstil braucht','Wie viel man läuft','Wie gross ein Land ist'],_h:0x2A},
+{q:'Wann wurden die 17 SDGs beschlossen?',a:['2000','2010','2015','2020'],_h:0x61},
+{q:'Was ist Kreislaufwirtschaft?',a:['Produkte im Kreis transportieren','Recyceln und Wiederverwenden statt Wegwerfen','Nur runde Produkte herstellen','Wirtschaft ohne Geld'],_h:0x5D}
+],
+boss:[
+{q:'Warum stehen \u00D6kologie und \u00D6konomie oft in Konflikt?',a:['Sie stehen nie in Konflikt','Umweltschutz kostet kurzfristig Geld, bringt aber langfristig Vorteile','\u00D6konomie ist unwichtig','\u00D6kologie ist nur f\u00FCr Reiche'],_h:0x4B},
+{q:'Warum ist weniger Fleischkonsum gut f\u00FCr das Klima?',a:['Weil Fleisch schlecht schmeckt','Tierhaltung verbraucht viel Wasser, Fl\u00E4che und erzeugt hohe CO\u2082-Emissionen','Weil Pflanzen mehr CO\u2082 produzieren','Weil Tiere mehr Sauerstoff brauchen'],_h:0x7E},
+{q:'Warum sind die SDGs wichtig f\u00FCr die Geographie?',a:['Sind sie nicht','Sie verbinden globale Umwelt-, Sozial- und Wirtschaftsprobleme, die alle räumlich verortet sind','Weil Geographen sie erfunden haben','Weil sie nur Karten betreffen'],_h:0x29}
+]}
+];
+// === State Management ===
+const STORAGE_KEY='geomeister_progress';
+let state={name:'',started:false,currentModule:0,xp:0,level:0,streak:0,lastVisit:null,modulesCompleted:[],quizResults:{},bossResults:{},badges:[],quizShuffleMap:{},modulesViewed:[],interactiveResults:{},designTheme:'cyber-dark'};
+function saveState(){try{localStorage.setItem(STORAGE_KEY,JSON.stringify(state))}catch(e){}}
+function loadState(){try{const s=localStorage.getItem(STORAGE_KEY);if(s){Object.assign(state,JSON.parse(s));return true}}catch(e){}return false}
+function exportData(){const a=document.createElement('a');a.download='geomeister-'+state.name+'.json';a.href=URL.createObjectURL(new Blob([JSON.stringify(state,null,2)],{type:'application/json'}));a.click()}
+function importData(e){const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=ev=>{try{const d=JSON.parse(ev.target.result);Object.assign(state,d);saveState();location.reload()}catch(err){alert('Datei konnte nicht gelesen werden.')}};r.readAsText(f)}
+
+// === XP & Level ===
+function getLevel(xp){let lv=0;for(let i=LEVELS.length-1;i>=0;i--){if(xp>=LEVELS[i].xp){lv=i;break}}return lv}
+function getLevelProgress(xp){const lv=getLevel(xp);const cur=LEVELS[lv].xp;const next=lv<LEVELS.length-1?LEVELS[lv+1].xp:cur;if(next===cur)return 100;return Math.min(100,Math.round((xp-cur)/(next-cur)*100))}
+function addXP(amount,reason){const old=getLevel(state.xp);state.xp+=amount;const nw=getLevel(state.xp);saveState();updateUI();showNotif('xp','+'+amount+' XP',reason);if(nw>old){state.level=nw;saveState();setTimeout(()=>showLevelUp(nw),800)}}
+
+// === Streak ===
+function updateStreak(){const today=new Date().toDateString();if(state.lastVisit===today)return;const yesterday=new Date(Date.now()-86400000).toDateString();if(state.lastVisit===yesterday){state.streak++;showNotif('streak','\uD83D\uDD25 '+state.streak+' Tage Streak!','Weiter so!');if(state.streak>=3)awardBadge('streak3');if(state.streak>=7)awardBadge('streak7')}else if(state.lastVisit!==today){state.streak=1}state.lastVisit=today;saveState()}
+
+// === Badges ===
+function awardBadge(id){if(state.badges.includes(id))return;state.badges.push(id);saveState();const b=BADGES.find(x=>x.id===id);if(b)showNotif('badge',b.icon+' Badge: '+b.name,b.desc)}
+
+// === Notifications ===
+let notifQueue=[],notifActive=false;
+function showNotif(type,title,text){notifQueue.push({type,title,text});if(!notifActive)processNotif()}
+function processNotif(){if(!notifQueue.length){notifActive=false;return}notifActive=true;const{type,title,text}=notifQueue.shift();const el=document.getElementById('notif');el.className='notif '+type;document.getElementById('notifTitle').textContent=title;document.getElementById('notifText').textContent=text;el.classList.add('show');setTimeout(()=>{el.classList.remove('show');setTimeout(processNotif,300)},2500)}
+
+// === Level Up + Confetti ===
+function showLevelUp(lv){const ov=document.getElementById('levelUpOverlay');const box=document.getElementById('levelUpBox');box.innerHTML='<div class="lvl-icon">\u2B06\uFE0F</div><div class="lvl-title">Level Up!</div><div class="lvl-name">Level '+(lv+1)+': '+LEVELS[lv].name+'</div>';ov.classList.add('active');spawnConfetti();setTimeout(()=>ov.classList.remove('active'),3000)}
+function spawnConfetti(){const c=document.getElementById('confetti');c.innerHTML='';const cols=['#3b82f6','#a855f7','#22c55e','#f59e0b','#ef4444','#06b6d4'];for(let i=0;i<60;i++){const p=document.createElement('div');p.style.cssText='position:absolute;left:'+Math.random()*100+'%;background:'+cols[i%cols.length]+';width:'+(6+Math.random()*8)+'px;height:'+(6+Math.random()*8)+'px;border-radius:'+(Math.random()>.5?'50%':'2px')+';animation:confettiFall '+(1.5+Math.random()*2)+'s ease-out '+Math.random()*.5+'s forwards';c.appendChild(p)}if(!document.getElementById('confettiStyle')){const s=document.createElement('style');s.id='confettiStyle';s.textContent='@keyframes confettiFall{0%{opacity:1;transform:translateY(0) rotate(0deg)}100%{opacity:0;transform:translateY(100vh) rotate(720deg)}}';document.head.appendChild(s)}setTimeout(()=>c.innerHTML='',4000)}
+
+// === Quiz Engine ===
+function shuffleQuiz(modId,quiz){const key='m'+modId;if(state.quizShuffleMap[key])return state.quizShuffleMap[key];const idx=[...Array(quiz.length).keys()];for(let i=idx.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[idx[i],idx[j]]=[idx[j],idx[i]]}state.quizShuffleMap[key]=idx;saveState();return idx}
+function renderQuiz(modId,quiz,isBoss){
+const pf=isBoss?'boss':'quiz';const idx=isBoss?[...Array(quiz.length).keys()]:shuffleQuiz(modId,quiz);
+let h='<div class="'+(isBoss?'boss-section':'quiz-section')+'">';
+h+=isBoss?'<h3>\uD83D\uDC51 Boss-Challenge</h3><p class="boss-sub">Alle '+quiz.length+' Fragen richtig beantworten!</p>':'<h3>\uD83D\uDCDD Quiz \u2014 Teste dein Wissen</h3>';
+idx.forEach((qi,di)=>{const q=quiz[qi];h+='<div class="quiz-q" data-qi="'+qi+'"><p>'+(di+1)+'. '+q.q+'</p>';q.a.forEach((a,ai)=>{h+='<label><input type="radio" name="'+pf+'_'+modId+'_'+qi+'" value="'+ai+'"> '+a+'<\/label>'});h+='<\/div>'});
+h+='<button class="quiz-submit" onclick="checkQuiz('+modId+','+isBoss+')">'+(isBoss?'Boss besiegen!':'Antworten prüfen')+'<\/button>';
+h+='<div class="quiz-result" id="'+pf+'Result'+modId+'" style="display:none"><\/div><\/div>';return h;
+}
+function checkQuiz(modId,isBoss){
+const pf=isBoss?'boss':'quiz';const quiz=isBoss?modules[modId].boss:modules[modId].quiz;
+let correct=0;const total=quiz.length;const startTime=window._quizStart||Date.now();
+quiz.forEach((q,qi)=>{
+const sel=document.querySelector('input[name="'+pf+'_'+modId+'_'+qi+'"]:checked');
+const labels=document.querySelectorAll('[data-qi="'+qi+'"] label');
+const ci=_d(q._h,qi);
+labels.forEach((l,li)=>{l.classList.remove('correct','wrong');if(li===ci)l.classList.add('correct');else if(sel&&parseInt(sel.value)===li)l.classList.add('wrong')});
+const qDiv=labels[0]?.closest('.quiz-q');if(qDiv){const old=qDiv.querySelector('.quiz-explanation');if(old)old.remove()}
+if(!sel||parseInt(sel.value)!==ci){if(qDiv){const exp=document.createElement('div');exp.className='quiz-explanation';exp.textContent='\u2192 Richtige Antwort: '+q.a[ci];qDiv.appendChild(exp)}}
+if(sel&&parseInt(sel.value)===ci)correct++;
+});
+const rEl=document.getElementById(pf+'Result'+modId);rEl.style.display='block';
+if(isBoss){
+if(correct===total){
+rEl.className='quiz-result pass';rEl.textContent='\uD83D\uDC51 Boss besiegt! '+correct+'/'+total+' \u2014 Perfekt!';
+if(!state.bossResults[modId]){state.bossResults[modId]=true;addXP(100,'Boss-Challenge bestanden!');if(!state.badges.includes('first_boss'))awardBadge('first_boss');if(modules.every((_,i)=>state.bossResults[i]))awardBadge('all_bosses');checkModuleComplete(modId)}
+}else{rEl.className='quiz-result fail';rEl.textContent='\uD83D\uDC80 '+correct+'/'+total+' \u2014 Alle müssen richtig sein! Versuch es nochmal.';setTimeout(()=>{document.querySelectorAll('input[name^="'+pf+'_'+modId+'"]').forEach(r=>{r.disabled=false;r.checked=false});document.querySelectorAll('[data-qi] label').forEach(l=>l.classList.remove('correct','wrong'));document.querySelectorAll('.quiz-explanation').forEach(e=>e.remove());rEl.style.display='none'},2000);return}
+}else{
+const passed=correct>=Math.ceil(total*0.6);rEl.className='quiz-result '+(passed?'pass':'fail');
+rEl.textContent=passed?'\u2705 '+correct+'/'+total+' richtig \u2014 Bestanden!':'\u274C '+correct+'/'+total+' richtig \u2014 Mindestens '+Math.ceil(total*0.6)+' nötig.';
+if(passed&&!state.quizResults[modId]){state.quizResults[modId]=correct;addXP(correct*15+50,'Quiz bestanden ('+correct+'/'+total+')');if(!state.badges.includes('first_quiz'))awardBadge('first_quiz');if(correct===total)awardBadge('perfect_quiz');if(Date.now()-startTime<60000)awardBadge('speed_quiz');checkModuleComplete(modId)}
+}
+saveState();document.querySelectorAll('input[name^="'+pf+'_'+modId+'"]').forEach(r=>r.disabled=true);
+window.scrollTo({top:0,behavior:'smooth'});
+}
+function checkModuleComplete(modId){
+if(state.quizResults[modId]!==undefined&&state.bossResults[modId]&&!state.modulesCompleted.includes(modId)){
+state.modulesCompleted.push(modId);awardBadge('m'+modId);
+if(state.modulesCompleted.length>=5)awardBadge('half_done');
+if(state.modulesCompleted.length>=10){awardBadge('graduate');setTimeout(()=>showCert(),1500)}
+saveState();renderSidebar();
+}
+}
+
+// === Render Module ===
+function renderModule(modId){
+state.currentModule=modId;
+if(!state.modulesViewed.includes(modId)){state.modulesViewed.push(modId);addXP(10,'Neues Modul geöffnet');if(state.modulesViewed.length>=10)awardBadge('explorer')}
+saveState();closeSidebar();
+const m=modules[modId];
+let h='<div class="module-header"><div class="mod-badge">'+m.icon+' Modul '+(modId+1)+'<\/div><h1>'+m.title+'<\/h1><p class="mod-desc">'+m.description+'<\/p><\/div>';
+m.lessons.forEach((l,i)=>{h+='<div class="lesson-card"><h3><span style="color:var(--neon)">'+String(i+1).padStart(2,'0')+'<\/span> '+l.title+' <button class="tts-btn" onclick="speakLesson('+i+')" title="Vorlesen">&#128266;<\/button><\/h3>'+l.content+'<\/div>'});
+h+='<div class="interactive-area"><h4>\uD83D\uDCDD Interaktive Übung<\/h4><div id="interactiveContent">Lädt...<\/div><\/div>';
+window._quizStart=Date.now();
+h+=renderQuiz(modId,m.quiz,false);
+h+=renderQuiz(modId,m.boss,true);
+document.getElementById('welcomeScreen').style.display='none';
+document.getElementById('badgesView').style.display='none';
+document.getElementById('statsView').style.display='none';
+const mc=document.getElementById('moduleContent');mc.style.display='block';mc.innerHTML=h;
+renderSidebar();setTimeout(()=>{initInteractive(modId);window.scrollTo(0,0)},100);
+}
+
+// === Sidebar ===
+function renderSidebar(){
+const el=document.getElementById('sidebarModules');
+el.innerHTML=modules.map((m,i)=>{
+const done=state.modulesCompleted.includes(i);
+const act=state.currentModule===i&&document.getElementById('moduleContent').style.display==='block';
+return '<a class="mod-link'+(act?' active':'')+(done?' completed':'')+'" onclick="renderModule('+i+')"><span class="mod-icon">'+m.icon+'<\/span>'+m.title+'<\/a>';
+}).join('');
+const lv=getLevel(state.xp);
+const lvEl=document.getElementById('sidebarLevel');if(lvEl)lvEl.textContent=LEVELS[lv].name;
+const xpEl=document.getElementById('sidebarXP');if(xpEl)xpEl.textContent=state.xp+' XP';
+const xpFill=document.getElementById('sidebarXPFill');if(xpFill)xpFill.style.width=getLevelProgress(state.xp)+'%';
+}
+function toggleSidebar(){document.getElementById('sidebar').classList.toggle('open')}
+function closeSidebar(){document.getElementById('sidebar').classList.remove('open')}
+
+// === Badges & Stats ===
+function showBadges(){
+document.getElementById('welcomeScreen').style.display='none';
+document.getElementById('moduleContent').style.display='none';
+document.getElementById('statsView').style.display='none';
+const v=document.getElementById('badgesView');v.style.display='block';closeSidebar();
+let h='<div class="module-header"><h1>\uD83C\uDFC5 Deine Abzeichen<\/h1><p class="mod-desc">'+state.badges.length+' von '+BADGES.length+' gesammelt<\/p><\/div><div class="badge-grid">';
+BADGES.forEach(b=>{const earned=state.badges.includes(b.id);h+='<div class="badge-item'+(earned?' earned':' locked')+'"><div class="badge-icon">'+(earned?b.icon:'\uD83D\uDD12')+'<\/div><div class="badge-name">'+b.name+'<\/div><\/div>'});
+h+='<\/div>';v.innerHTML=h;
+}
+function showStats(){
+document.getElementById('welcomeScreen').style.display='none';
+document.getElementById('moduleContent').style.display='none';
+document.getElementById('badgesView').style.display='none';
+const v=document.getElementById('statsView');v.style.display='block';closeSidebar();
+const lv=getLevel(state.xp);
+let h='<div class="module-header"><h1>\uD83D\uDCCA Statistik<\/h1><\/div><div class="stats-grid">';
+h+='<div class="stat-card"><div class="stat-val">'+state.xp+'<\/div><div class="stat-label">XP gesammelt<\/div><\/div>';
+h+='<div class="stat-card"><div class="stat-val">'+LEVELS[lv].name+'<\/div><div class="stat-label">Aktueller Rang<\/div><\/div>';
+h+='<div class="stat-card"><div class="stat-val">'+state.modulesCompleted.length+'/10<\/div><div class="stat-label">Module abgeschlossen<\/div><\/div>';
+h+='<div class="stat-card"><div class="stat-val">'+Object.keys(state.quizResults).length+'<\/div><div class="stat-label">Quizze bestanden<\/div><\/div>';
+h+='<div class="stat-card"><div class="stat-val">'+Object.keys(state.bossResults).length+'<\/div><div class="stat-label">Bosse besiegt<\/div><\/div>';
+h+='<div class="stat-card"><div class="stat-val">'+state.badges.length+'<\/div><div class="stat-label">Abzeichen<\/div><\/div>';
+h+='<div class="stat-card"><div class="stat-val">\uD83D\uDD25 '+state.streak+'<\/div><div class="stat-label">Tage-Streak<\/div><\/div>';
+h+='<\/div>';v.innerHTML=h;
+}
+
+// === Certificate ===
+let certStyle='akademie';
+function showCert(){window._lastFocus=document.activeElement;
+const ov=document.getElementById('certOverlay');
+const styles=['akademie','hacker','pixel','zukunft'];
+const labels=['\uD83C\uDFDB Akademie','\uD83D\uDCBB Hacker','\uD83D\uDD79 Pixel','\u2728 Zukunft'];
+document.getElementById('certPicker').innerHTML=styles.map((s,i)=>'<button class="cert-pick-btn '+(s===certStyle?'active':'')+'" onclick="certStyle=\''+s+'\';renderCert()">'+labels[i]+'<\/button>').join('');
+renderCert();ov.classList.add('active');
+}
+function closeCert(){document.getElementById('certOverlay').classList.remove('active');if(window._lastFocus){window._lastFocus.focus();window._lastFocus=null}}
+function generateCertCode(){const n=state.name||'X';const d=new Date();return 'TP-'+d.getFullYear()+'-'+((n.charCodeAt(0)*7+state.xp)%9999).toString(16).toUpperCase().padStart(4,'0')}
+function printCert(){window.print()}
+function certBadgeRow(){
+const earned=state.badges||[];if(earned.length===0)return'';
+return'<div class="cert-badge-row">'+earned.slice(0,8).map(bid=>{const b=BADGES.find(x=>x.id===bid);return b?'<div class="cert-badge-item" title="'+b.name+'">'+b.icon+'<\/div>':''}).join('')+(earned.length>8?'<div class="cert-badge-item" title="'+(earned.length-8)+' weitere">+'+(earned.length-8)+'<\/div>':'')+'<\/div>';
+}
+function certStatsRow(){
+const mods=state.modulesCompleted.length;const quizDone=Object.keys(state.quizResults).length;const bossDone=Object.keys(state.bossResults).length;
+return'<div class="cert-common-stats"><div class="cert-stat">\uD83D\uDCDA '+mods+'/10<\/div><div class="cert-stat">\uD83D\uDCDD '+quizDone+' Quizze<\/div><div class="cert-stat">\uD83D\uDC51 '+bossDone+' Bosse<\/div><div class="cert-stat">\uD83D\uDD25 '+state.streak+'d Streak<\/div><\/div>';
+}
+function certLogoFooter(dark){
+const fill=dark?'rgba(255,255,255,.4)':'rgba(0,0,0,.35)';
+return'<div class="cert-logo-footer"><svg viewBox="0 0 32 32" fill="none"><g transform="translate(16,16)"><circle cx="-10" cy="-9" r="1.2" fill="'+fill+'" opacity=".6"/><circle cx="10" cy="-9" r="1.2" fill="'+fill+'" opacity=".6"/><rect x="-7" y="-5.5" width="14" height="11" rx="3.5" fill="none" stroke="'+fill+'" stroke-width="1"/><text x="0" y="0" text-anchor="middle" dominant-baseline="central" font-family="system-ui" font-size="7.5" font-weight="900" fill="'+fill+'" letter-spacing="1">AI<\/text><\/g><\/svg><span style="color:'+fill+'">GZ AI Stacks<\/span><\/div>';
+}
+function svgCorner(){return'<svg viewBox="0 0 60 60" fill="none"><path d="M5 55 L5 15 Q5 5 15 5 L55 5" stroke="#c5a54e" stroke-width="1.5" fill="none" opacity=".4"/><circle cx="8" cy="8" r="3" fill="#c5a54e" opacity=".2"/><\/svg>';}
+function svgLaurelSeal(){return'<svg viewBox="0 0 90 90" fill="none"><circle cx="45" cy="45" r="32" fill="url(#cg)"/><defs><radialGradient id="cg"><stop offset="0%" stop-color="#e8c84e"/><stop offset="100%" stop-color="#8a6914"/><\/radialGradient><\/defs><text x="45" y="47" text-anchor="middle" dominant-baseline="central" font-family="serif" font-size="22" font-weight="900" fill="#fff">\u2605<\/text><\/svg>';}
+function svgHexSeal(){return'<svg viewBox="0 0 70 70" fill="none"><circle cx="35" cy="35" r="22" stroke="#00d4ff" stroke-width="1.5" opacity=".5"/><circle cx="35" cy="35" r="16" fill="rgba(0,255,65,.08)"/><text x="35" y="33" text-anchor="middle" dominant-baseline="central" font-family="monospace" font-size="8" font-weight="700" fill="#00ff41" opacity=".7">VERIFIED<\/text><text x="35" y="42" text-anchor="middle" font-family="monospace" font-size="7" fill="#00d4ff">\u2713<\/text><\/svg>';}
+function matrixCols(){const chars='01\u30A2\u30A4\u30A6\u30A8\u30AA{}[]<>';let h='';for(let i=0;i<10;i++){const x=5+i*9;const d=3+Math.random()*6;let col='';for(let j=0;j<25;j++)col+=chars[Math.floor(Math.random()*chars.length)]+'\n';h+='<div class="cert-matrix-col" style="left:'+x+'%;animation-duration:'+d+'s;animation-delay:'+Math.random()*4+'s">'+col+'<\/div>';}return h;}
+function renderCert(){
+const f=document.getElementById('certFrame');
+const name=state.name||'Unbekannt';const date=new Date().toLocaleDateString('de-DE',{day:'numeric',month:'long',year:'numeric'});
+const xp=state.xp;const mods=state.modulesCompleted.length;const rank=LEVELS[getLevel(xp)].name;const code=generateCertCode();const badges=certBadgeRow();
+document.querySelectorAll('.cert-pick-btn').forEach(b=>b.classList.toggle('active',b.textContent.toLowerCase().includes(certStyle)));
+if(certStyle==='akademie'){
+const corner=svgCorner();
+f.innerHTML='<div class="cert-akademie"><div class="cert-corner cert-corner-tl">'+corner+'<\/div><div class="cert-corner cert-corner-tr">'+corner+'<\/div><div class="cert-corner cert-corner-bl">'+corner+'<\/div><div class="cert-corner cert-corner-br">'+corner+'<\/div><div class="cert-inner"><div class="cert-sub">GeoMeister \u00B7 Geographie-Akademie<\/div><div class="cert-title">Diplom<\/div><div class="cert-hr"><\/div><div class="cert-body">Die Geographie-Akademie verleiht hiermit<\/div><div class="cert-name">'+name+'<\/div><div class="cert-body">die Anerkennung als<br><strong style="font-size:18px;color:#1a1a3e">Geo-'+rank+'<\/strong><br>für die erfolgreiche Absolvierung von<br>\u201EGeoMeister \u2014 Geographie Klasse 7-10\u201C<\/div>'+certStatsRow()+badges+'<div class="cert-seal-wrap"><div class="cert-seal-ring"><\/div><div class="cert-seal">'+svgLaurelSeal()+'<\/div><\/div><div class="cert-date">'+date+'<\/div><div class="cert-verification">'+code+'<\/div>'+certLogoFooter(false)+'<\/div><\/div>';
+}else if(certStyle==='hacker'){
+f.innerHTML='<div class="cert-hacker">'+matrixCols()+'<div class="cert-inner"><div class="cert-prompt">root@geomeister:~$ <span>verify --user "'+name+'" --deep-scan<\/span><\/div><div class="cert-title">&gt;&gt; SYSTEM CERTIFICATION &lt;&lt;<\/div><div class="cert-access">ACCESS GRANTED<span class="cursor-blink">_<\/span><\/div><div class="cert-body">&gt; User..........: <strong style="color:#00d4ff">'+name+'<\/strong><br>&gt; Rank..........: '+rank+'<br>&gt; Modules.......: [<span style="color:#00ff41">'+ '\u2588'.repeat(mods)+'\u2591'.repeat(10-mods)+'<\/span>] '+mods+'/10<br>&gt; XP............: '+xp+' pts<br>&gt; Status........: <span style="color:#00ff41">VERIFIED<\/span> \u2713<\/div>'+certStatsRow()+badges+'<div class="cert-hex-seal">'+svgHexSeal()+'<\/div><div class="cert-body" style="font-size:11px">&gt; Certificate ID: '+code+'<br>&gt; Issued: '+date+'<br>&gt; Authority: GeoMeister Akademie<\/div><div class="cert-prompt">root@geomeister:~$ <span class="cursor-blink">_<\/span><\/div>'+certLogoFooter(true)+'<\/div><\/div>';
+}else if(certStyle==='pixel'){
+const stars='\u2605'.repeat(Math.min(5,Math.ceil(mods/2)))+'\u2606'.repeat(Math.max(0,5-Math.ceil(mods/2)));
+const pct=Math.min(100,Math.round(xp/42));
+f.innerHTML='<div class="cert-pixel"><div class="cert-inner"><div class="cert-complete">\u25C6 LEVEL COMPLETE! \u25C6<\/div><div class="cert-title">CHAMPION<\/div><div class="cert-name">'+name+'<\/div><div class="cert-stars">'+stars+'<\/div><div class="cert-xp-bar"><div class="cert-xp-fill" style="width:'+pct+'%"><\/div><div class="cert-xp-label">'+xp+' XP<\/div><\/div><div class="cert-body">RANK: <strong style="color:#ffd700">'+rank.toUpperCase()+'<\/strong><\/div>'+certStatsRow()+badges+'<div class="cert-score">HIGH SCORE: '+xp+' PTS<\/div><div style="margin-top:8px;font-size:10px;color:#555">'+date+' \u00B7 '+code+'<\/div>'+certLogoFooter(true)+'<\/div><\/div>';
+}else{
+const particles=Array.from({length:15},(_,i)=>{const colors=['#6366f1','#ec4899','#f59e0b','#22c55e','#06b6d4'];return'<div class="cert-particle" style="position:absolute;left:'+Math.random()*100+'%;top:'+Math.random()*100+'%;width:'+(2+Math.random()*3)+'px;height:'+(2+Math.random()*3)+'px;background:'+colors[i%5]+';opacity:'+(0.1+Math.random()*0.2)+';box-shadow:0 0 '+(6+Math.random()*9)+'px '+colors[i%5]+';border-radius:50%"><\/div>';}).join('');
+f.innerHTML='<div class="cert-zukunft">'+particles+'<div class="cert-inner"><div class="cert-sub">Zukunfts-Akademie \u00B7 '+new Date().getFullYear()+'<\/div><div class="cert-title">Zertifikat der Zukunft<\/div><div class="cert-body">Hiermit best\u00E4tigen wir, dass<\/div><div class="cert-name">'+name+'<\/div><div class="cert-body">den interaktiven Geographie-Kurs<br>\u201EGeoMeister \u2014 Geographie Klasse 7-10\u201C<br>erfolgreich absolviert hat.<\/div><div class="cert-body" style="margin:6px 0"><strong style="color:#a78bfa;font-size:16px">'+rank+'<\/strong><\/div>'+certStatsRow()+badges+'<div class="cert-seal-holo"><div class="cert-seal-mid"><div class="cert-seal-inner"><svg viewBox="0 0 40 40" fill="none"><text x="20" y="18" text-anchor="middle" font-size="14" fill="#a78bfa">\u2726<\/text><text x="20" y="28" text-anchor="middle" font-size="6" font-weight="700" fill="rgba(255,255,255,.6)" font-family="system-ui">GEO<\/text><\/svg><\/div><\/div><\/div><div class="cert-date">'+date+' \u00B7 '+code+'<\/div>'+certLogoFooter(true)+'<\/div><\/div>';
+}
+f.style.animation='none';f.offsetHeight;f.style.animation='certEntrance .6s cubic-bezier(.34,1.56,.64,1) both';
+}
+// === UI Update ===
+function updateUI(){
+const lv=getLevel(state.xp);
+const hdr=document.getElementById('headerLevel');if(hdr)hdr.textContent=LEVELS[lv].name;
+const hxp=document.getElementById('headerXP');if(hxp)hxp.textContent=state.xp+' XP';
+const fill=document.querySelector('.header-xp-fill');if(fill)fill.style.width=getLevelProgress(state.xp)+'%';
+const streakEl=document.getElementById('headerStreak');if(streakEl)streakEl.textContent='\uD83D\uDD25 '+state.streak;
+renderSidebar();
+}
+
+// === Theme System ===
+function setDesignTheme(world,mode){state.designTheme=world+'-'+mode;document.documentElement.setAttribute('data-theme',state.designTheme);saveState();buildThemePicker()}
+function getCurrentThemeParts(){const p=state.designTheme.split('-');return{world:p.slice(0,-1).join('-'),mode:p[p.length-1]||'dark'}}
+function toggleMode(){const{world,mode}=getCurrentThemeParts();setDesignTheme(world,mode==='dark'?'light':'dark')}
+function buildThemePicker(){
+const dd=document.getElementById('themePickerDD');if(!dd)return;
+const{world,mode}=getCurrentThemeParts();
+let h='<div class="tp-label">Theme wählen<\/div>';
+Object.keys(THEME_CONFIG).forEach(w=>{const t=THEME_CONFIG[w];h+='<div class="tp-world'+(w===world?' active':'')+'" onclick="setDesignTheme(\''+w+'\',\''+mode+'\')\"><div class="tp-world-color" style="background:'+t.color+'">'+t.emoji+'<\/div><div class="tp-world-info"><div class="tp-world-name">'+t.name+'<\/div><div class="tp-world-desc">'+t.desc+'<\/div><\/div><\/div>';});
+h+='<div class="tp-divider"><\/div><div class="tp-mode-row"><span class="tp-mode-label">'+(mode==='dark'?'\uD83C\uDF19 Dark':'\u2600\uFE0F Light')+'<\/span><div class="tp-mode-switch'+(mode==='light'?' light':'')+'" onclick="toggleMode()"><\/div><\/div>';
+dd.innerHTML=h;
+}
+function toggleThemePicker(){document.getElementById('themePickerDD').classList.toggle('open')}
+
+// === Interactive Exercises ===
+function initInteractive(modId){
+const el=document.getElementById('interactiveContent');if(!el)return;
+const exercises=[
+// Mod 0: Klimazonen — Zone zuordnen
+function(){el.innerHTML='<p>Ordne die Eigenschaft der richtigen Klimazone zu.</p><div class="ix-grid" id="ixItems"><\/div><div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin:16px 0"><button class="ix-btn" onclick="ixDrop(0,\'tropisch\')">Tropisch</button><button class="ix-btn" onclick="ixDrop(0,\'gem\u00E4\u00DFigt\')">Gem\u00E4\u00DFigt</button><button class="ix-btn" onclick="ixDrop(0,\'polar\')">Polar</button></div><div class="ix-feedback" id="ixFb"><\/div>';
+const items=[{n:'Ganzjährig warm, Regenwald',t:'tropisch'},{n:'Vier Jahreszeiten',t:'gem\u00E4\u00DFigt'},{n:'Extrem kalt, Eis und Schnee',t:'polar'},{n:'Deutschland liegt hier',t:'gem\u00E4\u00DFigt'},{n:'Am \u00C4quator gelegen',t:'tropisch'},{n:'Arktis und Antarktis',t:'polar'}];
+window._ixData={items,sel:null,done:0,correct:0};
+const g=document.getElementById('ixItems');items.forEach((it,i)=>{const d=document.createElement('div');d.className='ix-item';d.textContent=it.n;d.onclick=()=>{document.querySelectorAll('.ix-item').forEach(x=>x.classList.remove('selected'));d.classList.add('selected');window._ixData.sel=i};g.appendChild(d)});},
+// Mod 1: Plattentektonik — Plattengrenze zuordnen
+function(){el.innerHTML='<p>Ordne das Phänomen der richtigen Plattengrenze zu.</p><div class="ix-grid" id="ixItems"><\/div><div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin:16px 0"><button class="ix-btn" onclick="ixDrop(1,\'divergent\')">Divergent</button><button class="ix-btn" onclick="ixDrop(1,\'konvergent\')">Konvergent</button><button class="ix-btn" onclick="ixDrop(1,\'transform\')">Transform</button></div><div class="ix-feedback" id="ixFb"><\/div>';
+const items=[{n:'Mittelozeanischer Ruecken',t:'divergent'},{n:'Himalaya-Gebirgsbildung',t:'konvergent'},{n:'San-Andreas-Verwerfung',t:'transform'},{n:'Ostafrikanischer Grabenbruch',t:'divergent'},{n:'Subduktionszone am Pazifik',t:'konvergent'},{n:'Erdbeben durch seitliches Gleiten',t:'transform'}];
+window._ixData={items,sel:null,done:0,correct:0};
+const g=document.getElementById('ixItems');items.forEach((it,i)=>{const d=document.createElement('div');d.className='ix-item';d.textContent=it.n;d.onclick=()=>{document.querySelectorAll('.ix-item').forEach(x=>x.classList.remove('selected'));d.classList.add('selected');window._ixData.sel=i};g.appendChild(d)});},
+// Mod 2: Bev\u00F6lkerung — Push/Pull zuordnen
+function(){el.innerHTML='<p>Ordne den Faktor richtig zu: Push oder Pull?</p><div class="ix-grid" id="ixItems"><\/div><div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin:16px 0"><button class="ix-btn" onclick="ixDrop(2,\'push\')">Push (vertreibt)</button><button class="ix-btn" onclick="ixDrop(2,\'pull\')">Pull (anzieht)</button></div><div class="ix-feedback" id="ixFb"><\/div>';
+const items=[{n:'Krieg im Heimatland',t:'push'},{n:'Bessere Arbeitsplätze',t:'pull'},{n:'Naturkatastrophen',t:'push'},{n:'Bildungschancen',t:'pull'},{n:'Armut und Hunger',t:'push'},{n:'Politische Freiheit',t:'pull'}];
+window._ixData={items,sel:null,done:0,correct:0};
+const g=document.getElementById('ixItems');items.forEach((it,i)=>{const d=document.createElement('div');d.className='ix-item';d.textContent=it.n;d.onclick=()=>{document.querySelectorAll('.ix-item').forEach(x=>x.classList.remove('selected'));d.classList.add('selected');window._ixData.sel=i};g.appendChild(d)});},
+// Mod 3: Klimawandel — Ursache oder Folge?
+function(){el.innerHTML='<p>Was ist Ursache und was ist Folge des Klimawandels?</p><div class="ix-grid" id="ixItems"><\/div><div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin:16px 0"><button class="ix-btn" onclick="ixDrop(3,\'ursache\')">Ursache</button><button class="ix-btn" onclick="ixDrop(3,\'folge\')">Folge</button></div><div class="ix-feedback" id="ixFb"><\/div>';
+const items=[{n:'Verbrennung fossiler Brennstoffe',t:'ursache'},{n:'Meeresspiegelanstieg',t:'folge'},{n:'Abholzung von Regenw\u00E4ldern',t:'ursache'},{n:'Korallenbleiche',t:'folge'},{n:'Massentierhaltung (Methan)',t:'ursache'},{n:'Extremwetter (D\u00FCrren, Fluten)',t:'folge'}];
+window._ixData={items,sel:null,done:0,correct:0};
+const g=document.getElementById('ixItems');items.forEach((it,i)=>{const d=document.createElement('div');d.className='ix-item';d.textContent=it.n;d.onclick=()=>{document.querySelectorAll('.ix-item').forEach(x=>x.classList.remove('selected'));d.classList.add('selected');window._ixData.sel=i};g.appendChild(d)});},
+// Mod 4: Landwirtschaft — Form zuordnen
+function(){el.innerHTML='<p>Ordne das Merkmal der richtigen Landwirtschaftsform zu.</p><div class="ix-grid" id="ixItems"><\/div><div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin:16px 0"><button class="ix-btn" onclick="ixDrop(4,\'subsistenz\')">Subsistenz</button><button class="ix-btn" onclick="ixDrop(4,\'plantage\')">Plantage</button><button class="ix-btn" onclick="ixDrop(4,\'\u00F6ko\')">Oekologisch</button></div><div class="ix-feedback" id="ixFb"><\/div>';
+const items=[{n:'Anbau f\u00FCr den Eigenbedarf',t:'subsistenz'},{n:'Großflächiger Kaffee-Export',t:'plantage'},{n:'Verzicht auf chemische Duenger',t:'\u00F6ko'},{n:'Kleine Felder, Handarbeit',t:'subsistenz'},{n:'Monokultur f\u00FCr den Weltmarkt',t:'plantage'},{n:'Artgerechte Tierhaltung',t:'\u00F6ko'}];
+window._ixData={items,sel:null,done:0,correct:0};
+const g=document.getElementById('ixItems');items.forEach((it,i)=>{const d=document.createElement('div');d.className='ix-item';d.textContent=it.n;d.onclick=()=>{document.querySelectorAll('.ix-item').forEach(x=>x.classList.remove('selected'));d.classList.add('selected');window._ixData.sel=i};g.appendChild(d)});},
+// Mod 5: Energie — Fossil oder Erneuerbar?
+function(){el.innerHTML='<p>Ordne die Energiequelle richtig zu.</p><div class="ix-grid" id="ixItems"><\/div><div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin:16px 0"><button class="ix-btn" onclick="ixDrop(5,\'fossil\')">Fossil</button><button class="ix-btn" onclick="ixDrop(5,\'erneuerbar\')">Erneuerbar</button></div><div class="ix-feedback" id="ixFb"><\/div>';
+const items=[{n:'Kohle',t:'fossil'},{n:'Solarenergie',t:'erneuerbar'},{n:'Erdöl',t:'fossil'},{n:'Windkraft',t:'erneuerbar'},{n:'Erdgas',t:'fossil'},{n:'Wasserkraft',t:'erneuerbar'}];
+window._ixData={items,sel:null,done:0,correct:0};
+const g=document.getElementById('ixItems');items.forEach((it,i)=>{const d=document.createElement('div');d.className='ix-item';d.textContent=it.n;d.onclick=()=>{document.querySelectorAll('.ix-item').forEach(x=>x.classList.remove('selected'));d.classList.add('selected');window._ixData.sel=i};g.appendChild(d)});},
+// Mod 6: Globalisierung — Handelsrouten chronologisch
+function(){el.innerHTML='<p>Bringe die Transportentwicklungen in die richtige Reihenfolge!</p><div class="ix-grid" id="ixItems"><\/div><div class="ix-feedback" id="ixFb"><\/div>';
+const items=[{n:'Alte Seidenstra\u00DFe (Kamelkarawanen)',o:0},{n:'Segeln \u00FCber den Atlantik (Kolumbus)',o:1},{n:'Bau des Suezkanals (1869)',o:2},{n:'Erste Containerschiffe (1956)',o:3},{n:'Neue Seidenstra\u00DFe (China-Europa)',o:4}];
+const shuffled=[...items].sort(()=>Math.random()-.5);window._ixOrder={items:shuffled,picked:[],step:0};
+const g=document.getElementById('ixItems');shuffled.forEach((it,i)=>{const d=document.createElement('div');d.className='ix-item';d.textContent=it.n;d.onclick=()=>{const od=window._ixOrder;if(d.classList.contains('placed'))return;if(it.o===od.step){d.classList.add('correct','placed');od.step++;od.picked.push(i);if(od.step>=items.length){const fb=document.getElementById('ixFb');fb.className='ix-feedback pass';fb.textContent='\u2705 Perfekt! Richtige Reihenfolge!';if(!state.interactiveResults[6]){state.interactiveResults[6]=true;addXP(20,'Interaktive Übung gelöst');saveState()}}}else{d.classList.add('wrong');setTimeout(()=>d.classList.remove('wrong'),800)}};g.appendChild(d)});},
+// Mod 7: Stadt — Europ\u00E4isch oder US-amerikanisch?
+function(){el.innerHTML='<p>Ordne das Merkmal dem richtigen Stadttyp zu.</p><div class="ix-grid" id="ixItems"><\/div><div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin:16px 0"><button class="ix-btn" onclick="ixDrop(7,\'europa\')">Europ\u00E4ische Stadt</button><button class="ix-btn" onclick="ixDrop(7,\'usa\')">US-amerikanische Stadt</button></div><div class="ix-feedback" id="ixFb"><\/div>';
+const items=[{n:'Historischer Stadtkern',t:'europa'},{n:'Central Business District (CBD)',t:'usa'},{n:'Schachbrettmuster',t:'usa'},{n:'Marktplatz und Kathedrale',t:'europa'},{n:'Suburbs (Vororte mit Einfamilienh\u00E4usern)',t:'usa'},{n:'Konzentrische Ringe um die Altstadt',t:'europa'}];
+window._ixData={items,sel:null,done:0,correct:0};
+const g=document.getElementById('ixItems');items.forEach((it,i)=>{const d=document.createElement('div');d.className='ix-item';d.textContent=it.n;d.onclick=()=>{document.querySelectorAll('.ix-item').forEach(x=>x.classList.remove('selected'));d.classList.add('selected');window._ixData.sel=i};g.appendChild(d)});},
+// Mod 8: Ozeane — Welcher Ozean?
+function(){el.innerHTML='<p>Ordne die Eigenschaft dem richtigen Ozean zu.</p><div class="ix-grid" id="ixItems"><\/div><div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin:16px 0"><button class="ix-btn" onclick="ixDrop(8,\'pazifik\')">Pazifik</button><button class="ix-btn" onclick="ixDrop(8,\'atlantik\')">Atlantik</button><button class="ix-btn" onclick="ixDrop(8,\'arktisch\')">Arktischer Ozean</button></div><div class="ix-feedback" id="ixFb"><\/div>';
+const items=[{n:'Gr\u00F6\u00DFter Ozean der Welt',t:'pazifik'},{n:'Trennt Amerika von Europa',t:'atlantik'},{n:'Gr\u00F6\u00DFtenteils von Eis bedeckt',t:'arktisch'},{n:'Pazifischer Feuerring',t:'pazifik'},{n:'Golfstrom',t:'atlantik'},{n:'Kleinster Ozean',t:'arktisch'}];
+window._ixData={items,sel:null,done:0,correct:0};
+const g=document.getElementById('ixItems');items.forEach((it,i)=>{const d=document.createElement('div');d.className='ix-item';d.textContent=it.n;d.onclick=()=>{document.querySelectorAll('.ix-item').forEach(x=>x.classList.remove('selected'));d.classList.add('selected');window._ixData.sel=i};g.appendChild(d)});},
+// Mod 9: Nachhaltigkeit — Die drei Säulen zuordnen
+function(){el.innerHTML='<p>Ordne das Beispiel der richtigen Säule der Nachhaltigkeit zu.</p><div class="ix-grid" id="ixItems"><\/div><div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin:16px 0"><button class="ix-btn" onclick="ixDrop(9,\'\u00F6ko\')">\u00D6kologie</button><button class="ix-btn" onclick="ixDrop(9,\'wirtschaft\')">\u00D6konomie</button><button class="ix-btn" onclick="ixDrop(9,\'sozial\')">Soziales</button></div><div class="ix-feedback" id="ixFb"><\/div>';
+const items=[{n:'Naturschutzgebiete einrichten',t:'\u00F6ko'},{n:'Faire Löhne f\u00FCr alle',t:'sozial'},{n:'Nachhaltige Wirtschaftsfoerderung',t:'wirtschaft'},{n:'CO\u2082-Ausstoss reduzieren',t:'\u00F6ko'},{n:'Bildungschancen f\u00FCr alle',t:'sozial'},{n:'Kreislaufwirtschaft foerdern',t:'wirtschaft'}];
+window._ixData={items,sel:null,done:0,correct:0};
+const g=document.getElementById('ixItems');items.forEach((it,i)=>{const d=document.createElement('div');d.className='ix-item';d.textContent=it.n;d.onclick=()=>{document.querySelectorAll('.ix-item').forEach(x=>x.classList.remove('selected'));d.classList.add('selected');window._ixData.sel=i};g.appendChild(d)});}
+];
+if(exercises[modId])exercises[modId]();
+}
+// Interactive helpers
+window.ixDrop=function(modId,cat){
+const d=window._ixData;if(d.sel===null)return;
+const item=d.items[d.sel];const els=document.querySelectorAll('.ix-item');
+if(item.t===cat){els[d.sel].classList.add('correct');els[d.sel].classList.add('placed');d.correct++}
+else{els[d.sel].classList.add('wrong');setTimeout(()=>els[d.sel].classList.remove('wrong'),800)}
+d.done++;d.sel=null;els.forEach(e=>e.classList.remove('selected'));
+if(d.done>=d.items.length){const fb=document.getElementById('ixFb');fb.className='ix-feedback '+(d.correct>=4?'pass':'fail');fb.textContent=d.correct>=4?'\u2705 '+d.correct+'/'+d.items.length+' richtig!':'\u274C '+d.correct+'/'+d.items.length+' \u2014 Versuch es nochmal!';
+if(d.correct>=4&&!state.interactiveResults[modId]){state.interactiveResults[modId]=true;addXP(20,'Interaktive Übung gelöst');saveState()}}
+};
+// === Start App ===
+function startApp(){
+const name=document.getElementById('nameInput').value.trim();if(!name)return;
+state.name=name;state.started=true;saveState();
+document.getElementById('welcomeScreen').style.display='none';
+renderModule(0);updateStreak();
+}
+
+// === Init ===
+(function init(){
+if(loadState()&&state.started){
+document.getElementById('welcomeScreen').style.display='none';
+document.documentElement.setAttribute('data-theme',state.designTheme);
+renderModule(state.currentModule);updateUI();updateStreak();
+}else{
+document.documentElement.setAttribute('data-theme',state.designTheme);
+buildThemePicker();
+}
+renderSidebar();
+document.addEventListener('click',e=>{if(!e.target.closest('.theme-picker-wrap'))document.getElementById('themePickerDD')?.classList.remove('open')});
+})();
+</script>
+
+<script>
+(function(){
+var KEY=null;
+var scripts=document.querySelectorAll('script');
+for(var i=0;i<scripts.length;i++){
+var km=scripts[i].textContent.match(/STORAGE_KEY\s*=\s*['"](\w+)['"]/);
+if(km){KEY=km[1];break;}
+}
+if(!location.hash.match(/modules=/)){try{Object.keys(localStorage).filter(function(k){return k.indexOf("_allowed_modules")!==-1}).forEach(function(k){localStorage.removeItem(k)})}catch(e){}}
+var LOCK_KEY=(KEY||'app')+'_allowed_modules';
+var h=location.hash.match(/modules=([0-9,]+)/);
+var allowed=null;
+if(h){
+allowed=h[1].split(",").map(Number);
+try{localStorage.setItem(LOCK_KEY,JSON.stringify(allowed));}catch(e){}
+}else{
+try{var stored=localStorage.getItem(LOCK_KEY);if(stored)allowed=JSON.parse(stored);}catch(e){}
+}
+if(!allowed||!allowed.length)return;
+function filterSidebar(){
+var items=document.querySelectorAll("#sidebarModules > *");
+for(var i=0;i<items.length;i++){
+items[i].style.display=(allowed.indexOf(i)===-1)?"none":"";
+}
+}
+var sb=document.getElementById("sidebarModules");
+if(sb){new MutationObserver(filterSidebar).observe(sb,{childList:true});filterSidebar();}
+document.addEventListener("click",function(e){
+var t=e.target.closest("[onclick]");
+if(!t)return;
+var oc=t.getAttribute("onclick")||"";
+var idx=oc.indexOf("renderModule(");
+if(idx===-1)return;
+var num=parseInt(oc.substring(idx+13));
+if(!isNaN(num)&&allowed.indexOf(num)===-1){e.preventDefault();e.stopImmediatePropagation();}
+},true);
+setTimeout(filterSidebar,500);
+window.addEventListener("hashchange",function(){
+var hh=location.hash.match(/modules=([0-9,]+)/);
+if(hh){
+allowed=hh[1].split(",").map(Number);
+try{localStorage.setItem(LOCK_KEY,JSON.stringify(allowed));}catch(e){}
+filterSidebar();
+}
+});
+})();
+</script>
+
+<div class="zoom-controls" role="toolbar" aria-label="Zoom-Steuerung">
+<button class="zoom-btn" onclick="zoomOut()" title="Verkleinern (Taste -)" aria-label="Verkleinern">&#8722;</button>
+<button class="zoom-btn" onclick="zoomReset()" title="Zoom zurücksetzen" aria-label="Zoom zurücksetzen" style="font-size:10px;position:relative"><span id="zoomLvl">100%</span></button>
+<button class="zoom-btn" onclick="zoomIn()" title="Vergrößern (Taste +)" aria-label="Vergrößern">+</button>
+</div>
+
+<script>
+(function(){
+var zl=100;
+function applyZoom(){document.body.style.zoom=zl/100;var e=document.getElementById('zoomLvl');if(e)e.textContent=zl+'%';}
+window.zoomIn=function(){if(zl<200){zl+=10;applyZoom();}};
+window.zoomOut=function(){if(zl>50){zl-=10;applyZoom();}};
+window.zoomReset=function(){zl=100;applyZoom();};
+document.addEventListener('keydown',function(e){
+if(e.target.tagName==='INPUT'||e.target.tagName==='TEXTAREA'||e.target.isContentEditable)return;
+if((e.key==='+'||e.key==='=')&&!e.ctrlKey&&!e.metaKey){e.preventDefault();zoomIn();}
+else if((e.key==='-'||e.key==='_')&&!e.ctrlKey&&!e.metaKey){e.preventDefault();zoomOut();}
+else if(e.key==='0'&&!e.ctrlKey&&!e.metaKey){e.preventDefault();zoomReset();}
+});
+})();
+</script>
+
+<script>
+/* A11y: Focus trap for modal overlays */
+document.addEventListener('keydown',function(e){if(e.key==='Tab'){var ov=document.querySelector('.cert-overlay.active,.modal-overlay.active,[role="dialog"].active');if(ov){var fc=ov.querySelectorAll('button,a,[tabindex="0"],input,select,textarea');if(fc.length){var f=fc[0],l=fc[fc.length-1];if(e.shiftKey&&document.activeElement===f){e.preventDefault();l.focus()}else if(!e.shiftKey&&document.activeElement===l){e.preventDefault();f.focus()}}}}});
+</script>
+</body>
+</html>

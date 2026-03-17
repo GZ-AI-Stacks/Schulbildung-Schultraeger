@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="de" data-theme="cyber-dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>WeltEntdecker — Geographie entdecken Klasse 1-3</title>
+<meta name="description" content="Interaktive Lern-App zum Thema Geographie, Klasse 1-3. 10 Module mit Quiz, Boss-Challenges und Gamification.">
+<style>
+@font-face{font-family:'Sora';src:url('../../../Klasse_7-10/Informatik/fonts/sora-latin-400-normal.woff2') format('woff2');font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:'Sora';src:url('../../../Klasse_7-10/Informatik/fonts/sora-latin-600-normal.woff2') format('woff2');font-weight:600;font-style:normal;font-display:swap}
+@font-face{font-family:'Sora';src:url('../../../Klasse_7-10/Informatik/fonts/sora-latin-700-normal.woff2') format('woff2');font-weight:700;font-style:normal;font-display:swap}
+@font-face{font-family:'JetBrains Mono';src:url('../../../Klasse_7-10/Informatik/fonts/jetbrains-mono-latin-400-normal.woff2') format('woff2');font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:'Playfair Display';src:url('../../../Klasse_7-10/Informatik/fonts/playfair-display-latin-700-normal.woff2') format('woff2');font-weight:700;font-style:normal;font-display:swap}
+@font-face{font-family:'Inter';src:url('../../../Klasse_7-10/Informatik/fonts/inter-latin-400-normal.woff2') format('woff2');font-weight:400;font-style:normal;font-display:swap}
+
+:root{--neon:#3b82f6;--neon-dim:rgba(59,130,246,.15);--neon-glow:rgba(59,130,246,.3);--bg:#0a0e14;--bg2:#111827;--bg3:#1f2937;--card:#161e2e;--card-hover:#1e293b;--border:#2a3444;--border-light:#374151;--text:#d4dce8;--text-dim:#8899aa;--text-bright:#f1f5f9;--heading:#ffffff;--link:#60a5fa;--success:#22c55e;--warning:#f59e0b;--danger:#ef4444;--xp-purple:#a855f7;--badge-cyan:#06b6d4;--streak-red:#ef4444;--radius:12px;--radius-sm:8px;--radius-lg:16px;--shadow:0 4px 24px rgba(0,0,0,.4);--shadow-lg:0 8px 40px rgba(0,0,0,.5);--font:'Sora','Segoe UI',system-ui,sans-serif;--mono:'JetBrains Mono','Cascadia Code',monospace;--serif:'Playfair Display','Georgia',serif;--sidebar-w:280px;--header-h:60px;--card-border-w:1px;--card-border-style:solid;--glow:1}
+[data-theme="cyber-dark"]{--neon:#3b82f6;--neon-dim:rgba(59,130,246,.15);--neon-glow:rgba(59,130,246,.3);--bg:#0a0e14;--bg2:#111827;--bg3:#1f2937;--card:#161e2e;--card-hover:#1e293b;--border:#2a3444;--border-light:#374151;--text:#d4dce8;--text-dim:#8899aa;--text-bright:#f1f5f9;--heading:#ffffff;--link:#60a5fa;--success:#22c55e;--warning:#f59e0b;--danger:#ef4444;--xp-purple:#a855f7;--badge-cyan:#06b6d4;--streak-red:#ef4444;--radius:12px;--radius-sm:8px;--radius-lg:16px;--shadow:0 4px 24px rgba(0,0,0,.4);--shadow-lg:0 8px 40px rgba(0,0,0,.5);--font:'Sora','Segoe UI',system-ui,sans-serif;--card-border-w:1px;--card-border-style:solid;--glow:1}
+[data-theme="cyber-light"]{--neon:#1d4ed8;--neon-dim:rgba(29,78,216,.1);--neon-glow:rgba(29,78,216,.2);--bg:#f8f9fb;--bg2:#f0f2f5;--bg3:#e5e7eb;--card:#ffffff;--card-hover:#f5f7fa;--border:#d1d5db;--border-light:#e5e7eb;--text:#374151;--text-dim:#4b5563;--text-bright:#111827;--heading:#111827;--link:#2563eb;--success:#22c55e;--warning:#f59e0b;--danger:#ef4444;--xp-purple:#a855f7;--badge-cyan:#06b6d4;--streak-red:#ef4444;--radius:12px;--radius-sm:8px;--radius-lg:16px;--shadow:0 4px 24px rgba(0,0,0,.08);--shadow-lg:0 8px 40px rgba(0,0,0,.12);--font:'Sora','Segoe UI',system-ui,sans-serif;--card-border-w:1px;--card-border-style:solid;--glow:0}
+[data-theme="retro-dark"]{--neon:#ffd700;--neon-dim:rgba(255,215,0,.12);--neon-glow:rgba(255,215,0,.3);--bg:#0d0208;--bg2:#1a0a1e;--bg3:#2d1233;--card:#1a0a1e;--card-hover:#2d1233;--border:#4a1942;--border-light:#5c2d5c;--text:#e0d0f0;--text-dim:#9080a0;--text-bright:#fff;--heading:#ffd700;--link:#ff6b9d;--success:#00e676;--warning:#ffab00;--danger:#ff1744;--xp-purple:#e040fb;--badge-cyan:#00e5ff;--streak-red:#ff1744;--radius:0px;--radius-sm:0px;--radius-lg:0px;--shadow:4px 4px 0 rgba(0,0,0,.8);--shadow-lg:6px 6px 0 rgba(0,0,0,.9);--font:'Courier New','Consolas',monospace;--card-border-w:3px;--card-border-style:solid;--glow:0}
+[data-theme="retro-light"]{--neon:#b8860b;--neon-dim:rgba(184,134,11,.1);--neon-glow:rgba(184,134,11,.2);--bg:#fff8e1;--bg2:#fff3cd;--bg3:#ffe0b2;--card:#ffffff;--card-hover:#fff9f0;--border:#d4a017;--border-light:#e6c84d;--text:#3e2723;--text-dim:#6d4c41;--text-bright:#1b0000;--heading:#b8860b;--link:#c2185b;--success:#2e7d32;--warning:#ef6c00;--danger:#c62828;--xp-purple:#8e24aa;--badge-cyan:#00838f;--streak-red:#c62828;--radius:0px;--radius-sm:0px;--radius-lg:0px;--shadow:3px 3px 0 rgba(0,0,0,.15);--shadow-lg:5px 5px 0 rgba(0,0,0,.2);--font:'Courier New','Consolas',monospace;--card-border-w:3px;--card-border-style:solid;--glow:0}
+[data-theme="nature-dark"]{--neon:#4ade80;--neon-dim:rgba(74,222,128,.12);--neon-glow:rgba(74,222,128,.25);--bg:#0c1a0f;--bg2:#132617;--bg3:#1e3a24;--card:#15291a;--card-hover:#1e3a24;--border:#2d5a36;--border-light:#3a7044;--text:#c8e6c9;--text-dim:#81a784;--text-bright:#e8f5e9;--heading:#e8f5e9;--link:#81c784;--success:#66bb6a;--warning:#ffa726;--danger:#ef5350;--xp-purple:#ab47bc;--badge-cyan:#26a69a;--streak-red:#ef5350;--radius:20px;--radius-sm:14px;--radius-lg:28px;--shadow:0 4px 20px rgba(0,0,0,.3);--shadow-lg:0 8px 32px rgba(0,0,0,.4);--font:'Segoe UI','Helvetica Neue',system-ui,sans-serif;--card-border-w:1px;--card-border-style:solid;--glow:0}
+[data-theme="nature-light"]{--neon:#2e7d32;--neon-dim:rgba(46,125,50,.08);--neon-glow:rgba(46,125,50,.15);--bg:#f1f8e9;--bg2:#e8f5e9;--bg3:#c8e6c9;--card:#ffffff;--card-hover:#f1faf1;--border:#a5d6a7;--border-light:#c8e6c9;--text:#33691e;--text-dim:#3e6e1c;--text-bright:#1b5e20;--heading:#1b5e20;--link:#2e7d32;--success:#388e3c;--warning:#ef6c00;--danger:#c62828;--xp-purple:#7b1fa2;--badge-cyan:#00695c;--streak-red:#c62828;--radius:20px;--radius-sm:14px;--radius-lg:28px;--shadow:0 4px 16px rgba(0,0,0,.06);--shadow-lg:0 8px 28px rgba(0,0,0,.1);--font:'Segoe UI','Helvetica Neue',system-ui,sans-serif;--card-border-w:1px;--card-border-style:solid;--glow:0}
+[data-theme="space-dark"]{--neon:#c084fc;--neon-dim:rgba(192,132,252,.12);--neon-glow:rgba(192,132,252,.3);--bg:#07020e;--bg2:#0f0720;--bg3:#1a0e35;--card:#110a28;--card-hover:#1a0e35;--border:#2e1a5e;--border-light:#3d2478;--text:#d4c8f0;--text-dim:#9080b8;--text-bright:#f0e8ff;--heading:#f0e8ff;--link:#f0abfc;--success:#34d399;--warning:#fbbf24;--danger:#fb7185;--xp-purple:#f472b6;--badge-cyan:#67e8f9;--streak-red:#fb7185;--radius:4px;--radius-sm:2px;--radius-lg:6px;--shadow:0 4px 24px rgba(100,50,200,.2);--shadow-lg:0 8px 40px rgba(100,50,200,.3);--font:'Segoe UI',system-ui,sans-serif;--card-border-w:1px;--card-border-style:solid;--glow:1}
+[data-theme="space-light"]{--neon:#7c3aed;--neon-dim:rgba(124,58,237,.08);--neon-glow:rgba(124,58,237,.15);--bg:#faf5ff;--bg2:#f3e8ff;--bg3:#e9d5ff;--card:#ffffff;--card-hover:#faf5ff;--border:#c4b5fd;--border-light:#ddd6fe;--text:#4c1d95;--text-dim:#5b21b6;--text-bright:#2e1065;--heading:#2e1065;--link:#7c3aed;--success:#059669;--warning:#d97706;--danger:#dc2626;--xp-purple:#db2777;--badge-cyan:#0891b2;--streak-red:#dc2626;--radius:4px;--radius-sm:2px;--radius-lg:6px;--shadow:0 4px 16px rgba(100,50,200,.06);--shadow-lg:0 8px 28px rgba(100,50,200,.1);--font:'Segoe UI',system-ui,sans-serif;--card-border-w:1px;--card-border-style:solid;--glow:0}
+[data-theme="comic-dark"]{--neon:#ff6b6b;--neon-dim:rgba(255,107,107,.12);--neon-glow:rgba(255,107,107,.3);--bg:#1a1a2e;--bg2:#222244;--bg3:#2e2e55;--card:#262650;--card-hover:#2e2e55;--border:#4a4a7a;--border-light:#5a5a8a;--text:#e8e0ff;--text-dim:#a098c0;--text-bright:#fff;--heading:#fff;--link:#ffa94d;--success:#51cf66;--warning:#fcc419;--danger:#ff6b6b;--xp-purple:#cc5de8;--badge-cyan:#22b8cf;--streak-red:#ff6b6b;--radius:16px;--radius-sm:12px;--radius-lg:24px;--shadow:4px 4px 0 rgba(0,0,0,.5);--shadow-lg:6px 6px 0 rgba(0,0,0,.6);--font:'Comic Sans MS','Chalkboard SE',cursive,system-ui,sans-serif;--card-border-w:3px;--card-border-style:solid;--glow:0}
+[data-theme="comic-light"]{--neon:#e03131;--neon-dim:rgba(224,49,49,.08);--neon-glow:rgba(224,49,49,.15);--bg:#fff9db;--bg2:#fff3bf;--bg3:#ffe066;--card:#ffffff;--card-hover:#fffdf0;--border:#fab005;--border-light:#fcc419;--text:#2b2b2b;--text-dim:#555;--text-bright:#000;--heading:#000;--link:#e8590c;--success:#2f9e44;--warning:#e8590c;--danger:#c92a2a;--xp-purple:#9c36b5;--badge-cyan:#1098ad;--streak-red:#c92a2a;--radius:16px;--radius-sm:12px;--radius-lg:24px;--shadow:3px 3px 0 rgba(0,0,0,.2);--shadow-lg:5px 5px 0 rgba(0,0,0,.25);--font:'Comic Sans MS','Chalkboard SE',cursive,system-ui,sans-serif;--card-border-w:3px;--card-border-style:solid;--glow:0}
+[data-theme="sketchy-dark"]{--neon:#d97706;--neon-dim:rgba(217,119,6,.15);--neon-glow:rgba(217,119,6,.3);--bg:#2a1f0f;--bg2:#3a2a1a;--bg3:#4a3a2a;--card:#362414;--card-hover:#462a1a;--border:#5a4030;--border-light:#6a5040;--text:#d4c4b0;--text-dim:#a09080;--text-bright:#e8d8c8;--heading:#f5ead5;--link:#e8a550;--success:#84cc16;--warning:#d97706;--danger:#e74c3c;--xp-purple:#d946ef;--badge-cyan:#06b6d4;--streak-red:#e74c3c;--radius:24px;--radius-sm:16px;--radius-lg:32px;--shadow:0 6px 20px rgba(0,0,0,.3);--shadow-lg:0 10px 40px rgba(0,0,0,.4);--font:'Playfair Display','Georgia',serif;--card-border-w:2px;--card-border-style:dashed;--glow:0}
+[data-theme="sketchy-light"]{--neon:#b45309;--neon-dim:rgba(180,83,9,.1);--neon-glow:rgba(180,83,9,.2);--bg:#fef3e2;--bg2:#fde8cc;--bg3:#f9d5b8;--card:#ffffff;--card-hover:#fffaf5;--border:#d4a574;--border-light:#e8c4a0;--text:#5c4033;--text-dim:#8b6f47;--text-bright:#3e2723;--heading:#3e2723;--link:#c2600c;--success:#65a30d;--warning:#b45309;--danger:#d25c4d;--xp-purple:#c084fc;--badge-cyan:#0891b2;--streak-red:#d25c4d;--radius:24px;--radius-sm:16px;--radius-lg:32px;--shadow:0 4px 12px rgba(0,0,0,.08);--shadow-lg:0 8px 24px rgba(0,0,0,.12);--font:'Playfair Display','Georgia',serif;--card-border-w:2px;--card-border-style:dashed;--glow:0}
+[data-theme="nature-code-dark"]{--neon:#10b981;--neon-dim:rgba(16,185,129,.15);--neon-glow:rgba(16,185,129,.25);--bg:#0a1f12;--bg2:#0d2818;--bg3:#1a3a2a;--card:#0f281a;--card-hover:#1a3a2a;--border:#2d5a3d;--border-light:#3a7050;--text:#c8e6d0;--text-dim:#7ba890;--text-bright:#e8f5ed;--heading:#e8f5ed;--link:#34d399;--success:#10b981;--warning:#f59e0b;--danger:#f87171;--xp-purple:#a78bfa;--badge-cyan:#22d3ee;--streak-red:#f87171;--radius:20px;--radius-sm:14px;--radius-lg:28px;--shadow:0 4px 20px rgba(0,100,50,.2);--shadow-lg:0 8px 32px rgba(0,100,50,.3);--font:'Segoe UI','Helvetica Neue',system-ui,sans-serif;--card-border-w:1px;--card-border-style:solid;--glow:0}
+[data-theme="nature-code-light"]{--neon:#059669;--neon-dim:rgba(5,150,105,.1);--neon-glow:rgba(5,150,105,.15);--bg:#f0fdf8;--bg2:#e8faf2;--bg3:#d1f2e0;--card:#ffffff;--card-hover:#f5fbf7;--border:#86efac;--border-light:#bbf7d0;--text:#164e3f;--text-dim:#2d6e4f;--text-bright:#052e16;--heading:#052e16;--link:#059669;--success:#10b981;--warning:#d97706;--danger:#dc2626;--xp-purple:#8b5cf6;--badge-cyan:#06b6d4;--streak-red:#dc2626;--radius:20px;--radius-sm:14px;--radius-lg:28px;--shadow:0 4px 16px rgba(0,100,50,.06);--shadow-lg:0 8px 28px rgba(0,100,50,.1);--font:'Segoe UI','Helvetica Neue',system-ui,sans-serif;--card-border-w:1px;--card-border-style:solid;--glow:0}
+[data-theme="glass-dark"]{--neon:#00d9ff;--neon-dim:rgba(0,217,255,.12);--neon-glow:rgba(0,217,255,.25);--bg:#0f0f23;--bg2:#1a1a3e;--bg3:#25254a;--card:rgba(30,30,60,.4);--card-hover:rgba(40,40,80,.5);--border:rgba(100,150,255,.2);--border-light:rgba(100,150,255,.3);--text:#e4e8f0;--text-dim:#8899aa;--text-bright:#f5f7ff;--heading:#ffffff;--link:#00d9ff;--success:#34d399;--warning:#fbbf24;--danger:#ff6b9d;--xp-purple:#b991f7;--badge-cyan:#00d9ff;--streak-red:#ff6b9d;--radius:16px;--radius-sm:12px;--radius-lg:20px;--shadow:0 8px 32px rgba(0,200,255,.1);--shadow-lg:0 16px 64px rgba(0,200,255,.15);--font:'Segoe UI',system-ui,sans-serif;--card-border-w:1px;--card-border-style:solid;--glow:1}
+[data-theme="glass-light"]{--neon:#0891b2;--neon-dim:rgba(8,145,178,.08);--neon-glow:rgba(8,145,178,.15);--bg:#f8fafc;--bg2:#f1f5f9;--bg3:#e2e8f0;--card:rgba(255,255,255,.4);--card-hover:rgba(255,255,255,.6);--border:rgba(100,180,255,.2);--border-light:rgba(100,180,255,.3);--text:#1e293b;--text-dim:#475569;--text-bright:#0f172a;--heading:#0f172a;--link:#0891b2;--success:#059669;--warning:#d97706;--danger:#dc2626;--xp-purple:#7c3aed;--badge-cyan:#0891b2;--streak-red:#dc2626;--radius:16px;--radius-sm:12px;--radius-lg:20px;--shadow:0 8px 32px rgba(100,150,255,.08);--shadow-lg:0 16px 64px rgba(100,150,255,.12);--font:'Segoe UI',system-ui,sans-serif;--card-border-w:1px;--card-border-style:solid;--glow:0}
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}body{font-family:var(--font);background:var(--bg);color:var(--text);line-height:1.6;min-height:100vh;overflow-x:hidden;transition:background .3s,color .3s}h1,h2,h3,h4{color:var(--heading);line-height:1.3}a{color:var(--link);text-decoration:none}a:hover{text-decoration:underline}button{font-family:var(--font);cursor:pointer;border:none;background:none;color:inherit}code,pre{font-family:var(--mono)}:focus-visible{outline:2px solid var(--neon);outline-offset:2px;border-radius:4px}::selection{background:var(--neon);color:#fff}::-webkit-scrollbar{width:8px}::-webkit-scrollbar-track{background:var(--bg2)}::-webkit-scrollbar-thumb{background:var(--border);border-radius:4px}::-webkit-scrollbar-thumb:hover{background:var(--text-dim)}
+.site-header{position:fixed;top:0;left:0;right:0;height:var(--header-h);background:var(--bg2);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 20px;z-index:100;backdrop-filter:blur(12px)}.header-logo{display:flex;align-items:center;gap:12px;font-weight:700;font-size:18px;color:var(--heading)}.header-logo-text{display:flex;flex-direction:column;line-height:1.2}.header-logo-main{font-size:20px;font-weight:800}.header-logo-sub{font-size:11px;font-weight:600;color:var(--neon);letter-spacing:1px;text-transform:uppercase;margin-top:2px}.header-right{margin-left:auto;display:flex;align-items:center;gap:12px}.header-xp{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--xp-purple);font-weight:600}.header-xp-bar{width:80px;height:6px;background:var(--bg3);border-radius:3px;overflow:hidden}.header-xp-fill{height:100%;background:var(--xp-purple);border-radius:3px;transition:width .5s}.header-streak{display:flex;align-items:center;gap:4px;font-size:13px;color:var(--streak-red);font-weight:600}
+.theme-toggle{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:var(--bg3);transition:background .2s}.theme-toggle:hover{background:var(--border)}.theme-picker-wrap{position:relative}.theme-picker-btn{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:var(--bg3);transition:background .2s;font-size:16px}.theme-picker-btn:hover{background:var(--border)}.theme-picker-dd{position:absolute;top:calc(100% + 8px);right:0;background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:12px;box-shadow:var(--shadow-lg);z-index:200;display:none;min-width:240px}.theme-picker-dd.open{display:block}.theme-picker-dd .tp-label{font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--text-dim);margin-bottom:8px}.tp-world{display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:var(--radius-sm);cursor:pointer;transition:background .15s;margin-bottom:2px}.tp-world:hover{background:var(--bg3)}.tp-world.active{background:var(--neon-dim)}.tp-world-color{width:28px;height:28px;border-radius:6px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:14px}.tp-world-info{flex:1;min-width:0}.tp-world-name{font-size:13px;font-weight:600;color:var(--heading)}.tp-world-desc{font-size:10px;color:var(--text-dim)}.tp-divider{height:1px;background:var(--border);margin:8px 0}.tp-mode-row{display:flex;align-items:center;justify-content:space-between;padding:4px 10px}.tp-mode-label{font-size:12px;color:var(--text);font-weight:600}.tp-mode-switch{width:44px;height:24px;border-radius:12px;background:var(--bg3);position:relative;cursor:pointer;transition:background .2s}.tp-mode-switch.light{background:var(--neon)}.tp-mode-switch::after{content:'';position:absolute;top:3px;left:3px;width:18px;height:18px;border-radius:50%;background:#fff;transition:transform .2s;box-shadow:0 1px 3px rgba(0,0,0,.3)}.tp-mode-switch.light::after{transform:translateX(20px)}.menu-btn{display:none;width:36px;height:36px;border-radius:8px;align-items:center;justify-content:center;background:var(--bg3)}
+.sidebar{position:fixed;top:var(--header-h);left:0;width:var(--sidebar-w);height:calc(100vh - var(--header-h));background:var(--bg2);border-right:1px solid var(--border);overflow-y:auto;padding:16px 12px;z-index:90;transition:transform .3s}.sidebar-section{margin-bottom:20px}.sidebar-label{font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--text-dim);padding:0 8px;margin-bottom:8px}.sidebar-level{padding:8px 12px;background:var(--neon-dim);border-radius:var(--radius-sm);margin-bottom:12px;text-align:center}.sidebar-level-title{font-size:14px;font-weight:700;color:var(--neon)}.sidebar-level-sub{font-size:11px;color:var(--text-dim);margin-top:2px}.sidebar-xp-bar{width:100%;height:8px;background:var(--bg3);border-radius:4px;overflow:hidden;margin-top:6px}.sidebar-xp-fill{height:100%;background:linear-gradient(90deg,var(--xp-purple),var(--neon));border-radius:4px;transition:width .6s}.mod-link{display:flex;align-items:center;gap:10px;padding:8px 12px;border-radius:var(--radius-sm);transition:background .15s;color:var(--text);font-size:13px;text-decoration:none;position:relative;cursor:pointer}.mod-link:hover{background:var(--bg3);text-decoration:none}.mod-link.active{background:var(--neon-dim);color:var(--neon);font-weight:600}.mod-link.completed::after{content:'\2713';position:absolute;right:10px;color:var(--success);font-weight:700;font-size:12px}.mod-link .mod-icon{width:28px;height:28px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
+.main{margin-left:var(--sidebar-w);margin-top:var(--header-h);min-height:calc(100vh - var(--header-h));padding:32px;max-width:900px}.module-header{margin-bottom:32px}.module-header .mod-badge{display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--neon);margin-bottom:8px}.module-header h1{font-size:28px;margin-bottom:8px}.module-header .mod-desc{font-size:15px;color:var(--text-dim);max-width:600px}
+.lesson-card{background:var(--card);border:var(--card-border-w) var(--card-border-style) var(--border);border-radius:var(--radius);padding:24px;margin-bottom:20px;transition:border-color .2s}.lesson-card:hover{border-color:var(--neon)}.lesson-card h3{font-size:18px;margin-bottom:12px;display:flex;align-items:center;gap:8px}.lesson-card p,.lesson-card li{font-size:14px;line-height:1.7;color:var(--text)}.lesson-card ul,.lesson-card ol{margin:8px 0 8px 20px}.lesson-card code{background:var(--bg3);padding:2px 6px;border-radius:4px;font-size:13px;color:var(--neon)}.lesson-card .info-box{background:var(--neon-dim);border-left:3px solid var(--neon);padding:12px 16px;border-radius:0 var(--radius-sm) var(--radius-sm) 0;margin:12px 0;font-size:13px}
+.interactive-area{background:var(--card);border:calc(var(--card-border-w) + 1px) dashed var(--border);border-radius:var(--radius);padding:24px;margin:20px 0;min-height:200px}.interactive-area h4{font-size:15px;color:var(--neon);margin-bottom:12px}.ix-grid{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;margin:16px 0}.ix-item{background:var(--bg3);border:2px solid var(--border);border-radius:var(--radius-sm);padding:14px 20px;font-size:16px;cursor:pointer;transition:all .2s;user-select:none;text-align:center;min-width:60px}.ix-item:hover{border-color:var(--neon);background:var(--neon-dim)}.ix-item.selected{border-color:var(--neon);background:var(--neon-dim)}.ix-item.correct{border-color:var(--success);background:rgba(34,197,94,.1)}.ix-item.wrong{border-color:var(--danger);background:rgba(239,68,68,.1)}.ix-item.placed{opacity:.4;pointer-events:none}.ix-btn{background:var(--neon);color:#fff;border:none;padding:10px 24px;border-radius:var(--radius-sm);font-size:14px;font-weight:700;cursor:pointer;font-family:var(--font);margin-top:12px;transition:opacity .2s}.ix-btn:hover{opacity:.85}.ix-feedback{text-align:center;padding:14px;border-radius:var(--radius-sm);font-size:16px;font-weight:700;margin-top:12px;display:none}.ix-feedback.pass{display:block;background:rgba(34,197,94,.12);color:var(--success)}.ix-feedback.fail{display:block;background:rgba(239,68,68,.12);color:var(--danger)}
+.quiz-section{background:var(--card);border:var(--card-border-w) var(--card-border-style) var(--border);border-radius:var(--radius);padding:24px;margin-top:24px}.quiz-section h3{font-size:18px;margin-bottom:16px;color:var(--xp-purple)}.quiz-q{margin-bottom:20px}.quiz-q p{font-size:14px;font-weight:600;margin-bottom:10px}.quiz-q label{display:flex;align-items:flex-start;gap:10px;padding:10px 14px;border-radius:var(--radius-sm);border:1px solid var(--border);cursor:pointer;transition:all .15s;font-size:14px;margin-bottom:6px}.quiz-q label:hover{border-color:var(--neon);background:var(--neon-dim)}.quiz-q input[type="radio"]{margin-top:3px;accent-color:var(--neon)}.quiz-q label.correct{border-color:var(--success);background:rgba(34,197,94,.1)}.quiz-q label.wrong{border-color:var(--danger);background:rgba(239,68,68,.1)}.quiz-submit{padding:10px 24px;font-size:14px;font-weight:700;border-radius:var(--radius-sm);background:var(--xp-purple);color:#fff;transition:opacity .2s;margin-top:8px}.quiz-submit:hover{opacity:.85}.quiz-result{padding:16px;border-radius:var(--radius-sm);margin-top:16px;font-size:14px;font-weight:600;text-align:center}.quiz-result.pass{background:rgba(34,197,94,.12);color:var(--success);border:1px solid rgba(34,197,94,.3)}.quiz-result.fail{background:rgba(239,68,68,.12);color:var(--danger);border:1px solid rgba(239,68,68,.3)}.quiz-explanation{margin-top:6px;padding:8px 14px;border-radius:var(--radius-sm);background:rgba(34,197,94,.08);border-left:3px solid var(--success);font-size:13px;color:var(--success);font-weight:600}
+.boss-section{background:linear-gradient(135deg,rgba(168,85,247,.08),rgba(59,130,246,.08));border:2px solid var(--xp-purple);border-radius:var(--radius);padding:24px;margin-top:24px}.boss-section h3{color:var(--xp-purple);font-size:20px;margin-bottom:4px}.boss-section .boss-sub{font-size:13px;color:var(--text-dim);margin-bottom:16px}
+.badge-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(100px,1fr));gap:12px;margin-top:12px}.badge-item{text-align:center;padding:12px 8px;border-radius:var(--radius-sm);background:var(--bg3);opacity:.4;transition:all .3s}.badge-item.earned{opacity:1;background:var(--neon-dim);border:1px solid var(--neon)}.badge-item .badge-icon{font-size:28px;margin-bottom:4px}.badge-item .badge-name{font-size:10px;font-weight:600;color:var(--text-dim)}.badge-item.earned .badge-name{color:var(--neon)}
+.stats-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px;margin-top:12px}.stat-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius-sm);padding:16px;text-align:center}.stat-card .stat-val{font-size:28px;font-weight:700;color:var(--neon)}.stat-card .stat-label{font-size:12px;color:var(--text-dim);margin-top:4px}
+.notif{position:fixed;top:80px;right:20px;background:var(--card);border:1px solid var(--neon);border-radius:var(--radius);padding:16px 20px;box-shadow:var(--shadow-lg);z-index:200;transform:translateX(120%);transition:transform .4s cubic-bezier(.22,1,.36,1);max-width:320px}.notif.show{transform:translateX(0)}.notif-title{font-size:14px;font-weight:700;color:var(--heading);margin-bottom:2px}.notif-text{font-size:12px;color:var(--text-dim)}.notif.xp{border-color:var(--xp-purple)}.notif.badge{border-color:var(--badge-cyan)}.notif.level{border-color:var(--success)}.notif.streak{border-color:var(--streak-red)}
+.level-up-overlay{position:fixed;inset:0;background:rgba(0,0,0,.7);display:none;align-items:center;justify-content:center;z-index:300}.level-up-overlay.active{display:flex}.level-up-box{text-align:center;padding:40px;animation:lvlPop .5s ease-out}.level-up-box .lvl-icon{font-size:64px;margin-bottom:12px}.level-up-box .lvl-title{font-size:28px;font-weight:900;color:var(--heading)}.level-up-box .lvl-name{font-size:20px;color:var(--xp-purple);font-weight:700;margin-top:4px}@keyframes lvlPop{from{transform:scale(.5);opacity:0}to{transform:scale(1);opacity:1}}
+.welcome-screen{display:flex;align-items:center;justify-content:center;min-height:calc(100vh - var(--header-h));text-align:center;padding:40px 20px}.welcome-box{max-width:480px}.welcome-box h1{font-size:36px;margin-bottom:8px}.welcome-box .ws-sub{color:var(--text-dim);font-size:15px;margin-bottom:32px}.welcome-box input{width:100%;max-width:320px;padding:12px 16px;font-size:16px;border-radius:var(--radius-sm);border:1px solid var(--border);background:var(--bg3);color:var(--heading);font-family:var(--font);text-align:center;margin-bottom:16px}.welcome-box input:focus{border-color:var(--neon);outline:none}.welcome-box .ws-start{padding:14px 40px;font-size:16px;font-weight:700;border-radius:var(--radius-sm);background:var(--neon);color:#fff;transition:opacity .2s}.welcome-box .ws-start:hover{opacity:.85}.welcome-box .ws-start:disabled{opacity:.4;cursor:not-allowed}
+.cert-overlay{position:fixed;inset:0;background:rgba(0,0,0,.88);display:none;align-items:center;justify-content:center;z-index:400;padding:20px;flex-direction:column;backdrop-filter:blur(8px)}.cert-overlay.active{display:flex}.cert-picker{display:flex;gap:12px;justify-content:center;margin-bottom:20px;flex-wrap:wrap}.cert-pick-btn{padding:10px 20px;font-size:13px;font-weight:700;border-radius:12px;border:2px solid rgba(255,255,255,.15);background:rgba(255,255,255,.06);color:rgba(255,255,255,.7);transition:all .3s;backdrop-filter:blur(4px)}.cert-pick-btn:hover{border-color:rgba(255,255,255,.3);color:#fff;transform:translateY(-2px)}.cert-pick-btn.active{border-color:#ffd700;color:#ffd700;background:rgba(255,215,0,.1);box-shadow:0 0 20px rgba(255,215,0,.15)}.cert-frame{width:720px;max-width:100%;aspect-ratio:1.414;position:relative;overflow:hidden}.cert-actions{display:flex;gap:12px;justify-content:center;margin-top:16px}.cert-actions button{padding:12px 28px;font-size:13px;font-weight:700;border-radius:12px;background:linear-gradient(135deg,var(--neon),var(--link));color:#fff;transition:transform .2s,box-shadow .2s}.cert-actions button:hover{transform:translateY(-2px);box-shadow:0 4px 20px rgba(0,0,0,.3)}
+.confetti-container{position:fixed;inset:0;pointer-events:none;z-index:600;overflow:hidden}
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.6);display:none;align-items:center;justify-content:center;z-index:500;padding:20px}.modal-overlay.active{display:flex}.modal{background:var(--card);border:1px solid var(--border);border-radius:var(--radius-lg);max-width:640px;width:100%;max-height:85vh;overflow-y:auto;padding:32px;position:relative}.modal-close{position:absolute;top:12px;right:16px;font-size:24px;color:var(--text-dim);background:none;border:none;cursor:pointer}
+@media(max-width:800px){.menu-btn{display:flex}.sidebar{transform:translateX(-100%)}.sidebar.open{transform:translateX(0)}.main{margin-left:0;padding:16px}}
+@media print{*{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}.site-header,.sidebar,.notif,.level-up-overlay,.confetti-container{display:none!important}.main{margin-left:0!important;padding:20px!important}.lesson-card{break-inside:avoid;page-break-inside:avoid}}
+
+/* Audio/Speech */
+.tts-btn{background:none;border:none;cursor:pointer;font-size:.9em;opacity:.5;transition:all .2s;vertical-align:middle;margin-left:8px;padding:2px 6px;border-radius:4px}
+.tts-btn:hover{opacity:1;background:var(--bg2)}.tts-btn.speaking{opacity:1;color:var(--neon);animation:tts-pulse 1s infinite}
+@keyframes tts-pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.15)}}
+.tts-bar{display:flex;align-items:center;gap:8px;padding:6px 12px;background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);margin:8px 0;font-size:.8rem;flex-wrap:wrap}
+.tts-bar select{background:var(--bg);color:var(--text);border:1px solid var(--border);border-radius:4px;padding:2px 6px;font-size:.78rem}
+.tts-bar button{background:none;border:1px solid var(--border);border-radius:4px;padding:2px 8px;cursor:pointer;color:var(--text);font-size:.8rem}
+.tts-bar button:hover{background:var(--bg)}
+.speech-ex{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:16px;margin:12px 0;text-align:center}
+.speech-ex h4{margin:0 0 8px;font-size:1rem}
+.mic-btn{font-size:1.6em;background:none;border:2px solid var(--neon);border-radius:50%;width:52px;height:52px;cursor:pointer;transition:all .3s;color:var(--text);display:inline-flex;align-items:center;justify-content:center}
+.mic-btn:hover{background:var(--neon);color:var(--bg)}.mic-btn.rec{background:#ef4444;border-color:#ef4444;color:#fff;animation:tts-pulse 1s infinite}
+.sr-res{margin-top:8px;padding:6px 10px;border-radius:4px;font-weight:600;font-size:.85rem;display:inline-block}
+.sr-res.good{background:#22c55e22;color:#22c55e}.sr-res.retry{background:#f59e0b22;color:#f59e0b}
+.sr-na{font-size:.8rem;color:var(--text-dim);margin-top:8px}
+</style>
+</head>
+<body>
+<a href="#mainContent" class="skip-nav" style="position:absolute;top:-50px;left:8px;background:var(--neon);color:#fff;padding:8px 16px;z-index:9999;border-radius:0 0 8px 8px;font-weight:700;text-decoration:none">Zum Inhalt springen</a>
+<header class="site-header">
+  <button class="menu-btn" onclick="toggleSidebar()" aria-label="Menu">&#9776;</button>
+  <div class="header-logo">
+    <svg viewBox="0 0 40 40" width="40" height="40" fill="none" aria-hidden="true"><rect x="4" y="4" width="32" height="32" rx="8" fill="var(--neon-dim)" stroke="var(--neon)" stroke-width="1.5"/><text x="20" y="26" text-anchor="middle" font-size="18" font-weight="900" fill="var(--neon)">W</text></svg>
+    <div class="header-logo-text"><div class="header-logo-main">WeltEntdecker</div><div class="header-logo-sub">Geographie entdecken Klasse 1-3</div></div>
+  </div>
+  <div class="header-right">
+    <div class="header-xp"><span id="headerLevel">Level 1</span><div class="header-xp-bar"><div class="header-xp-fill" style="width:0%"></div></div><span id="headerXP">0 XP</span></div>
+    <div class="header-streak" id="headerStreak">&#128293; 0</div>
+    <div class="theme-picker-wrap"><button class="theme-picker-btn" onclick="toggleThemePicker()" aria-label="Theme wählen">&#127912;</button><div class="theme-picker-dd" id="themePickerDD"></div></div>
+    <button class="theme-toggle" onclick="toggleMode()" aria-label="Dark/Light umschalten">&#127769;</button>
+  </div>
+</header>
+<nav class="sidebar" id="sidebar" role="navigation" aria-label="Module">
+  <div class="sidebar-section"><div class="sidebar-level"><div class="sidebar-level-title" id="sidebarLevel">Anfänger</div><div class="sidebar-level-sub" id="sidebarXP">0 XP</div><div class="sidebar-xp-bar"><div class="sidebar-xp-fill" id="sidebarXPFill" style="width:0%"></div></div></div></div>
+  <div class="sidebar-section"><div class="sidebar-label">Module</div><div id="sidebarModules"></div></div>
+  <div class="sidebar-section" style="border-top:1px solid var(--border);padding-top:12px;margin-top:12px">
+    <a class="mod-link" onclick="showBadges()"><span class="mod-icon">&#127941;</span>Abzeichen</a>
+    <a class="mod-link" onclick="showStats()"><span class="mod-icon">&#128202;</span>Statistik</a>
+    <a class="mod-link" onclick="showCert()"><span class="mod-icon">&#127891;</span>Urkunde</a>
+  </div>
+  <div class="sidebar-section" style="border-top:1px solid var(--border);padding-top:12px;margin-top:12px">
+    <a class="mod-link" onclick="exportData()"><span class="mod-icon">&#128190;</span>Speichern</a>
+    <label class="mod-link" style="cursor:pointer"><span class="mod-icon">&#128194;</span>Laden<input type="file" accept=".json" onchange="importData(event)" style="display:none"></label>
+    <a class="mod-link" onclick="if(confirm('Wirklich alles zurücksetzen?')){localStorage.removeItem(STORAGE_KEY);location.reload()}" style="color:var(--danger)"><span class="mod-icon">&#128465;</span>Zurücksetzen</a>
+  </div>
+  <div style="padding:16px 8px 8px;border-top:1px solid var(--border);margin-top:12px;font-size:11px;color:var(--text-dim)">
+    <a onclick="showImpressum()" style="cursor:pointer;color:var(--text-dim)">Impressum</a> &middot;
+    <a onclick="showDatenschutz()" style="cursor:pointer;color:var(--text-dim)">Datenschutz</a>
+  </div>
+</nav>
+<main class="main" id="mainContent">
+  <div class="welcome-screen" id="welcomeScreen"><div class="welcome-box"><div style="font-size:64px;margin-bottom:16px">🌍</div><h1>WeltEntdecker</h1><p class="ws-sub">Entdecke die Welt! 10 Module mit Quiz, Boss-Challenges und spannenden Entdeckungen.</p><input type="text" id="nameInput" placeholder="Dein Name" maxlength="24" aria-label="Dein Name" oninput="document.getElementById('startBtn').disabled=!this.value.trim()"><br><button class="ws-start" id="startBtn" disabled onclick="startApp()">🌍 Welt entdecken!</button></div></div>
+  <div id="moduleContent" style="display:none"></div>
+  <div id="badgesView" style="display:none"></div>
+  <div id="statsView" style="display:none"></div>
+</main>
+<div class="notif" id="notif"><div class="notif-title" id="notifTitle"></div><div class="notif-text" id="notifText"></div></div>
+<div class="level-up-overlay" id="levelUpOverlay"><div class="level-up-box" id="levelUpBox"></div></div>
+<div class="confetti-container" id="confetti"></div>
+<div class="cert-overlay" id="certOverlay" role="dialog" aria-label="Urkunde" aria-modal="true"><div class="cert-picker" id="certPicker"></div><div class="cert-frame" id="certFrame"></div><div class="cert-actions"><button onclick="printCert()">&#128424; Drucken / PDF</button><button onclick="closeCert()">Schließen</button></div></div>
+<div class="modal-overlay" id="impressumOverlay"><div class="modal"><button class="modal-close" onclick="document.getElementById('impressumOverlay').classList.remove('active')">&times;</button><h2>Impressum</h2><p><strong>© 2026 GZ AI Stacks - Gerd Zimmermann</strong></p><p>Diese Lern-App wurde mit Claude Code (Anthropic) entwickelt.</p></div></div>
+<div class="modal-overlay" id="datenschutzOverlay"><div class="modal"><button class="modal-close" onclick="document.getElementById('datenschutzOverlay').classList.remove('active')">&times;</button><h2>Datenschutzerklärung</h2><p>Diese App speichert Daten <strong>ausschließlich lokal</strong> in Ihrem Browser (LocalStorage). Es werden keine Daten an Server übertragen.</p><ul><li>Keine Cookies</li><li>Kein Tracking oder Analytics</li><li>Keine externen Ressourcen</li><li>Keine Registrierung</li><li>Alle Daten verbleiben auf Ihrem Gerät</li></ul><p>Sie können Ihre gespeicherten Daten jederzeit über die "Zurücksetzen"-Funktion löschen.</p></div></div>
+<script>
+function showImpressum(){document.getElementById('impressumOverlay').classList.add('active')}
+function showDatenschutz(){document.getElementById('datenschutzOverlay').classList.add('active')}
+
+
+// === Audio (TTS) ===
+const _synth=window.speechSynthesis,_LANG='de-DE';let _ttsOn=false,_ttsRate=1,_ttsTimer=null;
+function speakLesson(i){if(_ttsOn){stopTTS();return}const c=document.querySelectorAll('.lesson-card');if(!c[i]||!_synth)return;stopTTS();const u=new SpeechSynthesisUtterance(c[i].innerText);u.lang=_LANG;u.rate=_ttsRate;u.onstart=()=>{_ttsOn=true;updTTSUI();startTTSTimer()};u.onend=()=>{_ttsOn=false;updTTSUI();clearTTSTimer()};u.onerror=()=>{_ttsOn=false;updTTSUI();clearTTSTimer()};_synth.speak(u);showTTSBar()}
+function speakText(t,lang){if(!_synth)return;stopTTS();const u=new SpeechSynthesisUtterance(t);u.lang=lang||_LANG;u.rate=_ttsRate;u.onstart=()=>{_ttsOn=true;updTTSUI();startTTSTimer()};u.onend=()=>{_ttsOn=false;updTTSUI();clearTTSTimer()};u.onerror=()=>{_ttsOn=false;updTTSUI();clearTTSTimer()};_synth.speak(u)}
+function stopTTS(){if(_synth){_synth.cancel()}_ttsOn=false;updTTSUI();clearTTSTimer()}
+function updTTSUI(){document.querySelectorAll('.tts-btn').forEach(b=>b.classList.toggle('speaking',_ttsOn))}
+function setTTSRate(r){_ttsRate=parseFloat(r)}
+function startTTSTimer(){clearTTSTimer();_ttsTimer=setInterval(()=>{if(_synth&&_synth.speaking&&!_synth.paused){_synth.pause();_synth.resume()}},10000)}
+function clearTTSTimer(){if(_ttsTimer){clearInterval(_ttsTimer);_ttsTimer=null}}
+function showTTSBar(){if(document.getElementById('ttsBar'))return;const mc=document.getElementById('moduleContent');if(!mc)return;const b=document.createElement('div');b.className='tts-bar';b.id='ttsBar';b.innerHTML='\u{1F50A} <select onchange="setTTSRate(this.value)"><option value="0.7">Langsam</option><option value="1" selected>Normal</option><option value="1.3">Schnell</option></select> <button onclick="stopTTS()">\u25A0 Stopp</button>';mc.prepend(b)}
+
+const _qk=[0x4A,0x7F,0x2B,0x61,0x5C,0x3E,0x18,0x73];
+function _d(h,i){return h^_qk[i%_qk.length]}
+
+const LEVELS=[{"name":"Welt-Neuling","xp":0},{"name":"Karten-Leser","xp":40},{"name":"Kompass-Kenner","xp":100},{"name":"Kontinent-Entdecker","xp":180},{"name":"Ozean-Forscher","xp":280},{"name":"Wetter-Beobachter","xp":400},{"name":"Landschafts-Kenner","xp":540},{"name":"Tier-Entdecker","xp":700},{"name":"Europa-Experte","xp":880},{"name":"Natur-Schützer","xp":1080},{"name":"Geo-Detektiv","xp":1300},{"name":"Globus-Kenner","xp":1540},{"name":"Welt-Forscher","xp":1800},{"name":"Erdkunde-Profi","xp":2080},{"name":"Atlas-Meister","xp":2380},{"name":"Geo-Genie","xp":2700},{"name":"Welt-Meister","xp":3040},{"name":"Entdecker-Champion","xp":3400},{"name":"Geo-Legende","xp":3780},{"name":"WeltEntdecker-Meister","xp":4200}];
+const BADGES=[{"id":"m0","name":"Kontinente-Kenner","icon":"🌍","desc":"Modul 1 abgeschlossen"},{"id":"m1","name":"Ozean-Forscher","icon":"🌊","desc":"Modul 2 abgeschlossen"},{"id":"m2","name":"Kompass-Profi","icon":"🧭","desc":"Modul 3 abgeschlossen"},{"id":"m3","name":"Wetter-Experte","icon":"🌤️","desc":"Modul 4 abgeschlossen"},{"id":"m4","name":"Jahreszeiten-Kenner","icon":"🍂","desc":"Modul 5 abgeschlossen"},{"id":"m5","name":"Stadt-Land-Experte","icon":"🏘️","desc":"Modul 6 abgeschlossen"},{"id":"m6","name":"Tier-Entdecker","icon":"🐘","desc":"Modul 7 abgeschlossen"},{"id":"m7","name":"Landschafts-Kenner","icon":"🏔️","desc":"Modul 8 abgeschlossen"},{"id":"m8","name":"Europa-Experte","icon":"🇪🇺","desc":"Modul 9 abgeschlossen"},{"id":"m9","name":"Umwelt-Schützer","icon":"🌱","desc":"Modul 10 abgeschlossen"},{"id":"first_quiz","name":"Quiz-Neuling","icon":"❓","desc":"Erstes Quiz bestanden"},{"id":"perfect_quiz","name":"Perfektionist","icon":"💎","desc":"Quiz mit 5/5 bestanden"},{"id":"first_boss","name":"Boss-Bezwinger","icon":"👑","desc":"Erste Boss-Challenge bestanden"},{"id":"all_bosses","name":"Endgegner","icon":"🏆","desc":"Alle Boss-Challenges bestanden"},{"id":"streak3","name":"Durchstarter","icon":"🔥","desc":"3 Tage in Folge gelernt"},{"id":"streak7","name":"Wochenkrieger","icon":"⚔️","desc":"7 Tage in Folge gelernt"},{"id":"half_done","name":"Halbzeit","icon":"⏳","desc":"5 Module abgeschlossen"},{"id":"speed_quiz","name":"Blitz-Denker","icon":"⚡","desc":"Quiz in unter 60 Sekunden"},{"id":"explorer","name":"Entdecker","icon":"🗺️","desc":"Alle Module angesehen"},{"id":"graduate","name":"Absolvent","icon":"🎓","desc":"Alle 10 Module abgeschlossen"}];
+const THEME_CONFIG={
+  cyber:{name:'Cyber Neon',emoji:'🖥',color:'#3b82f6',desc:'Futuristisch & Digital'},
+  retro:{name:'Retro Arcade',emoji:'🕹',color:'#ffd700',desc:'80er Arcade-Feeling'},
+  nature:{name:'Nature Forest',emoji:'🌳',color:'#4ade80',desc:'Natürlich & Organisch'},
+  space:{name:'Deep Space',emoji:'🚀',color:'#c084fc',desc:'Kosmisch & Geheimnisvoll'},
+  comic:{name:'Comic Pop',emoji:'💥',color:'#ff6b6b',desc:'Bunt & Verspielt'},
+  sketchy:{name:'Sketchy',emoji:'✍️',color:'#d97706',desc:'Handgemacht & Warm'},
+  'nature-code':{name:'Nature x Code',emoji:'🌿',color:'#10b981',desc:'Natur trifft Technik'},
+  glass:{name:'Glasmorphism',emoji:'💠',color:'#00d9ff',desc:'Modern & Transparent'}
+};
+const modules=[{id:0,title:'Die Kontinente',icon:'🌍',duration:'20 Min.',description:'Lerne die 7 Kontinente der Erde kennen!',lessons:[{title:'Unsere 7 Kontinente',content:`<p>Die Erde hat <strong>7 Kontinente</strong>. Das sind die großen Landstücke auf unserer Erde:</p>
+<ul><li><strong>Europa</strong> — hier leben wir! 🏠</li><li><strong>Asien</strong> — der größte Kontinent 🏯</li><li><strong>Afrika</strong> — der heißeste Kontinent ☀️</li><li><strong>Nordamerika</strong> — dort liegt z.B. Kanada 🍁</li><li><strong>Südamerika</strong> — dort liegt der Regenwald 🌴</li><li><strong>Australien</strong> — der kleinste Kontinent 🦘</li><li><strong>Antarktis</strong> — ganz unten, voller Eis ❄️</li></ul>
+<div class="info-box">💡 <strong>Merke:</strong> Asien ist der <em>größte</em> Kontinent. Australien ist der <em>kleinste</em>!</div>`},{title:'Besonderheiten der Kontinente',content:`<p>Jeder Kontinent hat etwas <strong>Besonderes</strong>:</p>
+<ul><li><strong>Europa</strong> — viele verschiedene Länder und Sprachen</li><li><strong>Asien</strong> — die meisten Menschen leben hier</li><li><strong>Afrika</strong> — die Sahara ist die größte Wüste</li><li><strong>Nordamerika</strong> — die Rocky Mountains sind riesige Berge</li><li><strong>Südamerika</strong> — der Amazonas ist der längste Fluss</li><li><strong>Australien</strong> — einzigartige Tiere wie Kängurus</li><li><strong>Antarktis</strong> — hier leben Pinguine 🐧</li></ul>
+<div class="info-box">🌍 <strong>Wusstest du?</strong> In Asien leben über 4 Milliarden Menschen — mehr als auf jedem anderen Kontinent!</div>`}],quiz:[{q:'Wie viele Kontinente gibt es?',a:["5","6","7","8"],_h:72},{q:'Welcher Kontinent ist der größte?',a:["Europa","Asien","Afrika","Nordamerika"],_h:126},{q:'Auf welchem Kontinent leben wir?',a:["Europa","Asien","Nordamerika","Südamerika"],_h:43},{q:'Welcher Kontinent ist voller Eis?',a:["Australien","Europa","Afrika","Antarktis"],_h:98},{q:'Welches Tier lebt in Australien?',a:["Eisbär","Elefant","Känguru","Löwe"],_h:94}],boss:[{q:'Welcher Kontinent ist der kleinste?',a:["Europa","Antarktis","Australien","Afrika"],_h:72},{q:'Wo lebt die Hälfte aller Menschen der Welt?',a:["In Europa","In Asien","In Afrika","In Nordamerika"],_h:126},{q:'Auf welchem Kontinent ist die Sahara?',a:["Asien","Südamerika","Afrika","Europa"],_h:41}]},{id:1,title:'Die Ozeane',icon:'🌊',duration:'20 Min.',description:'Entdecke die 5 großen Ozeane der Erde!',lessons:[{title:'Die 5 Ozeane',content:`<p>Die <strong>Ozeane</strong> sind riesige Meere. Sie bedecken den größten Teil der Erde!</p>
+<ul><li><strong>Pazifischer Ozean</strong> — der größte Ozean (auch Stiller Ozean) 🌊</li><li><strong>Atlantischer Ozean</strong> — zwischen Europa und Amerika</li><li><strong>Indischer Ozean</strong> — warm und tropisch</li><li><strong>Südlicher Ozean</strong> — um die Antarktis herum, sehr kalt</li><li><strong>Arktischer Ozean</strong> — der kleinste, am Nordpol, oft zugefroren</li></ul>
+<div class="info-box">💡 <strong>Merke:</strong> Der <em>Pazifische Ozean</em> ist so groß, dass alle Kontinente hineinpassen würden!</div>`},{title:'Tiere im Meer',content:`<p>In den Ozeanen leben viele <strong>tolle Tiere</strong>:</p>
+<ul><li><strong>Wale</strong> — die größten Tiere der Welt 🐋</li><li><strong>Delfine</strong> — sehr schlau und verspielt 🐬</li><li><strong>Haie</strong> — schnelle Jäger 🦈</li><li><strong>Schildkröten</strong> — schwimmen tausende Kilometer 🐢</li><li><strong>Quallen</strong> — durchsichtig und glibberig</li></ul>
+<div class="info-box">🐋 <strong>Wusstest du?</strong> Der Blauwal ist das größte Tier, das jemals gelebt hat — größer als jeder Dinosaurier!</div>`}],quiz:[{q:'Wie viele Ozeane gibt es?',a:["3","4","5","6"],_h:72},{q:'Welcher Ozean ist der größte?',a:["Atlantischer Ozean","Pazifischer Ozean","Indischer Ozean","Arktischer Ozean"],_h:126},{q:'Welcher Ozean liegt am Nordpol?',a:["Pazifischer Ozean","Südlicher Ozean","Arktischer Ozean","Indischer Ozean"],_h:41},{q:'Was ist das größte Tier im Meer?',a:["Der Hai","Der Delfin","Die Schildkröte","Der Blauwal"],_h:98},{q:'Wie viel der Erde ist mit Wasser bedeckt?',a:["Die Hälfte","Ein Viertel","Der größte Teil","Ein kleiner Teil"],_h:94}],boss:[{q:'Welcher Ozean ist der kleinste?',a:["Der Arktische Ozean","Der Pazifische Ozean","Der Indische Ozean","Der Atlantische Ozean"],_h:74},{q:'Zwischen welchen Kontinenten liegt der Atlantische Ozean?',a:["Asien und Australien","Europa/Afrika und Amerika","Antarktis und Asien","Nur um Australien"],_h:126},{q:'Warum ist der Südliche Ozean so kalt?',a:["Weil er klein ist","Weil er am Nordpol liegt","Weil er um die Antarktis liegt","Weil keine Sonne scheint"],_h:41}]},{id:2,title:'Himmelsrichtungen',icon:'🧭',duration:'20 Min.',description:'Lerne Norden, Süden, Osten und Westen kennen!',lessons:[{title:'Die 4 Himmelsrichtungen',content:`<p>Es gibt <strong>4 Himmelsrichtungen</strong>:</p>
+<ul><li><strong>Norden (N)</strong> — oben auf der Karte ⬆️</li><li><strong>Süden (S)</strong> — unten auf der Karte ⬇️</li><li><strong>Osten (O)</strong> — rechts auf der Karte ➡️</li><li><strong>Westen (W)</strong> — links auf der Karte ⬅️</li></ul>
+<p>Ein <strong>Merksatz</strong>: <em>Nie Ohne Seife Waschen</em> (im Uhrzeigersinn: Norden, Osten, Süden, Westen)</p>
+<div class="info-box">💡 <strong>Merke:</strong> Auf jeder Karte ist <em>oben immer Norden</em>!</div>`},{title:'Der Kompass',content:`<p>Ein <strong>Kompass</strong> ist ein Gerät, das die Himmelsrichtung anzeigt.</p>
+<ul><li>Die <strong>Nadel</strong> zeigt immer nach <strong>Norden</strong></li><li>Die Erde hat einen großen Magneten im Inneren</li><li>Der Kompass hilft Wanderern, Seefahrern und Piloten</li></ul>
+<p>Auch die <strong>Sonne</strong> hilft dir:</p>
+<ul><li>Die Sonne geht im <strong>Osten</strong> auf (morgens)</li><li>Die Sonne geht im <strong>Westen</strong> unter (abends)</li></ul>
+<div class="info-box">🧭 <strong>Wusstest du?</strong> Schon vor über 1000 Jahren haben Menschen den Kompass benutzt!</div>`}],quiz:[{q:'Wo ist Norden auf der Karte?',a:["Oben","Unten","Links","Rechts"],_h:74},{q:'Wohin zeigt die Kompassnadel?',a:["Nach Süden","Nach Osten","Nach Norden","Nach Westen"],_h:125},{q:'Wo geht die Sonne auf?',a:["Im Westen","Im Norden","Im Osten","Im Süden"],_h:41},{q:'Was bedeutet der Merksatz Nie Ohne Seife Waschen?',a:["Eine Waschanleitung","Die Reihenfolge der Himmelsrichtungen","Ein Kochrezept","Ein Lied"],_h:96},{q:'Was ist ein Kompass?',a:["Eine Uhr","Ein Gerät das die Himmelsrichtung zeigt","Ein Fernglas","Ein Thermometer"],_h:93}],boss:[{q:'Welche Himmelsrichtung ist rechts auf der Karte?',a:["Norden","Süden","Westen","Osten"],_h:73},{q:'Wo geht die Sonne unter?',a:["Im Osten","Im Westen","Im Norden","Im Süden"],_h:126},{q:'Warum zeigt die Kompassnadel nach Norden?',a:["Weil Norden oben ist","Weil die Erde einen Magneten hat","Weil die Sonne dort ist","Weil es dort kalt ist"],_h:42}]},{id:3,title:'Unser Wetter',icon:'🌤️',duration:'20 Min.',description:'Lerne alles über Sonne, Regen, Wind und Wolken!',lessons:[{title:'Wetterarten',content:`<p>Das <strong>Wetter</strong> zeigt uns, wie es draußen ist. Es gibt verschiedene Wetterarten:</p>
+<ul><li><strong>Sonnig</strong> ☀️ — die Sonne scheint, blauer Himmel</li><li><strong>Bewölkt</strong> ☁️ — Wolken bedecken den Himmel</li><li><strong>Regnerisch</strong> 🌧️ — Wasser fällt aus den Wolken</li><li><strong>Windig</strong> 💨 — die Luft bewegt sich stark</li><li><strong>Gewitter</strong> ⛈️ — Blitz und Donner</li><li><strong>Schnee</strong> ❄️ — wenn es sehr kalt ist, fallen Schneeflocken</li></ul>
+<div class="info-box">💡 <strong>Merke:</strong> Das Wetter kann sich jeden Tag ändern!</div>`},{title:'Wolken und Regen',content:`<p>Woher kommt der <strong>Regen</strong>?</p>
+<ol><li>Die Sonne erwärmt Wasser (in Seen, Flüssen, Meeren)</li><li>Das Wasser steigt als unsichtbarer <strong>Dampf</strong> auf</li><li>Oben wird es kalt — der Dampf wird zu kleinen <strong>Tröpfchen</strong></li><li>Viele Tröpfchen bilden eine <strong>Wolke</strong></li><li>Wenn die Tröpfchen groß genug sind, fallen sie als <strong>Regen</strong></li></ol>
+<div class="info-box">🌧️ <strong>Wusstest du?</strong> In einem Gewitter kann ein Blitz heißer sein als die Sonne!</div>`}],quiz:[{q:'Was passiert bei einem Gewitter?',a:["Es schneit","Blitz und Donner","Die Sonne scheint","Es ist windstill"],_h:75},{q:'Woraus bestehen Wolken?',a:["Aus Rauch","Aus Staub","Aus winzigen Wassertröpfchen","Aus Luft"],_h:125},{q:'Was braucht man, damit Regen entsteht?',a:["Wind","Wolken mit großen Wassertropfen","Schnee","Nebel"],_h:42},{q:'Welches Wetterzeichen bedeutet Sonne?',a:["☁️","❄️","☀️","🌧️"],_h:99},{q:'Was fällt bei sehr kaltem Wetter vom Himmel?',a:["Regen","Hagel","Schnee","Sand"],_h:94}],boss:[{q:'Warum regnet es?',a:["Weil der Wind weht","Weil Wassertropfen in Wolken zu schwer werden","Weil die Erde sich dreht","Weil es dunkel wird"],_h:75},{q:'Was passiert mit Wasser, wenn die Sonne es erwärmt?',a:["Es wird zu Eis","Es steigt als Dampf nach oben","Es wird schmutzig","Es verschwindet"],_h:126},{q:'Warum blitzt es bei einem Gewitter?',a:["Weil die Sonne scheint","Weil Wolken zusammenstoßen","Weil elektrische Ladung sich entlädt","Weil es windig ist"],_h:41}]},{id:4,title:'Die Jahreszeiten',icon:'🍂',duration:'20 Min.',description:'Entdecke Frühling, Sommer, Herbst und Winter!',lessons:[{title:'Vier Jahreszeiten',content:`<p>Ein Jahr hat <strong>4 Jahreszeiten</strong>:</p>
+<ul><li><strong>Frühling</strong> 🌷 (März–Mai) — Blumen blühen, Tiere bekommen Babys</li><li><strong>Sommer</strong> ☀️ (Juni–August) — warm und sonnig, Ferien!</li><li><strong>Herbst</strong> 🍂 (September–November) — Blätter werden bunt, Ernte</li><li><strong>Winter</strong> ❄️ (Dezember–Februar) — kalt, Schnee, Weihnachten</li></ul>
+<div class="info-box">💡 <strong>Merke:</strong> Die Jahreszeiten entstehen, weil die Erde schief um die Sonne kreist!</div>`},{title:'Was passiert in jeder Jahreszeit?',content:`<p>In jeder Jahreszeit passiert etwas <strong>Besonderes</strong>:</p>
+<ul><li><strong>Frühling</strong> — Die Tage werden länger. Vögel kommen zurück.</li><li><strong>Sommer</strong> — Die Tage sind am längsten. Wir gehen schwimmen.</li><li><strong>Herbst</strong> — Die Tage werden kürzer. Wir sammeln Kastanien.</li><li><strong>Winter</strong> — Die Tage sind am kürzesten. Wir bauen Schneemänner.</li></ul>
+<div class="info-box">🌍 <strong>Wusstest du?</strong> Wenn bei uns Sommer ist, ist in Australien Winter!</div>`}],quiz:[{q:'Wie viele Jahreszeiten gibt es?',a:["2","3","4","5"],_h:72},{q:'In welcher Jahreszeit blühen die Blumen?',a:["Winter","Herbst","Sommer","Frühling"],_h:124},{q:'Wann sind die Tage am längsten?',a:["Im Frühling","Im Sommer","Im Herbst","Im Winter"],_h:42},{q:'Was passiert im Herbst mit den Blättern?',a:["Sie wachsen","Sie werden bunt und fallen ab","Sie werden größer","Nichts"],_h:96},{q:'Wann schneit es meistens?',a:["Im Frühling","Im Sommer","Im Herbst","Im Winter"],_h:95}],boss:[{q:'Warum gibt es Jahreszeiten?',a:["Weil der Mond sich dreht","Weil die Erde schief um die Sonne kreist","Weil die Sonne sich ändert","Weil es Wolken gibt"],_h:75},{q:'Wenn bei uns Winter ist, was ist dann in Australien?',a:["Auch Winter","Frühling","Herbst","Sommer"],_h:124},{q:'In welcher Jahreszeit sind die Tage am kürzesten?',a:["Im Frühling","Im Sommer","Im Herbst","Im Winter"],_h:40}]},{id:5,title:'Stadt und Land',icon:'🏘️',duration:'20 Min.',description:'Was ist anders in der Stadt und auf dem Land?',lessons:[{title:'Leben in der Stadt',content:`<p>In einer <strong>Stadt</strong> leben viele Menschen zusammen:</p>
+<ul><li><strong>Hohe Häuser</strong> — Wohnungen übereinander 🏢</li><li><strong>Viele Straßen</strong> — Autos, Busse und Bahnen 🚌</li><li><strong>Geschäfte</strong> — Supermärkte, Kaufhäuser 🛒</li><li><strong>Schulen und Krankenhäuser</strong> — alles ist nah</li><li><strong>Parks</strong> — Grünflächen zum Spielen 🌳</li></ul>
+<div class="info-box">💡 <strong>Merke:</strong> In Städten leben viele Menschen auf <em>wenig Platz</em>!</div>`},{title:'Leben auf dem Land',content:`<p>Auf dem <strong>Land</strong> ist vieles anders:</p>
+<ul><li><strong>Bauernhöfe</strong> — hier werden Lebensmittel angebaut 🌾</li><li><strong>Viel Natur</strong> — Wiesen, Wälder und Felder 🌻</li><li><strong>Weniger Menschen</strong> — ruhiger und gemütlicher</li><li><strong>Tiere</strong> — Kühe, Pferde, Hühner 🐄</li><li><strong>Längere Wege</strong> — oft braucht man ein Auto</li></ul>
+<div class="info-box">🏡 <strong>Wusstest du?</strong> Auf dem Land wird das Essen angebaut, das wir in der Stadt kaufen!</div>`}],quiz:[{q:'Was gibt es in einer Stadt besonders viel?',a:["Bauernhöfe","Hohe Häuser und viele Straßen","Kühe und Pferde","Wälder"],_h:75},{q:'Wo werden Lebensmittel angebaut?',a:["In der Stadt","Im Meer","Auf dem Land","Im Gebirge"],_h:125},{q:'Was fährt in der Stadt?',a:["Nur Fahrräder","Traktoren","Busse, Bahnen und Autos","Nur Pferde"],_h:41},{q:'Was gibt es auf dem Land mehr als in der Stadt?',a:["Krankenhäuser","Kaufhäuser","Natur und Tiere","U-Bahnen"],_h:99},{q:'Wo leben mehr Menschen zusammen?',a:["Auf dem Land","In der Stadt","Im Wald","Am Strand"],_h:93}],boss:[{q:'Was braucht man auf dem Land oft zum Einkaufen?',a:["Einen Bus","Ein Auto wegen der langen Wege","Ein Boot","Ein Flugzeug"],_h:75},{q:'Woher kommt die Milch im Supermarkt?',a:["Aus der Fabrik","Von Kühen auf dem Bauernhof","Aus dem Meer","Aus der Stadt"],_h:126},{q:'Warum gibt es Parks in der Stadt?',a:["Weil es regnet","Damit Menschen Natur und Grün haben","Weil Bäume billig sind","Weil Autos dort parken"],_h:42}]},{id:6,title:'Tiere der Welt',icon:'🐘',duration:'20 Min.',description:'Welche Tiere leben auf welchem Kontinent?',lessons:[{title:'Tiere auf den Kontinenten',content:`<p>Auf jedem Kontinent leben <strong>besondere Tiere</strong>:</p>
+<ul><li><strong>Europa</strong> — Rehe, Füchse, Störche 🦊</li><li><strong>Afrika</strong> — Löwen, Elefanten, Giraffen 🦁</li><li><strong>Asien</strong> — Tiger, Pandabären, Elefanten 🐼</li><li><strong>Nordamerika</strong> — Bären, Adler, Bisons 🦅</li><li><strong>Südamerika</strong> — Papageien, Affen, Lamas 🦜</li><li><strong>Australien</strong> — Kängurus, Koalas, Schnabeltiere 🦘</li><li><strong>Antarktis</strong> — Pinguine, Robben 🐧</li></ul>
+<div class="info-box">💡 <strong>Merke:</strong> Manche Tiere leben nur auf <em>einem</em> Kontinent. Der Koala lebt nur in Australien!</div>`},{title:'Besondere Tiere',content:`<p>Einige Tiere sind ganz <strong>besonders</strong>:</p>
+<ul><li><strong>Elefant</strong> 🐘 — das größte Landtier (lebt in Afrika und Asien)</li><li><strong>Blauwal</strong> 🐋 — das größte Tier überhaupt (lebt im Meer)</li><li><strong>Giraffe</strong> 🦒 — das höchste Tier (lebt in Afrika)</li><li><strong>Kolibri</strong> — der kleinste Vogel (lebt in Amerika)</li><li><strong>Gepard</strong> 🐆 — das schnellste Landtier (lebt in Afrika)</li></ul>
+<div class="info-box">🐘 <strong>Wusstest du?</strong> Elefanten können bis zu 6 Tonnen schwer werden — so viel wie 3 Autos!</div>`}],quiz:[{q:'Welches Tier lebt nur in Australien?',a:["Löwe","Koala","Tiger","Adler"],_h:75},{q:'Auf welchem Kontinent leben Löwen?',a:["Europa","Asien","Afrika","Australien"],_h:125},{q:'Was ist das größte Landtier?',a:["Der Blauwal","Die Giraffe","Das Nilpferd","Der Elefant"],_h:40},{q:'Welches Tier lebt in der Antarktis?',a:["Löwe","Känguru","Pinguin","Papagei"],_h:99},{q:'Was ist das schnellste Landtier?',a:["Der Löwe","Der Elefant","Der Gepard","Das Pferd"],_h:94}],boss:[{q:'Wo leben Pandabären?',a:["In Europa","In Afrika","In Asien","In Australien"],_h:72},{q:'Warum lebt der Eisbär am Nordpol und nicht am Südpol?',a:["Weil es dort wärmer ist","Weil er dort geboren wurde und das sein Lebensraum ist","Weil er nicht schwimmen kann","Weil der Südpol nicht existiert"],_h:126},{q:'Was ist das größte Tier der Welt?',a:["Der Elefant","Die Giraffe","Der Blauwal","Der Hai"],_h:41}]},{id:7,title:'Landschaften',icon:'🏔️',duration:'20 Min.',description:'Entdecke Berge, Flüsse, Wüsten und Wälder!',lessons:[{title:'Verschiedene Landschaften',content:`<p>Auf der Erde gibt es viele verschiedene <strong>Landschaften</strong>:</p>
+<ul><li><strong>Berge</strong> 🏔️ — sehr hoch, oben liegt oft Schnee</li><li><strong>Flüsse</strong> 🏞️ — Wasser fließt durch das Land zum Meer</li><li><strong>Wüsten</strong> 🏜️ — sehr trocken, kaum Pflanzen, viel Sand</li><li><strong>Wälder</strong> 🌲 — viele Bäume, Tiere und Pflanzen</li><li><strong>Seen</strong> — stehendes Wasser, umgeben von Land</li><li><strong>Inseln</strong> 🏝️ — Land, das ganz von Wasser umgeben ist</li></ul>
+<div class="info-box">💡 <strong>Merke:</strong> Der höchste Berg der Welt ist der <em>Mount Everest</em> in Asien!</div>`},{title:'Berühmte Landschaften',content:`<p>Es gibt viele <strong>berühmte Landschaften</strong>:</p>
+<ul><li><strong>Die Alpen</strong> — große Berge in Europa 🏔️</li><li><strong>Der Rhein</strong> — ein langer Fluss in Deutschland 🏞️</li><li><strong>Die Sahara</strong> — die größte Wüste der Welt 🏜️</li><li><strong>Der Amazonas-Regenwald</strong> — der größte Wald der Welt 🌳</li><li><strong>Der Bodensee</strong> — ein großer See in Deutschland</li></ul>
+<div class="info-box">🏜️ <strong>Wusstest du?</strong> Die Sahara ist fast so groß wie ganz Europa!</div>`}],quiz:[{q:'Was ist ein Berg?',a:["Flaches Land","Sehr hohes Land","Ein See","Ein Fluss"],_h:75},{q:'Was ist eine Wüste?',a:["Ein Wald","Ein See","Sehr trockenes Land mit wenig Pflanzen","Ein Berg"],_h:125},{q:'Wie heißt der höchste Berg der Welt?',a:["Die Alpen","Der Bodensee","Der Mount Everest","Der Rhein"],_h:41},{q:'Was ist eine Insel?',a:["Ein Berg im Meer","Land das ganz von Wasser umgeben ist","Ein großer See","Ein langer Fluss"],_h:96},{q:'Welche berühmten Berge gibt es in Europa?',a:["Die Sahara","Den Amazonas","Die Alpen","Den Nil"],_h:94}],boss:[{q:'Was fließt durch Deutschland zum Meer?',a:["Die Sahara","Die Alpen","Der Rhein","Der Bodensee"],_h:72},{q:'Wie heißt die größte Wüste der Welt?',a:["Die Alpen","Die Sahara","Der Regenwald","Die Antarktis"],_h:126},{q:'Warum liegt auf hohen Bergen oft Schnee?',a:["Weil es dort windig ist","Weil es oben viel kälter ist","Weil Wolken dort hängenbleiben","Weil es dort regnet"],_h:42}]},{id:8,title:'Länder Europas',icon:'🇪🇺',duration:'20 Min.',description:'Lerne Deutschland und seine Nachbarländer kennen!',lessons:[{title:'Deutschland und seine Nachbarn',content:`<p><strong>Deutschland</strong> liegt in der Mitte von Europa. Es hat <strong>9 Nachbarländer</strong>:</p>
+<ul><li><strong>Dänemark</strong> 🇩🇰 — im Norden</li><li><strong>Polen</strong> 🇵🇱 — im Osten</li><li><strong>Tschechien</strong> 🇨🇿 — im Südosten</li><li><strong>Österreich</strong> 🇦🇹 — im Süden</li><li><strong>Schweiz</strong> 🇨🇭 — im Süden</li><li><strong>Frankreich</strong> 🇫🇷 — im Südwesten</li><li><strong>Luxemburg</strong> 🇱🇺 — im Westen</li><li><strong>Belgien</strong> 🇧🇪 — im Westen</li><li><strong>Niederlande</strong> 🇳🇱 — im Nordwesten</li></ul>
+<div class="info-box">💡 <strong>Merke:</strong> Deutschland hat <em>9</em> Nachbarländer — mehr als die meisten Länder Europas!</div>`},{title:'Bekannte Länder Europas',content:`<p>In <strong>Europa</strong> gibt es viele spannende Länder:</p>
+<ul><li><strong>Frankreich</strong> 🇫🇷 — bekannt für den Eiffelturm in Paris</li><li><strong>Italien</strong> 🇮🇹 — bekannt für Pizza und den Stiefel-Umriss</li><li><strong>Spanien</strong> 🇪🇸 — sonnig und warm</li><li><strong>Großbritannien</strong> 🇬🇧 — eine Insel mit London als Hauptstadt</li><li><strong>Schweden</strong> 🇸🇪 — im Norden, kalt und schön</li></ul>
+<p>Die <strong>Hauptstadt</strong> von Deutschland ist <strong>Berlin</strong>.</p>
+<div class="info-box">🗼 <strong>Wusstest du?</strong> Der Eiffelturm in Paris ist 330 Meter hoch!</div>`}],quiz:[{q:'Wie viele Nachbarländer hat Deutschland?',a:["5","7","9","11"],_h:72},{q:'Welches Land liegt südlich von Deutschland?',a:["Dänemark","Polen","Österreich","Niederlande"],_h:125},{q:'Was ist die Hauptstadt von Deutschland?',a:["München","Hamburg","Berlin","Köln"],_h:41},{q:'In welchem Land steht der Eiffelturm?',a:["Deutschland","Frankreich","Italien","Spanien"],_h:96},{q:'Welches Land liegt nördlich von Deutschland?',a:["Österreich","Schweiz","Frankreich","Dänemark"],_h:95}],boss:[{q:'Welches Nachbarland liegt im Osten von Deutschland?',a:["Frankreich","Dänemark","Polen","Schweiz"],_h:72},{q:'Welches europäische Land hat die Form eines Stiefels?',a:["Spanien","Frankreich","Italien","Schweden"],_h:125},{q:'Warum hat Deutschland so viele Nachbarländer?',a:["Weil es am Meer liegt","Weil es in der Mitte Europas liegt","Weil es sehr groß ist","Weil es eine Insel ist"],_h:42}]},{id:9,title:'Unsere Erde schützen',icon:'🌱',duration:'20 Min.',description:'Lerne, wie wir die Umwelt schützen können!',lessons:[{title:'Umweltschutz',content:`<p>Unsere Erde braucht unsere <strong>Hilfe</strong>! Wir können die Umwelt schützen:</p>
+<ul><li><strong>Müll trennen</strong> ♻️ — Papier, Plastik, Glas, Bio getrennt sammeln</li><li><strong>Wasser sparen</strong> 💧 — Hahn zudrehen beim Zähneputzen</li><li><strong>Strom sparen</strong> 💡 — Licht ausschalten wenn du gehst</li><li><strong>Rad fahren</strong> 🚲 — statt Auto, das ist gesund und sauber</li><li><strong>Natur schützen</strong> 🌳 — keinen Müll in die Natur werfen</li></ul>
+<div class="info-box">💡 <strong>Merke:</strong> Jeder kann etwas für die Umwelt tun — auch <em>du</em>!</div>`},{title:'Recycling und Natur',content:`<p><strong>Recycling</strong> bedeutet: Aus altem Müll neue Dinge machen!</p>
+<ul><li><strong>Gelbe Tonne</strong> — für Plastik und Verpackungen</li><li><strong>Blaue Tonne</strong> — für Papier und Karton 📦</li><li><strong>Grüne/Braune Tonne</strong> — für Bioabfall (Essensreste) 🍌</li><li><strong>Glascontainer</strong> — für Flaschen und Gläser</li></ul>
+<p><strong>Warum ist Naturschutz wichtig?</strong></p>
+<ul><li>Bäume geben uns <strong>Sauerstoff</strong> zum Atmen</li><li>Tiere brauchen ihren <strong>Lebensraum</strong></li><li>Sauberes Wasser ist für alle <strong>lebenswichtig</strong></li></ul>
+<div class="info-box">♻️ <strong>Wusstest du?</strong> Eine Plastikflasche braucht 450 Jahre, bis sie in der Natur zerfällt!</div>`}],quiz:[{q:'Was gehört in die blaue Tonne?',a:["Plastik","Glasflaschen","Papier und Karton","Essensreste"],_h:72},{q:'Wie kann man Wasser sparen?',a:["Hahn beim Zähneputzen zudrehen","Mehr trinken","Öfter baden","Den Garten fluten"],_h:127},{q:'Was bedeutet Recycling?',a:["Müll verbrennen","Aus altem Müll neue Dinge machen","Müll ins Meer werfen","Müll verstecken"],_h:42},{q:'Warum sind Bäume wichtig?',a:["Weil sie schön sind","Weil sie uns Sauerstoff geben","Weil sie groß sind","Weil sie alt werden"],_h:96},{q:'Was ist schlecht für die Umwelt?',a:["Rad fahren","Müll trennen","Plastik in die Natur werfen","Licht ausschalten"],_h:94}],boss:[{q:'Wie lange braucht eine Plastikflasche um in der Natur zu zerfallen?',a:["10 Jahre","50 Jahre","450 Jahre","1 Jahr"],_h:72},{q:'Was kann jeder Mensch für die Umwelt tun?',a:["Nichts, das machen andere","Müll trennen, Strom und Wasser sparen","Nur große Firmen können helfen","Nur Erwachsene können helfen"],_h:126},{q:'Warum sollen wir Müll trennen?',a:["Weil es Spaß macht","Damit die Stoffe wiederverwertet werden können","Weil die Tonnen bunt sind","Weil es ein Gesetz ist"],_h:42}]}];
+
+const STORAGE_KEY='weltentdecker_progress';
+let state={name:'',started:false,currentModule:0,xp:0,level:0,streak:0,lastVisit:null,modulesCompleted:[],quizResults:{},bossResults:{},badges:[],quizShuffleMap:{},modulesViewed:[],interactiveResults:{},designTheme:'cyber-dark'};
+
+function saveState(){try{localStorage.setItem(STORAGE_KEY,JSON.stringify(state))}catch(e){}}
+function loadState(){try{const s=localStorage.getItem(STORAGE_KEY);if(s){Object.assign(state,JSON.parse(s));return true}}catch(e){}return false}
+function exportData(){const a=document.createElement('a');a.download='weltentdecker-'+state.name+'.json';a.href=URL.createObjectURL(new Blob([JSON.stringify(state,null,2)],{type:'application/json'}));a.click()}
+function importData(e){const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=ev=>{try{const d=JSON.parse(ev.target.result);Object.assign(state,d);saveState();location.reload()}catch(err){alert('Datei konnte nicht gelesen werden.')}};r.readAsText(f)}
+
+function getLevel(xp){let lv=0;for(let i=LEVELS.length-1;i>=0;i--){if(xp>=LEVELS[i].xp){lv=i;break}}return lv}
+function getLevelProgress(xp){const lv=getLevel(xp);const cur=LEVELS[lv].xp;const next=lv<LEVELS.length-1?LEVELS[lv+1].xp:cur;if(next===cur)return 100;return Math.min(100,Math.round((xp-cur)/(next-cur)*100))}
+function addXP(amount,reason){const old=getLevel(state.xp);state.xp+=amount;const nw=getLevel(state.xp);saveState();updateUI();showNotif('xp','+'+amount+' XP',reason);if(nw>old){state.level=nw;saveState();setTimeout(()=>showLevelUp(nw),800)}}
+
+function updateStreak(){const today=new Date().toDateString();if(state.lastVisit===today)return;const yesterday=new Date(Date.now()-86400000).toDateString();if(state.lastVisit===yesterday){state.streak++;showNotif('streak','\uD83D\uDD25 '+state.streak+' Tage Streak!','Weiter so!');if(state.streak>=3)awardBadge('streak3');if(state.streak>=7)awardBadge('streak7')}else if(state.lastVisit!==today){state.streak=1}state.lastVisit=today;saveState()}
+
+function awardBadge(id){if(state.badges.includes(id))return;state.badges.push(id);saveState();const b=BADGES.find(x=>x.id===id);if(b)showNotif('badge',b.icon+' Badge: '+b.name,b.desc)}
+
+let notifQueue=[],notifActive=false;
+function showNotif(type,title,text){notifQueue.push({type,title,text});if(!notifActive)processNotif()}
+function processNotif(){if(!notifQueue.length){notifActive=false;return}notifActive=true;const{type,title,text}=notifQueue.shift();const el=document.getElementById('notif');el.className='notif '+type;document.getElementById('notifTitle').textContent=title;document.getElementById('notifText').textContent=text;el.classList.add('show');setTimeout(()=>{el.classList.remove('show');setTimeout(processNotif,300)},2500)}
+
+function showLevelUp(lv){const ov=document.getElementById('levelUpOverlay');const box=document.getElementById('levelUpBox');box.innerHTML='<div class="lvl-icon">⬆️</div><div class="lvl-title">Level Up!</div><div class="lvl-name">Level '+(lv+1)+': '+LEVELS[lv].name+'<\/div>';ov.classList.add('active');spawnConfetti();setTimeout(()=>ov.classList.remove('active'),3000)}
+function spawnConfetti(){const c=document.getElementById('confetti');c.innerHTML='';const cols=['#3b82f6','#a855f7','#22c55e','#f59e0b','#ef4444','#06b6d4'];for(let i=0;i<60;i++){const p=document.createElement('div');p.style.cssText='position:absolute;left:'+Math.random()*100+'%;background:'+cols[i%cols.length]+';width:'+(6+Math.random()*8)+'px;height:'+(6+Math.random()*8)+'px;border-radius:'+(Math.random()>.5?'50%':'2px')+';animation:confettiFall '+(1.5+Math.random()*2)+'s ease-out '+Math.random()*.5+'s forwards';c.appendChild(p)}if(!document.getElementById('confettiStyle')){const s=document.createElement('style');s.id='confettiStyle';s.textContent='@keyframes confettiFall{0%{opacity:1;transform:translateY(0) rotate(0deg)}100%{opacity:0;transform:translateY(100vh) rotate(720deg)}}';document.head.appendChild(s)}setTimeout(()=>c.innerHTML='',4000)}
+
+function shuffleQuiz(modId,quiz){const key='m'+modId;if(state.quizShuffleMap[key])return state.quizShuffleMap[key];const idx=[...Array(quiz.length).keys()];for(let i=idx.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[idx[i],idx[j]]=[idx[j],idx[i]]}state.quizShuffleMap[key]=idx;saveState();return idx}
+
+function renderQuiz(modId,quiz,isBoss){
+  const pf=isBoss?'boss':'quiz';const idx=isBoss?[...Array(quiz.length).keys()]:shuffleQuiz(modId,quiz);
+  let h='<div class="'+(isBoss?'boss-section':'quiz-section')+'">';
+  h+=isBoss?'<h3>👑 Boss-Challenge<\/h3><p class="boss-sub">Alle '+quiz.length+' Fragen richtig beantworten!<\/p>':'<h3>📝 Quiz — Teste dein Wissen<\/h3>';
+  idx.forEach((qi,di)=>{const q=quiz[qi];h+='<div class="quiz-q" data-qi="'+qi+'"><p>'+(di+1)+'. '+q.q+'<\/p>';q.a.forEach((a,ai)=>{h+='<label><input type="radio" name="'+pf+'_'+modId+'_'+qi+'" value="'+ai+'"> '+a+'<\/label>'});h+='<\/div>'});
+  h+='<button class="quiz-submit" onclick="checkQuiz('+modId+','+isBoss+')">'+(isBoss?'Boss besiegen!':'Antworten prüfen')+'<\/button>';
+  h+='<div class="quiz-result" id="'+pf+'Result'+modId+'" style="display:none"><\/div><\/div>';return h;
+}
+
+function checkQuiz(modId,isBoss){
+  const pf=isBoss?'boss':'quiz';const quiz=isBoss?modules[modId].boss:modules[modId].quiz;
+  let correct=0;const total=quiz.length;const startTime=window._quizStart||Date.now();
+  quiz.forEach((q,qi)=>{
+    const sel=document.querySelector('input[name="'+pf+'_'+modId+'_'+qi+'"]:checked');
+    const labels=document.querySelectorAll('[data-qi="'+qi+'"] label');
+    const ci=_d(q._h,qi);
+    labels.forEach((l,li)=>{l.classList.remove('correct','wrong');if(li===ci)l.classList.add('correct');else if(sel&&parseInt(sel.value)===li)l.classList.add('wrong')});
+    const qDiv=labels[0]?.closest('.quiz-q');if(qDiv){const old=qDiv.querySelector('.quiz-explanation');if(old)old.remove()}
+    if(!sel||parseInt(sel.value)!==ci){if(qDiv){const exp=document.createElement('div');exp.className='quiz-explanation';exp.textContent='→ Richtige Antwort: '+q.a[ci];qDiv.appendChild(exp)}}
+    if(sel&&parseInt(sel.value)===ci)correct++;
+  });
+  const rEl=document.getElementById(pf+'Result'+modId);rEl.style.display='block';
+  if(isBoss){
+    if(correct===total){rEl.className='quiz-result pass';rEl.textContent='👑 Boss besiegt! '+correct+'/'+total+' — Perfekt!';if(!state.bossResults[modId]){state.bossResults[modId]=true;addXP(100,'Boss-Challenge bestanden!');if(!state.badges.includes('first_boss'))awardBadge('first_boss');if(modules.every((_,i)=>state.bossResults[i]))awardBadge('all_bosses');checkModuleComplete(modId)}}
+    else{rEl.className='quiz-result fail';rEl.textContent='💀 '+correct+'/'+total+' — Alle müssen richtig sein! Versuch es nochmal.';setTimeout(()=>{document.querySelectorAll('input[name^="'+pf+'_'+modId+'"]').forEach(r=>{r.disabled=false;r.checked=false});document.querySelectorAll('[data-qi] label').forEach(l=>l.classList.remove('correct','wrong'));document.querySelectorAll('.quiz-explanation').forEach(e=>e.remove());rEl.style.display='none'},2000);return}
+  }else{
+    const passed=correct>=Math.ceil(total*0.6);rEl.className='quiz-result '+(passed?'pass':'fail');
+    rEl.textContent=passed?'✅ '+correct+'/'+total+' richtig — Bestanden!':'❌ '+correct+'/'+total+' richtig — Mindestens '+Math.ceil(total*0.6)+' nötig.';
+    if(passed&&!state.quizResults[modId]){state.quizResults[modId]=correct;addXP(correct*15+50,'Quiz bestanden ('+correct+'/'+total+')');if(!state.badges.includes('first_quiz'))awardBadge('first_quiz');if(correct===total)awardBadge('perfect_quiz');if(Date.now()-startTime<60000)awardBadge('speed_quiz');checkModuleComplete(modId)}
+  }
+  saveState();document.querySelectorAll('input[name^="'+pf+'_'+modId+'"]').forEach(r=>r.disabled=true);window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function checkModuleComplete(modId){
+  if(state.quizResults[modId]!==undefined&&state.bossResults[modId]&&!state.modulesCompleted.includes(modId)){
+    state.modulesCompleted.push(modId);awardBadge('m'+modId);
+    if(state.modulesCompleted.length>=5)awardBadge('half_done');
+    if(state.modulesCompleted.length>=10){awardBadge('graduate');setTimeout(()=>showCert(),1500)}
+    saveState();renderSidebar();
+  }
+}
+
+function renderModule(modId){
+  state.currentModule=modId;
+  if(!state.modulesViewed.includes(modId)){state.modulesViewed.push(modId);addXP(10,'Neues Modul geöffnet');if(state.modulesViewed.length>=10)awardBadge('explorer')}
+  saveState();closeSidebar();
+  const m=modules[modId];
+  let h='<div class="module-header"><div class="mod-badge">'+m.icon+' Modul '+(modId+1)+'<\/div><h1>'+m.title+'<\/h1><p class="mod-desc">'+m.description+'<\/p><\/div>';
+  m.lessons.forEach((l,i)=>{h+='<div class="lesson-card"><h3><span style="color:var(--neon)">'+String(i+1).padStart(2,'0')+'<\/span> '+l.title+' <button class="tts-btn" onclick="speakLesson('+i+')" title="Vorlesen">&#128266;<\/button><\/h3>'+l.content+'<\/div>'});
+  h+='<div class="interactive-area"><h4>🧪 Interaktive Übung<\/h4><div id="interactiveContent">Lädt...<\/div><\/div>';
+  window._quizStart=Date.now();
+  h+=renderQuiz(modId,m.quiz,false);
+  h+=renderQuiz(modId,m.boss,true);
+  document.getElementById('welcomeScreen').style.display='none';
+  document.getElementById('badgesView').style.display='none';
+  document.getElementById('statsView').style.display='none';
+  const mc=document.getElementById('moduleContent');mc.style.display='block';mc.innerHTML=h;
+  renderSidebar();window.scrollTo({top:0,behavior:'smooth'});
+  setTimeout(()=>initInteractive(modId),100);
+}
+
+function renderSidebar(){
+  const el=document.getElementById('sidebarModules');
+  el.innerHTML=modules.map((m,i)=>{
+    const done=state.modulesCompleted.includes(i);
+    const act=state.currentModule===i&&document.getElementById('moduleContent').style.display==='block';
+    return '<a class="mod-link'+(act?' active':'')+(done?' completed':'')+'" onclick="renderModule('+i+')"><span class="mod-icon">'+m.icon+'<\/span>'+m.title+'<\/a>';
+  }).join('');
+  const lv=getLevel(state.xp);
+  const lvEl=document.querySelector('.sidebar-level-title');
+  if(lvEl)lvEl.textContent=LEVELS[lv].name;
+  const xpFill=document.querySelector('.sidebar-xp-fill');
+  if(xpFill)xpFill.style.width=getLevelProgress(state.xp)+'%';
+}
+function toggleSidebar(){document.getElementById('sidebar').classList.toggle('open')}
+function closeSidebar(){document.getElementById('sidebar').classList.remove('open')}
+
+function showBadges(){
+  document.getElementById('welcomeScreen').style.display='none';document.getElementById('moduleContent').style.display='none';document.getElementById('statsView').style.display='none';
+  const v=document.getElementById('badgesView');v.style.display='block';closeSidebar();
+  let h='<div class="module-header"><h1>🏅 Deine Abzeichen<\/h1><p class="mod-desc">'+state.badges.length+' von '+BADGES.length+' gesammelt<\/p><\/div><div class="badge-grid">';
+  BADGES.forEach(b=>{const earned=state.badges.includes(b.id);h+='<div class="badge-item'+(earned?' earned':' locked')+'"><div class="badge-icon">'+(earned?b.icon:'🔒')+'<\/div><div class="badge-name">'+b.name+'<\/div><\/div>'});
+  h+='<\/div>';v.innerHTML=h;
+}
+
+function showStats(){
+  document.getElementById('welcomeScreen').style.display='none';document.getElementById('moduleContent').style.display='none';document.getElementById('badgesView').style.display='none';
+  const v=document.getElementById('statsView');v.style.display='block';closeSidebar();
+  const lv=getLevel(state.xp);
+  let h='<div class="module-header"><h1>📊 Statistik<\/h1><\/div><div class="stats-grid">';
+  h+='<div class="stat-card"><div class="stat-val">'+state.xp+'<\/div><div class="stat-label">XP gesammelt<\/div><\/div>';
+  h+='<div class="stat-card"><div class="stat-val">'+LEVELS[lv].name+'<\/div><div class="stat-label">Aktueller Rang<\/div><\/div>';
+  h+='<div class="stat-card"><div class="stat-val">'+state.modulesCompleted.length+'/10<\/div><div class="stat-label">Module abgeschlossen<\/div><\/div>';
+  h+='<div class="stat-card"><div class="stat-val">'+Object.keys(state.quizResults).length+'<\/div><div class="stat-label">Quizze bestanden<\/div><\/div>';
+  h+='<div class="stat-card"><div class="stat-val">'+Object.keys(state.bossResults).length+'<\/div><div class="stat-label">Bosse besiegt<\/div><\/div>';
+  h+='<div class="stat-card"><div class="stat-val">'+state.badges.length+'<\/div><div class="stat-label">Abzeichen<\/div><\/div>';
+  h+='<div class="stat-card"><div class="stat-val">🔥 '+state.streak+'<\/div><div class="stat-label">Tage-Streak<\/div><\/div>';
+  h+='<\/div>';v.innerHTML=h;
+}
+
+let certStyle='akademie';
+function showCert(){
+  const ov=document.getElementById('certOverlay');ov.classList.add('active');
+  document.getElementById('certPicker').innerHTML=
+    ['🏛 Akademie','💻 Hacker','🕹 Pixel','🚀 Zukunft'].map((l,i)=>{
+      const s=['akademie','hacker','pixel','zukunft'][i];
+      return '<button class="cert-pick-btn'+(certStyle===s?' active':'')+'" onclick="certStyle=\''+s+'\';showCert()">'+l+'<\/button>';
+    }).join('');
+  renderCert();
+}
+function closeCert(){document.getElementById('certOverlay').classList.remove('active')}
+function generateCertCode(){const n=state.name||'X';const d=new Date();return 'WE-'+d.getFullYear()+'-'+((n.charCodeAt(0)*7+state.xp)%9999).toString(16).toUpperCase().padStart(4,'0')}
+
+function renderCert(){
+  const f=document.getElementById('certFrame');if(!f)return;
+  const n=state.name||'Schüler';const d=new Date().toLocaleDateString('de-DE',{day:'2-digit',month:'long',year:'numeric'});
+  const code=generateCertCode();const pct=Math.round(state.modulesCompleted.length/10*100);
+  const styles={
+    akademie:{bg:'linear-gradient(135deg,#1a1a4e,#2d2d7a)',border:'#c9a84c',title:'#c9a84c',text:'#d4d0ff',accent:'#c9a84c',font:"'Playfair Display',serif"},
+    hacker:{bg:'linear-gradient(135deg,#0a0e14,#1a2332)',border:'#00ff88',title:'#00ff88',text:'#b0f0d0',accent:'#00ff88',font:"'JetBrains Mono',monospace"},
+    pixel:{bg:'linear-gradient(135deg,#1a0a2e,#2d1055)',border:'#ffd700',title:'#ffd700',text:'#e0d0f0',accent:'#ff6b9d',font:"'Courier New',monospace"},
+    zukunft:{bg:'linear-gradient(135deg,#0f0f23,#1a1a3e)',border:'#00d9ff',title:'#00d9ff',text:'#d0e8ff',accent:'#00d9ff',font:"'Sora',sans-serif"}
+  };
+  const s=styles[certStyle]||styles.akademie;
+  f.innerHTML='<div style="width:100%;height:100%;background:'+s.bg+';border:3px solid '+s.border+';border-radius:12px;padding:40px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;font-family:'+s.font+';position:relative;overflow:hidden">'
+    +'<div style="font-size:14px;letter-spacing:4px;text-transform:uppercase;color:'+s.accent+';margin-bottom:8px">Zertifikat</div>'
+    +'<div style="font-size:28px;font-weight:700;color:'+s.title+';margin-bottom:4px">WeltEntdecker<\/div>'
+    +'<div style="font-size:13px;color:'+s.text+';margin-bottom:20px">Geographie entdecken Klasse 1-3<\/div>'
+    +'<div style="font-size:14px;color:'+s.text+'">Hiermit wird bestätigt, dass</div>'
+    +'<div style="font-size:24px;font-weight:700;color:'+s.title+';margin:8px 0;border-bottom:2px solid '+s.accent+';padding-bottom:4px">'+n+'</div>'
+    +'<div style="font-size:14px;color:'+s.text+';max-width:400px;line-height:1.6">den Kurs <strong>WeltEntdecker<\/strong> mit <strong>'+pct+'%</strong> Abschluss und <strong>'+state.xp+' XP</strong> erfolgreich absolviert hat.</div>'
+    +'<div style="font-size:12px;color:'+s.accent+';margin-top:16px">'+d+'</div>'
+    +'<div style="font-size:10px;color:'+s.text+';opacity:0.6;margin-top:8px">Code: '+code+' | © 2026 GZ AI Stacks</div>'
+    +'</div>';
+}
+function printCert(){window.print()}
+
+function updateUI(){
+  const lv=getLevel(state.xp);
+  const xpEl=document.querySelector('.header-xp');
+  if(xpEl)xpEl.innerHTML=LEVELS[lv].name+' <span style="margin-left:8px">'+state.xp+' XP<\/span>';
+  const fill=document.querySelector('.header-xp-fill');
+  if(fill)fill.style.width=getLevelProgress(state.xp)+'%';
+  const streakEl=document.querySelector('.header-streak');
+  if(streakEl)streakEl.textContent='🔥 '+state.streak;
+  renderSidebar();
+}
+
+function setDesignTheme(world,mode){
+  state.designTheme=world+'-'+mode;document.documentElement.setAttribute('data-theme',state.designTheme);saveState();buildThemePicker();
+}
+function getCurrentThemeParts(){const p=state.designTheme.split('-');return{world:p.slice(0,-1).join('-'),mode:p[p.length-1]||'dark'}}
+function toggleMode(){const{world,mode}=getCurrentThemeParts();setDesignTheme(world,mode==='dark'?'light':'dark')}
+function buildThemePicker(){
+  const dd=document.getElementById('themePickerDD');if(!dd)return;
+  const{world,mode}=getCurrentThemeParts();
+  let h='<div class="tp-label">Theme wählen<\/div>';
+  Object.keys(THEME_CONFIG).forEach(w=>{
+    const t=THEME_CONFIG[w];
+    h+='<div class="tp-world'+(w===world?' active':'')+'" onclick="setDesignTheme(\''+w+'\',\''+mode+'\')">';
+    h+='<div class="tp-world-color" style="background:'+t.color+'">'+t.emoji+'<\/div>';
+    h+='<div class="tp-world-info"><div class="tp-world-name">'+t.name+'<\/div><div class="tp-world-desc">'+t.desc+'<\/div><\/div><\/div>';
+  });
+  h+='<div class="tp-divider"><\/div>';
+  h+='<div class="tp-mode-row"><span class="tp-mode-label">'+(mode==='dark'?'🌙 Dark':'☀️ Light')+'<\/span>';
+  h+='<div class="tp-mode-switch'+(mode==='light'?' light':'')+'" onclick="toggleMode()"><\/div><\/div>';
+  dd.innerHTML=h;
+}
+function toggleThemePicker(){document.getElementById('themePickerDD').classList.toggle('open')}
+
+
+function initInteractive(modId) {
+  var el = document.getElementById('interactiveContent');
+  if (!el) return;
+  var exercises = [
+    // M0: Kontinente erkennen
+    function() {
+      var items = [{n:'Europa',c:true},{n:'Atlantik',c:false},{n:'Asien',c:true},{n:'Sahara',c:false},{n:'Afrika',c:true},{n:'Pazifik',c:false},{n:'Australien',c:true},{n:'Antarktis',c:true},{n:'Arktis',c:false},{n:'S\u00fcdamerika',c:true}];
+      var h='<p>Klicke auf alle <strong>Kontinente</strong>:</p><div class="ix-grid">';
+      items.forEach(function(it,i){h+='<div class="ix-item" onclick="checkIx0(this,'+i+')" data-c="'+it.c+'">'+it.n+'</div>'});
+      h+='</div><div class="ix-feedback" id="ixFb"></div>';
+      el.innerHTML=h;
+      window._ix0=new Set();
+      window.checkIx0=function(e,i){
+        if(e.classList.contains('correct')||e.classList.contains('wrong'))return;
+        var c=e.dataset.c==='true';
+        if(c){e.classList.add('correct');_ix0.add(i)}else{e.classList.add('wrong')}
+        if(_ix0.size===6){var fb=document.getElementById('ixFb');fb.className='ix-feedback pass';fb.textContent='Super! Alle 6 Kontinente gefunden!';if(!state.interactiveResults[0]){state.interactiveResults[0]=true;addXP(25,'Interaktive \u00dcbung gel\u00f6st');saveState()}}
+      };
+    },
+    // M1: Ozeane benennen
+    function() {
+      var pairs=[{s:'Der gr\u00f6\u00dfte Ozean',a:'Pazifischer Ozean'},{s:'Zwischen Europa und Amerika',a:'Atlantischer Ozean'},{s:'Am Nordpol',a:'Arktischer Ozean'},{s:'Um die Antarktis',a:'S\u00fcdlicher Ozean'}];
+      var ans=['Pazifischer Ozean','Atlantischer Ozean','Indischer Ozean','Arktischer Ozean','S\u00fcdlicher Ozean'];
+      var h='<p>Ordne die <strong>Beschreibung</strong> dem richtigen Ozean zu:</p>';
+      pairs.forEach(function(p,i){h+='<div style="display:flex;align-items:center;gap:12px;margin:8px 0;flex-wrap:wrap"><span style="min-width:180px">'+p.s+'</span><select class="ix-sel" id="ixs'+i+'" style="padding:8px;border-radius:var(--radius-sm);border:1px solid var(--border);background:var(--bg3);color:var(--text);font-family:var(--font)"><option value="">\u2014 w\u00e4hle \u2014</option>';ans.forEach(function(a){h+='<option>'+a+'</option>'});h+='</select></div>'});
+      h+='<button class="ix-btn" onclick="window._checkIx1()">Pr\u00fcfen</button><div class="ix-feedback" id="ixFb"></div>';
+      el.innerHTML=h;
+      window._checkIx1=function(){
+        var ok=0;pairs.forEach(function(p,i){if(document.getElementById('ixs'+i).value===p.a)ok++});
+        var fb=document.getElementById('ixFb');
+        if(ok===4){fb.className='ix-feedback pass';fb.textContent='Toll! Alle Ozeane richtig!';if(!state.interactiveResults[1]){state.interactiveResults[1]=true;addXP(25,'Interaktive \u00dcbung gel\u00f6st');saveState()}}
+        else{fb.className='ix-feedback fail';fb.textContent=ok+'/4 richtig. Versuch es nochmal!'}
+      };
+    },
+    // M2: Himmelsrichtungen zuordnen
+    function() {
+      var pairs=[{s:'Oben auf der Karte',a:'Norden'},{s:'Unten auf der Karte',a:'S\u00fcden'},{s:'Rechts auf der Karte',a:'Osten'},{s:'Links auf der Karte',a:'Westen'}];
+      var ans=['Norden','S\u00fcden','Osten','Westen'];
+      var h='<p>Ordne die <strong>Richtung</strong> der richtigen Himmelsrichtung zu:</p>';
+      pairs.forEach(function(p,i){h+='<div style="display:flex;align-items:center;gap:12px;margin:8px 0;flex-wrap:wrap"><span style="min-width:180px">'+p.s+'</span><select class="ix-sel" id="ixs'+i+'" style="padding:8px;border-radius:var(--radius-sm);border:1px solid var(--border);background:var(--bg3);color:var(--text);font-family:var(--font)"><option value="">\u2014 w\u00e4hle \u2014</option>';ans.forEach(function(a){h+='<option>'+a+'</option>'});h+='</select></div>'});
+      h+='<button class="ix-btn" onclick="window._checkIx2()">Pr\u00fcfen</button><div class="ix-feedback" id="ixFb"></div>';
+      el.innerHTML=h;
+      window._checkIx2=function(){
+        var ok=0;pairs.forEach(function(p,i){if(document.getElementById('ixs'+i).value===p.a)ok++});
+        var fb=document.getElementById('ixFb');
+        if(ok===4){fb.className='ix-feedback pass';fb.textContent='Super! Alle Himmelsrichtungen richtig!';if(!state.interactiveResults[2]){state.interactiveResults[2]=true;addXP(25,'Interaktive \u00dcbung gel\u00f6st');saveState()}}
+        else{fb.className='ix-feedback fail';fb.textContent=ok+'/4 richtig. Tipp: Nie Ohne Seife Waschen!'}
+      };
+    },
+    // M3: Wetter zuordnen
+    function() {
+      var items=[{e:'\u2600\ufe0f',w:'Sonnig'},{e:'\u{1f327}\ufe0f',w:'Regen'},{e:'\u2744\ufe0f',w:'Schnee'},{e:'\u26c8\ufe0f',w:'Gewitter'},{e:'\u{1f4a8}',w:'Wind'}];
+      var opts=['Sonnig','Regen','Schnee','Gewitter','Wind','Nebel'];
+      var h='<p>Ordne das <strong>Wettersymbol</strong> der richtigen Wetterart zu:</p>';
+      items.forEach(function(it,i){h+='<div style="display:flex;align-items:center;gap:12px;margin:8px 0;flex-wrap:wrap"><span style="font-size:32px;min-width:50px;text-align:center">'+it.e+'</span><select class="ix-sel" id="ixs'+i+'" style="padding:8px;border-radius:var(--radius-sm);border:1px solid var(--border);background:var(--bg3);color:var(--text);font-family:var(--font)"><option value="">\u2014 w\u00e4hle \u2014</option>';opts.forEach(function(o){h+='<option>'+o+'</option>'});h+='</select></div>'});
+      h+='<button class="ix-btn" onclick="window._checkIx3()">Pr\u00fcfen</button><div class="ix-feedback" id="ixFb"></div>';
+      el.innerHTML=h;
+      window._checkIx3=function(){
+        var ok=0;items.forEach(function(it,i){if(document.getElementById('ixs'+i).value===it.w)ok++});
+        var fb=document.getElementById('ixFb');
+        if(ok===5){fb.className='ix-feedback pass';fb.textContent='Klasse! Alle Wetterarten erkannt!';if(!state.interactiveResults[3]){state.interactiveResults[3]=true;addXP(25,'Interaktive \u00dcbung gel\u00f6st');saveState()}}
+        else{fb.className='ix-feedback fail';fb.textContent=ok+'/5 richtig. Versuch es nochmal!'}
+      };
+    },
+    // M4: Jahreszeiten zuordnen
+    function() {
+      var pairs=[{s:'Blumen bl\u00fchen',a:'Fr\u00fchling'},{s:'Schwimmen gehen',a:'Sommer'},{s:'Bl\u00e4tter werden bunt',a:'Herbst'},{s:'Schneemann bauen',a:'Winter'},{s:'Kastanien sammeln',a:'Herbst'}];
+      var ans=['Fr\u00fchling','Sommer','Herbst','Winter'];
+      var h='<p>Zu welcher <strong>Jahreszeit</strong> passt die Aktivit\u00e4t?</p>';
+      pairs.forEach(function(p,i){h+='<div style="display:flex;align-items:center;gap:12px;margin:8px 0;flex-wrap:wrap"><span style="min-width:180px">'+p.s+'</span><select class="ix-sel" id="ixs'+i+'" style="padding:8px;border-radius:var(--radius-sm);border:1px solid var(--border);background:var(--bg3);color:var(--text);font-family:var(--font)"><option value="">\u2014 w\u00e4hle \u2014</option>';ans.forEach(function(a){h+='<option>'+a+'</option>'});h+='</select></div>'});
+      h+='<button class="ix-btn" onclick="window._checkIx4()">Pr\u00fcfen</button><div class="ix-feedback" id="ixFb"></div>';
+      el.innerHTML=h;
+      window._checkIx4=function(){
+        var ok=0;pairs.forEach(function(p,i){if(document.getElementById('ixs'+i).value===p.a)ok++});
+        var fb=document.getElementById('ixFb');
+        if(ok===5){fb.className='ix-feedback pass';fb.textContent='Perfekt! Alle Jahreszeiten richtig!';if(!state.interactiveResults[4]){state.interactiveResults[4]=true;addXP(25,'Interaktive \u00dcbung gel\u00f6st');saveState()}}
+        else{fb.className='ix-feedback fail';fb.textContent=ok+'/5 richtig. Versuch es nochmal!'}
+      };
+    },
+    // M5: Stadt oder Land?
+    function() {
+      var items=[{n:'Hohe H\u00e4user',c:'Stadt'},{n:'Bauernhof',c:'Land'},{n:'U-Bahn',c:'Stadt'},{n:'K\u00fche auf der Weide',c:'Land'},{n:'Supermarkt',c:'Stadt'},{n:'Traktor',c:'Land'},{n:'Viele Autos',c:'Stadt'},{n:'Stille und Natur',c:'Land'}];
+      var h='<p>Geh\u00f6rt das zur <strong>Stadt</strong> oder zum <strong>Land</strong>? Klicke zum Umschalten:</p><div class="ix-grid">';
+      items.forEach(function(it,i){h+='<div class="ix-item" onclick="window._toggleSL(this)" data-c="'+it.c+'" data-s="">'+it.n+'<div style="font-size:11px;color:var(--text-dim);margin-top:4px" id="sl'+i+'">?</div></div>'});
+      h+='</div><button class="ix-btn" onclick="window._checkIx5()">Pr\u00fcfen</button><div class="ix-feedback" id="ixFb"></div>';
+      el.innerHTML=h;
+      window._toggleSL=function(e){
+        var states=['','Stadt','Land'];
+        var s=states.indexOf(e.dataset.s);s=(s+1)%3;e.dataset.s=states[s];
+        var lbl=e.querySelector('div');lbl.textContent=states[s]||'?';
+        if(states[s]==='Stadt'){e.style.borderColor='var(--neon)'}else if(states[s]==='Land'){e.style.borderColor='var(--warning)'}else{e.style.borderColor=''}
+      };
+      window._checkIx5=function(){
+        var ok=0;var all=el.querySelectorAll('.ix-item');
+        items.forEach(function(it,i){var e=all[i];if(e.dataset.s===it.c){ok++;e.classList.add('correct')}else{e.classList.add('wrong')}});
+        var fb=document.getElementById('ixFb');
+        if(ok===8){fb.className='ix-feedback pass';fb.textContent='Alles richtig! Du kennst Stadt und Land!';if(!state.interactiveResults[5]){state.interactiveResults[5]=true;addXP(25,'Interaktive \u00dcbung gel\u00f6st');saveState()}}
+        else{fb.className='ix-feedback fail';fb.textContent=ok+'/8 richtig. Tipp: Wo gibt es viel Natur?'}
+      };
+    },
+    // M6: Tiere den Kontinenten zuordnen
+    function() {
+      var pairs=[{s:'L\u00f6we \u{1f981}',a:'Afrika'},{s:'K\u00e4nguru \u{1f998}',a:'Australien'},{s:'Panda \u{1f43c}',a:'Asien'},{s:'Pinguin \u{1f427}',a:'Antarktis'},{s:'Adler \u{1f985}',a:'Nordamerika'}];
+      var ans=['Europa','Afrika','Asien','Nordamerika','S\u00fcdamerika','Australien','Antarktis'];
+      var h='<p>Auf welchem <strong>Kontinent</strong> lebt das Tier?</p>';
+      pairs.forEach(function(p,i){h+='<div style="display:flex;align-items:center;gap:12px;margin:8px 0;flex-wrap:wrap"><span style="min-width:160px">'+p.s+'</span><select class="ix-sel" id="ixs'+i+'" style="padding:8px;border-radius:var(--radius-sm);border:1px solid var(--border);background:var(--bg3);color:var(--text);font-family:var(--font)"><option value="">\u2014 w\u00e4hle \u2014</option>';ans.forEach(function(a){h+='<option>'+a+'</option>'});h+='</select></div>'});
+      h+='<button class="ix-btn" onclick="window._checkIx6()">Pr\u00fcfen</button><div class="ix-feedback" id="ixFb"></div>';
+      el.innerHTML=h;
+      window._checkIx6=function(){
+        var ok=0;pairs.forEach(function(p,i){if(document.getElementById('ixs'+i).value===p.a)ok++});
+        var fb=document.getElementById('ixFb');
+        if(ok===5){fb.className='ix-feedback pass';fb.textContent='Toll! Alle Tiere richtig zugeordnet!';if(!state.interactiveResults[6]){state.interactiveResults[6]=true;addXP(25,'Interaktive \u00dcbung gel\u00f6st');saveState()}}
+        else{fb.className='ix-feedback fail';fb.textContent=ok+'/5 richtig. Versuch es nochmal!'}
+      };
+    },
+    // M7: Landschaften erkennen
+    function() {
+      var items=[{e:'\u{1f3d4}\ufe0f',l:'Berg'},{e:'\u{1f3de}\ufe0f',l:'Fluss'},{e:'\u{1f3dc}\ufe0f',l:'W\u00fcste'},{e:'\u{1f332}',l:'Wald'},{e:'\u{1f3dd}\ufe0f',l:'Insel'}];
+      var opts=['Berg','Fluss','W\u00fcste','Wald','See','Insel'];
+      var h='<p>Welche <strong>Landschaft</strong> zeigt das Bild?</p>';
+      items.forEach(function(it,i){h+='<div style="display:flex;align-items:center;gap:12px;margin:8px 0;flex-wrap:wrap"><span style="font-size:32px;min-width:50px;text-align:center">'+it.e+'</span><select class="ix-sel" id="ixs'+i+'" style="padding:8px;border-radius:var(--radius-sm);border:1px solid var(--border);background:var(--bg3);color:var(--text);font-family:var(--font)"><option value="">\u2014 w\u00e4hle \u2014</option>';opts.forEach(function(o){h+='<option>'+o+'</option>'});h+='</select></div>'});
+      h+='<button class="ix-btn" onclick="window._checkIx7()">Pr\u00fcfen</button><div class="ix-feedback" id="ixFb"></div>';
+      el.innerHTML=h;
+      window._checkIx7=function(){
+        var ok=0;items.forEach(function(it,i){if(document.getElementById('ixs'+i).value===it.l)ok++});
+        var fb=document.getElementById('ixFb');
+        if(ok===5){fb.className='ix-feedback pass';fb.textContent='Super! Alle Landschaften erkannt!';if(!state.interactiveResults[7]){state.interactiveResults[7]=true;addXP(25,'Interaktive \u00dcbung gel\u00f6st');saveState()}}
+        else{fb.className='ix-feedback fail';fb.textContent=ok+'/5 richtig. Versuch es nochmal!'}
+      };
+    },
+    // M8: Nachbarl\u00e4nder Deutschlands
+    function() {
+      var items=[{n:'D\u00e4nemark',c:true},{n:'\u00d6sterreich',c:true},{n:'Frankreich',c:true},{n:'Polen',c:true},{n:'Spanien',c:false},{n:'Schweiz',c:true},{n:'Italien',c:false},{n:'Niederlande',c:true},{n:'Schweden',c:false},{n:'Belgien',c:true}];
+      var h='<p>Klicke auf alle <strong>Nachbarl\u00e4nder von Deutschland</strong>:</p><div class="ix-grid">';
+      items.forEach(function(it,i){h+='<div class="ix-item" onclick="window._checkNb(this,'+i+')" data-c="'+it.c+'">'+it.n+'</div>'});
+      h+='</div><div class="ix-feedback" id="ixFb"></div>';
+      el.innerHTML=h;
+      window._ix8=new Set();
+      window._checkNb=function(e,i){
+        if(e.classList.contains('correct')||e.classList.contains('wrong'))return;
+        var c=e.dataset.c==='true';
+        if(c){e.classList.add('correct');_ix8.add(i)}else{e.classList.add('wrong')}
+        if(_ix8.size===7){var fb=document.getElementById('ixFb');fb.className='ix-feedback pass';fb.textContent='Toll! Alle 7 Nachbarl\u00e4nder in der Liste gefunden!';if(!state.interactiveResults[8]){state.interactiveResults[8]=true;addXP(25,'Interaktive \u00dcbung gel\u00f6st');saveState()}}
+      };
+    },
+    // M9: Umweltschutz: gut oder schlecht?
+    function() {
+      var items=[{n:'M\u00fcll trennen',c:true},{n:'Plastik ins Meer werfen',c:false},{n:'Rad fahren statt Auto',c:true},{n:'Wasser verschwenden',c:false},{n:'Licht ausschalten',c:true},{n:'M\u00fcll in den Wald werfen',c:false},{n:'B\u00e4ume pflanzen',c:true},{n:'Papier verschwenden',c:false}];
+      var h='<p>Ist das <strong>gut</strong> oder <strong>schlecht</strong> f\u00fcr die Umwelt? Klicke zum Umschalten:</p><div class="ix-grid">';
+      items.forEach(function(it,i){h+='<div class="ix-item" onclick="window._toggleEnv(this)" data-c="'+it.c+'" data-s="">'+it.n+'<div style="font-size:11px;color:var(--text-dim);margin-top:4px" id="ev'+i+'">?</div></div>'});
+      h+='</div><button class="ix-btn" onclick="window._checkIx9()">Pr\u00fcfen</button><div class="ix-feedback" id="ixFb"></div>';
+      el.innerHTML=h;
+      window._toggleEnv=function(e){
+        var states=['','Gut','Schlecht'];
+        var s=states.indexOf(e.dataset.s);s=(s+1)%3;e.dataset.s=states[s];
+        var lbl=e.querySelector('div');lbl.textContent=states[s]||'?';
+        if(states[s]==='Gut'){e.style.borderColor='var(--neon)'}else if(states[s]==='Schlecht'){e.style.borderColor='var(--warning)'}else{e.style.borderColor=''}
+      };
+      window._checkIx9=function(){
+        var ok=0;var all=el.querySelectorAll('.ix-item');
+        items.forEach(function(it,i){var e=all[i];var g=(it.c&&e.dataset.s==='Gut')||(!it.c&&e.dataset.s==='Schlecht');
+          if(g){ok++;e.classList.add('correct')}else{e.classList.add('wrong')}});
+        var fb=document.getElementById('ixFb');
+        if(ok===8){fb.className='ix-feedback pass';fb.textContent='Perfekt! Du bist ein Umwelt-Experte!';if(!state.interactiveResults[9]){state.interactiveResults[9]=true;addXP(25,'Interaktive \u00dcbung gel\u00f6st');saveState()}}
+        else{fb.className='ix-feedback fail';fb.textContent=ok+'/8 richtig. Tipp: Was hilft der Natur?'}
+      };
+    }
+  ];
+  if (exercises[modId]) exercises[modId]();
+}
+
+function startApp(){
+  const name=document.getElementById('nameInput').value.trim();if(!name)return;
+  state.name=name;state.started=true;saveState();
+  document.getElementById('welcomeScreen').style.display='none';
+  renderModule(0);updateStreak();
+}
+
+(function init(){
+  if(loadState()&&state.started){
+    document.getElementById('welcomeScreen').style.display='none';
+    document.documentElement.setAttribute('data-theme',state.designTheme);
+    renderModule(state.currentModule);updateUI();updateStreak();
+  }else{
+    document.documentElement.setAttribute('data-theme',state.designTheme);
+    buildThemePicker();
+  }
+  renderSidebar();
+  document.addEventListener('click',e=>{if(!e.target.closest('.theme-picker-wrap'))document.getElementById('themePickerDD')?.classList.remove('open')});
+})();
+</script>
+</body>
+</html>

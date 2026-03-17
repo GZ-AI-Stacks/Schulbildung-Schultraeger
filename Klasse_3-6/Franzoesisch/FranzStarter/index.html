@@ -1,0 +1,1133 @@
+<!DOCTYPE html>
+<html lang="de" data-theme="cyber-dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>FranzStarter — Interaktive Franz\u00F6sisch-Lernapp</title>
+<meta name="description" content="Interaktive Franz\u00F6sisch-Lernapp f\u00FCr Klasse 3-6 mit Gamification, Quizzen und Boss-Challenges">
+<style>
+@font-face{font-family:'Sora';src:url('../../../Klasse_7-10/Informatik/fonts/sora-latin-400-normal.woff2') format('woff2');font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:'Sora';src:url('../../../Klasse_7-10/Informatik/fonts/sora-latin-600-normal.woff2') format('woff2');font-weight:600;font-style:normal;font-display:swap}
+@font-face{font-family:'Sora';src:url('../../../Klasse_7-10/Informatik/fonts/sora-latin-700-normal.woff2') format('woff2');font-weight:700;font-style:normal;font-display:swap}
+@font-face{font-family:'JetBrains Mono';src:url('../../../Klasse_7-10/Informatik/fonts/jetbrains-mono-latin-400-normal.woff2') format('woff2');font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:'Playfair Display';src:url('../../../Klasse_7-10/Informatik/fonts/playfair-display-latin-700-normal.woff2') format('woff2');font-weight:700;font-style:normal;font-display:swap}
+@font-face{font-family:'Inter';src:url('../../../Klasse_7-10/Informatik/fonts/inter-latin-400-normal.woff2') format('woff2');font-weight:400;font-style:normal;font-display:swap}
+
+:root{
+--neon:#3b82f6;--neon-dim:rgba(59,130,246,.15);--neon-glow:rgba(59,130,246,.3);
+--bg:#0a0e14;--bg2:#111827;--bg3:#1f2937;--card:#161e2e;--card-hover:#1e293b;
+--border:#2a3444;--border-light:#374151;
+--text:#d4dce8;--text-dim:#8899aa;--text-bright:#f1f5f9;
+--heading:#ffffff;--link:#60a5fa;
+--success:#22c55e;--warning:#f59e0b;--danger:#ef4444;
+--xp-purple:#a855f7;--badge-cyan:#06b6d4;--streak-red:#ef4444;
+--radius:12px;--radius-sm:8px;--radius-lg:16px;
+--shadow:0 4px 24px rgba(0,0,0,.4);--shadow-lg:0 8px 40px rgba(0,0,0,.5);
+--font:'Sora','Segoe UI',system-ui,sans-serif;
+--mono:'JetBrains Mono','Cascadia Code',monospace;
+--serif:'Playfair Display','Georgia',serif;
+--sidebar-w:280px;--header-h:60px;
+--card-border-w:1px;--card-border-style:solid;--glow:1
+}
+[data-theme="cyber-dark"]{--neon:#3b82f6;--neon-dim:rgba(59,130,246,.15);--neon-glow:rgba(59,130,246,.3);--bg:#0a0e14;--bg2:#111827;--bg3:#1f2937;--card:#161e2e;--card-hover:#1e293b;--border:#2a3444;--border-light:#374151;--text:#d4dce8;--text-dim:#8899aa;--text-bright:#f1f5f9;--heading:#ffffff;--link:#60a5fa;--success:#22c55e;--warning:#f59e0b;--danger:#ef4444;--xp-purple:#a855f7;--badge-cyan:#06b6d4;--streak-red:#ef4444;--radius:12px;--radius-sm:8px;--radius-lg:16px;--shadow:0 4px 24px rgba(0,0,0,.4);--shadow-lg:0 8px 40px rgba(0,0,0,.5);--font:'Sora','Segoe UI',system-ui,sans-serif;--card-border-w:1px;--card-border-style:solid;--glow:1}
+[data-theme="cyber-light"]{--neon:#1d4ed8;--neon-dim:rgba(29,78,216,.1);--neon-glow:rgba(29,78,216,.2);--bg:#f8f9fb;--bg2:#f0f2f5;--bg3:#e5e7eb;--card:#ffffff;--card-hover:#f5f7fa;--border:#d1d5db;--border-light:#e5e7eb;--text:#374151;--text-dim:#4b5563;--text-bright:#111827;--heading:#111827;--link:#2563eb;--success:#22c55e;--warning:#f59e0b;--danger:#ef4444;--xp-purple:#a855f7;--badge-cyan:#06b6d4;--streak-red:#ef4444;--radius:12px;--radius-sm:8px;--radius-lg:16px;--shadow:0 4px 24px rgba(0,0,0,.08);--shadow-lg:0 8px 40px rgba(0,0,0,.12);--font:'Sora','Segoe UI',system-ui,sans-serif;--card-border-w:1px;--card-border-style:solid;--glow:0}
+[data-theme="retro-dark"]{--neon:#ffd700;--neon-dim:rgba(255,215,0,.12);--neon-glow:rgba(255,215,0,.3);--bg:#0d0208;--bg2:#1a0a1e;--bg3:#2d1233;--card:#1a0a1e;--card-hover:#2d1233;--border:#4a1942;--border-light:#5c2d5c;--text:#e0d0f0;--text-dim:#9080a0;--text-bright:#fff;--heading:#ffd700;--link:#ff6b9d;--success:#00e676;--warning:#ffab00;--danger:#ff1744;--xp-purple:#e040fb;--badge-cyan:#00e5ff;--streak-red:#ff1744;--radius:0px;--radius-sm:0px;--radius-lg:0px;--shadow:4px 4px 0 rgba(0,0,0,.8);--shadow-lg:6px 6px 0 rgba(0,0,0,.9);--font:'Courier New','Consolas',monospace;--card-border-w:3px;--card-border-style:solid;--glow:0}
+[data-theme="retro-light"]{--neon:#b8860b;--neon-dim:rgba(184,134,11,.1);--neon-glow:rgba(184,134,11,.2);--bg:#fff8e1;--bg2:#fff3cd;--bg3:#ffe0b2;--card:#ffffff;--card-hover:#fff9f0;--border:#d4a017;--border-light:#e6c84d;--text:#3e2723;--text-dim:#6d4c41;--text-bright:#1b0000;--heading:#b8860b;--link:#c2185b;--success:#2e7d32;--warning:#ef6c00;--danger:#c62828;--xp-purple:#8e24aa;--badge-cyan:#00838f;--streak-red:#c62828;--radius:0px;--radius-sm:0px;--radius-lg:0px;--shadow:3px 3px 0 rgba(0,0,0,.15);--shadow-lg:5px 5px 0 rgba(0,0,0,.2);--font:'Courier New','Consolas',monospace;--card-border-w:3px;--card-border-style:solid;--glow:0}
+[data-theme="nature-dark"]{--neon:#4ade80;--neon-dim:rgba(74,222,128,.12);--neon-glow:rgba(74,222,128,.25);--bg:#0c1a0f;--bg2:#132617;--bg3:#1e3a24;--card:#15291a;--card-hover:#1e3a24;--border:#2d5a36;--border-light:#3a7044;--text:#c8e6c9;--text-dim:#81a784;--text-bright:#e8f5e9;--heading:#e8f5e9;--link:#81c784;--success:#66bb6a;--warning:#ffa726;--danger:#ef5350;--xp-purple:#ab47bc;--badge-cyan:#26a69a;--streak-red:#ef5350;--radius:20px;--radius-sm:14px;--radius-lg:28px;--shadow:0 4px 20px rgba(0,0,0,.3);--shadow-lg:0 8px 32px rgba(0,0,0,.4);--font:'Segoe UI','Helvetica Neue',system-ui,sans-serif;--card-border-w:1px;--card-border-style:solid;--glow:0}
+[data-theme="nature-light"]{--neon:#2e7d32;--neon-dim:rgba(46,125,50,.08);--neon-glow:rgba(46,125,50,.15);--bg:#f1f8e9;--bg2:#e8f5e9;--bg3:#c8e6c9;--card:#ffffff;--card-hover:#f1faf1;--border:#a5d6a7;--border-light:#c8e6c9;--text:#33691e;--text-dim:#3e6e1c;--text-bright:#1b5e20;--heading:#1b5e20;--link:#2e7d32;--success:#388e3c;--warning:#ef6c00;--danger:#c62828;--xp-purple:#7b1fa2;--badge-cyan:#00695c;--streak-red:#c62828;--radius:20px;--radius-sm:14px;--radius-lg:28px;--shadow:0 4px 16px rgba(0,0,0,.06);--shadow-lg:0 8px 28px rgba(0,0,0,.1);--font:'Segoe UI','Helvetica Neue',system-ui,sans-serif;--card-border-w:1px;--card-border-style:solid;--glow:0}
+[data-theme="space-dark"]{--neon:#c084fc;--neon-dim:rgba(192,132,252,.12);--neon-glow:rgba(192,132,252,.3);--bg:#07020e;--bg2:#0f0720;--bg3:#1a0e35;--card:#110a28;--card-hover:#1a0e35;--border:#2e1a5e;--border-light:#3d2478;--text:#d4c8f0;--text-dim:#9080b8;--text-bright:#f0e8ff;--heading:#f0e8ff;--link:#f0abfc;--success:#34d399;--warning:#fbbf24;--danger:#fb7185;--xp-purple:#f472b6;--badge-cyan:#67e8f9;--streak-red:#fb7185;--radius:4px;--radius-sm:2px;--radius-lg:6px;--shadow:0 4px 24px rgba(100,50,200,.2);--shadow-lg:0 8px 40px rgba(100,50,200,.3);--font:'Segoe UI',system-ui,sans-serif;--card-border-w:1px;--card-border-style:solid;--glow:1}
+[data-theme="space-light"]{--neon:#7c3aed;--neon-dim:rgba(124,58,237,.08);--neon-glow:rgba(124,58,237,.15);--bg:#faf5ff;--bg2:#f3e8ff;--bg3:#e9d5ff;--card:#ffffff;--card-hover:#faf5ff;--border:#c4b5fd;--border-light:#ddd6fe;--text:#4c1d95;--text-dim:#5b21b6;--text-bright:#2e1065;--heading:#2e1065;--link:#7c3aed;--success:#059669;--warning:#d97706;--danger:#dc2626;--xp-purple:#db2777;--badge-cyan:#0891b2;--streak-red:#dc2626;--radius:4px;--radius-sm:2px;--radius-lg:6px;--shadow:0 4px 16px rgba(100,50,200,.06);--shadow-lg:0 8px 28px rgba(100,50,200,.1);--font:'Segoe UI',system-ui,sans-serif;--card-border-w:1px;--card-border-style:solid;--glow:0}
+[data-theme="comic-dark"]{--neon:#ff6b6b;--neon-dim:rgba(255,107,107,.12);--neon-glow:rgba(255,107,107,.3);--bg:#1a1a2e;--bg2:#222244;--bg3:#2e2e55;--card:#262650;--card-hover:#2e2e55;--border:#4a4a7a;--border-light:#5a5a8a;--text:#e8e0ff;--text-dim:#a098c0;--text-bright:#fff;--heading:#fff;--link:#ffa94d;--success:#51cf66;--warning:#fcc419;--danger:#ff6b6b;--xp-purple:#cc5de8;--badge-cyan:#22b8cf;--streak-red:#ff6b6b;--radius:16px;--radius-sm:12px;--radius-lg:24px;--shadow:4px 4px 0 rgba(0,0,0,.5);--shadow-lg:6px 6px 0 rgba(0,0,0,.6);--font:'Comic Sans MS','Chalkboard SE',cursive,system-ui,sans-serif;--card-border-w:3px;--card-border-style:solid;--glow:0}
+[data-theme="comic-light"]{--neon:#e03131;--neon-dim:rgba(224,49,49,.08);--neon-glow:rgba(224,49,49,.15);--bg:#fff9db;--bg2:#fff3bf;--bg3:#ffe066;--card:#ffffff;--card-hover:#fffdf0;--border:#fab005;--border-light:#fcc419;--text:#2b2b2b;--text-dim:#555;--text-bright:#000;--heading:#000;--link:#e8590c;--success:#2f9e44;--warning:#e8590c;--danger:#c92a2a;--xp-purple:#9c36b5;--badge-cyan:#1098ad;--streak-red:#c92a2a;--radius:16px;--radius-sm:12px;--radius-lg:24px;--shadow:3px 3px 0 rgba(0,0,0,.2);--shadow-lg:5px 5px 0 rgba(0,0,0,.25);--font:'Comic Sans MS','Chalkboard SE',cursive,system-ui,sans-serif;--card-border-w:3px;--card-border-style:solid;--glow:0}
+[data-theme="sketchy-dark"]{--neon:#d97706;--neon-dim:rgba(217,119,6,.15);--neon-glow:rgba(217,119,6,.3);--bg:#2a1f0f;--bg2:#3a2a1a;--bg3:#4a3a2a;--card:#362414;--card-hover:#462a1a;--border:#5a4030;--border-light:#6a5040;--text:#d4c4b0;--text-dim:#a09080;--text-bright:#e8d8c8;--heading:#f5ead5;--link:#e8a550;--success:#84cc16;--warning:#d97706;--danger:#e74c3c;--xp-purple:#d946ef;--badge-cyan:#06b6d4;--streak-red:#e74c3c;--radius:24px;--radius-sm:16px;--radius-lg:32px;--shadow:0 6px 20px rgba(0,0,0,.3);--shadow-lg:0 10px 40px rgba(0,0,0,.4);--font:'Playfair Display','Georgia',serif;--card-border-w:2px;--card-border-style:dashed;--glow:0}
+[data-theme="sketchy-light"]{--neon:#b45309;--neon-dim:rgba(180,83,9,.1);--neon-glow:rgba(180,83,9,.2);--bg:#fef3e2;--bg2:#fde8cc;--bg3:#f9d5b8;--card:#ffffff;--card-hover:#fffaf5;--border:#d4a574;--border-light:#e8c4a0;--text:#5c4033;--text-dim:#8b6f47;--text-bright:#3e2723;--heading:#3e2723;--link:#c2600c;--success:#65a30d;--warning:#b45309;--danger:#d25c4d;--xp-purple:#c084fc;--badge-cyan:#0891b2;--streak-red:#d25c4d;--radius:24px;--radius-sm:16px;--radius-lg:32px;--shadow:0 4px 12px rgba(0,0,0,.08);--shadow-lg:0 8px 24px rgba(0,0,0,.12);--font:'Playfair Display','Georgia',serif;--card-border-w:2px;--card-border-style:dashed;--glow:0}
+[data-theme="nature-code-dark"]{--neon:#10b981;--neon-dim:rgba(16,185,129,.15);--neon-glow:rgba(16,185,129,.25);--bg:#0a1f12;--bg2:#0d2818;--bg3:#1a3a2a;--card:#0f281a;--card-hover:#1a3a2a;--border:#2d5a3d;--border-light:#3a7050;--text:#c8e6d0;--text-dim:#7ba890;--text-bright:#e8f5ed;--heading:#e8f5ed;--link:#34d399;--success:#10b981;--warning:#f59e0b;--danger:#f87171;--xp-purple:#a78bfa;--badge-cyan:#22d3ee;--streak-red:#f87171;--radius:20px;--radius-sm:14px;--radius-lg:28px;--shadow:0 4px 20px rgba(0,100,50,.2);--shadow-lg:0 8px 32px rgba(0,100,50,.3);--font:'Segoe UI','Helvetica Neue',system-ui,sans-serif;--card-border-w:1px;--card-border-style:solid;--glow:0}
+[data-theme="nature-code-light"]{--neon:#059669;--neon-dim:rgba(5,150,105,.1);--neon-glow:rgba(5,150,105,.15);--bg:#f0fdf8;--bg2:#e8faf2;--bg3:#d1f2e0;--card:#ffffff;--card-hover:#f5fbf7;--border:#86efac;--border-light:#bbf7d0;--text:#164e3f;--text-dim:#2d6e4f;--text-bright:#052e16;--heading:#052e16;--link:#059669;--success:#10b981;--warning:#d97706;--danger:#dc2626;--xp-purple:#8b5cf6;--badge-cyan:#06b6d4;--streak-red:#dc2626;--radius:20px;--radius-sm:14px;--radius-lg:28px;--shadow:0 4px 16px rgba(0,100,50,.06);--shadow-lg:0 8px 28px rgba(0,100,50,.1);--font:'Segoe UI','Helvetica Neue',system-ui,sans-serif;--card-border-w:1px;--card-border-style:solid;--glow:0}
+[data-theme="glass-dark"]{--neon:#00d9ff;--neon-dim:rgba(0,217,255,.12);--neon-glow:rgba(0,217,255,.25);--bg:#0f0f23;--bg2:#1a1a3e;--bg3:#25254a;--card:rgba(30,30,60,.4);--card-hover:rgba(40,40,80,.5);--border:rgba(100,150,255,.2);--border-light:rgba(100,150,255,.3);--text:#e4e8f0;--text-dim:#8899aa;--text-bright:#f5f7ff;--heading:#ffffff;--link:#00d9ff;--success:#34d399;--warning:#fbbf24;--danger:#ff6b9d;--xp-purple:#b991f7;--badge-cyan:#00d9ff;--streak-red:#ff6b9d;--radius:16px;--radius-sm:12px;--radius-lg:20px;--shadow:0 8px 32px rgba(0,200,255,.1);--shadow-lg:0 16px 64px rgba(0,200,255,.15);--font:'Segoe UI',system-ui,sans-serif;--card-border-w:1px;--card-border-style:solid;--glow:1}
+[data-theme="glass-light"]{--neon:#0891b2;--neon-dim:rgba(8,145,178,.08);--neon-glow:rgba(8,145,178,.15);--bg:#f8fafc;--bg2:#f1f5f9;--bg3:#e2e8f0;--card:rgba(255,255,255,.4);--card-hover:rgba(255,255,255,.6);--border:rgba(100,180,255,.2);--border-light:rgba(100,180,255,.3);--text:#1e293b;--text-dim:#475569;--text-bright:#0f172a;--heading:#0f172a;--link:#0891b2;--success:#059669;--warning:#d97706;--danger:#dc2626;--xp-purple:#7c3aed;--badge-cyan:#0891b2;--streak-red:#dc2626;--radius:16px;--radius-sm:12px;--radius-lg:20px;--shadow:0 8px 32px rgba(100,150,255,.08);--shadow-lg:0 16px 64px rgba(100,150,255,.12);--font:'Segoe UI',system-ui,sans-serif;--card-border-w:1px;--card-border-style:solid;--glow:0}
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{font-family:var(--font);background:var(--bg);color:var(--text);line-height:1.6;min-height:100vh;overflow-x:hidden;transition:background .3s,color .3s}
+h1,h2,h3,h4{color:var(--heading);line-height:1.3}
+a{color:var(--link);text-decoration:none}
+a:hover{text-decoration:underline}
+button{font-family:var(--font);cursor:pointer;border:none;background:none;color:inherit}
+code,pre{font-family:var(--mono)}
+:focus-visible{outline:2px solid var(--neon);outline-offset:2px;border-radius:4px}
+::selection{background:var(--neon);color:#fff}
+::-webkit-scrollbar{width:8px}
+::-webkit-scrollbar-track{background:var(--bg2)}
+::-webkit-scrollbar-thumb{background:var(--border);border-radius:4px}
+::-webkit-scrollbar-thumb:hover{background:var(--text-dim)}
+.site-header{position:fixed;top:0;left:0;right:0;height:var(--header-h);background:var(--bg2);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 20px;z-index:100;backdrop-filter:blur(12px)}
+.header-logo{display:flex;align-items:center;gap:12px;font-weight:700;font-size:18px;color:var(--heading)}
+.header-logo-text{display:flex;flex-direction:column;line-height:1.2}
+.header-logo-main{font-size:20px;font-weight:800}
+.header-logo-sub{font-size:11px;font-weight:600;color:var(--neon);letter-spacing:1px;text-transform:uppercase;margin-top:2px}
+.header-right{margin-left:auto;display:flex;align-items:center;gap:12px}
+.header-xp{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--xp-purple);font-weight:600}
+.header-xp-bar{width:80px;height:6px;background:var(--bg3);border-radius:3px;overflow:hidden}
+.header-xp-fill{height:100%;background:var(--xp-purple);border-radius:3px;transition:width .5s}
+.header-streak{display:flex;align-items:center;gap:4px;font-size:13px;color:var(--streak-red);font-weight:600}
+.theme-toggle{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:var(--bg3);transition:background .2s}
+.theme-toggle:hover{background:var(--border)}
+.theme-picker-wrap{position:relative}
+.theme-picker-btn{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:var(--bg3);transition:background .2s;font-size:16px}
+.theme-picker-btn:hover{background:var(--border)}
+.theme-picker-dd{position:absolute;top:calc(100% + 8px);right:0;background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:12px;box-shadow:var(--shadow-lg);z-index:200;display:none;min-width:240px}
+.theme-picker-dd.open{display:block}
+.theme-picker-dd .tp-label{font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--text-dim);margin-bottom:8px}
+.tp-world{display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:var(--radius-sm);cursor:pointer;transition:background .15s;margin-bottom:2px}
+.tp-world:hover{background:var(--bg3)}
+.tp-world.active{background:var(--neon-dim)}
+.tp-world-color{width:28px;height:28px;border-radius:6px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:14px}
+.tp-world-info{flex:1;min-width:0}
+.tp-world-name{font-size:13px;font-weight:600;color:var(--heading)}
+.tp-world-desc{font-size:10px;color:var(--text-dim)}
+.tp-divider{height:1px;background:var(--border);margin:8px 0}
+.tp-mode-row{display:flex;align-items:center;justify-content:space-between;padding:4px 10px}
+.tp-mode-label{font-size:12px;color:var(--text);font-weight:600}
+.tp-mode-switch{width:44px;height:24px;border-radius:12px;background:var(--bg3);position:relative;cursor:pointer;transition:background .2s}
+.tp-mode-switch.light{background:var(--neon)}
+.tp-mode-switch::after{content:'';position:absolute;top:3px;left:3px;width:18px;height:18px;border-radius:50%;background:#fff;transition:transform .2s;box-shadow:0 1px 3px rgba(0,0,0,.3)}
+.tp-mode-switch.light::after{transform:translateX(20px)}
+.menu-btn{display:none;width:36px;height:36px;border-radius:8px;align-items:center;justify-content:center;background:var(--bg3)}
+.sidebar{position:fixed;top:var(--header-h);left:0;width:var(--sidebar-w);height:calc(100vh - var(--header-h));background:var(--bg2);border-right:1px solid var(--border);overflow-y:auto;padding:16px 12px;z-index:90;transition:transform .3s}
+.sidebar-section{margin-bottom:20px}
+.sidebar-label{font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--text-dim);padding:0 8px;margin-bottom:8px}
+.sidebar-level{padding:8px 12px;background:var(--neon-dim);border-radius:var(--radius-sm);margin-bottom:12px;text-align:center}
+.sidebar-level-title{font-size:14px;font-weight:700;color:var(--neon)}
+.sidebar-level-sub{font-size:11px;color:var(--text-dim);margin-top:2px}
+.sidebar-xp-bar{width:100%;height:8px;background:var(--bg3);border-radius:4px;overflow:hidden;margin-top:6px}
+.sidebar-xp-fill{height:100%;background:linear-gradient(90deg,var(--xp-purple),var(--neon));border-radius:4px;transition:width .6s}
+.mod-link{display:flex;align-items:center;gap:10px;padding:8px 12px;border-radius:var(--radius-sm);transition:background .15s;color:var(--text);font-size:13px;text-decoration:none;position:relative;cursor:pointer}
+.mod-link:hover{background:var(--bg3);text-decoration:none}
+.mod-link.active{background:var(--neon-dim);color:var(--neon);font-weight:600}
+.mod-link.completed::after{content:'\2713';position:absolute;right:10px;color:var(--success);font-weight:700;font-size:12px}
+.mod-link .mod-icon{width:28px;height:28px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
+.main{margin-left:var(--sidebar-w);margin-top:var(--header-h);min-height:calc(100vh - var(--header-h));padding:32px;max-width:900px}
+.module-header{margin-bottom:32px}
+.module-header .mod-badge{display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--neon);margin-bottom:8px}
+.module-header h1{font-size:28px;margin-bottom:8px}
+.module-header .mod-desc{font-size:15px;color:var(--text-dim);max-width:600px}
+.lesson-card{background:var(--card);border:var(--card-border-w) var(--card-border-style) var(--border);border-radius:var(--radius);padding:24px;margin-bottom:20px;transition:border-color .2s}
+.lesson-card:hover{border-color:var(--neon)}
+.lesson-card h3{font-size:18px;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.lesson-card p,.lesson-card li{font-size:14px;line-height:1.7;color:var(--text)}
+.lesson-card ul,.lesson-card ol{margin:8px 0 8px 20px}
+.lesson-card code{background:var(--bg3);padding:2px 6px;border-radius:4px;font-size:13px;color:var(--neon)}
+.lesson-card pre{background:var(--bg);border:1px solid var(--border);border-radius:var(--radius-sm);padding:16px;overflow-x:auto;margin:12px 0;font-size:13px;line-height:1.5}
+.lesson-card .info-box{background:var(--neon-dim);border-left:3px solid var(--neon);padding:12px 16px;border-radius:0 var(--radius-sm) var(--radius-sm) 0;margin:12px 0;font-size:13px}
+.interactive-area{background:var(--card);border:calc(var(--card-border-w) + 1px) dashed var(--border);border-radius:var(--radius);padding:24px;margin:20px 0;min-height:200px}
+.interactive-area h4{font-size:15px;color:var(--neon);margin-bottom:12px}
+.ia-toolbar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+.ia-btn{padding:6px 14px;font-size:12px;font-weight:600;border-radius:var(--radius-sm);background:var(--neon-dim);color:var(--neon);border:1px solid transparent;transition:all .15s}
+.ia-btn:hover{background:var(--neon);color:#fff}
+.ia-btn.active{background:var(--neon);color:#fff}
+.ix-grid{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;margin:16px 0}
+.ix-item{background:var(--bg3);border:2px solid var(--border);border-radius:var(--radius-sm);padding:14px 20px;font-size:20px;cursor:pointer;transition:all .2s;user-select:none;text-align:center;min-width:60px}
+.ix-item:hover{border-color:var(--neon);background:var(--neon-dim)}
+.ix-item.selected{border-color:var(--neon);background:var(--neon-dim)}
+.ix-item.correct{border-color:var(--success);background:rgba(34,197,94,.1)}
+.ix-item.wrong{border-color:var(--danger);background:rgba(239,68,68,.1)}
+.ix-item.placed{opacity:.4;pointer-events:none}
+.ix-btn{background:var(--neon);color:#fff;border:none;padding:10px 24px;border-radius:var(--radius-sm);font-size:14px;font-weight:700;cursor:pointer;font-family:var(--font);margin-top:12px;transition:opacity .2s}
+.ix-btn:hover{opacity:.85}
+.ix-btn:disabled{opacity:.4;cursor:not-allowed}
+.ix-feedback{text-align:center;padding:14px;border-radius:var(--radius-sm);font-size:16px;font-weight:700;margin-top:12px;display:none}
+.ix-feedback.pass{display:block;background:rgba(34,197,94,.12);color:var(--success)}
+.ix-feedback.fail{display:block;background:rgba(239,68,68,.12);color:var(--danger)}
+.quiz-section{background:var(--card);border:var(--card-border-w) var(--card-border-style) var(--border);border-radius:var(--radius);padding:24px;margin-top:24px}
+.quiz-section h3{font-size:18px;margin-bottom:16px;color:var(--xp-purple)}
+.quiz-q{margin-bottom:20px}
+.quiz-q p{font-size:14px;font-weight:600;margin-bottom:10px}
+.quiz-q label{display:flex;align-items:flex-start;gap:10px;padding:10px 14px;border-radius:var(--radius-sm);border:1px solid var(--border);cursor:pointer;transition:all .15s;font-size:14px;margin-bottom:6px}
+.quiz-q label:hover{border-color:var(--neon);background:var(--neon-dim)}
+.quiz-q input[type="radio"]{margin-top:3px;accent-color:var(--neon)}
+.quiz-q label.correct{border-color:var(--success);background:rgba(34,197,94,.1)}
+.quiz-q label.wrong{border-color:var(--danger);background:rgba(239,68,68,.1)}
+.quiz-submit{padding:10px 24px;font-size:14px;font-weight:700;border-radius:var(--radius-sm);background:var(--xp-purple);color:#fff;transition:opacity .2s;margin-top:8px}
+.quiz-submit:hover{opacity:.85}
+.quiz-result{padding:16px;border-radius:var(--radius-sm);margin-top:16px;font-size:14px;font-weight:600;text-align:center}
+.quiz-result.pass{background:rgba(34,197,94,.12);color:var(--success);border:1px solid rgba(34,197,94,.3)}
+.quiz-result.fail{background:rgba(239,68,68,.12);color:var(--danger);border:1px solid rgba(239,68,68,.3)}
+.quiz-explanation{margin-top:6px;padding:8px 14px;border-radius:var(--radius-sm);background:rgba(34,197,94,.08);border-left:3px solid var(--success);font-size:13px;color:var(--success);font-weight:600}
+.boss-section{background:linear-gradient(135deg,rgba(168,85,247,.08),rgba(59,130,246,.08));border:2px solid var(--xp-purple);border-radius:var(--radius);padding:24px;margin-top:24px}
+.boss-section h3{color:var(--xp-purple);font-size:20px;margin-bottom:4px}
+.boss-section .boss-sub{font-size:13px;color:var(--text-dim);margin-bottom:16px}
+.badge-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(100px,1fr));gap:12px;margin-top:12px}
+.badge-item{text-align:center;padding:12px 8px;border-radius:var(--radius-sm);background:var(--bg3);opacity:.4;transition:all .3s}
+.badge-item.earned{opacity:1;background:var(--neon-dim);border:1px solid var(--neon)}
+.badge-item .badge-icon{font-size:28px;margin-bottom:4px}
+.badge-item .badge-name{font-size:10px;font-weight:600;color:var(--text-dim)}
+.badge-item.earned .badge-name{color:var(--neon)}
+.stats-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px;margin-top:12px}
+.stat-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius-sm);padding:16px;text-align:center}
+.stat-card .stat-val{font-size:28px;font-weight:700;color:var(--neon)}
+.stat-card .stat-label{font-size:12px;color:var(--text-dim);margin-top:4px}
+.notif{position:fixed;top:80px;right:20px;background:var(--card);border:1px solid var(--neon);border-radius:var(--radius);padding:16px 20px;box-shadow:var(--shadow-lg);z-index:200;transform:translateX(120%);transition:transform .4s cubic-bezier(.22,1,.36,1);max-width:320px}
+.notif.show{transform:translateX(0)}
+.notif-title{font-size:14px;font-weight:700;color:var(--heading);margin-bottom:2px}
+.notif-text{font-size:12px;color:var(--text-dim)}
+.notif.xp{border-color:var(--xp-purple)}
+.notif.badge{border-color:var(--badge-cyan)}
+.notif.level{border-color:var(--success)}
+.notif.streak{border-color:var(--streak-red)}
+.level-up-overlay{position:fixed;inset:0;background:rgba(0,0,0,.7);display:none;align-items:center;justify-content:center;z-index:300}
+.level-up-overlay.active{display:flex}
+.level-up-box{text-align:center;padding:40px;animation:lvlPop .5s ease-out}
+.level-up-box .lvl-icon{font-size:64px;margin-bottom:12px}
+.level-up-box .lvl-title{font-size:28px;font-weight:900;color:var(--heading)}
+.level-up-box .lvl-name{font-size:20px;color:var(--xp-purple);font-weight:700;margin-top:4px}
+@keyframes lvlPop{from{transform:scale(.5);opacity:0}to{transform:scale(1);opacity:1}}
+.welcome-screen{display:flex;align-items:center;justify-content:center;min-height:calc(100vh - var(--header-h));text-align:center;padding:40px 20px}
+.welcome-box{max-width:480px}
+.welcome-box h1{font-size:36px;margin-bottom:8px}
+.welcome-box .ws-sub{color:var(--text-dim);font-size:15px;margin-bottom:32px}
+.welcome-box input{width:100%;max-width:320px;padding:12px 16px;font-size:16px;border-radius:var(--radius-sm);border:1px solid var(--border);background:var(--bg3);color:var(--heading);font-family:var(--font);text-align:center;margin-bottom:16px}
+.welcome-box input:focus{border-color:var(--neon);outline:2px solid var(--neon);outline-offset:2px}
+.welcome-box .ws-start{padding:14px 40px;font-size:16px;font-weight:700;border-radius:var(--radius-sm);background:var(--neon);color:#fff;transition:opacity .2s}
+.welcome-box .ws-start:hover{opacity:.85}
+.welcome-box .ws-start:disabled{opacity:.4;cursor:not-allowed}
+.cert-overlay{position:fixed;inset:0;background:rgba(0,0,0,.88);display:none;align-items:center;justify-content:center;z-index:400;padding:20px;flex-direction:column;backdrop-filter:blur(8px)}
+.cert-overlay.active{display:flex}
+.cert-picker{display:flex;gap:12px;justify-content:center;margin-bottom:20px;flex-wrap:wrap}
+.cert-pick-btn{padding:10px 20px;font-size:13px;font-weight:700;border-radius:12px;border:2px solid rgba(255,255,255,.15);background:rgba(255,255,255,.06);color:rgba(255,255,255,.7);transition:all .3s;backdrop-filter:blur(4px)}
+.cert-pick-btn:hover{border-color:rgba(255,255,255,.3);color:#fff;transform:translateY(-2px)}
+.cert-pick-btn.active{border-color:#ffd700;color:#ffd700;background:rgba(255,215,0,.1);box-shadow:0 0 20px rgba(255,215,0,.15)}
+.cert-frame{width:720px;max-width:100%;aspect-ratio:1.414;position:relative;overflow:hidden;animation:certEntrance .6s cubic-bezier(.34,1.56,.64,1) both}
+.cert-actions{display:flex;gap:12px;justify-content:center;margin-top:16px}
+.cert-actions button{padding:12px 28px;font-size:13px;font-weight:700;border-radius:12px;background:linear-gradient(135deg,var(--neon),var(--link));color:#fff;transition:transform .2s,box-shadow .2s}
+.cert-actions button:hover{transform:translateY(-2px);box-shadow:0 4px 20px rgba(0,0,0,.3)}
+@keyframes certEntrance{0%{opacity:0;transform:scale(.8) translateY(30px)}100%{opacity:1;transform:scale(1) translateY(0)}}
+@keyframes shimmer{0%{background-position:-200% 0}100%{background-position:200% 0}}
+@keyframes blink{50%{opacity:0}}
+@keyframes glitch{0%,93%{text-shadow:0 0 20px rgba(0,212,255,.5)}94%{text-shadow:-3px 0 #ff0040,3px 0 #00d4ff;transform:skewX(-2deg)}95%{text-shadow:3px 0 #ff0040,-3px 0 #00d4ff;transform:skewX(2deg)}96%{text-shadow:-1px 2px #ff0040,1px -2px #00d4ff}97%,100%{text-shadow:0 0 20px rgba(0,212,255,.5);transform:skewX(0)}}
+@keyframes pixelBlink{50%{opacity:0}}
+@keyframes holoSpin{to{transform:rotate(360deg)}}
+@keyframes aurora{0%{background-position:0% 50%}25%{background-position:50% 100%}50%{background-position:100% 50%}75%{background-position:50% 0%}100%{background-position:0% 50%}}
+@keyframes goldShimmer{0%{background-position:-100% 0}100%{background-position:200% 0}}
+@keyframes neonPulse{0%,100%{box-shadow:0 0 5px #00ff41,0 0 10px #00ff41,0 0 20px rgba(0,255,65,.3)}50%{box-shadow:0 0 10px #00ff41,0 0 25px #00ff41,0 0 50px rgba(0,255,65,.4)}}
+@keyframes matrixFall{0%{transform:translateY(-100%);opacity:1}100%{transform:translateY(100vh);opacity:0}}
+.cert-common-stats{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin:10px 0}
+.cert-stat{padding:4px 10px;border-radius:20px;font-size:11px;font-weight:700;display:inline-flex;align-items:center;gap:4px}
+.cert-badge-row{display:flex;gap:6px;justify-content:center;flex-wrap:wrap;margin:8px 0}
+.cert-badge-item{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px}
+.cert-verification{font-size:10px;letter-spacing:2px;margin-top:8px;opacity:.5;font-family:var(--mono)}
+.cert-logo-footer{display:flex;align-items:center;justify-content:center;gap:6px;margin-top:10px;opacity:.4;font-size:10px}
+.cert-logo-footer svg{width:16px;height:16px}
+.cert-akademie{background:linear-gradient(145deg,#faf6e8,#f0e8d0,#e8dfc0);border:none;padding:0;text-align:center;font-family:var(--serif);color:#1a1a3e;position:relative;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;overflow:hidden}
+.cert-akademie::before{content:'';position:absolute;inset:0;background:url("data:image/svg+xml,%3Csvg width='60' height='60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 5 L35 20 L30 15 L25 20Z' fill='%23c5a54e' opacity='.04'/%3E%3C/svg%3E");pointer-events:none}
+.cert-akademie::after{content:'';position:absolute;inset:8px;border:2px solid rgba(197,165,78,.35);border-radius:2px;pointer-events:none}
+.cert-akademie .cert-inner{position:relative;z-index:1;padding:36px 32px;width:100%}
+.cert-akademie .cert-corner{position:absolute;width:60px;height:60px;z-index:2}
+.cert-akademie .cert-corner svg{width:100%;height:100%}
+.cert-akademie .cert-corner-tl{top:14px;left:14px}
+.cert-akademie .cert-corner-tr{top:14px;right:14px;transform:scaleX(-1)}
+.cert-akademie .cert-corner-bl{bottom:14px;left:14px;transform:scaleY(-1)}
+.cert-akademie .cert-corner-br{bottom:14px;right:14px;transform:scale(-1)}
+.cert-akademie .cert-title{font-size:36px;font-weight:700;color:#1a1a3e;margin-bottom:2px;letter-spacing:3px}
+.cert-akademie .cert-sub{font-size:11px;color:#8a7d5e;letter-spacing:5px;text-transform:uppercase;margin-bottom:16px}
+.cert-akademie .cert-hr{width:200px;height:2px;background:linear-gradient(90deg,transparent,#c5a54e,transparent);margin:10px auto}
+.cert-akademie .cert-body{font-size:14px;line-height:1.7;color:#3d3422;margin-bottom:8px}
+.cert-akademie .cert-name{font-size:32px;font-weight:700;background:linear-gradient(135deg,#c5a54e,#e8c84e,#c5a54e);background-size:200% auto;animation:goldShimmer 3s linear infinite;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin:12px 0;font-style:italic}
+.cert-akademie .cert-seal-wrap{margin:12px auto;position:relative;width:90px;height:90px}
+.cert-akademie .cert-seal-ring{position:absolute;inset:0;border:3px solid #c5a54e;border-radius:50%;opacity:.3}
+.cert-akademie .cert-seal{width:76px;height:76px;margin:7px;background:radial-gradient(circle at 35% 35%,#e8c84e,#c5a54e,#8a6914);border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 16px rgba(160,134,54,.5),inset 0 2px 4px rgba(255,255,255,.3)}
+.cert-akademie .cert-stat{background:rgba(197,165,78,.12);color:#8a6914;border:1px solid rgba(197,165,78,.25)}
+.cert-akademie .cert-badge-item{background:rgba(197,165,78,.15);border:1px solid rgba(197,165,78,.3)}
+.cert-akademie .cert-date{font-size:11px;color:#8a7d5e;margin-top:8px;font-style:italic}
+.cert-hacker{background:#050505;border:2px solid #00ff41;padding:0;font-family:var(--mono);color:#00ff41;position:relative;overflow:hidden;height:100%;display:flex;flex-direction:column;justify-content:center;box-shadow:0 0 30px rgba(0,255,65,.15),inset 0 0 60px rgba(0,255,65,.03);animation:neonPulse 4s ease-in-out infinite}
+.cert-hacker::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(transparent,transparent 2px,rgba(0,255,65,.025) 2px,rgba(0,255,65,.025) 4px);pointer-events:none;z-index:1}
+.cert-hacker::after{content:'> > > CERTIFIED > > > CERTIFIED > > > CERTIFIED > > >';position:absolute;bottom:0;left:0;right:0;font-size:9px;color:rgba(0,255,65,.08);letter-spacing:3px;padding:4px;white-space:nowrap;overflow:hidden;z-index:1}
+.cert-hacker .cert-inner{position:relative;z-index:2;padding:30px 32px}
+.cert-hacker .cert-matrix-col{position:absolute;top:-100%;font-size:11px;color:#00ff41;opacity:.08;z-index:0;font-family:var(--mono);line-height:1.1;animation:matrixFall linear infinite;white-space:pre}
+.cert-hacker .cert-title{font-size:22px;font-weight:700;text-shadow:0 0 15px rgba(0,255,65,.6);margin-bottom:4px}
+.cert-hacker .cert-access{font-size:32px;font-weight:700;color:#00d4ff;text-shadow:0 0 30px rgba(0,212,255,.6),0 0 60px rgba(0,212,255,.2);margin:14px 0;animation:glitch 4s infinite;letter-spacing:4px}
+.cert-hacker .cert-body{font-size:12px;line-height:2;color:#33cc55}
+.cert-hacker .cert-name{font-size:24px;color:#00d4ff;margin:12px 0;text-shadow:0 0 10px rgba(0,212,255,.4)}
+.cert-hacker .cert-prompt{color:#444;font-size:11px}
+.cert-hacker .cert-prompt span{color:#00ff41}
+.cert-hacker .cursor-blink{animation:blink 1s step-end infinite}
+.cert-hacker .cert-hex-seal{width:70px;height:70px;margin:12px auto;border:2px solid #00ff41;border-radius:50%;display:flex;align-items:center;justify-content:center;position:relative;box-shadow:0 0 15px rgba(0,255,65,.2)}
+.cert-hacker .cert-stat{background:rgba(0,255,65,.08);color:#00ff41;border:1px solid rgba(0,255,65,.2)}
+.cert-hacker .cert-badge-item{background:rgba(0,255,65,.08);border:1px solid rgba(0,255,65,.2)}
+.cert-pixel{background:linear-gradient(180deg,#0f0f2e,#1a1a3e,#0f0f2e);border:6px solid #ffd700;padding:0;text-align:center;color:#fff;font-family:var(--font);position:relative;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;overflow:hidden;box-shadow:inset 0 0 80px rgba(255,215,0,.05)}
+.cert-pixel .cert-inner{position:relative;z-index:1;padding:28px 24px;width:100%}
+.cert-pixel .cert-complete{font-size:20px;color:#00e676;margin:6px 0;animation:pixelBlink 1.2s step-end infinite;text-shadow:0 0 10px rgba(0,230,118,.4);letter-spacing:3px;font-weight:900}
+.cert-pixel .cert-title{font-size:32px;font-weight:900;color:#ffd700;text-transform:uppercase;letter-spacing:5px;text-shadow:4px 4px 0 #e4002b}
+.cert-pixel .cert-name{font-size:26px;font-weight:900;color:#fff;margin:14px 0;text-shadow:2px 2px 0 rgba(0,0,0,.5)}
+.cert-pixel .cert-stars{font-size:28px;margin:8px 0;letter-spacing:6px;color:#ffd700;text-shadow:0 0 10px rgba(255,215,0,.4)}
+.cert-pixel .cert-body{font-size:12px;color:#aaa;line-height:1.7}
+.cert-pixel .cert-score{font-size:18px;color:#ff4757;font-weight:900;margin-top:6px;text-shadow:2px 2px 0 rgba(0,0,0,.5);letter-spacing:2px}
+.cert-pixel .cert-xp-bar{width:200px;height:14px;background:#111;border:2px solid #ffd700;margin:8px auto;position:relative;overflow:hidden}
+.cert-pixel .cert-xp-fill{height:100%;background:repeating-linear-gradient(90deg,#ffd700 0px,#ffd700 8px,#ffaa00 8px,#ffaa00 16px);box-shadow:0 0 8px rgba(255,215,0,.4)}
+.cert-pixel .cert-xp-label{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:900;color:#fff;text-shadow:1px 1px 0 #000;z-index:1}
+.cert-pixel .cert-stat{background:rgba(255,215,0,.1);color:#ffd700;border:2px solid rgba(255,215,0,.3)}
+.cert-pixel .cert-badge-item{background:rgba(255,215,0,.1);border:2px solid rgba(255,215,0,.25)}
+.cert-zukunft{background:linear-gradient(135deg,#0a0a2e,#1a0a3e,#0a1a3e);border:1px solid rgba(255,255,255,.1);border-radius:20px;padding:0;text-align:center;color:#fff;font-family:var(--font);position:relative;overflow:hidden;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.cert-zukunft::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(99,102,241,.15),rgba(236,72,153,.15),rgba(245,158,11,.15),rgba(34,197,94,.15),rgba(99,102,241,.15));background-size:400% 400%;animation:aurora 8s ease infinite;pointer-events:none}
+.cert-zukunft .cert-inner{position:relative;z-index:1;padding:30px 28px;width:100%}
+.cert-zukunft .cert-particle{position:absolute;width:3px;height:3px;border-radius:50%;z-index:0}
+.cert-zukunft .cert-title{font-size:30px;font-weight:900;background:linear-gradient(135deg,#6366f1,#ec4899,#f59e0b,#22c55e);background-size:200% auto;animation:shimmer 4s linear infinite;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.cert-zukunft .cert-sub{font-size:11px;color:rgba(255,255,255,.5);letter-spacing:4px;text-transform:uppercase;margin-bottom:14px}
+.cert-zukunft .cert-name{font-size:28px;font-weight:700;margin:12px 0;background:linear-gradient(90deg,#a78bfa,#f472b6,#fbbf24);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.cert-zukunft .cert-body{font-size:13px;color:rgba(255,255,255,.65);line-height:1.7}
+.cert-zukunft .cert-seal-holo{width:80px;height:80px;margin:12px auto;border-radius:50%;background:conic-gradient(#6366f1,#ec4899,#f59e0b,#22c55e,#06b6d4,#6366f1);display:flex;align-items:center;justify-content:center;animation:holoSpin 6s linear infinite;box-shadow:0 0 30px rgba(99,102,241,.3)}
+.cert-zukunft .cert-seal-mid{width:68px;height:68px;border-radius:50%;border:2px solid rgba(255,255,255,.15);background:transparent;display:flex;align-items:center;justify-content:center;animation:holoSpin 10s linear infinite reverse}
+.cert-zukunft .cert-seal-inner{width:52px;height:52px;border-radius:50%;background:rgba(10,10,30,.9);display:flex;align-items:center;justify-content:center;backdrop-filter:blur(4px)}
+.cert-zukunft .cert-date{font-size:10px;color:rgba(255,255,255,.35);margin-top:10px;letter-spacing:2px}
+.cert-zukunft .cert-stat{background:rgba(99,102,241,.12);color:#a78bfa;border:1px solid rgba(99,102,241,.25)}
+.cert-zukunft .cert-badge-item{background:rgba(99,102,241,.1);border:1px solid rgba(99,102,241,.2)}
+.confetti-container{position:fixed;inset:0;pointer-events:none;z-index:600;overflow:hidden}
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.6);display:none;align-items:center;justify-content:center;z-index:500;padding:20px}
+.modal-overlay.active{display:flex}
+.modal{background:var(--card);border:1px solid var(--border);border-radius:var(--radius-lg);max-width:640px;width:100%;max-height:85vh;overflow-y:auto;padding:32px;position:relative}
+.modal-close{position:absolute;top:12px;right:12px;font-size:24px;color:var(--text-dim);background:none;border:none;cursor:pointer}
+@media(max-width:800px){
+.menu-btn{display:flex}
+.sidebar{transform:translateX(-100%)}
+.sidebar.open{transform:translateX(0)}
+.main{margin-left:0;padding:16px}
+}
+@media print{
+*{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}
+.site-header,.sidebar,.notif,.level-up-overlay,.confetti-container{display:none!important}
+.main{margin-left:0!important;padding:20px!important}
+.lesson-card{break-inside:avoid;page-break-inside:avoid}
+}
+
+.zoom-controls{position:fixed;bottom:16px;left:16px;display:flex;gap:4px;z-index:9999}
+.zoom-btn{width:32px;height:32px;border-radius:50%;border:1px solid var(--border,#2a3444);background:var(--bg2,#111827);color:var(--text,#d4dce8);cursor:pointer;font-size:15px;display:flex;align-items:center;justify-content:center;transition:all .2s;font-family:inherit;line-height:1}
+.zoom-btn:hover{border-color:var(--neon,#3b82f6);color:var(--neon,#3b82f6);transform:scale(1.1)}
+.zoom-btn:focus-visible{outline:2px solid var(--neon,#3b82f6);outline-offset:2px}
+.zoom-level{font-size:10px;position:absolute;top:-16px;left:50%;transform:translateX(-50%);color:var(--text-dim,#8899aa);white-space:nowrap;pointer-events:none}
+
+/* A11y: Print improvements */
+@media print{body{background:#fff!important;color:#000!important}.cert-overlay,.modal-overlay,.level-up-overlay,.theme-overlay,.zoom-controls{display:none!important}.lesson-card,.quiz-section,.boss-section,.interactive-area{break-inside:avoid;page-break-inside:avoid}}
+
+/* Audio/Speech */
+.tts-btn{background:none;border:none;cursor:pointer;font-size:.9em;opacity:.5;transition:all .2s;vertical-align:middle;margin-left:8px;padding:2px 6px;border-radius:4px}
+.tts-btn:hover{opacity:1;background:var(--bg2)}.tts-btn.speaking{opacity:1;color:var(--neon);animation:tts-pulse 1s infinite}
+@keyframes tts-pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.15)}}
+.tts-bar{display:flex;align-items:center;gap:8px;padding:6px 12px;background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);margin:8px 0;font-size:.8rem;flex-wrap:wrap}
+.tts-bar select{background:var(--bg);color:var(--text);border:1px solid var(--border);border-radius:4px;padding:2px 6px;font-size:.78rem}
+.tts-bar button{background:none;border:1px solid var(--border);border-radius:4px;padding:2px 8px;cursor:pointer;color:var(--text);font-size:.8rem}
+.tts-bar button:hover{background:var(--bg)}
+.speech-ex{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:16px;margin:12px 0;text-align:center}
+.speech-ex h4{margin:0 0 8px;font-size:1rem}
+.mic-btn{font-size:1.6em;background:none;border:2px solid var(--neon);border-radius:50%;width:52px;height:52px;cursor:pointer;transition:all .3s;color:var(--text);display:inline-flex;align-items:center;justify-content:center}
+.mic-btn:hover{background:var(--neon);color:var(--bg)}.mic-btn.rec{background:#ef4444;border-color:#ef4444;color:#fff;animation:tts-pulse 1s infinite}
+.sr-res{margin-top:8px;padding:6px 10px;border-radius:4px;font-weight:600;font-size:.85rem;display:inline-block}
+.sr-res.good{background:#22c55e22;color:#22c55e}.sr-res.retry{background:#f59e0b22;color:#f59e0b}
+.sr-na{font-size:.8rem;color:var(--text-dim);margin-top:8px}
+</style>
+</head>
+<body>
+<a href="#mainContent" class="skip-nav" style="position:absolute;top:-50px;left:8px;background:var(--neon);color:#fff;padding:8px 16px;z-index:9999;border-radius:0 0 8px 8px;font-weight:700;text-decoration:none">Zum Inhalt springen</a>
+<header class="site-header">
+<button class="menu-btn" onclick="toggleSidebar()" aria-label="Menu">&#9776;</button>
+<div class="header-logo">
+<svg viewBox="0 0 40 40" width="40" height="40" fill="none" aria-hidden="true">
+<rect x="4" y="4" width="32" height="32" rx="8" fill="var(--neon-dim)" stroke="var(--neon)" stroke-width="1.5"/>
+<text x="20" y="26" text-anchor="middle" font-size="18" font-weight="900" fill="var(--neon)">Z</text>
+</svg>
+<div class="header-logo-text">
+<div class="header-logo-main">FranzStarter</div>
+<div class="header-logo-sub">Franz\u00F6sisch Klasse 3-6</div>
+</div>
+</div>
+<div class="header-right">
+<div class="header-xp"><span id="headerLevel">Level 1</span><div class="header-xp-bar"><div class="header-xp-fill" style="width:0%"></div></div><span id="headerXP">0 XP</span></div>
+<div class="header-streak" id="headerStreak">&#128293; 0</div>
+<div class="theme-picker-wrap">
+<button class="theme-picker-btn" onclick="toggleThemePicker()" aria-label="Theme wählen">&#127912;</button>
+<div class="theme-picker-dd" id="themePickerDD"></div>
+</div>
+<button class="theme-toggle" onclick="toggleMode()" aria-label="Dark/Light umschalten">&#127769;</button>
+</div>
+</header>
+<nav class="sidebar" id="sidebar" role="navigation" aria-label="Module">
+<div class="sidebar-section">
+<div class="sidebar-level">
+<div class="sidebar-level-title" id="sidebarLevel">Franz-Anf\u00E4nger</div>
+<div class="sidebar-level-sub" id="sidebarXP">0 XP</div>
+<div class="sidebar-xp-bar"><div class="sidebar-xp-fill" id="sidebarXPFill" style="width:0%"></div></div>
+</div>
+</div>
+<div class="sidebar-section">
+<div class="sidebar-label">Module</div>
+<div id="sidebarModules"></div>
+</div>
+<div class="sidebar-section" style="border-top:1px solid var(--border);padding-top:12px;margin-top:12px">
+<a class="mod-link" onclick="showBadges()"><span class="mod-icon">&#127941;</span>Abzeichen</a>
+<a class="mod-link" onclick="showStats()"><span class="mod-icon">&#128202;</span>Statistik</a>
+<a class="mod-link" onclick="showCert()"><span class="mod-icon">&#127891;</span>Urkunde</a>
+</div>
+<div class="sidebar-section" style="border-top:1px solid var(--border);padding-top:12px;margin-top:12px">
+<a class="mod-link" onclick="exportData()"><span class="mod-icon">&#128190;</span>Speichern</a>
+    <a class="mod-link" onclick="exportFortschritt()"><span class="mod-icon">📄</span>Fortschritt (TXT)</a>
+<label class="mod-link" style="cursor:pointer"><span class="mod-icon">&#128194;</span>Laden<input type="file" accept=".json" onchange="importData(event)" style="display:none"></label>
+<a class="mod-link" onclick="if(confirm('Wirklich alles zurücksetzen?')){localStorage.removeItem(STORAGE_KEY);location.reload()}" style="color:var(--danger)"><span class="mod-icon">&#128465;</span>Zurücksetzen</a>
+</div>
+<div style="padding:16px 8px 8px;border-top:1px solid var(--border);margin-top:12px;font-size:11px;color:var(--text-dim)">
+<a onclick="showImpressum()" style="cursor:pointer;color:var(--text-dim)">Impressum</a> &middot;
+<a onclick="showDatenschutz()" style="cursor:pointer;color:var(--text-dim)">Datenschutz</a>
+</div>
+</nav>
+<main class="main" id="mainContent">
+<div class="welcome-screen" id="welcomeScreen">
+<div class="welcome-box">
+<div style="font-size:64px;margin-bottom:16px">&#127968;</div>
+<h1>FranzStarter</h1>
+<p class="ws-sub">Lerne Franz\u00F6sisch — Bonjour, Merci und vieles mehr!</p>
+<input type="text" id="nameInput" placeholder="Dein Name" maxlength="24" aria-label="Dein Name" oninput="document.getElementById('startBtn').disabled=!this.value.trim()">
+<br>
+<button class="ws-start" id="startBtn" disabled onclick="startApp()">Los geht's! &#9203;</button>
+</div>
+</div>
+<div id="moduleContent" style="display:none"></div>
+<div id="badgesView" style="display:none"></div>
+<div id="statsView" style="display:none"></div>
+</main>
+<div class="notif" id="notif" role="status" aria-live="polite" aria-atomic="true"><div class="notif-title" id="notifTitle"></div><div class="notif-text" id="notifText"></div></div>
+<div class="level-up-overlay" id="levelUpOverlay"><div class="level-up-box" id="levelUpBox"></div></div>
+<div class="confetti-container" id="confetti"></div>
+<div class="cert-overlay" id="certOverlay" role="dialog" aria-label="Urkunde" aria-modal="true">
+<div class="cert-picker" id="certPicker"></div>
+<div class="cert-frame" id="certFrame"></div>
+<div class="cert-actions">
+<button onclick="printCert()">&#128424; Drucken / PDF</button>
+<button onclick="closeCert()">Schließen</button>
+</div>
+</div>
+<div class="modal-overlay" id="impressumOverlay">
+<div class="modal">
+<button class="modal-close" onclick="document.getElementById('impressumOverlay').classList.remove('active')">&times;</button>
+<h2>Impressum</h2>
+<p><strong>&copy; 2026 GZ AI Stacks - Gerd Zimmermann</strong></p>
+<p>FranzStarter — Interaktive Franz\u00F6sisch-Lernapp f\u00FCr Klasse 3-6.</p>
+<p>Entwickelt mit Claude Code (Anthropic).</p>
+<p>Kontakt: gz-ai-stacks@example.com</p>
+</div>
+</div>
+<div class="modal-overlay" id="datenschutzOverlay">
+<div class="modal">
+<button class="modal-close" onclick="document.getElementById('datenschutzOverlay').classList.remove('active')">&times;</button>
+<h2>Datenschutzerklärung</h2>
+<p>Diese App speichert Daten <strong>ausschließlich lokal</strong> auf Ihrem Gerät.</p>
+<ul>
+<li>Keine Cookies</li>
+<li>Kein Tracking oder Analytics</li>
+<li>Keine externen Ressourcen</li>
+<li>Keine Registrierung</li>
+<li>Alle Daten verbleiben auf Ihrem Gerät</li>
+</ul>
+<p>Sie können Ihre gespeicherten Daten jederzeit über die "Zurücksetzen"-Funktion löschen.</p>
+</div>
+</div>
+<script>
+function showImpressum(){document.getElementById('impressumOverlay').classList.add('active')}
+function showDatenschutz(){document.getElementById('datenschutzOverlay').classList.add('active')}
+
+// === XOR Quiz Encryption ===
+
+// === Audio (TTS) ===
+const _synth=window.speechSynthesis,_LANG='fr-FR';let _ttsOn=false,_ttsRate=1,_ttsTimer=null;
+function speakLesson(i){if(_ttsOn){stopTTS();return}const c=document.querySelectorAll('.lesson-card');if(!c[i]||!_synth)return;stopTTS();const u=new SpeechSynthesisUtterance(c[i].innerText);u.lang=_LANG;u.rate=_ttsRate;u.onstart=()=>{_ttsOn=true;updTTSUI();startTTSTimer()};u.onend=()=>{_ttsOn=false;updTTSUI();clearTTSTimer()};u.onerror=()=>{_ttsOn=false;updTTSUI();clearTTSTimer()};_synth.speak(u);showTTSBar()}
+function speakText(t,lang){if(!_synth)return;stopTTS();const u=new SpeechSynthesisUtterance(t);u.lang=lang||_LANG;u.rate=_ttsRate;u.onstart=()=>{_ttsOn=true;updTTSUI();startTTSTimer()};u.onend=()=>{_ttsOn=false;updTTSUI();clearTTSTimer()};u.onerror=()=>{_ttsOn=false;updTTSUI();clearTTSTimer()};_synth.speak(u)}
+function stopTTS(){if(_synth){_synth.cancel()}_ttsOn=false;updTTSUI();clearTTSTimer()}
+function updTTSUI(){document.querySelectorAll('.tts-btn').forEach(b=>b.classList.toggle('speaking',_ttsOn))}
+function setTTSRate(r){_ttsRate=parseFloat(r)}
+function startTTSTimer(){clearTTSTimer();_ttsTimer=setInterval(()=>{if(_synth&&_synth.speaking&&!_synth.paused){_synth.pause();_synth.resume()}},10000)}
+function clearTTSTimer(){if(_ttsTimer){clearInterval(_ttsTimer);_ttsTimer=null}}
+function showTTSBar(){if(document.getElementById('ttsBar'))return;const mc=document.getElementById('moduleContent');if(!mc)return;const b=document.createElement('div');b.className='tts-bar';b.id='ttsBar';b.innerHTML='\u{1F50A} <select onchange="setTTSRate(this.value)"><option value="0.7">Langsam</option><option value="1" selected>Normal</option><option value="1.3">Schnell</option></select> <button onclick="stopTTS()">\u25A0 Stopp</button>';mc.prepend(b)}
+
+// === Audio (STT) ===
+const _SR=window.SpeechRecognition||window.webkitSpeechRecognition;let _rec=null,_recCB=null;
+function initSR(){if(!_SR)return false;_rec=new _SR();_rec.lang=_LANG;_rec.continuous=false;_rec.interimResults=false;_rec.onresult=e=>{const t=e.results[0][0].transcript.toLowerCase().trim();if(_recCB)_recCB(t,e.results[0][0].confidence)};_rec.onerror=()=>{document.querySelectorAll('.mic-btn').forEach(b=>b.classList.remove('rec'))};_rec.onend=()=>{document.querySelectorAll('.mic-btn').forEach(b=>b.classList.remove('rec'))};return true}
+function startSR(cb){if(!_rec&&!initSR()){cb(null,0);return}_recCB=cb;document.querySelectorAll('.mic-btn').forEach(b=>b.classList.add('rec'));try{_rec.start()}catch(e){cb(null,0)}}
+let _spIdx=0,_spSen=[];
+function initSpEx(m){const mod=modules[m];const d=document.createElement('div');d.innerHTML=mod.lessons.map(l=>l.content).join(' ');_spSen=d.textContent.split(/[.!?]+/).map(s=>s.trim()).filter(s=>s.length>15&&s.length<100).slice(0,5);_spIdx=0;renderSpEx()}
+function renderSpEx(){const el=document.getElementById('speechExArea');if(!el)return;if(!_spSen.length){el.innerHTML='<p class="sr-na">Keine S\u00E4tze f\u00FCr Sprach\u00FCbung verf\u00FCgbar.</p>';return}const s=_spSen[_spIdx].replace(/"/g,'&quot;').replace(/'/g,'&#39;');el.innerHTML='<p style="font-size:1.05em;color:var(--neon);margin:10px 0;font-style:italic">&bdquo;'+_spSen[_spIdx]+'&ldquo;</p><div style="display:flex;justify-content:center;gap:16px;margin:12px 0"><button class="tts-btn" onclick="speakText(this.closest(\'.speech-ex\').querySelector(\'p\').textContent)" style="font-size:1.5em;opacity:1" title="Vorlesen">&#128266;</button>'+(_SR?'<button class="mic-btn" onclick="doSpCheck()" title="Nachsprechen">&#127908;</button>':'<p class="sr-na">Spracherkennung nicht verf\u00FCgbar.</p>')+'</div><div id="srRes"></div><div style="font-size:.78rem;color:var(--text-dim);margin-top:8px">Satz '+(_spIdx+1)+' von '+_spSen.length+'</div>'}
+function doSpCheck(){const expected=_spSen[_spIdx].toLowerCase().replace(/[^a-z\u00e4\u00f6\u00fc\u00df\u00e9\u00e8\u00ea\u00e0 0-9]/g,'');startSR((spoken,conf)=>{const el=document.getElementById('srRes');if(!el)return;if(!spoken){el.innerHTML='<span class="sr-res retry">Nicht erkannt \u2014 nochmal versuchen</span>';return}const sim=calcSim(spoken.replace(/[^a-z\u00e4\u00f6\u00fc\u00df\u00e9\u00e8\u00ea\u00e0 0-9]/g,''),expected);if(sim>.45){el.innerHTML='<span class="sr-res good">\u2714 Gut! ('+Math.round(sim*100)+'%)</span>';_spIdx++;setTimeout(()=>{if(_spIdx<_spSen.length)renderSpEx();else{el.innerHTML='<span class="sr-res good">\u2714 Alle S\u00E4tze geschafft!</span>';if(typeof addXP==='function'&&typeof state!=='undefined'&&!state.interactiveResults['sp_'+state.currentModule]){state.interactiveResults['sp_'+state.currentModule]=true;addXP(30,'Sprach\u00FCbung');saveState()}}},1200)}else{el.innerHTML='<span class="sr-res retry">\u21BB Nochmal: &quot;'+spoken+'&quot;</span>'}})}
+function calcSim(a,b){const wa=a.split(/\s+/).filter(Boolean),wb=b.split(/\s+/).filter(Boolean);if(!wa.length||!wb.length)return 0;let c=0;wa.forEach(w=>{if(wb.some(x=>x.includes(w)||w.includes(x)))c++});return c/Math.max(wa.length,wb.length)}
+
+
+/* === Fortschritt-Export (TXT) === */
+function exportFortschritt(){
+  var t=document.title.replace(/\s*[\u2014\u2013|].*/,'').trim();
+  var d=new Date();
+  var dd=String(d.getDate()).padStart(2,'0');
+  var mm=String(d.getMonth()+1).padStart(2,'0');
+  var yyyy=d.getFullYear();
+  var datum=dd+'.'+mm+'.'+yyyy;
+  var datumFile=yyyy+'-'+mm+'-'+dd;
+
+  var mc=state.modulesCompleted||[];
+  var total=modules.length;
+  var done=mc.length;
+
+  var lvl=0;
+  for(var i=LEVELS.length-1;i>=0;i--){if(state.xp>=LEVELS[i].xp){lvl=i;break;}}
+  var lvlName=LEVELS[lvl]?LEVELS[lvl].name:'';
+
+  var sep='\u2550'.repeat(42);
+  var sep2='\u2500'.repeat(42);
+  var lines=[];
+  lines.push(sep);
+  lines.push('  LERNFORTSCHRITT \u2014 '+t);
+  lines.push(sep);
+  lines.push('');
+  lines.push('  Sch\u00FCler:   '+(state.name||'(kein Name)'));
+  lines.push('  Datum:     '+datum);
+  lines.push('  Level:     '+(lvl+1)+' \u2014 '+lvlName+' ('+state.xp+' XP)');
+  lines.push('  Streak:    '+(state.streak||0)+' Tage in Folge');
+  lines.push('');
+  lines.push(sep2);
+  lines.push('  MODULE ('+done+'/'+total+' abgeschlossen)');
+  lines.push(sep2);
+  lines.push('');
+
+  for(var m=0;m<modules.length;m++){
+    var mod=modules[m];
+    var isDone=mc.indexOf(m)!==-1;
+    var icon=isDone?'\u2705':'\u2B1C';
+    var line='  '+icon+' Modul '+(m+1)+': '+mod.title;
+    if(isDone){
+      var qs=state.quizResults&&state.quizResults[m]!=null?state.quizResults[m]:'?';
+      var bs=state.bossResults&&state.bossResults[m]!=null?state.bossResults[m]:'?';
+      line+='\n        Quiz: '+qs+'/5 | Boss: '+bs+'/3';
+    }
+    lines.push(line);
+  }
+
+  var earnedBadges=(state.badges||[]);
+  lines.push('');
+  lines.push(sep2);
+  lines.push('  ABZEICHEN ('+earnedBadges.length+'/'+BADGES.length+')');
+  lines.push(sep2);
+  lines.push('');
+  if(earnedBadges.length===0){
+    lines.push('  (noch keine)');
+  }else{
+    for(var b=0;b<BADGES.length;b++){
+      if(earnedBadges.indexOf(BADGES[b].id)!==-1){
+        lines.push('  '+BADGES[b].icon+' '+BADGES[b].name);
+      }
+    }
+  }
+
+  lines.push('');
+  lines.push(sep);
+  lines.push('  (c) 2026 GZ AI Stacks \u2014 Gerd Zimmermann');
+  lines.push(sep);
+
+  var txt=lines.join('\n');
+  var safeName=(state.name||'Schueler').replace(/[^a-zA-Z0-9\u00C0-\u017F]/g,'_');
+  var fileName='Fortschritt_'+t.replace(/[^a-zA-Z0-9\u00C0-\u017F]/g,'_')+'_'+safeName+'_'+datumFile+'.txt';
+  var a=document.createElement('a');
+  a.download=fileName;
+  a.href=URL.createObjectURL(new Blob([txt],{type:'text/plain;charset=utf-8'}));
+  a.click();
+}
+
+const _qk=[0x4A,0x7F,0x2B,0x61,0x5C,0x3E,0x18,0x73];
+function _d(h,i){return h^_qk[i%_qk.length]}
+
+// === Levels ===
+const LEVELS=[
+{name:'Franz-Anf\u00E4nger',xp:0},{name:'Zeitleisten-Leser',xp:40},{name:'Quellen-Entdecker',xp:100},
+{name:'Epochen-Kenner',xp:180},{name:'Fakten-Sammler',xp:280},{name:'Chronik-Forscher',xp:400},
+{name:'Franz-Detektiv',xp:540},{name:'Archiv-Experte',xp:700},{name:'Epochen-Navigator',xp:880},
+{name:'Quellenanalyst',xp:1080},{name:'Franz-Gelehrter',xp:1300},{name:'Zeitalter-Kenner',xp:1540},
+{name:'Historiker-Talent',xp:1800},{name:'Chronist',xp:2080},{name:'Franz-Stratege',xp:2380},
+{name:'Epochen-Meister',xp:2700},{name:'Franz-Professor',xp:3040},{name:'Herodot-Scholar',xp:3400},
+{name:'Clio-Meister',xp:3780},{name:'Franz-Genie',xp:4200}
+];
+
+// === Badges ===
+const BADGES=[
+{id:'m0',name:'Antike-Experte',icon:'🏛️',desc:'Modul 1 abgeschlossen'},
+{id:'m1',name:'Ritter-Meister',icon:'⚔️',desc:'Modul 2 abgeschlossen'},
+{id:'m2',name:'Renaissance-Kenner',icon:'🎨',desc:'Modul 3 abgeschlossen'},
+{id:'m3',name:'Aufkl\u00E4rungs-Denker',icon:'💡',desc:'Modul 4 abgeschlossen'},
+{id:'m4',name:'Revolutions-Held',icon:'🗽',desc:'Modul 5 abgeschlossen'},
+{id:'m5',name:'Industrie-Pioneer',icon:'🏭',desc:'Modul 6 abgeschlossen'},
+{id:'m6',name:'Weltkriegs-Analytiker',icon:'🌍',desc:'Modul 7 abgeschlossen'},
+{id:'m7',name:'Zeitzeuge',icon:'📜',desc:'Modul 8 abgeschlossen'},
+{id:'m8',name:'Kalter-Krieg-Experte',icon:'🧊',desc:'Modul 9 abgeschlossen'},
+{id:'m9',name:'Globalisierer',icon:'🌐',desc:'Modul 10 abgeschlossen'},
+{id:'first_quiz',name:'Quiz-Neuling',icon:'❓',desc:'Erstes Quiz bestanden'},
+{id:'perfect_quiz',name:'Perfektionist',icon:'💎',desc:'Quiz mit 5/5 bestanden'},
+{id:'first_boss',name:'Boss-Bezwinger',icon:'👑',desc:'Erste Boss-Challenge bestanden'},
+{id:'all_bosses',name:'Endgegner',icon:'🏆',desc:'Alle Boss-Challenges bestanden'},
+{id:'streak3',name:'Durchstarter',icon:'🔥',desc:'3 Tage in Folge gelernt'},
+{id:'streak7',name:'Wochenkrieger',icon:'⚔️',desc:'7 Tage in Folge gelernt'},
+{id:'half_done',name:'Halbzeit',icon:'⏳',desc:'5 Module abgeschlossen'},
+{id:'speed_quiz',name:'Blitz-Denker',icon:'⚡',desc:'Quiz in unter 60 Sekunden'},
+{id:'explorer',name:'Entdecker',icon:'🗺️',desc:'Alle Module angesehen'},
+{id:'graduate',name:'Absolvent',icon:'🎓',desc:'Alle 10 Module abgeschlossen'}
+];
+
+// === Theme Config ===
+const THEME_CONFIG={
+cyber:{name:'Cyber Neon',emoji:'\uD83D\uDDA5',color:'#3b82f6',desc:'Futuristisch & Digital'},
+retro:{name:'Retro Arcade',emoji:'\uD83D\uDD79',color:'#ffd700',desc:'80er Arcade-Feeling'},
+nature:{name:'Nature Forest',emoji:'\uD83C\uDF33',color:'#4ade80',desc:'Natürlich & Organisch'},
+space:{name:'Deep Space',emoji:'\uD83D\uDE80',color:'#c084fc',desc:'Kosmisch & Geheimnisvoll'},
+comic:{name:'Comic Pop',emoji:'\uD83D\uDCA5',color:'#ff6b6b',desc:'Bunt & Verspielt'},
+sketchy:{name:'Sketchy',emoji:'\u270D\uFE0F',color:'#d97706',desc:'Handgemacht & Warm'},
+'nature-code':{name:'Nature x Code',emoji:'\uD83C\uDF3F',color:'#10b981',desc:'Natur trifft Technik'},
+glass:{name:'Glasmorphism',emoji:'\uD83D\uDCA0',color:'#00d9ff',desc:'Modern & Transparent'}
+};
+
+// === Modules ===
+// === Modules ===
+const modules=[
+{id:0,title:'Bonjour! Begr\u00FC\u00DFung',icon:'\uD83D\uDC4B',duration:'20 Min.',description:'Sich vorstellen, begruessen und verabschieden auf Franz\u00F6sisch!',
+lessons:[
+{title:'Hallo und Tschuess',content:'<p>In Frankreich begruessen sich die Menschen mit <strong>Bonjour!</strong></p><p><strong>Wichtige Begr\u00FC\u00DFung:</strong></p><ul><li><strong>Bonjour!</strong> = Guten Tag!</li><li><strong>Salut!</strong> = Hallo! (unter Freunden)</li><li><strong>Bonsoir!</strong> = Guten Abend!</li><li><strong>Au revoir!</strong> = Auf Wiedersehen!</li><li><strong>Bonne nuit!</strong> = Gute Nacht!</li></ul><div class="info-box">\uD83D\uDCA1 <strong>Merke:</strong> In Frankreich gibt man sich zur Begr\u00FC\u00DFung oft <strong>Küsschen auf die Wange</strong> — das nennt man <strong>la bise</strong>!</div>'},
+{title:'Sich vorstellen',content:'<p>So stellst du dich auf Franz\u00F6sisch vor:</p><p><strong>Wichtige S\u00E4tze:</strong></p><ul><li><strong>Je m\'appelle...</strong> = Ich heiße...</li><li><strong>Comment tu t\'appelles?</strong> = Wie hei\u00DFt du?</li><li><strong>J\'ai ... ans.</strong> = Ich bin ... Jahre alt.</li><li><strong>J\'habite \u00E0...</strong> = Ich wohne in...</li><li><strong>Comment \u00E7a va?</strong> = Wie geht es dir?</li><li><strong>\u00C7a va bien!</strong> = Mir geht es gut!</li></ul><p><strong>Hoeflichkeit:</strong></p><ul><li><strong>S\'il vous pla\u00EEt</strong> = Bitte (Sie-Form)</li><li><strong>Merci!</strong> = Danke!</li><li><strong>Merci beaucoup!</strong> = Vielen Dank!</li></ul><div class="info-box">\uD83D\uDCA1 <strong>Wusstest du?</strong> In Frankreich sagt man <strong>\"vous\"</strong> zu Erwachsenen und <strong>\"tu\"</strong> zu Freunden — ähnlich wie \"Sie\" und \"du\" im Deutschen!</div>'}
+],
+quiz:[
+{q:'Was bedeutet \"Bonjour\"?',a:['Tschuess','Guten Tag','Gute Nacht','Danke'],_h:0x4B},
+{q:'Wie sagst du \"Ich heiße Anna\" auf Franz\u00F6sisch?',a:['Je suis Anna','Je m\'appelle Anna','J\'habite Anna','J\'ai Anna'],_h:0x7E},
+{q:'Was bedeutet \"Merci\"?',a:['Bitte','Hallo','Danke','Tschuess'],_h:0x29},
+{q:'Wie fragst du \"Wie geht es dir?\"',a:['Comment tu t\'appelles?','Comment \u00E7a va?','O\u00F9 habites-tu?','Quel \u00E2ge as-tu?'],_h:0x60},
+{q:'Was bedeutet \"Au revoir\"?',a:['Guten Morgen','Gute Nacht','Auf Wiedersehen','Hallo'],_h:0x5E}
+],
+boss:[
+{q:'Wann benutzt man in Frankreich \"tu\" und wann \"vous\"?',a:['Immer \"tu\"','\"tu\" f\u00FCr Freunde, \"vous\" f\u00FCr Erwachsene und Fremde','Immer \"vous\"','Es gibt keinen Unterschied'],_h:0x4B},
+{q:'Was ist \"la bise\"?',a:['Ein Kuchen','Küsschen auf die Wange zur Begr\u00FC\u00DFung','Ein Lied','Ein Tanz'],_h:0x7E},
+{q:'Wie antwortest du h\u00F6flich auf \"Merci\"?',a:['Bonjour','De rien! (Gern geschehen!)','Au revoir','Salut'],_h:0x29}
+]},
+{id:1,title:'Zahlen und Farben',icon:'\uD83C\uDFA8',duration:'20 Min.',description:'Zählen auf Franz\u00F6sisch und die wichtigsten Farben lernen.',
+lessons:[
+{title:'Zahlen von 1 bis 20',content:'<p>Zählen auf Franz\u00F6sisch ist gar nicht so schwer!</p><p><strong>1-10:</strong></p><ul><li><strong>1</strong> = un, <strong>2</strong> = deux, <strong>3</strong> = trois, <strong>4</strong> = quatre, <strong>5</strong> = cinq</li><li><strong>6</strong> = six, <strong>7</strong> = sept, <strong>8</strong> = huit, <strong>9</strong> = neuf, <strong>10</strong> = dix</li></ul><p><strong>11-20:</strong></p><ul><li><strong>11</strong> = onze, <strong>12</strong> = douze, <strong>13</strong> = treize, <strong>14</strong> = quatorze, <strong>15</strong> = quinze</li><li><strong>16</strong> = seize, <strong>17</strong> = dix-sept, <strong>18</strong> = dix-huit, <strong>19</strong> = dix-neuf, <strong>20</strong> = vingt</li></ul><div class="info-box">\uD83D\uDCA1 <strong>Merke:</strong> Ab 17 wird es logisch: <strong>dix-sept</strong> = zehn-sieben = 17!</div>'},
+{title:'Farben — Les couleurs',content:'<p>Die <strong>Farben</strong> auf Franz\u00F6sisch:</p><ul><li>\uD83D\uDD34 <strong>rouge</strong> = rot</li><li>\uD83D\uDD35 <strong>bleu</strong> = blau</li><li>\uD83D\uDFE2 <strong>vert</strong> = gr\u00FCn</li><li>\uD83D\uDFE1 <strong>jaune</strong> = gelb</li><li>\u26AB <strong>noir</strong> = schwarz</li><li>\u26AA <strong>blanc</strong> = weiss</li><li>\uD83D\uDFE0 <strong>orange</strong> = orange</li><li>\uD83D\uDFE3 <strong>violet</strong> = lila</li><li>\uD83D\uDFE4 <strong>marron</strong> = braun</li><li>\uD83E\uDFE9 <strong>rose</strong> = rosa</li></ul><p><strong>Beispiels\u00E4tze:</strong></p><ul><li><strong>Le ciel est bleu.</strong> = Der Himmel ist blau.</li><li><strong>La pomme est rouge.</strong> = Der Apfel ist rot.</li></ul><div class="info-box">\uD83D\uDCA1 <strong>Wusstest du?</strong> Die franz\u00F6sische Flagge hat die Farben <strong>bleu, blanc, rouge</strong> (blau, weiss, rot)!</div>'}
+],
+quiz:[
+{q:'Was bedeutet \"trois\"?',a:['Zwei','Drei','Vier','F\u00FCnf'],_h:0x4B},
+{q:'Wie hei\u00DFt \"blau\" auf Franz\u00F6sisch?',a:['Rouge','Vert','Bleu','Jaune'],_h:0x7D},
+{q:'Was ist \"dix\"?',a:['6','8','10','12'],_h:0x29},
+{q:'Welche Farbe ist \"vert\"?',a:['Rot','Gelb','Gr\u00FCn','Schwarz'],_h:0x61},
+{q:'Wie sagt man \"zwanzig\" auf Franz\u00F6sisch?',a:['Douze','Quinze','Seize','Vingt'],_h:0x5E}
+],
+boss:[
+{q:'Warum hei\u00DFt 17 auf Franz\u00F6sisch \"dix-sept\"?',a:['Zufall','Weil es zehn-sieben bedeutet (10+7)','Weil die Franzosen nicht z\u00E4hlen k\u00F6nnen','Weil es ein Eigenname ist'],_h:0x4B},
+{q:'Welche Farben hat die franz\u00F6sische Flagge?',a:['Rot, Gelb, Gr\u00FCn','Blau, Weiss, Rot','Schwarz, Rot, Gold','Weiss und Blau'],_h:0x7E},
+{q:'Was f\u00E4llt dir bei den Zahlen 11-16 auf?',a:['Sie sind wie im Deutschen','Jede hat einen eigenen Namen (nicht zusammengesetzt)','Sie klingen wie Englisch','Es gibt sie nicht'],_h:0x29}
+]},
+{id:2,title:'Meine Familie',icon:'\uD83D\uDC68\u200D\uD83D\uDC69\u200D\uD83D\uDC67\u200D\uD83D\uDC66',duration:'20 Min.',description:'Familienmitglieder auf Franz\u00F6sisch benennen und \u00FCber die Familie sprechen.',
+lessons:[
+{title:'La famille — Die Familie',content:'<p>Lerne die <strong>Familienmitglieder</strong> auf Franz\u00F6sisch:</p><ul><li><strong>la m\u00E8re</strong> = die Mutter, <strong>le p\u00E8re</strong> = der Vater</li><li><strong>les parents</strong> = die Eltern</li><li><strong>la soeur</strong> = die Schwester, <strong>le fr\u00E8re</strong> = der Bruder</li><li><strong>la grand-m\u00E8re</strong> = die Grossmutter (Oma)</li><li><strong>le grand-p\u00E8re</strong> = der Grossvater (Opa)</li><li><strong>l\'oncle</strong> = der Onkel, <strong>la tante</strong> = die Tante</li><li><strong>le cousin / la cousine</strong> = der Cousin / die Cousine</li></ul><div class="info-box">\uD83D\uDCA1 <strong>Merke:</strong> Im Franz\u00F6sischen gibt es <strong>\"le\"</strong> (m\u00E4nnlich) und <strong>\"la\"</strong> (weiblich) — das ist wie \"der\" und \"die\" im Deutschen!</div>'},
+{title:'\u00DCber die Familie sprechen',content:'<p>So erzählst du von deiner Familie:</p><p><strong>Wichtige S\u00E4tze:</strong></p><ul><li><strong>J\'ai un fr\u00E8re.</strong> = Ich habe einen Bruder.</li><li><strong>J\'ai deux soeurs.</strong> = Ich habe zwei Schwestern.</li><li><strong>Je n\'ai pas de fr\u00E8re.</strong> = Ich habe keinen Bruder.</li><li><strong>Ma m\u00E8re s\'appelle...</strong> = Meine Mutter hei\u00DFt...</li><li><strong>Mon p\u00E8re a 40 ans.</strong> = Mein Vater ist 40 Jahre alt.</li></ul><p><strong>Besitzanzeigende W\u00F6rter:</strong></p><ul><li><strong>mon</strong> = mein (m\u00E4nnlich), <strong>ma</strong> = meine (weiblich)</li><li><strong>mes</strong> = meine (Mehrzahl)</li><li><strong>ton</strong> = dein, <strong>ta</strong> = deine, <strong>tes</strong> = deine (Mehrzahl)</li></ul><div class="info-box">\uD83D\uDCA1 <strong>Wusstest du?</strong> In Frankreich heißen Grosseltern oft liebevoll <strong>\"Mamie\"</strong> und <strong>\"Papi\"</strong> (wie bei uns Oma und Opa)!</div>'}
+],
+quiz:[
+{q:'Was bedeutet \"la m\u00E8re\"?',a:['Die Schwester','Die Mutter','Die Tante','Die Oma'],_h:0x4A},
+{q:'Wie sagt man \"der Bruder\"?',a:['La soeur','Le p\u00E8re','Le fr\u00E8re','L\'oncle'],_h:0x7D},
+{q:'Was bedeutet \"les parents\"?',a:['Die Kinder','Die Eltern','Die Grosseltern','Die Geschwister'],_h:0x2A},
+{q:'Wie sagst du \"Ich habe eine Schwester\"?',a:['J\'ai un fr\u00E8re','J\'ai une soeur','Je suis soeur','Ma soeur est grande'],_h:0x60},
+{q:'Was ist der Unterschied zwischen \"le\" und \"la\"?',a:['Kein Unterschied','\"le\" = m\u00E4nnlich, \"la\" = weiblich','\"le\" = gross, \"la\" = klein','\"le\" = alt, \"la\" = jung'],_h:0x5D}
+],
+boss:[
+{q:'Warum muss man im Franz\u00F6sischen \"mon\" oder \"ma\" unterscheiden?',a:['Muss man nicht','Weil W\u00F6rter im Franz\u00F6sischen ein Geschlecht haben (m\u00E4nnlich/weiblich)','Weil \"mon\" f\u00FCr Kinder ist','Weil \"ma\" f\u00FCr Erwachsene ist'],_h:0x4B},
+{q:'Wie sagst du \"Ich habe keinen Bruder\" auf Franz\u00F6sisch?',a:['J\'ai un fr\u00E8re','Je n\'ai pas de fr\u00E8re','Mon fr\u00E8re n\'est pas','J\'ai pas fr\u00E8re'],_h:0x7E},
+{q:'Was bedeutet \"Mes grands-parents habitent \u00E0 Paris\"?',a:['Meine Eltern leben in Paris','Meine Grosseltern wohnen in Paris','Meine Geschwister sind in Paris','Mein Haus ist in Paris'],_h:0x29}
+]},
+{id:3,title:'Essen und Trinken',icon:'\uD83C\uDF55',duration:'20 Min.',description:'Franz\u00F6sische Spezialitäten kennenlernen und im Restaurant bestellen.',
+lessons:[
+{title:'Leckeres aus Frankreich',content:'<p>Frankreich ist berühmt f\u00FCr sein <strong>gutes Essen</strong>!</p><p><strong>Wichtige Lebensmittel:</strong></p><ul><li><strong>le pain</strong> = das Brot, <strong>la baguette</strong> = das Baguette</li><li><strong>le fromage</strong> = der K\u00E4se</li><li><strong>le croissant</strong> = das Croissant</li><li><strong>la cr\u00EApe</strong> = der Pfannkuchen</li><li><strong>la pomme</strong> = der Apfel, <strong>la banane</strong> = die Banane</li><li><strong>le poulet</strong> = das Huehnchen</li><li><strong>la salade</strong> = der Salat</li></ul><p><strong>Getränke:</strong></p><ul><li><strong>l\'eau</strong> = das Wasser</li><li><strong>le jus d\'orange</strong> = der Orangensaft</li><li><strong>le lait</strong> = die Milch</li></ul><div class="info-box">\uD83D\uDCA1 <strong>Wusstest du?</strong> In Frankreich gibt es \u00FCber <strong>1.000 verschiedene K\u00E4sesorten</strong>! K\u00E4se geh\u00F6rt zu jeder Mahlzeit.</div>'},
+{title:'Im Restaurant — Au restaurant',content:'<p>So bestellst du auf Franz\u00F6sisch:</p><p><strong>Wichtige S\u00E4tze:</strong></p><ul><li><strong>Je voudrais...</strong> = Ich möchte gerne...</li><li><strong>L\'addition, s\'il vous pla\u00EEt!</strong> = Die Rechnung, bitte!</li><li><strong>J\'ai faim.</strong> = Ich habe Hunger.</li><li><strong>J\'ai soif.</strong> = Ich habe Durst.</li><li><strong>C\'est d\u00E9licieux!</strong> = Das ist köstlich!</li></ul><p><strong>Mahlzeiten:</strong></p><ul><li><strong>le petit-d\u00E9jeuner</strong> = das Fruehst\u00FCck</li><li><strong>le d\u00E9jeuner</strong> = das Mittagessen</li><li><strong>le d\u00EEner</strong> = das Abendessen</li><li><strong>le go\u00FBter</strong> = die Zwischenmahlzeit (Nachmittagssnack)</li></ul><div class="info-box">\uD83D\uDCA1 <strong>Merke:</strong> Zum Fruehst\u00FCck essen Franzosen oft ein <strong>Croissant</strong> mit <strong>Konfitüre</strong> und trinken <strong>Kakao</strong> (chocolat chaud)!</div>'}
+],
+quiz:[
+{q:'Was bedeutet \"le pain\"?',a:['Der K\u00E4se','Das Brot','Der Kuchen','Die Milch'],_h:0x4B},
+{q:'Wie sagst du \"Ich möchte gerne...\"?',a:['Je suis...','J\'ai...','Je voudrais...','Je m\'appelle...'],_h:0x7D},
+{q:'Was ist \"le fromage\"?',a:['Die Wurst','Der K\u00E4se','Das Brot','Der Fisch'],_h:0x2A},
+{q:'Was bedeutet \"J\'ai faim\"?',a:['Ich habe Durst','Ich bin m\u00FCde','Ich habe Hunger','Ich bin gl\u00FCcklich'],_h:0x61},
+{q:'Welches Gebäck ist typisch franz\u00F6sisch zum Fruehst\u00FCck?',a:['Brezel','Croissant','Toast','Donut'],_h:0x5D}
+],
+boss:[
+{q:'Warum ist Essen in der franz\u00F6sischen Kultur so wichtig?',a:['Weil Franzosen viel essen','Gemeinsames Essen ist ein wichtiger Teil des sozialen Lebens und der Kultur','Weil es Vorschrift ist','Weil es nichts anderes zu tun gibt'],_h:0x4B},
+{q:'Was ist \"le go\u00FBter\" und wann findet er statt?',a:['Das Fruehst\u00FCck am Morgen','Ein Nachmittagssnack f\u00FCr Kinder','Das Abendessen','Ein Fest'],_h:0x7E},
+{q:'Wie fragst du h\u00F6flich nach der Rechnung?',a:['La carte!','L\'addition, s\'il vous pla\u00EEt!','Je veux payer!','Combien?'],_h:0x29}
+]},
+{id:4,title:'Tiere — Les animaux',icon:'\uD83D\uDC31',duration:'20 Min.',description:'Haustiere und Wildtiere auf Franz\u00F6sisch benennen.',
+lessons:[
+{title:'Haustiere und Bauernhoftiere',content:'<p>Viele <strong>Tiere</strong> heißen auf Franz\u00F6sisch ganz anders!</p><p><strong>Haustiere (les animaux domestiques):</strong></p><ul><li>\uD83D\uDC31 <strong>le chat</strong> = die Katze</li><li>\uD83D\uDC36 <strong>le chien</strong> = der Hund</li><li>\uD83D\uDC39 <strong>le hamster</strong> = der Hamster</li><li>\uD83D\uDC07 <strong>le lapin</strong> = das Kaninchen</li><li>\uD83D\uDC1F <strong>le poisson</strong> = der Fisch</li><li>\uD83D\uDC26 <strong>l\'oiseau</strong> = der Vogel</li></ul><p><strong>Bauernhoftiere:</strong></p><ul><li>\uD83D\uDC04 <strong>la vache</strong> = die Kuh</li><li>\uD83D\uDC14 <strong>le coq / la poule</strong> = der Hahn / die Henne</li><li>\uD83D\uDC34 <strong>le cheval</strong> = das Pferd</li><li>\uD83D\uDC37 <strong>le cochon</strong> = das Schwein</li><li>\uD83D\uDC11 <strong>le mouton</strong> = das Schaf</li></ul><div class="info-box">\uD83D\uDCA1 <strong>Merke:</strong> Der franz\u00F6sische Hahn <strong>\"le coq\"</strong> ist das <strong>Nationalsymbol</strong> Frankreichs!</div>'},
+{title:'Wildtiere',content:'<p><strong>Wildtiere (les animaux sauvages):</strong></p><ul><li>\uD83E\uDD81 <strong>le lion</strong> = der L\u00F6we</li><li>\uD83D\uDC18 <strong>l\'\u00E9l\u00E9phant</strong> = der Elefant</li><li>\uD83D\uDC12 <strong>le singe</strong> = der Affe</li><li>\uD83D\uDC0D <strong>le serpent</strong> = die Schlange</li><li>\uD83E\uDD8B <strong>le papillon</strong> = der Schmetterling</li><li>\uD83D\uDC2C <strong>le dauphin</strong> = der Delfin</li><li>\uD83D\uDC3B <strong>l\'ours</strong> = der Bär</li><li>\uD83E\uDD8A <strong>le renard</strong> = der Fuchs</li></ul><p><strong>Tierlaute auf Franz\u00F6sisch:</strong></p><ul><li>Hund: <strong>ouaf ouaf!</strong> (statt wau wau)</li><li>Katze: <strong>miaou!</strong></li><li>Hahn: <strong>cocorico!</strong> (statt kikeriki)</li><li>Kuh: <strong>meuh!</strong> (statt muh)</li></ul><div class="info-box">\uD83D\uDCA1 <strong>Wusstest du?</strong> Auf Franz\u00F6sisch macht der Hund <strong>\"ouaf ouaf\"</strong> — jede Sprache hat andere Tierlaute!</div>'}
+],
+quiz:[
+{q:'Was bedeutet \"le chat\"?',a:['Der Hund','Die Katze','Der Vogel','Der Fisch'],_h:0x4B},
+{q:'Wie hei\u00DFt \"der Hund\" auf Franz\u00F6sisch?',a:['Le chat','Le lapin','Le chien','Le cheval'],_h:0x7D},
+{q:'Welches Tier ist das Nationalsymbol Frankreichs?',a:['Der L\u00F6we','Der Adler','Der Hahn (le coq)','Der Bär'],_h:0x29},
+{q:'Was bedeutet \"le papillon\"?',a:['Der Schmetterling','Der Papagei','Der Delfin','Die Schnecke'],_h:0x60},
+{q:'Wie macht der Hahn auf Franz\u00F6sisch?',a:['Kikeriki','Ouaf ouaf','Cocorico','Miaou'],_h:0x5E}
+],
+boss:[
+{q:'Warum klingen Tierlaute in jeder Sprache anders?',a:['Weil die Tiere anders klingen','Jede Sprache interpretiert die Geräusche anders und dr\u00FCckt sie mit eigenen Lauten aus','Weil es verschiedene Tiere sind','Das stimmt nicht'],_h:0x4A},
+{q:'Was ist der Unterschied zwischen \"le coq\" und \"la poule\"?',a:['Kein Unterschied','Le coq = Hahn (m\u00E4nnlich), la poule = Henne (weiblich)','Le coq ist jung, la poule ist alt','Le coq ist gross, la poule ist klein'],_h:0x7E},
+{q:'Wie sagst du \"Ich habe eine Katze\" auf Franz\u00F6sisch?',a:['Je suis un chat','J\'ai un chat','Mon chat appelle','Le chat est moi'],_h:0x29}
+]},
+{id:5,title:'Schule — L\'\u00E9cole',icon:'\uD83C\uDFEB',duration:'20 Min.',description:'Schulfächer, Schulsachen und den Schulalltag in Frankreich kennenlernen.',
+lessons:[
+{title:'Schulfächer und Schulsachen',content:'<p>In Frankreich gehen Kinder auch in die <strong>Schule</strong> — aber einiges ist anders!</p><p><strong>Schulfächer (les mati\u00E8res):</strong></p><ul><li><strong>le fran\u00E7ais</strong> = Franz\u00F6sisch</li><li><strong>les math\u00E9matiques (les maths)</strong> = Mathematik</li><li><strong>l\'anglais</strong> = Englisch</li><li><strong>l\'histoire</strong> = Geschichte</li><li><strong>les sciences</strong> = Naturwissenschaften</li><li><strong>le sport</strong> = Sport</li><li><strong>la musique</strong> = Musik</li><li><strong>le dessin</strong> = Kunst/Zeichnen</li></ul><p><strong>Schulsachen (les fournitures scolaires):</strong></p><ul><li><strong>le cahier</strong> = das Heft, <strong>le livre</strong> = das Buch</li><li><strong>le stylo</strong> = der Kugelschreiber, <strong>le crayon</strong> = der Bleistift</li><li><strong>la gomme</strong> = der Radiergummi, <strong>la r\u00E8gle</strong> = das Lineal</li></ul><div class="info-box">\uD83D\uDCA1 <strong>Merke:</strong> In Frankreich haben Kinder <strong>mittwochs oft frei</strong> oder nur halbtags Schule!</div>'},
+{title:'Der Schulalltag in Frankreich',content:'<p>Schule in Frankreich ist ein bisschen <strong>anders</strong> als in Deutschland.</p><p><strong>Unterschiede:</strong></p><ul><li>Schule dauert oft von <strong>8:30 bis 16:30 Uhr</strong> (Ganztagsschule)</li><li>Mittwochs ist oft <strong>schulfrei</strong> oder nur Vormittag</li><li>Es gibt eine lange <strong>Mittagspause</strong> (1-2 Stunden!)</li><li>Viele Kinder essen in der <strong>Kantine</strong> (la cantine)</li><li>Noten gehen von <strong>0 bis 20</strong> (20 ist die beste Note)</li></ul><p><strong>Schulstufen:</strong></p><ul><li><strong>\u00C9cole maternelle</strong> = Kindergarten (3-6 Jahre)</li><li><strong>\u00C9cole primaire</strong> = Grundschule (6-11 Jahre)</li><li><strong>Coll\u00E8ge</strong> = Mittelschule (11-15 Jahre)</li><li><strong>Lyc\u00E9e</strong> = Gymnasium (15-18 Jahre)</li></ul><div class="info-box">\uD83D\uDCA1 <strong>Wusstest du?</strong> Die beste Note in Frankreich ist <strong>20/20</strong> — aber fast niemand bekommt sie! Eine 14 gilt schon als <strong>sehr gut</strong>!</div>'}
+],
+quiz:[
+{q:'An welchem Tag haben franz\u00F6sische Kinder oft frei?',a:['Montag','Mittwoch','Freitag','Samstag'],_h:0x4B},
+{q:'Was bedeutet \"le cahier\"?',a:['Das Buch','Der Stift','Das Heft','Der Rucksack'],_h:0x7E},
+{q:'Wie ist das Notensystem in Frankreich?',a:['1-6','A-F','0-20','1-10'],_h:0x29},
+{q:'Was ist die \"cantine\"?',a:['Die Turnhalle','Die Schulkantine (Mensa)','Das Klassenzimmer','Der Pausenhof'],_h:0x60},
+{q:'Was ist die \"\u00E9cole primaire\"?',a:['Der Kindergarten','Die Grundschule','Das Gymnasium','Die Uni'],_h:0x5D}
+],
+boss:[
+{q:'Warum dauert der Schultag in Frankreich l\u00E4nger als in Deutschland?',a:['Weil Franzosen langsam lernen','Es ist eine Ganztagsschule mit langer Mittagspause, daf\u00FCr ist mittwochs oft frei','Weil es mehr Fächer gibt','Weil die Lehrer strenger sind'],_h:0x4B},
+{q:'Warum gilt in Frankreich eine 14 von 20 schon als sehr gute Note?',a:['Weil 14 die Hoechstnote ist','Eine 20 ist fast unerreichbar — das System ist strenger bei der Bewertung','Weil franz\u00F6sische Sch\u00FCler schlecht sind','Weil 14 die Mitte ist'],_h:0x7E},
+{q:'Was ist der Unterschied zwischen \"le stylo\" und \"le crayon\"?',a:['Kein Unterschied','Stylo = Kugelschreiber, crayon = Bleistift','Stylo ist gr\u00F6\u00DFer','Crayon ist teurer'],_h:0x29}
+]},
+{id:6,title:'Wochentage und Monate',icon:'\uD83D\uDCC5',duration:'20 Min.',description:'Die Wochentage, Monate und Jahreszeiten auf Franz\u00F6sisch.',
+lessons:[
+{title:'Wochentage und Monate',content:'<p>Die <strong>Wochentage</strong> (les jours de la semaine):</p><ul><li><strong>lundi</strong> = Montag</li><li><strong>mardi</strong> = Dienstag</li><li><strong>mercredi</strong> = Mittwoch</li><li><strong>jeudi</strong> = Donnerstag</li><li><strong>vendredi</strong> = Freitag</li><li><strong>samedi</strong> = Samstag</li><li><strong>dimanche</strong> = Sonntag</li></ul><p><strong>Die 12 Monate</strong> (les mois):</p><ul><li><strong>janvier, f\u00E9vrier, mars, avril, mai, juin</strong></li><li><strong>juillet, ao\u00FBt, septembre, octobre, novembre, d\u00E9cembre</strong></li></ul><div class="info-box">\uD83D\uDCA1 <strong>Merke:</strong> Im Franz\u00F6sischen schreibt man Wochentage und Monate <strong>klein</strong> — anders als im Deutschen!</div>'},
+{title:'Jahreszeiten und Datum',content:'<p><strong>Die Jahreszeiten</strong> (les saisons):</p><ul><li>\uD83C\uDF38 <strong>le printemps</strong> = der Fr\u00FChling</li><li>\u2600\uFE0F <strong>l\'\u00E9t\u00E9</strong> = der Sommer</li><li>\uD83C\uDF42 <strong>l\'automne</strong> = der Herbst</li><li>\u2744\uFE0F <strong>l\'hiver</strong> = der Winter</li></ul><p><strong>Das Datum sagen:</strong></p><ul><li><strong>Quel jour sommes-nous?</strong> = Welchen Tag haben wir?</li><li><strong>Nous sommes le 5 mars.</strong> = Wir haben den 5. März.</li><li>Reihenfolge: <strong>le + Zahl + Monat + Jahr</strong></li><li>Ausnahme: Der 1. hei\u00DFt <strong>\"le premier\"</strong> (nicht \"le un\")</li></ul><p><strong>Geburtstag:</strong></p><ul><li><strong>Mon anniversaire est le...</strong> = Mein Geburtstag ist am...</li><li><strong>Joyeux anniversaire!</strong> = Herzlichen Gl\u00FCckwunsch!</li></ul><div class="info-box">\uD83D\uDCA1 <strong>Wusstest du?</strong> Der <strong>14. Juli</strong> (le quatorze juillet) ist der franz\u00F6sische Nationalfeiertag — wie der 3. Oktober in Deutschland!</div>'}
+],
+quiz:[
+{q:'Was bedeutet \"mercredi\"?',a:['Montag','Dienstag','Mittwoch','Freitag'],_h:0x4B},
+{q:'Wie hei\u00DFt \"der Fr\u00FChling\" auf Franz\u00F6sisch?',a:['L\'\u00E9t\u00E9','L\'automne','L\'hiver','Le printemps'],_h:0x7E},
+{q:'Wann ist der franz\u00F6sische Nationalfeiertag?',a:['1. Januar','14. Juli','3. Oktober','25. Dezember'],_h:0x2A},
+{q:'Wie sagt man \"Herzlichen Gl\u00FCckwunsch!\" auf Franz\u00F6sisch?',a:['Bonne nuit!','Bon voyage!','Joyeux anniversaire!','Bonsoir!'],_h:0x61},
+{q:'Was f\u00E4llt bei franz\u00F6sischen Wochentagen und Monaten auf?',a:['Sie werden gross geschrieben','Sie werden klein geschrieben','Sie sind gleich wie im Deutschen','Es gibt nur 6 Wochentage'],_h:0x5D}
+],
+boss:[
+{q:'Warum hei\u00DFt der 1. eines Monats \"le premier\" statt \"le un\"?',a:['Zufall','Es ist eine Sonderform — wie im Deutschen \"erster\" statt \"einster\"','Weil \"un\" nur f\u00FCr Tiere ist','Weil es schneller geht'],_h:0x4B},
+{q:'Was feiert Frankreich am 14. Juli?',a:['Weihnachten','Den Sturm auf die Bastille (Beginn der Revolution 1789)','Den Geburtstag des Präsidenten','Das Ende des Krieges'],_h:0x7E},
+{q:'Wie sagst du dein Geburtsdatum auf Franz\u00F6sisch?',a:['Je suis n\u00E9(e) le + Zahl + Monat + Jahr','Mon name est...','J\'ai birthday','Je date...'],_h:0x29}
+]},
+{id:7,title:'Mein K\u00F6rper',icon:'\uD83E\uDDB6',duration:'20 Min.',description:'K\u00F6rperteile benennen und sagen, wie es dir geht.',
+lessons:[
+{title:'K\u00F6rperteile — Le corps',content:'<p>Lerne die <strong>K\u00F6rperteile</strong> auf Franz\u00F6sisch:</p><p><strong>Kopf und Gesicht:</strong></p><ul><li><strong>la t\u00EAte</strong> = der Kopf</li><li><strong>les yeux</strong> = die Augen (Einzahl: l\'oeil)</li><li><strong>le nez</strong> = die Nase</li><li><strong>la bouche</strong> = der Mund</li><li><strong>les oreilles</strong> = die Ohren</li><li><strong>les cheveux</strong> = die Haare</li></ul><p><strong>K\u00F6rper:</strong></p><ul><li><strong>le bras</strong> = der Arm, <strong>la main</strong> = die Hand</li><li><strong>la jambe</strong> = das Bein, <strong>le pied</strong> = der Fuss</li><li><strong>le ventre</strong> = der Bauch, <strong>le dos</strong> = der Ruecken</li></ul><div class="info-box">\uD83D\uDCA1 <strong>Merke:</strong> Es gibt ein bekanntes franz\u00F6sisches Kinderlied: <strong>\"T\u00EAte, \u00E9paules, genoux et pieds\"</strong> (Kopf, Schultern, Knie und Füße)!</div>'},
+{title:'Wie geht es mir?',content:'<p>So sagst du, wie es dir geht oder wo etwas wehtut:</p><p><strong>Befinden:</strong></p><ul><li><strong>Je suis content(e).</strong> = Ich bin zufrieden/fröhlich.</li><li><strong>Je suis fatigu\u00E9(e).</strong> = Ich bin m\u00FCde.</li><li><strong>Je suis malade.</strong> = Ich bin krank.</li></ul><p><strong>Schmerzen ausdr\u00FCcken:</strong></p><ul><li><strong>J\'ai mal \u00E0 la t\u00EAte.</strong> = Ich habe Kopfschmerzen.</li><li><strong>J\'ai mal au ventre.</strong> = Ich habe Bauchschmerzen.</li><li><strong>J\'ai mal aux dents.</strong> = Ich habe Zahnschmerzen.</li></ul><p><strong>Die Formel:</strong> <strong>J\'ai mal \u00E0</strong> + K\u00F6rperteil</p><div class="info-box">\uD83D\uDCA1 <strong>Wusstest du?</strong> Im Franz\u00F6sischen \u00E4ndert sich die Endung je nach Geschlecht: Ein Junge sagt <strong>\"fatigu\u00E9\"</strong>, ein Mädchen <strong>\"fatigu\u00E9e\"</strong> (mit extra -e)!</div>'}
+],
+quiz:[
+{q:'Was bedeutet \"la t\u00EAte\"?',a:['Die Hand','Der Fuss','Der Kopf','Der Arm'],_h:0x4B},
+{q:'Wie sagst du \"Ich habe Bauchschmerzen\"?',a:['J\'ai mal \u00E0 la t\u00EAte','J\'ai mal au ventre','J\'ai mal aux dents','J\'ai mal au dos'],_h:0x7E},
+{q:'Was bedeutet \"les yeux\"?',a:['Die Ohren','Die Haare','Die Augen','Die Hände'],_h:0x29},
+{q:'Was bedeutet \"Je suis malade\"?',a:['Ich bin gl\u00FCcklich','Ich bin m\u00FCde','Ich bin krank','Ich bin stark'],_h:0x61},
+{q:'Wie hei\u00DFt das Kinderlied auf Franz\u00F6sisch?',a:['Alle meine Entchen','T\u00EAte, \u00E9paules, genoux et pieds','Bruder Jakob','Hänschen klein'],_h:0x5D}
+],
+boss:[
+{q:'Warum sagt ein Mädchen \"fatigu\u00E9e\" und ein Junge \"fatigu\u00E9\"?',a:['Weil Mädchen m\u00FCder sind','Im Franz\u00F6sischen bekommen Adjektive ein extra -e in der weiblichen Form','Zufall','Weil es zwei verschiedene W\u00F6rter sind'],_h:0x4B},
+{q:'Wie funktioniert die Formel \"J\'ai mal \u00E0...\"?',a:['Man sagt nur \"mal\"','\"J\'ai mal \u00E0\" + K\u00F6rperteil = Ich habe Schmerzen am...','Man zeigt einfach drauf','Man sagt \"ouch\"'],_h:0x7E},
+{q:'Was ist die Einzahl von \"les yeux\"?',a:['Le yeu','L\'oeil','La yeux','Un yeux'],_h:0x29}
+]},
+{id:8,title:'Hobbys und Sport',icon:'\u26BD',duration:'20 Min.',description:'\u00DCber Hobbys und Sportarten auf Franz\u00F6sisch sprechen.',
+lessons:[
+{title:'Hobbys — Les loisirs',content:'<p>Was machst du gerne in deiner <strong>Freizeit</strong>?</p><p><strong>Hobbys auf Franz\u00F6sisch:</strong></p><ul><li>\uD83C\uDFA8 <strong>le dessin</strong> = Zeichnen/Malen</li><li>\uD83C\uDFB5 <strong>la musique</strong> = Musik</li><li>\uD83D\uDCDA <strong>la lecture</strong> = Lesen</li><li>\uD83C\uDFAE <strong>les jeux vid\u00E9o</strong> = Videospiele</li><li>\uD83C\uDFA5 <strong>le cin\u00E9ma</strong> = Kino</li><li>\uD83D\uDE34 <strong>la danse</strong> = Tanzen</li><li>\uD83C\uDF73 <strong>la cuisine</strong> = Kochen</li></ul><p><strong>Dar\u00FCber sprechen:</strong></p><ul><li><strong>J\'aime...</strong> = Ich mag/liebe...</li><li><strong>Je n\'aime pas...</strong> = Ich mag nicht...</li><li><strong>J\'adore...</strong> = Ich liebe... (st\u00E4rker)</li><li><strong>Je d\u00E9teste...</strong> = Ich hasse...</li></ul><div class="info-box">\uD83D\uDCA1 <strong>Merke:</strong> <strong>\"J\'aime\"</strong> bedeutet sowohl \"ich mag\" als auch \"ich liebe\" — je nach Kontext!</div>'},
+{title:'Sport — Le sport',content:'<p><strong>Sportarten</strong> auf Franz\u00F6sisch:</p><ul><li>\u26BD <strong>le football (le foot)</strong> = Fussball</li><li>\uD83C\uDFC0 <strong>le basket</strong> = Basketball</li><li>\uD83C\uDFBE <strong>le tennis</strong> = Tennis</li><li>\uD83C\uDFCA <strong>la natation</strong> = Schwimmen</li><li>\uD83D\uDEB4 <strong>le v\u00E9lo / le cyclisme</strong> = Radfahren</li><li>\uD83C\uDFC3 <strong>la course</strong> = Laufen/Rennen</li><li>\u26F7\uFE0F <strong>le ski</strong> = Skifahren</li></ul><p><strong>Sport machen:</strong></p><ul><li><strong>Je fais du sport.</strong> = Ich mache Sport.</li><li><strong>Je joue au football.</strong> = Ich spiele Fussball.</li><li><strong>Je fais de la natation.</strong> = Ich schwimme.</li></ul><div class="info-box">\uD83D\uDCA1 <strong>Wusstest du?</strong> Die <strong>Tour de France</strong> ist das berühmteste Radrennen der Welt — es gibt sie seit 1903!</div>'}
+],
+quiz:[
+{q:'Was bedeutet \"J\'aime\"?',a:['Ich hasse','Ich mag/liebe','Ich spiele','Ich esse'],_h:0x4B},
+{q:'Wie hei\u00DFt \"Fussball\" auf Franz\u00F6sisch?',a:['Le basket','Le tennis','Le football','Le rugby'],_h:0x7D},
+{q:'Was bedeutet \"la natation\"?',a:['Laufen','Radfahren','Schwimmen','Skifahren'],_h:0x29},
+{q:'Wie sagst du \"Ich spiele Fussball\"?',a:['Je fais du football','Je joue au football','J\'aime football','Je suis football'],_h:0x60},
+{q:'Was ist die Tour de France?',a:['Ein Marathonlauf','Ein berühmtes Radrennen','Ein Fussballturnier','Eine Autofahrt'],_h:0x5D}
+],
+boss:[
+{q:'Was ist der Unterschied zwischen \"J\'aime\" und \"J\'adore\"?',a:['Kein Unterschied','\"J\'adore\" ist st\u00E4rker als \"J\'aime\"','\"J\'aime\" ist st\u00E4rker','\"J\'adore\" ist negativ'],_h:0x4B},
+{q:'Warum sagt man \"joue au football\" aber \"fais de la natation\"?',a:['Zufall','\"Jouer \u00E0\" f\u00FCr Ballsportarten, \"faire de\" f\u00FCr andere Sportarten','Weil Schwimmen kein Sport ist','Weil Fussball wichtiger ist'],_h:0x7E},
+{q:'Wie w\u00FCrdest du sagen \"Ich liebe Musik, aber ich hasse Videospiele\"?',a:['J\'aime la musique','J\'adore la musique, mais je d\u00E9teste les jeux vid\u00E9o','Musique oui, jeux non','Je fais musique'],_h:0x29}
+]},
+{id:9,title:'Frankreich entdecken',icon:'\uD83C\uDDEB\uD83C\uDDF7',duration:'20 Min.',description:'St\u00E4dte, Sehensw\u00FCrdigkeiten und Kultur Frankreichs kennenlernen.',
+lessons:[
+{title:'St\u00E4dte und Sehensw\u00FCrdigkeiten',content:'<p><strong>Frankreich</strong> ist das gr\u00F6\u00DFte Land in der EU und hat viel zu bieten!</p><p><strong>Wichtige St\u00E4dte:</strong></p><ul><li>\uD83D\uDDFC <strong>Paris</strong> — die Hauptstadt mit dem Eiffelturm (la tour Eiffel)</li><li>\uD83C\uDFD6\uFE0F <strong>Marseille</strong> — grosse Hafenstadt am Mittelmeer</li><li>\uD83C\uDF77 <strong>Lyon</strong> — Hauptstadt der franz\u00F6sischen K\u00FCche</li><li>\uD83C\uDFF0 <strong>Bordeaux</strong> — bekannt f\u00FCr Wein</li><li>\u26F7\uFE0F <strong>Strasbourg</strong> — an der Grenze zu Deutschland</li></ul><p><strong>Beruehmte Sehensw\u00FCrdigkeiten:</strong></p><ul><li><strong>La tour Eiffel</strong> — 330 Meter hoch, das Wahrzeichen von Paris</li><li><strong>Le Louvre</strong> — gr\u00F6\u00DFtes Museum der Welt (Mona Lisa!)</li><li><strong>Mont-Saint-Michel</strong> — Klosterinsel in der Normandie</li><li><strong>Ch\u00E2teaux de la Loire</strong> — \u00FCber 300 Schlösser!</li></ul><div class="info-box">\uD83D\uDCA1 <strong>Wusstest du?</strong> Der Eiffelturm sollte nach 20 Jahren wieder <strong>abgerissen</strong> werden — heute ist er das meistbesuchte Bauwerk der Welt!</div>'},
+{title:'Franz\u00F6sische Kultur',content:'<p>Frankreich hat eine reiche <strong>Kultur</strong>!</p><p><strong>Feste und Traditionen:</strong></p><ul><li><strong>La F\u00EAte nationale (14 juillet)</strong> — Nationalfeiertag mit Feuerwerk</li><li><strong>La Chandeleur (2 f\u00E9vrier)</strong> — Cr\u00EApe-Tag!</li><li><strong>La galette des Rois (6 janvier)</strong> — Dreik\u00F6nigs-Kuchen</li><li><strong>No\u00EBl</strong> = Weihnachten, <strong>P\u00E2ques</strong> = Ostern</li></ul><p><strong>Frankreich und Deutschland:</strong></p><ul><li>Frankreich und Deutschland sind enge <strong>Partner und Freunde</strong></li><li>Es gibt den <strong>Elys\u00E9e-Vertrag</strong> (1963) f\u00FCr die Freundschaft</li><li>Viele Sch\u00FCler lernen die Sprache des <strong>Nachbarlandes</strong></li><li>Es gibt <strong>St\u00E4dtepartnerschaften</strong> und Austauschprogramme</li></ul><div class="info-box">\uD83D\uDCA1 <strong>Merke:</strong> Deutschland und Frankreich waren fr\u00FCher oft <strong>Feinde</strong>, heute sind sie die besten <strong>Freunde in Europa</strong>!</div>'}
+],
+quiz:[
+{q:'Was ist das Wahrzeichen von Paris?',a:['Das Kolosseum','Der Big Ben','Der Eiffelturm (la tour Eiffel)','Die Freiheitsstatue'],_h:0x4B},
+{q:'Wo h\u00E4ngt die Mona Lisa?',a:['Im Buckingham Palace','Im Louvre','Im Eiffelturm','In der Notre-Dame'],_h:0x7E},
+{q:'Was feiert Frankreich am 14. Juli?',a:['Weihnachten','Den Nationalfeiertag','Ostern','Silvester'],_h:0x29},
+{q:'Was ist \"La Chandeleur\"?',a:['Ein Museum','Der Cr\u00EApe-Tag','Ein Berg','Ein Fluss'],_h:0x60},
+{q:'Welcher Vertrag besiegelte die deutsch-franz\u00F6sische Freundschaft?',a:['Versailler Vertrag','Elys\u00E9e-Vertrag','Maastricht-Vertrag','Wiener Vertrag'],_h:0x5D}
+],
+boss:[
+{q:'Warum ist die deutsch-franz\u00F6sische Freundschaft so besonders?',a:['Weil beide L\u00E4nder gross sind','Weil die L\u00E4nder fr\u00FCher Feinde waren und sich zu engen Partnern entwickelten','Weil sie die gleiche Sprache sprechen','Weil sie nebeneinander liegen'],_h:0x4B},
+{q:'Warum sollte der Eiffelturm eigentlich abgerissen werden?',a:['Weil er hässlich war','Er wurde nur f\u00FCr eine Weltausstellung 1889 gebaut und sollte temporär sein','Weil er zu teuer war','Weil er wackelte'],_h:0x7E},
+{q:'Was sind St\u00E4dtepartnerschaften?',a:['Wenn zwei St\u00E4dte fusionieren','Partnerschaften zwischen St\u00E4dten verschiedener L\u00E4nder f\u00FCr kulturellen Austausch','Wenn St\u00E4dte gegeneinander k\u00E4mpfen','Wenn St\u00E4dte zusammenwachsen'],_h:0x29}
+]}
+];
+// === State Management ===
+const STORAGE_KEY='franzstarter_progress';
+let state={name:'',started:false,currentModule:0,xp:0,level:0,streak:0,lastVisit:null,modulesCompleted:[],quizResults:{},bossResults:{},badges:[],quizShuffleMap:{},modulesViewed:[],interactiveResults:{},designTheme:'cyber-dark'};
+function saveState(){try{localStorage.setItem(STORAGE_KEY,JSON.stringify(state))}catch(e){}}
+function loadState(){try{const s=localStorage.getItem(STORAGE_KEY);if(s){Object.assign(state,JSON.parse(s));return true}}catch(e){}return false}
+function exportData(){const a=document.createElement('a');a.download='franzstarter-'+state.name+'.json';a.href=URL.createObjectURL(new Blob([JSON.stringify(state,null,2)],{type:'application/json'}));a.click()}
+function importData(e){const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=ev=>{try{const d=JSON.parse(ev.target.result);Object.assign(state,d);saveState();location.reload()}catch(err){alert('Datei konnte nicht gelesen werden.')}};r.readAsText(f)}
+
+// === XP & Level ===
+function getLevel(xp){let lv=0;for(let i=LEVELS.length-1;i>=0;i--){if(xp>=LEVELS[i].xp){lv=i;break}}return lv}
+function getLevelProgress(xp){const lv=getLevel(xp);const cur=LEVELS[lv].xp;const next=lv<LEVELS.length-1?LEVELS[lv+1].xp:cur;if(next===cur)return 100;return Math.min(100,Math.round((xp-cur)/(next-cur)*100))}
+function addXP(amount,reason){const old=getLevel(state.xp);state.xp+=amount;const nw=getLevel(state.xp);saveState();updateUI();showNotif('xp','+'+amount+' XP',reason);if(nw>old){state.level=nw;saveState();setTimeout(()=>showLevelUp(nw),800)}}
+
+// === Streak ===
+function updateStreak(){const today=new Date().toDateString();if(state.lastVisit===today)return;const yesterday=new Date(Date.now()-86400000).toDateString();if(state.lastVisit===yesterday){state.streak++;showNotif('streak','\uD83D\uDD25 '+state.streak+' Tage Streak!','Weiter so!');if(state.streak>=3)awardBadge('streak3');if(state.streak>=7)awardBadge('streak7')}else if(state.lastVisit!==today){state.streak=1}state.lastVisit=today;saveState()}
+
+// === Badges ===
+function awardBadge(id){if(state.badges.includes(id))return;state.badges.push(id);saveState();const b=BADGES.find(x=>x.id===id);if(b)showNotif('badge',b.icon+' Badge: '+b.name,b.desc)}
+
+// === Notifications ===
+let notifQueue=[],notifActive=false;
+function showNotif(type,title,text){notifQueue.push({type,title,text});if(!notifActive)processNotif()}
+function processNotif(){if(!notifQueue.length){notifActive=false;return}notifActive=true;const{type,title,text}=notifQueue.shift();const el=document.getElementById('notif');el.className='notif '+type;document.getElementById('notifTitle').textContent=title;document.getElementById('notifText').textContent=text;el.classList.add('show');setTimeout(()=>{el.classList.remove('show');setTimeout(processNotif,300)},2500)}
+
+// === Level Up + Confetti ===
+function showLevelUp(lv){const ov=document.getElementById('levelUpOverlay');const box=document.getElementById('levelUpBox');box.innerHTML='<div class="lvl-icon">\u2B06\uFE0F</div><div class="lvl-title">Level Up!</div><div class="lvl-name">Level '+(lv+1)+': '+LEVELS[lv].name+'</div>';ov.classList.add('active');spawnConfetti();setTimeout(()=>ov.classList.remove('active'),3000)}
+function spawnConfetti(){const c=document.getElementById('confetti');c.innerHTML='';const cols=['#3b82f6','#a855f7','#22c55e','#f59e0b','#ef4444','#06b6d4'];for(let i=0;i<60;i++){const p=document.createElement('div');p.style.cssText='position:absolute;left:'+Math.random()*100+'%;background:'+cols[i%cols.length]+';width:'+(6+Math.random()*8)+'px;height:'+(6+Math.random()*8)+'px;border-radius:'+(Math.random()>.5?'50%':'2px')+';animation:confettiFall '+(1.5+Math.random()*2)+'s ease-out '+Math.random()*.5+'s forwards';c.appendChild(p)}if(!document.getElementById('confettiStyle')){const s=document.createElement('style');s.id='confettiStyle';s.textContent='@keyframes confettiFall{0%{opacity:1;transform:translateY(0) rotate(0deg)}100%{opacity:0;transform:translateY(100vh) rotate(720deg)}}';document.head.appendChild(s)}setTimeout(()=>c.innerHTML='',4000)}
+
+// === Quiz Engine ===
+function shuffleQuiz(modId,quiz){const key='m'+modId;if(state.quizShuffleMap[key])return state.quizShuffleMap[key];const idx=[...Array(quiz.length).keys()];for(let i=idx.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[idx[i],idx[j]]=[idx[j],idx[i]]}state.quizShuffleMap[key]=idx;saveState();return idx}
+function renderQuiz(modId,quiz,isBoss){
+const pf=isBoss?'boss':'quiz';const idx=isBoss?[...Array(quiz.length).keys()]:shuffleQuiz(modId,quiz);
+let h='<div class="'+(isBoss?'boss-section':'quiz-section')+'">';
+h+=isBoss?'<h3>\uD83D\uDC51 Boss-Challenge</h3><p class="boss-sub">Alle '+quiz.length+' Fragen richtig beantworten!</p>':'<h3>\uD83D\uDCDD Quiz \u2014 Teste dein Wissen</h3>';
+idx.forEach((qi,di)=>{const q=quiz[qi];h+='<div class="quiz-q" data-qi="'+qi+'"><p>'+(di+1)+'. '+q.q+'</p>';q.a.forEach((a,ai)=>{h+='<label><input type="radio" name="'+pf+'_'+modId+'_'+qi+'" value="'+ai+'"> '+a+'<\/label>'});h+='<\/div>'});
+h+='<button class="quiz-submit" onclick="checkQuiz('+modId+','+isBoss+')">'+(isBoss?'Boss besiegen!':'Antworten prüfen')+'<\/button>';
+h+='<div class="quiz-result" id="'+pf+'Result'+modId+'" style="display:none"><\/div><\/div>';return h;
+}
+function checkQuiz(modId,isBoss){
+const pf=isBoss?'boss':'quiz';const quiz=isBoss?modules[modId].boss:modules[modId].quiz;
+let correct=0;const total=quiz.length;const startTime=window._quizStart||Date.now();
+quiz.forEach((q,qi)=>{
+const sel=document.querySelector('input[name="'+pf+'_'+modId+'_'+qi+'"]:checked');
+const labels=document.querySelectorAll('[data-qi="'+qi+'"] label');
+const ci=_d(q._h,qi);
+labels.forEach((l,li)=>{l.classList.remove('correct','wrong');if(li===ci)l.classList.add('correct');else if(sel&&parseInt(sel.value)===li)l.classList.add('wrong')});
+const qDiv=labels[0]?.closest('.quiz-q');if(qDiv){const old=qDiv.querySelector('.quiz-explanation');if(old)old.remove()}
+if(!sel||parseInt(sel.value)!==ci){if(qDiv){const exp=document.createElement('div');exp.className='quiz-explanation';exp.textContent='\u2192 Richtige Antwort: '+q.a[ci];qDiv.appendChild(exp)}}
+if(sel&&parseInt(sel.value)===ci)correct++;
+});
+const rEl=document.getElementById(pf+'Result'+modId);rEl.style.display='block';
+if(isBoss){
+if(correct===total){
+rEl.className='quiz-result pass';rEl.textContent='\uD83D\uDC51 Boss besiegt! '+correct+'/'+total+' \u2014 Perfekt!';
+if(!state.bossResults[modId]){state.bossResults[modId]=true;addXP(100,'Boss-Challenge bestanden!');if(!state.badges.includes('first_boss'))awardBadge('first_boss');if(modules.every((_,i)=>state.bossResults[i]))awardBadge('all_bosses');checkModuleComplete(modId)}
+}else{rEl.className='quiz-result fail';rEl.textContent='\uD83D\uDC80 '+correct+'/'+total+' \u2014 Alle müssen richtig sein! Versuch es nochmal.';setTimeout(()=>{document.querySelectorAll('input[name^="'+pf+'_'+modId+'"]').forEach(r=>{r.disabled=false;r.checked=false});document.querySelectorAll('[data-qi] label').forEach(l=>l.classList.remove('correct','wrong'));document.querySelectorAll('.quiz-explanation').forEach(e=>e.remove());rEl.style.display='none'},2000);return}
+}else{
+const passed=correct>=Math.ceil(total*0.6);rEl.className='quiz-result '+(passed?'pass':'fail');
+rEl.textContent=passed?'\u2705 '+correct+'/'+total+' richtig \u2014 Bestanden!':'\u274C '+correct+'/'+total+' richtig \u2014 Mindestens '+Math.ceil(total*0.6)+' nötig.';
+if(passed&&!state.quizResults[modId]){state.quizResults[modId]=correct;addXP(correct*15+50,'Quiz bestanden ('+correct+'/'+total+')');if(!state.badges.includes('first_quiz'))awardBadge('first_quiz');if(correct===total)awardBadge('perfect_quiz');if(Date.now()-startTime<60000)awardBadge('speed_quiz');checkModuleComplete(modId)}
+}
+saveState();document.querySelectorAll('input[name^="'+pf+'_'+modId+'"]').forEach(r=>r.disabled=true);
+window.scrollTo({top:0,behavior:'smooth'});
+}
+function checkModuleComplete(modId){
+if(state.quizResults[modId]!==undefined&&state.bossResults[modId]&&!state.modulesCompleted.includes(modId)){
+state.modulesCompleted.push(modId);awardBadge('m'+modId);
+if(state.modulesCompleted.length>=5)awardBadge('half_done');
+if(state.modulesCompleted.length>=10){awardBadge('graduate');setTimeout(()=>showCert(),1500)}
+saveState();renderSidebar();
+}
+}
+
+// === Render Module ===
+function renderModule(modId){
+state.currentModule=modId;
+if(!state.modulesViewed.includes(modId)){state.modulesViewed.push(modId);addXP(10,'Neues Modul geöffnet');if(state.modulesViewed.length>=10)awardBadge('explorer')}
+saveState();closeSidebar();
+const m=modules[modId];
+let h='<div class="module-header"><div class="mod-badge">'+m.icon+' Modul '+(modId+1)+'<\/div><h1>'+m.title+'<\/h1><p class="mod-desc">'+m.description+'<\/p><\/div>';
+m.lessons.forEach((l,i)=>{h+='<div class="lesson-card"><h3><span style="color:var(--neon)">'+String(i+1).padStart(2,'0')+'<\/span> '+l.title+' <button class="tts-btn" onclick="speakLesson('+i+')" title="Vorlesen">&#128266;<\/button><\/h3>'+l.content+'<\/div>'});
+h+='<div class="interactive-area"><h4>\uD83D\uDCDD Interaktive Übung<\/h4><div id="interactiveContent">Lädt...<\/div><\/div>';
+window._quizStart=Date.now();
+h+='<div class="speech-ex"><h4>Sprach\u00FCbung \u{1F3A4}<\/h4><div id="speechExArea"><\/div><\/div>';
+h+=renderQuiz(modId,m.quiz,false);
+h+=renderQuiz(modId,m.boss,true);
+document.getElementById('welcomeScreen').style.display='none';
+document.getElementById('badgesView').style.display='none';
+document.getElementById('statsView').style.display='none';
+const mc=document.getElementById('moduleContent');mc.style.display='block';mc.innerHTML=h;
+renderSidebar();setTimeout(()=>{initInteractive(modId);window.scrollTo(0,0)},100);
+}
+
+// === Sidebar ===
+function renderSidebar(){
+const el=document.getElementById('sidebarModules');
+el.innerHTML=modules.map((m,i)=>{
+const done=state.modulesCompleted.includes(i);
+const act=state.currentModule===i&&document.getElementById('moduleContent').style.display==='block';
+return '<a class="mod-link'+(act?' active':'')+(done?' completed':'')+'" onclick="renderModule('+i+')"><span class="mod-icon">'+m.icon+'<\/span>'+m.title+'<\/a>';
+}).join('');
+const lv=getLevel(state.xp);
+const lvEl=document.getElementById('sidebarLevel');if(lvEl)lvEl.textContent=LEVELS[lv].name;
+const xpEl=document.getElementById('sidebarXP');if(xpEl)xpEl.textContent=state.xp+' XP';
+const xpFill=document.getElementById('sidebarXPFill');if(xpFill)xpFill.style.width=getLevelProgress(state.xp)+'%';
+}
+function toggleSidebar(){document.getElementById('sidebar').classList.toggle('open')}
+function closeSidebar(){document.getElementById('sidebar').classList.remove('open')}
+
+// === Badges & Stats ===
+function showBadges(){
+document.getElementById('welcomeScreen').style.display='none';
+document.getElementById('moduleContent').style.display='none';
+document.getElementById('statsView').style.display='none';
+const v=document.getElementById('badgesView');v.style.display='block';closeSidebar();
+let h='<div class="module-header"><h1>\uD83C\uDFC5 Deine Abzeichen<\/h1><p class="mod-desc">'+state.badges.length+' von '+BADGES.length+' gesammelt<\/p><\/div><div class="badge-grid">';
+BADGES.forEach(b=>{const earned=state.badges.includes(b.id);h+='<div class="badge-item'+(earned?' earned':' locked')+'"><div class="badge-icon">'+(earned?b.icon:'\uD83D\uDD12')+'<\/div><div class="badge-name">'+b.name+'<\/div><\/div>'});
+h+='<\/div>';v.innerHTML=h;
+}
+function showStats(){
+document.getElementById('welcomeScreen').style.display='none';
+document.getElementById('moduleContent').style.display='none';
+document.getElementById('badgesView').style.display='none';
+const v=document.getElementById('statsView');v.style.display='block';closeSidebar();
+const lv=getLevel(state.xp);
+let h='<div class="module-header"><h1>\uD83D\uDCCA Statistik<\/h1><\/div><div class="stats-grid">';
+h+='<div class="stat-card"><div class="stat-val">'+state.xp+'<\/div><div class="stat-label">XP gesammelt<\/div><\/div>';
+h+='<div class="stat-card"><div class="stat-val">'+LEVELS[lv].name+'<\/div><div class="stat-label">Aktueller Rang<\/div><\/div>';
+h+='<div class="stat-card"><div class="stat-val">'+state.modulesCompleted.length+'/10<\/div><div class="stat-label">Module abgeschlossen<\/div><\/div>';
+h+='<div class="stat-card"><div class="stat-val">'+Object.keys(state.quizResults).length+'<\/div><div class="stat-label">Quizze bestanden<\/div><\/div>';
+h+='<div class="stat-card"><div class="stat-val">'+Object.keys(state.bossResults).length+'<\/div><div class="stat-label">Bosse besiegt<\/div><\/div>';
+h+='<div class="stat-card"><div class="stat-val">'+state.badges.length+'<\/div><div class="stat-label">Abzeichen<\/div><\/div>';
+h+='<div class="stat-card"><div class="stat-val">\uD83D\uDD25 '+state.streak+'<\/div><div class="stat-label">Tage-Streak<\/div><\/div>';
+h+='<\/div>';v.innerHTML=h;
+}
+
+// === Certificate ===
+let certStyle='akademie';
+function showCert(){window._lastFocus=document.activeElement;
+const ov=document.getElementById('certOverlay');
+const styles=['akademie','hacker','pixel','zukunft'];
+const labels=['\uD83C\uDFDB Akademie','\uD83D\uDCBB Hacker','\uD83D\uDD79 Pixel','\u2728 Zukunft'];
+document.getElementById('certPicker').innerHTML=styles.map((s,i)=>'<button class="cert-pick-btn '+(s===certStyle?'active':'')+'" onclick="certStyle=\''+s+'\';renderCert()">'+labels[i]+'<\/button>').join('');
+renderCert();ov.classList.add('active');
+}
+function closeCert(){document.getElementById('certOverlay').classList.remove('active');if(window._lastFocus){window._lastFocus.focus();window._lastFocus=null}}
+function generateCertCode(){const n=state.name||'X';const d=new Date();return 'TP-'+d.getFullYear()+'-'+((n.charCodeAt(0)*7+state.xp)%9999).toString(16).toUpperCase().padStart(4,'0')}
+function printCert(){window.print()}
+function certBadgeRow(){
+const earned=state.badges||[];if(earned.length===0)return'';
+return'<div class="cert-badge-row">'+earned.slice(0,8).map(bid=>{const b=BADGES.find(x=>x.id===bid);return b?'<div class="cert-badge-item" title="'+b.name+'">'+b.icon+'<\/div>':''}).join('')+(earned.length>8?'<div class="cert-badge-item" title="'+(earned.length-8)+' weitere">+'+(earned.length-8)+'<\/div>':'')+'<\/div>';
+}
+function certStatsRow(){
+const mods=state.modulesCompleted.length;const quizDone=Object.keys(state.quizResults).length;const bossDone=Object.keys(state.bossResults).length;
+return'<div class="cert-common-stats"><div class="cert-stat">\uD83D\uDCDA '+mods+'/10<\/div><div class="cert-stat">\uD83D\uDCDD '+quizDone+' Quizze<\/div><div class="cert-stat">\uD83D\uDC51 '+bossDone+' Bosse<\/div><div class="cert-stat">\uD83D\uDD25 '+state.streak+'d Streak<\/div><\/div>';
+}
+function certLogoFooter(dark){
+const fill=dark?'rgba(255,255,255,.4)':'rgba(0,0,0,.35)';
+return'<div class="cert-logo-footer"><svg viewBox="0 0 32 32" fill="none"><g transform="translate(16,16)"><circle cx="-10" cy="-9" r="1.2" fill="'+fill+'" opacity=".6"/><circle cx="10" cy="-9" r="1.2" fill="'+fill+'" opacity=".6"/><rect x="-7" y="-5.5" width="14" height="11" rx="3.5" fill="none" stroke="'+fill+'" stroke-width="1"/><text x="0" y="0" text-anchor="middle" dominant-baseline="central" font-family="system-ui" font-size="7.5" font-weight="900" fill="'+fill+'" letter-spacing="1">AI<\/text><\/g><\/svg><span style="color:'+fill+'">GZ AI Stacks<\/span><\/div>';
+}
+function svgCorner(){return'<svg viewBox="0 0 60 60" fill="none"><path d="M5 55 L5 15 Q5 5 15 5 L55 5" stroke="#c5a54e" stroke-width="1.5" fill="none" opacity=".4"/><circle cx="8" cy="8" r="3" fill="#c5a54e" opacity=".2"/><\/svg>';}
+function svgLaurelSeal(){return'<svg viewBox="0 0 90 90" fill="none"><circle cx="45" cy="45" r="32" fill="url(#cg)"/><defs><radialGradient id="cg"><stop offset="0%" stop-color="#e8c84e"/><stop offset="100%" stop-color="#8a6914"/><\/radialGradient><\/defs><text x="45" y="47" text-anchor="middle" dominant-baseline="central" font-family="serif" font-size="22" font-weight="900" fill="#fff">\u2605<\/text><\/svg>';}
+function svgHexSeal(){return'<svg viewBox="0 0 70 70" fill="none"><circle cx="35" cy="35" r="22" stroke="#00d4ff" stroke-width="1.5" opacity=".5"/><circle cx="35" cy="35" r="16" fill="rgba(0,255,65,.08)"/><text x="35" y="33" text-anchor="middle" dominant-baseline="central" font-family="monospace" font-size="8" font-weight="700" fill="#00ff41" opacity=".7">VERIFIED<\/text><text x="35" y="42" text-anchor="middle" font-family="monospace" font-size="7" fill="#00d4ff">\u2713<\/text><\/svg>';}
+function matrixCols(){const chars='01\u30A2\u30A4\u30A6\u30A8\u30AA{}[]<>';let h='';for(let i=0;i<10;i++){const x=5+i*9;const d=3+Math.random()*6;let col='';for(let j=0;j<25;j++)col+=chars[Math.floor(Math.random()*chars.length)]+'\n';h+='<div class="cert-matrix-col" style="left:'+x+'%;animation-duration:'+d+'s;animation-delay:'+Math.random()*4+'s">'+col+'<\/div>';}return h;}
+function renderCert(){
+const f=document.getElementById('certFrame');
+const name=state.name||'Unbekannt';const date=new Date().toLocaleDateString('de-DE',{day:'numeric',month:'long',year:'numeric'});
+const xp=state.xp;const mods=state.modulesCompleted.length;const rank=LEVELS[getLevel(xp)].name;const code=generateCertCode();const badges=certBadgeRow();
+document.querySelectorAll('.cert-pick-btn').forEach(b=>b.classList.toggle('active',b.textContent.toLowerCase().includes(certStyle)));
+if(certStyle==='akademie'){
+const corner=svgCorner();
+f.innerHTML='<div class="cert-akademie"><div class="cert-corner cert-corner-tl">'+corner+'<\/div><div class="cert-corner cert-corner-tr">'+corner+'<\/div><div class="cert-corner cert-corner-bl">'+corner+'<\/div><div class="cert-corner cert-corner-br">'+corner+'<\/div><div class="cert-inner"><div class="cert-sub">FranzStarter \u00B7 Franz\u00F6sisch-Akademie<\/div><div class="cert-title">Diplom<\/div><div class="cert-hr"><\/div><div class="cert-body">Die Franz\u00F6sisch-Akademie verleiht hiermit<\/div><div class="cert-name">'+name+'<\/div><div class="cert-body">die Anerkennung als<br><strong style="font-size:18px;color:#1a1a3e">Franz-'+rank+'<\/strong><br>für die erfolgreiche Absolvierung von<br>\u201EFranzStarter \u2014 Franz\u00F6sisch Klasse 3-6\u201C<\/div>'+certStatsRow()+badges+'<div class="cert-seal-wrap"><div class="cert-seal-ring"><\/div><div class="cert-seal">'+svgLaurelSeal()+'<\/div><\/div><div class="cert-date">'+date+'<\/div><div class="cert-verification">'+code+'<\/div>'+certLogoFooter(false)+'<\/div><\/div>';
+}else if(certStyle==='hacker'){
+f.innerHTML='<div class="cert-hacker">'+matrixCols()+'<div class="cert-inner"><div class="cert-prompt">root@franzstarter:~$ <span>verify --user "'+name+'" --deep-scan<\/span><\/div><div class="cert-title">&gt;&gt; SYSTEM CERTIFICATION &lt;&lt;<\/div><div class="cert-access">ACCESS GRANTED<span class="cursor-blink">_<\/span><\/div><div class="cert-body">&gt; User..........: <strong style="color:#00d4ff">'+name+'<\/strong><br>&gt; Rank..........: '+rank+'<br>&gt; Modules.......: [<span style="color:#00ff41">'+ '\u2588'.repeat(mods)+'\u2591'.repeat(10-mods)+'<\/span>] '+mods+'/10<br>&gt; XP............: '+xp+' pts<br>&gt; Status........: <span style="color:#00ff41">VERIFIED<\/span> \u2713<\/div>'+certStatsRow()+badges+'<div class="cert-hex-seal">'+svgHexSeal()+'<\/div><div class="cert-body" style="font-size:11px">&gt; Certificate ID: '+code+'<br>&gt; Issued: '+date+'<br>&gt; Authority: FranzStarter Akademie<\/div><div class="cert-prompt">root@franzstarter:~$ <span class="cursor-blink">_<\/span><\/div>'+certLogoFooter(true)+'<\/div><\/div>';
+}else if(certStyle==='pixel'){
+const stars='\u2605'.repeat(Math.min(5,Math.ceil(mods/2)))+'\u2606'.repeat(Math.max(0,5-Math.ceil(mods/2)));
+const pct=Math.min(100,Math.round(xp/42));
+f.innerHTML='<div class="cert-pixel"><div class="cert-inner"><div class="cert-complete">\u25C6 LEVEL COMPLETE! \u25C6<\/div><div class="cert-title">CHAMPION<\/div><div class="cert-name">'+name+'<\/div><div class="cert-stars">'+stars+'<\/div><div class="cert-xp-bar"><div class="cert-xp-fill" style="width:'+pct+'%"><\/div><div class="cert-xp-label">'+xp+' XP<\/div><\/div><div class="cert-body">RANK: <strong style="color:#ffd700">'+rank.toUpperCase()+'<\/strong><\/div>'+certStatsRow()+badges+'<div class="cert-score">HIGH SCORE: '+xp+' PTS<\/div><div style="margin-top:8px;font-size:10px;color:#555">'+date+' \u00B7 '+code+'<\/div>'+certLogoFooter(true)+'<\/div><\/div>';
+}else{
+const particles=Array.from({length:15},(_,i)=>{const colors=['#6366f1','#ec4899','#f59e0b','#22c55e','#06b6d4'];return'<div class="cert-particle" style="position:absolute;left:'+Math.random()*100+'%;top:'+Math.random()*100+'%;width:'+(2+Math.random()*3)+'px;height:'+(2+Math.random()*3)+'px;background:'+colors[i%5]+';opacity:'+(0.1+Math.random()*0.2)+';box-shadow:0 0 '+(6+Math.random()*9)+'px '+colors[i%5]+';border-radius:50%"><\/div>';}).join('');
+f.innerHTML='<div class="cert-zukunft">'+particles+'<div class="cert-inner"><div class="cert-sub">Zukunfts-Akademie \u00B7 '+new Date().getFullYear()+'<\/div><div class="cert-title">Zertifikat der Zukunft<\/div><div class="cert-body">Hiermit best\u00E4tigen wir, dass<\/div><div class="cert-name">'+name+'<\/div><div class="cert-body">den interaktiven Franz\u00F6sisch-Kurs<br>\u201EFranzStarter \u2014 Franz\u00F6sisch Klasse 3-6\u201C<br>erfolgreich absolviert hat.<\/div><div class="cert-body" style="margin:6px 0"><strong style="color:#a78bfa;font-size:16px">'+rank+'<\/strong><\/div>'+certStatsRow()+badges+'<div class="cert-seal-holo"><div class="cert-seal-mid"><div class="cert-seal-inner"><svg viewBox="0 0 40 40" fill="none"><text x="20" y="18" text-anchor="middle" font-size="14" fill="#a78bfa">\u2726<\/text><text x="20" y="28" text-anchor="middle" font-size="6" font-weight="700" fill="rgba(255,255,255,.6)" font-family="system-ui">FRA<\/text><\/svg><\/div><\/div><\/div><div class="cert-date">'+date+' \u00B7 '+code+'<\/div>'+certLogoFooter(true)+'<\/div><\/div>';
+}
+f.style.animation='none';f.offsetHeight;f.style.animation='certEntrance .6s cubic-bezier(.34,1.56,.64,1) both';
+}
+// === UI Update ===
+function updateUI(){
+const lv=getLevel(state.xp);
+const hdr=document.getElementById('headerLevel');if(hdr)hdr.textContent=LEVELS[lv].name;
+const hxp=document.getElementById('headerXP');if(hxp)hxp.textContent=state.xp+' XP';
+const fill=document.querySelector('.header-xp-fill');if(fill)fill.style.width=getLevelProgress(state.xp)+'%';
+const streakEl=document.getElementById('headerStreak');if(streakEl)streakEl.textContent='\uD83D\uDD25 '+state.streak;
+renderSidebar();
+}
+
+// === Theme System ===
+function setDesignTheme(world,mode){state.designTheme=world+'-'+mode;document.documentElement.setAttribute('data-theme',state.designTheme);saveState();buildThemePicker()}
+function getCurrentThemeParts(){const p=state.designTheme.split('-');return{world:p.slice(0,-1).join('-'),mode:p[p.length-1]||'dark'}}
+function toggleMode(){const{world,mode}=getCurrentThemeParts();setDesignTheme(world,mode==='dark'?'light':'dark')}
+function buildThemePicker(){
+const dd=document.getElementById('themePickerDD');if(!dd)return;
+const{world,mode}=getCurrentThemeParts();
+let h='<div class="tp-label">Theme wählen<\/div>';
+Object.keys(THEME_CONFIG).forEach(w=>{const t=THEME_CONFIG[w];h+='<div class="tp-world'+(w===world?' active':'')+'" onclick="setDesignTheme(\''+w+'\',\''+mode+'\')\"><div class="tp-world-color" style="background:'+t.color+'">'+t.emoji+'<\/div><div class="tp-world-info"><div class="tp-world-name">'+t.name+'<\/div><div class="tp-world-desc">'+t.desc+'<\/div><\/div><\/div>';});
+h+='<div class="tp-divider"><\/div><div class="tp-mode-row"><span class="tp-mode-label">'+(mode==='dark'?'\uD83C\uDF19 Dark':'\u2600\uFE0F Light')+'<\/span><div class="tp-mode-switch'+(mode==='light'?' light':'')+'" onclick="toggleMode()"><\/div><\/div>';
+dd.innerHTML=h;
+}
+function toggleThemePicker(){document.getElementById('themePickerDD').classList.toggle('open')}
+
+// === Interactive Exercises ===
+function initInteractive(modId){
+const el=document.getElementById('interactiveContent');if(!el)return;
+const exercises=[
+// Mod 0: Begr\u00FC\u00DFung — Richtige \u00DCbersetzung zuordnen
+function(){el.innerHTML='<p>Ordne die franz\u00F6sische Begr\u00FC\u00DFung der richtigen Bedeutung zu!</p><div class="ix-grid" id="ixItems"><\/div><div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin:16px 0"><button class="ix-btn" onclick="ixDrop(0,\'hallo\')">Hallo/Guten Tag</button><button class="ix-btn" onclick="ixDrop(0,\'tschuess\')">Tschuess/Auf Wiedersehen</button><button class="ix-btn" onclick="ixDrop(0,\'danke\')">Danke/Bitte</button></div><div class="ix-feedback" id="ixFb"><\/div>';
+const items=[{n:'Bonjour!',t:'hallo'},{n:'Au revoir!',t:'tschuess'},{n:'Merci!',t:'danke'},{n:'Salut!',t:'hallo'},{n:'Bonne nuit!',t:'tschuess'},{n:'S\'il vous pla\u00EEt',t:'danke'}];
+window._ixData={items,sel:null,done:0,correct:0};
+const g=document.getElementById('ixItems');items.forEach((it,i)=>{const d=document.createElement('div');d.className='ix-item';d.textContent=it.n;d.onclick=()=>{document.querySelectorAll('.ix-item').forEach(x=>x.classList.remove('selected'));d.classList.add('selected');window._ixData.sel=i};g.appendChild(d)});},
+// Mod 1: Zahlen — Zahl der \u00DCbersetzung zuordnen
+function(){el.innerHTML='<p>Ordne die franz\u00F6sische Zahl der richtigen deutschen Zahl zu!</p><div class="ix-grid" id="ixItems"><\/div><div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin:16px 0"><button class="ix-btn" onclick="ixDrop(1,\'klein\')">1-5</button><button class="ix-btn" onclick="ixDrop(1,\'mittel\')">6-10</button><button class="ix-btn" onclick="ixDrop(1,\'gross\')">11-20</button></div><div class="ix-feedback" id="ixFb"><\/div>';
+const items=[{n:'trois (3)',t:'klein'},{n:'sept (7)',t:'mittel'},{n:'quinze (15)',t:'gross'},{n:'cinq (5)',t:'klein'},{n:'neuf (9)',t:'mittel'},{n:'vingt (20)',t:'gross'}];
+window._ixData={items,sel:null,done:0,correct:0};
+const g=document.getElementById('ixItems');items.forEach((it,i)=>{const d=document.createElement('div');d.className='ix-item';d.textContent=it.n;d.onclick=()=>{document.querySelectorAll('.ix-item').forEach(x=>x.classList.remove('selected'));d.classList.add('selected');window._ixData.sel=i};g.appendChild(d)});},
+// Mod 2: Familie — Männlich oder weiblich?
+function(){el.innerHTML='<p>Ist das Familienmitglied m\u00E4nnlich (le) oder weiblich (la)?</p><div class="ix-grid" id="ixItems"><\/div><div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin:16px 0"><button class="ix-btn" onclick="ixDrop(2,\'le\')">le (m\u00E4nnlich)</button><button class="ix-btn" onclick="ixDrop(2,\'la\')">la (weiblich)</button></div><div class="ix-feedback" id="ixFb"><\/div>';
+const items=[{n:'p\u00E8re (Vater)',t:'le'},{n:'m\u00E8re (Mutter)',t:'la'},{n:'fr\u00E8re (Bruder)',t:'le'},{n:'soeur (Schwester)',t:'la'},{n:'grand-p\u00E8re (Opa)',t:'le'},{n:'tante (Tante)',t:'la'}];
+window._ixData={items,sel:null,done:0,correct:0};
+const g=document.getElementById('ixItems');items.forEach((it,i)=>{const d=document.createElement('div');d.className='ix-item';d.textContent=it.n;d.onclick=()=>{document.querySelectorAll('.ix-item').forEach(x=>x.classList.remove('selected'));d.classList.add('selected');window._ixData.sel=i};g.appendChild(d)});},
+// Mod 3: Essen — Essen oder Trinken?
+function(){el.innerHTML='<p>Ist das etwas zum Essen oder zum Trinken?</p><div class="ix-grid" id="ixItems"><\/div><div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin:16px 0"><button class="ix-btn" onclick="ixDrop(3,\'essen\')">Essen</button><button class="ix-btn" onclick="ixDrop(3,\'trinken\')">Trinken</button></div><div class="ix-feedback" id="ixFb"><\/div>';
+const items=[{n:'le pain (Brot)',t:'essen'},{n:'le jus d\'orange (OJ)',t:'trinken'},{n:'le fromage (K\u00E4se)',t:'essen'},{n:'l\'eau (Wasser)',t:'trinken'},{n:'le croissant',t:'essen'},{n:'le lait (Milch)',t:'trinken'}];
+window._ixData={items,sel:null,done:0,correct:0};
+const g=document.getElementById('ixItems');items.forEach((it,i)=>{const d=document.createElement('div');d.className='ix-item';d.textContent=it.n;d.onclick=()=>{document.querySelectorAll('.ix-item').forEach(x=>x.classList.remove('selected'));d.classList.add('selected');window._ixData.sel=i};g.appendChild(d)});},
+// Mod 4: Tiere — Haustier oder Wildtier?
+function(){el.innerHTML='<p>Ist das ein Haustier oder ein Wildtier?</p><div class="ix-grid" id="ixItems"><\/div><div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin:16px 0"><button class="ix-btn" onclick="ixDrop(4,\'haus\')">Haustier</button><button class="ix-btn" onclick="ixDrop(4,\'wild\')">Wildtier</button></div><div class="ix-feedback" id="ixFb"><\/div>';
+const items=[{n:'le chat (Katze)',t:'haus'},{n:'le lion (L\u00F6we)',t:'wild'},{n:'le chien (Hund)',t:'haus'},{n:'le singe (Affe)',t:'wild'},{n:'le lapin (Kaninchen)',t:'haus'},{n:'le serpent (Schlange)',t:'wild'}];
+window._ixData={items,sel:null,done:0,correct:0};
+const g=document.getElementById('ixItems');items.forEach((it,i)=>{const d=document.createElement('div');d.className='ix-item';d.textContent=it.n;d.onclick=()=>{document.querySelectorAll('.ix-item').forEach(x=>x.classList.remove('selected'));d.classList.add('selected');window._ixData.sel=i};g.appendChild(d)});},
+// Mod 5: Schule — Schulfach oder Schulsache?
+function(){el.innerHTML='<p>Ist das ein Schulfach oder eine Schulsache?</p><div class="ix-grid" id="ixItems"><\/div><div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin:16px 0"><button class="ix-btn" onclick="ixDrop(5,\'fach\')">Schulfach</button><button class="ix-btn" onclick="ixDrop(5,\'sache\')">Schulsache</button></div><div class="ix-feedback" id="ixFb"><\/div>';
+const items=[{n:'les maths (Mathe)',t:'fach'},{n:'le cahier (Heft)',t:'sache'},{n:'le sport',t:'fach'},{n:'le stylo (Kugelschreiber)',t:'sache'},{n:'la musique (Musik)',t:'fach'},{n:'la gomme (Radiergummi)',t:'sache'}];
+window._ixData={items,sel:null,done:0,correct:0};
+const g=document.getElementById('ixItems');items.forEach((it,i)=>{const d=document.createElement('div');d.className='ix-item';d.textContent=it.n;d.onclick=()=>{document.querySelectorAll('.ix-item').forEach(x=>x.classList.remove('selected'));d.classList.add('selected');window._ixData.sel=i};g.appendChild(d)});},
+// Mod 6: Wochentage — In die richtige Reihenfolge bringen
+function(){el.innerHTML='<p>Bringe die franz\u00F6sischen Wochentage in die richtige Reihenfolge!</p><div class="ix-grid" id="ixItems"><\/div><div class="ix-feedback" id="ixFb"><\/div>';
+const items=[{n:'lundi (Montag)',o:0},{n:'mardi (Dienstag)',o:1},{n:'mercredi (Mittwoch)',o:2},{n:'jeudi (Donnerstag)',o:3},{n:'vendredi (Freitag)',o:4}];
+const shuffled=[...items].sort(()=>Math.random()-.5);window._ixOrder={items:shuffled,picked:[],step:0};
+const g=document.getElementById('ixItems');shuffled.forEach((it,i)=>{const d=document.createElement('div');d.className='ix-item';d.textContent=it.n;d.onclick=()=>{const od=window._ixOrder;if(d.classList.contains('placed'))return;if(it.o===od.step){d.classList.add('correct','placed');od.step++;od.picked.push(i);if(od.step>=items.length){const fb=document.getElementById('ixFb');fb.className='ix-feedback pass';fb.textContent='\u2705 Parfait! Richtige Reihenfolge!';if(!state.interactiveResults[6]){state.interactiveResults[6]=true;addXP(20,'Interaktive Übung gelöst');saveState()}}}else{d.classList.add('wrong');setTimeout(()=>d.classList.remove('wrong'),800)}};g.appendChild(d)});},
+// Mod 7: K\u00F6rper — Kopf oder K\u00F6rper?
+function(){el.innerHTML='<p>Geh\u00F6rt das zum Kopf/Gesicht oder zum K\u00F6rper?</p><div class="ix-grid" id="ixItems"><\/div><div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin:16px 0"><button class="ix-btn" onclick="ixDrop(7,\'kopf\')">Kopf/Gesicht</button><button class="ix-btn" onclick="ixDrop(7,\'k\u00F6rper\')">K\u00F6rper</button></div><div class="ix-feedback" id="ixFb"><\/div>';
+const items=[{n:'les yeux (Augen)',t:'kopf'},{n:'le bras (Arm)',t:'k\u00F6rper'},{n:'le nez (Nase)',t:'kopf'},{n:'la jambe (Bein)',t:'k\u00F6rper'},{n:'la bouche (Mund)',t:'kopf'},{n:'le pied (Fuss)',t:'k\u00F6rper'}];
+window._ixData={items,sel:null,done:0,correct:0};
+const g=document.getElementById('ixItems');items.forEach((it,i)=>{const d=document.createElement('div');d.className='ix-item';d.textContent=it.n;d.onclick=()=>{document.querySelectorAll('.ix-item').forEach(x=>x.classList.remove('selected'));d.classList.add('selected');window._ixData.sel=i};g.appendChild(d)});},
+// Mod 8: Hobbys — J'aime oder Je n'aime pas? (positiv/negativ zuordnen)
+function(){el.innerHTML='<p>Ordne zu: Welcher Ausdruck ist positiv und welcher negativ?</p><div class="ix-grid" id="ixItems"><\/div><div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin:16px 0"><button class="ix-btn" onclick="ixDrop(8,\'positiv\')">Positiv (mag ich)</button><button class="ix-btn" onclick="ixDrop(8,\'negativ\')">Negativ (mag ich nicht)</button></div><div class="ix-feedback" id="ixFb"><\/div>';
+const items=[{n:'J\'aime (Ich mag)',t:'positiv'},{n:'Je d\u00E9teste (Ich hasse)',t:'negativ'},{n:'J\'adore (Ich liebe)',t:'positiv'},{n:'Je n\'aime pas (Ich mag nicht)',t:'negativ'},{n:'C\'est super! (Super!)',t:'positiv'},{n:'C\'est nul! (Das ist doof!)',t:'negativ'}];
+window._ixData={items,sel:null,done:0,correct:0};
+const g=document.getElementById('ixItems');items.forEach((it,i)=>{const d=document.createElement('div');d.className='ix-item';d.textContent=it.n;d.onclick=()=>{document.querySelectorAll('.ix-item').forEach(x=>x.classList.remove('selected'));d.classList.add('selected');window._ixData.sel=i};g.appendChild(d)});},
+// Mod 9: Frankreich — Sehenswürdigkeit der Stadt zuordnen
+function(){el.innerHTML='<p>Ordne die Sehenswürdigkeit der richtigen Stadt zu!</p><div class="ix-grid" id="ixItems"><\/div><div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin:16px 0"><button class="ix-btn" onclick="ixDrop(9,\'paris\')">Paris</button><button class="ix-btn" onclick="ixDrop(9,\'andere\')">Andere Stadt</button></div><div class="ix-feedback" id="ixFb"><\/div>';
+const items=[{n:'Tour Eiffel (Eiffelturm)',t:'paris'},{n:'Mont-Saint-Michel (Normandie)',t:'andere'},{n:'Le Louvre (Museum)',t:'paris'},{n:'Ch\u00E2teaux de la Loire',t:'andere'},{n:'Notre-Dame (Kathedrale)',t:'paris'},{n:'Vieux-Port de Marseille',t:'andere'}];
+window._ixData={items,sel:null,done:0,correct:0};
+const g=document.getElementById('ixItems');items.forEach((it,i)=>{const d=document.createElement('div');d.className='ix-item';d.textContent=it.n;d.onclick=()=>{document.querySelectorAll('.ix-item').forEach(x=>x.classList.remove('selected'));d.classList.add('selected');window._ixData.sel=i};g.appendChild(d)});}
+];
+if(exercises[modId])exercises[modId]();
+}
+// Interactive helpers
+window.ixDrop=function(modId,cat){
+const d=window._ixData;if(d.sel===null)return;
+const item=d.items[d.sel];const els=document.querySelectorAll('.ix-item');
+if(item.t===cat){els[d.sel].classList.add('correct');els[d.sel].classList.add('placed');d.correct++}
+else{els[d.sel].classList.add('wrong');setTimeout(()=>els[d.sel].classList.remove('wrong'),800)}
+d.done++;d.sel=null;els.forEach(e=>e.classList.remove('selected'));
+if(d.done>=d.items.length){const fb=document.getElementById('ixFb');fb.className='ix-feedback '+(d.correct>=4?'pass':'fail');fb.textContent=d.correct>=4?'\u2705 '+d.correct+'/'+d.items.length+' richtig — Tr\u00E8s bien!':'\u274C '+d.correct+'/'+d.items.length+' \u2014 Versuch es nochmal!';
+if(d.correct>=4&&!state.interactiveResults[modId]){state.interactiveResults[modId]=true;addXP(20,'Interaktive Übung gelöst');saveState()}}
+};
+// === Start App ===
+function startApp(){
+const name=document.getElementById('nameInput').value.trim();if(!name)return;
+state.name=name;state.started=true;saveState();
+document.getElementById('welcomeScreen').style.display='none';
+renderModule(0);updateStreak();
+}
+
+// === Init ===
+(function init(){
+if(loadState()&&state.started){
+document.getElementById('welcomeScreen').style.display='none';
+document.documentElement.setAttribute('data-theme',state.designTheme);
+renderModule(state.currentModule);updateUI();updateStreak();
+}else{
+document.documentElement.setAttribute('data-theme',state.designTheme);
+buildThemePicker();
+}
+renderSidebar();
+document.addEventListener('click',e=>{if(!e.target.closest('.theme-picker-wrap'))document.getElementById('themePickerDD')?.classList.remove('open')});
+})();
+</script>
+
+<script>
+(function(){
+var KEY=null;
+var scripts=document.querySelectorAll('script');
+for(var i=0;i<scripts.length;i++){
+var km=scripts[i].textContent.match(/STORAGE_KEY\s*=\s*['"](\w+)['"]/);
+if(km){KEY=km[1];break;}
+}
+if(!location.hash.match(/modules=/)){try{Object.keys(localStorage).filter(function(k){return k.indexOf("_allowed_modules")!==-1}).forEach(function(k){localStorage.removeItem(k)})}catch(e){}}
+var LOCK_KEY=(KEY||'app')+'_allowed_modules';
+var h=location.hash.match(/modules=([0-9,]+)/);
+var allowed=null;
+if(h){
+allowed=h[1].split(",").map(Number);
+try{localStorage.setItem(LOCK_KEY,JSON.stringify(allowed));}catch(e){}
+}else{
+try{var stored=localStorage.getItem(LOCK_KEY);if(stored)allowed=JSON.parse(stored);}catch(e){}
+}
+if(!allowed||!allowed.length)return;
+function filterSidebar(){
+var items=document.querySelectorAll("#sidebarModules > *");
+for(var i=0;i<items.length;i++){
+items[i].style.display=(allowed.indexOf(i)===-1)?"none":"";
+}
+}
+var sb=document.getElementById("sidebarModules");
+if(sb){new MutationObserver(filterSidebar).observe(sb,{childList:true});filterSidebar();}
+document.addEventListener("click",function(e){
+var t=e.target.closest("[onclick]");
+if(!t)return;
+var oc=t.getAttribute("onclick")||"";
+var idx=oc.indexOf("renderModule(");
+if(idx===-1)return;
+var num=parseInt(oc.substring(idx+13));
+if(!isNaN(num)&&allowed.indexOf(num)===-1){e.preventDefault();e.stopImmediatePropagation();}
+},true);
+setTimeout(filterSidebar,500);
+window.addEventListener("hashchange",function(){
+var hh=location.hash.match(/modules=([0-9,]+)/);
+if(hh){
+allowed=hh[1].split(",").map(Number);
+try{localStorage.setItem(LOCK_KEY,JSON.stringify(allowed));}catch(e){}
+filterSidebar();
+}
+});
+})();
+</script>
+
+<div class="zoom-controls" role="toolbar" aria-label="Zoom-Steuerung">
+<button class="zoom-btn" onclick="zoomOut()" title="Verkleinern (Taste -)" aria-label="Verkleinern">&#8722;</button>
+<button class="zoom-btn" onclick="zoomReset()" title="Zoom zurücksetzen" aria-label="Zoom zurücksetzen" style="font-size:10px;position:relative"><span id="zoomLvl">100%</span></button>
+<button class="zoom-btn" onclick="zoomIn()" title="Vergrößern (Taste +)" aria-label="Vergrößern">+</button>
+</div>
+
+<script>
+(function(){
+var zl=100;
+function applyZoom(){document.body.style.zoom=zl/100;var e=document.getElementById('zoomLvl');if(e)e.textContent=zl+'%';}
+window.zoomIn=function(){if(zl<200){zl+=10;applyZoom();}};
+window.zoomOut=function(){if(zl>50){zl-=10;applyZoom();}};
+window.zoomReset=function(){zl=100;applyZoom();};
+document.addEventListener('keydown',function(e){
+if(e.target.tagName==='INPUT'||e.target.tagName==='TEXTAREA'||e.target.isContentEditable)return;
+if((e.key==='+'||e.key==='=')&&!e.ctrlKey&&!e.metaKey){e.preventDefault();zoomIn();}
+else if((e.key==='-'||e.key==='_')&&!e.ctrlKey&&!e.metaKey){e.preventDefault();zoomOut();}
+else if(e.key==='0'&&!e.ctrlKey&&!e.metaKey){e.preventDefault();zoomReset();}
+});
+})();
+</script>
+
+<script>
+/* A11y: Focus trap for modal overlays */
+document.addEventListener('keydown',function(e){if(e.key==='Tab'){var ov=document.querySelector('.cert-overlay.active,.modal-overlay.active,[role="dialog"].active');if(ov){var fc=ov.querySelectorAll('button,a,[tabindex="0"],input,select,textarea');if(fc.length){var f=fc[0],l=fc[fc.length-1];if(e.shiftKey&&document.activeElement===f){e.preventDefault();l.focus()}else if(!e.shiftKey&&document.activeElement===l){e.preventDefault();f.focus()}}}}});
+</script>
+</body>
+</html>

@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="de" data-theme="cyber-dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>AlgebraMeister — Mathe Kl. 7-9</title>
+<meta name="description" content="Interaktive Mathe-Lern-App f\u00FCr Klasse 7-9: Gleichungen, Prozent, Funktionen und mehr.">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+/* ═══ Theme: Cyber Neon ═══ */
+[data-theme="cyber-dark"]{--bg:#0a0a14;--bg2:#12121e;--bg3:#1a1a2a;--card:#141422;--text:#c8c8e0;--text-dim:#6a6a8a;--heading:#e8e8ff;--neon:#818cf8;--neon-dim:rgba(129,140,248,.1);--neon-glow:0 0 20px rgba(129,140,248,.2);--link:#a5b4fc;--border:rgba(129,140,248,.12);--success:#34d399;--warning:#fbbf24;--danger:#f87171;--xp-purple:#a78bfa;--badge-cyan:#22d3ee;--streak-red:#f87171;--radius:10px;--shadow:0 4px 24px rgba(0,0,0,.4);--font:'Segoe UI',system-ui,sans-serif;--mono:'Courier New',monospace;--serif:Georgia,serif}
+[data-theme="cyber-light"]{--bg:#f5f5ff;--bg2:#eeeef8;--bg3:#e0e0f0;--card:#fff;--text:#1a1a3e;--text-dim:#6a6a8a;--heading:#1a1a3e;--neon:#6366f1;--neon-dim:rgba(99,102,241,.06);--neon-glow:0 0 12px rgba(99,102,241,.12);--link:#4f46e5;--border:rgba(99,102,241,.12);--success:#059669;--warning:#d97706;--danger:#dc2626;--xp-purple:#7c3aed;--badge-cyan:#0891b2;--streak-red:#dc2626;--radius:10px;--shadow:0 4px 24px rgba(0,0,0,.06);--font:'Segoe UI',system-ui,sans-serif;--mono:'Courier New',monospace;--serif:Georgia,serif}
+/* ═══ Theme: Terminal ═══ */
+[data-theme="term-dark"]{--bg:#0c0c0c;--bg2:#161616;--bg3:#1e1e1e;--card:#141414;--text:#b0d0b0;--text-dim:#5a7a5a;--heading:#d0f0d0;--neon:#4ade80;--neon-dim:rgba(74,222,128,.08);--neon-glow:0 0 16px rgba(74,222,128,.15);--link:#66bb6a;--border:rgba(74,222,128,.1);--success:#4ade80;--warning:#fbbf24;--danger:#f87171;--xp-purple:#a78bfa;--badge-cyan:#22d3ee;--streak-red:#f87171;--radius:6px;--shadow:0 2px 16px rgba(0,0,0,.5);--font:'Courier New','Consolas',monospace;--mono:'Courier New',monospace;--serif:Georgia,serif}
+[data-theme="term-light"]{--bg:#f4f8f4;--bg2:#e8f0e8;--bg3:#d0e0d0;--card:#fff;--text:#1a2e1a;--text-dim:#4a6a4a;--heading:#0a1e0a;--neon:#16a34a;--neon-dim:rgba(22,163,74,.06);--neon-glow:0 0 10px rgba(22,163,74,.1);--link:#15803d;--border:rgba(22,163,74,.1);--success:#16a34a;--warning:#d97706;--danger:#dc2626;--xp-purple:#7c3aed;--badge-cyan:#0891b2;--streak-red:#dc2626;--radius:6px;--shadow:0 2px 16px rgba(0,0,0,.06);--font:'Courier New','Consolas',monospace;--mono:'Courier New',monospace;--serif:Georgia,serif}
+/* ═══ Theme: Ocean Pro ═══ */
+[data-theme="ocean-dark"]{--bg:#0a1520;--bg2:#0f1e30;--bg3:#142840;--card:#0f1e2e;--text:#b0d0e8;--text-dim:#5a8aaa;--heading:#d0eaff;--neon:#38bdf8;--neon-dim:rgba(56,189,248,.08);--neon-glow:0 0 18px rgba(56,189,248,.18);--link:#0ea5e9;--border:rgba(56,189,248,.1);--success:#22d3ee;--warning:#fbbf24;--danger:#f87171;--xp-purple:#a78bfa;--badge-cyan:#22d3ee;--streak-red:#f87171;--radius:10px;--shadow:0 4px 24px rgba(0,0,0,.4);--font:'Segoe UI',system-ui,sans-serif;--mono:'Courier New',monospace;--serif:Georgia,serif}
+[data-theme="ocean-light"]{--bg:#f0f9ff;--bg2:#e0f2fe;--bg3:#bae6fd;--card:#fff;--text:#0c4a6e;--text-dim:#4a8aaa;--heading:#082f49;--neon:#0284c7;--neon-dim:rgba(2,132,199,.06);--neon-glow:0 0 10px rgba(2,132,199,.1);--link:#0369a1;--border:rgba(2,132,199,.1);--success:#0891b2;--warning:#d97706;--danger:#dc2626;--xp-purple:#7c3aed;--badge-cyan:#0891b2;--streak-red:#dc2626;--radius:10px;--shadow:0 4px 24px rgba(0,0,0,.05);--font:'Segoe UI',system-ui,sans-serif;--mono:'Courier New',monospace;--serif:Georgia,serif}
+/* ═══ Theme: Minimal ═══ */
+[data-theme="minimal-dark"]{--bg:#111;--bg2:#1a1a1a;--bg3:#222;--card:#181818;--text:#c0c0c0;--text-dim:#666;--heading:#eee;--neon:#e0e0e0;--neon-dim:rgba(224,224,224,.06);--neon-glow:0 0 12px rgba(255,255,255,.06);--link:#aaa;--border:rgba(255,255,255,.08);--success:#4ade80;--warning:#fbbf24;--danger:#f87171;--xp-purple:#a78bfa;--badge-cyan:#22d3ee;--streak-red:#f87171;--radius:8px;--shadow:0 2px 16px rgba(0,0,0,.5);--font:'Segoe UI',system-ui,sans-serif;--mono:'Courier New',monospace;--serif:Georgia,serif}
+[data-theme="minimal-light"]{--bg:#fafafa;--bg2:#f0f0f0;--bg3:#e5e5e5;--card:#fff;--text:#333;--text-dim:#888;--heading:#111;--neon:#333;--neon-dim:rgba(0,0,0,.04);--neon-glow:0 0 8px rgba(0,0,0,.05);--link:#555;--border:rgba(0,0,0,.08);--success:#16a34a;--warning:#d97706;--danger:#dc2626;--xp-purple:#7c3aed;--badge-cyan:#0891b2;--streak-red:#dc2626;--radius:8px;--shadow:0 2px 16px rgba(0,0,0,.05);--font:'Segoe UI',system-ui,sans-serif;--mono:'Courier New',monospace;--serif:Georgia,serif}
+
+html{scroll-behavior:smooth}body{font-family:var(--font);background:var(--bg);color:var(--text);font-size:17px;line-height:1.7;min-height:100vh;transition:background .3s,color .3s}a{color:var(--link);text-decoration:none}a:hover{text-decoration:underline}.skip-nav{position:absolute;top:-50px;left:8px;background:var(--neon);color:var(--bg);padding:8px 16px;z-index:9999;border-radius:0 0 8px 8px;font-weight:700}.skip-nav:focus{top:0}
+.header{position:sticky;top:0;z-index:100;background:var(--bg2);border-bottom:1px solid var(--border);padding:10px 20px;display:flex;align-items:center;gap:12px;backdrop-filter:blur(12px)}.header .logo{display:flex;align-items:center;gap:10px;font-weight:700;font-size:18px;color:var(--heading);letter-spacing:-.5px}.header .logo svg{width:28px;height:28px}.header .xp-bar{flex:1;max-width:240px;margin-left:auto}.header .xp-label{font-size:11px;color:var(--text-dim);display:flex;justify-content:space-between;font-weight:600;text-transform:uppercase;letter-spacing:1px}.header .xp-track{height:6px;background:var(--bg3);border-radius:3px;overflow:hidden;margin-top:3px}.header .xp-fill{height:100%;background:var(--neon);border-radius:3px;transition:width .5s}.hamburger{display:none;background:none;border:1px solid var(--border);color:var(--text);font-size:20px;padding:4px 10px;border-radius:var(--radius);cursor:pointer}@media(max-width:800px){.hamburger{display:block}}
+.sidebar{position:fixed;top:54px;left:0;width:260px;height:calc(100vh - 54px);background:var(--bg2);border-right:1px solid var(--border);overflow-y:auto;padding:16px;z-index:90;transition:transform .3s}.sidebar h3{font-size:11px;color:var(--text-dim);text-transform:uppercase;letter-spacing:2px;margin-bottom:12px}.sidebar-item{display:flex;align-items:center;gap:8px;padding:9px 12px;border-radius:var(--radius);cursor:pointer;color:var(--text);font-size:14px;transition:background .2s;margin-bottom:3px;border:1px solid transparent}.sidebar-item:hover{background:var(--neon-dim);border-color:var(--border)}.sidebar-item.active{background:var(--neon-dim);border-color:var(--neon);color:var(--neon);font-weight:600}.sidebar-item.completed::after{content:'\2713';margin-left:auto;color:var(--success);font-weight:700;font-size:12px}.sidebar-link{display:block;padding:9px 12px;border-radius:var(--radius);color:var(--text-dim);font-size:13px;cursor:pointer;transition:background .2s;margin-bottom:2px}.sidebar-link:hover{background:var(--neon-dim);color:var(--text)}@media(max-width:800px){.sidebar{transform:translateX(-100%)}.sidebar.open{transform:translateX(0)}}
+.main{margin-left:260px;padding:32px;max-width:860px}@media(max-width:800px){.main{margin-left:0;padding:16px}}
+.welcome{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:70vh;text-align:center;padding:40px 20px}.welcome .hero-icon{font-size:48px;margin-bottom:20px;opacity:.7}.welcome h1{font-size:clamp(28px,5vw,44px);color:var(--heading);margin-bottom:8px;letter-spacing:-1px;font-weight:800}.welcome .sub{font-size:clamp(15px,2.5vw,18px);color:var(--text-dim);margin-bottom:32px;max-width:480px;line-height:1.6}.welcome input{font-size:18px;padding:12px 24px;border-radius:var(--radius);border:1px solid var(--border);background:var(--bg2);color:var(--text);text-align:center;width:min(320px,90%);outline:none;font-family:var(--font);transition:border-color .3s}.welcome input:focus{border-color:var(--neon)}.welcome .start-btn{margin-top:16px;padding:14px 40px;font-size:16px;font-weight:700;border-radius:var(--radius);border:none;background:var(--neon);color:var(--bg);cursor:pointer;font-family:var(--font);transition:transform .15s,box-shadow .15s;text-transform:uppercase;letter-spacing:1px}.welcome .start-btn:hover{transform:translateY(-2px);box-shadow:var(--neon-glow)}.welcome .start-btn:disabled{opacity:.4;cursor:not-allowed;transform:none}
+.theme-picker{display:flex;gap:8px;margin-top:20px;flex-wrap:wrap;justify-content:center}.theme-btn{width:36px;height:36px;border-radius:50%;border:2px solid transparent;cursor:pointer;transition:transform .2s,border-color .2s;font-size:0}.theme-btn:hover{transform:scale(1.1)}.theme-btn.active{border-color:var(--heading);transform:scale(1.1)}.mode-toggle{background:var(--bg3);border:1px solid var(--border);color:var(--text);padding:6px 14px;border-radius:20px;cursor:pointer;font-size:16px;transition:all .2s;margin-left:8px}.mode-toggle:hover{border-color:var(--neon)}
+.module-header{text-align:center;margin-bottom:32px}.module-header .mod-badge{display:inline-block;background:var(--neon-dim);border:1px solid var(--border);color:var(--neon);padding:4px 14px;border-radius:4px;font-size:12px;font-weight:600;margin-bottom:12px;text-transform:uppercase;letter-spacing:1px}.module-header h1{color:var(--heading);font-size:clamp(22px,4vw,32px);letter-spacing:-.5px}.module-header .mod-desc{color:var(--text-dim);margin-top:8px;font-size:15px}
+.lesson-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:24px 28px;margin-bottom:20px;box-shadow:var(--shadow)}.lesson-card h3{color:var(--heading);font-size:18px;margin-bottom:12px}.lesson-card p,.lesson-card li{font-size:16px;line-height:1.8;margin-bottom:8px}.lesson-card .info-box{background:var(--neon-dim);border-left:3px solid var(--neon);padding:14px 18px;border-radius:0 var(--radius) var(--radius) 0;margin:16px 0;font-size:15px}.lesson-card ul,.lesson-card ol{padding-left:24px;margin:12px 0}
+.interactive-area{background:var(--card);border:1px solid var(--neon);border-radius:var(--radius);padding:24px;margin:24px 0}.interactive-area h4{color:var(--neon);font-size:15px;margin-bottom:16px;text-transform:uppercase;letter-spacing:1px}#interactiveContent{min-height:100px}
+.ix-grid{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin:16px 0}.ix-item{background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius);padding:12px 18px;font-size:18px;cursor:pointer;transition:all .15s;user-select:none;text-align:center;min-width:56px}.ix-item:hover{border-color:var(--neon);background:var(--neon-dim)}.ix-item.selected{border-color:var(--neon);background:var(--neon-dim)}.ix-item.correct{border-color:var(--success);background:rgba(52,211,153,.12);color:var(--success)}.ix-item.wrong{border-color:var(--danger);background:rgba(248,113,113,.12);color:var(--danger)}.ix-item.placed{opacity:.35;pointer-events:none}
+.ix-btn{background:var(--neon);color:var(--bg);border:none;padding:10px 24px;border-radius:var(--radius);font-size:15px;font-weight:700;cursor:pointer;font-family:var(--font);margin-top:14px;transition:transform .15s;text-transform:uppercase;letter-spacing:.5px}.ix-btn:hover{transform:translateY(-1px)}.ix-btn:disabled{opacity:.4;cursor:not-allowed;transform:none}.ix-feedback{text-align:center;padding:12px;border-radius:var(--radius);font-size:16px;font-weight:600;margin-top:12px;display:none}.ix-feedback.pass{display:block;background:rgba(52,211,153,.1);color:var(--success)}.ix-feedback.fail{display:block;background:rgba(248,113,113,.1);color:var(--danger)}
+.quiz-section,.boss-section{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:24px;margin:20px 0}.boss-section{border-color:var(--warning)}.quiz-section h3,.boss-section h3{color:var(--heading);margin-bottom:16px;font-size:18px}.boss-sub{color:var(--warning);font-size:13px;margin-bottom:16px}.quiz-q{margin-bottom:20px}.quiz-q p{font-weight:600;font-size:16px;margin-bottom:10px;color:var(--heading)}.quiz-q label{display:block;padding:10px 16px;border-radius:var(--radius);border:1px solid var(--border);margin-bottom:5px;cursor:pointer;transition:all .15s;font-size:15px}.quiz-q label:hover{background:var(--neon-dim)}.quiz-q label.correct{background:rgba(52,211,153,.12);border-color:var(--success);color:var(--success)}.quiz-q label.wrong{background:rgba(248,113,113,.12);border-color:var(--danger);color:var(--danger)}.quiz-submit{background:var(--neon);color:var(--bg);border:none;padding:10px 24px;border-radius:var(--radius);font-size:14px;font-weight:700;cursor:pointer;font-family:var(--font);text-transform:uppercase;letter-spacing:.5px}.quiz-submit:disabled{opacity:.4;cursor:not-allowed}.quiz-result{padding:12px;border-radius:var(--radius);font-weight:600;font-size:15px;margin-top:12px;text-align:center}.quiz-result.pass{background:rgba(52,211,153,.1);color:var(--success)}.quiz-result.fail{background:rgba(248,113,113,.1);color:var(--danger)}.quiz-explanation{margin-top:6px;padding:8px 14px;border-radius:var(--radius);background:rgba(52,211,153,.06);border-left:3px solid var(--success);font-size:13px;color:var(--success);font-weight:600}
+.badges-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:10px;margin-top:16px}.badge-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:14px;text-align:center}.badge-card.earned{border-color:var(--neon)}.badge-card .badge-icon{font-size:28px;margin-bottom:4px}.badge-card .badge-name{font-weight:600;font-size:13px;color:var(--heading)}.badge-card .badge-desc{font-size:11px;color:var(--text-dim);margin-top:3px}.badge-card.locked{opacity:.3}
+.stats-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:14px;margin-top:16px}.stat-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:18px;text-align:center}.stat-card .stat-val{font-size:32px;font-weight:700;color:var(--neon)}.stat-card .stat-label{font-size:12px;color:var(--text-dim);margin-top:4px;text-transform:uppercase;letter-spacing:1px}
+.notif{position:fixed;top:-80px;right:20px;padding:12px 18px;border-radius:var(--radius);font-size:14px;z-index:999;transition:top .3s ease;box-shadow:var(--shadow);max-width:300px}.notif.show{top:66px}.notif.xp{background:var(--xp-purple);color:#fff}.notif.badge{background:var(--badge-cyan);color:#000}.notif.streak{background:var(--streak-red);color:#fff}.notif.level{background:var(--neon);color:var(--bg)}.notif-title{font-weight:700;font-size:14px}.notif-text{font-size:12px;opacity:.8;margin-top:2px}
+.level-up-overlay{position:fixed;inset:0;z-index:500;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,.75)}.level-up-overlay.active{display:flex}.lvl-box{text-align:center;animation:fadeUp .4s ease}.lvl-icon{font-size:40px;opacity:.6}.lvl-title{font-size:28px;font-weight:800;color:var(--neon);margin:8px 0;letter-spacing:-1px}.lvl-name{font-size:16px;color:var(--heading)}@keyframes fadeUp{0%{transform:translateY(20px);opacity:0}100%{transform:translateY(0);opacity:1}}#confetti{position:fixed;inset:0;pointer-events:none;z-index:501;overflow:hidden}
+.cert-overlay{display:none;position:fixed;inset:0;z-index:400;background:rgba(0,0,0,.85);align-items:center;justify-content:center;flex-direction:column;padding:20px;overflow-y:auto}.cert-overlay.active{display:flex}.cert-picker{display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap;justify-content:center}.cert-picker button{padding:6px 14px;border-radius:var(--radius);border:1px solid var(--border);background:var(--bg2);color:var(--text);cursor:pointer;font-size:13px;font-family:var(--font);transition:all .2s}.cert-picker button.active{border-color:var(--neon);color:var(--neon);background:var(--neon-dim)}.cert-frame{width:min(700px,95vw);min-height:500px;border-radius:8px;overflow:hidden}.cert-actions{display:flex;gap:10px;margin-top:14px;flex-wrap:wrap;justify-content:center}.cert-actions button{padding:8px 18px;border-radius:var(--radius);border:1px solid var(--border);background:var(--bg2);color:var(--text);cursor:pointer;font-size:13px;font-family:var(--font);transition:all .2s}.cert-actions button:hover{border-color:var(--neon);color:var(--neon)}
+@media print{*{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}.header,.sidebar,.notif,.level-up-overlay,#confetti{display:none!important}.main{margin-left:0!important;padding:20px!important}.lesson-card{break-inside:avoid;page-break-inside:avoid}}
+.site-footer{text-align:center;padding:32px 0;margin-top:40px;border-top:1px solid var(--border);color:var(--text-dim);font-size:12px}
+
+.zoom-controls{position:fixed;bottom:16px;left:16px;display:flex;gap:4px;z-index:9999}
+.zoom-btn{width:32px;height:32px;border-radius:50%;border:1px solid var(--border,#2a3444);background:var(--bg2,#111827);color:var(--text,#d4dce8);cursor:pointer;font-size:15px;display:flex;align-items:center;justify-content:center;transition:all .2s;font-family:inherit;line-height:1}
+.zoom-btn:hover{border-color:var(--neon,#3b82f6);color:var(--neon,#3b82f6);transform:scale(1.1)}
+.zoom-btn:focus-visible{outline:2px solid var(--neon,#3b82f6);outline-offset:2px}
+.zoom-level{font-size:10px;position:absolute;top:-16px;left:50%;transform:translateX(-50%);color:var(--text-dim,#8899aa);white-space:nowrap;pointer-events:none}
+
+/* A11y: Print improvements */
+@media print{body{background:#fff!important;color:#000!important}.cert-overlay,.modal-overlay,.level-up-overlay,.theme-overlay,.zoom-controls{display:none!important}.lesson-card,.quiz-section,.boss-section,.interactive-area{break-inside:avoid;page-break-inside:avoid}}
+
+/* Audio/Speech */
+.tts-btn{background:none;border:none;cursor:pointer;font-size:.9em;opacity:.5;transition:all .2s;vertical-align:middle;margin-left:8px;padding:2px 6px;border-radius:4px}
+.tts-btn:hover{opacity:1;background:var(--bg2)}.tts-btn.speaking{opacity:1;color:var(--neon);animation:tts-pulse 1s infinite}
+@keyframes tts-pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.15)}}
+.tts-bar{display:flex;align-items:center;gap:8px;padding:6px 12px;background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);margin:8px 0;font-size:.8rem;flex-wrap:wrap}
+.tts-bar select{background:var(--bg);color:var(--text);border:1px solid var(--border);border-radius:4px;padding:2px 6px;font-size:.78rem}
+.tts-bar button{background:none;border:1px solid var(--border);border-radius:4px;padding:2px 8px;cursor:pointer;color:var(--text);font-size:.8rem}
+.tts-bar button:hover{background:var(--bg)}
+.speech-ex{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:16px;margin:12px 0;text-align:center}
+.speech-ex h4{margin:0 0 8px;font-size:1rem}
+.mic-btn{font-size:1.6em;background:none;border:2px solid var(--neon);border-radius:50%;width:52px;height:52px;cursor:pointer;transition:all .3s;color:var(--text);display:inline-flex;align-items:center;justify-content:center}
+.mic-btn:hover{background:var(--neon);color:var(--bg)}.mic-btn.rec{background:#ef4444;border-color:#ef4444;color:#fff;animation:tts-pulse 1s infinite}
+.sr-res{margin-top:8px;padding:6px 10px;border-radius:4px;font-weight:600;font-size:.85rem;display:inline-block}
+.sr-res.good{background:#22c55e22;color:#22c55e}.sr-res.retry{background:#f59e0b22;color:#f59e0b}
+.sr-na{font-size:.8rem;color:var(--text-dim);margin-top:8px}
+</style>
+</head>
+<body>
+<a href="#mainContent" class="skip-nav">Zum Inhalt springen</a>
+<header class="header" role="banner">
+  <button class="hamburger" onclick="toggleSidebar()" aria-label="Menu">&#9776;</button>
+  <div class="logo">
+    <svg viewBox="0 0 28 28" fill="none" aria-hidden="true"><rect x="1" y="1" width="26" height="26" rx="5" fill="var(--neon-dim)" stroke="var(--neon)" stroke-width="1"/><text x="14" y="12" text-anchor="middle" font-size="8" font-weight="800" fill="var(--heading)">x&#xB2;</text><text x="14" y="22" text-anchor="middle" font-size="7" font-weight="700" fill="var(--neon)">=?</text></svg>
+    <span>AlgebraMeister</span>
+  </div>
+  <div class="xp-bar"><div class="xp-label"><span id="levelName">Einsteiger</span><span id="xpText">0 XP</span></div><div class="xp-track"><div class="xp-fill" id="xpFill" style="width:0%"></div></div></div>
+</header>
+<nav class="sidebar" id="sidebar" role="navigation" aria-label="Module">
+  <h3>Module</h3><div id="sidebarModules"></div>
+  <hr style="border:none;border-top:1px solid var(--border);margin:16px 0">
+  <div class="sidebar-link" onclick="showBadges()">Achievements</div>
+  <div class="sidebar-link" onclick="showStats()">Statistik</div>
+  <div class="sidebar-link" onclick="showCert()">Zertifikat</div>
+  <hr style="border:none;border-top:1px solid var(--border);margin:16px 0">
+  <div class="sidebar-link" onclick="exportData()">Speichern</div>
+  <div class="sidebar-link" onclick="exportFortschritt()">📄 Fortschritt (TXT)</div>
+  <label class="sidebar-link" style="cursor:pointer">Laden <input type="file" accept=".json" onchange="importData(event)" style="display:none"></label>
+  <div class="sidebar-link" onclick="if(confirm('Fortschritt zur\u00fccksetzen?')){localStorage.removeItem(SK);location.reload()}" style="color:var(--danger)">Zur\u00fccksetzen</div>
+</nav>
+<main class="main" id="mainContent">
+  <div class="welcome" id="welcomeScreen">
+    <div class="hero-icon" id="heroIcon">f(x)</div>
+    <h1 id="welcomeTitle">AlgebraMeister</h1>
+    <p class="sub" id="welcomeSub">Algebra, Funktionen und Prozentrechnung — interaktiv trainieren.</p>
+    <input type="text" id="nameInput" placeholder="Dein Name" maxlength="24" aria-label="Name" oninput="document.getElementById('startBtn').disabled=!this.value.trim()">
+    <button class="start-btn" id="startBtn" disabled onclick="startApp()">Starten</button>
+    <div class="theme-picker" id="themePicker"></div>
+  </div>
+  <div id="moduleContent" style="display:none"></div>
+  <div id="badgesView" style="display:none"></div>
+  <div id="statsView" style="display:none"></div>
+</main>
+<div class="notif" id="notif" role="status" aria-live="polite" aria-atomic="true"><div class="notif-title" id="notifTitle"></div><div class="notif-text" id="notifText"></div></div>
+<div class="level-up-overlay" id="levelUpOverlay"><div class="lvl-box" id="levelUpBox"></div></div>
+<div id="confetti"></div>
+<div class="cert-overlay" id="certOverlay" role="dialog" aria-label="Zertifikat" aria-modal="true">
+  <div class="cert-picker" id="certPicker"></div><div class="cert-frame" id="certFrame"></div>
+  <div class="cert-actions"><button onclick="printCert()">Drucken / PDF</button><button onclick="closeCert()">Schliessen</button></div>
+</div>
+<script>
+
+// === Audio (TTS) ===
+const _synth=window.speechSynthesis,_LANG='de-DE';let _ttsOn=false,_ttsRate=1,_ttsTimer=null;
+function speakLesson(i){if(_ttsOn){stopTTS();return}const c=document.querySelectorAll('.lesson-card');if(!c[i]||!_synth)return;stopTTS();const u=new SpeechSynthesisUtterance(c[i].innerText);u.lang=_LANG;u.rate=_ttsRate;u.onstart=()=>{_ttsOn=true;updTTSUI();startTTSTimer()};u.onend=()=>{_ttsOn=false;updTTSUI();clearTTSTimer()};u.onerror=()=>{_ttsOn=false;updTTSUI();clearTTSTimer()};_synth.speak(u);showTTSBar()}
+function speakText(t,lang){if(!_synth)return;stopTTS();const u=new SpeechSynthesisUtterance(t);u.lang=lang||_LANG;u.rate=_ttsRate;u.onstart=()=>{_ttsOn=true;updTTSUI();startTTSTimer()};u.onend=()=>{_ttsOn=false;updTTSUI();clearTTSTimer()};u.onerror=()=>{_ttsOn=false;updTTSUI();clearTTSTimer()};_synth.speak(u)}
+function stopTTS(){if(_synth){_synth.cancel()}_ttsOn=false;updTTSUI();clearTTSTimer()}
+function updTTSUI(){document.querySelectorAll('.tts-btn').forEach(b=>b.classList.toggle('speaking',_ttsOn))}
+function setTTSRate(r){_ttsRate=parseFloat(r)}
+function startTTSTimer(){clearTTSTimer();_ttsTimer=setInterval(()=>{if(_synth&&_synth.speaking&&!_synth.paused){_synth.pause();_synth.resume()}},10000)}
+function clearTTSTimer(){if(_ttsTimer){clearInterval(_ttsTimer);_ttsTimer=null}}
+function showTTSBar(){if(document.getElementById('ttsBar'))return;const mc=document.getElementById('moduleContent');if(!mc)return;const b=document.createElement('div');b.className='tts-bar';b.id='ttsBar';b.innerHTML='\u{1F50A} <select onchange="setTTSRate(this.value)"><option value="0.7">Langsam</option><option value="1" selected>Normal</option><option value="1.3">Schnell</option></select> <button onclick="stopTTS()">\u25A0 Stopp</button>';mc.prepend(b)}
+
+
+/* === Fortschritt-Export (TXT) === */
+function exportFortschritt(){
+  var t=document.title.replace(/\s*[\u2014\u2013|].*/,'').trim();
+  var d=new Date();
+  var dd=String(d.getDate()).padStart(2,'0');
+  var mm=String(d.getMonth()+1).padStart(2,'0');
+  var yyyy=d.getFullYear();
+  var datum=dd+'.'+mm+'.'+yyyy;
+  var datumFile=yyyy+'-'+mm+'-'+dd;
+
+  var mc=state.modulesCompleted||[];
+  var total=modules.length;
+  var done=mc.length;
+
+  var lvl=0;
+  for(var i=LEVELS.length-1;i>=0;i--){if(state.xp>=LEVELS[i].xp){lvl=i;break;}}
+  var lvlName=LEVELS[lvl]?LEVELS[lvl].name:'';
+
+  var sep='\u2550'.repeat(42);
+  var sep2='\u2500'.repeat(42);
+  var lines=[];
+  lines.push(sep);
+  lines.push('  LERNFORTSCHRITT \u2014 '+t);
+  lines.push(sep);
+  lines.push('');
+  lines.push('  Sch\u00FCler:   '+(state.name||'(kein Name)'));
+  lines.push('  Datum:     '+datum);
+  lines.push('  Level:     '+(lvl+1)+' \u2014 '+lvlName+' ('+state.xp+' XP)');
+  lines.push('  Streak:    '+(state.streak||0)+' Tage in Folge');
+  lines.push('');
+  lines.push(sep2);
+  lines.push('  MODULE ('+done+'/'+total+' abgeschlossen)');
+  lines.push(sep2);
+  lines.push('');
+
+  for(var m=0;m<modules.length;m++){
+    var mod=modules[m];
+    var isDone=mc.indexOf(m)!==-1;
+    var icon=isDone?'\u2705':'\u2B1C';
+    var line='  '+icon+' Modul '+(m+1)+': '+mod.title;
+    if(isDone){
+      var qs=state.quizResults&&state.quizResults[m]!=null?state.quizResults[m]:'?';
+      var bs=state.bossResults&&state.bossResults[m]!=null?state.bossResults[m]:'?';
+      line+='\n        Quiz: '+qs+'/5 | Boss: '+bs+'/3';
+    }
+    lines.push(line);
+  }
+
+  var earnedBadges=(state.badges||[]);
+  lines.push('');
+  lines.push(sep2);
+  lines.push('  ABZEICHEN ('+earnedBadges.length+'/'+BADGES.length+')');
+  lines.push(sep2);
+  lines.push('');
+  if(earnedBadges.length===0){
+    lines.push('  (noch keine)');
+  }else{
+    for(var b=0;b<BADGES.length;b++){
+      if(earnedBadges.indexOf(BADGES[b].id)!==-1){
+        lines.push('  '+BADGES[b].icon+' '+BADGES[b].name);
+      }
+    }
+  }
+
+  lines.push('');
+  lines.push(sep);
+  lines.push('  (c) 2026 GZ AI Stacks \u2014 Gerd Zimmermann');
+  lines.push(sep);
+
+  var txt=lines.join('\n');
+  var safeName=(state.name||'Schueler').replace(/[^a-zA-Z0-9\u00C0-\u017F]/g,'_');
+  var fileName='Fortschritt_'+t.replace(/[^a-zA-Z0-9\u00C0-\u017F]/g,'_')+'_'+safeName+'_'+datumFile+'.txt';
+  var a=document.createElement('a');
+  a.download=fileName;
+  a.href=URL.createObjectURL(new Blob([txt],{type:'text/plain;charset=utf-8'}));
+  a.click();
+}
+
+const _qk=[0x4A,0x7F,0x2B,0x61,0x5C,0x3E,0x18,0x73];function _d(h,i){return h^_qk[i%_qk.length]}
+const LEVELS=[{name:'Einsteiger',xp:0},{name:'Grundlagen',xp:40},{name:'Anwender',xp:100},{name:'Fortgeschritten',xp:180},{name:'Analytiker',xp:280},{name:'Spezialist',xp:400},{name:'Stratege',xp:540},{name:'Experte',xp:700},{name:'Profi',xp:880},{name:'Meister',xp:1080},{name:'Veteran',xp:1300},{name:'Elite',xp:1540},{name:'Champion',xp:1800},{name:'Virtuose',xp:2080},{name:'Koryphäe',xp:2380},{name:'Autoritat',xp:2700},{name:'Mastermind',xp:3040},{name:'Kapazitat',xp:3400},{name:'Legende',xp:3780},{name:'Grandmaster',xp:4180}];
+const BADGES=[{id:'m0',name:'Vorzeichen',icon:'\u00b1',desc:'Modul 1 abgeschlossen'},{id:'m1',name:'Terme',icon:'x',desc:'Modul 2 abgeschlossen'},{id:'m2',name:'Gleichungen',icon:'=',desc:'Modul 3 abgeschlossen'},{id:'m3',name:'Prozent',icon:'%',desc:'Modul 4 abgeschlossen'},{id:'m4',name:'Proportion',icon:'\u221d',desc:'Modul 5 abgeschlossen'},{id:'m5',name:'Fl\u00E4chen',icon:'\u25b3',desc:'Modul 6 abgeschlossen'},{id:'m6',name:'Volumen',icon:'\u25a1\u00b3',desc:'Modul 7 abgeschlossen'},{id:'m7',name:'Potenzen',icon:'n\u00b2',desc:'Modul 8 abgeschlossen'},{id:'m8',name:'Funktionen',icon:'f(x)',desc:'Modul 9 abgeschlossen'},{id:'m9',name:'Stochastik',icon:'P',desc:'Modul 10 abgeschlossen'},{id:'first_quiz',name:'Erster Test',icon:'?',desc:'Quiz bestanden'},{id:'perfect_quiz',name:'Fehlerfrei',icon:'\u2605',desc:'5/5 im Quiz'},{id:'first_boss',name:'Challenge',icon:'\u2713',desc:'Erste Challenge bestanden'},{id:'all_bosses',name:'Alle Challenges',icon:'\u2713\u2713',desc:'Alle 10 Challenges'},{id:'streak3',name:'3-Tage-Serie',icon:'3d',desc:'3 Tage hintereinander'},{id:'streak7',name:'Wochenserie',icon:'7d',desc:'7 Tage hintereinander'},{id:'half_done',name:'Halbzeit',icon:'50%',desc:'5 Module'},{id:'speed_quiz',name:'Speed-Run',icon:'<60s',desc:'Quiz unter 60 Sek.'},{id:'explorer',name:'Explorer',icon:'10/10',desc:'Alle Module angesehen'},{id:'graduate',name:'Abschluss',icon:'\u2606',desc:'Alle 10 Module abgeschlossen'}];
+const TC={cyber:{name:'Cyber Neon',color:'#818cf8',icon:'f(x)',title:'AlgebraMeister',sub:'Algebra, Funktionen und Prozentrechnung — interaktiv trainieren.',btn:'Starten'},term:{name:'Terminal',color:'#4ade80',icon:'>_',title:'AlgebraMeister',sub:'Mathe-Training im Terminal-Modus.',btn:'Starten'},ocean:{name:'Ocean Pro',color:'#38bdf8',icon:'f(x)',title:'AlgebraMeister',sub:'Tiefgehend lernen — Algebra und mehr.',btn:'Starten'},minimal:{name:'Minimal',color:'#888',icon:'f(x)',title:'AlgebraMeister',sub:'Klar. Fokussiert. Mathematik.',btn:'Starten'}};
+const modules=[
+// M0: Negative Zahlen
+{id:0,title:'Negative Zahlen',icon:'\u00b1',duration:'25 Min.',description:'Zahlen unter Null, Zahlengerade und Vorzeichen.',
+lessons:[
+{title:'Was sind negative Zahlen?',content:'<p><strong>Negative Zahlen</strong> sind kleiner als 0 und tragen ein Minus-Vorzeichen.</p><div class="info-box"><strong>Zahlenreihe:</strong> ..., \u22123, \u22122, \u22121, 0, 1, 2, 3, ...</div><p>Anwendungen: Temperatur (\u221210\u00b0C), Kontostand (\u221250\u20ac), Meerestiefe (\u2212200m).</p>'},
+{title:'Rechenregeln',content:'<div class="info-box"><strong>Addition/Subtraktion:</strong><br>(\u22123) + 5 = 2<br>(\u22123) + (\u22122) = \u22125<br>(\u22123) \u2212 (\u22122) = \u22121</div><p><strong>Multiplikation/Division:</strong></p><ul><li>(+) \u00d7 (+) = (+)</li><li>(\u2212) \u00d7 (\u2212) = (+)</li><li>(+) \u00d7 (\u2212) = (\u2212)</li><li>(\u2212) \u00d7 (+) = (\u2212)</li></ul><p>Gleiches gilt f\u00fcr Division!</p><div class="info-box"><strong>Betrag</strong> (der Abstand einer Zahl von 0, immer positiv): |\u22127| = 7, |3| = 3</div>'}],
+quiz:[{q:'(\u22125) + 3 = ?',a:['\u22128','\u22122','2','8'],_h:0x4B},{q:'(\u22123) \u00d7 (\u22124) = ?',a:['\u221212','\u22127','12','7'],_h:0x7D},{q:'Welche Zahl ist kleiner: \u22127 oder \u22123?',a:['\u22123','\u22127','Gleich','0'],_h:0x2A},{q:'0 \u2212 8 = ?',a:['8','\u22128','0','\u221280'],_h:0x60},{q:'(\u22126) + (\u22124) = ?',a:['\u221210','2','\u22122','10'],_h:0x5C}],
+boss:[{q:'(\u22125) \u00d7 3 + 10 = ?',a:['25','\u221225','\u22125','5'],_h:0x48},{q:'|\u22127| = ?',a:['\u22127','7','0','49'],_h:0x7E},{q:'Ordne: \u22125, 3, \u22121, 0 (aufsteigend)',a:['\u22125, \u22121, 0, 3','0, \u22121, 3, \u22125','3, 0, \u22121, \u22125','\u22121, \u22125, 0, 3'],_h:0x2B}]},
+// M1: Terme
+{id:1,title:'Terme und Variablen',icon:'x',duration:'25 Min.',description:'Variablen, Terme aufstellen und vereinfachen.',
+lessons:[
+{title:'Variablen und Terme',content:'<p>Eine <strong>Variable</strong> ist ein Platzhalter (x, y, a). Ein <strong>Term</strong> ist ein Rechenausdruck: 3x + 2.</p><div class="info-box"><strong>Beispiele:</strong> 3x + 2, 4a \u2212 b, x\u00b2 + 1</div><p><strong>Koeffizient</strong> (die Zahl vor der Variable): In 3x ist 3 der Koeffizient, in 7y\u00b2 ist 7 der Koeffizient.</p>'},
+{title:'Vereinfachen',content:'<div class="info-box"><strong>Gleichartige Glieder</strong> (Terme mit derselben Variable, z.B. 3x und 5x sind gleichartig, 3x und 2y nicht) <strong>zusammenfassen:</strong><br>3x + 5x = 8x<br>2a + 3b + a = 3a + 3b<br>2(x + 3) = 2x + 6 (Ausmultiplizieren)</div>'}],
+quiz:[{q:'5x + 3x = ?',a:['15x','8x','53x','8'],_h:0x4B},{q:'2a + 3b + 4a vereinfacht:',a:['6a + 3b','9ab','6ab + 3','unver\u00e4ndert'],_h:0x7F},{q:'3(x + 2) = ?',a:['3x + 2','3x + 6','x + 6','6x'],_h:0x2A},{q:'F\u00fcr x = 4: 2x + 1 = ?',a:['7','9','6','10'],_h:0x60},{q:'\"Das Doppelte einer Zahl minus 3\" als Term:',a:['x + 2 \u2212 3','2 \u2212 3x','2x \u2212 3','x\u00b2 \u2212 3'],_h:0x5E}],
+boss:[{q:'4(2x \u2212 1) + 3x = ?',a:['11x \u2212 4','8x + 3','11x \u2212 1','5x \u2212 4'],_h:0x4A},{q:'a = 3, b = 2: a\u00b2 + b = ?',a:['11','13','7','14'],_h:0x7F},{q:'2(x+1) ist gleichwertig mit:',a:['2x + 1','x + 2','2x + 2','2x\u00b2'],_h:0x29}]},
+// M2: Gleichungen
+{id:2,title:'Gleichungen l\u00f6sen',icon:'=',duration:'30 Min.',description:'\u00c4quivalenzumformungen — x isolieren.',
+lessons:[
+{title:'Gleichungen',content:'<p>Eine <strong>Gleichung</strong> hat ein = und eine Unbekannte. Ziel: x isolieren.</p><div class="info-box">x + 5 = 12 \u2192 x = 7</div>'},
+{title:'\u00c4quivalenzumformungen',content:'<div class="info-box"><strong>\u00c4quivalenzumformung</strong> (eine erlaubte Umformung, die die L\u00f6sung nicht ver\u00e4ndert):<br>2x + 3 = 11<br>2x = 8 &nbsp; | \u22123<br>x = 4 &nbsp;&nbsp; | :2</div><p>Erlaubt: Auf beiden Seiten addieren, subtrahieren, multiplizieren, dividieren (nicht durch 0).</p><div class="info-box"><strong>Probe</strong> (Ergebnis in die Ausgangsgleichung einsetzen): x=4 \u2192 2\u00d74+3 = 11 \u2714</div>'}],
+quiz:[{q:'x + 7 = 15. x = ?',a:['7','9','8','22'],_h:0x48},{q:'3x = 21. x = ?',a:['6','7','3','63'],_h:0x7E},{q:'2x \u2212 4 = 10. x = ?',a:['3','5','7','14'],_h:0x29},{q:'x/5 = 3. x = ?',a:['8','15','0,6','35'],_h:0x60},{q:'4x + 2 = 3x + 9. x = ?',a:['11','9','7','3'],_h:0x5E}],
+boss:[{q:'5(x \u2212 2) = 3x + 4. x = ?',a:['5','6','7','8'],_h:0x48},{q:'\u22122x + 8 = 0. x = ?',a:['4','\u22124','8','2'],_h:0x7F},{q:'x/3 + 2 = 5. x = ?',a:['1','6','9','15'],_h:0x29}]},
+// M3: Prozent
+{id:3,title:'Prozentrechnung',icon:'%',duration:'25 Min.',description:'Grundwert, Prozentwert und Prozentsatz.',
+lessons:[
+{title:'Grundbegriffe',content:'<div class="info-box"><strong>Prozent</strong> = von Hundert<br>25% = 25/100 = 0,25</div><ul><li><strong>Grundwert (G)</strong>: Das Ganze</li><li><strong>Prozentwert (W)</strong>: Der Anteil</li><li><strong>Prozentsatz (p%)</strong>: Der Anteil in %</li></ul>'},
+{title:'Formeln',content:'<div class="info-box"><strong>W = G \u00d7 p/100</strong><br><strong>p = W/G \u00d7 100</strong><br><strong>G = W \u00d7 100/p</strong></div><p>Beispiel: 20% von 150 = 150 \u00d7 0,20 = 30</p><div class="info-box"><strong>Vermehrter Grundwert:</strong> G \u00d7 (1 + p/100), z.B. 200\u20ac + 10% = 200 \u00d7 1,10 = 220\u20ac<br><strong>Verminderter Grundwert:</strong> G \u00d7 (1 \u2212 p/100), z.B. 80\u20ac \u2212 25% = 80 \u00d7 0,75 = 60\u20ac</div>'}],
+quiz:[{q:'20% von 200 = ?',a:['20','40','60','80'],_h:0x4B},{q:'50% von 84 = ?',a:['42','44','34','168'],_h:0x7F},{q:'15 von 60 = wie viel %?',a:['15%','20%','25%','30%'],_h:0x29},{q:'80\u20ac, 25% Rabatt. Neuer Preis?',a:['55\u20ac','65\u20ac','60\u20ac','20\u20ac'],_h:0x63},{q:'100% von 50 = ?',a:['100','50','0','150'],_h:0x5D}],
+boss:[{q:'200\u20ac + 10% Aufschlag = ?',a:['210\u20ac','220\u20ac','180\u20ac','202\u20ac'],_h:0x4B},{q:'72 ist 30% von welchem Grundwert?',a:['216','240','24','300'],_h:0x7E},{q:'100\u20ac, erst 20% dann 10% Rabatt. Endpreis?',a:['70\u20ac','72\u20ac','68\u20ac','75\u20ac'],_h:0x2A}]},
+// M4: Proportionalität
+{id:4,title:'Proportionalit\u00e4t',icon:'\u221d',duration:'25 Min.',description:'Dreisatz, direkte und indirekte Proportionalit\u00e4t.',
+lessons:[
+{title:'Direkte Proportionalit\u00e4t',content:'<div class="info-box"><strong>Direkte Proportionalit\u00e4t</strong> (je mehr, desto mehr): y = k \u00d7 x<br>Doppelte Menge = doppelter Preis</div><p>3 kg kosten 6\u20ac \u2192 6 kg kosten 12\u20ac</p><div class="info-box"><strong>Indirekte Proportionalit\u00e4t</strong> (je mehr, desto weniger): y = k / x<br>Doppelt so viele Arbeiter brauchen halb so lange</div>'},
+{title:'Dreisatz',content:'<div class="info-box"><strong>Dreisatz (3 Schritte):</strong><br>1. Gegeben: 5 Br\u00f6tchen \u2192 3\u20ac<br>2. Auf 1 rechnen: 1 Br\u00f6tchen \u2192 0,60\u20ac<br>3. Auf Ziel rechnen: 8 Br\u00f6tchen \u2192 4,80\u20ac</div>'}],
+quiz:[{q:'3 Shirts = 45\u20ac. 5 Shirts = ?',a:['60\u20ac','75\u20ac','90\u20ac','50\u20ac'],_h:0x4B},{q:'Direkt proportional: x \u00d72 \u2192 y ...',a:['halbiert','verdoppelt','bleibt gleich','vervierfacht'],_h:0x7E},{q:'2 Arbeiter = 6h. 6 Arbeiter = ?',a:['2h','18h','3h','1h'],_h:0x2B},{q:'y = 3x, x = 7. y = ?',a:['10','21','24','7'],_h:0x60},{q:'8L/100km. 250km = ?',a:['20L','25L','15L','16L'],_h:0x5C}],
+boss:[{q:'Rezept 4 Pers.: 200g. 10 Pers. = ?',a:['400g','600g','500g','800g'],_h:0x48},{q:'Mehr Arbeiter \u2192 ... (indirekt prop.)',a:['mehr Zeit','weniger Zeit','gleiche Zeit','doppelte Zeit'],_h:0x7E},{q:'12 Stifte = 9,60\u20ac. St\u00fcckpreis?',a:['0,60\u20ac','0,80\u20ac','0,90\u20ac','1,20\u20ac'],_h:0x2A}]},
+// M5: Flächen
+{id:5,title:'Fl\u00e4chenberechnung',icon:'\u25b3',duration:'25 Min.',description:'Rechteck, Dreieck, Kreis, Parallelogramm.',
+lessons:[
+{title:'Grundformen',content:'<div class="info-box"><strong>Rechteck:</strong> A (Fl\u00e4cheninhalt) = a \u00d7 b<br><strong>Quadrat:</strong> A = a\u00b2<br><strong>Dreieck:</strong> A = g (Grundseite) \u00d7 h (H\u00f6he, senkrecht zur Grundseite) / 2<br><strong>Kreis:</strong> A = \u03c0r\u00b2 mit r (Radius, Abstand Mittelpunkt zum Rand)</div><p>Einheiten: cm\u00b2, m\u00b2, km\u00b2 usw.</p>'},
+{title:'Zusammengesetzte Fl\u00e4chen',content:'<div class="info-box"><strong>Parallelogramm:</strong> A = a \u00d7 h<br><strong>Trapez:</strong> A = (a+c)/2 \u00d7 h, wobei a und c die parallelen Seiten sind</div><p>Kreisfl\u00e4che r=5: A = \u03c0 \u00d7 25 \u2248 78,5 cm\u00b2</p>'}],
+quiz:[{q:'Rechteck 8\u00d75 = ?',a:['13','40','26','80'],_h:0x4B},{q:'Dreieck g=10, h=6. A = ?',a:['60','30','16','80'],_h:0x7E},{q:'Quadrat a=7. A = ?',a:['14','28','49','21'],_h:0x29},{q:'Kreis r=3 (\u03c0\u22483,14). A \u2248 ?',a:['9,42','18,84','28,26','6,28'],_h:0x63},{q:'Fl\u00e4cheneinheit?',a:['cm','cm\u00b2','cm\u00b3','m'],_h:0x5D}],
+boss:[{q:'Parallelogramm a=12, h=5. A = ?',a:['17','34','60','120'],_h:0x48},{q:'Trapez a=6, c=10, h=4. A = ?',a:['24','32','40','64'],_h:0x7E},{q:'Halbkreis r=4. A \u2248 ?',a:['25,12','50,24','12,56','8'],_h:0x2B}]},
+// M6: Volumen
+{id:6,title:'Volumenberechnung',icon:'\u25a1\u00b3',duration:'25 Min.',description:'Quader, Zylinder, Kegel, Kugel.',
+lessons:[
+{title:'Grundk\u00f6rper',content:'<div class="info-box"><strong>Quader:</strong> V (Volumen) = a \u00d7 b \u00d7 c<br><strong>W\u00fcrfel:</strong> V = a\u00b3<br><strong>Zylinder:</strong> V = \u03c0r\u00b2h mit r (Radius), h (H\u00f6he)</div><p>Einheiten: cm\u00b3, m\u00b3. Wichtig: 1 dm\u00b3 = 1 Liter, 1000 cm\u00b3 = 1 Liter</p><p>Beispiel: Zylinder r=3cm, h=10cm \u2192 V = \u03c0 \u00d7 9 \u00d7 10 \u2248 282,7 cm\u00b3</p>'},
+{title:'Weitere K\u00f6rper',content:'<div class="info-box"><strong>Kegel:</strong> V = \u03c0r\u00b2h/3<br><strong>Kugel:</strong> V = 4\u03c0r\u00b3/3</div>'}],
+quiz:[{q:'Quader 4\u00d73\u00d72 = ?',a:['9','24','18','36'],_h:0x4B},{q:'W\u00fcrfel a=5. V = ?',a:['15','25','125','100'],_h:0x7D},{q:'Volumeneinheit?',a:['m\u00b2','m','m\u00b3','m\u2074'],_h:0x29},{q:'Zylinder r=2, h=10. V \u2248 ?',a:['62,8','125,6','40','31,4'],_h:0x60},{q:'1 Liter = ? cm\u00b3',a:['10','100','1000','10000'],_h:0x5E}],
+boss:[{q:'Kegel r=3, h=4. V \u2248 ?',a:['37,68','12,56','75,36','113,04'],_h:0x4A},{q:'Quader doppelt so hoch \u2192 V?',a:['gleich','doppelt','vierfach','dreifach'],_h:0x7E},{q:'Kugel r=3. V \u2248 ?',a:['113,04','84,78','36\u03c0','28,26'],_h:0x2B}]},
+// M7: Potenzen
+{id:7,title:'Potenzrechnung',icon:'n\u00b2',duration:'25 Min.',description:'Potenzen, Potenzgesetze, Zehnerpotenzen.',
+lessons:[
+{title:'Grundlagen',content:'<div class="info-box"><strong>Potenz:</strong> 2\u00b3 = 2\u00d72\u00d72 = 8<br><strong>Basis</strong> (die Zahl, die multipliziert wird): 2<br><strong>Exponent</strong> (wie oft multipliziert wird): 3<br>a\u2070 = 1 (immer, au\u00dfer 0\u2070 ist umstritten)</div><div class="info-box"><strong>Negativer Exponent:</strong> a\u207b\u207f = 1/a\u207f, z.B. 2\u207b\u00b3 = 1/2\u00b3 = 1/8 = 0,125<br><strong>Zehnerpotenzen:</strong> 10\u00b3 = 1.000, 10\u2076 = 1.000.000 (eine Million)</div>'},
+{title:'Potenzgesetze',content:'<div class="info-box">a\u207c \u00d7 a\u207f = a^(m+n)<br>a\u207c / a\u207f = a^(m\u2212n)<br>(a\u207c)\u207f = a^(m\u00d7n)</div><p>Beispiel: 2\u00b3 \u00d7 2\u00b2 = 2\u2075 = 32</p>'}],
+quiz:[{q:'3\u00b2 = ?',a:['6','9','27','8'],_h:0x4B},{q:'2\u2075 = ?',a:['10','16','32','64'],_h:0x7D},{q:'10\u2070 = ?',a:['0','10','1','100'],_h:0x29},{q:'5\u00b3 = ?',a:['15','25','75','125'],_h:0x62},{q:'2\u00b3 \u00d7 2\u00b2 = ?',a:['2\u2076','2\u2075','4\u2075','4\u2076'],_h:0x5D}],
+boss:[{q:'(\u22122)\u00b3 = ?',a:['8','\u22128','6','\u22126'],_h:0x4B},{q:'3\u2074 / 3\u00b2 = ?',a:['3\u00b2 = 9','3\u2076','1','3'],_h:0x7F},{q:'(2\u00b3)\u00b2 = ?',a:['2\u2075','2\u2076 = 64','2\u2079','12'],_h:0x2A}]},
+// M8: Lineare Funktionen
+{id:8,title:'Lineare Funktionen',icon:'f(x)',duration:'30 Min.',description:'y = mx + b, Steigung, Graphen.',
+lessons:[
+{title:'Geradengleichung',content:'<div class="info-box"><strong>y = mx + b</strong><br><strong>m</strong> (Steigung \u2014 gibt an, wie steil die Gerade ist)<br><strong>b</strong> (y-Achsenabschnitt \u2014 wo die Gerade die y-Achse schneidet)</div><p>y = 2x + 1: Steigung 2, schneidet y-Achse bei 1.</p><div class="info-box"><strong>Nullstelle</strong> (wo die Gerade die x-Achse schneidet, also y=0): 0 = mx + b \u2192 x = \u2212b/m</div>'},
+{title:'Steigung',content:'<div class="info-box"><strong>m = (y\u2082 \u2212 y\u2081) / (x\u2082 \u2212 x\u2081)</strong></div><p>m > 0: steigend | m < 0: fallend | m = 0: waagerecht</p>'}],
+quiz:[{q:'y = 3x + 2. Steigung?',a:['2','5','3','6'],_h:0x48},{q:'y = \u22122x + 5. y-Achsenabschnitt?',a:['\u22122','5','3','\u22125'],_h:0x7E},{q:'y = x, x = 4. y = ?',a:['0','1','4','8'],_h:0x29},{q:'m = 0 bedeutet:',a:['senkrecht','waagerecht','steil','fallend'],_h:0x60},{q:'P(0,1) und P(2,5). m = ?',a:['1','2','3','4'],_h:0x5D}],
+boss:[{q:'y = \u22123x + 6. Nullstelle?',a:['x = \u22122','x = 2','x = 6','x = 3'],_h:0x4B},{q:'Parallele Geraden: gleiche ...?',a:['y-Abschnitte','Steigung','Nullstellen','L\u00E4nge'],_h:0x7E},{q:'Durch (1,3) und (3,7). Gleichung?',a:['y = 2x + 1','y = x + 2','y = 3x','y = 2x + 3'],_h:0x2B}]},
+// M9: Wahrscheinlichkeit
+{id:9,title:'Wahrscheinlichkeit',icon:'P',duration:'25 Min.',description:'Laplace, Baumdiagramme, Zufallsexperimente.',
+lessons:[
+{title:'Grundlagen',content:'<div class="info-box"><strong>Laplace-Experiment</strong> (benannt nach Pierre-Simon Laplace \u2014 alle Ergebnisse sind gleich wahrscheinlich, z.B. fairer W\u00fcrfel):<br>P(E) = g\u00fcnstige / m\u00f6gliche<br>W\u00fcrfel: P(6) = 1/6 \u2248 16,7%</div><p>P liegt immer zwischen 0 und 1 (bzw. 0% und 100%).</p><div class="info-box"><strong>Gegenereignis:</strong> P(nicht A) = 1 \u2212 P(A), z.B. P(keine 6) = 1 \u2212 1/6 = 5/6</div>'},
+{title:'Baumdiagramme',content:'<div class="info-box"><strong>M\u00fcnze 2x:</strong> KK, KZ, ZK, ZZ<br>P(2x Kopf) = 1/4 = 25%</div><p>Pfadregel: Wahrscheinlichkeiten entlang eines Pfades multiplizieren.</p>'}],
+quiz:[{q:'W\u00fcrfel: P(gerade)?',a:['1/6','1/3','1/2','2/3'],_h:0x48},{q:'M\u00fcnze: P(Kopf)?',a:['1/4','1/3','1/2','1'],_h:0x7D},{q:'52 Karten: P(Herz-As)?',a:['1/52','1/13','4/52','1/4'],_h:0x2B},{q:'P(unm\u00f6glich) = ?',a:['1','\u22121','0','0,5'],_h:0x63},{q:'2 W\u00fcrfel: Ergebnisse insgesamt?',a:['12','6','36','24'],_h:0x5E}],
+boss:[{q:'3 rote, 7 blaue Kugeln. P(rot)?',a:['3/7','7/10','3/10','7/3'],_h:0x48},{q:'P(A) = 0,3. P(nicht A)?',a:['0,3','0,7','\u22120,3','1,3'],_h:0x7E},{q:'2 W\u00fcrfel: P(Summe 7)?',a:['1/6','6/36 = 1/6','1/12','7/36'],_h:0x2A}]}
+];
+// ═══ Engine ═══
+const SK='algebrameister_progress';
+let state={name:'',started:false,currentModule:0,xp:0,level:0,streak:0,lastVisit:null,modulesCompleted:[],quizResults:{},bossResults:{},badges:[],quizShuffleMap:{},modulesViewed:[],interactiveResults:{},designTheme:'cyber-dark'};
+function saveState(){try{localStorage.setItem(SK,JSON.stringify(state))}catch(e){}}
+function loadState(){try{const s=localStorage.getItem(SK);if(s){Object.assign(state,JSON.parse(s));return true}}catch(e){}return false}
+function exportData(){const a=document.createElement('a');a.download='algebrameister-'+state.name+'.json';a.href=URL.createObjectURL(new Blob([JSON.stringify(state,null,2)],{type:'application/json'}));a.click()}
+function importData(e){const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=ev=>{try{Object.assign(state,JSON.parse(ev.target.result));saveState();location.reload()}catch(err){alert('Fehler')}};r.readAsText(f)}
+function getLevel(xp){let l=0;for(let i=LEVELS.length-1;i>=0;i--)if(xp>=LEVELS[i].xp){l=i;break}return l}
+function getLevelProgress(xp){const l=getLevel(xp),c=LEVELS[l].xp,n=l<LEVELS.length-1?LEVELS[l+1].xp:c;return n===c?100:Math.min(100,Math.round((xp-c)/(n-c)*100))}
+function addXP(a,r){const o=getLevel(state.xp);state.xp+=a;const n=getLevel(state.xp);saveState();updateUI();showNotif('xp','+'+a+' XP',r);if(n>o){state.level=n;saveState();setTimeout(()=>showLevelUp(n),600)}}
+function updateStreak(){const t=new Date().toDateString();if(state.lastVisit===t)return;const y=new Date(Date.now()-864e5).toDateString();if(state.lastVisit===y){state.streak++;showNotif('streak',state.streak+'-Tage-Serie','');if(state.streak>=3)awardBadge('streak3');if(state.streak>=7)awardBadge('streak7')}else state.streak=1;state.lastVisit=t;saveState()}
+function awardBadge(id){if(state.badges.includes(id))return;state.badges.push(id);saveState();const b=BADGES.find(x=>x.id===id);if(b)showNotif('badge','Achievement: '+b.name,b.desc)}
+let nQ=[],nA=false;function showNotif(t,ti,tx){nQ.push({type:t,title:ti,text:tx});if(!nA)procN()}function procN(){if(!nQ.length){nA=false;return}nA=true;const{type,title,text}=nQ.shift();const el=document.getElementById('notif');el.className='notif '+type;document.getElementById('notifTitle').textContent=title;document.getElementById('notifText').textContent=text;el.classList.add('show');setTimeout(()=>{el.classList.remove('show');setTimeout(procN,300)},2200)}
+function showLevelUp(l){const o=document.getElementById('levelUpOverlay');document.getElementById('levelUpBox').innerHTML='<div class="lvl-icon">\u2191</div><div class="lvl-title">Level Up</div><div class="lvl-name">Rang '+(l+1)+': '+LEVELS[l].name+'</div>';o.classList.add('active');setTimeout(()=>o.classList.remove('active'),2500)}
+function shuffleQuiz(m,q){const k='m'+m;if(state.quizShuffleMap[k])return state.quizShuffleMap[k];const idx=[...Array(q.length).keys()];for(let i=idx.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[idx[i],idx[j]]=[idx[j],idx[i]]}state.quizShuffleMap[k]=idx;saveState();return idx}
+function renderQuiz(mi,quiz,boss){const pf=boss?'boss':'quiz';const idx=boss?[...Array(quiz.length).keys()]:shuffleQuiz(mi,quiz);let h='<div class="'+(boss?'boss-section':'quiz-section')+'">';h+=boss?'<h3>Challenge</h3><p class="boss-sub">Alle '+quiz.length+' Fragen korrekt beantworten.</p>':'<h3>Quiz</h3>';idx.forEach((qi,di)=>{const q=quiz[qi];h+='<div class="quiz-q" data-qi="'+qi+'"><p>'+(di+1)+'. '+q.q+'</p>';q.a.forEach((a,ai)=>{h+='<label><input type="radio" name="'+pf+'_'+mi+'_'+qi+'" value="'+ai+'"> '+a+'</label>'});h+='</div>'});h+='<button class="quiz-submit" onclick="checkQuiz('+mi+','+boss+')">'+(boss?'Absenden':'Auswerten')+'</button><div class="quiz-result" id="'+pf+'Result'+mi+'" style="display:none"></div></div>';return h}
+function checkQuiz(mi,boss){const pf=boss?'boss':'quiz';const quiz=boss?modules[mi].boss:modules[mi].quiz;let cor=0;const tot=quiz.length;quiz.forEach((q,qi)=>{const sel=document.querySelector('input[name="'+pf+'_'+mi+'_'+qi+'"]:checked');const labs=document.querySelectorAll('[data-qi="'+qi+'"] label');const ci=_d(q._h,qi);labs.forEach((l,li)=>{l.classList.remove('correct','wrong');if(li===ci)l.classList.add('correct');else if(sel&&+sel.value===li)l.classList.add('wrong')});const qDiv=labs[0]?.closest('.quiz-q');if(qDiv){const old=qDiv.querySelector('.quiz-explanation');if(old)old.remove()}if(!sel||+sel.value!==ci){if(qDiv){const exp=document.createElement('div');exp.className='quiz-explanation';exp.textContent='\u2192 Richtige Antwort: '+q.a[ci];qDiv.appendChild(exp)}}if(sel&&+sel.value===ci)cor++});const r=document.getElementById(pf+'Result'+mi);r.style.display='block';if(boss){if(cor===tot){r.className='quiz-result pass';r.textContent='Challenge bestanden \u2014 '+cor+'/'+tot;if(!state.bossResults[mi]){state.bossResults[mi]=true;addXP(100,'Challenge bestanden');if(!state.badges.includes('first_boss'))awardBadge('first_boss');if(modules.every((_,i)=>state.bossResults[i]))awardBadge('all_bosses');checkMC(mi)}}else{r.className='quiz-result fail';r.textContent=cor+'/'+tot+' \u2014 Alle m\u00FCssen korrekt sein.';setTimeout(()=>{document.querySelectorAll('input[name^="'+pf+'_'+mi+'"]').forEach(x=>{x.disabled=false;x.checked=false});document.querySelectorAll('[data-qi] label').forEach(l=>l.classList.remove('correct','wrong'));document.querySelectorAll('.quiz-explanation').forEach(e=>e.remove());r.style.display='none'},2000);return}}else{const ok=cor>=Math.ceil(tot*.6);r.className='quiz-result '+(ok?'pass':'fail');r.textContent=ok?cor+'/'+tot+' \u2014 Bestanden.':cor+'/'+tot+' \u2014 Mindestens '+Math.ceil(tot*.6)+' korrekte Antworten n\u00f6tig.';if(ok&&!state.quizResults[mi]){state.quizResults[mi]=cor;addXP(cor*15+50,'Quiz bestanden');if(!state.badges.includes('first_quiz'))awardBadge('first_quiz');if(cor===tot)awardBadge('perfect_quiz');if(Date.now()-(window._qS||Date.now())<6e4)awardBadge('speed_quiz');checkMC(mi)}}saveState();document.querySelectorAll('input[name^="'+pf+'_'+mi+'"]').forEach(x=>x.disabled=true);window.scrollTo({top:0,behavior:'smooth'})}
+function checkMC(m){if(state.quizResults[m]!==undefined&&state.bossResults[m]&&!state.modulesCompleted.includes(m)){state.modulesCompleted.push(m);awardBadge('m'+m);if(state.modulesCompleted.length>=5)awardBadge('half_done');if(state.modulesCompleted.length>=10){awardBadge('graduate');setTimeout(()=>showCert(),1500)}saveState();renderSidebar()}}
+function renderModule(m){state.currentModule=m;if(!state.modulesViewed.includes(m)){state.modulesViewed.push(m);addXP(10,'Modul geöffnet');if(state.modulesViewed.length>=10)awardBadge('explorer')}saveState();closeSidebar();const mod=modules[m];let h='<div class="module-header"><div class="mod-badge">Modul '+(m+1)+' \u00b7 '+mod.icon+'</div><h1>'+mod.title+'</h1><p class="mod-desc">'+mod.description+'</p></div>';mod.lessons.forEach((l,i)=>{h+='<div class="lesson-card"><h3><span style="color:var(--neon)">'+String(i+1).padStart(2,'0')+'</span> '+l.title+' <button class="tts-btn" onclick="speakLesson('+i+')" title="Vorlesen">&#128266;</button></h3>'+l.content+'</div>'});h+='<div class="interactive-area"><h4>Interaktive \u00DCbung</h4><div id="interactiveContent"></div></div>';window._qS=Date.now();h+=renderQuiz(m,mod.quiz,false);h+=renderQuiz(m,mod.boss,true);h+='<div class="site-footer">AlgebraMeister &copy; 2026 GZ AI Stacks \u00b7 Gerd Zimmermann</div>';document.getElementById('welcomeScreen').style.display='none';document.getElementById('badgesView').style.display='none';document.getElementById('statsView').style.display='none';const mc=document.getElementById('moduleContent');mc.style.display='block';mc.innerHTML=h;renderSidebar();setTimeout(()=>{initIx(m);window.scrollTo(0,0)},100)}
+function renderSidebar(){document.getElementById('sidebarModules').innerHTML=modules.map((m,i)=>{const d=state.modulesCompleted.includes(i),a=state.currentModule===i&&document.getElementById('moduleContent').style.display==='block';return '<div class="sidebar-item'+(a?' active':'')+(d?' completed':'')+'" onclick="renderModule('+i+')">'+m.icon+' '+m.title+'</div>'}).join('')}
+function toggleSidebar(){document.getElementById('sidebar').classList.toggle('open')}function closeSidebar(){document.getElementById('sidebar').classList.remove('open')}
+function showBadges(){document.getElementById('welcomeScreen').style.display='none';document.getElementById('moduleContent').style.display='none';document.getElementById('statsView').style.display='none';const v=document.getElementById('badgesView');v.style.display='block';closeSidebar();let h='<div class="module-header"><h1>Achievements</h1><p class="mod-desc">'+state.badges.length+' / '+BADGES.length+' freigeschaltet</p></div><div class="badges-grid">';BADGES.forEach(b=>{const e=state.badges.includes(b.id);h+='<div class="badge-card'+(e?' earned':' locked')+'"><div class="badge-icon" style="font-family:var(--mono);font-weight:700">'+(e?b.icon:'\u2014')+'</div><div class="badge-name">'+b.name+'</div><div class="badge-desc">'+b.desc+'</div></div>'});v.innerHTML=h+'</div>'}
+function showStats(){document.getElementById('welcomeScreen').style.display='none';document.getElementById('moduleContent').style.display='none';document.getElementById('badgesView').style.display='none';const v=document.getElementById('statsView');v.style.display='block';closeSidebar();const l=getLevel(state.xp);v.innerHTML='<div class="module-header"><h1>Statistik</h1></div><div class="stats-grid"><div class="stat-card"><div class="stat-val">'+state.xp+'</div><div class="stat-label">XP</div></div><div class="stat-card"><div class="stat-val">'+LEVELS[l].name+'</div><div class="stat-label">Rang</div></div><div class="stat-card"><div class="stat-val">'+state.modulesCompleted.length+'/10</div><div class="stat-label">Module</div></div><div class="stat-card"><div class="stat-val">'+Object.keys(state.quizResults).length+'</div><div class="stat-label">Quizze</div></div><div class="stat-card"><div class="stat-val">'+Object.keys(state.bossResults).length+'</div><div class="stat-label">Challenges</div></div><div class="stat-card"><div class="stat-val">'+state.badges.length+'</div><div class="stat-label">Achievements</div></div><div class="stat-card"><div class="stat-val">'+state.streak+'d</div><div class="stat-label">Serie</div></div></div>'}
+let certStyle='modern';function showCert(){window._lastFocus=document.activeElement;document.getElementById('certOverlay').classList.add('active');document.getElementById('certPicker').innerHTML=['Modern','Klassisch','Tech','Minimal'].map((l,i)=>{const s=['modern','klassisch','tech','minimal'][i];return '<button class="'+(certStyle===s?'active':'')+'" onclick="certStyle=\''+s+'\';showCert()">'+l+'</button>'}).join('');renderCert()}
+function closeCert(){document.getElementById('certOverlay').classList.remove('active');if(window._lastFocus){window._lastFocus.focus();window._lastFocus=null}}
+function renderCert(){const f=document.getElementById('certFrame'),l=getLevel(state.xp),nm=state.name||'?',dt=new Date().toLocaleDateString('de-DE',{day:'numeric',month:'long',year:'numeric'}),cd='AM-'+new Date().getFullYear()+'-'+((nm.charCodeAt(0)*7+state.xp)%9999).toString(16).toUpperCase().padStart(4,'0'),st={modern:{bg:'linear-gradient(135deg,#1a1a3e,#0d0d2b)',bd:'#818cf8',tx:'#e0e0ff',sb:'#8888cc',ac:'#a5b4fc'},klassisch:{bg:'linear-gradient(135deg,#fdf8ee,#f5edda)',bd:'#c5a54e',tx:'#1a1a3e',sb:'#5c5040',ac:'#b8860b'},tech:{bg:'linear-gradient(135deg,#0a0a0a,#111)',bd:'#4ade80',tx:'#d0f0d0',sb:'#5a8a5a',ac:'#4ade80'},minimal:{bg:'#fff',bd:'#333',tx:'#111',sb:'#666',ac:'#333'}},s=st[certStyle];f.innerHTML='<div style="background:'+s.bg+';padding:48px 40px;border:2px solid '+s.bd+';border-radius:8px;text-align:center;min-height:500px;color:'+s.tx+'"><div style="font-size:12px;color:'+s.sb+';letter-spacing:4px;text-transform:uppercase">AlgebraMeister \u00b7 Mathematik Kl. 7-9</div><h1 style="font-size:40px;margin:20px 0;font-family:Georgia,serif;letter-spacing:-1px">Zertifikat</h1><div style="width:80px;height:1px;background:'+s.bd+';margin:0 auto 28px;opacity:.4"></div><p style="font-size:16px;color:'+s.sb+'">Hiermit wird bescheinigt, dass</p><h2 style="font-size:36px;color:'+s.ac+';margin:14px 0;font-family:Georgia,serif">'+nm+'</h2><p style="font-size:18px;font-weight:600;margin:16px 0">Rang: '+LEVELS[l].name+'</p><p style="font-size:14px;color:'+s.sb+'">das Programm AlgebraMeister erfolgreich absolviert hat.</p><div style="font-size:14px;margin:28px 0">Module: '+state.modulesCompleted.length+'/10 \u00b7 XP: '+state.xp+' \u00b7 Achievements: '+state.badges.length+'</div><div style="font-size:13px;color:'+s.sb+';margin-top:28px">'+dt+'</div><div style="font-size:10px;color:'+s.sb+';opacity:.4;margin-top:6px">'+cd+' \u00b7 GZ AI STACKS</div></div>'}
+function printCert(){window.print()}
+function updateUI(){const l=getLevel(state.xp);document.getElementById('levelName').textContent=LEVELS[l].name;document.getElementById('xpText').textContent=state.xp+' XP';document.getElementById('xpFill').style.width=getLevelProgress(state.xp)+'%'}
+function setDesignTheme(w,m){state.designTheme=w+'-'+m;document.documentElement.setAttribute('data-theme',state.designTheme);saveState();const t=TC[w];if(t){document.getElementById('heroIcon').textContent=t.icon;document.getElementById('welcomeTitle').textContent=t.title;document.getElementById('welcomeSub').textContent=t.sub;document.getElementById('startBtn').textContent=t.btn}buildTP()}
+function getCurrentThemeParts(){const p=state.designTheme.split('-');return{world:p[0],mode:p[1]||'dark'}}
+function buildTP(){const{world,mode}=getCurrentThemeParts();let h='';Object.keys(TC).forEach(w=>{const t=TC[w];h+='<button class="theme-btn'+(w===world?' active':'')+'" style="background:'+t.color+'" onclick="setDesignTheme(\''+w+'\',\''+mode+'\')" title="'+t.name+'"></button>'});h+='<button class="mode-toggle" onclick="setDesignTheme(\''+world+'\',\''+(mode==='dark'?'light':'dark')+'\')">'+(mode==='dark'?'\u2600':'L')+'</button>';document.getElementById('themePicker').innerHTML=h}
+// ═══ Interactive Exercises ═══
+function initIx(m){const fns=[ixNeg,ixTerm,ixGleich,ixProz,ixDrei,ixFlae,ixVol,ixPot,ixFunc,ixProb];if(fns[m])fns[m]();else document.getElementById('interactiveContent').textContent='Wird geladen...'}
+function makeInput(label){return '<div style="text-align:center"><p style="font-size:18px;color:var(--neon);margin-bottom:14px"><strong>'+label+'</strong></p><input id="inp" type="text" style="font-size:20px;padding:10px;border-radius:var(--radius);border:1px solid var(--border);background:var(--bg2);color:var(--text);text-align:center;width:140px;font-family:var(--mono)" autocomplete="off"><br><button class="ix-btn" onclick="ckIx()" style="margin-top:10px">Pr\u00FCfen</button><div class="ix-feedback" id="ixFeedback"></div></div>'}
+function ixNeg(){const ts=[{q:'(\u22125) + 3',a:'-2'},{q:'(\u22123) \u00d7 (\u22124)',a:'12'},{q:'(\u22128) \u2212 (\u22123)',a:'-5'},{q:'|\u22127|',a:'7'}];let i=0;const el=document.getElementById('interactiveContent');function r(){if(i>=ts.length){el.innerHTML='<div class="ix-feedback pass" style="display:block">Alle korrekt.</div>';if(!state.interactiveResults[0]){state.interactiveResults[0]=true;addXP(30,'\u00DCbung abgeschlossen');saveState()}return}el.innerHTML=makeInput(ts[i].q+' = ?');document.getElementById('inp').focus();document.getElementById('inp').addEventListener('keydown',e=>{if(e.key==='Enter')ckIx()});window.ckIx=()=>{if(document.getElementById('inp').value.trim()===ts[i].a){document.getElementById('ixFeedback').className='ix-feedback pass';document.getElementById('ixFeedback').textContent='Korrekt';i++;setTimeout(r,600)}else{document.getElementById('ixFeedback').className='ix-feedback fail';document.getElementById('ixFeedback').textContent='Falsch'}}}r()}
+function ixTerm(){const ts=[{q:'3x + 5x',a:'8x'},{q:'2a + 3b + a',a:'3a+3b'},{q:'4(x + 2)',a:'4x+8'},{q:'7y - 3y + 2',a:'4y+2'}];let i=0;const el=document.getElementById('interactiveContent');function r(){if(i>=ts.length){el.innerHTML='<div class="ix-feedback pass" style="display:block">Alle Terme vereinfacht.</div>';if(!state.interactiveResults[1]){state.interactiveResults[1]=true;addXP(30,'Terme');saveState()}return}el.innerHTML=makeInput('Vereinfache: '+ts[i].q);document.getElementById('inp').focus();document.getElementById('inp').addEventListener('keydown',e=>{if(e.key==='Enter')ckIx()});window.ckIx=()=>{const v=document.getElementById('inp').value.trim().replace(/\s/g,'');if(v===ts[i].a){document.getElementById('ixFeedback').className='ix-feedback pass';document.getElementById('ixFeedback').textContent='Korrekt';i++;setTimeout(r,600)}else{document.getElementById('ixFeedback').className='ix-feedback fail';document.getElementById('ixFeedback').textContent='Falsch \u2014 tipp ohne Leerzeichen'}}}r()}
+function ixGleich(){const ts=[{q:'x + 5 = 12',a:'7'},{q:'3x = 18',a:'6'},{q:'2x - 4 = 10',a:'7'},{q:'x/4 = 5',a:'20'}];let i=0;const el=document.getElementById('interactiveContent');function r(){if(i>=ts.length){el.innerHTML='<div class="ix-feedback pass" style="display:block">Alle Gleichungen gel\u00F6st.</div>';if(!state.interactiveResults[2]){state.interactiveResults[2]=true;addXP(30,'Gleichungen');saveState()}return}el.innerHTML=makeInput(ts[i].q+' &rarr; x = ?');document.getElementById('inp').focus();document.getElementById('inp').addEventListener('keydown',e=>{if(e.key==='Enter')ckIx()});window.ckIx=()=>{if(document.getElementById('inp').value.trim()===ts[i].a){document.getElementById('ixFeedback').className='ix-feedback pass';document.getElementById('ixFeedback').textContent='Korrekt';i++;setTimeout(r,600)}else{document.getElementById('ixFeedback').className='ix-feedback fail';document.getElementById('ixFeedback').textContent='Falsch'}}}r()}
+function ixProz(){const ts=[{q:'25% von 200',a:'50'},{q:'10% von 350',a:'35'},{q:'50% von 84',a:'42'},{q:'75% von 120',a:'90'}];let i=0;const el=document.getElementById('interactiveContent');function r(){if(i>=ts.length){el.innerHTML='<div class="ix-feedback pass" style="display:block">Prozentrechnung abgeschlossen.</div>';if(!state.interactiveResults[3]){state.interactiveResults[3]=true;addXP(30,'Prozent');saveState()}return}el.innerHTML=makeInput(ts[i].q+' = ?');document.getElementById('inp').focus();document.getElementById('inp').addEventListener('keydown',e=>{if(e.key==='Enter')ckIx()});window.ckIx=()=>{if(document.getElementById('inp').value.trim()===ts[i].a){document.getElementById('ixFeedback').className='ix-feedback pass';document.getElementById('ixFeedback').textContent='Korrekt';i++;setTimeout(r,600)}else{document.getElementById('ixFeedback').className='ix-feedback fail';document.getElementById('ixFeedback').textContent='Falsch'}}}r()}
+function ixDrei(){const ts=[{q:'3 kg = 9\u20ac. 7 kg = ?',a:'21'},{q:'5h = 100km. 8h = ?',a:'160'},{q:'4 St. = 12\u20ac. 10 St. = ?',a:'30'}];let i=0;const el=document.getElementById('interactiveContent');function r(){if(i>=ts.length){el.innerHTML='<div class="ix-feedback pass" style="display:block">Dreisatz abgeschlossen.</div>';if(!state.interactiveResults[4]){state.interactiveResults[4]=true;addXP(30,'Dreisatz');saveState()}return}el.innerHTML=makeInput(ts[i].q);document.getElementById('inp').focus();document.getElementById('inp').addEventListener('keydown',e=>{if(e.key==='Enter')ckIx()});window.ckIx=()=>{if(document.getElementById('inp').value.trim()===ts[i].a){document.getElementById('ixFeedback').className='ix-feedback pass';document.getElementById('ixFeedback').textContent='Korrekt';i++;setTimeout(r,600)}else{document.getElementById('ixFeedback').className='ix-feedback fail';document.getElementById('ixFeedback').textContent='Falsch'}}}r()}
+function ixFlae(){const ts=[{q:'Rechteck 6\u00d74',a:'24'},{q:'Quadrat a=9',a:'81'},{q:'Dreieck g=10, h=8',a:'40'}];let i=0;const el=document.getElementById('interactiveContent');function r(){if(i>=ts.length){el.innerHTML='<div class="ix-feedback pass" style="display:block">Fl\u00E4chenberechnungen korrekt.</div>';if(!state.interactiveResults[5]){state.interactiveResults[5]=true;addXP(30,'Fl\u00E4chen');saveState()}return}el.innerHTML=makeInput('A('+ts[i].q+') = ?');document.getElementById('inp').focus();document.getElementById('inp').addEventListener('keydown',e=>{if(e.key==='Enter')ckIx()});window.ckIx=()=>{if(document.getElementById('inp').value.trim()===ts[i].a){document.getElementById('ixFeedback').className='ix-feedback pass';document.getElementById('ixFeedback').textContent='Korrekt';i++;setTimeout(r,600)}else{document.getElementById('ixFeedback').className='ix-feedback fail';document.getElementById('ixFeedback').textContent='Falsch'}}}r()}
+function ixVol(){const ts=[{q:'Quader 3\u00d74\u00d75',a:'60'},{q:'W\u00FCrfel a=4',a:'64'},{q:'Quader 2\u00d76\u00d710',a:'120'}];let i=0;const el=document.getElementById('interactiveContent');function r(){if(i>=ts.length){el.innerHTML='<div class="ix-feedback pass" style="display:block">Volumenberechnungen korrekt.</div>';if(!state.interactiveResults[6]){state.interactiveResults[6]=true;addXP(30,'Volumen');saveState()}return}el.innerHTML=makeInput('V('+ts[i].q+') = ?');document.getElementById('inp').focus();document.getElementById('inp').addEventListener('keydown',e=>{if(e.key==='Enter')ckIx()});window.ckIx=()=>{if(document.getElementById('inp').value.trim()===ts[i].a){document.getElementById('ixFeedback').className='ix-feedback pass';document.getElementById('ixFeedback').textContent='Korrekt';i++;setTimeout(r,600)}else{document.getElementById('ixFeedback').className='ix-feedback fail';document.getElementById('ixFeedback').textContent='Falsch'}}}r()}
+function ixPot(){const pairs=[['2\u00b3','8'],['3\u00b2','9'],['5\u00b2','25'],['10\u00b3','1000'],['2\u2074','16']];let sL=null,mt=0;const el=document.getElementById('interactiveContent');el.innerHTML='<p style="margin-bottom:12px"><strong>Ordne Potenz \u2194 Ergebnis zu.</strong></p><div style="display:flex;gap:20px;flex-wrap:wrap;justify-content:center"><div><div class="ix-grid" id="ixL" style="flex-direction:column"></div></div><div><div class="ix-grid" id="ixR" style="flex-direction:column"></div></div></div><div class="ix-feedback" id="ixFeedback"></div>';const sR=[...pairs].sort(()=>Math.random()-.5);pairs.forEach(([l])=>{const b=document.createElement('span');b.className='ix-item';b.textContent=l;b.style.fontFamily='var(--mono)';b.onclick=()=>{if(b.classList.contains('placed'))return;document.querySelectorAll('#ixL .ix-item').forEach(x=>x.classList.remove('selected'));b.classList.add('selected');sL=l};document.getElementById('ixL').appendChild(b)});sR.forEach(([,r])=>{const b=document.createElement('span');b.className='ix-item';b.textContent=r;b.style.fontFamily='var(--mono)';b.onclick=()=>{if(!sL||b.classList.contains('placed'))return;const p=pairs.find(x=>x[0]===sL&&x[1]===r);if(p){b.classList.add('correct','placed');document.querySelectorAll('#ixL .ix-item').forEach(x=>{if(x.textContent===sL)x.classList.add('correct','placed')});sL=null;mt++;if(mt===pairs.length){document.getElementById('ixFeedback').className='ix-feedback pass';document.getElementById('ixFeedback').textContent='Alle Zuordnungen korrekt.';if(!state.interactiveResults[7]){state.interactiveResults[7]=true;addXP(30,'Potenzen');saveState()}}}else{b.classList.add('wrong');setTimeout(()=>b.classList.remove('wrong'),400)}};document.getElementById('ixR').appendChild(b)})}
+function ixFunc(){const ts=[{m:2,b:1,x:3,y:7},{m:-1,b:5,x:2,y:3},{m:0.5,b:0,x:4,y:2},{m:3,b:-2,x:1,y:1}];let i=0;const el=document.getElementById('interactiveContent');function r(){if(i>=ts.length){el.innerHTML='<div class="ix-feedback pass" style="display:block">Funktionswerte korrekt.</div>';if(!state.interactiveResults[8]){state.interactiveResults[8]=true;addXP(30,'Funktionen');saveState()}return}const t=ts[i];el.innerHTML=makeInput('y = '+t.m+'x'+(t.b>=0?' + ':' \u2212 ')+Math.abs(t.b)+', x = '+t.x+'. y = ?');document.getElementById('inp').focus();document.getElementById('inp').addEventListener('keydown',e=>{if(e.key==='Enter')ckIx()});window.ckIx=()=>{if(+document.getElementById('inp').value===t.y){document.getElementById('ixFeedback').className='ix-feedback pass';document.getElementById('ixFeedback').textContent='y = '+t.y;i++;setTimeout(r,600)}else{document.getElementById('ixFeedback').className='ix-feedback fail';document.getElementById('ixFeedback').textContent='Falsch'}}}r()}
+function ixProb(){let rolls=[],total=0;const el=document.getElementById('interactiveContent');const faces=['\u2680','\u2681','\u2682','\u2683','\u2684','\u2685'];let counts=[0,0,0,0,0,0];el.innerHTML='<p style="margin-bottom:12px"><strong>Würfle 20x und vergleiche mit der Theorie (je ~3,3x).</strong></p><div style="text-align:center"><div style="font-size:48px;margin:12px 0;font-family:var(--mono)" id="die">\u2680</div><button class="ix-btn" id="rollBtn" onclick="doRoll()">W\u00FCrfeln</button><div style="margin:14px 0;font-size:14px;color:var(--text-dim)"><span id="cnt">0</span>/20</div><div id="hist" style="display:flex;gap:6px;justify-content:center;flex-wrap:wrap;font-family:var(--mono)"></div><div class="ix-feedback" id="ixFeedback"></div></div>';window.doRoll=()=>{if(total>=20)return;const v=Math.floor(Math.random()*6);counts[v]++;total++;document.getElementById('die').textContent=faces[v];document.getElementById('cnt').textContent=total;let h='';for(let j=0;j<6;j++)h+='<div style="text-align:center;min-width:36px"><div style="font-size:20px">'+faces[j]+'</div><div style="font-size:16px;font-weight:600;color:var(--neon)">'+counts[j]+'</div></div>';document.getElementById('hist').innerHTML=h;if(total>=20){document.getElementById('rollBtn').disabled=true;document.getElementById('ixFeedback').className='ix-feedback pass';document.getElementById('ixFeedback').textContent='Ergebnis: Vergleiche mit dem theoretischen Wert von je 3,3.';if(!state.interactiveResults[9]){state.interactiveResults[9]=true;addXP(30,'Stochastik');saveState()}}}}
+// ═══ Start & Init ═══
+function startApp(){const n=document.getElementById('nameInput').value.trim();if(!n)return;state.name=n;state.started=true;saveState();document.getElementById('welcomeScreen').style.display='none';renderModule(0);updateStreak()}
+(function(){if(loadState()){document.documentElement.setAttribute('data-theme',state.designTheme);if(state.started){document.getElementById('welcomeScreen').style.display='none';renderModule(state.currentModule);updateStreak()}else{document.getElementById('nameInput').value=state.name||'';document.getElementById('startBtn').disabled=!state.name}}buildTP();updateUI();renderSidebar();const{world}=getCurrentThemeParts();const t=TC[world];if(t){document.getElementById('heroIcon').textContent=t.icon;document.getElementById('welcomeTitle').textContent=t.title;document.getElementById('welcomeSub').textContent=t.sub;document.getElementById('startBtn').textContent=t.btn}document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeCert();document.getElementById('levelUpOverlay').classList.remove('active')}})})()
+</script>
+
+<script>
+(function(){
+var KEY=null;
+var scripts=document.querySelectorAll('script');
+for(var i=0;i<scripts.length;i++){
+var km=scripts[i].textContent.match(/STORAGE_KEY\s*=\s*['"](\w+)['"]/);
+if(km){KEY=km[1];break;}
+}
+if(!location.hash.match(/modules=/)){try{Object.keys(localStorage).filter(function(k){return k.indexOf("_allowed_modules")!==-1}).forEach(function(k){localStorage.removeItem(k)})}catch(e){}}
+var LOCK_KEY=(KEY||'app')+'_allowed_modules';
+var h=location.hash.match(/modules=([0-9,]+)/);
+var allowed=null;
+if(h){
+allowed=h[1].split(",").map(Number);
+try{localStorage.setItem(LOCK_KEY,JSON.stringify(allowed));}catch(e){}
+}else{
+try{var stored=localStorage.getItem(LOCK_KEY);if(stored)allowed=JSON.parse(stored);}catch(e){}
+}
+if(!allowed||!allowed.length)return;
+function filterSidebar(){
+var items=document.querySelectorAll("#sidebarModules > *");
+for(var i=0;i<items.length;i++){
+items[i].style.display=(allowed.indexOf(i)===-1)?"none":"";
+}
+}
+var sb=document.getElementById("sidebarModules");
+if(sb){new MutationObserver(filterSidebar).observe(sb,{childList:true});filterSidebar();}
+document.addEventListener("click",function(e){
+var t=e.target.closest("[onclick]");
+if(!t)return;
+var oc=t.getAttribute("onclick")||"";
+var idx=oc.indexOf("renderModule(");
+if(idx===-1)return;
+var num=parseInt(oc.substring(idx+13));
+if(!isNaN(num)&&allowed.indexOf(num)===-1){e.preventDefault();e.stopImmediatePropagation();}
+},true);
+setTimeout(filterSidebar,500);
+window.addEventListener("hashchange",function(){
+var hh=location.hash.match(/modules=([0-9,]+)/);
+if(hh){
+allowed=hh[1].split(",").map(Number);
+try{localStorage.setItem(LOCK_KEY,JSON.stringify(allowed));}catch(e){}
+filterSidebar();
+}
+});
+})();
+</script>
+
+<div class="zoom-controls" role="toolbar" aria-label="Zoom-Steuerung">
+<button class="zoom-btn" onclick="zoomOut()" title="Verkleinern (Taste -)" aria-label="Verkleinern">&#8722;</button>
+<button class="zoom-btn" onclick="zoomReset()" title="Zoom zurücksetzen" aria-label="Zoom zurücksetzen" style="font-size:10px;position:relative"><span id="zoomLvl">100%</span></button>
+<button class="zoom-btn" onclick="zoomIn()" title="Vergrößern (Taste +)" aria-label="Vergrößern">+</button>
+</div>
+
+<script>
+(function(){
+var zl=100;
+function applyZoom(){document.documentElement.style.fontSize=zl+'%';var e=document.getElementById('zoomLvl');if(e)e.textContent=zl+'%';}
+window.zoomIn=function(){if(zl<200){zl+=10;applyZoom();}};
+window.zoomOut=function(){if(zl>50){zl-=10;applyZoom();}};
+window.zoomReset=function(){zl=100;applyZoom();};
+document.addEventListener('keydown',function(e){
+if(e.target.tagName==='INPUT'||e.target.tagName==='TEXTAREA'||e.target.isContentEditable)return;
+if((e.key==='+'||e.key==='=')&&!e.ctrlKey&&!e.metaKey){e.preventDefault();zoomIn();}
+else if((e.key==='-'||e.key==='_')&&!e.ctrlKey&&!e.metaKey){e.preventDefault();zoomOut();}
+else if(e.key==='0'&&!e.ctrlKey&&!e.metaKey){e.preventDefault();zoomReset();}
+});
+})();
+</script>
+
+<script>
+/* A11y: Focus trap for modal overlays */
+document.addEventListener('keydown',function(e){if(e.key==='Tab'){var ov=document.querySelector('.cert-overlay.active,.modal-overlay.active,[role="dialog"].active');if(ov){var fc=ov.querySelectorAll('button,a,[tabindex="0"],input,select,textarea');if(fc.length){var f=fc[0],l=fc[fc.length-1];if(e.shiftKey&&document.activeElement===f){e.preventDefault();l.focus()}else if(!e.shiftKey&&document.activeElement===l){e.preventDefault();f.focus()}}}}});
+</script>
+</body>
+</html>

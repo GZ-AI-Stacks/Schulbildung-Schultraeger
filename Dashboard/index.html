@@ -1,0 +1,2166 @@
+<!DOCTYPE html>
+<html lang="de" data-theme="cyber-dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>LehrplanManager — Lehrer-Dashboard</title>
+<meta name="description" content="Lehrer-Dashboard zur individuellen Lehrplanerstellung aus 110 Lernmodulen">
+<style>
+@font-face{font-family:'Sora';src:url('../Klasse_7-10/Informatik/fonts/sora-latin-400-normal.woff2') format('woff2');font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:'Sora';src:url('../Klasse_7-10/Informatik/fonts/sora-latin-600-normal.woff2') format('woff2');font-weight:600;font-style:normal;font-display:swap}
+@font-face{font-family:'Sora';src:url('../Klasse_7-10/Informatik/fonts/sora-latin-700-normal.woff2') format('woff2');font-weight:700;font-style:normal;font-display:swap}
+@font-face{font-family:'JetBrains Mono';src:url('../Klasse_7-10/Informatik/fonts/jetbrains-mono-latin-400-normal.woff2') format('woff2');font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:'Playfair Display';src:url('../Klasse_7-10/Informatik/fonts/playfair-display-latin-700-normal.woff2') format('woff2');font-weight:700;font-style:normal;font-display:swap}
+@font-face{font-family:'Inter';src:url('../Klasse_7-10/Informatik/fonts/inter-latin-400-normal.woff2') format('woff2');font-weight:400;font-style:normal;font-display:swap}
+
+:root{
+--neon:#3b82f6;--neon-dim:rgba(59,130,246,.15);--neon-glow:rgba(59,130,246,.3);
+--bg:#0a0e14;--bg2:#111827;--bg3:#1f2937;--card:#161e2e;--card-hover:#1e293b;
+--border:#2a3444;--border-light:#374151;
+--text:#d4dce8;--text-dim:#8899aa;--text-bright:#f1f5f9;
+--heading:#ffffff;--link:#60a5fa;
+--success:#22c55e;--warning:#f59e0b;--danger:#ef4444;
+--xp-purple:#a855f7;--badge-cyan:#06b6d4;--streak-red:#ef4444;
+--radius:12px;--radius-sm:8px;--radius-lg:16px;
+--shadow:0 4px 24px rgba(0,0,0,.4);--shadow-lg:0 8px 40px rgba(0,0,0,.5);
+--font:'Sora','Segoe UI',system-ui,sans-serif;
+--mono:'JetBrains Mono','Cascadia Code',monospace;
+--serif:'Playfair Display','Georgia',serif;
+--card-border-w:1px;--card-border-style:solid;--glow:1
+}
+[data-theme="cyber-dark"]{--neon:#3b82f6;--neon-dim:rgba(59,130,246,.15);--neon-glow:rgba(59,130,246,.3);--bg:#0a0e14;--bg2:#111827;--bg3:#1f2937;--card:#161e2e;--card-hover:#1e293b;--border:#2a3444;--border-light:#374151;--text:#d4dce8;--text-dim:#8899aa;--text-bright:#f1f5f9;--heading:#ffffff;--link:#60a5fa;--success:#22c55e;--warning:#f59e0b;--danger:#ef4444;--xp-purple:#a855f7;--badge-cyan:#06b6d4;--streak-red:#ef4444;--radius:12px;--radius-sm:8px;--radius-lg:16px;--shadow:0 4px 24px rgba(0,0,0,.4);--shadow-lg:0 8px 40px rgba(0,0,0,.5);--font:'Sora','Segoe UI',system-ui,sans-serif;--card-border-w:1px;--card-border-style:solid;--glow:1}
+[data-theme="cyber-light"]{--neon:#1d4ed8;--neon-dim:rgba(29,78,216,.1);--neon-glow:rgba(29,78,216,.2);--bg:#f8f9fb;--bg2:#f0f2f5;--bg3:#e5e7eb;--card:#ffffff;--card-hover:#f5f7fa;--border:#d1d5db;--border-light:#e5e7eb;--text:#374151;--text-dim:#4b5563;--text-bright:#111827;--heading:#111827;--link:#2563eb;--success:#22c55e;--warning:#f59e0b;--danger:#ef4444;--xp-purple:#a855f7;--badge-cyan:#06b6d4;--streak-red:#ef4444;--radius:12px;--radius-sm:8px;--radius-lg:16px;--shadow:0 4px 24px rgba(0,0,0,.08);--shadow-lg:0 8px 40px rgba(0,0,0,.12);--font:'Sora','Segoe UI',system-ui,sans-serif;--card-border-w:1px;--card-border-style:solid;--glow:0}
+[data-theme="retro-dark"]{--neon:#ffd700;--neon-dim:rgba(255,215,0,.12);--neon-glow:rgba(255,215,0,.3);--bg:#0d0208;--bg2:#1a0a1e;--bg3:#2d1233;--card:#1a0a1e;--card-hover:#2d1233;--border:#4a1942;--border-light:#5c2d5c;--text:#e0d0f0;--text-dim:#9080a0;--text-bright:#fff;--heading:#ffd700;--link:#ff6b9d;--success:#00e676;--warning:#ffab00;--danger:#ff1744;--xp-purple:#e040fb;--badge-cyan:#00e5ff;--streak-red:#ff1744;--radius:0px;--radius-sm:0px;--radius-lg:0px;--shadow:4px 4px 0 rgba(0,0,0,.8);--shadow-lg:6px 6px 0 rgba(0,0,0,.9);--font:'Courier New','Consolas',monospace;--card-border-w:3px;--card-border-style:solid;--glow:0}
+[data-theme="retro-light"]{--neon:#b8860b;--neon-dim:rgba(184,134,11,.1);--neon-glow:rgba(184,134,11,.2);--bg:#fff8e1;--bg2:#fff3cd;--bg3:#ffe0b2;--card:#ffffff;--card-hover:#fff9f0;--border:#d4a017;--border-light:#e6c84d;--text:#3e2723;--text-dim:#6d4c41;--text-bright:#1b0000;--heading:#b8860b;--link:#c2185b;--success:#2e7d32;--warning:#ef6c00;--danger:#c62828;--xp-purple:#8e24aa;--badge-cyan:#00838f;--streak-red:#c62828;--radius:0px;--radius-sm:0px;--radius-lg:0px;--shadow:3px 3px 0 rgba(0,0,0,.15);--shadow-lg:5px 5px 0 rgba(0,0,0,.2);--font:'Courier New','Consolas',monospace;--card-border-w:3px;--card-border-style:solid;--glow:0}
+[data-theme="nature-dark"]{--neon:#4ade80;--neon-dim:rgba(74,222,128,.12);--neon-glow:rgba(74,222,128,.25);--bg:#0c1a0f;--bg2:#132617;--bg3:#1e3a24;--card:#15291a;--card-hover:#1e3a24;--border:#2d5a36;--border-light:#3a7044;--text:#c8e6c9;--text-dim:#81a784;--text-bright:#e8f5e9;--heading:#e8f5e9;--link:#81c784;--success:#66bb6a;--warning:#ffa726;--danger:#ef5350;--xp-purple:#ab47bc;--badge-cyan:#26a69a;--streak-red:#ef5350;--radius:20px;--radius-sm:14px;--radius-lg:28px;--shadow:0 4px 20px rgba(0,0,0,.3);--shadow-lg:0 8px 32px rgba(0,0,0,.4);--font:'Segoe UI','Helvetica Neue',system-ui,sans-serif;--card-border-w:1px;--card-border-style:solid;--glow:0}
+[data-theme="nature-light"]{--neon:#2e7d32;--neon-dim:rgba(46,125,50,.08);--neon-glow:rgba(46,125,50,.15);--bg:#f1f8e9;--bg2:#e8f5e9;--bg3:#c8e6c9;--card:#ffffff;--card-hover:#f1faf1;--border:#a5d6a7;--border-light:#c8e6c9;--text:#33691e;--text-dim:#3e6e1c;--text-bright:#1b5e20;--heading:#1b5e20;--link:#2e7d32;--success:#388e3c;--warning:#ef6c00;--danger:#c62828;--xp-purple:#7b1fa2;--badge-cyan:#00695c;--streak-red:#c62828;--radius:20px;--radius-sm:14px;--radius-lg:28px;--shadow:0 4px 16px rgba(0,0,0,.06);--shadow-lg:0 8px 28px rgba(0,0,0,.1);--font:'Segoe UI','Helvetica Neue',system-ui,sans-serif;--card-border-w:1px;--card-border-style:solid;--glow:0}
+[data-theme="space-dark"]{--neon:#c084fc;--neon-dim:rgba(192,132,252,.12);--neon-glow:rgba(192,132,252,.3);--bg:#07020e;--bg2:#0f0720;--bg3:#1a0e35;--card:#110a28;--card-hover:#1a0e35;--border:#2e1a5e;--border-light:#3d2478;--text:#d4c8f0;--text-dim:#9080b8;--text-bright:#f0e8ff;--heading:#f0e8ff;--link:#f0abfc;--success:#34d399;--warning:#fbbf24;--danger:#fb7185;--xp-purple:#f472b6;--badge-cyan:#67e8f9;--streak-red:#fb7185;--radius:4px;--radius-sm:2px;--radius-lg:6px;--shadow:0 4px 24px rgba(100,50,200,.2);--shadow-lg:0 8px 40px rgba(100,50,200,.3);--font:'Segoe UI',system-ui,sans-serif;--card-border-w:1px;--card-border-style:solid;--glow:1}
+[data-theme="space-light"]{--neon:#7c3aed;--neon-dim:rgba(124,58,237,.08);--neon-glow:rgba(124,58,237,.15);--bg:#faf5ff;--bg2:#f3e8ff;--bg3:#e9d5ff;--card:#ffffff;--card-hover:#faf5ff;--border:#c4b5fd;--border-light:#ddd6fe;--text:#4c1d95;--text-dim:#5b21b6;--text-bright:#2e1065;--heading:#2e1065;--link:#7c3aed;--success:#059669;--warning:#d97706;--danger:#dc2626;--xp-purple:#db2777;--badge-cyan:#0891b2;--streak-red:#dc2626;--radius:4px;--radius-sm:2px;--radius-lg:6px;--shadow:0 4px 16px rgba(100,50,200,.06);--shadow-lg:0 8px 28px rgba(100,50,200,.1);--font:'Segoe UI',system-ui,sans-serif;--card-border-w:1px;--card-border-style:solid;--glow:0}
+[data-theme="comic-dark"]{--neon:#ff6b6b;--neon-dim:rgba(255,107,107,.12);--neon-glow:rgba(255,107,107,.3);--bg:#1a1a2e;--bg2:#222244;--bg3:#2e2e55;--card:#262650;--card-hover:#2e2e55;--border:#4a4a7a;--border-light:#5a5a8a;--text:#e8e0ff;--text-dim:#a098c0;--text-bright:#fff;--heading:#fff;--link:#ffa94d;--success:#51cf66;--warning:#fcc419;--danger:#ff6b6b;--xp-purple:#cc5de8;--badge-cyan:#22b8cf;--streak-red:#ff6b6b;--radius:16px;--radius-sm:12px;--radius-lg:24px;--shadow:4px 4px 0 rgba(0,0,0,.5);--shadow-lg:6px 6px 0 rgba(0,0,0,.6);--font:'Comic Sans MS','Chalkboard SE',cursive,system-ui,sans-serif;--card-border-w:3px;--card-border-style:solid;--glow:0}
+[data-theme="comic-light"]{--neon:#e03131;--neon-dim:rgba(224,49,49,.08);--neon-glow:rgba(224,49,49,.15);--bg:#fff9db;--bg2:#fff3bf;--bg3:#ffe066;--card:#ffffff;--card-hover:#fffdf0;--border:#fab005;--border-light:#fcc419;--text:#2b2b2b;--text-dim:#555;--text-bright:#000;--heading:#000;--link:#e8590c;--success:#2f9e44;--warning:#e8590c;--danger:#c92a2a;--xp-purple:#9c36b5;--badge-cyan:#1098ad;--streak-red:#c92a2a;--radius:16px;--radius-sm:12px;--radius-lg:24px;--shadow:3px 3px 0 rgba(0,0,0,.2);--shadow-lg:5px 5px 0 rgba(0,0,0,.25);--font:'Comic Sans MS','Chalkboard SE',cursive,system-ui,sans-serif;--card-border-w:3px;--card-border-style:solid;--glow:0}
+[data-theme="sketchy-dark"]{--neon:#d97706;--neon-dim:rgba(217,119,6,.15);--neon-glow:rgba(217,119,6,.3);--bg:#2a1f0f;--bg2:#3a2a1a;--bg3:#4a3a2a;--card:#362414;--card-hover:#462a1a;--border:#5a4030;--border-light:#6a5040;--text:#d4c4b0;--text-dim:#a09080;--text-bright:#e8d8c8;--heading:#f5ead5;--link:#e8a550;--success:#84cc16;--warning:#d97706;--danger:#e74c3c;--xp-purple:#d946ef;--badge-cyan:#06b6d4;--streak-red:#e74c3c;--radius:24px;--radius-sm:16px;--radius-lg:32px;--shadow:0 6px 20px rgba(0,0,0,.3);--shadow-lg:0 10px 40px rgba(0,0,0,.4);--font:'Playfair Display','Georgia',serif;--card-border-w:2px;--card-border-style:dashed;--glow:0}
+[data-theme="sketchy-light"]{--neon:#b45309;--neon-dim:rgba(180,83,9,.1);--neon-glow:rgba(180,83,9,.2);--bg:#fef3e2;--bg2:#fde8cc;--bg3:#f9d5b8;--card:#ffffff;--card-hover:#fffaf5;--border:#d4a574;--border-light:#e8c4a0;--text:#5c4033;--text-dim:#8b6f47;--text-bright:#3e2723;--heading:#3e2723;--link:#c2600c;--success:#65a30d;--warning:#b45309;--danger:#d25c4d;--xp-purple:#c084fc;--badge-cyan:#0891b2;--streak-red:#d25c4d;--radius:24px;--radius-sm:16px;--radius-lg:32px;--shadow:0 4px 12px rgba(0,0,0,.08);--shadow-lg:0 8px 24px rgba(0,0,0,.12);--font:'Playfair Display','Georgia',serif;--card-border-w:2px;--card-border-style:dashed;--glow:0}
+[data-theme="nature-code-dark"]{--neon:#10b981;--neon-dim:rgba(16,185,129,.15);--neon-glow:rgba(16,185,129,.25);--bg:#0a1f12;--bg2:#0d2818;--bg3:#1a3a2a;--card:#0f281a;--card-hover:#1a3a2a;--border:#2d5a3d;--border-light:#3a7050;--text:#c8e6d0;--text-dim:#7ba890;--text-bright:#e8f5ed;--heading:#e8f5ed;--link:#34d399;--success:#10b981;--warning:#f59e0b;--danger:#f87171;--xp-purple:#a78bfa;--badge-cyan:#22d3ee;--streak-red:#f87171;--radius:20px;--radius-sm:14px;--radius-lg:28px;--shadow:0 4px 20px rgba(0,100,50,.2);--shadow-lg:0 8px 32px rgba(0,100,50,.3);--font:'Segoe UI','Helvetica Neue',system-ui,sans-serif;--card-border-w:1px;--card-border-style:solid;--glow:0}
+[data-theme="nature-code-light"]{--neon:#059669;--neon-dim:rgba(5,150,105,.1);--neon-glow:rgba(5,150,105,.15);--bg:#f0fdf8;--bg2:#e8faf2;--bg3:#d1f2e0;--card:#ffffff;--card-hover:#f5fbf7;--border:#86efac;--border-light:#bbf7d0;--text:#164e3f;--text-dim:#2d6e4f;--text-bright:#052e16;--heading:#052e16;--link:#059669;--success:#10b981;--warning:#d97706;--danger:#dc2626;--xp-purple:#8b5cf6;--badge-cyan:#06b6d4;--streak-red:#dc2626;--radius:20px;--radius-sm:14px;--radius-lg:28px;--shadow:0 4px 16px rgba(0,100,50,.06);--shadow-lg:0 8px 28px rgba(0,100,50,.1);--font:'Segoe UI','Helvetica Neue',system-ui,sans-serif;--card-border-w:1px;--card-border-style:solid;--glow:0}
+[data-theme="glass-dark"]{--neon:#00d9ff;--neon-dim:rgba(0,217,255,.12);--neon-glow:rgba(0,217,255,.25);--bg:#0f0f23;--bg2:#1a1a3e;--bg3:#25254a;--card:rgba(30,30,60,.4);--card-hover:rgba(40,40,80,.5);--border:rgba(100,150,255,.2);--border-light:rgba(100,150,255,.3);--text:#e4e8f0;--text-dim:#8899aa;--text-bright:#f5f7ff;--heading:#ffffff;--link:#00d9ff;--success:#34d399;--warning:#fbbf24;--danger:#ff6b9d;--xp-purple:#b991f7;--badge-cyan:#00d9ff;--streak-red:#ff6b9d;--radius:16px;--radius-sm:12px;--radius-lg:20px;--shadow:0 8px 32px rgba(0,200,255,.1);--shadow-lg:0 16px 64px rgba(0,200,255,.15);--font:'Segoe UI',system-ui,sans-serif;--card-border-w:1px;--card-border-style:solid;--glow:1}
+[data-theme="glass-light"]{--neon:#0891b2;--neon-dim:rgba(8,145,178,.08);--neon-glow:rgba(8,145,178,.15);--bg:#f8fafc;--bg2:#f1f5f9;--bg3:#e2e8f0;--card:rgba(255,255,255,.4);--card-hover:rgba(255,255,255,.6);--border:rgba(100,180,255,.2);--border-light:rgba(100,180,255,.3);--text:#1e293b;--text-dim:#475569;--text-bright:#0f172a;--heading:#0f172a;--link:#0891b2;--success:#059669;--warning:#d97706;--danger:#dc2626;--xp-purple:#7c3aed;--badge-cyan:#0891b2;--streak-red:#dc2626;--radius:16px;--radius-sm:12px;--radius-lg:20px;--shadow:0 8px 32px rgba(100,150,255,.08);--shadow-lg:0 16px 64px rgba(100,150,255,.12);--font:'Segoe UI',system-ui,sans-serif;--card-border-w:1px;--card-border-style:solid;--glow:0}
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{font-family:var(--font);background:var(--bg);color:var(--text);line-height:1.6;min-height:100vh}
+
+/* ===== LAYOUT ===== */
+.app{display:grid;grid-template-columns:280px 1fr;grid-template-rows:auto 1fr;min-height:100vh}
+.header{grid-column:1/-1;background:var(--bg2);border-bottom:var(--card-border-w) var(--card-border-style) var(--border);padding:1rem 1.5rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;position:sticky;top:0;z-index:100}
+.sidebar{background:var(--bg2);border-right:var(--card-border-w) var(--card-border-style) var(--border);padding:1rem;overflow-y:auto;position:sticky;top:60px;height:calc(100vh - 60px)}
+.main{padding:1.5rem;overflow-y:auto}
+
+/* ===== HEADER ===== */
+.header-title{display:flex;align-items:center;gap:.75rem}
+.header-title h1{font-size:1.3rem;color:var(--heading);font-weight:700}
+.header-title .logo{font-size:1.6rem}
+.header-actions{display:flex;align-items:center;gap:.5rem;flex-wrap:wrap}
+
+/* ===== BUTTONS ===== */
+.btn{display:inline-flex;align-items:center;gap:.4rem;padding:.5rem 1rem;border-radius:var(--radius-sm);border:var(--card-border-w) var(--card-border-style) var(--border);background:var(--card);color:var(--text);font-family:var(--font);font-size:.82rem;font-weight:600;cursor:pointer;transition:all .2s;white-space:nowrap}
+.btn:hover{background:var(--card-hover);border-color:var(--neon);color:var(--text-bright)}
+.btn-primary{background:var(--neon);color:#fff;border-color:var(--neon)}
+.btn-primary:hover{opacity:.85}
+.btn-danger{border-color:var(--danger);color:var(--danger)}
+.btn-danger:hover{background:var(--danger);color:#fff}
+.btn-sm{padding:.35rem .7rem;font-size:.75rem}
+.btn-icon{padding:.4rem .6rem;font-size:1rem}
+
+/* ===== SIDEBAR ===== */
+.sidebar h3{font-size:.75rem;text-transform:uppercase;letter-spacing:.08em;color:var(--text-dim);margin:1.2rem 0 .5rem;padding:0 .5rem}
+.sidebar h3:first-child{margin-top:0}
+button.nav-item{background:none;width:100%;text-align:left;font-family:var(--font)}
+.nav-item{display:flex;align-items:center;gap:.6rem;padding:.55rem .75rem;border-radius:var(--radius-sm);cursor:pointer;transition:all .15s;font-size:.85rem;color:var(--text);border:1px solid transparent}
+.nav-item:hover{background:var(--neon-dim);color:var(--text-bright)}
+.nav-item.active{background:var(--neon-dim);border-color:var(--neon);color:var(--neon)}
+.nav-item .icon{font-size:1.1rem;width:24px;text-align:center}
+.nav-item .badge-count{margin-left:auto;background:var(--neon);color:#fff;font-size:.65rem;font-weight:700;padding:.1rem .45rem;border-radius:10px;min-width:20px;text-align:center}
+
+/* ===== STAT CARDS ===== */
+.stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-bottom:1.5rem}
+.stat-card{background:var(--card);border:var(--card-border-w) var(--card-border-style) var(--border);border-radius:var(--radius);padding:1.2rem;text-align:center;transition:all .2s}
+.stat-card:hover{border-color:var(--neon);transform:translateY(-2px)}
+.stat-card .num{font-size:2rem;font-weight:700;color:var(--neon);line-height:1.1}
+.stat-card .label{font-size:.78rem;color:var(--text-dim);margin-top:.3rem}
+
+/* ===== FILTER BAR ===== */
+.filter-bar{display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:1.5rem;align-items:center}
+.filter-chip{padding:.4rem .8rem;border-radius:20px;border:1px solid var(--border);background:var(--card);color:var(--text-dim);font-size:.78rem;font-weight:600;cursor:pointer;transition:all .15s;font-family:var(--font)}
+.filter-chip:hover{border-color:var(--neon);color:var(--text)}
+.filter-chip.active{background:var(--neon);color:#fff;border-color:var(--neon)}
+.filter-sep{width:1px;height:24px;background:var(--border);margin:0 .3rem}
+
+/* ===== APP CARDS ===== */
+.apps-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:1.2rem;margin-bottom:2rem}
+.app-card{background:var(--card);border:var(--card-border-w) var(--card-border-style) var(--border);border-radius:var(--radius);overflow:hidden;transition:all .25s}
+.app-card:hover{border-color:var(--neon);box-shadow:var(--shadow)}
+.app-card-header{padding:1rem 1.2rem;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:.8rem}
+.app-card-header .app-icon{font-size:1.6rem}
+.app-card-header .app-info h3{font-size:.95rem;color:var(--heading);font-weight:700;line-height:1.2}
+.app-card-header .app-meta{font-size:.72rem;color:var(--text-dim);display:flex;gap:.6rem;margin-top:.2rem}
+.app-card-header .app-meta span{display:flex;align-items:center;gap:.2rem}
+.app-card-header .open-link{margin-left:auto;font-size:.8rem;color:var(--link);text-decoration:none;padding:.3rem .6rem;border-radius:var(--radius-sm);border:1px solid var(--border);transition:all .15s;white-space:nowrap}
+.app-card-header .open-link:hover{border-color:var(--link);background:var(--neon-dim)}
+.module-list{padding:.5rem}
+.module-item{display:flex;align-items:center;gap:.6rem;padding:.45rem .7rem;border-radius:var(--radius-sm);cursor:pointer;transition:all .12s;font-size:.82rem}
+.module-item:hover{background:var(--neon-dim)}
+.module-item .m-icon{font-size:1rem;width:22px;text-align:center}
+.module-item .m-title{flex:1;color:var(--text)}
+.module-item .m-check{width:18px;height:18px;border-radius:4px;border:2px solid var(--border);display:flex;align-items:center;justify-content:center;transition:all .15s;flex-shrink:0}
+.module-item.selected .m-check{background:var(--success);border-color:var(--success);color:#fff;font-size:.7rem}
+.module-item .m-time{font-size:.7rem;color:var(--text-dim);white-space:nowrap}
+.module-item.selected{background:var(--neon-dim)}
+.app-card-footer{padding:.6rem 1rem;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;font-size:.72rem;color:var(--text-dim)}
+.select-all-btn{font-size:.72rem;color:var(--link);cursor:pointer;border:none;background:none;font-family:var(--font);font-weight:600}
+.select-all-btn:hover{text-decoration:underline}
+
+/* ===== LEHRPLAN PANEL ===== */
+.plan-section{margin-top:2rem}
+.plan-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem;flex-wrap:wrap;gap:.5rem}
+.plan-header h2{font-size:1.2rem;color:var(--heading);font-weight:700}
+.plan-tabs{display:flex;gap:.3rem;flex-wrap:wrap}
+.plan-tab{padding:.4rem .8rem;border-radius:var(--radius-sm);border:1px solid var(--border);background:var(--card);color:var(--text-dim);font-size:.78rem;font-weight:600;cursor:pointer;font-family:var(--font);transition:all .15s}
+.plan-tab:hover{border-color:var(--neon);color:var(--text)}
+.plan-tab.active{background:var(--neon);color:#fff;border-color:var(--neon)}
+.plan-tab.add{border-style:dashed;color:var(--text-dim)}
+.plan-name-input{background:var(--card);border:1px solid var(--neon);color:var(--heading);padding:.35rem .6rem;border-radius:var(--radius-sm);font-size:.82rem;font-family:var(--font);width:180px}
+
+/* ===== WEEK PLANNER ===== */
+.week-planner{display:grid;grid-template-columns:repeat(5,1fr);gap:.8rem;margin-bottom:1.5rem}
+.week-col{background:var(--card);border:var(--card-border-w) var(--card-border-style) var(--border);border-radius:var(--radius);min-height:180px;display:flex;flex-direction:column}
+.week-col-header{padding:.6rem .8rem;border-bottom:1px solid var(--border);font-size:.82rem;font-weight:700;color:var(--heading);text-align:center}
+.week-col-body{padding:.5rem;flex:1;display:flex;flex-direction:column;gap:.3rem}
+.week-module{padding:.4rem .6rem;background:var(--neon-dim);border:1px solid var(--border);border-radius:var(--radius-sm);font-size:.72rem;color:var(--text);display:flex;align-items:center;gap:.4rem;cursor:grab;position:relative}
+.week-module:active{cursor:grabbing}
+.week-module .wm-icon{font-size:.85rem}
+.week-module .wm-remove{margin-left:auto;cursor:pointer;color:var(--text-dim);font-size:.85rem;line-height:1}
+.week-module .wm-remove:hover{color:var(--danger)}
+.week-col.drag-over{border-color:var(--neon);background:var(--neon-dim)}
+.week-col-footer{padding:.4rem .6rem;border-top:1px solid var(--border);font-size:.68rem;color:var(--text-dim);text-align:center}
+.drop-hint{font-size:.7rem;color:var(--text-dim);text-align:center;padding:1rem;opacity:.5}
+
+/* ===== PLAN SUMMARY ===== */
+.plan-summary{background:var(--card);border:var(--card-border-w) var(--card-border-style) var(--border);border-radius:var(--radius);padding:1.2rem;margin-top:1rem}
+.plan-summary h3{font-size:.9rem;color:var(--heading);margin-bottom:.8rem}
+.plan-summary-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:.6rem}
+.plan-summary-item{display:flex;align-items:center;gap:.5rem;padding:.4rem .6rem;background:var(--bg3);border-radius:var(--radius-sm);font-size:.78rem}
+.plan-summary-item .psi-icon{font-size:.9rem}
+.plan-summary-item .psi-app{color:var(--text-dim);font-size:.68rem}
+
+/* ===== THEME PICKER ===== */
+.theme-overlay{position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:200;display:none;align-items:center;justify-content:center;padding:1rem}
+.theme-overlay.show{display:flex}
+.theme-panel{background:var(--bg2);border:var(--card-border-w) var(--card-border-style) var(--border);border-radius:var(--radius-lg);padding:1.5rem;max-width:520px;width:100%;max-height:80vh;overflow-y:auto}
+.theme-panel h2{font-size:1.1rem;color:var(--heading);margin-bottom:1rem;display:flex;align-items:center;justify-content:space-between}
+.theme-grid{display:grid;grid-template-columns:1fr 1fr;gap:.6rem}
+.theme-opt{padding:.8rem;border-radius:var(--radius);border:2px solid var(--border);cursor:pointer;transition:all .2s;display:flex;align-items:center;gap:.7rem}
+.theme-opt:hover{border-color:var(--neon)}
+.theme-opt.active{border-color:var(--neon);background:var(--neon-dim)}
+.theme-opt .t-emoji{font-size:1.4rem}
+.theme-opt .t-name{font-size:.82rem;font-weight:600;color:var(--text-bright)}
+.theme-opt .t-desc{font-size:.68rem;color:var(--text-dim)}
+.theme-opt .t-color{width:14px;height:14px;border-radius:50%;margin-left:auto;flex-shrink:0}
+.theme-mode-toggle{display:flex;gap:.5rem;margin-bottom:1rem;justify-content:center}
+.mode-btn{padding:.4rem 1.2rem;border-radius:20px;border:1px solid var(--border);background:var(--card);color:var(--text-dim);font-size:.82rem;font-weight:600;cursor:pointer;font-family:var(--font);transition:all .15s}
+.mode-btn.active{background:var(--neon);color:#fff;border-color:var(--neon)}
+
+/* ===== IMPRESSUM OVERLAY ===== */
+.impressum-overlay{position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:200;display:none;align-items:center;justify-content:center;padding:1rem}
+.impressum-overlay.show{display:flex}
+.impressum-panel{background:var(--bg2);border:var(--card-border-w) var(--card-border-style) var(--border);border-radius:var(--radius-lg);padding:2rem;max-width:480px;width:100%}
+.impressum-panel h2{font-size:1.1rem;color:var(--heading);margin-bottom:1rem}
+.impressum-panel p{font-size:.85rem;color:var(--text);margin-bottom:.6rem}
+
+/* ===== MOBILE MENU ===== */
+.mobile-menu-btn{display:none;background:none;border:none;color:var(--text);font-size:1.4rem;cursor:pointer;padding:.3rem}
+
+/* ===== FOOTER ===== */
+.footer{grid-column:1/-1;padding:1rem 1.5rem;text-align:center;font-size:.72rem;color:var(--text-dim);border-top:1px solid var(--border);background:var(--bg2)}
+.footer a{color:var(--link);text-decoration:none}
+.footer a:hover{text-decoration:underline}
+
+/* ===== TOAST ===== */
+.toast{position:fixed;bottom:1.5rem;right:1.5rem;background:var(--success);color:#fff;padding:.7rem 1.2rem;border-radius:var(--radius-sm);font-size:.82rem;font-weight:600;z-index:300;transform:translateY(100px);opacity:0;transition:all .3s;pointer-events:none}
+.toast.show{transform:translateY(0);opacity:1}
+
+/* ===== PRINT ===== */
+@media print{
+  body{background:#fff;color:#000}
+  .header,.sidebar,.filter-bar,.theme-overlay,.impressum-overlay,.footer,.btn,.toast,.mobile-menu-btn,.select-all-btn,.open-link,.plan-tabs,.app-card,.stats-row{display:none!important}
+  .app{display:block}
+  .main{padding:0}
+  .plan-section{margin:0}
+  .plan-section,.week-planner,.plan-summary{display:block!important}
+  .week-planner{grid-template-columns:repeat(5,1fr)}
+  .week-col,.week-module,.plan-summary,.plan-summary-item{border:1px solid #ccc;background:#fff;color:#000}
+  .week-col-header{color:#000;font-weight:700;border-bottom:1px solid #ccc}
+  .plan-header h2{color:#000}
+  .plan-summary h3{color:#000}
+  .print-header{display:block!important;text-align:center;margin-bottom:1.5rem;padding-bottom:1rem;border-bottom:2px solid #000}
+  .print-header h1{font-size:1.4rem;color:#000}
+  .print-header p{font-size:.85rem;color:#333}
+}
+.print-header{display:none}
+
+/* ===== RESPONSIVE: TABLET ===== */
+@media(max-width:1024px){
+  .apps-grid{grid-template-columns:repeat(auto-fill,minmax(300px,1fr))}
+  .stats-row{grid-template-columns:repeat(2,1fr)}
+  .week-planner{grid-template-columns:repeat(3,1fr)}
+}
+
+/* ===== RESPONSIVE: MOBILE ===== */
+@media(max-width:768px){
+  .app{grid-template-columns:1fr}
+  .sidebar{display:none;position:fixed;top:60px;left:0;bottom:0;width:280px;z-index:150;box-shadow:var(--shadow-lg)}
+  .sidebar.open{display:block}
+  .mobile-menu-btn{display:block}
+  .header{padding:.8rem 1rem}
+  .header-title h1{font-size:1.05rem}
+  .main{padding:1rem}
+  .apps-grid{grid-template-columns:1fr}
+  .stats-row{grid-template-columns:repeat(2,1fr)}
+  .week-planner{grid-template-columns:1fr}
+  .filter-bar{gap:.35rem}
+  .theme-grid{grid-template-columns:1fr}
+  .plan-header{flex-direction:column;align-items:flex-start}
+}
+
+@media(max-width:480px){
+  .stats-row{grid-template-columns:1fr 1fr}
+  .stat-card .num{font-size:1.5rem}
+  .stat-card{padding:.8rem}
+  .header-actions{gap:.3rem}
+  .btn{padding:.4rem .7rem;font-size:.75rem}
+}
+
+/* ===== EXPORT STUDENT OVERLAY ===== */
+.export-overlay{position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:200;display:none;align-items:center;justify-content:center;padding:1rem}
+.export-overlay.show{display:flex}
+.export-panel{background:var(--bg2);border:var(--card-border-w) var(--card-border-style) var(--border);border-radius:var(--radius-lg);padding:2rem;max-width:560px;width:100%;max-height:85vh;overflow-y:auto}
+.export-panel h2{font-size:1.15rem;color:var(--heading);margin-bottom:.3rem}
+.export-panel .export-subtitle{font-size:.82rem;color:var(--text-dim);margin-bottom:1.2rem}
+.export-field{margin-bottom:1rem}
+.export-field label{display:block;font-size:.82rem;font-weight:600;color:var(--text-bright);margin-bottom:.3rem}
+.export-field input,.export-field textarea,.export-field select{width:100%;padding:.55rem .8rem;background:var(--card);border:1px solid var(--border);border-radius:var(--radius-sm);color:var(--text);font-family:var(--font);font-size:.85rem;resize:vertical}
+.export-field input:focus,.export-field textarea:focus{border-color:var(--neon);outline:2px solid var(--neon);outline-offset:1px}
+.export-field textarea{min-height:80px}
+.export-field .hint{font-size:.7rem;color:var(--text-dim);margin-top:.2rem}
+.export-preview{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:1rem;margin-bottom:1rem}
+.export-preview h4{font-size:.85rem;color:var(--heading);margin-bottom:.5rem}
+.export-preview .ep-stat{display:flex;gap:1rem;flex-wrap:wrap;font-size:.78rem;color:var(--text)}
+.export-preview .ep-stat span{display:flex;align-items:center;gap:.3rem}
+.export-actions{display:flex;gap:.5rem;justify-content:flex-end;margin-top:1rem}
+
+/* ===== STUDENT MANAGEMENT ===== */
+.preset-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:.8rem;margin-bottom:1.5rem}
+.preset-card{background:var(--card);border:var(--card-border-w) var(--card-border-style) var(--border);border-radius:var(--radius);padding:1rem;transition:all .2s;position:relative}
+.preset-card:hover{border-color:var(--neon);box-shadow:var(--shadow)}
+.preset-card .pc-name{font-size:.95rem;font-weight:700;color:var(--heading);margin-bottom:.4rem;display:flex;align-items:center;gap:.4rem}
+.preset-card .pc-meta{font-size:.72rem;color:var(--text-dim);margin-bottom:.6rem;display:flex;gap:.6rem;flex-wrap:wrap}
+.preset-card .pc-modules{display:flex;flex-wrap:wrap;gap:.3rem}
+.preset-card .pc-tag{background:var(--bg3);border:1px solid var(--border);border-radius:4px;padding:.15rem .4rem;font-size:.65rem;color:var(--text-dim);max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.preset-card .pc-actions{display:flex;gap:.3rem;margin-top:.6rem}
+.preset-empty{grid-column:1/-1;text-align:center;padding:2rem;font-size:.85rem;color:var(--text-dim);background:var(--card);border:2px dashed var(--border);border-radius:var(--radius)}
+
+.student-add-form{background:var(--card);border:var(--card-border-w) var(--card-border-style) var(--border);border-radius:var(--radius);padding:1.2rem;margin-bottom:1rem}
+.saf-row{display:grid;grid-template-columns:1fr 1fr 150px;gap:.8rem;margin-bottom:.6rem}
+@media(max-width:768px){.saf-row{grid-template-columns:1fr}}
+
+.student-list{display:flex;flex-direction:column;gap:.5rem}
+.student-row{background:var(--card);border:var(--card-border-w) var(--card-border-style) var(--border);border-radius:var(--radius);padding:.8rem 1rem;display:flex;align-items:center;gap:.8rem;transition:all .2s}
+.student-row:hover{border-color:var(--neon)}
+.student-row .sr-avatar{width:36px;height:36px;border-radius:50%;background:var(--neon-dim);display:flex;align-items:center;justify-content:center;font-size:1rem;color:var(--neon);flex-shrink:0;font-weight:700}
+.student-row .sr-info{flex:1;min-width:0}
+.student-row .sr-name{font-size:.9rem;font-weight:700;color:var(--heading)}
+.student-row .sr-detail{font-size:.72rem;color:var(--text-dim);display:flex;gap:.5rem;flex-wrap:wrap}
+.student-row .sr-actions{display:flex;gap:.3rem;flex-shrink:0}
+.student-empty{text-align:center;padding:2rem;font-size:.85rem;color:var(--text-dim);background:var(--card);border:2px dashed var(--border);border-radius:var(--radius)}
+
+/* ===== PROGRESS CARDS ===== */
+.progress-card{background:var(--card);border:var(--card-border-w) var(--card-border-style) var(--border);border-radius:var(--radius);margin-bottom:.8rem;overflow:hidden}
+.progress-card-header{display:flex;align-items:center;gap:.8rem;padding:.8rem 1rem;border-bottom:1px solid var(--border);cursor:pointer;transition:background .12s}
+.progress-card-header:hover{background:var(--card-hover,rgba(255,255,255,.03))}
+.pc-avatar{width:36px;height:36px;border-radius:50%;background:var(--neon-dim);display:flex;align-items:center;justify-content:center;font-size:.85rem;color:var(--neon);flex-shrink:0;font-weight:700}
+.pc-info{flex:1;min-width:0}
+.pc-name{font-size:.9rem;font-weight:700;color:var(--heading)}
+.pc-meta{font-size:.72rem;color:var(--text-dim);display:flex;gap:.5rem;flex-wrap:wrap}
+.pc-stats{display:flex;gap:.5rem;flex-shrink:0}
+.pc-stat{text-align:center;padding:.2rem .6rem;border-radius:var(--radius-sm);background:var(--bg3);font-size:.72rem}
+.pc-stat .pc-val{font-weight:700;font-size:.9rem;color:var(--neon)}
+.pc-modules{padding:.5rem 1rem;display:none}
+.pc-modules.open{display:block}
+.pc-mod-row{display:flex;align-items:center;gap:.5rem;padding:.35rem 0;font-size:.82rem;border-bottom:1px solid var(--bg3)}
+.pc-mod-row:last-child{border:none}
+.pc-mod-label{font-size:.68rem;padding:2px 8px;border-radius:10px;font-weight:600;white-space:nowrap;flex-shrink:0;text-align:center;min-width:90px}
+.pc-mod-label.st-none{background:var(--bg3);color:var(--text-dim)}
+.pc-mod-label.st-viewed{background:rgba(59,130,246,.15);color:#60a5fa}
+.pc-mod-label.st-quiz-fail{background:rgba(245,158,11,.15);color:#f59e0b}
+.pc-mod-label.st-progress{background:rgba(59,130,246,.15);color:var(--neon)}
+.pc-mod-label.st-done{background:rgba(34,197,94,.15);color:#22c55e}
+.pc-mod-title{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.pc-mod-score{font-size:.72rem;color:var(--text-dim);white-space:nowrap}
+.pc-delete{background:none;border:none;color:var(--text-dim);cursor:pointer;font-size:.85rem;padding:.2rem .4rem;border-radius:var(--radius-sm);flex-shrink:0}
+.pc-delete:hover{color:var(--danger);background:rgba(239,68,68,.12)}
+
+/* ===== ANIMATIONS ===== */
+@keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+.app-card{animation:fadeIn .3s ease both}
+/* ===== ACCESSIBILITY ===== */
+.skip-link{position:absolute;left:-10000px;top:auto;width:1px;height:1px;overflow:hidden;z-index:999}
+.skip-link:focus{position:fixed;top:8px;left:8px;width:auto;height:auto;padding:.6rem 1.2rem;background:var(--neon);color:#fff;border-radius:var(--radius-sm);font-size:.85rem;font-weight:700;z-index:999;text-decoration:none}
+*:focus-visible{outline:2px solid var(--neon);outline-offset:2px}
+.nav-item:focus-visible,.filter-chip:focus-visible,.btn:focus-visible,.module-item:focus-visible,.theme-opt:focus-visible,.plan-tab:focus-visible{outline:2px solid var(--neon);outline-offset:2px}
+</style>
+</head>
+<body>
+<a href="#mainContent" class="skip-link">Zum Inhalt springen</a>
+<div class="app">
+
+<!-- HEADER -->
+<header class="header" role="banner">
+  <div class="header-title">
+    <button class="mobile-menu-btn" onclick="toggleSidebar()" aria-label="Navigationsmen&uuml; &ouml;ffnen" aria-expanded="false" id="menuToggleBtn"><span aria-hidden="true">&#9776;</span></button>
+    <span class="logo" aria-hidden="true">&#128218;</span>
+    <h1>LehrplanManager <small style="font-size:.55em;font-weight:400;color:var(--text-dim)">GZ-AI.-Stacks</small></h1>
+  </div>
+  <div class="header-actions" role="toolbar" aria-label="Aktionen">
+    <button class="btn" onclick="showThemes()" aria-label="Theme wechseln"><span aria-hidden="true">&#127912;</span> Theme</button>
+    <button class="btn" onclick="exportPlan()" aria-label="Lehrplan als JSON exportieren"><span aria-hidden="true">&#128190;</span> Export</button>
+    <button class="btn" onclick="importPlan()" aria-label="Lehrplan importieren"><span aria-hidden="true">&#128194;</span> Import</button>
+    <button class="btn" onclick="printPlan()" aria-label="Lehrplan drucken"><span aria-hidden="true">&#128424;</span> Drucken</button>
+    <button class="btn btn-primary" onclick="showExportStudent()" aria-label="Sch&uuml;ler-App generieren"><span aria-hidden="true">&#127891;</span> Sch&uuml;ler-App</button>
+    <button class="btn btn-icon" onclick="showImpressum()" aria-label="Impressum und Datenschutz anzeigen"><span aria-hidden="true">&#9432;</span></button>
+  </div>
+</header>
+
+<!-- SIDEBAR -->
+<aside class="sidebar" id="sidebar" role="navigation" aria-label="Hauptnavigation">
+  <h3 id="navLabel">Navigation</h3>
+  <button class="nav-item active" onclick="showView('dashboard')" data-view="dashboard" tabindex="0" aria-current="true">
+    <span class="icon" aria-hidden="true">&#128202;</span> Dashboard
+  </button>
+  <button class="nav-item" onclick="showView('planner')" data-view="planner" tabindex="0">
+    <span class="icon" aria-hidden="true">&#128197;</span> Wochenplaner
+    <span class="badge-count" id="planCount" aria-label="ausgew&auml;hlte Module">0</span>
+  </button>
+  <button class="nav-item" onclick="showView('students')" data-view="students" tabindex="0">
+    <span class="icon" aria-hidden="true">&#127891;</span> Sch&uuml;ler
+    <span class="badge-count" id="studentCount" aria-label="Sch&uuml;ler">0</span>
+  </button>
+
+  <h3>Klassenstufen</h3>
+  <button class="nav-item" onclick="filterGrade('all')" tabindex="0">
+    <span class="icon" aria-hidden="true">&#127979;</span> Alle Stufen
+  </button>
+  <button class="nav-item" onclick="filterGrade('Klasse_1-3')" tabindex="0">
+    <span class="icon" aria-hidden="true">&#127793;</span> Klasse 1-3
+  </button>
+  <button class="nav-item" onclick="filterGrade('Klasse_3-6')" tabindex="0">
+    <span class="icon" aria-hidden="true">&#127795;</span> Klasse 3-6
+  </button>
+  <button class="nav-item" onclick="filterGrade('Klasse_7-10')" tabindex="0">
+    <span class="icon" aria-hidden="true">&#127796;</span> Klasse 7-10
+  </button>
+
+  <h3>Schnellzugriff</h3>
+  <button class="nav-item" onclick="selectAllModules()" tabindex="0">
+    <span class="icon" aria-hidden="true">&#9989;</span> Alle ausw&auml;hlen
+  </button>
+  <button class="nav-item" onclick="clearSelection()" tabindex="0">
+    <span class="icon" aria-hidden="true">&#10060;</span> Auswahl leeren
+  </button>
+</aside>
+
+<!-- MAIN -->
+<main class="main" id="mainContent">
+
+  <!-- PRINT HEADER -->
+  <div class="print-header">
+    <h1>Lehrplan</h1>
+    <p id="printPlanName"></p>
+  </div>
+
+  <!-- DASHBOARD VIEW -->
+  <div id="viewDashboard">
+    <!-- Stats -->
+    <div class="stats-row">
+      <div class="stat-card"><div class="num" id="statApps">0</div><div class="label">Lern-Apps</div></div>
+      <div class="stat-card"><div class="num" id="statModules">0</div><div class="label">Module</div></div>
+      <div class="stat-card"><div class="num" id="statSelected">0</div><div class="label">Ausgew&auml;hlt</div></div>
+      <div class="stat-card"><div class="num" id="statTime">0h</div><div class="label">Gesamtzeit</div></div>
+    </div>
+
+    <!-- Filter -->
+    <div class="filter-bar" id="filterBar" role="group" aria-label="Fächer und Klassenstufen filtern">
+      <button class="filter-chip active" data-filter="all" onclick="filterSubject('all')" aria-label="Alle F&auml;cher anzeigen">Alle F&auml;cher</button>
+      <button class="filter-chip" data-filter="Deutsch" onclick="filterSubject('Deutsch')" aria-label="Nach Deutsch filtern">&#128214; Deutsch</button>
+      <button class="filter-chip" data-filter="Mathematik" onclick="filterSubject('Mathematik')" aria-label="Nach Mathematik filtern">&#128290; Mathematik</button>
+      <button class="filter-chip" data-filter="Informatik" onclick="filterSubject('Informatik')" aria-label="Nach Informatik filtern">&#128187; Informatik</button>
+      <button class="filter-chip" data-filter="Physik" onclick="filterSubject('Physik')" aria-label="Nach Physik filtern">&#9881; Physik</button>
+      <button class="filter-chip" data-filter="Chemie" onclick="filterSubject('Chemie')" aria-label="Nach Chemie filtern">&#129514; Chemie</button>
+      <button class="filter-chip" data-filter="Biologie" onclick="filterSubject('Biologie')" aria-label="Nach Biologie filtern">&#129516; Biologie</button>
+      <button class="filter-chip" data-filter="Englisch" onclick="filterSubject('Englisch')" aria-label="Nach Englisch filtern">&#127468;&#127463; Englisch</button>
+      <button class="filter-chip" data-filter="Geschichte" onclick="filterSubject('Geschichte')" aria-label="Nach Geschichte filtern">&#127963;&#65039; Geschichte</button>
+      <button class="filter-chip" data-filter="Geographie" onclick="filterSubject('Geographie')" aria-label="Nach Geographie filtern">&#127758; Geographie</button>
+      <button class="filter-chip" data-filter="Franzoesisch" onclick="filterSubject('Franzoesisch')" aria-label="Nach Franz&ouml;sisch filtern">&#127467;&#127479; Franz&ouml;sisch</button>
+      <button class="filter-chip" data-filter="Musik" onclick="filterSubject('Musik')" aria-label="Nach Musik filtern">&#127925; Musik</button>
+      <button class="filter-chip" data-filter="Kunst" onclick="filterSubject('Kunst')" aria-label="Nach Kunst filtern">&#127912; Kunst</button>
+      <div class="filter-sep" role="separator"></div>
+      <button class="filter-chip" data-filter="Klasse_1-3" onclick="filterGrade('Klasse_1-3')" aria-label="Klassenstufe 1-3 filtern">Kl. 1-3</button>
+      <button class="filter-chip" data-filter="Klasse_3-6" onclick="filterGrade('Klasse_3-6')" aria-label="Klassenstufe 3-6 filtern">Kl. 3-6</button>
+      <button class="filter-chip" data-filter="Klasse_7-10" onclick="filterGrade('Klasse_7-10')" aria-label="Klassenstufe 7-10 filtern">Kl. 7-10</button>
+    </div>
+
+    <!-- App Cards Grid -->
+    <div class="apps-grid" id="appsGrid"></div>
+  </div>
+
+  <!-- PLANNER VIEW -->
+  <div id="viewPlanner" style="display:none">
+    <div class="plan-section">
+      <div class="plan-header">
+        <h2>&#128197; Wochenplaner</h2>
+        <div style="display:flex;gap:.5rem;align-items:center;flex-wrap:wrap">
+          <div class="plan-tabs" id="planTabs"></div>
+          <button class="btn btn-sm" onclick="addPlan()">+ Neuer Plan</button>
+        </div>
+      </div>
+
+      <div class="week-planner" id="weekPlanner">
+        <div class="week-col" data-day="0">
+          <div class="week-col-header">Montag</div>
+          <div class="week-col-body" data-day="0"></div>
+          <div class="week-col-footer" data-day="0">0 Min.</div>
+        </div>
+        <div class="week-col" data-day="1">
+          <div class="week-col-header">Dienstag</div>
+          <div class="week-col-body" data-day="1"></div>
+          <div class="week-col-footer" data-day="1">0 Min.</div>
+        </div>
+        <div class="week-col" data-day="2">
+          <div class="week-col-header">Mittwoch</div>
+          <div class="week-col-body" data-day="2"></div>
+          <div class="week-col-footer" data-day="2">0 Min.</div>
+        </div>
+        <div class="week-col" data-day="3">
+          <div class="week-col-header">Donnerstag</div>
+          <div class="week-col-body" data-day="3"></div>
+          <div class="week-col-footer" data-day="3">0 Min.</div>
+        </div>
+        <div class="week-col" data-day="4">
+          <div class="week-col-header">Freitag</div>
+          <div class="week-col-body" data-day="4"></div>
+          <div class="week-col-footer" data-day="4">0 Min.</div>
+        </div>
+      </div>
+
+      <p style="font-size:.78rem;color:var(--text-dim);margin-bottom:1rem">
+        Ziehe ausgew&auml;hlte Module per Drag &amp; Drop in die Wochentage, oder klicke auf einen Wochentag um Module zuzuweisen.
+      </p>
+
+      <!-- Selected modules for drag -->
+      <div class="plan-summary" id="planSummary">
+        <h3>&#9989; Ausgew&auml;hlte Module (<span id="summaryCount">0</span>) &mdash; <span id="summaryTime">0 Min.</span></h3>
+        <div class="filter-bar" id="plannerFilterBar" style="margin-bottom:.8rem"></div>
+        <div class="plan-summary-grid" id="summaryGrid"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STUDENTS VIEW -->
+  <div id="viewStudents" style="display:none">
+    <div class="plan-section">
+
+      <!-- PRESETS -->
+      <div class="plan-header">
+        <h2>&#128218; Modul-Presets</h2>
+        <button class="btn btn-sm" onclick="savePreset()">+ Aktuelle Auswahl als Preset speichern</button>
+      </div>
+      <p style="font-size:.82rem;color:var(--text-dim);margin-bottom:.8rem">
+        Erstelle Presets aus deiner aktuellen Modul-Auswahl im Dashboard. Weise sie dann Sch&uuml;lern zu.
+      </p>
+      <div class="preset-grid" id="presetGrid"></div>
+
+      <!-- STUDENT LIST -->
+      <div class="plan-header" style="margin-top:2rem">
+        <h2>&#127891; Sch&uuml;lerliste</h2>
+        <button class="btn btn-sm" onclick="addStudent()">+ Sch&uuml;ler hinzuf&uuml;gen</button>
+      </div>
+      <div class="student-add-form" id="studentForm" style="display:none">
+        <div class="saf-row">
+          <div class="export-field"><label for="sfName">Name</label><input type="text" id="sfName" placeholder="z.B. Max Mustermann"></div>
+          <div class="export-field"><label for="sfPreset">Preset</label><select id="sfPreset"></select></div>
+          <div class="export-field"><label for="sfDeadline">Abgabe</label><input type="date" id="sfDeadline"></div>
+        </div>
+        <div class="export-field"><label for="sfGreeting">Pers&ouml;nliche Nachricht (optional)</label><input type="text" id="sfGreeting" placeholder="z.B. Hallo Max, hier sind deine Module..."></div>
+        <div style="display:flex;gap:.5rem;margin-top:.5rem">
+          <button class="btn btn-primary btn-sm" onclick="confirmStudent()">Speichern</button>
+          <button class="btn btn-sm" onclick="cancelStudent()">Abbrechen</button>
+        </div>
+      </div>
+      <div class="student-list" id="studentList"></div>
+
+      <!-- BATCH ACTIONS -->
+      <div id="batchActions" style="display:none;margin-top:1.5rem">
+        <div class="plan-header">
+          <h2>&#128640; Batch-Export</h2>
+        </div>
+        <div class="export-field">
+          <label for="batchBaseUrl">Basis-URL f&uuml;r App-Links</label>
+          <input type="text" id="batchBaseUrl" placeholder="z.B. https://schule.example.com/Schulbildung">
+          <div class="hint">Ohne Angabe werden keine &quot;Starten&quot;-Links erzeugt (reine Checkliste)</div>
+        </div>
+        <div class="export-field">
+          <label for="batchTheme">Theme</label>
+          <select id="batchTheme">
+            <option value="cyber">Cyber Neon</option><option value="retro">Retro Arcade</option>
+            <option value="nature">Nature Forest</option><option value="space">Deep Space</option>
+            <option value="comic">Comic Pop</option><option value="sketchy">Sketchy</option>
+            <option value="nature-code">Nature x Code</option><option value="glass">Glasmorphism</option>
+          </select>
+        </div>
+        <div style="margin-top:.8rem">
+          <button class="btn btn-primary" onclick="batchGenerateSingle()">&#128196; Alle Lernpl&auml;ne herunterladen</button>
+        </div>
+      </div>
+
+      <!-- PROGRESS IMPORT -->
+      <div style="margin-top:2rem">
+        <div class="plan-header">
+          <h2>&#128202; Fortschritt importieren</h2>
+        </div>
+        <p style="font-size:.82rem;color:var(--text-dim);margin-bottom:.8rem">
+          Sch&uuml;ler kopieren ihren Fortschrittscode aus der Lernplan-App.
+          Hier einf&uuml;gen, um den Lernfortschritt anzuzeigen.
+        </p>
+        <input type="file" id="progressFileInput" accept=".txt" style="display:none" onchange="loadProgressFile(this)">
+        <div style="display:flex;gap:.5rem;flex-wrap:wrap">
+          <button class="btn btn-primary btn-sm" onclick="document.getElementById('progressFileInput').click()">&#128194; Datei laden</button>
+        </div>
+        <details style="margin-top:.8rem">
+          <summary style="font-size:.78rem;color:var(--text-dim);cursor:pointer">Oder Code manuell einf&uuml;gen</summary>
+          <div class="export-field" style="margin-top:.5rem">
+            <label for="progressInput">Fortschrittscode</label>
+            <textarea id="progressInput" rows="3" placeholder="SB1:eyJ2Ijox..." style="width:100%;resize:vertical;font-family:var(--mono);font-size:.8rem;background:var(--bg3);color:var(--text);border:1px solid var(--border);border-radius:var(--radius-sm);padding:.6rem"></textarea>
+          </div>
+          <div style="display:flex;gap:.5rem;margin-top:.5rem">
+            <button class="btn btn-primary btn-sm" onclick="importProgress()">&#128229; Importieren</button>
+            <button class="btn btn-sm" onclick="document.getElementById('progressInput').value=''">L&ouml;schen</button>
+          </div>
+        </details>
+      </div>
+
+      <!-- IMPORTED PROGRESS TABLE -->
+      <div id="progressResults" style="display:none;margin-top:1.2rem">
+        <div class="plan-header">
+          <h3>&#128202; Importierte Fortschritte</h3>
+          <button class="btn btn-sm btn-danger" onclick="clearAllProgress()">Alle l&ouml;schen</button>
+        </div>
+        <div id="progressTable"></div>
+      </div>
+
+    </div>
+  </div>
+
+</main>
+
+<!-- FOOTER -->
+<footer class="footer" role="contentinfo">
+  &copy; 2026 GZ-AI.-Stacks &mdash; Zimmermann AI Systems &nbsp;|&nbsp;
+  <a href="#" onclick="showImpressum();return false">Impressum &amp; Datenschutz</a> &nbsp;|&nbsp;
+  Gerd Zimmermann &middot; G&ouml;rlitzer Str. 10 &middot; 91315 H&ouml;chstadt a.d. Aisch
+</footer>
+
+</div><!-- .app -->
+
+<!-- THEME OVERLAY -->
+<div class="theme-overlay" id="themeOverlay" onclick="if(event.target===this)hideThemes()" role="presentation" aria-hidden="true">
+  <div class="theme-panel" role="dialog" aria-modal="true" aria-labelledby="themeDialogTitle">
+    <h2 id="themeDialogTitle"><span aria-hidden="true">&#127912;</span> Theme w&auml;hlen <button class="btn btn-sm" onclick="hideThemes()" aria-label="Dialog schlie&szlig;en">&#10005; Schlie&szlig;en</button></h2>
+    <div class="theme-mode-toggle">
+      <button class="mode-btn active" id="modeDark" onclick="setMode('dark')">&#127761; Dark</button>
+      <button class="mode-btn" id="modeLight" onclick="setMode('light')">&#9728;&#65039; Light</button>
+    </div>
+    <div class="theme-grid" id="themeGrid"></div>
+  </div>
+</div>
+
+<!-- IMPRESSUM OVERLAY -->
+<div class="impressum-overlay" id="impressumOverlay" onclick="if(event.target===this)hideImpressum()" role="presentation" aria-hidden="true">
+  <div class="impressum-panel" role="dialog" aria-modal="true" aria-labelledby="impressumTitle" style="max-height:85vh;overflow-y:auto">
+    <h2 id="impressumTitle">Impressum &amp; Datenschutz <button class="btn btn-sm" style="float:right" onclick="hideImpressum()" aria-label="Dialog schlie&szlig;en">&#10005;</button></h2>
+
+    <h3 style="font-size:.9rem;color:var(--heading);margin:1rem 0 .5rem">Impressum</h3>
+    <p><strong>Gerd Zimmermann</strong><br>GZ-AI.-Stacks &mdash; Zimmermann AI Systems<br>G&ouml;rlitzer Stra&szlig;e 10<br>91315 H&ouml;chstadt an der Aisch</p>
+    <p style="margin-top:.5rem"><strong>E-Mail:</strong> gz.ai.stacks@gmail.com</p>
+    <p style="margin-top:.5rem"><strong>Verantwortlich f&uuml;r den Inhalt nach &sect; 18 Abs. 2 MStV:</strong><br>Gerd Zimmermann (Anschrift wie oben)</p>
+
+    <h3 style="font-size:.9rem;color:var(--heading);margin:1rem 0 .5rem">Datenschutzerkl&auml;rung</h3>
+    <p><strong>1. Verantwortlicher:</strong> Gerd Zimmermann &middot; GZ-AI.-Stacks &mdash; Zimmermann AI Systems &middot; G&ouml;rlitzer Stra&szlig;e 10 &middot; 91315 H&ouml;chstadt an der Aisch &middot; gz.ai.stacks@gmail.com</p>
+    <p style="margin-top:.5rem"><strong>2. Keine Datenerhebung:</strong> Diese Anwendung erhebt, verarbeitet und &uuml;bermittelt keinerlei personenbezogene Daten. Es werden keine Cookies gesetzt, keine Analyse-Tools eingebunden und kein Tracking durchgef&uuml;hrt.</p>
+    <p style="margin-top:.5rem"><strong>3. Lokale Speicherung:</strong> Lehrpl&auml;ne und Einstellungen werden ausschlie&szlig;lich lokal in Ihrem Browser (LocalStorage) gespeichert. Diese Daten verlassen zu keinem Zeitpunkt Ihr Endger&auml;t.</p>
+    <p style="margin-top:.5rem"><strong>4. Keine externen Verbindungen:</strong> Die Anwendung stellt keine Verbindungen zu externen Servern her. Sie funktioniert vollst&auml;ndig offline.</p>
+    <p style="margin-top:.5rem"><strong>5. Ihre Rechte:</strong> Da keine personenbezogenen Daten verarbeitet werden, entfallen Auskunfts-, L&ouml;schungs- und Widerrufsrechte nach Art. 15-21 DSGVO. Sie k&ouml;nnen jederzeit Ihre lokal gespeicherten Daten &uuml;ber die Browser-Einstellungen l&ouml;schen.</p>
+
+    <p style="margin-top:1rem;font-size:.78rem;color:var(--text-dim)">&copy; 2026 GZ AI Stacks &mdash; Gerd Zimmermann. Alle Rechte vorbehalten.</p>
+  </div>
+</div>
+
+<!-- EXPORT STUDENT OVERLAY -->
+<div class="export-overlay" id="exportOverlay" onclick="if(event.target===this)hideExportStudent()" role="presentation" aria-hidden="true">
+  <div class="export-panel" role="dialog" aria-modal="true" aria-labelledby="exportDialogTitle">
+    <h2 id="exportDialogTitle"><span aria-hidden="true">&#127891;</span> Sch&uuml;ler-App generieren</h2>
+    <p class="export-subtitle">Erstelle eine fertige Lern-App mit den ausgew&auml;hlten Modulen f&uuml;r deine Sch&uuml;ler.</p>
+
+    <div class="export-preview">
+      <h4>Zusammenfassung</h4>
+      <div class="ep-stat">
+        <span>&#128218; <strong id="expModCount">0</strong> Module</span>
+        <span>&#128218; <strong id="expAppCount">0</strong> Apps</span>
+        <span>&#9201; <strong id="expTime">0</strong> Min.</span>
+        <span>&#128214; <strong id="expSubjects">0</strong> F&auml;cher</span>
+      </div>
+    </div>
+
+    <div class="export-field">
+      <label for="expClassName">Klassenname / Kursbezeichnung</label>
+      <input type="text" id="expClassName" placeholder="z.B. Klasse 7a, MINT-AG, Nachhilfe Max">
+    </div>
+
+    <div class="export-field">
+      <label for="expGreeting">Begr&uuml;&szlig;ungstext f&uuml;r Sch&uuml;ler</label>
+      <textarea id="expGreeting" placeholder="z.B. Hallo liebe 7a! Hier findet ihr eure Lernmodule f&uuml;r diese Woche. Arbeitet die Module der Reihe nach durch und versucht m&ouml;glichst alle Quizze zu bestehen. Viel Erfolg!"></textarea>
+    </div>
+
+    <div class="export-field">
+      <label for="expDeadline">Abgabedatum (optional)</label>
+      <input type="date" id="expDeadline">
+      <div class="hint">Wird als Countdown in der Sch&uuml;ler-App angezeigt</div>
+    </div>
+
+    <div class="export-field">
+      <label for="expBaseUrl">Basis-URL / Pfad zu den Lern-Apps</label>
+      <input type="text" id="expBaseUrl" placeholder="z.B. https://schule.example.com/Schulbildung oder C:/Schulbildung">
+      <div class="hint">Pfad zum Schulbildung-Ordner. Ohne Angabe werden relative Links erzeugt &mdash; die Sch&uuml;ler-App muss dann im Schulbildung-Ordner liegen.</div>
+      <div class="hint" style="margin-top:4px;color:var(--neon)">&#128161; Tipp: Speichere den Lernplan im <strong>Schueler_Paket</strong>-Ordner (ohne Basis-URL) und verteile den ganzen Ordner an Sch&uuml;ler.</div>
+    </div>
+
+    <div class="export-field">
+      <label for="expTheme">Theme f&uuml;r Sch&uuml;ler-App</label>
+      <select id="expTheme">
+        <option value="cyber">Cyber Neon</option>
+        <option value="retro">Retro Arcade</option>
+        <option value="nature">Nature Forest</option>
+        <option value="space">Deep Space</option>
+        <option value="comic">Comic Pop</option>
+        <option value="sketchy">Sketchy</option>
+        <option value="nature-code">Nature x Code</option>
+        <option value="glass">Glasmorphism</option>
+      </select>
+    </div>
+
+    <div class="export-actions">
+      <button class="btn" onclick="hideExportStudent()">Abbrechen</button>
+      <button class="btn btn-primary" onclick="generateStudentApp()">&#128190; App herunterladen</button>
+    </div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast" role="status" aria-live="polite" aria-atomic="true"></div>
+
+<!-- HIDDEN FILE INPUT -->
+<input type="file" id="fileInput" accept=".json" style="display:none" onchange="handleImport(event)">
+
+<script>
+/* ===== APP DATA ===== */
+const APPS=[
+{id:'buchstaben-reise',name:'BuchstabenReise',subtitle:'Lese- & Schreibabenteuer',subject:'Deutsch',grade:'Klasse_1-3',gradeLabel:'Kl. 1-2',path:'../Klasse_1-3/Deutsch/BuchstabenReise/index.html',storageKey:'buchstabenreise_progress',appIcon:'\uD83D\uDCD6',modules:[
+{id:0,title:'Die Vokale: A, E, I, O, U',icon:'\uD83C\uDD70\uFE0F'},{id:1,title:'Konsonanten-Safari',icon:'\uD83E\uDD81'},{id:2,title:'Mehr Buchstaben entdecken',icon:'\uD83D\uDD24'},{id:3,title:'Besondere Buchstaben',icon:'\u2728'},{id:4,title:'Silben klatschen',icon:'\uD83D\uDC4F'},{id:5,title:'Erste W\u00F6rter lesen',icon:'\uD83D\uDCD6'},{id:6,title:'W\u00F6rter schreiben',icon:'\u270F\uFE0F'},{id:7,title:'Kleine S\u00E4tze lesen',icon:'\uD83D\uDCDD'},{id:8,title:'Reimw\u00F6rter & Wortfamilien',icon:'\uD83C\uDFB5'},{id:9,title:'Lese-Abenteuer',icon:'\uD83C\uDFC6'}]},
+{id:'lese-held',name:'LeseHeld',subtitle:'Lese-Abenteuer Kl. 2-3',subject:'Deutsch',grade:'Klasse_1-3',gradeLabel:'Kl. 2-3',path:'../Klasse_1-3/Deutsch/LeseHeld/index.html',storageKey:'leseheld_progress',appIcon:'\uD83D\uDCDA',modules:[
+{id:0,title:'W\u00F6rter verstehen',icon:'\uD83D\uDD0D'},{id:1,title:'S\u00E4tze richtig lesen',icon:'\u2757'},{id:2,title:'Was passiert in der Geschichte?',icon:'\u2705'},{id:3,title:'Wer, Wo, Wann?',icon:'\uD83D\uDCCB'},{id:4,title:'L\u00FCckentexte meistern',icon:'\u270F\uFE0F'},{id:5,title:'Geschichten-Werkstatt',icon:'\uD83E\uDDE9'},{id:6,title:'Gef\u00FChle & Stimmungen',icon:'\uD83D\uDC96'},{id:7,title:'Sachtexte verstehen',icon:'\uD83C\uDFAF'},{id:8,title:'Tabellen & Listen',icon:'\uD83D\uDCCA'},{id:9,title:'Lese-Meisterschaft',icon:'\uD83C\uDFC6'}]},
+{id:'rechen-held',name:'RechenHeld',subtitle:'Rechenabenteuer Kl. 1-3',subject:'Mathematik',grade:'Klasse_1-3',gradeLabel:'Kl. 1-3',path:'../Klasse_1-3/Mathematik/RechenHeld/index.html',storageKey:'rechenheld_progress',appIcon:'\uD83E\uDDEE',modules:[
+{id:0,title:'Zahlen bis 20',icon:'\uD83D\uDD22'},{id:1,title:'Addition bis 20',icon:'\u2795'},{id:2,title:'Subtraktion bis 20',icon:'\u2796'},{id:3,title:'Zahlen bis 100',icon:'\u2B50'},{id:4,title:'Addition bis 100',icon:'\uD83E\uDD29'},{id:5,title:'Subtraktion bis 100',icon:'\uD83D\uDC51'},{id:6,title:'Das Einmaleins',icon:'\u2716\uFE0F'},{id:7,title:'Division',icon:'\u2797'},{id:8,title:'Zahlen bis 1000',icon:'\uD83C\uDFAF'},{id:9,title:'Textaufgaben',icon:'\uD83D\uDCDD'}]},
+{id:'einmaleins-held',name:'EinmaleinsHeld',subtitle:'Das kleine Einmaleins',subject:'Mathematik',grade:'Klasse_1-3',gradeLabel:'Kl. 2-3',path:'../Klasse_1-3/Mathematik/EinmaleinsHeld/index.html',storageKey:'einmaleinsheld_progress',appIcon:'\u2716\uFE0F',modules:[
+{id:0,title:'Die Zweierreihe',icon:'\u270C\uFE0F'},{id:1,title:'Die Dreierreihe',icon:'\uD83D\uDD3A'},{id:2,title:'Die Viererreihe',icon:'\uD83C\uDF40'},{id:3,title:'Die F\u00FCnferreihe',icon:'\u270B'},{id:4,title:'Die Sechserreihe',icon:'\uD83C\uDFB2'},{id:5,title:'Die Siebenerreihe',icon:'\uD83C\uDF08'},{id:6,title:'Die Achterreihe',icon:'\uD83D\uDC19'},{id:7,title:'Die Neunerreihe',icon:'\uD83D\uDD2E'},{id:8,title:'Die Zehnerreihe',icon:'\uD83D\uDD1F'},{id:9,title:'Einmaleins-Meister',icon:'\uD83D\uDC51'}]},
+{id:'schreib-profi',name:'SchreibProfi',subtitle:'Rechtschreibung & Grammatik',subject:'Deutsch',grade:'Klasse_3-6',gradeLabel:'Kl. 3-4',path:'../Klasse_3-6/Deutsch/SchreibProfi/index.html',storageKey:'schreibprofi_progress',appIcon:'\u270D\uFE0F',modules:[
+{id:0,title:'Gro\u00DF- und Kleinschreibung',icon:'\uD83D\uDD20'},{id:1,title:'Doppelte Buchstaben',icon:'\uD83D\uDD0D'},{id:2,title:'Dehnung & Sch\u00E4rfung',icon:'\uD83D\uDCCF'},{id:3,title:'Wortarten entdecken',icon:'\uD83D\uDDC2\uFE0F'},{id:4,title:'Verben beugen',icon:'\uD83D\uDCAA'},{id:5,title:'Satzglieder',icon:'\uD83E\uDDE9'},{id:6,title:'Satzarten & Satzzeichen',icon:'\u2757'},{id:7,title:'Zusammengesetzte W\u00F6rter',icon:'\uD83C\uDFD7\uFE0F'},{id:8,title:'Texte schreiben',icon:'\u2709\uFE0F'},{id:9,title:'SchreibProfi-Pr\u00FCfung',icon:'\uD83C\uDFC6'}]},
+{id:'bruch-profi',name:'BruchProfi',subtitle:'Bruchrechnung meistern',subject:'Mathematik',grade:'Klasse_3-6',gradeLabel:'Kl. 4-6',path:'../Klasse_3-6/Mathematik/BruchProfi/index.html',storageKey:'bruchprofi_progress',appIcon:'\uD83E\uDD67',modules:[
+{id:0,title:'Was sind Br\u00FCche?',icon:'\uD83D\uDD22'},{id:1,title:'Br\u00FCche vergleichen',icon:'\u2696\uFE0F'},{id:2,title:'Erweitern & K\u00FCrzen',icon:'\u2702\uFE0F'},{id:3,title:'Addition von Br\u00FCchen',icon:'\u2795'},{id:4,title:'Subtraktion von Br\u00FCchen',icon:'\u2796'},{id:5,title:'Multiplikation von Br\u00FCchen',icon:'\u2716\uFE0F'},{id:6,title:'Division von Br\u00FCchen',icon:'\u2797'},{id:7,title:'Dezimalzahlen',icon:'\uD83D\uDCCB'},{id:8,title:'Br\u00FCche \u2194 Dezimalzahlen',icon:'\uD83D\uDD04'},{id:9,title:'Textaufgaben mit Br\u00FCchen',icon:'\uD83D\uDCDD'}]},
+{id:'physik-starter',name:'PhysikLab',subtitle:'Interaktive Physik-Lernapp',subject:'Physik',grade:'Klasse_3-6',gradeLabel:'Kl. 3-6',path:'../Klasse_3-6/Physik/PhysikLab/index.html',storageKey:'physiklab_progress',appIcon:'\u2699\uFE0F',modules:[
+{id:0,title:'Kr\u00E4fte und Bewegung',icon:'\uD83D\uDCAA'},{id:1,title:'Energie und Energieformen',icon:'\u26A1'},{id:2,title:'Elektrischer Strom',icon:'\uD83D\uDD0C'},{id:3,title:'Magnete und Magnetismus',icon:'\uD83E\uDDF2'},{id:4,title:'Licht und Optik',icon:'\uD83D\uDD26'},{id:5,title:'Schall und Akustik',icon:'\uD83D\uDD0A'},{id:6,title:'W\u00E4rme und Temperatur',icon:'\uD83C\uDF21\uFE0F'},{id:7,title:'Einfache Maschinen',icon:'\u2699\uFE0F'},{id:8,title:'Wetter und Atmosph\u00E4re',icon:'\u26C5'},{id:9,title:'Physik im Alltag',icon:'\uD83C\uDFE0'}]},
+{id:'english-starter',name:'EnglishStarter',subtitle:'Englisch f\u00FCr Anf\u00E4nger',subject:'Englisch',grade:'Klasse_3-6',gradeLabel:'Kl. 3-5',path:'../Klasse_3-6/Englisch/EnglishStarter/index.html',storageKey:'englishstarter_progress',appIcon:'\uD83C\uDDEC\uD83C\uDDE7',modules:[
+{id:0,title:'Colours \u2014 Farben',icon:'\uD83C\uDF08'},{id:1,title:'Numbers \u2014 Zahlen',icon:'\uD83D\uDD22'},{id:2,title:'Animals \u2014 Tiere',icon:'\uD83D\uDC3E'},{id:3,title:'Family \u2014 Familie',icon:'\uD83D\uDC68\u200D\uD83D\uDC69\u200D\uD83D\uDC67'},{id:4,title:'Food & Drinks \u2014 Essen',icon:'\uD83C\uDF54'},{id:5,title:'My Body \u2014 Mein K\u00F6rper',icon:'\uD83E\uDDB6'},{id:6,title:'At School \u2014 In der Schule',icon:'\uD83C\uDFEB'},{id:7,title:'Time & Days \u2014 Zeit',icon:'\u23F0'},{id:8,title:'Hobbies & Sports',icon:'\u26BD'},{id:9,title:'Simple Sentences \u2014 S\u00E4tze',icon:'\uD83D\uDCAC'}]},
+{id:'bio-starter',name:'BioStarter',subtitle:'Interaktive Biologie-Lernapp',subject:'Biologie',grade:'Klasse_3-6',gradeLabel:'Kl. 3-6',path:'../Klasse_3-6/Biologie/BioStarter/index.html',storageKey:'biostarter_progress',appIcon:'\uD83E\uDDEC',modules:[
+{id:0,title:'Mein K\u00F6rper',icon:'\uD83E\uDEC0'},{id:1,title:'Pflanzen entdecken',icon:'\uD83C\uDF31'},{id:2,title:'Tiere und ihre Lebensr\u00E4ume',icon:'\uD83E\uDD81'},{id:3,title:'Sinne und Wahrnehmung',icon:'\uD83D\uDC41\uFE0F'},{id:4,title:'Gesunde Ern\u00E4hrung',icon:'\uD83E\uDD57'},{id:5,title:'Wasser und Leben',icon:'\uD83D\uDCA7'},{id:6,title:'Wald und Wiese',icon:'\uD83C\uDF32'},{id:7,title:'Insekten und Krabbeltiere',icon:'\uD83D\uDC1B'},{id:8,title:'Von der Raupe zum Schmetterling',icon:'\uD83E\uDD8B'},{id:9,title:'Naturschutz und Umwelt',icon:'\uD83C\uDF0D'}]},
+{id:'logik-labor',name:'LogikLabor',subtitle:'Logisches Denken & Programmieren',subject:'Informatik',grade:'Klasse_3-6',gradeLabel:'Kl. 3-6',path:'../Klasse_3-6/Informatik/LogikLabor/index.html',storageKey:'logiklabor_progress',appIcon:'\uD83E\uDDE0',modules:[
+{id:0,title:'Algorithmen im Alltag',icon:'\uD83D\uDCCB'},{id:1,title:'Muster erkennen',icon:'\uD83D\uDD0D'},{id:2,title:'Bedingungen (Wenn-Dann)',icon:'\u2753'},{id:3,title:'Schleifen (Wiederholungen)',icon:'\uD83D\uDD01'},{id:4,title:'Variablen und Daten',icon:'\uD83D\uDCE6'},{id:5,title:'Fehler finden (Debugging)',icon:'\uD83D\uDC1B'},{id:6,title:'Zerlegung (Dekomposition)',icon:'\uD83E\uDDE9'},{id:7,title:'Abstraktion',icon:'\uD83C\uDFA8'},{id:8,title:'Flussdiagramme',icon:'\uD83D\uDCC8'},{id:9,title:'Logik-Meister',icon:'\uD83E\uDDE0'}]},
+{id:'algebra-meister',name:'AlgebraMeister',subtitle:'Mathe Kl. 7-9',subject:'Mathematik',grade:'Klasse_7-10',gradeLabel:'Kl. 7-9',path:'../Klasse_7-10/Mathematik/AlgebraMeister/index.html',storageKey:'algebrameister_progress',appIcon:'\uD83D\uDCD0',modules:[
+{id:0,title:'Negative Zahlen',icon:'\u00B1'},{id:1,title:'Terme und Variablen',icon:'x'},{id:2,title:'Gleichungen l\u00F6sen',icon:'='},{id:3,title:'Prozentrechnung',icon:'%'},{id:4,title:'Proportionalit\u00E4t',icon:'\u221D'},{id:5,title:'Fl\u00E4chenberechnung',icon:'\u25B3'},{id:6,title:'Volumenberechnung',icon:'\u25A1\u00B3'},{id:7,title:'Potenzrechnung',icon:'n\u00B2'},{id:8,title:'Lineare Funktionen',icon:'f(x)'},{id:9,title:'Wahrscheinlichkeit',icon:'P'}]},
+{id:'code-quest',name:'Code Quest',subtitle:'Informatik-Abenteuer',subject:'Informatik',grade:'Klasse_7-10',gradeLabel:'Kl. 7-10',path:'../Klasse_7-10/Informatik/index.html',storageKey:'codequest_progress',appIcon:'\uD83D\uDCBB',modules:[
+{id:0,title:'Willkommen in der digitalen Welt',icon:'\uD83D\uDCBB'},{id:1,title:'Bin\u00E4r & Bits',icon:'\uD83D\uDD22'},{id:2,title:'Algorithmen-K\u00FCche',icon:'\uD83C\uDF73'},{id:3,title:'Geheime Botschaften',icon:'\uD83D\uDD10'},{id:4,title:'Meine erste Webseite',icon:'\uD83C\uDF10'},{id:5,title:'Code verstehen',icon:'\u26A1'},{id:6,title:'Spiel programmieren',icon:'\uD83C\uDFAE'},{id:7,title:'Daten-Detektiv',icon:'\uD83D\uDD0D'},{id:8,title:'Netzwerk-Abenteuer',icon:'\uD83C\uDF0D'},{id:9,title:'KI & die Zukunft',icon:'\uD83E\uDD16'}]},
+{id:'english-pro',name:'EnglishPro',subtitle:'Interaktive Englisch-Lernapp',subject:'Englisch',grade:'Klasse_7-10',gradeLabel:'Kl. 7-10',path:'../Klasse_7-10/Englisch/EnglishPro/index.html',storageKey:'englishpro_progress',appIcon:'\uD83C\uDDEC\uD83C\uDDE7',modules:[
+{id:0,title:'Tenses (Zeiten)',icon:'\u23F0'},{id:1,title:'Vocabulary und Word Formation',icon:'\uD83D\uDCDA'},{id:2,title:'Satzbau und Grammatik',icon:'\uD83D\uDCDD'},{id:3,title:'Reading Comprehension',icon:'\uD83D\uDCD6'},{id:4,title:'Writing Skills',icon:'\u270F\uFE0F'},{id:5,title:'Prepositions und Phrasal Verbs',icon:'\uD83D\uDD0D'},{id:6,title:'Conditional Sentences und Wishes',icon:'\uD83D\uDD0E'},{id:7,title:'Passive Voice und Reported Speech',icon:'\uD83D\uDD04'},{id:8,title:'Idioms, Collocations und Speaking',icon:'\uD83D\uDDE3\uFE0F'},{id:9,title:'Mediation und Intercultural Communication',icon:'\uD83C\uDF0D'}]},
+{id:'bio-entdecker',name:'BioEntdecker',subtitle:'Interaktive Biologie-Lernapp',subject:'Biologie',grade:'Klasse_7-10',gradeLabel:'Kl. 7-10',path:'../Klasse_7-10/Biologie/BioEntdecker/index.html',storageKey:'bioentdecker_progress',appIcon:'\uD83E\uDDEC',modules:[
+{id:0,title:'Zellbiologie',icon:'\uD83D\uDD2C'},{id:1,title:'Genetik und Vererbung',icon:'\uD83E\uDDEC'},{id:2,title:'Evolution',icon:'\uD83E\uDD95'},{id:3,title:'\u00D6kologie',icon:'\uD83C\uDF0D'},{id:4,title:'Fotosynthese und Atmung',icon:'\uD83C\uDF31'},{id:5,title:'Menschlicher K\u00F6rper',icon:'\uD83E\uDDB4'},{id:6,title:'Nervensystem und Sinne',icon:'\uD83E\uDDE0'},{id:7,title:'Immunsystem',icon:'\uD83D\uDEE1\uFE0F'},{id:8,title:'Fortpflanzung und Entwicklung',icon:'\uD83E\uDD90'},{id:9,title:'Biodiversit\u00E4t',icon:'\uD83E\uDD8E'}]},
+{id:'chemie-labor',name:'ChemieLabor',subtitle:'Interaktive Chemie-Lernapp',subject:'Chemie',grade:'Klasse_7-10',gradeLabel:'Kl. 7-10',path:'../Klasse_7-10/Chemie/ChemieLabor/index.html',storageKey:'chemielabor_progress',appIcon:'\uD83E\uDDEA',modules:[
+{id:0,title:'Stoffe und Eigenschaften',icon:'\uD83E\uDDEA'},{id:1,title:'Atombau und Periodensystem',icon:'\u269B\uFE0F'},{id:2,title:'Chemische Bindungen',icon:'\uD83D\uDD17'},{id:3,title:'Chemische Reaktionen',icon:'\uD83D\uDCA5'},{id:4,title:'S\u00E4uren, Basen und Salze',icon:'\uD83E\uDDEB'},{id:5,title:'Oxidation und Reduktion',icon:'\u26A1'},{id:6,title:'Organische Chemie',icon:'\uD83E\uDDF9'},{id:7,title:'Energie bei Reaktionen',icon:'\uD83D\uDD25'},{id:8,title:'Elektrochemie',icon:'\uD83D\uDD0B'},{id:9,title:'Chemie im Alltag',icon:'\uD83C\uDFE0'}]},
+{id:'text-profi',name:'TextProfi',subtitle:'Interaktive Deutsch-Lernapp',subject:'Deutsch',grade:'Klasse_7-10',gradeLabel:'Kl. 7-10',path:'../Klasse_7-10/Deutsch/TextProfi/index.html',storageKey:'textprofi_progress',appIcon:'\uD83D\uDCD6',modules:[
+{id:0,title:'Textanalyse Grundlagen',icon:'\uD83D\uDD0D'},{id:1,title:'Er\u00F6rterung schreiben',icon:'\u2696\uFE0F'},{id:2,title:'Grammatik Oberstufe',icon:'\uD83D\uDCD0'},{id:3,title:'Stilmittel erkennen',icon:'\uD83C\uDFAD'},{id:4,title:'Rechtschreibung Fortgeschritten',icon:'\u2705'},{id:5,title:'Zeichensetzung Meistern',icon:'\u2757'},{id:6,title:'Gedichtanalyse',icon:'\uD83C\uDFB5'},{id:7,title:'Sachtextanalyse',icon:'\uD83D\uDCCA'},{id:8,title:'Kreatives Schreiben',icon:'\u270D\uFE0F'},{id:9,title:'Kommunikationsmodelle',icon:'\uD83D\uDDE3\uFE0F'}]},
+{id:'physik-profi',name:'PhysikProfi',subtitle:'Interaktive Physik-Lernapp',subject:'Physik',grade:'Klasse_7-10',gradeLabel:'Kl. 7-10',path:'../Klasse_7-10/Physik/PhysikProfi/index.html',storageKey:'physikprofi_progress',appIcon:'\u269B',modules:[
+{id:0,title:'Mechanik',icon:'\u2699\uFE0F'},{id:1,title:'Energie & Arbeit',icon:'\uD83D\uDD0B'},{id:2,title:'Elektrizit\u00E4tslehre',icon:'\uD83D\uDCA1'},{id:3,title:'Magnetismus',icon:'\uD83E\uDDF2'},{id:4,title:'Optik',icon:'\uD83D\uDD26'},{id:5,title:'W\u00E4rmelehre',icon:'\uD83C\uDF21\uFE0F'},{id:6,title:'Wellen & Schwingungen',icon:'\uD83C\uDF0A'},{id:7,title:'Atomphysik & Radioaktivit\u00E4t',icon:'\u269B'},{id:8,title:'Kinematik',icon:'\uD83C\uDFC3'},{id:9,title:'Astronomie & Astrophysik',icon:'\u2B50'}]},
+{id:'zeit-reise',name:'ZeitReise',subtitle:'Interaktive Geschichte-Lernapp',subject:'Geschichte',grade:'Klasse_7-10',gradeLabel:'Kl. 7-10',path:'../Klasse_7-10/Geschichte/ZeitReise/index.html',storageKey:'zeitreise_progress',appIcon:'\uD83C\uDFDB\uFE0F',modules:[
+{id:0,title:'Antike Hochkulturen',icon:'\uD83C\uDFDB\uFE0F'},{id:1,title:'Das Mittelalter',icon:'\u2694\uFE0F'},{id:2,title:'Renaissance & Reformation',icon:'\uD83C\uDFA8'},{id:3,title:'Absolutismus & Aufkl\u00E4rung',icon:'\uD83D\uDC51'},{id:4,title:'Franz\u00F6sische Revolution',icon:'\uD83D\uDDFD'},{id:5,title:'Industrielle Revolution',icon:'\uD83C\uDFED'},{id:6,title:'Imperialismus & Erster Weltkrieg',icon:'\uD83C\uDF0D'},{id:7,title:'Weimarer Republik & NS-Zeit',icon:'\uD83D\uDCDC'},{id:8,title:'Kalter Krieg & Deutsche Teilung',icon:'\uD83E\uDDCA'},{id:9,title:'Globalisierung & Zeitgeschichte',icon:'\uD83C\uDF10'}]},
+{id:'zeit-entdecker',name:'ZeitEntdecker',subtitle:'Interaktive Geschichte-Lernapp',subject:'Geschichte',grade:'Klasse_3-6',gradeLabel:'Kl. 3-6',path:'../Klasse_3-6/Geschichte/ZeitEntdecker/index.html',storageKey:'zeitentdecker_progress',appIcon:'\uD83C\uDFDB\uFE0F',modules:[
+{id:0,title:'Steinzeit-Abenteuer',icon:'\uD83E\uDDB4'},{id:1,title:'Das alte \u00C4gypten',icon:'\uD83C\uDFDB'},{id:2,title:'Ritter und Burgen',icon:'\u2694\uFE0F'},{id:3,title:'Entdecker und Seefahrer',icon:'\u26F5'},{id:4,title:'Erfindungen ver\u00E4ndern die Welt',icon:'\uD83D\uDCA1'},{id:5,title:'K\u00F6nige und K\u00F6niginnen',icon:'\uD83D\uDC51'},{id:6,title:'Piraten und Schatzsucher',icon:'\uD83C\uDFF4\u200D\u2620\uFE0F'},{id:7,title:'Gro\u00DFe Bauwerke',icon:'\uD83C\uDFDF'},{id:8,title:'Kinder fr\u00FCher und heute',icon:'\uD83D\uDC67'},{id:9,title:'Zeitleiste der Geschichte',icon:'\u231B'}]},
+{id:'geo-meister',name:'GeoMeister',subtitle:'Interaktive Geographie-Lernapp',subject:'Geographie',grade:'Klasse_7-10',gradeLabel:'Kl. 7-10',path:'../Klasse_7-10/Geographie/GeoMeister/index.html',storageKey:'geomeister_progress',appIcon:'\uD83C\uDF0D',modules:[
+{id:0,title:'Erde und Klimazonen',icon:'\uD83C\uDF0D'},{id:1,title:'Plattentektonik und Vulkanismus',icon:'\uD83C\uDF0B'},{id:2,title:'Bev\u00F6lkerung und Migration',icon:'\uD83D\uDC65'},{id:3,title:'Wetter und Klimawandel',icon:'\uD83C\uDF21\uFE0F'},{id:4,title:'Landwirtschaft und Ern\u00E4hrung',icon:'\uD83C\uDF3E'},{id:5,title:'Rohstoffe und Energie',icon:'\u26A1'},{id:6,title:'Globalisierung und Welthandel',icon:'\uD83C\uDF10'},{id:7,title:'St\u00E4dte und Raumplanung',icon:'\uD83C\uDFD9\uFE0F'},{id:8,title:'Ozeane und Meere',icon:'\uD83C\uDF0A'},{id:9,title:'Nachhaltigkeit und Zukunft',icon:'\u267B\uFE0F'}]},
+{id:'geo-starter',name:'GeoStarter',subtitle:'Interaktive Geographie-Lernapp',subject:'Geographie',grade:'Klasse_3-6',gradeLabel:'Kl. 3-6',path:'../Klasse_3-6/Geographie/GeoStarter/index.html',storageKey:'geostarter_progress',appIcon:'\uD83C\uDF0D',modules:[
+{id:0,title:'Unsere Erde',icon:'\uD83C\uDF0D'},{id:1,title:'Deutschland entdecken',icon:'\uD83C\uDDE9\uD83C\uDDEA'},{id:2,title:'Wetter und Jahreszeiten',icon:'\u2600\uFE0F'},{id:3,title:'Tiere und Lebensr\u00E4ume',icon:'\uD83E\uDD81'},{id:4,title:'Wasser \u2014 unser Schatz',icon:'\uD83D\uDCA7'},{id:5,title:'Vulkane und Erdbeben',icon:'\uD83C\uDF0B'},{id:6,title:'St\u00E4dte und D\u00F6rfer',icon:'\uD83C\uDFE0'},{id:7,title:'Karten und Kompass',icon:'\uD83E\uDDED'},{id:8,title:'M\u00FCll und Recycling',icon:'\u267B\uFE0F'},{id:9,title:'Natur sch\u00FCtzen',icon:'\uD83C\uDF3F'}]},
+{id:'musik-entdecker',name:'MusikEntdecker',subtitle:'Interaktive Musik-Lernapp',subject:'Musik',grade:'Klasse_3-6',gradeLabel:'Kl. 3-6',path:'../Klasse_3-6/Musik/MusikEntdecker/index.html',storageKey:'musikentdecker_progress',appIcon:'\uD83C\uDFB5',modules:[
+{id:0,title:'Noten lesen',icon:'\uD83C\uDFB5'},{id:1,title:'Rhythmus und Takt',icon:'\uD83E\uDD41'},{id:2,title:'Instrumente der Welt',icon:'\uD83C\uDFB8'},{id:3,title:'Musikgeschichte',icon:'\uD83D\uDCDC'},{id:4,title:'Tonleitern und Intervalle',icon:'\uD83C\uDFB9'},{id:5,title:'Harmonie und Akkorde',icon:'\uD83C\uDFB6'},{id:6,title:'Ber\u00FChmte Komponisten',icon:'\uD83C\uDFBC'},{id:7,title:'Musikstile und Genres',icon:'\uD83C\uDFA7'},{id:8,title:'Singen und Stimme',icon:'\uD83C\uDFA4'},{id:9,title:'Musik-Meister',icon:'\uD83C\uDFC6'}]},
+{id:'kunst-atelier',name:'KunstAtelier',subtitle:'Interaktive Kunst-Lernapp',subject:'Kunst',grade:'Klasse_3-6',gradeLabel:'Kl. 3-6',path:'../Klasse_3-6/Kunst/KunstAtelier/index.html',storageKey:'kunstatelier_progress',appIcon:'\uD83C\uDFA8',modules:[
+{id:0,title:'Farben und Farbenlehre',icon:'\uD83C\uDFA8'},{id:1,title:'Zeichnen und Skizzieren',icon:'\u270F\uFE0F'},{id:2,title:'Malerei und Maltechniken',icon:'\uD83D\uDD8C\uFE0F'},{id:3,title:'Formen und Geometrie',icon:'\uD83D\uDD37'},{id:4,title:'Ber\u00FChmte K\u00FCnstler',icon:'\uD83D\uDDBC\uFE0F'},{id:5,title:'Kunstgeschichte',icon:'\uD83C\uDFDB\uFE0F'},{id:6,title:'Skulptur und Plastik',icon:'\uD83D\uDDFF'},{id:7,title:'Fotografie und digitale Kunst',icon:'\uD83D\uDCF7'},{id:8,title:'Design und Gestaltung',icon:'\u2728'},{id:9,title:'Kunst-Meister',icon:'\uD83C\uDFC6'}]},
+{id:'franz-starter',name:'FranzStarter',subtitle:'Interaktive Franz\u00F6sisch-Lernapp',subject:'Franzoesisch',grade:'Klasse_3-6',gradeLabel:'Kl. 3-6',path:'../Klasse_3-6/Franzoesisch/FranzStarter/index.html',storageKey:'franzstarter_progress',appIcon:'\uD83C\uDDEB\uD83C\uDDF7',modules:[
+{id:0,title:'Bonjour! Begr\u00FC\u00DFung',icon:'\uD83D\uDC4B'},{id:1,title:'Zahlen und Farben',icon:'\uD83C\uDFA8'},{id:2,title:'Meine Familie',icon:'\uD83D\uDC68\u200D\uD83D\uDC69\u200D\uD83D\uDC67\u200D\uD83D\uDC66'},{id:3,title:'Essen und Trinken',icon:'\uD83C\uDF55'},{id:4,title:'Tiere \u2014 Les animaux',icon:'\uD83D\uDC31'},{id:5,title:'Schule \u2014 L\'\u00E9cole',icon:'\uD83C\uDFEB'},{id:6,title:'Wochentage und Monate',icon:'\uD83D\uDCC5'},{id:7,title:'Mein K\u00F6rper',icon:'\uD83E\uDDB6'},{id:8,title:'Hobbys und Sport',icon:'\u26BD'},{id:9,title:'Frankreich entdecken',icon:'\uD83C\uDDEB\uD83C\uDDF7'}]},
+{id:'franz-pro',name:'FranzPro',subtitle:'Interaktive Franz\u00F6sisch-Lernapp',subject:'Franzoesisch',grade:'Klasse_7-10',gradeLabel:'Kl. 7-10',path:'../Klasse_7-10/Franzoesisch/FranzPro/index.html',storageKey:'franzpro_progress',appIcon:'\uD83C\uDDEB\uD83C\uDDF7',modules:[
+{id:0,title:'Grammatik & Zeiten',icon:'\uD83D\uDCDA'},{id:1,title:'Wortschatz Alltag',icon:'\uD83D\uDED2'},{id:2,title:'Lesen & Textverst\u00E4ndnis',icon:'\uD83D\uDCD6'},{id:3,title:'Schreiben & Textproduktion',icon:'\u270D\uFE0F'},{id:4,title:'Pronomen & Begleiter',icon:'\uD83D\uDD24'},{id:5,title:'Subjonctif & Conditionnel',icon:'\uD83C\uDFAF'},{id:6,title:'Kultur & Landeskunde',icon:'\uD83C\uDDEB\uD83C\uDDF7'},{id:7,title:'M\u00FCndliche Kommunikation',icon:'\uD83D\uDDE3\uFE0F'},{id:8,title:'Frankophonie',icon:'\uD83C\uDF0D'},{id:9,title:'M\u00E9diation & Sprachmittlung',icon:'\uD83E\uDD1D'}]},
+{id:'chemie-starter',name:'ChemieStarter',subtitle:'Interaktive Chemie-Lernapp',subject:'Chemie',grade:'Klasse_3-6',gradeLabel:'Kl. 3-6',path:'../Klasse_3-6/Chemie/ChemieStarter/index.html',storageKey:'chemiestarter_progress',appIcon:'\uD83E\uDDEA',modules:[
+{id:0,title:'Was ist Chemie?',icon:'\uD83E\uDD14'},{id:1,title:'Aggregatzust\u00E4nde',icon:'\u2744\uFE0F'},{id:2,title:'Stoffeigenschaften',icon:'\uD83D\uDD0D'},{id:3,title:'Gemische & Trennverfahren',icon:'\u2697\uFE0F'},{id:4,title:'Wasser',icon:'\uD83D\uDCA7'},{id:5,title:'Luft & Gase',icon:'\uD83C\uDF2C\uFE0F'},{id:6,title:'Feuer & Verbrennung',icon:'\uD83D\uDD25'},{id:7,title:'S\u00E4uren & Basen',icon:'\uD83E\uDDEA'},{id:8,title:'Metalle & Nichtmetalle',icon:'\u2699\uFE0F'},{id:9,title:'Chemie im Alltag',icon:'\uD83C\uDFE0'}]},
+{id:'musik-profi',name:'MusikProfi',subtitle:'Interaktive Musik-Lernapp',subject:'Musik',grade:'Klasse_7-10',gradeLabel:'Kl. 7-10',path:'../Klasse_7-10/Musik/MusikProfi/index.html',storageKey:'musikprofi_progress',appIcon:'\uD83C\uDFB5',modules:[
+{id:0,title:'Notenlehre',icon:'\uD83C\uDFBC'},{id:1,title:'Rhythmus & Takt',icon:'\uD83E\uDD41'},{id:2,title:'Melodie & Tonleitern',icon:'\uD83C\uDFB6'},{id:3,title:'Harmonie & Akkorde',icon:'\uD83C\uDFB9'},{id:4,title:'Instrumente & Klangfarben',icon:'\uD83C\uDFBB'},{id:5,title:'Musikepochen',icon:'\uD83C\uDFDB\uFE0F'},{id:6,title:'Musikanalyse',icon:'\uD83D\uDD0D'},{id:7,title:'Stimme & Gesang',icon:'\uD83C\uDFA4'},{id:8,title:'Popularmusik',icon:'\uD83C\uDFB8'},{id:9,title:'Musik & Gesellschaft',icon:'\uD83C\uDF0D'}]},
+{id:'kunst-profi',name:'KunstProfi',subtitle:'Interaktive Kunst-Lernapp',subject:'Kunst',grade:'Klasse_7-10',gradeLabel:'Kl. 7-10',path:'../Klasse_7-10/Kunst/KunstProfi/index.html',storageKey:'kunstprofi_progress',appIcon:'\uD83C\uDFA8',modules:[
+{id:0,title:'Farblehre',icon:'\uD83C\uDFA8'},{id:1,title:'Form & Fl\u00E4che',icon:'\uD83D\uDD37'},{id:2,title:'Perspektive & Raum',icon:'\uD83D\uDC41\uFE0F'},{id:3,title:'Komposition & Bildaufbau',icon:'\uD83D\uDDBC\uFE0F'},{id:4,title:'Zeichentechniken',icon:'\u270F\uFE0F'},{id:5,title:'Kunstgeschichte I',icon:'\uD83C\uDFDB\uFE0F'},{id:6,title:'Kunstgeschichte II',icon:'\uD83D\uDFE5'},{id:7,title:'Skulptur & Plastik',icon:'\uD83D\uDDFF'},{id:8,title:'Fotografie & Digitale Kunst',icon:'\uD83D\uDCF7'},{id:9,title:'Kunstkritik & Reflexion',icon:'\uD83D\uDCDD'}]},
+{id:'english-abc',name:'EnglishABC',subtitle:'Englisch-Grundlagen Kl. 1-3',subject:'Englisch',grade:'Klasse_1-3',gradeLabel:'Kl. 1-3',path:'../Klasse_1-3/Englisch/EnglishABC/index.html',storageKey:'englishabc_progress',appIcon:'🇬🇧',modules:[
+{id:0,title:'Hello & Goodbye',icon:'👋'},{id:1,title:'Colours',icon:'🎨'},{id:2,title:'Numbers 1-20',icon:'🔢'},{id:3,title:'Animals',icon:'🐾'},{id:4,title:'My Body',icon:'🏃'},{id:5,title:'Food & Drinks',icon:'🍎'},{id:6,title:'Family & Friends',icon:'❤️'},{id:7,title:'School Things',icon:'📚'},{id:8,title:'Clothes',icon:'👕'},{id:9,title:'Seasons & Weather',icon:'🌤️'}]},
+{id:'franz-abc',name:'FranzABC',subtitle:'Französisch-Grundlagen Kl. 1-3',subject:'Franzoesisch',grade:'Klasse_1-3',gradeLabel:'Kl. 1-3',path:'../Klasse_1-3/Französisch/FranzABC/index.html',storageKey:'franzabc_progress',appIcon:'🇫🇷',modules:[
+{id:0,title:'Bonjour & Au revoir',icon:'👋'},{id:1,title:'Les couleurs',icon:'🎨'},{id:2,title:'Les nombres 1-20',icon:'🔢'},{id:3,title:'Les animaux',icon:'🐾'},{id:4,title:'Mon corps',icon:'🏃'},{id:5,title:'La nourriture',icon:'🍎'},{id:6,title:'Ma famille',icon:'❤️'},{id:7,title:'L\'\u00E9cole',icon:'📚'},{id:8,title:'Les v\u00EAtements',icon:'👕'},{id:9,title:'Les saisons & la m\u00E9t\u00E9o',icon:'🌤️'}]},
+{id:'digital-start',name:'DigitalStart',subtitle:'Computer-Grundlagen Kl. 1-3',subject:'Informatik',grade:'Klasse_1-3',gradeLabel:'Kl. 1-3',path:'../Klasse_1-3/Informatik/DigitalStart/index.html',storageKey:'digitalstart_progress',appIcon:'💻',modules:[
+{id:0,title:'Die Maus',icon:'🖱️'},{id:1,title:'Die Tastatur',icon:'⌨️'},{id:2,title:'Der Desktop',icon:'🖥️'},{id:3,title:'Malen am Computer',icon:'🎨'},{id:4,title:'Texte schreiben',icon:'📝'},{id:5,title:'Dateien und Ordner',icon:'📁'},{id:6,title:'Internet entdecken',icon:'🌐'},{id:7,title:'Sicher im Internet',icon:'🔒'},{id:8,title:'Bilder und Fotos',icon:'📷'},{id:9,title:'Regeln am Computer',icon:'🏅'}]},
+{id:'physik-entdecker',name:'PhysikEntdecker',subtitle:'Physik-Entdeckungen Kl. 1-3',subject:'Physik',grade:'Klasse_1-3',gradeLabel:'Kl. 1-3',path:'../Klasse_1-3/Physik/PhysikEntdecker/index.html',storageKey:'physikentdecker_progress',appIcon:'🔭',modules:[
+{id:0,title:'Licht und Schatten',icon:'💡'},{id:1,title:'Schall und Töne',icon:'🔊'},{id:2,title:'Magnete',icon:'🧲'},{id:3,title:'Schwerkraft',icon:'🍎'},{id:4,title:'Wasser',icon:'💧'},{id:5,title:'Luft und Wind',icon:'💨'},{id:6,title:'Wärme und Kälte',icon:'🌡️'},{id:7,title:'Spiegel und Reflexion',icon:'🪞'},{id:8,title:'Bewegung und Geschwindigkeit',icon:'🏃'},{id:9,title:'Energie im Alltag',icon:'⚡'}]},
+{id:'natur-freund',name:'NaturFreund',subtitle:'Natur entdecken Kl. 1-3',subject:'Biologie',grade:'Klasse_1-3',gradeLabel:'Kl. 1-3',path:'../Klasse_1-3/Biologie/NaturFreund/index.html',storageKey:'naturfreund_progress',appIcon:'🌿',modules:[
+{id:0,title:'Unsere Haustiere',icon:'🐾'},{id:1,title:'Pflanzen entdecken',icon:'🌱'},{id:2,title:'Die vier Jahreszeiten',icon:'🍂'},{id:3,title:'Unsere fünf Sinne',icon:'👁️'},{id:4,title:'Wasser — unser Lebenselixier',icon:'💧'},{id:5,title:'Der Wald',icon:'🌲'},{id:6,title:'Wiese und Garten',icon:'🌻'},{id:7,title:'Vögel beobachten',icon:'🐦'},{id:8,title:'Insekten und kleine Krabbeltiere',icon:'🐝'},{id:9,title:'Natur schützen',icon:'🌍'}]},
+{id:'zeit-starter',name:'ZeitStarter',subtitle:'Zeit entdecken Kl. 1-3',subject:'Geschichte',grade:'Klasse_1-3',gradeLabel:'Kl. 1-3',path:'../Klasse_1-3/Geschichte/ZeitStarter/index.html',storageKey:'zeitstarter_progress',appIcon:'⌛',modules:[
+{id:0,title:'Dinosaurier',icon:'🦕'},{id:1,title:'Steinzeitmenschen',icon:'🪨'},{id:2,title:'Altes Ägypten',icon:'🏛️'},{id:3,title:'Ritter und Burgen',icon:'🏰'},{id:4,title:'Wikinger',icon:'⚔️'},{id:5,title:'Piraten',icon:'🏴‍☠️'},{id:6,title:'Große Erfindungen',icon:'💡'},{id:7,title:'Könige und Königinnen',icon:'👑'},{id:8,title:'Kinder früher und heute',icon:'👧'},{id:9,title:'Zeitreise-Meister',icon:'⏳'}]},
+{id:'welt-entdecker',name:'WeltEntdecker',subtitle:'Geographie-Grundlagen Kl. 1-3',subject:'Geographie',grade:'Klasse_1-3',gradeLabel:'Kl. 1-3',path:'../Klasse_1-3/Geographie/WeltEntdecker/index.html',storageKey:'weltentdecker_progress',appIcon:'🌍',modules:[
+{id:0,title:'Die Kontinente',icon:'🌍'},{id:1,title:'Die Ozeane',icon:'🌊'},{id:2,title:'Himmelsrichtungen',icon:'🧭'},{id:3,title:'Unser Wetter',icon:'🌤️'},{id:4,title:'Die Jahreszeiten',icon:'🍂'},{id:5,title:'Stadt und Land',icon:'🏘️'},{id:6,title:'Tiere der Welt',icon:'🐘'},{id:7,title:'Landschaften',icon:'🏔️'},{id:8,title:'Länder Europas',icon:'🇪🇺'},{id:9,title:'Unsere Erde schützen',icon:'🌱'}]},
+{id:'stoffe-forscher',name:'StoffeForscher',subtitle:'Chemie-Grundlagen Kl. 1-3',subject:'Chemie',grade:'Klasse_1-3',gradeLabel:'Kl. 1-3',path:'../Klasse_1-3/Chemie/StoffeForscher/index.html',storageKey:'stoffeforscher_progress',appIcon:'🧪',modules:[
+{id:0,title:'Stoffe erkennen',icon:'🔍'},{id:1,title:'Fest, flüssig, gasförmig',icon:'🧊'},{id:2,title:'Mischen und Trennen',icon:'🥣'},{id:3,title:'Wasser — unser Lebenselixier',icon:'💧'},{id:4,title:'Luft ist nicht nichts!',icon:'💨'},{id:5,title:'Feuer und Flamme',icon:'🔥'},{id:6,title:'Metalle im Alltag',icon:'🔧'},{id:7,title:'Farben mischen',icon:'🎨'},{id:8,title:'Kristalle züchten',icon:'💎'},{id:9,title:'Recycling — Müll wird neu',icon:'♻️'}]},
+{id:'klang-welt',name:'KlangWelt',subtitle:'Musik-Grundlagen Kl. 1-3',subject:'Musik',grade:'Klasse_1-3',gradeLabel:'Kl. 1-3',path:'../Klasse_1-3/Musik/KlangWelt/index.html',storageKey:'klangwelt_progress',appIcon:'🎵',modules:[
+{id:0,title:'Klänge entdecken',icon:'🔔'},{id:1,title:'Rhythmus',icon:'🥁'},{id:2,title:'Laut und Leise',icon:'🔊'},{id:3,title:'Instrumente kennenlernen',icon:'🎸'},{id:4,title:'Singen',icon:'🎤'},{id:5,title:'Musik hören',icon:'🎧'},{id:6,title:'Notenwerte',icon:'🎼'},{id:7,title:'Tanz und Bewegung',icon:'💃'},{id:8,title:'Musik aus aller Welt',icon:'🌍'},{id:9,title:'Musik machen',icon:'🎹'}]},
+{id:'farben-welt',name:'FarbenWelt',subtitle:'Kunst-Grundlagen Kl. 1-3',subject:'Kunst',grade:'Klasse_1-3',gradeLabel:'Kl. 1-3',path:'../Klasse_1-3/Kunst/FarbenWelt/index.html',storageKey:'farbenwelt_progress',appIcon:'🎨',modules:[
+{id:0,title:'Farben kennenlernen',icon:'🌈'},{id:1,title:'Formen',icon:'🔷'},{id:2,title:'Malen und Zeichnen',icon:'🖌️'},{id:3,title:'Basteln',icon:'✂️'},{id:4,title:'Muster',icon:'🔲'},{id:5,title:'Tiere zeichnen',icon:'🐱'},{id:6,title:'Natur malen',icon:'🌳'},{id:7,title:'Collagen',icon:'📎'},{id:8,title:'Drucken',icon:'🖐️'},{id:9,title:'Kunst betrachten',icon:'🖼️'}]},
+{id:'bio-forscher',name:'BioForscher',subtitle:'Biologie Kl. 3-6',subject:'Biologie',grade:'Klasse_3-6',gradeLabel:'Kl. 3-6',path:'../Klasse_3-6/Biologie/BioForscher/index.html',storageKey:'bioforscher_progress',appIcon:'🧬',modules:[
+{id:0,title:'Die Zelle — Baustein des Lebens',icon:'🔬'},{id:1,title:'Ökosysteme',icon:'🌿'},{id:2,title:'Gesunde Ernährung',icon:'🥗'},{id:3,title:'Der menschliche Körper',icon:'🫀'},{id:4,title:'Pflanzen — Aufbau und Fortpflanzung',icon:'🌱'},{id:5,title:'Wirbeltiere und Wirbellose',icon:'🦎'},{id:6,title:'Mikroorganismen',icon:'🦠'},{id:7,title:'Genetik — Vererbung einfach erklärt',icon:'🧬'},{id:8,title:'Sinne und Nervensystem',icon:'👁️'},{id:9,title:'Umweltschutz und Artenvielfalt',icon:'🌍'}]},
+{id:'web-explorer',name:'WebExplorer',subtitle:'Web und IT-Grundlagen Kl. 3-6',subject:'Informatik',grade:'Klasse_3-6',gradeLabel:'Kl. 3-6',path:'../Klasse_3-6/Informatik/WebExplorer/index.html',storageKey:'webexplorer_progress',appIcon:'🌐',modules:[
+{id:0,title:'HTML-Grundlagen',icon:'📄'},{id:1,title:'CSS — Webseiten stylen',icon:'🎨'},{id:2,title:'Links und Navigation',icon:'🔗'},{id:3,title:'Netzwerke und Internet',icon:'🌐'},{id:4,title:'Suchmaschinen nutzen',icon:'🔍'},{id:5,title:'Algorithmen verstehen',icon:'🧩'},{id:6,title:'Daten und Speicher',icon:'💾'},{id:7,title:'Sicherheit im Netz',icon:'🛡️'},{id:8,title:'Digitale Medien',icon:'📱'},{id:9,title:'Digitale Bürgerschaft',icon:'🏅'}]},
+{id:'physik-forscher',name:'PhysikForscher',subtitle:'Physik Kl. 3-6',subject:'Physik',grade:'Klasse_3-6',gradeLabel:'Kl. 3-6',path:'../Klasse_3-6/Physik/PhysikForscher/index.html',storageKey:'physikforscher_progress',appIcon:'⚙️',modules:[
+{id:0,title:'Elektrischer Strom',icon:'⚡'},{id:1,title:'Wärme und Temperatur',icon:'🌡️'},{id:2,title:'Licht und Optik',icon:'🔦'},{id:3,title:'Kräfte und Mechanik',icon:'⚙️'},{id:4,title:'Magnete und Magnetismus',icon:'🧲'},{id:5,title:'Schall und Akustik',icon:'🔊'},{id:6,title:'Druck und Auftrieb',icon:'💨'},{id:7,title:'Energie und Energieformen',icon:'🔋'},{id:8,title:'Gewicht, Masse und Dichte',icon:'⚖️'},{id:9,title:'Physik im Alltag',icon:'🏠'}]},
+{id:'geschichte-forscher',name:'GeschichteForscher',subtitle:'Geschichte Kl. 3-6',subject:'Geschichte',grade:'Klasse_3-6',gradeLabel:'Kl. 3-6',path:'../Klasse_3-6/Geschichte/GeschichteForscher/index.html',storageKey:'geschichteforscher_progress',appIcon:'🏛️',modules:[
+{id:0,title:'Das Römische Reich',icon:'🏛️'},{id:1,title:'Das Mittelalter',icon:'🏰'},{id:2,title:'Die Wikinger',icon:'⚔️'},{id:3,title:'Das Alte Griechenland',icon:'🏺'},{id:4,title:'Entdecker der Neuzeit',icon:'🧭'},{id:5,title:'Die Reformation',icon:'📜'},{id:6,title:'Absolutismus',icon:'👑'},{id:7,title:'Industrielle Revolution',icon:'🏭'},{id:8,title:'Große Erfindungen',icon:'💡'},{id:9,title:'Demokratie verstehen',icon:'🗳️'}]},
+{id:'geo-forscher',name:'GeoForscher',subtitle:'Geographie Kl. 3-6',subject:'Geographie',grade:'Klasse_3-6',gradeLabel:'Kl. 3-6',path:'../Klasse_3-6/Geographie/GeoForscher/index.html',storageKey:'geoforscher_progress',appIcon:'🌍',modules:[
+{id:0,title:'Kontinente im Detail',icon:'🌍'},{id:1,title:'Klimazonen',icon:'🌡️'},{id:2,title:'Naturkatastrophen',icon:'🌋'},{id:3,title:'Flüsse und Seen',icon:'🏞️'},{id:4,title:'Gebirge der Welt',icon:'🏔️'},{id:5,title:'Bevölkerung der Erde',icon:'👥'},{id:6,title:'Rohstoffe',icon:'💎'},{id:7,title:'Landwirtschaft',icon:'🌾'},{id:8,title:'Globalisierung',icon:'🌐'},{id:9,title:'Nachhaltigkeit',icon:'♻️'}]},
+{id:'musik-forscher',name:'MusikForscher',subtitle:'Musik Kl. 3-6',subject:'Musik',grade:'Klasse_3-6',gradeLabel:'Kl. 3-6',path:'../Klasse_3-6/Musik/MusikForscher/index.html',storageKey:'musikforscher_progress',appIcon:'🎵',modules:[
+{id:0,title:'Notenlesen',icon:'🎼'},{id:1,title:'Tonleitern',icon:'🎹'},{id:2,title:'Rhythmus-Profi',icon:'🥁'},{id:3,title:'Instrumentenfamilien',icon:'🎻'},{id:4,title:'Berühmte Komponisten',icon:'📜'},{id:5,title:'Musikepochen',icon:'🏛️'},{id:6,title:'Harmonie und Akkorde',icon:'🎶'},{id:7,title:'Liedformen',icon:'📋'},{id:8,title:'Weltmusik',icon:'🌍'},{id:9,title:'Musik und Technik',icon:'💻'}]},
+{id:'kunst-forscher',name:'KunstForscher',subtitle:'Kunst Kl. 3-6',subject:'Kunst',grade:'Klasse_3-6',gradeLabel:'Kl. 3-6',path:'../Klasse_3-6/Kunst/KunstForscher/index.html',storageKey:'kunstforscher_progress',appIcon:'🎨',modules:[
+{id:0,title:'Farbenlehre',icon:'🎨'},{id:1,title:'Perspektive',icon:'📐'},{id:2,title:'Berühmte Künstler',icon:'🖼️'},{id:3,title:'Kunstepochen',icon:'🏛️'},{id:4,title:'Drucktechniken',icon:'🖨️'},{id:5,title:'Plastisches Gestalten',icon:'🗿'},{id:6,title:'Fotografie',icon:'📷'},{id:7,title:'Design',icon:'✏️'},{id:8,title:'Architektur',icon:'🏗️'},{id:9,title:'Moderne Kunst',icon:'🎭'}]},
+{id:'english-master',name:'EnglishMaster',subtitle:'Englisch Kl. 7-10',subject:'Englisch',grade:'Klasse_7-10',gradeLabel:'Kl. 7-10',path:'../Klasse_7-10/Englisch/EnglishMaster/index.html',storageKey:'englishmaster_progress',appIcon:'🇬🇧',modules:[
+{id:0,title:'Tenses & Aspects',icon:'⏰'},{id:1,title:'Conditional Sentences',icon:'🔀'},{id:2,title:'Passive Voice',icon:'🔄'},{id:3,title:'Reading Comprehension',icon:'🔍'},{id:4,title:'Essay Writing',icon:'✍️'},{id:5,title:'Vocabulary & Word Formation',icon:'📖'},{id:6,title:'Literature & Genres',icon:'📚'},{id:7,title:'Media Literacy',icon:'📰'},{id:8,title:'Discussion & Debate',icon:'🎤'},{id:9,title:'Cultural Awareness',icon:'🌍'}]},
+{id:'franz-master',name:'FranzMaster',subtitle:'Französisch Kl. 7-10',subject:'Franzoesisch',grade:'Klasse_7-10',gradeLabel:'Kl. 7-10',path:'../Klasse_7-10/Französisch/FranzMaster/index.html',storageKey:'franzmaster_progress',appIcon:'🇫🇷',modules:[
+{id:0,title:'Les temps verbaux',icon:'⏰'},{id:1,title:'Le subjonctif',icon:'🔀'},{id:2,title:'Analyse de texte',icon:'🔍'},{id:3,title:'La rédaction',icon:'✍️'},{id:4,title:'La littérature française',icon:'📚'},{id:5,title:'Vocabulaire avancé',icon:'📖'},{id:6,title:'Les médias',icon:'📰'},{id:7,title:'Le débat',icon:'🎤'},{id:8,title:'La culture française',icon:'🗼'},{id:9,title:'La Francophonie',icon:'🌍'}]},
+{id:'chemie-profi',name:'ChemieProfi',subtitle:'Chemie Kl. 7-10',subject:'Chemie',grade:'Klasse_7-10',gradeLabel:'Kl. 7-10',path:'../Klasse_7-10/Chemie/ChemieProfi/index.html',storageKey:'chemieprofi_progress',appIcon:'🧪',modules:[
+{id:0,title:'Atombau',icon:'⚛️'},{id:1,title:'Periodensystem',icon:'📊'},{id:2,title:'Ionenbindung',icon:'🔗'},{id:3,title:'Kovalente Bindung',icon:'🧲'},{id:4,title:'Redoxreaktionen',icon:'🔋'},{id:5,title:'Säuren und Basen',icon:'🧪'},{id:6,title:'Organische Chemie',icon:'🫧'},{id:7,title:'Elektrochemie',icon:'⚡'},{id:8,title:'Chemisches Gleichgewicht',icon:'⚖️'},{id:9,title:'Analytik',icon:'🔬'}]}
+];
+
+const THEMES={
+  cyber:{name:'Cyber Neon',emoji:'\uD83D\uDDA5\uFE0F',color:'#3b82f6',desc:'Futuristisch & Digital'},
+  retro:{name:'Retro Arcade',emoji:'\uD83D\uDD79\uFE0F',color:'#ffd700',desc:'80er Arcade-Feeling'},
+  nature:{name:'Nature Forest',emoji:'\uD83C\uDF33',color:'#4ade80',desc:'Nat\u00FCrlich & Organisch'},
+  space:{name:'Deep Space',emoji:'\uD83D\uDE80',color:'#c084fc',desc:'Kosmisch & Geheimnisvoll'},
+  comic:{name:'Comic Pop',emoji:'\uD83D\uDCA5',color:'#ff6b6b',desc:'Bunt & Verspielt'},
+  sketchy:{name:'Sketchy',emoji:'\u270D\uFE0F',color:'#d97706',desc:'Handgemacht & Warm'},
+  'nature-code':{name:'Nature x Code',emoji:'\uD83C\uDF3F',color:'#10b981',desc:'Natur trifft Technik'},
+  glass:{name:'Glasmorphism',emoji:'\uD83D\uDCA0',color:'#00d9ff',desc:'Modern & Transparent'}
+};
+
+const SUBJECT_COLORS={Deutsch:'#3b82f6',Mathematik:'#a855f7',Informatik:'#22c55e',Physik:'#f59e0b',Chemie:'#ef4444',Biologie:'#10b981',Englisch:'#ec4899',Geschichte:'#d97706',Geographie:'#06b6d4',Franzoesisch:'#e11d48',Musik:'#f97316',Kunst:'#d946ef'};
+const STORAGE_KEY='lehrplan-manager-v1';
+const MODULE_TIME=25;
+
+/* ===== STATE ===== */
+let state={
+  theme:'cyber',mode:'dark',
+  selectedModules:{},
+  plans:[{id:'plan-1',name:'Mein Lehrplan',weeks:[[],[],[],[],[]]}],
+  activePlan:0,
+  filterSubject:'all',filterGrade:'all',
+  presets:[],
+  students:[],
+  importedProgress:[]
+};
+
+function loadState(){
+  try{const s=localStorage.getItem(STORAGE_KEY);if(s){const p=JSON.parse(s);Object.assign(state,p)}}catch(e){}
+  if(!state.importedProgress)state.importedProgress=[];
+  document.documentElement.setAttribute('data-theme',state.theme+'-'+state.mode);
+}
+function saveState(){
+  try{localStorage.setItem(STORAGE_KEY,JSON.stringify(state))}catch(e){}
+}
+
+/* ===== MODAL ARIA HELPERS ===== */
+function openOverlay(id){
+  const ov=document.getElementById(id);
+  ov.classList.add('show');ov.setAttribute('aria-hidden','false');
+  const dialog=ov.querySelector('[role="dialog"]');
+  if(dialog){const first=dialog.querySelector('button,input,select,textarea,[tabindex="0"]');if(first)first.focus()}
+  ov._trapFocus=function(e){
+    if(e.key!=='Tab')return;
+    const focusable=dialog.querySelectorAll('button,input,select,textarea,[tabindex="0"]');
+    if(!focusable.length)return;
+    const first=focusable[0],last=focusable[focusable.length-1];
+    if(e.shiftKey&&document.activeElement===first){e.preventDefault();last.focus()}
+    else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first.focus()}
+  };
+  ov.addEventListener('keydown',ov._trapFocus);
+}
+function closeOverlay(id){
+  const ov=document.getElementById(id);
+  ov.classList.remove('show');ov.setAttribute('aria-hidden','true');
+  if(ov._trapFocus){ov.removeEventListener('keydown',ov._trapFocus);delete ov._trapFocus}
+}
+
+/* ===== THEME ===== */
+function showThemes(){openOverlay('themeOverlay');renderThemeGrid()}
+function hideThemes(){closeOverlay('themeOverlay')}
+function setMode(m){
+  state.mode=m;
+  document.getElementById('modeDark').classList.toggle('active',m==='dark');
+  document.getElementById('modeLight').classList.toggle('active',m==='light');
+  document.documentElement.setAttribute('data-theme',state.theme+'-'+m);
+  renderThemeGrid();saveState();
+}
+function setTheme(t){
+  state.theme=t;
+  document.documentElement.setAttribute('data-theme',t+'-'+state.mode);
+  renderThemeGrid();saveState();
+}
+function renderThemeGrid(){
+  const g=document.getElementById('themeGrid');
+  g.innerHTML=Object.entries(THEMES).map(([k,v])=>
+    '<div class="theme-opt'+(state.theme===k?' active':'')+'" onclick="setTheme(\''+k+'\')" tabindex="0" role="button" aria-pressed="'+(state.theme===k?'true':'false')+'" onkeydown="if(event.key===\'Enter\'||event.key===\' \'){event.preventDefault();setTheme(\''+k+'\')}">'+
+    '<span class="t-emoji">'+v.emoji+'<\/span>'+
+    '<div><div class="t-name">'+v.name+'<\/div><div class="t-desc">'+v.desc+'<\/div><\/div>'+
+    '<div class="t-color" style="background:'+v.color+'"><\/div><\/div>'
+  ).join('');
+}
+
+/* ===== SIDEBAR ===== */
+function toggleSidebar(){
+  const sb=document.getElementById('sidebar');
+  const btn=document.getElementById('menuToggleBtn');
+  sb.classList.toggle('open');
+  btn.setAttribute('aria-expanded',sb.classList.contains('open')?'true':'false');
+}
+
+function showView(v){
+  document.getElementById('viewDashboard').style.display=v==='dashboard'?'':'none';
+  document.getElementById('viewPlanner').style.display=v==='planner'?'':'none';
+  document.getElementById('viewStudents').style.display=v==='students'?'':'none';
+  document.querySelectorAll('.nav-item[data-view]').forEach(n=>n.classList.toggle('active',n.dataset.view===v));
+  if(v==='planner')renderPlanner();
+  if(v==='students'){renderPresets();renderStudents();autoDetectBatchUrl();renderImportedProgress()}
+  if(window.innerWidth<768)document.getElementById('sidebar').classList.remove('open');
+}
+
+/* ===== FILTERS ===== */
+function filterSubject(s){
+  state.filterSubject=s;state.filterGrade='all';
+  updateFilterChips();renderApps();saveState();
+}
+function filterGrade(g){
+  state.filterGrade=g;state.filterSubject='all';
+  updateFilterChips();renderApps();saveState();
+  if(window.innerWidth<768)document.getElementById('sidebar').classList.remove('open');
+}
+function updateFilterChips(){
+  document.querySelectorAll('.filter-chip').forEach(c=>{
+    const f=c.dataset.filter;
+    c.classList.toggle('active',f===state.filterSubject||f===state.filterGrade||(f==='all'&&state.filterSubject==='all'&&state.filterGrade==='all'));
+  });
+}
+
+/* ===== RENDER APPS ===== */
+function renderApps(){
+  const grid=document.getElementById('appsGrid');
+  const filtered=APPS.filter(a=>{
+    if(state.filterSubject!=='all'&&a.subject!==state.filterSubject)return false;
+    if(state.filterGrade!=='all'&&a.grade!==state.filterGrade)return false;
+    return true;
+  });
+  grid.innerHTML=filtered.map((a,ai)=>{
+    const sc=SUBJECT_COLORS[a.subject]||'#888';
+    const selCount=a.modules.filter(m=>state.selectedModules[a.id+'_'+m.id]).length;
+    return '<div class="app-card" style="animation-delay:'+(ai*0.05)+'s">'+
+      '<div class="app-card-header">'+
+        '<span class="app-icon">'+a.appIcon+'<\/span>'+
+        '<div class="app-info"><h3>'+a.name+'<\/h3>'+
+        '<div class="app-meta"><span style="color:'+sc+'">'+a.subject+'<\/span><span>'+a.gradeLabel+'<\/span><span>'+a.modules.length+' Module<\/span><\/div><\/div>'+
+        '<a class="open-link" href="'+a.path+'" target="_blank">\u2197 \u00D6ffnen<\/a>'+
+      '<\/div>'+
+      '<div class="module-list">'+a.modules.map(m=>{
+        const key=a.id+'_'+m.id;
+        const sel=state.selectedModules[key];
+        return '<div class="module-item'+(sel?' selected':'')+'" onclick="toggleModule(\''+key+'\',\''+a.id+'\','+m.id+')" data-key="'+key+'" draggable="true" ondragstart="dragModule(event,\''+key+'\')" role="checkbox" aria-checked="'+(sel?'true':'false')+'" tabindex="0" onkeydown="if(event.key===\'Enter\'||event.key===\' \'){event.preventDefault();toggleModule(\''+key+'\',\''+a.id+'\','+m.id+')}">'+
+          '<span class="m-icon" aria-hidden="true">'+m.icon+'<\/span>'+
+          '<span class="m-title">'+m.title+'<\/span>'+
+          '<span class="m-time">'+MODULE_TIME+' Min.<\/span>'+
+          '<span class="m-check" aria-hidden="true">'+(sel?'\u2713':'')+'<\/span>'+
+        '<\/div>';
+      }).join('')+'<\/div>'+
+      '<div class="app-card-footer">'+
+        '<span>'+selCount+'/'+a.modules.length+' ausgew\u00E4hlt<\/span>'+
+        '<button class="select-all-btn" onclick="toggleAllApp(\''+a.id+'\')">'+(selCount===a.modules.length?'Alle abw\u00E4hlen':'Alle ausw\u00E4hlen')+'<\/button>'+
+      '<\/div>'+
+    '<\/div>';
+  }).join('');
+  updateStats();
+}
+
+/* ===== MODULE SELECTION ===== */
+function toggleModule(key,appId,modId){
+  if(state.selectedModules[key]){delete state.selectedModules[key]}
+  else{
+    const app=APPS.find(a=>a.id===appId);
+    const mod=app.modules.find(m=>m.id===modId);
+    state.selectedModules[key]={appId,modId,appName:app.name,title:mod.title,icon:mod.icon,subject:app.subject};
+  }
+  saveState();renderApps();
+}
+function toggleAllApp(appId){
+  const app=APPS.find(a=>a.id===appId);
+  const allSelected=app.modules.every(m=>state.selectedModules[app.id+'_'+m.id]);
+  app.modules.forEach(m=>{
+    const key=app.id+'_'+m.id;
+    if(allSelected){delete state.selectedModules[key]}
+    else{state.selectedModules[key]={appId:app.id,modId:m.id,appName:app.name,title:m.title,icon:m.icon,subject:app.subject}}
+  });
+  saveState();renderApps();
+}
+function selectAllModules(){
+  APPS.forEach(a=>a.modules.forEach(m=>{
+    state.selectedModules[a.id+'_'+m.id]={appId:a.id,modId:m.id,appName:a.name,title:m.title,icon:m.icon,subject:a.subject};
+  }));
+  saveState();renderApps();toast('Alle '+APPS.reduce(function(s,a){return s+a.modules.length},0)+' Module ausgew\u00E4hlt');
+}
+function clearSelection(){
+  state.selectedModules={};
+  const plan=state.plans[state.activePlan];
+  if(plan)plan.weeks=[[],[],[],[],[]];
+  saveState();renderApps();renderPlanner();toast('Auswahl geleert');
+}
+
+/* ===== STATS ===== */
+function updateStats(){
+  const count=Object.keys(state.selectedModules).length;
+  document.getElementById('statApps').textContent=APPS.length;
+  document.getElementById('statModules').textContent=APPS.reduce(function(s,a){return s+a.modules.length},0);
+  document.getElementById('statSelected').textContent=count;
+  document.getElementById('statTime').textContent=count*MODULE_TIME>=60?Math.round(count*MODULE_TIME/60*10)/10+'h':count*MODULE_TIME+' Min.';
+  document.getElementById('planCount').textContent=count;
+}
+
+/* ===== PLANNER ===== */
+function renderPlanner(){
+  renderPlanTabs();renderWeek();renderSummary();
+}
+function renderPlanTabs(){
+  const tabs=document.getElementById('planTabs');
+  tabs.innerHTML=state.plans.map((p,i)=>
+    '<div class="plan-tab'+(i===state.activePlan?' active':'')+'" onclick="switchPlan('+i+')">'+
+    (state.plans.length>1?'<span style="cursor:pointer;margin-right:4px" onclick="event.stopPropagation();renamePlan('+i+')">\u270F\uFE0F<\/span>':'')+
+    p.name+
+    (state.plans.length>1&&i===state.activePlan?'<span style="cursor:pointer;margin-left:6px;color:var(--danger)" onclick="event.stopPropagation();deletePlan('+i+')">\u00D7<\/span>':'')+
+    '<\/div>'
+  ).join('');
+}
+function switchPlan(i){state.activePlan=i;saveState();renderPlanner()}
+function addPlan(){
+  const name=prompt('Name f\u00FCr den neuen Lehrplan:','Lehrplan '+(state.plans.length+1));
+  if(!name)return;
+  state.plans.push({id:'plan-'+Date.now(),name,weeks:[[],[],[],[],[]]});
+  state.activePlan=state.plans.length-1;
+  saveState();renderPlanner();toast('Plan "'+name+'" erstellt');
+}
+function renamePlan(i){
+  const name=prompt('Neuer Name:',state.plans[i].name);
+  if(!name)return;
+  state.plans[i].name=name;saveState();renderPlanner();
+}
+function deletePlan(i){
+  if(!confirm('Plan "'+state.plans[i].name+'" wirklich l\u00F6schen?'))return;
+  state.plans.splice(i,1);
+  if(state.activePlan>=state.plans.length)state.activePlan=state.plans.length-1;
+  saveState();renderPlanner();toast('Plan gel\u00F6scht');
+}
+
+function renderWeek(){
+  const plan=state.plans[state.activePlan];
+  if(!plan)return;
+  const days=['Montag','Dienstag','Mittwoch','Donnerstag','Freitag'];
+  for(let d=0;d<5;d++){
+    const body=document.querySelector('.week-col-body[data-day="'+d+'"]');
+    const footer=document.querySelector('.week-col-footer[data-day="'+d+'"]');
+    const items=plan.weeks[d]||[];
+    body.innerHTML=items.length?items.map((key,i)=>{
+      const info=state.selectedModules[key];
+      if(!info)return '';
+      const sc=SUBJECT_COLORS[info.subject]||'#888';
+      return '<div class="week-module" draggable="true" ondragstart="dragWeekModule(event,'+d+','+i+')" data-key="'+key+'">'+
+        '<span class="wm-icon">'+info.icon+'<\/span>'+
+        '<span style="flex:1;overflow:hidden;text-overflow:ellipsis">'+info.title+'<\/span>'+
+        '<span class="wm-remove" onclick="removeFromDay('+d+','+i+')">\u00D7<\/span>'+
+      '<\/div>';
+    }).join(''):'<div class="drop-hint">Module hierher ziehen<\/div>';
+    footer.textContent=items.length*MODULE_TIME+' Min.';
+  }
+  // Setup drop zones
+  document.querySelectorAll('.week-col-body').forEach(col=>{
+    col.ondragover=e=>{e.preventDefault();col.closest('.week-col').classList.add('drag-over')};
+    col.ondragleave=e=>{col.closest('.week-col').classList.remove('drag-over')};
+    col.ondrop=e=>{
+      e.preventDefault();col.closest('.week-col').classList.remove('drag-over');
+      const day=parseInt(col.dataset.day);
+      const key=e.dataTransfer.getData('moduleKey');
+      const fromDay=e.dataTransfer.getData('fromDay');
+      const fromIdx=e.dataTransfer.getData('fromIdx');
+      if(fromDay!==''){
+        const fd=parseInt(fromDay);const fi=parseInt(fromIdx);
+        plan.weeks[fd].splice(fi,1);
+      }
+      if(key&&!plan.weeks[day].includes(key)){
+        plan.weeks[day].push(key);
+        saveState();renderWeek();
+      }
+    };
+  });
+}
+function removeFromDay(day,idx){
+  const plan=state.plans[state.activePlan];
+  plan.weeks[day].splice(idx,1);
+  saveState();renderWeek();
+}
+
+var plannerFilter={subject:'all',grade:'all'};
+function filterPlanner(type,val){
+  if(type==='subject'){plannerFilter.subject=val;plannerFilter.grade='all'}
+  else{plannerFilter.grade=val;plannerFilter.subject='all'}
+  renderSummary();
+}
+function renderSummary(){
+  var keys=Object.keys(state.selectedModules);
+  document.getElementById('summaryCount').textContent=keys.length;
+  document.getElementById('summaryTime').textContent=keys.length*MODULE_TIME+' Min.';
+  // Build filter chips
+  var subjects=new Set();var grades=new Set();
+  keys.forEach(function(k){var info=state.selectedModules[k];subjects.add(info.subject);var a=APPS.find(function(x){return x.id===info.appId});if(a)grades.add(a.grade)});
+  var fb=document.getElementById('plannerFilterBar');
+  if(keys.length>0){
+    var chips='<button class="filter-chip'+(plannerFilter.subject==='all'&&plannerFilter.grade==='all'?' active':'')+'" onclick="filterPlanner(\'subject\',\'all\')">Alle<\/button>';
+    Array.from(subjects).sort().forEach(function(s){
+      var icon=s==='Deutsch'?'\uD83D\uDCD6':s==='Mathematik'?'\uD83D\uDD22':s==='Informatik'?'\uD83D\uDCBB':s==='Physik'?'\u2699':s==='Chemie'?'\uD83E\uDDEA':s==='Biologie'?'\uD83E\uDDEC':s==='Englisch'?'\uD83C\uDDEC\uD83C\uDDE7':s==='Geschichte'?'\uD83C\uDFDB':s==='Geographie'?'\uD83C\uDF0D':s==='Franzoesisch'?'\uD83C\uDDEB\uD83C\uDDF7':'';
+      chips+='<button class="filter-chip'+(plannerFilter.subject===s?' active':'')+'" onclick="filterPlanner(\'subject\',\''+s+'\')">'+icon+' '+s+'<\/button>';
+    });
+    var gradeLabels={'Klasse_1-3':'Kl. 1-3','Klasse_3-6':'Kl. 3-6','Klasse_7-10':'Kl. 7-10'};
+    Array.from(grades).sort().forEach(function(g){
+      chips+='<button class="filter-chip'+(plannerFilter.grade===g?' active':'')+'" onclick="filterPlanner(\'grade\',\''+g+'\')">'+(gradeLabels[g]||g)+'<\/button>';
+    });
+    fb.innerHTML=chips;
+  }else{fb.innerHTML=''}
+  // Filter keys
+  var filtered=keys.filter(function(key){
+    var info=state.selectedModules[key];
+    if(plannerFilter.subject!=='all'&&info.subject!==plannerFilter.subject)return false;
+    if(plannerFilter.grade!=='all'){var a=APPS.find(function(x){return x.id===info.appId});if(a&&a.grade!==plannerFilter.grade)return false}
+    return true;
+  });
+  var grid=document.getElementById('summaryGrid');
+  grid.innerHTML=filtered.map(function(key){
+    var info=state.selectedModules[key];
+    var sc=SUBJECT_COLORS[info.subject]||'#888';
+    return '<div class="plan-summary-item" draggable="true" ondragstart="dragModule(event,\''+key+'\')">'+
+      '<span class="psi-icon">'+info.icon+'<\/span>'+
+      '<div style="flex:1;overflow:hidden"><div style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis">'+info.title+'<\/div>'+
+      '<div class="psi-app" style="color:'+sc+'">'+info.appName+' \u2022 '+info.subject+'<\/div><\/div>'+
+    '<\/div>';
+  }).join('')||(keys.length?'<p style="font-size:.82rem;color:var(--text-dim);grid-column:1/-1">Keine Module f\u00FCr diesen Filter.<\/p>':'<p style="font-size:.82rem;color:var(--text-dim);grid-column:1/-1">Noch keine Module ausgew\u00E4hlt. W\u00E4hle Module im Dashboard aus.<\/p>');
+}
+
+/* ===== DRAG & DROP ===== */
+function dragModule(e,key){
+  e.dataTransfer.setData('moduleKey',key);
+  e.dataTransfer.setData('fromDay','');
+  e.dataTransfer.setData('fromIdx','');
+}
+function dragWeekModule(e,day,idx){
+  const plan=state.plans[state.activePlan];
+  const key=plan.weeks[day][idx];
+  e.dataTransfer.setData('moduleKey',key);
+  e.dataTransfer.setData('fromDay',day.toString());
+  e.dataTransfer.setData('fromIdx',idx.toString());
+}
+
+/* ===== EXPORT / IMPORT ===== */
+function exportPlan(){
+  const data=JSON.stringify(state,null,2);
+  const blob=new Blob([data],{type:'application/json'});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement('a');
+  a.href=url;a.download='lehrplan-'+new Date().toISOString().slice(0,10)+'.json';
+  a.click();URL.revokeObjectURL(url);
+  toast('Lehrplan exportiert');
+}
+function importPlan(){document.getElementById('fileInput').click()}
+function handleImport(e){
+  const file=e.target.files[0];if(!file)return;
+  const reader=new FileReader();
+  reader.onload=function(ev){
+    try{
+      const imported=JSON.parse(ev.target.result);
+      Object.assign(state,imported);
+      document.documentElement.setAttribute('data-theme',state.theme+'-'+state.mode);
+      saveState();renderApps();renderPlanner();
+      toast('Lehrplan importiert');
+    }catch(err){toast('Fehler beim Import')}
+  };
+  reader.readAsText(file);
+  e.target.value='';
+}
+
+function printPlan(){
+  const plan=state.plans[state.activePlan];
+  document.getElementById('printPlanName').textContent=plan?plan.name+' \u2014 '+Object.keys(state.selectedModules).length+' Module, '+Object.keys(state.selectedModules).length*MODULE_TIME+' Min.':'';
+  showView('planner');
+  setTimeout(()=>window.print(),200);
+}
+
+/* ===== IMPRESSUM ===== */
+function showImpressum(){openOverlay('impressumOverlay')}
+function hideImpressum(){closeOverlay('impressumOverlay')}
+
+/* ===== TOAST ===== */
+function toast(msg){
+  const t=document.getElementById('toast');
+  t.textContent=msg;t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),2500);
+}
+
+/* ===== STUDENT APP GENERATOR ===== */
+function showExportStudent(){
+  const keys=Object.keys(state.selectedModules);
+  if(!keys.length){toast('Bitte zuerst Module ausw\u00E4hlen');return}
+  const apps=new Set();const subjects=new Set();
+  keys.forEach(k=>{const i=state.selectedModules[k];apps.add(i.appName);subjects.add(i.subject)});
+  document.getElementById('expModCount').textContent=keys.length;
+  document.getElementById('expAppCount').textContent=apps.size;
+  document.getElementById('expTime').textContent=keys.length*MODULE_TIME;
+  document.getElementById('expSubjects').textContent=subjects.size;
+  document.getElementById('expTheme').value=state.theme;
+  // Auto-detect base URL from current location
+  const inp=document.getElementById('expBaseUrl');
+  if(!inp.value){
+    const loc=decodeURIComponent(window.location.href).replace(/\\/g,'/');
+    const m=loc.match(/^(file:\/\/\/.+?)\/Dashboard\//i)||loc.match(/^(https?:\/\/.+?)\/Dashboard\//i);
+    if(m)inp.value=m[1].replace(/^file:\/\/\//,'');
+  }
+  openOverlay('exportOverlay');
+}
+function hideExportStudent(){closeOverlay('exportOverlay')}
+
+function generateStudentApp(){
+  const keys=Object.keys(state.selectedModules);
+  if(!keys.length){toast('Keine Module ausgew\u00E4hlt');return}
+  const className=document.getElementById('expClassName').value||'Mein Lernplan';
+  const greeting=document.getElementById('expGreeting').value||'';
+  const deadline=document.getElementById('expDeadline').value||'';
+  const theme=document.getElementById('expTheme').value;
+  let baseUrl=(document.getElementById('expBaseUrl').value||'').trim().replace(/\/+$/,'').replace(/\\/g,'/');
+  // Auto-prefix file:/// for local paths like C:/...
+  if(baseUrl&&/^[A-Za-z]:/.test(baseUrl))baseUrl='file:///'+baseUrl;
+
+  // Group modules by app
+  const grouped={};
+  keys.forEach(key=>{
+    const info=state.selectedModules[key];
+    const appData=APPS.find(a=>a.id===info.appId);
+    const sKey=appData?appData.storageKey:'';
+    if(!grouped[info.appId])grouped[info.appId]={appName:info.appName,subject:info.subject,storageKey:sKey,modules:[]};
+    grouped[info.appId].modules.push({id:info.modId,title:info.title,icon:info.icon,key:key});
+  });
+
+  const appEntries=Object.entries(grouped);
+  const totalModules=keys.length;
+  const totalTime=totalModules*MODULE_TIME;
+  const subjectList=[...new Set(keys.map(k=>state.selectedModules[k].subject))];
+
+  // Build module list HTML
+  let moduleListHtml='';
+  appEntries.forEach(([appId,data])=>{
+    const sc=SUBJECT_COLORS[data.subject]||'#888';
+    const appData=APPS.find(a=>a.id===appId);
+    const appPath=appData?appData.path.replace(/^\.\.\//,''):'';
+    moduleListHtml+='<div class="app-group">';
+    moduleListHtml+='<div class="app-group-header"><span class="ag-color" style="background:'+sc+'"></span>';
+    moduleListHtml+='<span class="ag-name">'+data.appName+'</span>';
+    moduleListHtml+='<span class="ag-subject">'+data.subject+'</span>';
+    moduleListHtml+='</div>';
+    const allModIds=data.modules.map(m=>m.id).join(',');
+    const appUrl=appPath?(baseUrl?baseUrl+'/'+appPath:appPath)+'#modules='+allModIds:'';
+    data.modules.forEach(m=>{
+      const singleUrl=appUrl;
+      moduleListHtml+='<div class="module-row" data-key="'+m.key+'" data-sk="'+data.storageKey+'" data-mid="'+m.id+'">';
+      moduleListHtml+='<span class="mr-check" id="chk_'+m.key+'"></span>';
+      moduleListHtml+='<span class="mr-icon">'+m.icon+'</span>';
+      moduleListHtml+='<span class="mr-title">'+m.title+'</span>';
+      moduleListHtml+='<span class="mr-time">'+MODULE_TIME+' Min.</span>';
+      if(singleUrl)moduleListHtml+='<a class="mr-start" href="'+singleUrl+'" target="_blank">\u25B6 Starten</a>';
+      moduleListHtml+='</div>';
+    });
+    moduleListHtml+='</div>';
+  });
+
+  // Escape for embedding in HTML
+  const esc=s=>s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+
+  const SCR_END='<'+'/script>';
+  const html='<!-- saved from url=(0016)http://localhost -->\n<!DOCTYPE html>\n'+
+'<html lang="de" data-theme="'+theme+'-dark">\n'+
+'<head>\n'+
+'<meta charset="UTF-8">\n'+
+'<meta name="viewport" content="width=device-width,initial-scale=1">\n'+
+'<title>'+esc(className)+' \u2014 Lernplan</title>\n'+
+'<style>\n'+
+':root{--neon:#3b82f6;--neon-dim:rgba(59,130,246,.15);--bg:#0a0e14;--bg2:#111827;--bg3:#1f2937;--card:#161e2e;--card-hover:#1e293b;--border:#2a3444;--border-light:#374151;--text:#d4dce8;--text-dim:#8899aa;--text-bright:#f1f5f9;--heading:#fff;--link:#60a5fa;--success:#22c55e;--warning:#f59e0b;--danger:#ef4444;--radius:12px;--radius-sm:8px;--radius-lg:16px;--shadow:0 4px 24px rgba(0,0,0,.4);--font:\'Segoe UI\',system-ui,sans-serif;--card-border-w:1px;--card-border-style:solid;--glow:1}\n'+
+'[data-theme="cyber-dark"]{--neon:#3b82f6;--bg:#0a0e14;--bg2:#111827;--bg3:#1f2937;--card:#161e2e;--card-hover:#1e293b;--border:#2a3444;--text:#d4dce8;--text-dim:#8899aa;--text-bright:#f1f5f9;--heading:#fff;--link:#60a5fa;--glow:1}\n'+
+'[data-theme="cyber-light"]{--neon:#1d4ed8;--bg:#f8f9fb;--bg2:#f0f2f5;--bg3:#e5e7eb;--card:#fff;--card-hover:#f5f7fa;--border:#d1d5db;--text:#374151;--text-dim:#4b5563;--text-bright:#111827;--heading:#111827;--link:#2563eb;--glow:0}\n'+
+'[data-theme="retro-dark"]{--neon:#ffd700;--bg:#0d0208;--bg2:#1a0a1e;--bg3:#2d1233;--card:#1a0a1e;--card-hover:#2d1233;--border:#4a1942;--text:#e0d0f0;--text-dim:#9080a0;--text-bright:#fff;--heading:#ffd700;--link:#ff6b9d;--radius:0;--radius-sm:0;--radius-lg:0;--font:\'Courier New\',monospace;--card-border-w:3px;--glow:0}\n'+
+'[data-theme="retro-light"]{--neon:#b8860b;--bg:#fff8e1;--bg2:#fff3cd;--bg3:#ffe0b2;--card:#fff;--card-hover:#fff9f0;--border:#d4a017;--text:#3e2723;--text-dim:#6d4c41;--text-bright:#1b0000;--heading:#b8860b;--link:#c2185b;--radius:0;--radius-sm:0;--radius-lg:0;--font:\'Courier New\',monospace;--card-border-w:3px;--glow:0}\n'+
+'[data-theme="nature-dark"]{--neon:#4ade80;--bg:#0c1a0f;--bg2:#132617;--bg3:#1e3a24;--card:#15291a;--card-hover:#1e3a24;--border:#2d5a36;--text:#c8e6c9;--text-dim:#81a784;--text-bright:#e8f5e9;--heading:#e8f5e9;--link:#81c784;--radius:20px;--radius-sm:14px;--radius-lg:28px;--glow:0}\n'+
+'[data-theme="nature-light"]{--neon:#2e7d32;--bg:#f1f8e9;--bg2:#e8f5e9;--bg3:#c8e6c9;--card:#fff;--card-hover:#f1faf1;--border:#a5d6a7;--text:#33691e;--text-dim:#3e6e1c;--text-bright:#1b5e20;--heading:#1b5e20;--link:#2e7d32;--radius:20px;--radius-sm:14px;--radius-lg:28px;--glow:0}\n'+
+'[data-theme="space-dark"]{--neon:#c084fc;--bg:#07020e;--bg2:#0f0720;--bg3:#1a0e35;--card:#110a28;--card-hover:#1a0e35;--border:#2e1a5e;--text:#d4c8f0;--text-dim:#9080b8;--text-bright:#f0e8ff;--heading:#f0e8ff;--link:#f0abfc;--radius:4px;--radius-sm:2px;--radius-lg:6px;--glow:1}\n'+
+'[data-theme="space-light"]{--neon:#7c3aed;--bg:#faf5ff;--bg2:#f3e8ff;--bg3:#e9d5ff;--card:#fff;--card-hover:#faf5ff;--border:#c4b5fd;--text:#4c1d95;--text-dim:#5b21b6;--text-bright:#2e1065;--heading:#2e1065;--link:#7c3aed;--radius:4px;--radius-sm:2px;--radius-lg:6px;--glow:0}\n'+
+'[data-theme="comic-dark"]{--neon:#ff6b6b;--bg:#1a1a2e;--bg2:#222244;--bg3:#2e2e55;--card:#262650;--card-hover:#2e2e55;--border:#4a4a7a;--text:#e8e0ff;--text-dim:#a098c0;--text-bright:#fff;--heading:#fff;--link:#ffa94d;--radius:16px;--radius-sm:12px;--radius-lg:24px;--font:\'Comic Sans MS\',cursive,sans-serif;--card-border-w:3px;--glow:0}\n'+
+'[data-theme="comic-light"]{--neon:#e03131;--bg:#fff9db;--bg2:#fff3bf;--bg3:#ffe066;--card:#fff;--card-hover:#fffdf0;--border:#fab005;--text:#2b2b2b;--text-dim:#555;--text-bright:#000;--heading:#000;--link:#e8590c;--radius:16px;--radius-sm:12px;--radius-lg:24px;--font:\'Comic Sans MS\',cursive,sans-serif;--card-border-w:3px;--glow:0}\n'+
+'[data-theme="sketchy-dark"]{--neon:#d97706;--bg:#2a1f0f;--bg2:#3a2a1a;--bg3:#4a3a2a;--card:#362414;--card-hover:#462a1a;--border:#5a4030;--text:#d4c4b0;--text-dim:#a09080;--text-bright:#e8d8c8;--heading:#f5ead5;--link:#e8a550;--radius:24px;--radius-sm:16px;--radius-lg:32px;--font:\'Georgia\',serif;--card-border-w:2px;--card-border-style:dashed;--glow:0}\n'+
+'[data-theme="sketchy-light"]{--neon:#b45309;--bg:#fef3e2;--bg2:#fde8cc;--bg3:#f9d5b8;--card:#fff;--card-hover:#fffaf5;--border:#d4a574;--text:#5c4033;--text-dim:#8b6f47;--text-bright:#3e2723;--heading:#3e2723;--link:#c2600c;--radius:24px;--radius-sm:16px;--radius-lg:32px;--font:\'Georgia\',serif;--card-border-w:2px;--card-border-style:dashed;--glow:0}\n'+
+'[data-theme="nature-code-dark"]{--neon:#10b981;--bg:#0a1f12;--bg2:#0d2818;--bg3:#1a3a2a;--card:#0f281a;--card-hover:#1a3a2a;--border:#2d5a3d;--text:#c8e6d0;--text-dim:#7ba890;--text-bright:#e8f5ed;--heading:#e8f5ed;--link:#34d399;--radius:20px;--radius-sm:14px;--radius-lg:28px;--glow:0}\n'+
+'[data-theme="nature-code-light"]{--neon:#059669;--bg:#f0fdf8;--bg2:#e8faf2;--bg3:#d1f2e0;--card:#fff;--card-hover:#f5fbf7;--border:#86efac;--text:#164e3f;--text-dim:#2d6e4f;--text-bright:#052e16;--heading:#052e16;--link:#059669;--radius:20px;--radius-sm:14px;--radius-lg:28px;--glow:0}\n'+
+'[data-theme="glass-dark"]{--neon:#00d9ff;--bg:#0f0f23;--bg2:#1a1a3e;--bg3:#25254a;--card:rgba(30,30,60,.4);--card-hover:rgba(40,40,80,.5);--border:rgba(100,150,255,.2);--text:#e4e8f0;--text-dim:#8899aa;--text-bright:#f5f7ff;--heading:#fff;--link:#00d9ff;--radius:16px;--radius-sm:12px;--radius-lg:20px;--glow:1}\n'+
+'[data-theme="glass-light"]{--neon:#0891b2;--bg:#f8fafc;--bg2:#f1f5f9;--bg3:#e2e8f0;--card:rgba(255,255,255,.4);--card-hover:rgba(255,255,255,.6);--border:rgba(100,180,255,.2);--text:#1e293b;--text-dim:#475569;--text-bright:#0f172a;--heading:#0f172a;--link:#0891b2;--radius:16px;--radius-sm:12px;--radius-lg:20px;--glow:0}\n'+
+'*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}\n'+
+'html{scroll-behavior:smooth}\n'+
+'body{font-family:var(--font);background:var(--bg);color:var(--text);line-height:1.6;min-height:100vh;padding:0}\n'+
+'.container{max-width:800px;margin:0 auto;padding:1.5rem}\n'+
+'.hero{background:var(--bg2);border-bottom:var(--card-border-w) var(--card-border-style) var(--border);padding:2rem 1.5rem;text-align:center;margin-bottom:1.5rem;border-radius:0 0 var(--radius-lg) var(--radius-lg)}\n'+
+'.hero h1{font-size:1.6rem;color:var(--heading);margin-bottom:.3rem}\n'+
+'.hero .class-name{font-size:1rem;color:var(--neon);font-weight:600;margin-bottom:.5rem}\n'+
+'.hero .greeting{font-size:.88rem;color:var(--text);max-width:600px;margin:0 auto .8rem;line-height:1.5;white-space:pre-line}\n'+
+'.countdown{display:inline-flex;align-items:center;gap:.5rem;background:var(--card);border:var(--card-border-w) var(--card-border-style) var(--border);padding:.5rem 1.2rem;border-radius:var(--radius);font-size:.85rem;color:var(--text-bright)}\n'+
+'.countdown.urgent{border-color:var(--danger);color:var(--danger)}\n'+
+'.countdown .cd-num{font-size:1.3rem;font-weight:700;color:var(--neon)}\n'+
+'.countdown.urgent .cd-num{color:var(--danger)}\n'+
+'.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:.8rem;margin-bottom:1.5rem}\n'+
+'.stat{background:var(--card);border:var(--card-border-w) var(--card-border-style) var(--border);border-radius:var(--radius);padding:1rem;text-align:center}\n'+
+'.stat .s-num{font-size:1.6rem;font-weight:700;color:var(--neon)}\n'+
+'.stat .s-label{font-size:.72rem;color:var(--text-dim)}\n'+
+'.progress-bar{background:var(--bg3);border-radius:20px;height:12px;margin-bottom:1.5rem;overflow:hidden}\n'+
+'.progress-fill{height:100%;background:linear-gradient(90deg,var(--neon),var(--success));border-radius:20px;transition:width .5s;width:0}\n'+
+'.app-group{background:var(--card);border:var(--card-border-w) var(--card-border-style) var(--border);border-radius:var(--radius);margin-bottom:1rem;overflow:hidden}\n'+
+'.app-group-header{display:flex;align-items:center;gap:.6rem;padding:.8rem 1rem;border-bottom:1px solid var(--border);flex-wrap:wrap}\n'+
+'.ag-color{width:12px;height:12px;border-radius:50%;flex-shrink:0}\n'+
+'.ag-name{font-weight:700;font-size:.9rem;color:var(--heading)}\n'+
+'.ag-subject{font-size:.72rem;color:var(--text-dim);margin-right:auto}\n'+
+'.ag-link{font-size:.75rem;color:var(--link);text-decoration:none;padding:.25rem .6rem;border:1px solid var(--border);border-radius:var(--radius-sm)}\n'+
+'.ag-link:hover{border-color:var(--link);background:var(--neon-dim,rgba(0,0,0,.1))}\n'+
+'.module-row{display:flex;align-items:center;gap:.6rem;padding:.55rem 1rem;transition:background .12s}\n'+
+'.module-row:hover{background:var(--card-hover)}\n'+
+'.module-row.done{opacity:.6}\n'+
+'.module-row.done .mr-title{text-decoration:line-through}\n'+
+'.mr-check{width:22px;height:22px;border-radius:6px;border:2px solid var(--border);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:.75rem;transition:all .15s}\n'+
+'.module-row.done .mr-check{background:var(--success);border-color:var(--success);color:#fff}\n'+
+'.mr-icon{font-size:1rem;width:22px;text-align:center}\n'+
+'.mr-title{flex:1;font-size:.85rem}\n'+
+'.mr-time{font-size:.7rem;color:var(--text-dim);margin-right:.4rem}\n'+
+'.mr-start{font-size:.7rem;color:var(--link);text-decoration:none;padding:.2rem .5rem;border:1px solid var(--border);border-radius:var(--radius-sm);white-space:nowrap;transition:all .15s}\n'+
+'.mr-start:hover{border-color:var(--neon);background:var(--neon-dim,rgba(59,130,246,.15))}\n'+
+'.theme-toggle{position:fixed;bottom:1rem;right:1rem;display:flex;gap:.3rem}\n'+
+'.tt-btn{width:36px;height:36px;border-radius:50%;border:2px solid var(--border);background:var(--card);cursor:pointer;font-size:1rem;display:flex;align-items:center;justify-content:center;transition:all .15s}\n'+
+'.tt-btn:hover{border-color:var(--neon);transform:scale(1.1)}\n'+
+'.tt-btn:focus-visible{outline:2px solid var(--neon);outline-offset:2px}\n'+
+'.zoom-controls{position:fixed;bottom:1rem;left:1rem;display:flex;gap:4px;z-index:999}\n'+
+'.zoom-btn{width:32px;height:32px;border-radius:50%;border:2px solid var(--border);background:var(--card);color:var(--text);cursor:pointer;font-size:15px;display:flex;align-items:center;justify-content:center;transition:all .15s;font-family:inherit;line-height:1}\n'+
+'.zoom-btn:hover{border-color:var(--neon);color:var(--neon);transform:scale(1.1)}\n'+
+'.zoom-btn:focus-visible{outline:2px solid var(--neon);outline-offset:2px}\n'+
+'.footer{text-align:center;padding:2rem 1rem;font-size:.72rem;color:var(--text-dim)}\n'+
+'@keyframes confetti-fall{0%{transform:translateY(-100vh) rotate(0deg);opacity:1}100%{transform:translateY(100vh) rotate(720deg);opacity:0}}\n'+
+'.confetti{position:fixed;top:-10px;width:8px;height:8px;border-radius:2px;animation:confetti-fall 3s ease-out forwards;pointer-events:none;z-index:999}\n'+
+'.export-section{margin:1.5rem auto;text-align:center}\n'+
+'.export-btn{background:var(--neon);color:#fff;border:none;padding:.7rem 1.5rem;border-radius:var(--radius);font-family:var(--font);font-size:.9rem;font-weight:600;cursor:pointer;transition:all .2s}\n'+
+'.export-btn:hover{opacity:.85;transform:translateY(-1px)}\n'+
+'.export-status{margin-top:.5rem;font-size:.8rem;padding:.4rem .8rem;border-radius:var(--radius-sm);display:inline-block}\n'+
+'.export-status.ok{background:rgba(34,197,94,.15);color:var(--success)}\n'+
+'.export-status.err{background:rgba(239,68,68,.15);color:var(--danger)}\n'+
+'@media print{body{background:#fff;color:#000}.hero{background:#f5f5f5;border:1px solid #ccc}.hero h1,.hero .class-name{color:#000}.stat{border:1px solid #ccc;background:#fff}.stat .s-num{color:#333}.app-group{border:1px solid #ccc}.module-row.done .mr-check{background:#22c55e}.theme-toggle,.zoom-controls,.mr-start,.export-section{display:none!important}.countdown{border:1px solid #ccc}}\n'+
+'@media(max-width:600px){.stats{grid-template-columns:1fr 1fr}.hero h1{font-size:1.2rem}.container{padding:1rem}}\n'+
+'<\/style>\n'+
+'<\/head>\n'+
+'<body>\n'+
+'<div class="hero">\n'+
+'<h1>\uD83C\uDF93 Mein Lernplan<\/h1>\n'+
+'<div class="class-name">'+esc(className)+'<\/div>\n'+
+(greeting?'<div class="greeting">'+esc(greeting)+'<\/div>\n':'')+
+(deadline?'<div class="countdown" id="countdown"><span>\u23F3 Abgabe in <span class="cd-num" id="cdDays">-<\/span> Tagen<\/span><\/div>\n':'')+
+'<\/div>\n'+
+'<div class="container">\n'+
+'<div class="stats">\n'+
+'<div class="stat"><div class="s-num" id="sDone">0<\/div><div class="s-label">Erledigt<\/div><\/div>\n'+
+'<div class="stat"><div class="s-num">'+totalModules+'<\/div><div class="s-label">Module<\/div><\/div>\n'+
+'<div class="stat"><div class="s-num" id="sPercent">0%<\/div><div class="s-label">Fortschritt<\/div><\/div>\n'+
+'<div class="stat"><div class="s-num">'+Math.round(totalTime/60*10)/10+'h<\/div><div class="s-label">Gesamtzeit<\/div><\/div>\n'+
+'<\/div>\n'+
+'<div class="progress-bar"><div class="progress-fill" id="progressFill"><\/div><\/div>\n'+
+moduleListHtml+'\n'+
+'<div class="export-section"><button class="export-btn" onclick="saveProgressFile()">\uD83D\uDCBE Fortschritt speichern<\/button> <button class="export-btn" onclick="exportProgress()" style="background:var(--bg3);color:var(--text);font-size:.8rem;padding:.5rem 1rem">\uD83D\uDCCB Kopieren<\/button><div class="export-status" id="exportStatus" style="display:none"><\/div><\/div>\n'+
+'<\/div>\n'+
+'<div class="theme-toggle" role="toolbar" aria-label="Darstellung">\n'+
+'<button class="tt-btn" onclick="toggleMode()" title="Dark/Light umschalten (Taste D)" aria-label="Dark/Light Modus umschalten" id="modeToggle">\uD83C\uDF19<\/button>\n'+
+'<\/div>\n'+
+'<div class="zoom-controls" role="toolbar" aria-label="Zoom-Steuerung">\n'+
+'<button class="zoom-btn" onclick="zoomOut()" title="Verkleinern (Taste -)" aria-label="Verkleinern">\u2212<\/button>\n'+
+'<button class="zoom-btn" onclick="zoomReset()" title="Zoom zur\u00FCcksetzen (Taste 0)" aria-label="Zoom zur\u00FCcksetzen" style="font-size:10px"><span id="zoomLvl">100%<\/span><\/button>\n'+
+'<button class="zoom-btn" onclick="zoomIn()" title="Vergr\u00F6\u00DFern (Taste +)" aria-label="Vergr\u00F6\u00DFern">+<\/button>\n'+
+'<\/div>\n'+
+'<div class="footer">\u00A9 2026 GZ AI Stacks \u2014 Gerd Zimmermann<br>Erstellt mit dem LehrplanManager<\/div>\n'+
+'<script>\n'+
+'var TOTAL='+totalModules+';\n'+
+'var DEADLINE="'+deadline+'";\n'+
+'var THEME="'+theme+'";\n'+
+'var STUDENT_NAME="'+esc(className)+'";\n'+
+'var mode="dark";\n'+
+'var prevDone=0;\n'+
+'var zl=100;\n'+
+'function zoomIn(){if(zl<200){zl+=10;applyZoom();}}\n'+
+'function zoomOut(){if(zl>50){zl-=10;applyZoom();}}\n'+
+'function zoomReset(){zl=100;applyZoom();}\n'+
+'function applyZoom(){document.documentElement.style.fontSize=zl+"%";var e=document.getElementById("zoomLvl");if(e)e.textContent=zl+"%";}\n'+
+'document.addEventListener("keydown",function(e){\n'+
+'if(e.target.tagName==="INPUT"||e.target.tagName==="TEXTAREA"||e.target.isContentEditable)return;\n'+
+'if((e.key==="+"||e.key==="=")&&!e.ctrlKey&&!e.metaKey){e.preventDefault();zoomIn();}\n'+
+'else if((e.key==="-"||e.key==="_")&&!e.ctrlKey&&!e.metaKey){e.preventDefault();zoomOut();}\n'+
+'else if(e.key==="0"&&!e.ctrlKey&&!e.metaKey){e.preventDefault();zoomReset();}\n'+
+'});\n'+
+'function checkProgress(){\n'+
+'var ct=0;\n'+
+'document.querySelectorAll(".module-row").forEach(function(r){\n'+
+'var sk=r.dataset.sk;\n'+
+'var mid=parseInt(r.dataset.mid);\n'+
+'var done=false;\n'+
+'try{\n'+
+'var raw=localStorage.getItem(sk);\n'+
+'if(raw){\n'+
+'var st=JSON.parse(raw);\n'+
+'if(st.modulesCompleted&&st.modulesCompleted.indexOf(mid)!==-1)done=true;\n'+
+'}\n'+
+'}catch(e){}\n'+
+'r.classList.toggle("done",done);\n'+
+'var chk=document.getElementById("chk_"+r.dataset.key);\n'+
+'if(chk)chk.textContent=done?"\\u2713":"";\n'+
+'if(done)ct++;\n'+
+'});\n'+
+'var pct=Math.round(ct/TOTAL*100);\n'+
+'document.getElementById("sDone").textContent=ct;\n'+
+'document.getElementById("sPercent").textContent=pct+"%";\n'+
+'document.getElementById("progressFill").style.width=pct+"%";\n'+
+'if(ct===TOTAL&&prevDone<TOTAL)celebrate();\n'+
+'prevDone=ct;\n'+
+'}\n'+
+'function updateCountdown(){\n'+
+'if(!DEADLINE)return;\n'+
+'var dl=new Date(DEADLINE+"T23:59:59");\n'+
+'var now=new Date();\n'+
+'var diff=Math.ceil((dl-now)/(1000*60*60*24));\n'+
+'var el=document.getElementById("cdDays");\n'+
+'var cd=document.getElementById("countdown");\n'+
+'if(!el||!cd)return;\n'+
+'if(diff<0){el.textContent="0";cd.querySelector("span").innerHTML="\\u23F3 Abgabefrist abgelaufen";cd.classList.add("urgent")}\n'+
+'else{el.textContent=diff;if(diff<=3)cd.classList.add("urgent");else cd.classList.remove("urgent")}\n'+
+'}\n'+
+'function toggleMode(){\n'+
+'mode=mode==="dark"?"light":"dark";\n'+
+'document.documentElement.setAttribute("data-theme",THEME+"-"+mode);\n'+
+'document.getElementById("modeToggle").textContent=mode==="dark"?"\\u{1F319}":"\\u2600\\uFE0F";\n'+
+'}\n'+
+'function celebrate(){\n'+
+'var colors=["#ff6b6b","#ffd700","#4ade80","#3b82f6","#c084fc","#f59e0b","#ec4899"];\n'+
+'for(var i=0;i<50;i++){\n'+
+'var c=document.createElement("div");\n'+
+'c.className="confetti";\n'+
+'c.style.left=Math.random()*100+"vw";\n'+
+'c.style.background=colors[Math.floor(Math.random()*colors.length)];\n'+
+'c.style.animationDelay=Math.random()*2+"s";\n'+
+'c.style.width=(4+Math.random()*8)+"px";\n'+
+'c.style.height=(4+Math.random()*8)+"px";\n'+
+'document.body.appendChild(c);\n'+
+'setTimeout(function(el){return function(){el.remove()}}(c),5000);\n'+
+'}\n'+
+'}\n'+
+'function buildProgressCode(){\n'+
+'var modules=[];\n'+
+'document.querySelectorAll(".module-row").forEach(function(r){\n'+
+'var sk=r.dataset.sk;\n'+
+'var mid=parseInt(r.dataset.mid);\n'+
+'var entry={s:sk,i:mid,c:0,q:-1,b:-1,w:0};\n'+
+'try{\n'+
+'var raw=localStorage.getItem(sk);\n'+
+'if(raw){\n'+
+'var st=JSON.parse(raw);\n'+
+'if(st.modulesCompleted&&st.modulesCompleted.indexOf(mid)!==-1)entry.c=1;\n'+
+'if(st.quizResults&&st.quizResults[mid]!==undefined)entry.q=st.quizResults[mid];\n'+
+'if(st.bossResults&&st.bossResults[mid]!==undefined)entry.b=st.bossResults[mid]?1:0;\n'+
+'if(st.modulesViewed&&st.modulesViewed.indexOf(mid)!==-1)entry.w=1;\n'+
+'}\n'+
+'}catch(e){}\n'+
+'modules.push(entry);\n'+
+'});\n'+
+'var data={v:1,n:STUDENT_NAME,t:new Date().toISOString().substring(0,16),m:modules};\n'+
+'return "SB1:"+btoa(unescape(encodeURIComponent(JSON.stringify(data))));\n'+
+'}\n'+
+'function saveProgressFile(){\n'+
+'var encoded=buildProgressCode();\n'+
+'var safeName=STUDENT_NAME.replace(/[^a-zA-Z0-9\\u00C0-\\u024F_-]/g,"_");\n'+
+'var date=new Date().toISOString().substring(0,10);\n'+
+'var blob=new Blob([encoded],{type:"text/plain;charset=utf-8"});\n'+
+'var a=document.createElement("a");\n'+
+'a.href=URL.createObjectURL(blob);\n'+
+'a.download="Fortschritt_"+safeName+"_"+date+".txt";\n'+
+'a.click();\n'+
+'URL.revokeObjectURL(a.href);\n'+
+'var el=document.getElementById("exportStatus");\n'+
+'el.textContent="\\u2705 Datei gespeichert! Gib sie deinem Lehrer.";\n'+
+'el.className="export-status ok";el.style.display="inline-block";\n'+
+'}\n'+
+'function exportProgress(){\n'+
+'copyToClipboard(buildProgressCode());\n'+
+'}\n'+
+'function copyToClipboard(text){\n'+
+'var el=document.getElementById("exportStatus");\n'+
+'if(navigator.clipboard&&window.isSecureContext){\n'+
+'navigator.clipboard.writeText(text).then(function(){\n'+
+'el.textContent="\\u2705 Fortschritt kopiert! Gib diesen Code deinem Lehrer.";\n'+
+'el.className="export-status ok";el.style.display="inline-block";\n'+
+'}).catch(function(){fallbackCopy(text)});\n'+
+'}else{fallbackCopy(text);}\n'+
+'}\n'+
+'function fallbackCopy(text){\n'+
+'var el=document.getElementById("exportStatus");\n'+
+'var ta=document.createElement("textarea");\n'+
+'ta.value=text;ta.style.position="fixed";ta.style.left="-9999px";\n'+
+'document.body.appendChild(ta);ta.select();\n'+
+'try{document.execCommand("copy");\n'+
+'el.textContent="\\u2705 Fortschritt kopiert! Gib diesen Code deinem Lehrer.";\n'+
+'el.className="export-status ok";el.style.display="inline-block";\n'+
+'}catch(e){\n'+
+'el.textContent="\\u274C Kopieren fehlgeschlagen. Bitte manuell kopieren.";\n'+
+'el.className="export-status err";el.style.display="inline-block";\n'+
+'prompt("Bitte diesen Text kopieren:",text);\n'+
+'}ta.remove();\n'+
+'}\n'+
+'checkProgress();\n'+
+'updateCountdown();\n'+
+'setInterval(checkProgress,3000);\n'+
+'if(DEADLINE)setInterval(updateCountdown,60000);\n'+
+SCR_END+'\n'+
+'</body>\n'+
+'</html>';
+
+  const blob=new Blob([html],{type:'text/html;charset=utf-8'});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement('a');
+  const safeName=className.replace(/[^a-zA-Z0-9\u00C0-\u024F_-]/g,'_').substring(0,40);
+  a.href=url;a.download='Lernplan_'+safeName+'.html';
+  a.click();URL.revokeObjectURL(url);
+  hideExportStudent();
+  toast('Sch\u00FCler-App "'+className+'" heruntergeladen!');
+}
+
+/* ===== STUDENT MANAGEMENT ===== */
+
+/* --- Presets --- */
+function savePreset(){
+  var keys=Object.keys(state.selectedModules);
+  if(!keys.length){toast('Bitte zuerst Module im Dashboard ausw\u00E4hlen');return}
+  var name=prompt('Name f\u00FCr dieses Preset:','Preset '+(state.presets.length+1));
+  if(!name)return;
+  state.presets.push({id:'preset-'+Date.now(),name:name,modules:JSON.parse(JSON.stringify(state.selectedModules))});
+  saveState();renderPresets();updateStudentCount();
+  toast('Preset "'+name+'" gespeichert ('+keys.length+' Module)');
+}
+
+function deletePreset(idx){
+  if(!confirm('Preset "'+state.presets[idx].name+'" l\u00F6schen?'))return;
+  var pid=state.presets[idx].id;
+  state.presets.splice(idx,1);
+  // Remove preset assignment from students
+  state.students.forEach(function(s){if(s.presetId===pid)s.presetId=''});
+  saveState();renderPresets();renderStudents();
+  toast('Preset gel\u00F6scht');
+}
+
+function renamePreset(idx){
+  var name=prompt('Neuer Name:',state.presets[idx].name);
+  if(!name)return;
+  state.presets[idx].name=name;saveState();renderPresets();renderStudents();
+}
+
+function loadPreset(idx){
+  state.selectedModules=JSON.parse(JSON.stringify(state.presets[idx].modules));
+  saveState();renderApps();
+  toast('Preset "'+state.presets[idx].name+'" geladen');
+}
+
+function renderPresets(){
+  var grid=document.getElementById('presetGrid');
+  if(!state.presets.length){
+    grid.innerHTML='<div class="preset-empty">\uD83D\uDCE6 Noch keine Presets. W\u00E4hle Module im Dashboard aus und klicke &quot;+ Aktuelle Auswahl als Preset speichern&quot;</div>';
+    return;
+  }
+  grid.innerHTML=state.presets.map(function(p,i){
+    var keys=Object.keys(p.modules);
+    var subjects=[];
+    keys.forEach(function(k){var s=p.modules[k].subject;if(subjects.indexOf(s)===-1)subjects.push(s)});
+    var tags=keys.slice(0,6).map(function(k){return '<span class="pc-tag">'+p.modules[k].icon+' '+p.modules[k].title+'<\/span>'}).join('');
+    if(keys.length>6)tags+='<span class="pc-tag">+' +(keys.length-6)+' weitere<\/span>';
+    return '<div class="preset-card">'+
+      '<div class="pc-name">\uD83D\uDCE6 '+p.name+'<\/div>'+
+      '<div class="pc-meta"><span>'+keys.length+' Module<\/span><span>'+subjects.join(', ')+'<\/span><span>'+Math.round(keys.length*MODULE_TIME/60*10)/10+'h<\/span><\/div>'+
+      '<div class="pc-modules">'+tags+'<\/div>'+
+      '<div class="pc-actions">'+
+        '<button class="btn btn-sm" onclick="loadPreset('+i+')">\u2B07 Laden<\/button>'+
+        '<button class="btn btn-sm" onclick="renamePreset('+i+')">\u270F\uFE0F<\/button>'+
+        '<button class="btn btn-sm btn-danger" onclick="deletePreset('+i+')">\u2716<\/button>'+
+      '<\/div>'+
+    '<\/div>';
+  }).join('');
+  populatePresetDropdown();
+}
+
+function populatePresetDropdown(){
+  var sel=document.getElementById('sfPreset');
+  sel.innerHTML='<option value="">-- Preset w\u00E4hlen --<\/option>'+
+    state.presets.map(function(p){return '<option value="'+p.id+'">'+p.name+' ('+Object.keys(p.modules).length+' Module)<\/option>'}).join('');
+}
+
+/* --- Students --- */
+var editingStudentIdx=-1;
+
+function addStudent(){
+  if(!state.presets.length){toast('Bitte zuerst ein Preset erstellen');return}
+  editingStudentIdx=-1;
+  document.getElementById('sfName').value='';
+  document.getElementById('sfDeadline').value='';
+  document.getElementById('sfGreeting').value='';
+  populatePresetDropdown();
+  document.getElementById('sfPreset').value='';
+  document.getElementById('studentForm').style.display='';
+  document.getElementById('sfName').focus();
+}
+
+function confirmStudent(){
+  var name=document.getElementById('sfName').value.trim();
+  if(!name){toast('Bitte einen Namen eingeben');return}
+  var presetId=document.getElementById('sfPreset').value;
+  if(!presetId){toast('Bitte ein Preset ausw\u00E4hlen');return}
+  var student={
+    id:'student-'+Date.now(),
+    name:name,
+    presetId:presetId,
+    deadline:document.getElementById('sfDeadline').value,
+    greeting:document.getElementById('sfGreeting').value.trim()
+  };
+  if(editingStudentIdx>=0){
+    student.id=state.students[editingStudentIdx].id;
+    state.students[editingStudentIdx]=student;
+  }else{
+    state.students.push(student);
+  }
+  saveState();
+  document.getElementById('studentForm').style.display='none';
+  renderStudents();updateStudentCount();
+  toast(editingStudentIdx>=0?'Sch\u00FCler aktualisiert':'Sch\u00FCler "'+name+'" hinzugef\u00FCgt');
+  editingStudentIdx=-1;
+}
+
+function cancelStudent(){
+  document.getElementById('studentForm').style.display='none';
+  editingStudentIdx=-1;
+}
+
+function editStudent(idx){
+  var s=state.students[idx];
+  editingStudentIdx=idx;
+  document.getElementById('sfName').value=s.name;
+  document.getElementById('sfDeadline').value=s.deadline||'';
+  document.getElementById('sfGreeting').value=s.greeting||'';
+  populatePresetDropdown();
+  document.getElementById('sfPreset').value=s.presetId;
+  document.getElementById('studentForm').style.display='';
+  document.getElementById('sfName').focus();
+}
+
+function deleteStudent(idx){
+  if(!confirm('Sch\u00FCler "'+state.students[idx].name+'" entfernen?'))return;
+  state.students.splice(idx,1);
+  saveState();renderStudents();updateStudentCount();
+  toast('Sch\u00FCler entfernt');
+}
+
+function updateStudentCount(){
+  document.getElementById('studentCount').textContent=state.students.length;
+}
+
+function renderStudents(){
+  var list=document.getElementById('studentList');
+  var batch=document.getElementById('batchActions');
+  updateStudentCount();
+  if(!state.students.length){
+    list.innerHTML='<div class="student-empty">\uD83C\uDF93 Noch keine Sch\u00FCler. Klicke &quot;+ Sch\u00FCler hinzuf\u00FCgen&quot; um zu starten.</div>';
+    batch.style.display='none';
+    return;
+  }
+  batch.style.display='';
+  list.innerHTML=state.students.map(function(s,i){
+    var preset=state.presets.find(function(p){return p.id===s.presetId});
+    var presetName=preset?preset.name:'(gel\u00F6scht)';
+    var modCount=preset?Object.keys(preset.modules).length:0;
+    var initials=s.name.split(' ').map(function(w){return w.charAt(0).toUpperCase()}).join('').substring(0,2);
+    return '<div class="student-row">'+
+      '<div class="sr-avatar">'+initials+'<\/div>'+
+      '<div class="sr-info">'+
+        '<div class="sr-name">'+s.name+'<\/div>'+
+        '<div class="sr-detail">'+
+          '<span>\uD83D\uDCE6 '+presetName+'<\/span>'+
+          '<span>\uD83D\uDCDA '+modCount+' Module<\/span>'+
+          (s.deadline?'<span>\uD83D\uDCC5 '+s.deadline+'<\/span>':'')+
+          (s.greeting?'<span>\uD83D\uDCAC Nachricht<\/span>':'')+
+        '<\/div>'+
+      '<\/div>'+
+      '<div class="sr-actions">'+
+        '<button class="btn btn-sm" onclick="editStudent('+i+')">\u270F\uFE0F<\/button>'+
+        '<button class="btn btn-sm btn-danger" onclick="deleteStudent('+i+')">\u2716<\/button>'+
+      '<\/div>'+
+    '<\/div>';
+  }).join('');
+}
+
+function autoDetectBatchUrl(){
+  var inp=document.getElementById('batchBaseUrl');
+  if(!inp.value){
+    var loc=decodeURIComponent(window.location.href).replace(/\\/g,'/');
+    var m=loc.match(/^(file:\/\/\/.+?)\/Dashboard\//i)||loc.match(/^(https?:\/\/.+?)\/Dashboard\//i);
+    if(m)inp.value=m[1].replace(/^file:\/\/\//,'');
+  }
+}
+
+/* --- Progress Import --- */
+function importProgress(){
+  var input=document.getElementById('progressInput').value.trim();
+  if(!input){toast('Bitte einen Fortschrittscode einf\u00FCgen');return}
+  if(input.indexOf('SB1:')!==0){toast('Ung\u00FCltiger Code \u2013 muss mit SB1: beginnen','danger');return}
+  var b64=input.substring(4);
+  try{
+    var json=decodeURIComponent(escape(atob(b64)));
+    var data=JSON.parse(json);
+  }catch(e){toast('Fehler beim Dekodieren des Fortschrittscodes','danger');return}
+  if(!data.v||!data.n||!data.m||!Array.isArray(data.m)){toast('Ung\u00FCltiges Datenformat','danger');return}
+  var record={
+    id:'prog-'+Date.now(),
+    studentName:data.n,
+    timestamp:data.t||'',
+    importedAt:new Date().toISOString().substring(0,16),
+    modules:data.m.map(function(mod){
+      return {storageKey:mod.s,moduleId:mod.i,completed:mod.c===1,quizScore:mod.q,bossResult:mod.b,viewed:mod.w||0};
+    })
+  };
+  var dupeIdx=-1;
+  state.importedProgress.forEach(function(p,i){
+    if(p.studentName===record.studentName&&p.timestamp===record.timestamp)dupeIdx=i;
+  });
+  if(dupeIdx>=0){
+    if(!confirm('Fortschritt von "'+record.studentName+'" mit gleichem Zeitstempel existiert bereits. \u00DCberschreiben?'))return;
+    state.importedProgress[dupeIdx]=record;
+  }else{
+    state.importedProgress.push(record);
+  }
+  saveState();
+  document.getElementById('progressInput').value='';
+  renderImportedProgress();
+  toast('Fortschritt von "'+record.studentName+'" importiert!');
+}
+
+function renderImportedProgress(){
+  var container=document.getElementById('progressResults');
+  var table=document.getElementById('progressTable');
+  if(!state.importedProgress||!state.importedProgress.length){container.style.display='none';return}
+  container.style.display='';
+  table.innerHTML=state.importedProgress.map(function(p,idx){
+    var total=p.modules.length;
+    var done=p.modules.filter(function(m){return m.completed}).length;
+    var pct=total>0?Math.round(done/total*100):0;
+    var avgQuiz=0;var quizCount=0;
+    p.modules.forEach(function(m){if(m.quizScore>=0){avgQuiz+=m.quizScore;quizCount++}});
+    if(quizCount>0)avgQuiz=Math.round(avgQuiz/quizCount*10)/10;
+    var initials=p.studentName.split(' ').map(function(w){return w.charAt(0).toUpperCase()}).join('').substring(0,2);
+    var dateStr=p.timestamp?p.timestamp.replace('T',' '):'?';
+    var moduleRows=p.modules.map(function(m){
+      var appInfo=APPS.find(function(a){return a.storageKey===m.storageKey});
+      var appName=appInfo?appInfo.name:'?';
+      var modInfo=appInfo?appInfo.modules.find(function(mod){return mod.id===m.moduleId}):null;
+      var modTitle=modInfo?(modInfo.icon+' '+modInfo.title):'Modul '+m.moduleId;
+      var quizStr=m.quizScore>=0?m.quizScore+'/5':'--';
+      var bossStr=m.bossResult===1?'\u2705':m.bossResult===0?'\u274C':'--';
+      var st;
+      if(m.completed){st={cls:'st-done',lbl:'\u2713 Abgeschlossen'}}
+      else if(m.quizScore>=3){st={cls:'st-progress',lbl:'\u23F3 In Bearbeitung'}}
+      else if(m.quizScore>=0){st={cls:'st-quiz-fail',lbl:'\u26A0 Quiz: '+m.quizScore+'/5'}}
+      else if(m.viewed){st={cls:'st-viewed',lbl:'\uD83D\uDC41 Ge\u00F6ffnet'}}
+      else{st={cls:'st-none',lbl:'\u25CB Nicht gestartet'}}
+      return '<div class="pc-mod-row">'+
+        '<span class="pc-mod-label '+st.cls+'">'+st.lbl+'<\/span>'+
+        '<span class="pc-mod-title" title="'+appName+'">'+modTitle+'<\/span>'+
+        '<span class="pc-mod-score">Quiz: '+quizStr+'<\/span>'+
+        '<span class="pc-mod-score">Boss: '+bossStr+'<\/span>'+
+      '<\/div>';
+    }).join('');
+    return '<div class="progress-card">'+
+      '<div class="progress-card-header" onclick="toggleProgressDetail('+idx+')">'+
+        '<div class="pc-avatar">'+initials+'<\/div>'+
+        '<div class="pc-info">'+
+          '<div class="pc-name">'+p.studentName+'<\/div>'+
+          '<div class="pc-meta">'+
+            '<span>\uD83D\uDCC5 '+dateStr+'<\/span>'+
+            '<span>\uD83D\uDCDA '+done+'/'+total+' Module<\/span>'+
+          '<\/div>'+
+        '<\/div>'+
+        '<div class="pc-stats">'+
+          '<div class="pc-stat"><div class="pc-val" style="color:'+(pct>=100?'var(--success)':pct>=50?'var(--neon)':'var(--danger)')+'">'+pct+'%<\/div>Fortschritt<\/div>'+
+          (quizCount>0?'<div class="pc-stat"><div class="pc-val">'+avgQuiz+'<\/div>\u00D8 Quiz<\/div>':'')+
+        '<\/div>'+
+        '<button class="pc-delete" onclick="event.stopPropagation();deleteProgress('+idx+')" title="Entfernen">\u2716<\/button>'+
+      '<\/div>'+
+      '<div class="pc-modules" id="pcDetail_'+idx+'">'+moduleRows+'<\/div>'+
+    '<\/div>';
+  }).join('');
+}
+
+function toggleProgressDetail(idx){
+  var el=document.getElementById('pcDetail_'+idx);
+  if(el)el.classList.toggle('open');
+}
+
+function deleteProgress(idx){
+  if(!confirm('Fortschritt von "'+state.importedProgress[idx].studentName+'" entfernen?'))return;
+  state.importedProgress.splice(idx,1);
+  saveState();renderImportedProgress();
+  toast('Fortschritt entfernt');
+}
+
+function loadProgressFile(input){
+  if(!input.files||!input.files[0])return;
+  var file=input.files[0];
+  var reader=new FileReader();
+  reader.onload=function(e){
+    var text=(e.target.result||'').trim();
+    if(text.indexOf('SB1:')!==0){toast('Ung\u00FCltige Datei \u2013 kein Fortschrittscode gefunden','danger');input.value='';return}
+    document.getElementById('progressInput').value=text;
+    importProgress();
+    input.value='';
+  };
+  reader.readAsText(file);
+}
+
+function clearAllProgress(){
+  if(!confirm('Alle importierten Fortschritte l\u00F6schen?'))return;
+  state.importedProgress=[];
+  saveState();renderImportedProgress();
+  toast('Alle Fortschritte gel\u00F6scht');
+}
+
+/* --- Batch Generation --- */
+function buildStudentHtml(student,theme,baseUrl){
+  var preset=state.presets.find(function(p){return p.id===student.presetId});
+  if(!preset)return null;
+  var mods=preset.modules;
+  var keys=Object.keys(mods);
+  var totalModules=keys.length;
+  var totalTime=totalModules*MODULE_TIME;
+
+  // Group modules by app
+  var grouped={};
+  keys.forEach(function(key){
+    var info=mods[key];
+    var appData=APPS.find(function(a){return a.id===info.appId});
+    var sKey=appData?appData.storageKey:'';
+    if(!grouped[info.appId])grouped[info.appId]={appName:info.appName,subject:info.subject,storageKey:sKey,modules:[]};
+    grouped[info.appId].modules.push({id:info.modId,title:info.title,icon:info.icon,key:key});
+  });
+
+  // Build module list HTML
+  var moduleListHtml='';
+  Object.entries(grouped).forEach(function(entry){
+    var appId=entry[0],data=entry[1];
+    var sc=SUBJECT_COLORS[data.subject]||'#888';
+    var appData=APPS.find(function(a){return a.id===appId});
+    var appPath=appData?appData.path.replace(/^\.\.\//,''):'';
+    moduleListHtml+='<div class="app-group">';
+    moduleListHtml+='<div class="app-group-header"><span class="ag-color" style="background:'+sc+'"></span>';
+    moduleListHtml+='<span class="ag-name">'+data.appName+'</span>';
+    moduleListHtml+='<span class="ag-subject">'+data.subject+'</span>';
+    moduleListHtml+='</div>';
+    var allModIds=data.modules.map(function(m){return m.id}).join(',');
+    var appUrl=appPath?(baseUrl?baseUrl+'/'+appPath:appPath)+'#modules='+allModIds:'';
+    data.modules.forEach(function(m){
+      var singleUrl=appUrl;
+      moduleListHtml+='<div class="module-row" data-key="'+m.key+'" data-sk="'+data.storageKey+'" data-mid="'+m.id+'">';
+      moduleListHtml+='<span class="mr-check" id="chk_'+m.key+'"></span>';
+      moduleListHtml+='<span class="mr-icon">'+m.icon+'</span>';
+      moduleListHtml+='<span class="mr-title">'+m.title+'</span>';
+      moduleListHtml+='<span class="mr-time">'+MODULE_TIME+' Min.</span>';
+      if(singleUrl)moduleListHtml+='<a class="mr-start" href="'+singleUrl+'" target="_blank">\u25B6 Starten</a>';
+      moduleListHtml+='</div>';
+    });
+    moduleListHtml+='</div>';
+  });
+
+  var esc=function(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;')};
+  var className=student.name;
+  var greeting=student.greeting||'';
+  var deadline=student.deadline||'';
+  var SCR_END='<'+'/script>';
+
+  // Reuse the same HTML template from generateStudentApp
+  var html='<!-- saved from url=(0016)http://localhost -->\n<!DOCTYPE html>\n'+
+'<html lang="de" data-theme="'+theme+'-dark">\n'+
+'<head>\n'+
+'<meta charset="UTF-8">\n'+
+'<meta name="viewport" content="width=device-width,initial-scale=1">\n'+
+'<title>'+esc(className)+' \u2014 Lernplan</title>\n'+
+'<style>\n'+
+':root{--neon:#3b82f6;--neon-dim:rgba(59,130,246,.15);--bg:#0a0e14;--bg2:#111827;--bg3:#1f2937;--card:#161e2e;--card-hover:#1e293b;--border:#2a3444;--border-light:#374151;--text:#d4dce8;--text-dim:#8899aa;--text-bright:#f1f5f9;--heading:#fff;--link:#60a5fa;--success:#22c55e;--warning:#f59e0b;--danger:#ef4444;--radius:12px;--radius-sm:8px;--radius-lg:16px;--shadow:0 4px 24px rgba(0,0,0,.4);--font:\'Segoe UI\',system-ui,sans-serif;--card-border-w:1px;--card-border-style:solid;--glow:1}\n'+
+'[data-theme="cyber-dark"]{--neon:#3b82f6;--bg:#0a0e14;--bg2:#111827;--bg3:#1f2937;--card:#161e2e;--card-hover:#1e293b;--border:#2a3444;--text:#d4dce8;--text-dim:#8899aa;--text-bright:#f1f5f9;--heading:#fff;--link:#60a5fa;--glow:1}\n'+
+'[data-theme="cyber-light"]{--neon:#1d4ed8;--bg:#f8f9fb;--bg2:#f0f2f5;--bg3:#e5e7eb;--card:#fff;--card-hover:#f5f7fa;--border:#d1d5db;--text:#374151;--text-dim:#4b5563;--text-bright:#111827;--heading:#111827;--link:#2563eb;--glow:0}\n'+
+'[data-theme="retro-dark"]{--neon:#ffd700;--bg:#0d0208;--bg2:#1a0a1e;--bg3:#2d1233;--card:#1a0a1e;--card-hover:#2d1233;--border:#4a1942;--text:#e0d0f0;--text-dim:#9080a0;--text-bright:#fff;--heading:#ffd700;--link:#ff6b9d;--radius:0;--radius-sm:0;--radius-lg:0;--font:\'Courier New\',monospace;--card-border-w:3px;--glow:0}\n'+
+'[data-theme="retro-light"]{--neon:#b8860b;--bg:#fff8e1;--bg2:#fff3cd;--bg3:#ffe0b2;--card:#fff;--card-hover:#fff9f0;--border:#d4a017;--text:#3e2723;--text-dim:#6d4c41;--text-bright:#1b0000;--heading:#b8860b;--link:#c2185b;--radius:0;--radius-sm:0;--radius-lg:0;--font:\'Courier New\',monospace;--card-border-w:3px;--glow:0}\n'+
+'[data-theme="nature-dark"]{--neon:#4ade80;--bg:#0c1a0f;--bg2:#132617;--bg3:#1e3a24;--card:#15291a;--card-hover:#1e3a24;--border:#2d5a36;--text:#c8e6c9;--text-dim:#81a784;--text-bright:#e8f5e9;--heading:#e8f5e9;--link:#81c784;--radius:20px;--radius-sm:14px;--radius-lg:28px;--glow:0}\n'+
+'[data-theme="nature-light"]{--neon:#2e7d32;--bg:#f1f8e9;--bg2:#e8f5e9;--bg3:#c8e6c9;--card:#fff;--card-hover:#f1faf1;--border:#a5d6a7;--text:#33691e;--text-dim:#3e6e1c;--text-bright:#1b5e20;--heading:#1b5e20;--link:#2e7d32;--radius:20px;--radius-sm:14px;--radius-lg:28px;--glow:0}\n'+
+'[data-theme="space-dark"]{--neon:#c084fc;--bg:#07020e;--bg2:#0f0720;--bg3:#1a0e35;--card:#110a28;--card-hover:#1a0e35;--border:#2e1a5e;--text:#d4c8f0;--text-dim:#9080b8;--text-bright:#f0e8ff;--heading:#f0e8ff;--link:#f0abfc;--radius:4px;--radius-sm:2px;--radius-lg:6px;--glow:1}\n'+
+'[data-theme="space-light"]{--neon:#7c3aed;--bg:#faf5ff;--bg2:#f3e8ff;--bg3:#e9d5ff;--card:#fff;--card-hover:#faf5ff;--border:#c4b5fd;--text:#4c1d95;--text-dim:#5b21b6;--text-bright:#2e1065;--heading:#2e1065;--link:#7c3aed;--radius:4px;--radius-sm:2px;--radius-lg:6px;--glow:0}\n'+
+'[data-theme="comic-dark"]{--neon:#ff6b6b;--bg:#1a1a2e;--bg2:#222244;--bg3:#2e2e55;--card:#262650;--card-hover:#2e2e55;--border:#4a4a7a;--text:#e8e0ff;--text-dim:#a098c0;--text-bright:#fff;--heading:#fff;--link:#ffa94d;--radius:16px;--radius-sm:12px;--radius-lg:24px;--font:\'Comic Sans MS\',cursive,sans-serif;--card-border-w:3px;--glow:0}\n'+
+'[data-theme="comic-light"]{--neon:#e03131;--bg:#fff9db;--bg2:#fff3bf;--bg3:#ffe066;--card:#fff;--card-hover:#fffdf0;--border:#fab005;--text:#2b2b2b;--text-dim:#555;--text-bright:#000;--heading:#000;--link:#e8590c;--radius:16px;--radius-sm:12px;--radius-lg:24px;--font:\'Comic Sans MS\',cursive,sans-serif;--card-border-w:3px;--glow:0}\n'+
+'[data-theme="sketchy-dark"]{--neon:#d97706;--bg:#2a1f0f;--bg2:#3a2a1a;--bg3:#4a3a2a;--card:#362414;--card-hover:#462a1a;--border:#5a4030;--text:#d4c4b0;--text-dim:#a09080;--text-bright:#e8d8c8;--heading:#f5ead5;--link:#e8a550;--radius:24px;--radius-sm:16px;--radius-lg:32px;--font:\'Georgia\',serif;--card-border-w:2px;--card-border-style:dashed;--glow:0}\n'+
+'[data-theme="sketchy-light"]{--neon:#b45309;--bg:#fef3e2;--bg2:#fde8cc;--bg3:#f9d5b8;--card:#fff;--card-hover:#fffaf5;--border:#d4a574;--text:#5c4033;--text-dim:#8b6f47;--text-bright:#3e2723;--heading:#3e2723;--link:#c2600c;--radius:24px;--radius-sm:16px;--radius-lg:32px;--font:\'Georgia\',serif;--card-border-w:2px;--card-border-style:dashed;--glow:0}\n'+
+'[data-theme="nature-code-dark"]{--neon:#10b981;--bg:#0a1f12;--bg2:#0d2818;--bg3:#1a3a2a;--card:#0f281a;--card-hover:#1a3a2a;--border:#2d5a3d;--text:#c8e6d0;--text-dim:#7ba890;--text-bright:#e8f5ed;--heading:#e8f5ed;--link:#34d399;--radius:20px;--radius-sm:14px;--radius-lg:28px;--glow:0}\n'+
+'[data-theme="nature-code-light"]{--neon:#059669;--bg:#f0fdf8;--bg2:#e8faf2;--bg3:#d1f2e0;--card:#fff;--card-hover:#f5fbf7;--border:#86efac;--text:#164e3f;--text-dim:#2d6e4f;--text-bright:#052e16;--heading:#052e16;--link:#059669;--radius:20px;--radius-sm:14px;--radius-lg:28px;--glow:0}\n'+
+'[data-theme="glass-dark"]{--neon:#00d9ff;--bg:#0f0f23;--bg2:#1a1a3e;--bg3:#25254a;--card:rgba(30,30,60,.4);--card-hover:rgba(40,40,80,.5);--border:rgba(100,150,255,.2);--text:#e4e8f0;--text-dim:#8899aa;--text-bright:#f5f7ff;--heading:#fff;--link:#00d9ff;--radius:16px;--radius-sm:12px;--radius-lg:20px;--glow:1}\n'+
+'[data-theme="glass-light"]{--neon:#0891b2;--bg:#f8fafc;--bg2:#f1f5f9;--bg3:#e2e8f0;--card:rgba(255,255,255,.4);--card-hover:rgba(255,255,255,.6);--border:rgba(100,180,255,.2);--text:#1e293b;--text-dim:#475569;--text-bright:#0f172a;--heading:#0f172a;--link:#0891b2;--radius:16px;--radius-sm:12px;--radius-lg:20px;--glow:0}\n'+
+'*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}\n'+
+'html{scroll-behavior:smooth}\n'+
+'body{font-family:var(--font);background:var(--bg);color:var(--text);line-height:1.6;min-height:100vh;padding:0}\n'+
+'.container{max-width:800px;margin:0 auto;padding:1.5rem}\n'+
+'.hero{background:var(--bg2);border-bottom:var(--card-border-w) var(--card-border-style) var(--border);padding:2rem 1.5rem;text-align:center;margin-bottom:1.5rem;border-radius:0 0 var(--radius-lg) var(--radius-lg)}\n'+
+'.hero h1{font-size:1.6rem;color:var(--heading);margin-bottom:.3rem}\n'+
+'.hero .class-name{font-size:1rem;color:var(--neon);font-weight:600;margin-bottom:.5rem}\n'+
+'.hero .greeting{font-size:.88rem;color:var(--text);max-width:600px;margin:0 auto .8rem;line-height:1.5;white-space:pre-line}\n'+
+'.countdown{display:inline-flex;align-items:center;gap:.5rem;background:var(--card);border:var(--card-border-w) var(--card-border-style) var(--border);padding:.5rem 1.2rem;border-radius:var(--radius);font-size:.85rem;color:var(--text-bright)}\n'+
+'.countdown.urgent{border-color:var(--danger);color:var(--danger)}\n'+
+'.countdown .cd-num{font-size:1.3rem;font-weight:700;color:var(--neon)}\n'+
+'.countdown.urgent .cd-num{color:var(--danger)}\n'+
+'.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:.8rem;margin-bottom:1.5rem}\n'+
+'.stat{background:var(--card);border:var(--card-border-w) var(--card-border-style) var(--border);border-radius:var(--radius);padding:1rem;text-align:center}\n'+
+'.stat .s-num{font-size:1.6rem;font-weight:700;color:var(--neon)}\n'+
+'.stat .s-label{font-size:.72rem;color:var(--text-dim)}\n'+
+'.progress-bar{background:var(--bg3);border-radius:20px;height:12px;margin-bottom:1.5rem;overflow:hidden}\n'+
+'.progress-fill{height:100%;background:linear-gradient(90deg,var(--neon),var(--success));border-radius:20px;transition:width .5s;width:0}\n'+
+'.app-group{background:var(--card);border:var(--card-border-w) var(--card-border-style) var(--border);border-radius:var(--radius);margin-bottom:1rem;overflow:hidden}\n'+
+'.app-group-header{display:flex;align-items:center;gap:.6rem;padding:.8rem 1rem;border-bottom:1px solid var(--border);flex-wrap:wrap}\n'+
+'.ag-color{width:12px;height:12px;border-radius:50%;flex-shrink:0}\n'+
+'.ag-name{font-weight:700;font-size:.9rem;color:var(--heading)}\n'+
+'.ag-subject{font-size:.72rem;color:var(--text-dim);margin-right:auto}\n'+
+'.module-row{display:flex;align-items:center;gap:.6rem;padding:.55rem 1rem;transition:background .12s}\n'+
+'.module-row:hover{background:var(--card-hover)}\n'+
+'.module-row.done{opacity:.6}\n'+
+'.module-row.done .mr-title{text-decoration:line-through}\n'+
+'.mr-check{width:22px;height:22px;border-radius:6px;border:2px solid var(--border);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:.75rem;transition:all .15s}\n'+
+'.module-row.done .mr-check{background:var(--success);border-color:var(--success);color:#fff}\n'+
+'.mr-icon{font-size:1rem;width:22px;text-align:center}\n'+
+'.mr-title{flex:1;font-size:.85rem}\n'+
+'.mr-time{font-size:.7rem;color:var(--text-dim);margin-right:.4rem}\n'+
+'.mr-start{font-size:.7rem;color:var(--link);text-decoration:none;padding:.2rem .5rem;border:1px solid var(--border);border-radius:var(--radius-sm);white-space:nowrap;transition:all .15s}\n'+
+'.mr-start:hover{border-color:var(--neon);background:var(--neon-dim,rgba(59,130,246,.15))}\n'+
+'.theme-toggle{position:fixed;bottom:1rem;right:1rem;display:flex;gap:.3rem}\n'+
+'.tt-btn{width:36px;height:36px;border-radius:50%;border:2px solid var(--border);background:var(--card);cursor:pointer;font-size:1rem;display:flex;align-items:center;justify-content:center;transition:all .15s}\n'+
+'.tt-btn:hover{border-color:var(--neon);transform:scale(1.1)}\n'+
+'.tt-btn:focus-visible{outline:2px solid var(--neon);outline-offset:2px}\n'+
+'.zoom-controls{position:fixed;bottom:1rem;left:1rem;display:flex;gap:4px;z-index:999}\n'+
+'.zoom-btn{width:32px;height:32px;border-radius:50%;border:2px solid var(--border);background:var(--card);color:var(--text);cursor:pointer;font-size:15px;display:flex;align-items:center;justify-content:center;transition:all .15s;font-family:inherit;line-height:1}\n'+
+'.zoom-btn:hover{border-color:var(--neon);color:var(--neon);transform:scale(1.1)}\n'+
+'.zoom-btn:focus-visible{outline:2px solid var(--neon);outline-offset:2px}\n'+
+'.footer{text-align:center;padding:2rem 1rem;font-size:.72rem;color:var(--text-dim)}\n'+
+'@keyframes confetti-fall{0%{transform:translateY(-100vh) rotate(0deg);opacity:1}100%{transform:translateY(100vh) rotate(720deg);opacity:0}}\n'+
+'.confetti{position:fixed;top:-10px;width:8px;height:8px;border-radius:2px;animation:confetti-fall 3s ease-out forwards;pointer-events:none;z-index:999}\n'+
+'.export-section{margin:1.5rem auto;text-align:center}\n'+
+'.export-btn{background:var(--neon);color:#fff;border:none;padding:.7rem 1.5rem;border-radius:var(--radius);font-family:var(--font);font-size:.9rem;font-weight:600;cursor:pointer;transition:all .2s}\n'+
+'.export-btn:hover{opacity:.85;transform:translateY(-1px)}\n'+
+'.export-status{margin-top:.5rem;font-size:.8rem;padding:.4rem .8rem;border-radius:var(--radius-sm);display:inline-block}\n'+
+'.export-status.ok{background:rgba(34,197,94,.15);color:var(--success)}\n'+
+'.export-status.err{background:rgba(239,68,68,.15);color:var(--danger)}\n'+
+'@media print{body{background:#fff;color:#000}.hero{background:#f5f5f5;border:1px solid #ccc}.hero h1,.hero .class-name{color:#000}.stat{border:1px solid #ccc;background:#fff}.stat .s-num{color:#333}.app-group{border:1px solid #ccc}.module-row.done .mr-check{background:#22c55e}.theme-toggle,.zoom-controls,.mr-start,.export-section{display:none!important}.countdown{border:1px solid #ccc}}\n'+
+'@media(max-width:600px){.stats{grid-template-columns:1fr 1fr}.hero h1{font-size:1.2rem}.container{padding:1rem}}\n'+
+'<\/style>\n'+
+'<\/head>\n'+
+'<body>\n'+
+'<div class="hero">\n'+
+'<h1>\uD83C\uDF93 Mein Lernplan<\/h1>\n'+
+'<div class="class-name">'+esc(className)+'<\/div>\n'+
+(greeting?'<div class="greeting">'+esc(greeting)+'<\/div>\n':'')+
+(deadline?'<div class="countdown" id="countdown"><span>\u23F3 Abgabe in <span class="cd-num" id="cdDays">-<\/span> Tagen<\/span><\/div>\n':'')+
+'<\/div>\n'+
+'<div class="container">\n'+
+'<div class="stats">\n'+
+'<div class="stat"><div class="s-num" id="sDone">0<\/div><div class="s-label">Erledigt<\/div><\/div>\n'+
+'<div class="stat"><div class="s-num">'+totalModules+'<\/div><div class="s-label">Module<\/div><\/div>\n'+
+'<div class="stat"><div class="s-num" id="sPercent">0%<\/div><div class="s-label">Fortschritt<\/div><\/div>\n'+
+'<div class="stat"><div class="s-num">'+Math.round(totalTime/60*10)/10+'h<\/div><div class="s-label">Gesamtzeit<\/div><\/div>\n'+
+'<\/div>\n'+
+'<div class="progress-bar"><div class="progress-fill" id="progressFill"><\/div><\/div>\n'+
+moduleListHtml+'\n'+
+'<div class="export-section"><button class="export-btn" onclick="saveProgressFile()">\uD83D\uDCBE Fortschritt speichern<\/button> <button class="export-btn" onclick="exportProgress()" style="background:var(--bg3);color:var(--text);font-size:.8rem;padding:.5rem 1rem">\uD83D\uDCCB Kopieren<\/button><div class="export-status" id="exportStatus" style="display:none"><\/div><\/div>\n'+
+'<\/div>\n'+
+'<div class="theme-toggle">\n'+
+'<button class="tt-btn" onclick="toggleMode()" title="Dark/Light umschalten" id="modeToggle">\uD83C\uDF19<\/button>\n'+
+'<\/div>\n'+
+'<div class="zoom-controls" role="toolbar" aria-label="Zoom-Steuerung">\n'+
+'<button class="zoom-btn" onclick="zoomOut()" title="Verkleinern (Taste -)" aria-label="Verkleinern">\u2212<\/button>\n'+
+'<button class="zoom-btn" onclick="zoomReset()" title="Zoom zur\u00FCcksetzen (Taste 0)" aria-label="Zoom zur\u00FCcksetzen" style="font-size:10px"><span id="zoomLvl">100%<\/span><\/button>\n'+
+'<button class="zoom-btn" onclick="zoomIn()" title="Vergr\u00F6\u00DFern (Taste +)" aria-label="Vergr\u00F6\u00DFern">+<\/button>\n'+
+'<\/div>\n'+
+'<div class="footer">\u00A9 2026 GZ AI Stacks \u2014 Gerd Zimmermann<br>Erstellt mit dem LehrplanManager<\/div>\n'+
+'<script>\n'+
+'var TOTAL='+totalModules+';\n'+
+'var DEADLINE="'+deadline+'";\n'+
+'var THEME="'+theme+'";\n'+
+'var STUDENT_NAME="'+esc(className)+'";\n'+
+'var mode="dark";\n'+
+'var prevDone=0;\n'+
+'var zl=100;\n'+
+'function zoomIn(){if(zl<200){zl+=10;applyZoom();}}\n'+
+'function zoomOut(){if(zl>50){zl-=10;applyZoom();}}\n'+
+'function zoomReset(){zl=100;applyZoom();}\n'+
+'function applyZoom(){document.documentElement.style.fontSize=zl+"%";var e=document.getElementById("zoomLvl");if(e)e.textContent=zl+"%";}\n'+
+'document.addEventListener("keydown",function(e){\n'+
+'if(e.target.tagName==="INPUT"||e.target.tagName==="TEXTAREA"||e.target.isContentEditable)return;\n'+
+'if((e.key==="+"||e.key==="=")&&!e.ctrlKey&&!e.metaKey){e.preventDefault();zoomIn();}\n'+
+'else if((e.key==="-"||e.key==="_")&&!e.ctrlKey&&!e.metaKey){e.preventDefault();zoomOut();}\n'+
+'else if(e.key==="0"&&!e.ctrlKey&&!e.metaKey){e.preventDefault();zoomReset();}\n'+
+'});\n'+
+'function checkProgress(){\n'+
+'var ct=0;\n'+
+'document.querySelectorAll(".module-row").forEach(function(r){\n'+
+'var sk=r.dataset.sk;\n'+
+'var mid=parseInt(r.dataset.mid);\n'+
+'var done=false;\n'+
+'try{\n'+
+'var raw=localStorage.getItem(sk);\n'+
+'if(raw){\n'+
+'var st=JSON.parse(raw);\n'+
+'if(st.modulesCompleted&&st.modulesCompleted.indexOf(mid)!==-1)done=true;\n'+
+'}\n'+
+'}catch(e){}\n'+
+'r.classList.toggle("done",done);\n'+
+'var chk=document.getElementById("chk_"+r.dataset.key);\n'+
+'if(chk)chk.textContent=done?"\\u2713":"";\n'+
+'if(done)ct++;\n'+
+'});\n'+
+'var pct=Math.round(ct/TOTAL*100);\n'+
+'document.getElementById("sDone").textContent=ct;\n'+
+'document.getElementById("sPercent").textContent=pct+"%";\n'+
+'document.getElementById("progressFill").style.width=pct+"%";\n'+
+'if(ct===TOTAL&&prevDone<TOTAL)celebrate();\n'+
+'prevDone=ct;\n'+
+'}\n'+
+'function updateCountdown(){\n'+
+'if(!DEADLINE)return;\n'+
+'var dl=new Date(DEADLINE+"T23:59:59");\n'+
+'var now=new Date();\n'+
+'var diff=Math.ceil((dl-now)/(1000*60*60*24));\n'+
+'var el=document.getElementById("cdDays");\n'+
+'var cd=document.getElementById("countdown");\n'+
+'if(!el||!cd)return;\n'+
+'if(diff<0){el.textContent="0";cd.querySelector("span").innerHTML="\\u23F3 Abgabefrist abgelaufen";cd.classList.add("urgent")}\n'+
+'else{el.textContent=diff;if(diff<=3)cd.classList.add("urgent");else cd.classList.remove("urgent")}\n'+
+'}\n'+
+'function toggleMode(){\n'+
+'mode=mode==="dark"?"light":"dark";\n'+
+'document.documentElement.setAttribute("data-theme",THEME+"-"+mode);\n'+
+'document.getElementById("modeToggle").textContent=mode==="dark"?"\\u{1F319}":"\\u2600\\uFE0F";\n'+
+'}\n'+
+'function celebrate(){\n'+
+'var colors=["#ff6b6b","#ffd700","#4ade80","#3b82f6","#c084fc","#f59e0b","#ec4899"];\n'+
+'for(var i=0;i<50;i++){\n'+
+'var c=document.createElement("div");\n'+
+'c.className="confetti";\n'+
+'c.style.left=Math.random()*100+"vw";\n'+
+'c.style.background=colors[Math.floor(Math.random()*colors.length)];\n'+
+'c.style.animationDelay=Math.random()*2+"s";\n'+
+'c.style.width=(4+Math.random()*8)+"px";\n'+
+'c.style.height=(4+Math.random()*8)+"px";\n'+
+'document.body.appendChild(c);\n'+
+'setTimeout(function(el){return function(){el.remove()}}(c),5000);\n'+
+'}\n'+
+'}\n'+
+'function buildProgressCode(){\n'+
+'var modules=[];\n'+
+'document.querySelectorAll(".module-row").forEach(function(r){\n'+
+'var sk=r.dataset.sk;\n'+
+'var mid=parseInt(r.dataset.mid);\n'+
+'var entry={s:sk,i:mid,c:0,q:-1,b:-1,w:0};\n'+
+'try{\n'+
+'var raw=localStorage.getItem(sk);\n'+
+'if(raw){\n'+
+'var st=JSON.parse(raw);\n'+
+'if(st.modulesCompleted&&st.modulesCompleted.indexOf(mid)!==-1)entry.c=1;\n'+
+'if(st.quizResults&&st.quizResults[mid]!==undefined)entry.q=st.quizResults[mid];\n'+
+'if(st.bossResults&&st.bossResults[mid]!==undefined)entry.b=st.bossResults[mid]?1:0;\n'+
+'if(st.modulesViewed&&st.modulesViewed.indexOf(mid)!==-1)entry.w=1;\n'+
+'}\n'+
+'}catch(e){}\n'+
+'modules.push(entry);\n'+
+'});\n'+
+'var data={v:1,n:STUDENT_NAME,t:new Date().toISOString().substring(0,16),m:modules};\n'+
+'return "SB1:"+btoa(unescape(encodeURIComponent(JSON.stringify(data))));\n'+
+'}\n'+
+'function saveProgressFile(){\n'+
+'var encoded=buildProgressCode();\n'+
+'var safeName=STUDENT_NAME.replace(/[^a-zA-Z0-9\\u00C0-\\u024F_-]/g,"_");\n'+
+'var date=new Date().toISOString().substring(0,10);\n'+
+'var blob=new Blob([encoded],{type:"text/plain;charset=utf-8"});\n'+
+'var a=document.createElement("a");\n'+
+'a.href=URL.createObjectURL(blob);\n'+
+'a.download="Fortschritt_"+safeName+"_"+date+".txt";\n'+
+'a.click();\n'+
+'URL.revokeObjectURL(a.href);\n'+
+'var el=document.getElementById("exportStatus");\n'+
+'el.textContent="\\u2705 Datei gespeichert! Gib sie deinem Lehrer.";\n'+
+'el.className="export-status ok";el.style.display="inline-block";\n'+
+'}\n'+
+'function exportProgress(){\n'+
+'copyToClipboard(buildProgressCode());\n'+
+'}\n'+
+'function copyToClipboard(text){\n'+
+'var el=document.getElementById("exportStatus");\n'+
+'if(navigator.clipboard&&window.isSecureContext){\n'+
+'navigator.clipboard.writeText(text).then(function(){\n'+
+'el.textContent="\\u2705 Fortschritt kopiert! Gib diesen Code deinem Lehrer.";\n'+
+'el.className="export-status ok";el.style.display="inline-block";\n'+
+'}).catch(function(){fallbackCopy(text)});\n'+
+'}else{fallbackCopy(text);}\n'+
+'}\n'+
+'function fallbackCopy(text){\n'+
+'var el=document.getElementById("exportStatus");\n'+
+'var ta=document.createElement("textarea");\n'+
+'ta.value=text;ta.style.position="fixed";ta.style.left="-9999px";\n'+
+'document.body.appendChild(ta);ta.select();\n'+
+'try{document.execCommand("copy");\n'+
+'el.textContent="\\u2705 Fortschritt kopiert! Gib diesen Code deinem Lehrer.";\n'+
+'el.className="export-status ok";el.style.display="inline-block";\n'+
+'}catch(e){\n'+
+'el.textContent="\\u274C Kopieren fehlgeschlagen. Bitte manuell kopieren.";\n'+
+'el.className="export-status err";el.style.display="inline-block";\n'+
+'prompt("Bitte diesen Text kopieren:",text);\n'+
+'}ta.remove();\n'+
+'}\n'+
+'checkProgress();\n'+
+'updateCountdown();\n'+
+'setInterval(checkProgress,3000);\n'+
+'if(DEADLINE)setInterval(updateCountdown,60000);\n'+
+SCR_END+'\n'+
+'<\/body>\n'+
+'<\/html>';
+
+  return html;
+}
+
+async function batchGenerateSingle(){
+  if(!state.students.length){toast('Keine Sch\u00FCler vorhanden');return}
+  var theme=document.getElementById('batchTheme').value;
+  var baseUrl=(document.getElementById('batchBaseUrl').value||'').trim().replace(/\/+$/,'').replace(/\\/g,'/');
+  if(baseUrl&&/^[A-Za-z]:/.test(baseUrl))baseUrl='file:///'+baseUrl;
+
+  var filesToSave=[];
+  state.students.forEach(function(s){
+    var html=buildStudentHtml(s,theme,baseUrl);
+    if(!html)return;
+    var safeName=s.name.replace(/[^a-zA-Z0-9\u00C0-\u024F_-]/g,'_').substring(0,40);
+    filesToSave.push({name:'Lernplan_'+safeName+'.html',html:html});
+  });
+  if(!filesToSave.length){toast('Keine g\u00FCltigen Lernpl\u00E4ne erstellt');return}
+
+  if(window.showDirectoryPicker){
+    try{
+      var dirHandle=await window.showDirectoryPicker({mode:'readwrite',startIn:'downloads'});
+      for(var i=0;i<filesToSave.length;i++){
+        var f=filesToSave[i];
+        var fileHandle=await dirHandle.getFileHandle(f.name,{create:true});
+        var writable=await fileHandle.createWritable();
+        await writable.write(f.html);
+        await writable.close();
+      }
+      toast(filesToSave.length+' Lernpl\u00E4ne gespeichert in ausgew\u00E4hltem Ordner');
+      return;
+    }catch(e){
+      if(e.name==='AbortError')return;
+    }
+  }
+
+  filesToSave.forEach(function(f,i){
+    setTimeout(function(){
+      var blob=new Blob([f.html],{type:'text/html;charset=utf-8'});
+      var url=URL.createObjectURL(blob);
+      var a=document.createElement('a');
+      a.href=url;a.download=f.name;
+      a.click();URL.revokeObjectURL(url);
+    },i*300);
+  });
+  toast(filesToSave.length+' Lernpl\u00E4ne werden heruntergeladen...');
+}
+
+/* ===== KEYBOARD ===== */
+document.addEventListener('keydown',e=>{
+  if(e.key==='Escape'){hideThemes();hideImpressum();hideExportStudent()}
+});
+
+/* ===== INIT ===== */
+loadState();
+renderApps();
+updateFilterChips();
+renderPlanner();
+updateStudentCount();
+</script>
+</body>
+</html>
