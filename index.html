@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="manifest" href="manifest.json">
 <title>Schulbildung — Schulträger</title>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
@@ -51,5 +52,6 @@ function _lActivate(){var input=document.getElementById('_lInput');var error=doc
 document.getElementById('_lInput').addEventListener('input',function(){var v=this.value.replace(/[^A-Za-z0-9]/g,'').toUpperCase();if(v.length>0&&!v.startsWith('SCT'))v='SCT'+v.substring(3);var f='';if(v.length>0)f=v.substring(0,3);if(v.length>3)f+='-'+v.substring(3,7);if(v.length>7)f+='-'+v.substring(7,11);if(v.length>11)f+='-'+v.substring(11,15);this.value=f;});
 document.getElementById('_lInput').addEventListener('keydown',function(e){if(e.key==='Enter')_lActivate();});
 </script>
+<script>if('serviceWorker' in navigator){navigator.serviceWorker.register('./sw.js').catch(()=>{});}</script>
 </body>
 </html>
