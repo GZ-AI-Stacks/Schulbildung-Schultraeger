@@ -1,1 +1,55 @@
-<!DOCTYPE html><html><head><meta charset="UTF-8"><meta http-equiv="refresh" content="0;url=Dashboard/index.html"><title>Weiterleitung...</title></head><body><p>Weiterleitung zum <a href="Dashboard/index.html">Lehrer-Dashboard</a>...</p></body></html>
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Schulbildung — Schulträger</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Segoe UI',system-ui,sans-serif;background:linear-gradient(135deg,#0a0e14,#111827);min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px}
+._llic{position:fixed;inset:0;z-index:99999;background:linear-gradient(135deg,#0a0e14,#111827);display:flex;align-items:center;justify-content:center;padding:24px}
+._llic.hidden{display:none}
+._lbox{background:#161e2e;border:1px solid #2a3444;border-radius:16px;padding:40px 36px;max-width:420px;width:100%;text-align:center;box-shadow:0 8px 40px rgba(0,0,0,.5)}
+._licon{font-size:3rem;margin-bottom:12px}
+._ltitle{font-size:1.5rem;font-weight:700;color:#f1f5f9;margin-bottom:8px}
+._lsub{font-size:.875rem;color:#8899aa;margin-bottom:28px;line-height:1.5}
+._linput{width:100%;padding:12px 16px;background:#0a0e14;border:2px solid #2a3444;border-radius:10px;color:#f1f5f9;font-size:1rem;font-family:'Courier New',monospace;letter-spacing:.1em;text-align:center;outline:none;transition:border-color .2s;margin-bottom:14px}
+._linput:focus{border-color:#3b82f6}
+._lbtn{width:100%;padding:12px;background:#3b82f6;border:none;border-radius:10px;color:#fff;font-size:1rem;font-weight:600;cursor:pointer;transition:opacity .2s;margin-bottom:12px}
+._lbtn:hover{opacity:.85}
+._lerr{font-size:.82rem;color:#f87171;min-height:20px}
+._lfooter{font-size:.7rem;color:#4b5563;margin-top:20px;text-transform:uppercase;letter-spacing:.08em}
+</style>
+</head>
+<body>
+
+<div class="_llic" id="_lScreen">
+  <div class="_lbox">
+    <div class="_licon">🏫</div>
+    <div class="_ltitle">Schulbildung — Schulträger</div>
+    <div class="_lsub">Bitte gib deinen Lizenzschlüssel ein,<br>um das Lehrer-Dashboard zu aktivieren.</div>
+    <input class="_linput" id="_lInput" type="text" placeholder="SCT-XXXX-XXXX-XXXX" maxlength="19" autocomplete="off" spellcheck="false">
+    <button class="_lbtn" onclick="_lActivate()">Aktivieren</button>
+    <div class="_lerr" id="_lErr"></div>
+    <div class="_lfooter">GZ-AI.-Stacks &middot; Schulbildung Schulträger</div>
+  </div>
+</div>
+
+<script>
+var _lSTORE='schulbildung_schultraeger_lic_v1';
+
+function _lHash(s){var h=0x7A39E1B;for(var i=0;i<s.length;i++){h=((h<<5)-h+s.charCodeAt(i))|0;h=(h^(h>>>16))|0;h=(h*0x45d9f3b)|0;}return Math.abs(h);}
+
+function _lGenCheck(parts){var seed=0x535400;var p1=_lHash(parts[0]+'gz');var p2=_lHash(parts[1]+'ai');var combined=(p1^p2^seed)>>>0;var check=(combined%89990)+10000;return check.toString().substring(0,4);}
+
+function _lValidate(key){if(!key)return false;var k=key.toUpperCase().trim();var regex=/^SCT-([A-Z0-9]{4})-([A-Z0-9]{4})-([A-Z0-9]{4})$/;var m=k.match(regex);if(!m)return false;var expected=_lGenCheck([m[1],m[2]]);return m[3]===expected;}
+
+function _lActivate(){var input=document.getElementById('_lInput');var error=document.getElementById('_lErr');var key=input.value.trim().toUpperCase();if(!key){error.textContent='Bitte Lizenzschlüssel eingeben';return;}if(_lValidate(key)){try{localStorage.setItem(_lSTORE,key)}catch(e){}document.getElementById('_lScreen').classList.add('hidden');window.location.href='Dashboard/index.html';}else{error.textContent='Ungültiger Lizenzschlüssel';input.style.borderColor='#f87171';setTimeout(function(){input.style.borderColor=''},2000);}}
+
+(function(){var stored=null;try{stored=localStorage.getItem(_lSTORE)}catch(e){}if(stored&&_lValidate(stored)){window.location.href='Dashboard/index.html';}})();
+
+document.getElementById('_lInput').addEventListener('input',function(){var v=this.value.replace(/[^A-Za-z0-9]/g,'').toUpperCase();if(v.length>0&&!v.startsWith('SCT'))v='SCT'+v.substring(3);var f='';if(v.length>0)f=v.substring(0,3);if(v.length>3)f+='-'+v.substring(3,7);if(v.length>7)f+='-'+v.substring(7,11);if(v.length>11)f+='-'+v.substring(11,15);this.value=f;});
+document.getElementById('_lInput').addEventListener('keydown',function(e){if(e.key==='Enter')_lActivate();});
+</script>
+</body>
+</html>
