@@ -133,14 +133,15 @@ a{color:var(--link);text-decoration:none}a:hover{text-decoration:underline}
 // ═══════════════════════════════════════════════
 
 // === Audio (TTS) ===
-const _synth=window.speechSynthesis,_LANG='de-DE';let _ttsOn=false,_ttsRate=1,_ttsTimer=null,_ttsUtterance=null;
-function speakLesson(i){if(_ttsOn){stopTTS();return}const c=document.querySelectorAll('.lesson-card');if(!c[i]||!_synth)return;stopTTS();_ttsUtterance=new SpeechSynthesisUtterance(c[i].innerText);_ttsUtterance.lang=_LANG;_ttsUtterance.rate=_ttsRate;_ttsUtterance.onstart=()=>{_ttsOn=true;updTTSUI();startTTSTimer()};_ttsUtterance.onend=()=>{_ttsOn=false;updTTSUI();clearTTSTimer()};_ttsUtterance.onerror=()=>{_ttsOn=false;updTTSUI();clearTTSTimer()};_synth.speak(_ttsUtterance);showTTSBar()}
-function speakText(t,lang){if(!_synth)return;stopTTS();_ttsUtterance=new SpeechSynthesisUtterance(t);_ttsUtterance.lang=lang||_LANG;_ttsUtterance.rate=_ttsRate;_ttsUtterance.onstart=()=>{_ttsOn=true;updTTSUI();startTTSTimer()};_ttsUtterance.onend=()=>{_ttsOn=false;updTTSUI();clearTTSTimer()};_ttsUtterance.onerror=()=>{_ttsOn=false;updTTSUI();clearTTSTimer()};_synth.speak(_ttsUtterance)}
-function stopTTS(){if(_synth){_synth.cancel()}_ttsOn=false;updTTSUI();clearTTSTimer()}
+const _synth=window.speechSynthesis,_LANG='de-DE';let _ttsOn=false,_ttsRate=1,_ttsUtterance=null,_ttsQueue=[];
+function speakLesson(i){if(_ttsOn){stopTTS();return}const c=document.querySelectorAll('.lesson-card');if(!c[i]||!_synth)return;stopTTS();_ttsStartChunked(c[i].innerText,_LANG);showTTSBar()}
+function speakText(t,lang){if(!_synth)return;stopTTS();_ttsStartChunked(t,lang||_LANG)}
+function stopTTS(){_ttsQueue=[];if(_synth){_synth.cancel()}_ttsOn=false;updTTSUI()}
 function updTTSUI(){document.querySelectorAll('.tts-btn').forEach(b=>b.classList.toggle('speaking',_ttsOn))}
 function setTTSRate(r){_ttsRate=parseFloat(r)}
-function startTTSTimer(){clearTTSTimer();_ttsTimer=setInterval(()=>{if(_synth&&_synth.speaking&&!_synth.paused){_synth.pause();_synth.resume()}},10000)}
-function clearTTSTimer(){if(_ttsTimer){clearInterval(_ttsTimer);_ttsTimer=null}}
+function _ttsChunkText(text,maxWords){const sentences=text.replace(/([.!?])\s+/g,'$1\n').split('\n');const chunks=[];let cur=[];let wc=0;for(const s of sentences){const words=s.trim().split(/\s+/);if(wc+words.length>maxWords&&cur.length>0){chunks.push(cur.join(' '));cur=[];wc=0}cur.push(s.trim());wc+=words.length}if(cur.length>0)chunks.push(cur.join(' '));return chunks}
+function _ttsStartChunked(text,lang){_ttsQueue=_ttsChunkText(text,80);_ttsPlayNext(lang)}
+function _ttsPlayNext(lang){if(_ttsQueue.length===0){_ttsOn=false;updTTSUI();return}_ttsUtterance=new SpeechSynthesisUtterance(_ttsQueue.shift());_ttsUtterance.lang=lang;_ttsUtterance.rate=_ttsRate;_ttsUtterance.onstart=()=>{_ttsOn=true;updTTSUI()};_ttsUtterance.onend=()=>{_ttsPlayNext(lang)};_ttsUtterance.onerror=()=>{_ttsOn=false;_ttsQueue=[];updTTSUI()};_synth.speak(_ttsUtterance)}
 function showTTSBar(){if(document.getElementById('ttsBar'))return;const mc=document.getElementById('moduleContent');if(!mc)return;const b=document.createElement('div');b.className='tts-bar';b.id='ttsBar';b.innerHTML='\u{1F50A} <select onchange="setTTSRate(this.value)"><option value="0.7">Langsam</option><option value="1" selected>Normal</option><option value="1.3">Schnell</option></select> <button onclick="stopTTS()">\u25A0 Stopp</button>';mc.prepend(b)}
 
 // === Audio (STT) ===
