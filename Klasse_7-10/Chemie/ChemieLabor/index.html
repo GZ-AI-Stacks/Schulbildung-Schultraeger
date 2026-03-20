@@ -433,9 +433,9 @@ function showDatenschutz(){document.getElementById('datenschutzOverlay').classLi
 // === XOR Quiz Encryption ===
 
 // === Audio (TTS) ===
-const _synth=window.speechSynthesis,_LANG='de-DE';let _ttsOn=false,_ttsRate=1,_ttsTimer=null;
-function speakLesson(i){if(_ttsOn){stopTTS();return}const c=document.querySelectorAll('.lesson-card');if(!c[i]||!_synth)return;stopTTS();const u=new SpeechSynthesisUtterance(c[i].innerText);u.lang=_LANG;u.rate=_ttsRate;u.onstart=()=>{_ttsOn=true;updTTSUI();startTTSTimer()};u.onend=()=>{_ttsOn=false;updTTSUI();clearTTSTimer()};u.onerror=()=>{_ttsOn=false;updTTSUI();clearTTSTimer()};_synth.speak(u);showTTSBar()}
-function speakText(t,lang){if(!_synth)return;stopTTS();const u=new SpeechSynthesisUtterance(t);u.lang=lang||_LANG;u.rate=_ttsRate;u.onstart=()=>{_ttsOn=true;updTTSUI();startTTSTimer()};u.onend=()=>{_ttsOn=false;updTTSUI();clearTTSTimer()};u.onerror=()=>{_ttsOn=false;updTTSUI();clearTTSTimer()};_synth.speak(u)}
+const _synth=window.speechSynthesis,_LANG='de-DE';let _ttsOn=false,_ttsRate=1,_ttsTimer=null,_ttsUtterance=null;
+function speakLesson(i){if(_ttsOn){stopTTS();return}const c=document.querySelectorAll('.lesson-card');if(!c[i]||!_synth)return;stopTTS();_ttsUtterance=new SpeechSynthesisUtterance(c[i].innerText);_ttsUtterance.lang=_LANG;_ttsUtterance.rate=_ttsRate;_ttsUtterance.onstart=()=>{_ttsOn=true;updTTSUI();startTTSTimer()};_ttsUtterance.onend=()=>{_ttsOn=false;updTTSUI();clearTTSTimer()};_ttsUtterance.onerror=()=>{_ttsOn=false;updTTSUI();clearTTSTimer()};_synth.speak(_ttsUtterance);showTTSBar()}
+function speakText(t,lang){if(!_synth)return;stopTTS();_ttsUtterance=new SpeechSynthesisUtterance(t);_ttsUtterance.lang=lang||_LANG;_ttsUtterance.rate=_ttsRate;_ttsUtterance.onstart=()=>{_ttsOn=true;updTTSUI();startTTSTimer()};_ttsUtterance.onend=()=>{_ttsOn=false;updTTSUI();clearTTSTimer()};_ttsUtterance.onerror=()=>{_ttsOn=false;updTTSUI();clearTTSTimer()};_synth.speak(_ttsUtterance)}
 function stopTTS(){if(_synth){_synth.cancel()}_ttsOn=false;updTTSUI();clearTTSTimer()}
 function updTTSUI(){document.querySelectorAll('.tts-btn').forEach(b=>b.classList.toggle('speaking',_ttsOn))}
 function setTTSRate(r){_ttsRate=parseFloat(r)}
